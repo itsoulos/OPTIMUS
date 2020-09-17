@@ -273,6 +273,9 @@ int main(int argc, char *argv[])
   //run the selected optimizer
   if(!optMethod.isEmpty())
   {
+
+
+//#pragma omp parallel for num_threads(threads)
     for(int i=1;i<=iterations;i++)
     {
       mainProblem->resetFunctionCalls();

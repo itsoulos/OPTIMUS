@@ -12,6 +12,8 @@ Problem::Problem(IntervalProblem *p)
         rmargin[i]=bound[i].rightValue();
     }
     functionCalls=0;
+    tempx.resize(dimension);
+    tempg.resize(dimension);
     bestx.resize(dimension);
     besty=1e+100;
 }
@@ -90,7 +92,16 @@ double  Problem::randomDouble()
 {
     return problem->randomDouble();
 }
-
+void       Problem::getleftmarginx(double *x)
+{
+   for(int i=0;i<lmargin.size();i++)
+       x[i]=lmargin[i];
+}
+void       Problem::getrightmarginx(double *x)
+{
+    for(int i=0;i<lmargin.size();i++)
+        x[i]=rmargin[i];
+}
 double Problem::funmin(Data &x)
 {
     double y;
@@ -100,11 +111,30 @@ double Problem::funmin(Data &x)
     y=problem->funmin(x);
     if(y<besty)
     {
+        printf("besty found %.20lf %lf %lf\n",y,x[0],x[1]);
         besty=y;
         bestx=x;
     }
 }
     return y;
+}
+
+
+double  Problem::funmin(double *x)
+{
+    for(int i=0;i<tempx.size();i++)
+        tempx[i]=x[i];
+    return funmin(tempx);
+}
+
+
+void Problem::granal(double *x, double *g)
+{
+    for(int i=0;i<tempx.size();i++)
+        tempx[i]=x[i];
+    granal(tempx,tempg);
+    for(int i=0;i<tempx.size();i++)
+        g[i]=tempg[i];
 }
 void Problem::granal(Data &x,Data &g)
 {

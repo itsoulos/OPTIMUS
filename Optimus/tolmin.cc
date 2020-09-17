@@ -4,201 +4,58 @@
 
 # include <tolmin.h>
 # include <omp.h>
-int ifail=0;
-#pragma omp threadprivate(ifail)
-long iabs(long x)
+
+
+Tolmin::Tolmin(Problem *p)
 {
-    return x>0?x:-x;
+    myProblem=p;
+    ifail=0;
+    c__0=0;
+    long n=p->getDimension();
+
+    a=new double[n*n];
+    b=new double[n];
+    xl=new double[n];
+    xu=new double[n];
+    xp=new double[n];
+    w=new double[12*n+n*n*n];
+    iact=new long[3*n];
+    par=new double[n];
+    p->getleftmarginx(xl);
+    p->getrightmarginx(xu);
 }
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
-/* Common Block Declarations */
+double Tolmin::Solve(Data &x)
+{
+    long n=myProblem->getDimension();
+    for(int i=0;i<n;i++)
+    {
+        xp[i]=x[i];
+    }
+    double acc=1e-19;
+    long nact;
+    long iprint=0;
+    long info=2001;
+    long m=0;
+    long meq=0;
+    long ia=n;
+    getmin_(&n,&m,&meq,a,&ia,b,xl,xu,xp,&acc,iact,&nact,par,&iprint,&info,w);
 
-# define integer long
-# define double double
-# define real float
-struct {
-    integer itnocs, ipartc, itder, ipder, ithess, iphess, itjac, ipjac;
-} totcal_;
-#pragma omp threadprivate(totcal_)
+    for(int i=0;i<n;i++) x[i]=xp[i];
+    double fmin=myProblem->funmin(x);
+    if(!myProblem->isPointIn(x)) fmin=1e+100;
+    return fmin;
+}
 
-#define totcal_1 totcal_
-
-struct {
-    integer iuinp, iuout;
-} units_;
-#pragma omp threadprivate(units_)
-
-#define units_1 units_
-
-/* Table of constant values */
-
-integer c__0 = 0;
-#pragma omp threadprivate(c__0)
-
-/*  --------------------------------------------------------------------- */
-
-/* Subroutine */ int getmin_(integer *n, integer *m, integer *meq, double 
+int Tolmin::getmin_(integer *n, integer *m, integer *meq, double
 	*a, integer *ia, double *b, double *xl, double *xu, 
 	double *x, double *acc, integer *iact, integer *nact, 
-	double *par, integer *iprint, integer *info, double *w,
-    Problem *p)
+    double *par, integer *iprint, integer *info, double *w)
 {
-    /* System generated locals */
     integer a_dim1, a_offset;
-
-    /* Local variables */
      integer iztg, ixbig, ibres, id, ig, iu, iz;
-    extern /* Subroutine */ int minflc_(integer *, integer *, integer *, 
-	    double *, integer *, double *, double *, double *,
-	     double *, double *, integer *, integer *, double *, 
-	    integer *, integer *, double *, double *, double *, 
-	    double *, double *, double *, double *, 
-	    double *, double *, double *, double *,
-        Problem *);
      integer ireskt, igm, igs, ixs;
-
-
-/*  This is the entry point to a package of subroutines that calculate */
-/*     the least value of a differentiable function of several variables */
-/*     subject to linear constraints on the values of the variables. */
-/*  N is the number of variables and must be set by the user. */
-/*  M is the number of linear constraints (excluding simple bounds) and */
-/*     must be set by the user. */
-/*  MEQ is the number of constraints that are equalities and must be set */
-/*     by the user. */
-/*  A(.,.) is a 2-dimensional array whose columns are the gradients of */
-/*     the M constraint functions. Its entries must be set by the user */
-/*     and its dimensions must be at least N by M. */
-/*  IA is the actual first dimension of the array A that is supplied by */
-/*     the user, so its value may not be less than N. */
-/*  B(.) is a vector of constraint right hand sides that must also be set */
-/*     by the user.  Specifically the constraints on the variables X(I) */
-/*     I=1(1)N are */
-/*          A(1,K)*X(1)+...+A(N,K)*X(N) .EQ. B(K)  K=1,...,MEQ */
-/*          A(1,K)*X(1)+...+A(N,K)*X(N) .LE. B(K)  K=MEQ+1,...,M  . */
-/*     Note that the data that define the equality constraints come */
-/*     before the data of the inequalities. */
-/*  XL(.) and XU(.) are vectors whose components must be set to lower and */
-/*     upper bounds on the variables.  Choose very large negative and */
-/*     positive entries if a component should be unconstrained, or set */
-/*     XL(I)=XU(I) to freeze the I-th variable.  Specifically these */
-/*     simple bounds are */
-/*          XL(I) .LE. X(I) and X(I) .LE. XU(I)  I=1,...,N  . */
-/*  X(.) is the vector of variables of the optimization calculation. Its */
-/*     initial elements must be set by the user to an estimate of the */
-/*     required solution.  The subroutines can usually cope with poor */
-/*     estimates, and there is no need for X(.) to be feasible initially. */
-/*     These variables are adjusted automatically and the values that */
-/*     give the least feasible calculated value of the objective function */
-/*     are available in X(.) on the return from GETMIN. */
-/*  ACC is a tolerance on the first order conditions at the calculated */
-/*     solution of the optimization problem.  These first order */
-/*     conditions state that, if X(.) is a solution, then there is a set */
-/*     of active constraints with indices IACT(K) K=1(1)NACT, say, */
-/*     such that X(.) is on the boundaries of these constraints, */
-/*     and the gradient of the objective function can be expressed */
-/*     in the form */
-/*           GRAD(F)=PAR(1)*GRAD(C(IACT(1)))+... */
-/*                        ...+PAR(NACT)*GRAD(C(IACT(NACT)))  . */
-/*     Here PAR(K) K=1(1)NACT are Lagrange multipliers that are */
-/*     nonpositive for inequality constraints, and GRAD(C(IACT(K))) */
-/*     is the gradient of the IACT(K)-th constraint function, so it is */
-/*     A(.,IACT(K)) if IACT(K) .LE. M, and it is minus or plus the J-th */
-/*     coordinate vector if the constraint is the lower or upper bound on */
-/*     X(J) respectively. The normal return from the calculation occurs */
-/*     when X(.) is feasible and the sum of squares of components of the */
-/*     vector RESKT(.) is at most ACC**2, where RESKT(.) is the */
-/*     N-component vector of residuals of the first order condition that */
-/*     is displayed above. */
-/*     Sometimes the package cannot satisfy this condition, because noise */
-/*     in the function values can prevent a change to the variables, */
-/*     no line search being allowed to increase the objective function. */
-/*  IACT(.) is a working space array of integer variables that must be */
-/*     provided by the user.  Its length must be at least (M+2*N).  Its */
-/*     leading entries on the return from the subroutine are the indices */
-/*     IACT(K) K=1(1)NACT that are mentioned in the previous paragraph: */
-/*     in other words they are the indices of the final active */
-/*     constraints. */
-/*     Here the indices M+1,...,M+N and M+N+1,...,M+2*N denote the lower */
-/*     and upper bounds respectively. */
-/*  NACT is set automatically to the integer variable of this ilk that */
-/*     has been introduced already. */
-/*  PAR is a one-dimensional array that will hold the Lagrange */
-/*     multipliers PAR(K) K=1(1)NACT on the return from GETMIN, these */
-/*     parameters being defined in the above paragraph on ACC. */
-/*     The length of PAR should be at least N. */
-/*  IPRINT must be set by the user to specify the frequency of printing */
-/*     during the execution of the optimization package.  There is no */
-/*     printed output if IPRINT=0.  Otherwise, after ensuring */
-/*     feasibility, information is given every IABS(IPRINT) iterations */
-/*     and whenever a parameter called TOL is reduced. The printing */
-/*     provides the values of X(.), F(.) and G(.)=GRAD(F) if IPRINT */
-/*     is positive, while if IPRINT is negative this information is */
-/*     augmented by the current values of IACT(K) K=1(1)NACT, */
-/*     PAR(K) K=1(1)NACT and RESKT(I) I=1(1)N. The reason for returning */
-/*     to the calling program is also displayed when IPRINT is nonzero. */
-/*  INFO is an integer variable that should be set to zero initially, */
-/*     unless the user wishes to impose an upper bound on the number of */
-/*     evaluations of the objective function and its gradient, in which */
-/*     case INFO should be set to the value of this bound.  On the exit */
-/*     from GETMIN it will have one of the following integer values to */
-/*     indicate the reason for leaving the optimization package: */
-/*          INFO=1   X(.) is feasible and the condition that depends on */
-/*     ACC is satisfied. */
-/*          INFO=2   X(.) is feasible and rounding errors are preventing */
-/*     further progress. */
-/*          INFO=3   X(.) is feasible but the objective function fails to */
-/*     decrease although a decrease is predicted by the current gradient */
-/*     vector.  If this return occurs and KTRES(.) has large components */
-/*     then the user's calculation of the gradient of the objective */
-/*     function may be incorrect.  One should also question the coding of */
-/*     the gradient when the final rate of convergence is slow. */
-/*          INFO=4   In this case the calculation cannot begin because IA */
-/*     is less than N or because the lower bound on a variable is greater */
-/*     than the upper bound. */
-/*          INFO=5   This value indicates that the equality constraints */
-/*     are inconsistent.   These constraints include any components of */
-/*     X(.) that are frozen by setting XL(I)=XU(I). */
-/*          INFO=6   In this case there is an error return because the */
-/*     equality constraints and the bounds on the variables are found to */
-/*     be inconsistent. */
-/*          INFO=7   This value indicates that there is no vector of */
-/*     variables that satisfies all of the constraints.  Specifically, */
-/*     when this return or an INFO=6 return occurs, the current active */
-/*     constraints (whose indices are IACT(K) K=1(1)NACT) prevent any */
-/*     change in X(.) that reduces the sum of constraint violations, */
-/*     where only bounds are included in this sum if INFO=6. */
-/*          INFO=8   In this case the limit on the number of calls of */
-/*     subroutine FGCALC (see below) has been reached, and there would */
-/*     have been further calculation otherwise. */
-/*  W(.) is a working space array of real variables that must be provided */
-/*     by the user.  Its length must be at least (M+11*N+N**2).  On exit */
-/*     from the package one can find the final components of GRAD(F) and */
-/*     RESKT(.) in W(1),...,W(N) and W(N+1),...,W(2*N) respectively. */
-/*  Note 1.   The variables N, M, MEQ, IA, ACC and IPRINT and the */
-/*     elements of the arrays A(,.,), B(.), XL(.) and XU(.) are not */
-/*     altered by the optimization procedure. Their values, the value of */
-/*     INFO and the initial components of X(.) must be set on entry */
-/*     to GETMIN. */
-/*  Note 2.   Of course the package needs the objective function and its */
-/*     gradient.  Therefore the user must provide a subroutine called */
-/*     FGCALC, its first two lines being */
-/*          SUBROUTINE FGCALC (N,X,F,G) */
-/*          DIMENSION X(*),G(*)   . */
-/*     It is called automatically with N set as above and with X(.) set */
-/*     to a feasible vector of variables.  It should calculate the value */
-/*     of the objective function and its gradient for this X(.) and */
-/*     should set them in F and G(I) I=1(1)N respectively, without */
-/*     disturbing N or any of the components of X(.). */
-/*  Note 3.   A paper on the method of calculation and a report on the */
-/*     main features of the computer code are available from the author */
-/*     M.J.D.Powell (D.A.M.T.P., University of Cambridge, Silver Street, */
-/*     Cambridge CB3 9EW, England). */
-
 /*     Partition the workspace array. */
 
     /* Parameter adjustments */
@@ -225,37 +82,27 @@ integer c__0 = 0;
     igm = iztg + *n;
     ixs = igm + *n;
     igs = ixs + *n;
-
-/*     Call the optimization package. */
-
     minflc_(n, m, meq, &a[a_offset], ia, &b[1], &xl[1], &xu[1], &x[1], acc, &
 	    iact[1], nact, &par[1], iprint, info, &w[ig], &w[iz], &w[iu], &w[
 	    ixbig], &w[ireskt], &w[ibres], &w[id], &w[iztg], &w[igm], &w[ixs],
-         &w[igs],p);
+         &w[igs]);
     return 0;
-} /* getmin_ */
+}
 
 
-/*  --------------------------------------------------------------------- */
 
-/* Subroutine */ int initzu_(integer *n, integer *m, double *xl, 
+int  Tolmin::initzu_(integer *n, integer *m, double *xl,
 	double *xu, double *x, integer *iact, integer *meql, integer *
 	info, double *z__, double *u, double *xbig, double *
 	relacc)
 {
-    /* System generated locals */
     integer i__1;
     double d__1;
-
-    /* Local variables */
      integer jact, i__, j;
      double tempa, tempb, ztpar;
      integer nn, iz;
 
 
-/*     Set RELACC. */
-
-    /* Parameter adjustments */
     --xbig;
     --u;
     --z__;
@@ -318,12 +165,9 @@ L10:
     *info = 1;
 L50:
     return 0;
-} /* initzu_ */
+}
 
-
-/*  --------------------------------------------------------------------- */
-
-/* Subroutine */ int ktvec_(integer *n, integer *m, double *a, integer *
+int Tolmin::ktvec_(integer *n, integer *m, double *a, integer *
 	ia, integer *iact, integer *nact, double *par, double *g, 
 	double *reskt, double *z__, double *u, double *bres, 
 	double *relaxf, integer *meql, double *ssqkt, double *
@@ -485,14 +329,10 @@ L130:
     return 0;
 } /* ktvec_ */
 
-
-/*  --------------------------------------------------------------------- */
-
-/* Subroutine */ int lsrch_(integer *n, double *x, double *g, 
+int  Tolmin::lsrch_(integer *n, double *x, double *g,
 	double *d__, double *xs, double *gs, double *relacc, 
 	double *stepcb, double *ddotg, double *f, double *
-	step, integer *nfvals, integer *nfmax, double *gopt,
-    Problem *p)
+    step, integer *nfvals, integer *nfmax, double *gopt)
 {
     /* System generated locals */
     integer i__1;
@@ -502,8 +342,6 @@ L130:
      double fhgh, temp, flow, fopt;
      integer i__;
      double fbase, dghgh, dgmid, sbase, dglow, dgopt, ratio;
-    extern /* Subroutine */ int fgcalc_(integer *, double *, double *,
-         double *,Problem *);
      double ddotgb;
     integer isofar;
      double dgknot, relint, stphgh;
@@ -564,7 +402,7 @@ L20:
 	x[i__] = xs[i__] + *step * d__[i__];
     }
     isofar = totcal_1.itnocs;
-    fgcalc_(n, &x[1], f, &g[1],p);
+    fgcalc_(n, &x[1], f, &g[1]);
     icount += totcal_1.itnocs - isofar;
     dgmid = (float)0.;
     i__1 = *n;
@@ -664,16 +502,13 @@ L70:
 } /* lsrch_ */
 
 
-/*  --------------------------------------------------------------------- */
-
-/* Subroutine */ int minflc_(integer *n, integer *m, integer *meq, double 
+int Tolmin::minflc_(integer *n, integer *m, integer *meq, double
 	*a, integer *ia, double *b, double *xl, double *xu, 
 	double *x, double *acc, integer *iact, integer *nact, 
 	double *par, integer *iprint, integer *info, double *g, 
 	double *z__, double *u, double *xbig, double *reskt, 
 	double *bres, double *d__, double *ztg, double *gm, 
-	double *xs, double *gs,
-    Problem *p)
+    double *xs, double *gs)
 {
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
@@ -689,32 +524,8 @@ L70:
     nfmax=5001;
      double relacc;
      integer mp;
-    extern /* Subroutine */ int getfes_(integer *, integer *, double *, 
-	    integer *, double *, double *, double *, double *,
-	     integer *, integer *, double *, integer *, double *, 
-	    double *, double *, double *, double *, 
-	    double *, integer *, integer *, integer *, double *, 
-	    double *, double *, double *, double *, 
-	    double *, double *), adjtol_(integer *, integer *, 
-	    double *, integer *, double *, double *, double *,
-	     double *, integer *, integer *, double *, double *, 
-	    double *, integer *), eqcons_(integer *, integer *, integer *,
-	     double *, integer *, double *, double *, integer *, 
-	    integer *, integer *, double *, double *, double *, 
-	    double *, double *);
+
      integer nfvals;
-    extern /* Subroutine */ int minfun_(integer *, integer *, double *, 
-	    integer *, double *, double *, double *, double *,
-	     double *, integer *, integer *, double *, integer *, 
-	    integer *, double *, double *, double *, double *,
-	     double *, double *, double *, integer *, integer *, 
-	    integer *, integer *, integer *, double *, double *, 
-	    double *, double *, double *, double *, 
-	    double *, double *, integer *,
-        Problem *), initzu_(integer *,
-	    integer *, double *, double *, double *, integer *, 
-	    integer *, integer *, double *, double *, double *, 
-	    double *);
      double zznorm, amx, tol;
 
     /* Parameter adjustments */
@@ -869,7 +680,7 @@ L30:
 	    1], nact, &par[1], iprint, info, &g[1], &z__[1], &u[1], &xbig[1], 
 	    &relacc, &zznorm, &tol, &meql, &mtot, &iterc, &nfvals, &nfmax, &
 	    reskt[1], &bres[1], &d__[1], &ztg[1], &gm[1], &xs[1], &gs[1], &f, 
-        &iexau,p);
+        &iexau);
     if (iexau != 0) {
 	return 0;
     }
@@ -885,29 +696,12 @@ L30:
 	    *info = 8;
 	}
     }
-/*      IF (IPRINT .NE. 0) THEN */
-/*          IF (INFO .EQ. 1) WRITE (IUOUT,1070) */
-/* 1070     FORMAT (/5X,'GETMIN HAS ACHIEVED THE REQUIRED ACCURACY') */
-/*          IF (INFO .EQ. 2) WRITE (IUOUT,1080) */
-/* 1080     FORMAT (/5X,'GETMIN CAN MAKE NO FURTHER PROGRESS BECAUSE', */
-/*     1      ' OF ROUNDING ERRORS') */
-/*          IF (INFO .EQ. 3) WRITE (IUOUT,1090) */
-/* 1090     FORMAT (/5X,'GETMIN CAN MAKE NO FURTHER PROGRESS BECAUSE', */
-/*     1      ' F WILL NOT DECREASE ANY MORE') */
-/*          IF (INFO .EQ. 8) WRITE (IUOUT,1100) */
-/* 1100     FORMAT (/5X,'GETMIN HAS REACHED THE GIVEN LIMIT ON THE', */
-/*     1      ' NUMBER OF CALLS OF FGCALC') */
-/*      END IF */
+
 L40:
     return 0;
-} /* minflc_ */
+}
 
-
-/*  --------------------------------------------------------------------- */
-
-/* --------------------------------------------------------------------- */
-
-/* Subroutine */ int minfun_(integer *n, integer *m, double *a, integer *
+int Tolmin::minfun_(integer *n, integer *m, double *a, integer *
 	ia, double *b, double *xl, double *xu, double *x, 
 	double *acc, integer *iact, integer *nact, double *par, 
 	integer *iprint, integer *info, double *g, double *z__, 
@@ -915,8 +709,7 @@ L40:
 	zznorm, double *tol, integer *meql, integer *mtot, integer *iterc,
 	 integer *nfvals, integer *nfmax, double *reskt, double *bres,
 	 double *d__, double *ztg, double *gm, double *xs, 
-	double *gs, double *f, integer *iexau,
-    Problem *p)
+    double *gs, double *f, integer *iexau)
 {
     /* System generated locals */
     integer a_dim1, a_offset, i__1;
@@ -930,37 +723,14 @@ L40:
      double step;
      integer i__, k;
     double ddotg;
-    extern /* Subroutine */ int ktvec_(integer *, integer *, double *, 
-	    integer *, integer *, integer *, double *, double *, 
-	    double *, double *, double *, double *, 
-	    double *, integer *, double *, double *, double *)
-	    , lsrch_(integer *, double *, double *, double *, 
-	    double *, double *, double *, double *, 
-	    double *, double *, double *, integer *, integer *, 
-        double *,Problem *);
     integer iterk;
-    extern /* Subroutine */ int zbfgs_(integer *, double *, integer *, 
-	    double *, double *, double *, double *, 
-	    double *, double *);
      double fprev;
      integer iterp;
     double ssqkt;
-    extern /* Subroutine */ int fgcalc_(integer *, double *, double *,
-         double *,Problem *), addcon_(integer *, integer *, double *,
-	    integer *, integer *, integer *, double *, double *, 
-	    double *, integer *, double *, double *);
      integer indxbd;
     double stepcb;
     integer nfvalk, isofar;
     double relaxf;
-    extern /* Subroutine */ int conres_(integer *, integer *, double *, 
-	    integer *, double *, double *, double *, double *,
-	     integer *, integer *, double *, double *, double *, 
-	    double *, double *, double *, double *, 
-	    double *, double *, double *, double *, 
-	    double *, integer *, integer *, integer *, integer *, 
-	    double *, double *, double *, double *);
-    extern integer itconv_(double *);
     double sum;
 
 
@@ -994,7 +764,7 @@ L40:
     nfvalk = *nfvals;
     if (*nfvals == 0 || *info == 1) {
 	isofar = totcal_1.itnocs;
-    fgcalc_(n, &x[1], f, &g[1],p);
+    fgcalc_(n, &x[1], f, &g[1]);
 	*nfvals += totcal_1.itnocs - isofar;
     }
     fprev = (d__1 = *f + *f + (float)1., fabs(d__1));
@@ -1060,7 +830,7 @@ L20:
 	goto L70;
     }
     if (iterp == *iterc) {
-	iterp = *iterc + iabs(*iprint);
+    iterp = *iterc + abs(*iprint);
 	goto L80;
     }
 
@@ -1069,7 +839,7 @@ L20:
 L40:
     ++(*iterc);
     lsrch_(n, &x[1], &g[1], &d__[1], &xs[1], &gs[1], relacc, &stepcb, &ddotg, 
-        f, &step, nfvals, nfmax, &bres[1],p);
+        f, &step, nfvals, nfmax, &bres[1]);
     if (step == (float)0.) {
 	*info = 3;
 	sum = (float)0.;
@@ -1123,54 +893,14 @@ L70:
     }
     iterp = -1;
 L80:
-    //mdis_(&x[1], f, iterc, nfvals, nfmax, iprint, &c__0);
-
-/*  Did we reach our target value ? */
-    /*
-    if (itconv_(f) != 0) {
-	*info = 9;
-	*iexau = 1;
-	return 0;
-    }*/
-/* L1010: */
-/*      IF (NFVALS .GT. NFVALK) THEN */
-/*          WRITE (*,1020) (X(I),I=1,N) */
-/* 1020     FORMAT ('  X =',(1P5E14.5)) */
-/*          WRITE (*,1030) (G(I),I=1,N) */
-/* 1030     FORMAT ('  G =',(1P5E14.5)) */
-/*      ELSE */
-/*          WRITE (*,1040) */
-/* 1040     FORMAT (5X,'NO CHANGE TO X AND G SINCE PREVIOUS OUTPUT') */
-/*      END IF */
-/*      IF (IPRINT .LT. 0) THEN */
-/*          IF (NACT .EQ. 0) THEN */
-/*              WRITE (*,1050) */
-/* 1050         FORMAT (5X,'NO ACTIVE CONSTRAINTS') */
-/*          ELSE */
-/*              WRITE (*,1060) (IACT(I),I=1,NACT) */
-/* 1060         FORMAT (' IA =',(14I5)) */
-/*              WRITE (*,1070) (PAR(I),I=1,NACT) */
-/* 1070         FORMAT (' LP =',(1P5E14.5)) */
-/*          END IF */
-/*          IF (NACT .EQ. N) THEN */
-/*              WRITE (*,1080) */
-/* 1080         FORMAT (5X,'KT RESIDUAL VECTOR IS ZERO') */
-/*          ELSE */
-/*              WRITE (*,1090) (RESKT(I),I=1,N) */
-/* 1090         FORMAT (' KT =',(1P5E14.5)) */
-/*          END IF */
-/*      END IF */
     if (iterp >= 0) {
 	goto L40;
     }
 L90:
     return 0;
-} /* minfun_ */
+}
 
-
-/*  --------------------------------------------------------------------- */
-
-/* Subroutine */ int newcon_(integer *n, integer *m, double *a, integer *
+int Tolmin::newcon_(integer *n, integer *m, double *a, integer *
 	ia, integer *iact, integer *nact, double *z__, double *u, 
 	double *d__, double *relacc, integer *mdeg, double *
 	zzdiag, double *gmnew, double *cgrad)
@@ -1185,9 +915,6 @@ L90:
     integer i__, j, k, khigh;
      double cviol, cvmax;
      integer jm;
-    extern /* Subroutine */ int addcon_(integer *, integer *, double *, 
-	    integer *, integer *, integer *, double *, double *, 
-	    double *, integer *, double *, double *);
      integer np, iz;
      double savabs, sumabs, savsum;
      integer jmv;
@@ -1382,12 +1109,10 @@ L130:
     }
 L140:
     return 0;
-} /* newcon_ */
+}
 
 
-/*  --------------------------------------------------------------------- */
-
-/* Subroutine */ int satact_(integer *n, integer *m, double *a, integer *
+int Tolmin::satact_(integer *n, integer *m, double *a, integer *
 	ia, double *b, double *xl, double *xu, double *x, 
 	integer *iact, integer *nact, integer *info, double *z__, 
 	double *u, double *xbig, double *relacc, double *tol, 
@@ -1404,9 +1129,7 @@ L140:
      integer idrop;
      double savex;
      integer jx, iz;
-    extern /* Subroutine */ int delcon_(integer *, integer *, double *, 
-	    integer *, integer *, integer *, double *, double *, 
-	    double *, integer *);
+
     double resbig, resabs, res;
 
     /* Parameter adjustments */
@@ -1511,12 +1234,10 @@ L40:
     }
 L50:
     return 0;
-} /* satact_ */
+}
 
 
-/*  --------------------------------------------------------------------- */
-
-/* Subroutine */ int sdegen_(integer *n, integer *m, double *a, integer *
+int Tolmin::sdegen_(integer *n, integer *m, double *a, integer *
 	ia, integer *iact, integer *nact, double *par, double *z__, 
 	double *u, double *d__, double *ztg, double *gm, 
 	double *relacc, double *ddotgm, integer *meql, integer *mdeg, 
@@ -1530,18 +1251,10 @@ L50:
     double temp;
      integer i__, j, k;
      double theta, ratio;
-    extern /* Subroutine */ int sdirn_(integer *, integer *, double *, 
-	    double *, double *, double *, double *, 
-	    double *);
+
     integer idrop;
     double dtest;
     integer itest, jm, mp, np, ku, iz;
-    extern /* Subroutine */ int delcon_(integer *, integer *, double *, 
-	    integer *, integer *, integer *, double *, double *, 
-	    double *, integer *), newcon_(integer *, integer *, 
-	    double *, integer *, integer *, integer *, double *, 
-	    double *, double *, double *, integer *, double *,
-	     double *, double *);
     double amx, sum;
 
     /* Parameter adjustments */
@@ -1707,12 +1420,10 @@ L50:
     *ddotgm = (float)0.;
 L120:
     return 0;
-} /* sdegen_ */
+}
 
 
-/*  --------------------------------------------------------------------- */
-
-/* Subroutine */ int sdirn_(integer *n, integer *nact, double *z__, 
+int Tolmin::sdirn_(integer *n, integer *nact, double *z__,
 	double *d__, double *ztg, double *gm, double *relacc, 
 	double *ddotgm)
 {
@@ -1796,12 +1507,10 @@ L120:
     }
 L60:
     return 0;
-} /* sdirn_ */
+}
 
 
-/*  --------------------------------------------------------------------- */
-
-/* Subroutine */ int stepbd_(integer *n, integer *m, double *a, integer *
+int Tolmin::stepbd_(integer *n, integer *m, double *a, integer *
 	ia, integer *iact, double *bres, double *d__, double *
 	stepcb, double *ddotg, integer *mdeg, integer *msat, integer *
 	mtot, integer *indxbd)
@@ -1917,12 +1626,10 @@ L50:
     }
 L800:
     return 0;
-} /* stepbd_ */
+}
 
 
-/*  --------------------------------------------------------------------- */
-
-/* Subroutine */ int zbfgs_(integer *n, double *x, integer *nact, 
+int Tolmin::zbfgs_(integer *n, double *x, integer *nact,
 	double *g, double *z__, double *ztg, double *xs, 
 	double *gs, double *zznorm)
 {
@@ -2060,17 +1767,9 @@ L20:
     }
 L90:
     return 0;
-} /* zbfgs_ */
+}
 
-extern int getmin_(integer *n, integer *m, integer *meq, double 
-	*a, integer *ia, double *b, double *xl, double *xu, 
-	double *x, double *acc, integer *iact, integer *nact, 
-	double *par, integer *iprint, integer *info, double *w,
-    Problem *p);
-
-double oldmin=1e+100;
-#pragma omp threadprivate(oldmin)
-
+/*
 double tolmin(Data &x, Problem *p,int iters)
 {
 	double fmin;
@@ -2081,25 +1780,21 @@ double tolmin(Data &x, Problem *p,int iters)
 	long meq=0;
 	double *a=new double[n*n];
 	long ia=n;
-	double b[n];
-	double xl[n];
-	double xu[n];
+    double *b=new double[n];
+    double *xl=new double[n];
+    double *xu=new double[n];
 	double *xp=new double[n];
-	Data x1,x2;
-    x1.resize(p->getDimension());
-    x2.resize(p->getDimension());
-    x1=p->getLeftMargin();
-    x2=p->getRightMargin();
+
+    p->getleftmarginx(xl);
+    p->getrightmarginx(xu);
 	for(int i=0;i<n;i++) 
 	{
         xp[i]=x[i];
-        xl[i]=x1[i];
-        xu[i]=x2[i];
 	}
 	double acc=1e-19;
-	long iact[3*n];
+    long *iact=new long[3*n];
 	long nact;
-	double par[n];
+    double *par=new double[n];
 	long iprint=0;
     long info=iters;
 	double *w=new double[12*n+n*n*n];
@@ -2112,32 +1807,29 @@ double tolmin(Data &x, Problem *p,int iters)
 	delete[] w;
 	delete[] a;
 	delete[] xp;
+    delete[] iact;
+    delete[] par;
+    delete[] b;
+    delete[] xl;
+    delete[] xu;
     return fmin;
 }
-
-int fgcalc_(long *n,double *x,double *f,double *g,Problem *p)
+*/
+int Tolmin::fgcalc_(long *n,double *x,double *f,double *g)
 {
 	totcal_1.itnocs++;
 
-	Data Xa;
-	Data Ga;
-	Ga.resize(*n);
-	Xa.resize(*n);
-	for(int i=0;i<*n;i++) Xa[i]=x[i];
-    *f=p->funmin(Xa);
-    p->granal(Xa,Ga);
-	{
-        if(*f<=oldmin)
-		{
+    *f=myProblem->funmin(x);
+    myProblem->granal(x,g);
+    if(*f<=oldMin)
+    {
     //    printf("NEW MIN[%d] =%20.10lg\n",totcal_1.itnocs,*f);
-		 oldmin=*f;
-		}
-	}
-	for(int i=0;i<*n;i++) g[i]=Ga[i];
-	return 0;
+    oldMin=*f;
+    }
+    return 0;
 }
 
-/* Subroutine */ int getfes_(integer *n, integer *m, double *a, integer *
+int Tolmin::getfes_(integer *n, integer *m, double *a, integer *
 	ia, double *b, double *xl, double *xu, double *x, 
 	integer *iact, integer *nact, double *par, integer *info, 
 	double *g, double *z__, double *u, double *xbig, 
@@ -2152,25 +1844,9 @@ int fgcalc_(long *n,double *x,double *f,double *g,Problem *p)
 
     /* Local variables */
      integer i__, msatk, itest;
-    extern /* Subroutine */ int addcon_(integer *, integer *, double *, 
-	    integer *, integer *, integer *, double *, double *, 
-	    double *, integer *, double *, double *);
+
      integer indxbd;
-    extern /* Subroutine */ int satact_(integer *, integer *, double *, 
-	    integer *, double *, double *, double *, double *,
-	     integer *, integer *, integer *, double *, double *, 
-	    double *, double *, double *, integer *);
      double stepcb;
-    extern /* Subroutine */ int adjtol_(integer *, integer *, double *, 
-	    integer *, double *, double *, double *, double *,
-	     integer *, integer *, double *, double *, double *, 
-	    integer *), conres_(integer *, integer *, double *, integer *,
-	     double *, double *, double *, double *, integer *
-	    , integer *, double *, double *, double *, double 
-	    *, double *, double *, double *, double *, 
-	    double *, double *, double *, double *, integer *,
-	     integer *, integer *, integer *, double *, double *, 
-	    double *, double *);
     double sumres, sumrsk;
 
 
@@ -2265,9 +1941,9 @@ L50:
     }
 L60:
     return 0;
-} /* getfes_ */
+}
 
-/* Subroutine */ int addcon_(integer *n, integer *m, double *a, integer *
+int Tolmin::addcon_(integer *n, integer *m, double *a, integer *
 	ia, integer *iact, integer *nact, double *z__, double *u, 
 	double *relacc, integer *indxbd, double *ztc, double *
 	cgrad)
@@ -2449,12 +2125,10 @@ L40:
     *nact = np;
 L90:
     return 0;
-} /* addcon_ */
+}
 
 
-/*  --------------------------------------------------------------------- */
-
-/* Subroutine */ int adjtol_(integer *n, integer *m, double *a, integer *
+int Tolmin::adjtol_(integer *n, integer *m, double *a, integer *
 	ia, double *b, double *xl, double *xu, double *x, 
 	integer *iact, integer *nact, double *xbig, double *relacc, 
 	double *tol, integer *meql)
@@ -2532,12 +2206,10 @@ L90:
 	}
     }
     return 0;
-} /* adjtol_ */
+}
 
 
-/*  --------------------------------------------------------------------- */
-
-/* Subroutine */ int conres_(integer *n, integer *m, double *a, integer *
+int Tolmin::conres_(integer *n, integer *m, double *a, integer *
 	ia, double *b, double *xl, double *xu, double *x, 
 	integer *iact, integer *nact, double *par, double *g, 
 	double *z__, double *u, double *xbig, double *bres, 
@@ -2552,19 +2224,13 @@ L90:
 
     /* Local variables */
      integer mdeg;
-    extern /* Subroutine */ int getd_(integer *, integer *, double *, 
-	    integer *, integer *, integer *, double *, double *, 
-	    double *, double *, double *, double *, 
-	    double *, double *, integer *, integer *, double *, 
-	    double *, double *, double *);
+
      double temp;
     integer i__, j, k, idiff;
      double ddotg;
      integer msatk, kl, jm;
      double resabs;
-    extern /* Subroutine */ int stepbd_(integer *, integer *, double *, 
-	    integer *, integer *, double *, double *, double *, 
-	    double *, integer *, integer *, integer *, integer *);
+
      double res, sum;
 
     /* Parameter adjustments */
@@ -2733,9 +2399,9 @@ L50:
     }
 L60:
     return 0;
-} /* conres_ */
+}
 
-/* Subroutine */ int delcon_(integer *n, integer *m, double *a, integer *
+int Tolmin::delcon_(integer *n, integer *m, double *a, integer *
 	ia, integer *iact, integer *nact, double *z__, double *u, 
 	double *relacc, integer *idrop)
 {
@@ -2878,12 +2544,10 @@ L60:
 L60:
     *nact = nm;
     return 0;
-} /* delcon_ */
+}
 
 
-/*  --------------------------------------------------------------------- */
-
-/* Subroutine */ int eqcons_(integer *n, integer *m, integer *meq, double 
+int Tolmin::eqcons_(integer *n, integer *m, integer *meq, double
 	*a, integer *ia, double *b, double *xu, integer *iact, 
 	integer *meql, integer *info, double *z__, double *u, 
 	double *relacc, double *am, double *cgrad)
@@ -2896,9 +2560,7 @@ L60:
      integer i__, j, k;
      double vmult;
      integer jm;
-    extern /* Subroutine */ int addcon_(integer *, integer *, double *, 
-	    integer *, integer *, integer *, double *, double *, 
-	    double *, integer *, double *, double *);
+
     integer np, iz;
     double sumabs;
     integer keq;
@@ -2986,12 +2648,10 @@ L50:
     }
 L60:
     return 0;
-} /* eqcons_ */
+}
 
 
-/*  --------------------------------------------------------------------- */
-
-/* Subroutine */ int getd_(integer *n, integer *m, double *a, integer *ia,
+int Tolmin::getd_(integer *n, integer *m, double *a, integer *ia,
 	 integer *iact, integer *nact, double *par, double *g, 
 	double *z__, double *u, double *d__, double *ztg, 
 	double *relacc, double *ddotg, integer *meql, integer *mdeg, 
@@ -3004,13 +2664,7 @@ L60:
     /* Local variables */
      double temp;
     integer i__, j, k, ii, jm, iz;
-    extern /* Subroutine */ int delcon_(integer *, integer *, double *, 
-	    integer *, integer *, integer *, double *, double *, 
-	    double *, integer *), sdegen_(integer *, integer *, 
-	    double *, integer *, integer *, integer *, double *, 
-	    double *, double *, double *, double *, 
-	    double *, double *, double *, integer *, integer *, 
-	    double *, double *, double *);
+
      double ddotgm, abcd;
 
 
@@ -3104,8 +2758,14 @@ L30:
 } /* getd_ */
 
 
-/*  --------------------------------------------------------------------- */
-
-#ifdef __cplusplus
-	}
-#endif
+Tolmin::~Tolmin()
+{
+    delete[] w;
+    delete[] a;
+    delete[] xp;
+    delete[] iact;
+    delete[] par;
+    delete[] b;
+    delete[] xl;
+    delete[] xu;
+}

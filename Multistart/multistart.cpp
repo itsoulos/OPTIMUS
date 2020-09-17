@@ -28,11 +28,11 @@ void    Multistart::step()
 {
     int Multistart_samples=params["multistart_samples"].toString().toInt();
     ++iteration;
-#pragma omp parallel for num_threads(threads)
-    for(int i=1;i<=Multistart_samples;i++)
+    Tolmin mTolmin(myProblem);
+    for(int i=0;i<Multistart_samples;i++)
     {
         trialx=myProblem->getRandomPoint();
-        double y=tolmin(trialx,myProblem,2001);
+        double y=mTolmin.Solve(trialx);
     }
     printf("Multistart. Iteration:%5d Global minimum: %20.10lg\n",iteration,myProblem->getBesty());
 }
@@ -46,7 +46,6 @@ void Multistart::init()
     stopat=0.0;
     oldBesty=1e+100;
     trialx.resize(myProblem->getDimension());
-
 }
 
 void Multistart::done()

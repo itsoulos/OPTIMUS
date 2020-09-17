@@ -9,7 +9,7 @@ private:
     int dimension;
     Data lmargin,rmargin;
     int functionCalls;
-    Data bestx;
+    Data bestx,tempx,tempg;
     double besty;
 public:
     Problem(IntervalProblem *p);
@@ -17,8 +17,12 @@ public:
     int         getDimension() const;
     Data        getLeftMargin() const;
     Data        getRightMargin() const;
+    void        getleftmarginx(double *);
+    void        getrightmarginx(double *);
     double      funmin(Data &x);
+    double      funmin(double *x);
     void        granal(Data &x,Data &g);
+    void        granal(double *x,double *g);
     Data        getRandomPoint();
     Data        getUniformRandomPoint();
     QJsonObject done(Data &x);

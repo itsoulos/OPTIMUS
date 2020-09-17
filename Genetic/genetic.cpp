@@ -65,8 +65,8 @@ bool       Genetic::terminated()
         stopat=variance/2.0;
     }
     if(stopat<1e-8 && !isnan(variance)) stopat=variance/2.0;
-    printf("Generation %d value: %lf variance: %lf stopat: %lf\n",generation,fitness_array[0],
-            variance,stopat);
+    //printf("Generation %d value: %lf variance: %lf stopat: %lf\n",generation,fitness_array[0],
+    //        variance,stopat);
     return generation>=max_generations || (variance<=stopat && generation>=20);
 }
 
@@ -99,8 +99,8 @@ void    Genetic::calcFitnessArray()
     int genome_count = chromosome.size();
     double localsearch_rate = params["localsearch_rate"].toString().toDouble();
     double dmin=1e+100;
-#pragma omp parallel for num_threads(threads)
 
+    Tolmin mTolmin(myProblem);
     for(int i=0;i<genome_count;i++)
     {
         if(localsearch_rate>0 && myProblem->randomDouble()<=localsearch_rate)
@@ -110,10 +110,9 @@ void    Genetic::calcFitnessArray()
                 fitness_array[i]=fitness(chromosome[i]);
                 continue;
             }
-#pragma omp critical
-{
             Data dg=chromosome[i];
-            fitness_array[i]=tolmin(chromosome[i],myProblem,2001);
+
+            fitness_array[i]=mTolmin.Solve(chromosome[i]);
             RC+=getDistance(chromosome[i],dg);
             localSearchCount++;
             bool found=false;
@@ -124,7 +123,6 @@ void    Genetic::calcFitnessArray()
             if(!found)
             minimax.push_back(chromosome[i]);
             minimax.push_back(dg);
-}
         }
         else
         {
@@ -329,7 +327,8 @@ void       Genetic::init()
 
 void       Genetic::done()
 {
-
+    Tolmin mTolmin(myProblem);
+    fitness_array[0]=mTolmin.Solve(chromosome[0]);
 }
 
 void	Genetic::Solve()
