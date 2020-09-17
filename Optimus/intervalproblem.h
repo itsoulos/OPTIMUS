@@ -2,6 +2,7 @@
 #define INTERVALPROBLEM_H
 # include <vector>
 # include <iostream>
+# include <QVector>
 # include <QJsonObject>
 # include "interval.h"
 # include <QRandomGenerator>
@@ -17,7 +18,8 @@ protected:
     IntervalData        margin;
     const int     maxSearchDepth=5;
     QRandomGenerator randGen;
-
+    int threads;
+    QVector<QRandomGenerator> threadGen;
 public:
     IntervalProblem(int d);
     void                setDimension(int d);
@@ -40,6 +42,7 @@ public:
     void                printData(IntervalData &x);
     double              randomDouble();
     void                setRandomSeed(int k);
+    void                setRandomSeedForThreads(int k,int t);
     virtual             ~IntervalProblem();
 };
 

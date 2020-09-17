@@ -53,10 +53,11 @@ void loadProblem()
         {
           qDebug()<<"PROBLEM: "<<filename<<" loaded.";
           dllProblem=new DllProblem(filename,problemParams);
+         dllProblem->setRandomSeed(randomSeed);
 
-          dllProblem->setRandomSeed(randomSeed);
           QStringList keys=optimizerList.keys();
           mainProblem=new Problem(dllProblem);
+
           for(int i=0;i<optimizerList.size();i++)
           {
               optimizerList[keys[i]]->setProblem(mainProblem);

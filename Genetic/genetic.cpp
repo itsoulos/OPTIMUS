@@ -100,12 +100,16 @@ void    Genetic::calcFitnessArray()
     double localsearch_rate = params["localsearch_rate"].toString().toDouble();
     double dmin=1e+100;
 
+    QVector<double> randomNums;
+    for(int i=0;i<genome_count;i++)
+        randomNums<<myProblem->randomDouble();
 
+//#pragma omp parallel for reduction(+:RC)
 #pragma omp parallel for num_threads(threads)
     for(int i=0;i<genome_count;i++)
     {
 
-        if(localsearch_rate>0 && myProblem->randomDouble()<=localsearch_rate)
+        if(localsearch_rate>0 && randomNums[i]<=localsearch_rate)
         {
             if(checkForGradientCriterion(chromosome[i]))
             {
@@ -116,6 +120,7 @@ void    Genetic::calcFitnessArray()
 
             Tolmin mTolmin(myProblem);
             fitness_array[i]=mTolmin.Solve(chromosome[i]);
+
             RC+=getDistance(chromosome[i],dg);
             localSearchCount++;
             bool found=false;
@@ -124,10 +129,13 @@ void    Genetic::calcFitnessArray()
                 if(getDistance(minimax[j],chromosome[i])<1e-5) {found=true;break;}
             }
             if(!found)
-#pragma omp critical
+
             {
+#pragma omp critical
+{
             minimax.push_back(chromosome[i]);
             minimax.push_back(dg);
+            }
             }
         }
         else

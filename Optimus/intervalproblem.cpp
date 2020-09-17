@@ -1,9 +1,11 @@
 #include "intervalproblem.h"
 # include <QVariant>
+# include <omp.h>
 
 IntervalProblem::IntervalProblem(int d)
 {
 
+ threads=0;
  dimension=d;
  margin.resize((unsigned)d);
  for(unsigned int i=0;i<d;i++)
@@ -40,6 +42,8 @@ int    IntervalProblem::getDimension() const
 
 double  IntervalProblem::randomDouble()
 {
+    if(threads>0)
+        return threadGen[omp_get_thread_num()].generateDouble();
     return randGen.generateDouble();
 }
 
@@ -124,6 +128,14 @@ IntervalData    IntervalProblem::createRandomInterval()
         }
     }*/
     return x;
+}
+
+void  IntervalProblem::setRandomSeedForThreads(int k,int t)
+{
+    threads=t;
+    threadGen.resize(threads);
+    for(int i=0;i<threads;i++)
+        threadGen[i].seed(k+i);
 }
 
 void    IntervalProblem::randomize(IntervalData &x,int pos)
