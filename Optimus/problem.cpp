@@ -111,7 +111,6 @@ double Problem::funmin(Data &x)
     y=problem->funmin(x);
     if(y<besty)
     {
-        printf("besty found %.20lf %lf %lf\n",y,x[0],x[1]);
         besty=y;
         bestx=x;
     }

@@ -10,14 +10,14 @@ Multistart::Multistart(Problem *p)
 bool Multistart::terminated()
 {
     int multistart_maxiterations=params["multistart_maxiterations"].toString().toInt();
-    double fmin=fabs(myProblem->getBesty());
+    double fmin=fabs(1.0+mbesty);
     x1+=fmin;
     x2+=fmin * fmin;
-    variance=x2/iteration-(x1/iteration)*(x1/iteration);
+    variance=x2/(iteration+1)-(x1/(iteration+1))*(x1/(iteration+1));
     variance=fabs(variance);
-    if(myProblem->getBesty()<oldBesty)
+    if(mbesty<oldBesty)
     {
-        oldBesty=myProblem->getBesty();
+        oldBesty=mbesty;
         stopat=variance/2.0;
     }
     if(fabs(stopat)<1e-8) stopat=variance/2.0;
@@ -33,8 +33,11 @@ void    Multistart::step()
     {
         trialx=myProblem->getRandomPoint();
         double y=mTolmin.Solve(trialx);
+        if(y<mbesty)
+            mbesty=y;
     }
-    printf("Multistart. Iteration:%5d Global minimum: %20.10lg\n",iteration,myProblem->getBesty());
+    printf("Multistart. Iteration:%5d Global minimum: %20.10lg variance: %lf stopat: %lf\n",
+           iteration,myProblem->getBesty(),variance,stopat);
 }
 
 void Multistart::init()
@@ -45,6 +48,7 @@ void Multistart::init()
     variance=0.0;
     stopat=0.0;
     oldBesty=1e+100;
+    mbesty=1e+100;
     trialx.resize(myProblem->getDimension());
 }
 

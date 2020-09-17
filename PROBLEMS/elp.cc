@@ -16,8 +16,8 @@ int dimension=8;
 
 void    init(QJsonObject data)
 {
-    if(data.contains("dimension"))
-        dimension=data["dimension"].toInt();
+    if(data.contains("natoms"))
+        dimension=data["natoms"].toString().toInt();
 }
 
 int	getdimension()
@@ -41,11 +41,23 @@ double	funmin(vector<double> &x)
 
 }
 
-void    granal(vector<double> &x,vector<double> &g)
+static double dmax(double a,double b)
 {
-    for(int i=0;i<dimension;i++)
-        g[i]=3.0*(x[i]-i-1)*(x[i]-i-1)*(i+1.0);
+	return a>b?a:b;
+}
 
+void	granal(vector<double>&x,vector<double>&g)
+{
+	for(int i=0;i<dimension;i++)
+	{
+		double eps=pow(1e-18,1.0/3.0)*dmax(1.0,fabs(x[i]));
+		x[i]+=eps;
+		double v1=funmin(x);
+		x[i]-=2.0 *eps;
+		double v2=funmin(x);
+		g[i]=(v1-v2)/(2.0 * eps);
+		x[i]+=eps;
+	}
 }
 
 QJsonObject    done(vector<double> &x)

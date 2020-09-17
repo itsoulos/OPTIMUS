@@ -23,6 +23,7 @@ private:
     virtual void done();
     int    iteration;
     Data trialx;
+    double mbesty;
     double x1,x2,stopat,variance,oldBesty;
 public:
     Multistart(Problem *p);
