@@ -73,6 +73,7 @@ bool       Genetic::terminated()
 
 bool  Genetic::checkForGradientCriterion(Data &x)
 {
+    return false;
     double dmin=1e+100;
     int imin=0;
     if(minimax.size()>0)
