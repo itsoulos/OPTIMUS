@@ -92,7 +92,6 @@ void parseCmdLine(QStringList args)
 
     for(int i=1;i<args.size();i++)
     {
-        qDebug()<<"args "<<args[i];
         if(args[i]=="--help")
         {
             printParams();
@@ -110,6 +109,7 @@ void parseCmdLine(QStringList args)
         {
             if(optimizerName.contains(value))
             optMethod=value;
+            else qDebug()<<"Not found "<<value<<endl;
         }
         else
         if(param=="--threads" || param=="-t")
@@ -155,10 +155,12 @@ void parseCmdLine(QStringList args)
 void  loadOptimizers()
 {
 
-    optimizerName<<"libGenetic.so";
-    for(int i=0;i<optimizerName.size();i++)
+    QStringList optimizerFile;
+
+    optimizerFile<<"libGenetic.so"<<"libMultistart.so";
+    for(int i=0;i<optimizerFile.size();i++)
     {
-        QString name=optimizerName[i];
+        QString name=optimizerFile[i];
         QLibrary *library=new QLibrary(OptimusPath+QDir::separator()+"lib"+QDir::separator()+name);
         if(library->load())
        {
@@ -173,6 +175,7 @@ void  loadOptimizers()
                          QString optimizerNameIs=name.mid(3);
                          optimizerNameIs=optimizerNameIs.mid(0,optimizerNameIs.size()-3);
                          qDebug()<<"OPTIMIZER: "<<optimizerNameIs<<" loaded.";
+                         optimizerName<<optimizerNameIs;
                          optimizerList[optimizerNameIs]=myClassInstance;
                          QJsonObject optimizerParams=myClassInstance->getParameters();
                          QStringList keys=optimizerParams.keys();
@@ -182,6 +185,7 @@ void  loadOptimizers()
                          }
                       }
                   }
+                  else qDebug()<<"Could not load "<<name;
                    optimizerDll<<library;
 
        }
