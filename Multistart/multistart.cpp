@@ -28,14 +28,18 @@ void    Multistart::step()
 {
     int Multistart_samples=params["multistart_samples"].toString().toInt();
     ++iteration;
-    Tolmin mTolmin(myProblem);
+#pragma omp parallel for num_threads(threads)
     for(int i=0;i<Multistart_samples;i++)
     {
-        trialx=myProblem->getRandomPoint();
+        Tolmin mTolmin(myProblem);
+        Data trialx=myProblem->getRandomPoint();
         double y=mTolmin.Solve(trialx);
+#pragma omp critical
+{
         if(y<mbesty)
             mbesty=y;
-    }
+}
+ }
     printf("Multistart. Iteration:%5d Global minimum: %20.10lg variance: %lf stopat: %lf\n",
            iteration,myProblem->getBesty(),variance,stopat);
 }
