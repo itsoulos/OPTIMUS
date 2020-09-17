@@ -1819,12 +1819,18 @@ int Tolmin::fgcalc_(long *n,double *x,double *f,double *g)
 {
 	totcal_1.itnocs++;
 
-    *f=myProblem->funmin(x);
-    myProblem->granal(x,g);
-    if(*f<=oldMin)
+    Data tempx,tempg;
+    tempx.resize(*n);
+    tempg.resize(*n);
+    for(int i=0;i<*n;i++)
+        tempx[i]=x[i];
+    *f=myProblem->funmin(tempx);
+    myProblem->granal(tempx,tempg);
+
+    for(int i=0;i<*n;i++)
     {
-    //    printf("NEW MIN[%d] =%20.10lg\n",totcal_1.itnocs,*f);
-    oldMin=*f;
+        x[i]=tempx[i];
+        g[i]=tempg[i];
     }
     return 0;
 }

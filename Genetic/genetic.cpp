@@ -100,9 +100,11 @@ void    Genetic::calcFitnessArray()
     double localsearch_rate = params["localsearch_rate"].toString().toDouble();
     double dmin=1e+100;
 
-    Tolmin mTolmin(myProblem);
+
+#pragma omp parallel for num_threads(threads)
     for(int i=0;i<genome_count;i++)
     {
+
         if(localsearch_rate>0 && myProblem->randomDouble()<=localsearch_rate)
         {
             if(checkForGradientCriterion(chromosome[i]))
@@ -112,6 +114,7 @@ void    Genetic::calcFitnessArray()
             }
             Data dg=chromosome[i];
 
+            Tolmin mTolmin(myProblem);
             fitness_array[i]=mTolmin.Solve(chromosome[i]);
             RC+=getDistance(chromosome[i],dg);
             localSearchCount++;
@@ -121,8 +124,11 @@ void    Genetic::calcFitnessArray()
                 if(getDistance(minimax[j],chromosome[i])<1e-5) {found=true;break;}
             }
             if(!found)
+#pragma omp critical
+            {
             minimax.push_back(chromosome[i]);
             minimax.push_back(dg);
+            }
         }
         else
         {
