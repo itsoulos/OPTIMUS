@@ -93,13 +93,17 @@ double  Problem::randomDouble()
 
 double Problem::funmin(Data &x)
 {
+    double y;
 	++functionCalls;
-    double y=problem->funmin(x);
+#pragma omp critical
+    {
+    y=problem->funmin(x);
     if(y<besty)
     {
         besty=y;
         bestx=x;
     }
+}
     return y;
 }
 void Problem::granal(Data &x,Data &g)

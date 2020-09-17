@@ -26,9 +26,14 @@ bool Multistart::terminated()
 
 void    Multistart::step()
 {
+    int Multistart_samples=params["multistart_samples"].toString().toInt();
     ++iteration;
-    trialx=myProblem->getRandomPoint();
-    double y=tolmin(trialx,myProblem,2001);
+#pragma omp parallel for num_threads(threads)
+    for(int i=1;i<=Multistart_samples;i++)
+    {
+        trialx=myProblem->getRandomPoint();
+        double y=tolmin(trialx,myProblem,2001);
+    }
     printf("Multistart. Iteration:%5d Global minimum: %20.10lg\n",iteration,myProblem->getBesty());
 }
 
