@@ -1,0 +1,2 @@
+TEMPLATE=lib
+SOURCES+=gkls350.cc
