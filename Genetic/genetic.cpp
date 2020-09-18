@@ -55,12 +55,10 @@ bool       Genetic::terminated()
 {
     int max_generations=params["max_generations"].toString().toInt();
     double fmin=fabs(1.0+fabs(fitness_array[0]));
-    if(generation<=1) {x1=0.0;x2=0.0;}
+
     x1=x1+fmin;
     x2=x2+fmin * fmin;
 
-    if(isnan(fitness_array[0]) || isinf(fitness_array[0]) || fitness_array[0]>1e+10)
-        return false;
 
     variance = x2/(generation+1) -(x1/(generation+1))*(x1/(generation+1));
     variance=fabs(variance);
@@ -68,15 +66,15 @@ bool       Genetic::terminated()
     if(fitness_array[0]<oldBesty)
     {
         oldBesty=fitness_array[0];
+
         stopat=variance/2.0;
+        printf("Changing values %lf -> %lf \n",variance,stopat);
     }
-    if(stopat<1e-8) stopat=variance/2.0;
-    if(isnan(variance)) stopat=0.0;
 
     if(stopat<1e-8 && generation>=20) return true;
     printf("Generation fit: %d value: %lf variance: %lf stopat: %lf\n",
            generation,
-            fitness_array[0],stopat);
+            fitness_array[0],variance,stopat);
     return generation>=max_generations || (variance<=stopat && generation>=20);
 }
 
@@ -133,6 +131,8 @@ void    Genetic::calcFitnessArray()
 
             RC+=getDistance(chromosome[i],dg);
             localSearchCount++;
+#pragma omp critical
+{
             bool found=false;
             for(int j=0;j<minimax.size();j++)
             {
@@ -141,11 +141,11 @@ void    Genetic::calcFitnessArray()
             if(!found)
 
             {
-#pragma omp critical
-{
+
             minimax.push_back(chromosome[i]);
-            minimax.push_back(dg);
             }
+            minimax.push_back(dg);
+
             }
         }
         else
@@ -345,6 +345,7 @@ void       Genetic::init()
     variance=0.0;
     stopat=0.0;
     RC=0.0;
+    oldBesty=1e+100;
     localSearchCount=0;
     minimax.resize(0);
     int gsize=myProblem->getDimension();

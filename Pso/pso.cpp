@@ -9,7 +9,7 @@ Pso::Pso(Problem *p)
     addParameter("pso_c2","1.0","Pso c2 parameter");
     addParameter("pso_inertia_start","0.4","Start value for inertia");
     addParameter("pso_inertia_end","0.9","End value for inertia");
-    addParameter("pso_localsearch_rate","0.0","Local search rate for pso");
+    addParameter("localsearch_rate","0.0","Local search rate for pso");
 }
 
 bool Pso::checkGradientCriterion(Data &x)
@@ -40,7 +40,7 @@ bool Pso::terminated()
 {
     int max_generations=params["pso_generations"].toString().toInt();
     double fmin=fabs(1.0+fabs(besty));
-      if(generation<=1) {x1=0.0;x2=0.0;}
+    if(generation<=1) {x1=0.0;x2=0.0;}
     x1+=fmin;
     x2+=fmin * fmin;
     variance = x2/(generation+1) -(x1/(generation+1))*(x1/(generation+1));
@@ -111,9 +111,11 @@ void Pso::calcFitnessArray()
     int maxGenerations=params["pso_generations"].toString().toInt();
     Data distances;
     int genome_size=myProblem->getDimension();
-    double inertia=sqrt(2.0)/2;//wmax-generation*1.0/maxGenerations*(wmax-wmin);
+    double inertia= wmax-generation*1.0/maxGenerations*(wmax-wmin);
     double c1=params["pso_c1"].toString().toDouble();
     double c2=params["pso_c2"].toString().toDouble();
+
+    double localsearch_rate=params["localsearch_rate"].toString().toDouble();
     for(int i=0;i<genome_count;i++)
     {
         Data oldg=particle[i];
@@ -127,7 +129,6 @@ void Pso::calcFitnessArray()
             double part2=c1 * r1 * (bestParticle[i][j]-particle[i][j]);
             double part3=c2 * r2 * (bestx[j]-particle[i][j]);
             velocity[i][j]=part1+part2+part3;
-
             double trialf=particle[i][j]+velocity[i][j];
             if(trialf<lmargin[j] || trialf>rmargin[j])
             {
@@ -142,10 +143,36 @@ void Pso::calcFitnessArray()
         }
     distances.push_back(getDistance(particle[i],oldg));
     }
+#pragma omp parallel for num_threads(threads)
     for(int i=0;i<genome_count;i++)
     {
-    if(distances[i]>1e-6  )
-        fitness_array[i]=fitness(particle[i]);
+        if(distances[i]>1e-6  )
+        {
+            if(localsearch_rate>0.0 && myProblem->randomDouble()<=localsearch_rate
+                    && !checkGradientCriterion(particle[i]))
+            {
+                Data dg=particle[i];
+                Tolmin mTolmin(myProblem);
+                fitness_array[i]=mTolmin.Solve(particle[i]);
+                RC+=getDistance(dg,particle[i]);
+                localSearchCount++;
+                #pragma omp critical
+                {
+                    bool found=false;
+                    for(int j=0;j<minimax.size();j++)
+                    {
+                        if(getDistance(minimax[j],particle[i])<1e-5) {found=true;break;}
+                    }
+                    if(!found)
+                    {
+                        minimax.push_back(particle[i]);
+                    }
+                    minimax.push_back(dg);
+                }
+            }
+            else
+            fitness_array[i]=fitness(particle[i]);
+        }
     }
 }
 
@@ -219,9 +246,9 @@ void Pso::setSettings(QJsonObject settings)
     addParameter("pso_generations",settings["pso_generations"].toString(),"Maximum number of pso generations");
     addParameter("pso_c1",settings["pso_c1"].toString(),"Pso c1 parameter");
     addParameter("pso_c2",settings["pso_c2"].toString(),"Pso c2 parameter");
-    addParameter("pso_inertia_start",settings["inertia_start"].toString(),"Start value for inertia");
-    addParameter("pso_inertia_end",settings["inertia_end"].toString(),"End value for inertia");
-    addParameter("pso_localsearch_rate",settings["pso_localsearch_rate"].toString(),"Local search rate for pso");
+    addParameter("pso_inertia_start",settings["pso_inertia_start"].toString(),"Start value for inertia");
+    addParameter("pso_inertia_end",settings["pso_inertia_end"].toString(),"End value for inertia");
+    addParameter("localsearch_rate",settings["localsearch_rate"].toString(),"Local search rate for pso");
 
     int pso_particles=params["pso_particles"].toString().toInt();
     particle.resize(pso_particles);
