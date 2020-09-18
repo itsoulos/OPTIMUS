@@ -54,19 +54,29 @@ double     Genetic::fitness(Data &x)
 bool       Genetic::terminated()
 {
     int max_generations=params["max_generations"].toString().toInt();
-    double fmin=fabs((fitness_array[0]));
-    x1+=fmin;
-    x2+=fmin * fmin;
-    variance = x2/generation -(x1/generation)*(x1/generation);
+    double fmin=fabs(1.0+fabs(fitness_array[0]));
+    if(generation<=1) {x1=0.0;x2=0.0;}
+    x1=x1+fmin;
+    x2=x2+fmin * fmin;
+
+    if(isnan(fitness_array[0]) || isinf(fitness_array[0]) || fitness_array[0]>1e+10)
+        return false;
+
+    variance = x2/(generation+1) -(x1/(generation+1))*(x1/(generation+1));
     variance=fabs(variance);
+
     if(fitness_array[0]<oldBesty)
     {
         oldBesty=fitness_array[0];
         stopat=variance/2.0;
     }
-    if(stopat<1e-8 && !isnan(variance)) stopat=variance/2.0;
-    //printf("Generation %d value: %lf variance: %lf stopat: %lf\n",generation,fitness_array[0],
-    //        variance,stopat);
+    if(stopat<1e-8) stopat=variance/2.0;
+    if(isnan(variance)) stopat=0.0;
+
+    if(stopat<1e-8 && generation>=20) return true;
+    printf("Generation fit: %d value: %lf variance: %lf stopat: %lf\n",
+           generation,
+            fitness_array[0],stopat);
     return generation>=max_generations || (variance<=stopat && generation>=20);
 }
 
@@ -337,6 +347,13 @@ void       Genetic::init()
     RC=0.0;
     localSearchCount=0;
     minimax.resize(0);
+    int gsize=myProblem->getDimension();
+    int gcount=chromosome.size();
+    for(int i=0;i<gcount;i++)
+    {
+        chromosome[i]=myProblem->getRandomPoint();
+        fitness_array[i]=fitness(chromosome[i]);
+    }
 }
 
 void       Genetic::done()

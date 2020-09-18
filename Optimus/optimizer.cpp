@@ -28,10 +28,10 @@ Problem         *Optimizer::getProblem()
 void Optimizer::Solve()
 {
     init();
-    while(!terminated())
+    do
     {
         step();
-    }
+    }while(!terminated());
     done();
 }
 

@@ -11,6 +11,7 @@ bool Multistart::terminated()
 {
     int multistart_maxiterations=params["multistart_maxiterations"].toString().toInt();
     double fmin=fabs(1.0+mbesty);
+    if(iteration<=1) {x1=0;x2=0.0;}
     x1+=fmin;
     x2+=fmin * fmin;
     variance=x2/(iteration+1)-(x1/(iteration+1))*(x1/(iteration+1));
