@@ -27,7 +27,6 @@ private:
     double x1,x2,stopat,variance,oldBesty;
 public:
     Multistart(Problem *p);
-    virtual void setSettings(QJsonObject settings);
     virtual void Solve();
     virtual ~Multistart();
 };

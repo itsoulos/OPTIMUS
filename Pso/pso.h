@@ -39,7 +39,6 @@ private:
     void updateBest();
 public:
     Pso(Problem *p);
-    virtual void setSettings(QJsonObject settings);
     virtual         void Solve();
     virtual ~Pso();
 };

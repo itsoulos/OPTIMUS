@@ -9,7 +9,7 @@ Pso::Pso(Problem *p)
     addParameter("pso_c2","1.0","Pso c2 parameter");
     addParameter("pso_inertia_start","0.4","Start value for inertia");
     addParameter("pso_inertia_end","0.9","End value for inertia");
-    addParameter("localsearch_rate","0.0","Local search rate for pso");
+    addParameter("pso_localsearch_rate","0.0","Local search rate for pso");
 }
 
 bool Pso::checkGradientCriterion(Data &x)
@@ -65,7 +65,18 @@ void Pso::step()
 
 void Pso::init()
 {
+
     int pso_particles=params["pso_particles"].toString().toInt();
+    particle.resize(pso_particles);
+    bestParticle.resize(pso_particles);
+    velocity.resize(pso_particles);
+    fitness_array.resize(pso_particles);
+    bestFitness_array.resize(pso_particles);
+    bestx.resize(myProblem->getDimension());
+    lmargin=myProblem->getLeftMargin();
+    rmargin=myProblem->getRightMargin();
+
+
     generation=0;
     besty=1e+100;
     oldbesty=1e+100;
@@ -115,7 +126,7 @@ void Pso::calcFitnessArray()
     double c1=params["pso_c1"].toString().toDouble();
     double c2=params["pso_c2"].toString().toDouble();
 
-    double localsearch_rate=params["localsearch_rate"].toString().toDouble();
+    double localsearch_rate=params["pso_localsearch_rate"].toString().toDouble();
     for(int i=0;i<genome_count;i++)
     {
         Data oldg=particle[i];
@@ -237,29 +248,6 @@ void Pso::updateBest()
             besty=bestFitness_array[i];
         }
     }
-
-}
-
-void Pso::setSettings(QJsonObject settings)
-{
-    addParameter("pso_particles",settings["pso_particles"].toString(),"Number of pso particles");
-    addParameter("pso_generations",settings["pso_generations"].toString(),"Maximum number of pso generations");
-    addParameter("pso_c1",settings["pso_c1"].toString(),"Pso c1 parameter");
-    addParameter("pso_c2",settings["pso_c2"].toString(),"Pso c2 parameter");
-    addParameter("pso_inertia_start",settings["pso_inertia_start"].toString(),"Start value for inertia");
-    addParameter("pso_inertia_end",settings["pso_inertia_end"].toString(),"End value for inertia");
-    addParameter("localsearch_rate",settings["localsearch_rate"].toString(),"Local search rate for pso");
-
-    int pso_particles=params["pso_particles"].toString().toInt();
-    particle.resize(pso_particles);
-    bestParticle.resize(pso_particles);
-    velocity.resize(pso_particles);
-    fitness_array.resize(pso_particles);
-    bestFitness_array.resize(pso_particles);
-    bestx.resize(myProblem->getDimension());
-    lmargin=myProblem->getLeftMargin();
-    rmargin=myProblem->getRightMargin();
-
 
 }
 

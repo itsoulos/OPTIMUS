@@ -9,36 +9,8 @@ Genetic::Genetic(Problem *p)
     addParameter("selection_rate","0.1","Selection rate");
     addParameter("mutation_rate","0.05","Mutation rate");
     addParameter("localsearch_rate","0.0","Local search rate");
+    addParameter("maxiters","1","Number of iterations of the algorithm");
 }
-
-void Genetic::setSettings(QJsonObject settings)
-{
-    int gcount=settings["chromosome_count"].toString().toInt(),
-            maxg=settings["max_generations"].toString().toInt();
-
-
-    addParameter("chromosome_count",QString::number(gcount),"Number of chromosomes");
-    addParameter("max_generations",QString::number(maxg),"Maximum number of generations");
-    addParameter("selection_rate",settings["selection_rate"].toString(),"Selection rate");
-    addParameter("mutation_rate",settings["mutation_rate"].toString(),"Mutation rate");
-    addParameter("localsearch_rate",settings["localsearch_rate"].toString(),"Local search rate");
-    chromosome.resize(gcount);
-    fitness_array.resize(gcount);
-    children.resize(gcount);
-    int gsize=myProblem->getDimension();
-    for(int i=0;i<gcount;i++)
-    {
-        chromosome[i].resize(gsize);
-        children[i].resize(gsize);
-        chromosome[i]=myProblem->getRandomPoint();
-        fitness_array[i]=fitness(chromosome[i]);
-    }
-    lmargin=myProblem->getLeftMargin();
-    rmargin=myProblem->getRightMargin();
-    parent0.resize(gsize);
-    parent1.resize(gsize);
-}
-
 
 Genetic::~Genetic()
 {
@@ -68,14 +40,16 @@ bool       Genetic::terminated()
         oldBesty=fitness_array[0];
 
         stopat=variance/2.0;
-        printf("Changing values %lf -> %lf \n",variance,stopat);
     }
 
-    if(stopat<1e-8 && generation>=20) return true;
+    if(stopat<1e-8 && generation>=10) return true;
     printf("Generation fit: %d value: %lf variance: %lf stopat: %lf\n",
            generation,
             fitness_array[0],variance,stopat);
-    return generation>=max_generations || (variance<=stopat && generation>=20);
+
+
+
+    return generation>=max_generations || (variance<=stopat && generation>=10);
 }
 
 
@@ -83,12 +57,15 @@ bool  Genetic::checkForGradientCriterion(Data &x)
 {
     double dmin=1e+100;
     int imin=0;
-    if(minimax.size()>0)
+    vector<Data> localCopy;
+#pragma omp critical
+    localCopy=minimax;
+    if(localCopy.size()>0)
     {
-    dmin=getDistance(minimax[0],x);
-    for(int j=0;j<minimax.size();j++)
+    dmin=getDistance(localCopy[0],x);
+    for(int j=0;j<localCopy.size();j++)
     {
-        double d=getDistance(minimax[j],x);
+        double d=getDistance(localCopy[j],x);
         if(d<dmin)
         {
             imin=j;
@@ -97,7 +74,7 @@ bool  Genetic::checkForGradientCriterion(Data &x)
     }
     }
     else return false;
-    if(dmin<1e-6 || (dmin<RC/localSearchCount && myProblem->getGradientCriterion(x,minimax[imin])))
+    if(dmin<1e-6 || (dmin<RC/localSearchCount && myProblem->getGradientCriterion(x,localCopy[imin])))
         return true;
     return false;
 }
@@ -344,16 +321,41 @@ void       Genetic::init()
     x2=0.0;
     variance=0.0;
     stopat=0.0;
-    RC=0.0;
     oldBesty=1e+100;
-    localSearchCount=0;
-    minimax.resize(0);
+
+    int gcount=params["chromosome_count"].toString().toInt();
     int gsize=myProblem->getDimension();
-    int gcount=chromosome.size();
-    for(int i=0;i<gcount;i++)
+
+    if(chromosome.size()==0)
     {
-        chromosome[i]=myProblem->getRandomPoint();
-        fitness_array[i]=fitness(chromosome[i]);
+        chromosome.resize(gcount);
+        fitness_array.resize(gcount);
+        children.resize(gcount);
+        int gsize=myProblem->getDimension();
+        for(int i=0;i<gcount;i++)
+        {
+            chromosome[i].resize(gsize);
+            children[i].resize(gsize);
+        }
+        lmargin=myProblem->getLeftMargin();
+        rmargin=myProblem->getRightMargin();
+        parent0.resize(gsize);
+        parent1.resize(gsize);
+        iterNumber=1;
+    }
+
+
+    if(iterNumber==1)
+    {
+        localSearchCount=0;
+        minimax.resize(0);
+        RC=0.0;
+
+        for(int i=0;i<gcount;i++)
+        {
+            chromosome[i]=myProblem->getRandomPoint();
+            fitness_array[i]=fitness(chromosome[i]);
+        }
     }
 }
 
@@ -365,7 +367,18 @@ void       Genetic::done()
 
 void	Genetic::Solve()
 {
-	Optimizer::Solve();
+    int maxIters=params["maxiters"].toString().toInt();
+    if(maxIters==0)
+    {
+        iterNumber=1;
+        Optimizer::Solve();
+        return;
+    }
+    for(iterNumber=1;iterNumber<=maxIters;iterNumber++)
+    {
+        Optimizer::Solve();
+
+    }
 }
 
 extern "C"  GENETIC_EXPORT Optimizer *createOptimizer(Problem *p)

@@ -12,7 +12,12 @@ void Optimizer::setProblem(Problem *p)
 
 void Optimizer::setSettings(QJsonObject settings)
 {
-
+    QStringList keys=settings.keys();
+    for(int i=0;i<keys.size();i++)
+    {
+        if(params.contains(keys[i]))
+            params[keys[i]]=settings[keys[i]].toString();
+    }
 }
 
 void Optimizer::setThreads(int t)

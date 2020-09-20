@@ -62,15 +62,6 @@ void Multistart::done()
 
 }
 
-void Multistart::setSettings(QJsonObject settings)
-{
-    if(settings.contains("multistart_samples"))
-    addParameter("multistart_samples",settings["multistart_samples"].toString() ,"Number of multistart samples");
-    if(settings.contains("multistart_maxiterations"))
-    addParameter("multistart_maxiterations",settings["multistart_maxiterations"].toString(),
-            "Number of maximum iterations");
-}
-
 void Multistart::Solve()
 {
     Optimizer::Solve();

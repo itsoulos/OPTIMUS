@@ -38,6 +38,7 @@ private:
     vector<Data> chromosome,children,minimax;
     Data         fitness_array,lmargin,rmargin,parent0,parent1;
     double     fitness(Data &x);
+    int iterNumber;
     //for termination rule
     double x1,x2,stopat,variance,oldBesty;
     double RC;
@@ -57,7 +58,6 @@ private:
     bool  checkForGradientCriterion(Data &x);
 public:
     Genetic(Problem *p);
-    virtual void setSettings(QJsonObject settings);
     virtual         void Solve();
     virtual ~Genetic();
 };
