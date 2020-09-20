@@ -6,6 +6,7 @@
 # include <QJsonObject>
 # include <QFile>
 # include <QTextStream>
+# include <QDebug>
 # include <omp.h>
 # include <adept.h>
 # include <adept_arrays.h>
@@ -106,11 +107,12 @@ void    init(QJsonObject data)
     if(data.contains("testName"))
         testName=data["testName"].toString();
     if(data.contains("nodes"))
-        nodes=data["nodes"].toInt();
+        nodes=data["nodes"].toString().toInt();
     if(data.contains("initialLeft"))
-        initialLeft=data["initialLeft"].toDouble();
+        initialLeft=data["initialLeft"].toString().toDouble();
     if(data.contains("initialRight"))
-        initialRight=data["initialRight"].toDouble();
+        initialRight=data["initialRight"].toString().toDouble();
+    qDebug()<<"Data is "<<data;
     loadTrain();
     if(testName!="xy.data") loadTest();
 }

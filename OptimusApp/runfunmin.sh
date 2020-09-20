@@ -2,7 +2,7 @@ METHOD=Minfinder
 METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then
-	METHODPARAMS="--minfinder_samples=25 --minfinder_sampling=awayminima"
+	METHODPARAMS="--minfinder_samples=25 --minfinder_sampling=repulsion"
 elif [ $METHOD = "Genetic" ]
 then
 	METHODPARAMS="--localsearch_rate=0.1"
