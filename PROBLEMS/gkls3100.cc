@@ -1296,10 +1296,6 @@ return error_code;
 # define MY_GKLS_DIMENSION		3
 # define MY_GKLS_MINIMA			100
 
-void    init(QJsonObject data)
-{
-}
-
 int	getdimension()
 {
 	return		MY_GKLS_DIMENSION;
@@ -1312,46 +1308,42 @@ void 	getmargins(vector<Interval> &x)
     x[i]=Interval(-1.0,1.0);
     }
 }
-double	funmin(double *x)
-{
-	static int itric=1;
-	if(itric==1)
-	{
-		itric = 0;
-		GKLS_dim = MY_GKLS_DIMENSION;
-		GKLS_num_minima = MY_GKLS_MINIMA;
-		GKLS_domain_alloc();
-		GKLS_global_dist=2.0/3.0;
-		GKLS_global_radius=0.5*GKLS_global_dist;
-		GKLS_global_value=GKLS_GLOBAL_MIN_VALUE;
-	        GKLS_parameters_check();
-		int func_num=2;
-	        GKLS_arg_generate(func_num);
-	}
-	return GKLS_D_func(x);
-}
-
-void    granal(double *x,double *g)
-{
-	static int itric=1;
-	if(itric==1)
-	{
-		itric = 0;
-		GKLS_dim = MY_GKLS_DIMENSION;
-		GKLS_num_minima = MY_GKLS_MINIMA;
-		GKLS_domain_alloc();
-		GKLS_global_dist=2.0/3.0;
-		GKLS_global_radius=0.5*GKLS_global_dist;
-		GKLS_global_value=GKLS_GLOBAL_MIN_VALUE;
-	        GKLS_parameters_check();
-		int func_num=2;
-	        GKLS_arg_generate(func_num);
-	}
-	GKLS_D_gradient(x,g);
-}
-
 QJsonObject    done(vector<double> &x)
 {
     return QJsonObject();
+}
+void    init(QJsonObject data)
+{
+
+		GKLS_dim = MY_GKLS_DIMENSION;
+		GKLS_num_minima = MY_GKLS_MINIMA;
+		GKLS_domain_alloc();
+		GKLS_global_dist=2.0/3.0;
+		GKLS_global_radius=0.5*GKLS_global_dist;
+		GKLS_global_value=GKLS_GLOBAL_MIN_VALUE;
+	        GKLS_parameters_check();
+		int func_num=2;
+	        GKLS_arg_generate(func_num);
+}
+double	funmin(vector<double> &x)
+{
+	double *tempx=new double[x.size()];
+	for(int i=0;i<x.size();i++) tempx[i]=x[i];
+	double f=GKLS_D_func(tempx);
+	for(int i=0;i<x.size();i++) x[i]=tempx[i];
+	delete[] tempx;
+	return f;
+}
+
+void    granal(vector<double> &x,vector<double> &g)
+{
+	double *tempx=new double[x.size()];
+	double *tempg=new double[x.size()];
+	for(int i=0;i<x.size();i++) tempx[i]=x[i];
+	GKLS_D_gradient(tempx,tempg);
+	for(int i=0;i<x.size();i++) x[i]=tempx[i];
+	for(int i=0;i<x.size();i++) g[i]=tempg[i];
+	delete[] tempx;
+	delete[] tempg;
 }
 }

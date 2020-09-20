@@ -1,3 +1,7 @@
+# include <interval.h>
+# include <vector>
+# include <QJsonObject>
+using namespace std;
 extern "C"
 {
 #define KK 100                     /* the long lag */
@@ -1291,6 +1295,11 @@ int	getdimension()
 	return		MY_GKLS_DIMENSION;
 }
 
+void 	getmargins(vector<Interval> &x)
+{
+	for(int i=0;i<MY_GKLS_DIMENSION;i++) x[i]=Interval(-1.0,1.0);
+}
+
 void	getleftmargin(double *x)
 {
 	for(int i=0;i<MY_GKLS_DIMENSION;i++) x[i]=-1.0;
@@ -1301,12 +1310,9 @@ void	getrightmargin(double *x)
 	for(int i=0;i<MY_GKLS_DIMENSION;i++) x[i]= 1.0;
 }
 
-double	funmin(double *x)
+void    init(QJsonObject data)
 {
-	static int itric=1;
-	if(itric==1)
-	{
-		itric = 0;
+
 		GKLS_dim = MY_GKLS_DIMENSION;
 		GKLS_num_minima = MY_GKLS_MINIMA;
 		GKLS_domain_alloc();
@@ -1316,27 +1322,27 @@ double	funmin(double *x)
 	        GKLS_parameters_check();
 		int func_num=2;
 	        GKLS_arg_generate(func_num);
-	}
-	return GKLS_D_func(x);
+}
+double	funmin(vector<double> &x)
+{
+	double *tempx=new double[x.size()];
+	for(int i=0;i<x.size();i++) tempx[i]=x[i];
+	double f=GKLS_D_func(tempx);
+	for(int i=0;i<x.size();i++) x[i]=tempx[i];
+	delete[] tempx;
+	return f;
 }
 
-void    granal(double *x,double *g)
+void    granal(vector<double> &x,vector<double> &g)
 {
-	static int itric=1;
-	if(itric==1)
-	{
-		itric = 0;
-		GKLS_dim = MY_GKLS_DIMENSION;
-		GKLS_num_minima = MY_GKLS_MINIMA;
-		GKLS_domain_alloc();
-		GKLS_global_dist=2.0/3.0;
-		GKLS_global_radius=0.5*GKLS_global_dist;
-		GKLS_global_value=GKLS_GLOBAL_MIN_VALUE;
-	        GKLS_parameters_check();
-		int func_num=2;
-	        GKLS_arg_generate(func_num);
-	}
-	GKLS_D_gradient(x,g);
+	double *tempx=new double[x.size()];
+	double *tempg=new double[x.size()];
+	for(int i=0;i<x.size();i++) tempx[i]=x[i];
+	GKLS_D_gradient(tempx,tempg);
+	for(int i=0;i<x.size();i++) x[i]=tempx[i];
+	for(int i=0;i<x.size();i++) g[i]=tempg[i];
+	delete[] tempx;
+	delete[] tempg;
 }
 
 }

@@ -16,8 +16,8 @@ int  DIMENSION=8;
 
 void    init(QJsonObject data)
 {
-    if(data.contains("dimension"))
-        DIMENSION=data["dimension"].toInt();
+    if(data.contains("natoms"))
+        DIMENSION=data["natoms"].toString().toInt();
 }
 
 int	getdimension()
