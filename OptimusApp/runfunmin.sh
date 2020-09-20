@@ -1,4 +1,4 @@
-METHOD=Minfinder
+METHOD=Multistart
 METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then
