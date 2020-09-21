@@ -1,4 +1,4 @@
-METHOD=Genetic
+METHOD=Minfinder
 METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then

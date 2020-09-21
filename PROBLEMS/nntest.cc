@@ -32,7 +32,7 @@ double initialLeft=-100.0;
 double initialRight= 100.0;
 Interval maxWidth;
 int failCount=0;
-int normalTrain=0;
+int normalTrain=1;
 
 void loadTrain()
 {

@@ -2,7 +2,7 @@
 DATAPATH=/home/sheridan/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfolding/
 NODES=10
 
-METHOD=Minfinder
+METHOD=Multistart
 METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then
