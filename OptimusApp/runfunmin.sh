@@ -1,4 +1,4 @@
-METHOD=Multistart
+METHOD=Genetic
 METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then
@@ -11,7 +11,7 @@ then
 	METHODPARAMS="--pso_localsearch_rate=0.1"
 elif [ $METHOD = "Multistart" ]
 then
-	METHODPARAMS=="--multistart_samples=25"
+	METHODPARAMS="--multistart_samples=25"
 fi
 
 PROBLEM=$1

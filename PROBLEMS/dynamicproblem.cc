@@ -27,29 +27,27 @@ double rightmargin=  2.00;
 
 #define sigma 1.0
 #define STEPS 1000000
-vector<Data> reactions,velocities;
 
-
-void init_reactions();
-void init_velocities();
+void init_reactions(Data &reactions);
+void init_velocities(Data &velocities);
 
 double potential( Data &,Data &);
-double calculate_field(Data &);
-void update_velocities();
-void update_positions(Data &pos, double step=0.01);
+double calculate_field(Data &,Data &,Data &);
+void update_velocities(Data &velocities,Data &reactions);
+void update_positions(Data &pos, Data &,double step=0.01);
 
-void init_reactions(){
+void init_reactions(Data &reactions){
     for(unsigned i = 0; i < natoms; i++){
         for(unsigned j = 0; j < 3; j++){
-            reactions[i][j] = 0;
+            reactions[i*3+j] = 0;
         }
     }
 }
 
-void init_velocities(){
+void init_velocities(Data &velocities){
     for(unsigned i = 0; i < natoms; i++){
         for(unsigned j = 0; j < 3; j++){
-            velocities[i][j] = 0;
+            velocities[i*3+j] = 0;
         }
     }
 }
@@ -64,7 +62,7 @@ double potential(Data &posA,Data &posB){
     return 4 * eps * sbyr6*(sbyr6-1.0);
 }
 
-double calculate_field(Data &pos){
+double calculate_field(Data &pos,Data &reactions,Data &velocities){
     double minPot = 1e+6;
     double maxPot = -1e+6;
     double sumPot = 0;
@@ -88,8 +86,8 @@ double calculate_field(Data &pos){
             }
             d = sqrt(d);
             for(unsigned k = 0; k < 3; k++){
-                reactions[i][k] += sgn(d-1.1225) * (pot) * (pos[i*3+k]-pos[j*3+k]) / d;
-                reactions[j][k] -= sgn(d-1.1225) * (pot) * (pos[i*3+k]-pos[j*3+k]) / d;
+                reactions[i*3+k] += sgn(d-1.1225) * (pot) * (pos[i*3+k]-pos[j*3+k]) / d;
+                reactions[j*3+k] -= sgn(d-1.1225) * (pot) * (pos[i*3+k]-pos[j*3+k]) / d;
             }
         }
     }
@@ -102,26 +100,26 @@ double calculate_field(Data &pos){
             }
             d = sqrt(d);
             for(unsigned k = 0; k < 3; k++){
-                reactions[i][k] += sgn(d-1.1225) * minPot * (pos[i*3+k]-pos[j*3+k]) / d;
-                reactions[j][k] -= sgn(d-1.1225) * minPot * (pos[i*3+k]-pos[j*3+k]) / d;
+                reactions[i*3+k] += sgn(d-1.1225) * minPot * (pos[i*3+k]-pos[j*3+k]) / d;
+                reactions[j*3+k] -= sgn(d-1.1225) * minPot * (pos[i*3+k]-pos[j*3+k]) / d;
             }
         }
     }
     return sumPot;
 }
 
-void update_velocities(){
+void update_velocities(Data &velocities,Data &reactions){
     for(unsigned i = 0; i < natoms; i++){
         for(unsigned j = 0; j < 3; j++){
-            velocities[i][j] = (0.1*velocities[i][j] + 0.9*reactions[i][j]/natoms);
+            velocities[i*3+j] = (0.1*velocities[i*3+j] + 0.9*reactions[i*3+j]/natoms);
         }
     }
 }
 
-void update_positions(Data &pos,  double step){
+void update_positions(Data &pos, Data &velocities, double step){
     for(unsigned i = 0; i < natoms; i++){
         for(unsigned j = 0; j < 3; j++){
-            pos[i*3+j] += step*velocities[i][j];
+            pos[i*3+j] += step*velocities[i*3+j];
         }
     }
 }
@@ -130,7 +128,7 @@ void update_positions(Data &pos,  double step){
 
 int	getdimension()
 {
-    return	3 * natoms;
+    return	3*(3 * natoms);
 }
 void    init(QJsonObject data)
 {
@@ -140,15 +138,7 @@ void    init(QJsonObject data)
         leftmargin=data["leftmargin"].toString().toDouble();
     if(data.contains("rightmargin"))
         rightmargin=data["rightmargin"].toString().toDouble();
-    reactions.resize(natoms);
-    velocities.resize(natoms);
-    for(int i=0;i<natoms;i++)
-    {
-        reactions[i].resize(3);
-        velocities[i].resize(3);
-    }
-    init_reactions();
-    init_velocities();
+   
 }
 
 void 	getmargins(vector<Interval> &x)
@@ -164,14 +154,23 @@ void 	getmargins(vector<Interval> &x)
 double	funmin(Data &x)
 {
     double f;
-    init_reactions();
-    init_velocities();
-    for(int iters=1;iters<=1000;iters++)
+    Data pos,reactions,velocities;
+    pos.resize(3 * natoms);
+    reactions.resize(3 * natoms);
+    velocities.resize(3 * natoms);
+    for(int i=0;i<3 * natoms;i++)
     {
-        f=calculate_field(x);
-        update_velocities();
-        update_positions(x,0.001);
-        init_reactions();
+        pos[i]=x[i];
+        reactions[i]=x[3*natoms+i];
+        velocities[i]=x[3*natoms+3*natoms+i];
+    }
+    f=calculate_field(pos,reactions,velocities);
+    
+    for(int i=0;i<3 * natoms;i++)
+    {
+        x[i]=pos[i];
+        x[3*natoms+i]=reactions[i];
+        x[3*natoms+3*natoms+i]=velocities[i];
     }
     return f;
 }
