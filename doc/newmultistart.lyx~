@@ -176,8 +176,8 @@ literal "true"
 
  is divided iteratively in subregions and some subregions that not contain
  the global solution are discarded using some pre defined criteria.
- On the other hand, in the second category  there are Controlled Random
- Search methods 
+ On the other hand, in the second category there are Controlled Random Search
+ methods 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "crs1,crs2,crs3"
@@ -226,24 +226,22 @@ literal "true"
 \end_inset
 
  etc.
+ 
 \end_layout
 
 \begin_layout Standard
-This article proposes a new sampling technique for multistart based methods
- aimed to enhance the speed and the efficiency of the underlying method.
- The multistart method starts a local search optimizer such as BFGS 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "bfgs"
-literal "true"
-
-\end_inset
-
- from different points (samples) and after some iterations the lowest discovered
- minimum is the outcome of the algorithm.
- Although, the method is rather simple it is the base for many other more
- efficient methods and it has many applications such as the TSP problem
+This article introduces a novel method which is based on the multistart
+ method to discover the global minimum of continouous functions.
+ The method incorporates an efficient stopping rule as well as The multistart
+ method is one of the simplest global optimization technique which start
+ a local search optimizer such as BFGS from diffrent random points and yelds
+ the lowest discovered minimum as the global one.
+ Due to its simplicity the method has been used in many problems such as
+ the TSP problem
+\series bold
  
+\series default
+
 \begin_inset CommandInset citation
 LatexCommand cite
 key "multistart-tsp"
@@ -259,7 +257,25 @@ literal "true"
 
 \end_inset
 
+, the facility location problem 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "multistart_fac"
+literal "false"
+
+\end_inset
+
+, the maximum clique problem 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "multistart_clique"
+literal "false"
+
+\end_inset
+
  etc.
+
+\series bold
  During the past years many global optimization methods based on Multistart
  have been presented in the relevant literature such as methods aim to discover
  all the minima of a function 
@@ -324,6 +340,10 @@ literal "true"
 \end_inset
 
  etc.
+\end_layout
+
+\begin_layout Standard
+//na milisoume gia clustering methodous edo??
 \end_layout
 
 \begin_layout Section
@@ -2707,6 +2727,79 @@ S.A.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "multistart-tsp"
+literal "true"
+
+\end_inset
+
+Li W., A Parallel Multi-start Search Algorithm for Dynamic Traveling Salesman
+ Problem.
+ In: Pardalos P.M., Rebennack S.
+ (eds) Experimental Algorithms.
+ SEA 2011.
+ Lecture Notes in Computer Science, vol 6630.
+ Springer, Berlin, Heidelberg, 2011.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "multistart-vehicle"
+literal "true"
+
+\end_inset
+
+Olli Bräysy, Geir Hasle, Wout Dullaert, A multi-start local search algorithm
+ for the vehicle routing problem with time windows, European Journal of
+ Operational Research 
+\series bold
+159
+\series default
+, pp.
+ 586-605, 2004.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "multistart_fac"
+literal "false"
+
+\end_inset
+
+Mauricio G.C.
+ Resende, Renato F.
+ Werneck,A hybrid multistart heuristic for the uncapacitated facility location
+ problem, European Journal of Operational Research 
+\series bold
+174
+\series default
+, pp.
+ 54-68, 2006.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "multistart_clique"
+literal "false"
+
+\end_inset
+
+E.
+ Marchiori, Genetic, Iterated and Multistart Local Search for the Maximum
+ Clique Problem.
+ In: Cagnoni S., Gottlieb J., Hart E., Middendorf M., Raidl G.R.
+ (eds) Applications of Evolutionary Computing.
+ EvoWorkshops 2002.
+ Lecture Notes in Computer Science, vol 2279.
+ Springer, Berlin, Heidelberg.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "bfgs"
 literal "true"
 
@@ -2928,41 +3021,6 @@ H.P.J.
  EuroPVM/MPI 2000.
  Lecture Notes in Computer Science, vol 1908.
  Springer, Berlin, Heidelberg, 2000.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "multistart-tsp"
-literal "true"
-
-\end_inset
-
-Li W., A Parallel Multi-start Search Algorithm for Dynamic Traveling Salesman
- Problem.
- In: Pardalos P.M., Rebennack S.
- (eds) Experimental Algorithms.
- SEA 2011.
- Lecture Notes in Computer Science, vol 6630.
- Springer, Berlin, Heidelberg, 2011.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "multistart-vehicle"
-literal "true"
-
-\end_inset
-
-Olli Bräysy, Geir Hasle, Wout Dullaert, A multi-start local search algorithm
- for the vehicle routing problem with time windows, European Journal of
- Operational Research 
-\series bold
-159
-\series default
-, pp.
- 586-605, 2004.
 \end_layout
 
 \begin_layout Bibliography
