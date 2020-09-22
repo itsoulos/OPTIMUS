@@ -159,6 +159,171 @@ literal "false"
 \end_inset
 
  etc.
+ Global optimization methods usually are divided into two main categories:
+ deterministic and stochastic methods.
+ The most common methods of the first category are the so called Interval
+ methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "interval1,interval2"
+literal "true"
+
+\end_inset
+
+, where the set 
+\begin_inset Formula $S$
+\end_inset
+
+ is divided iteratively in subregions and some subregions that not contain
+ the global solution are discarded using some pre defined criteria.
+ On the other hand, in the second category  there are Controlled Random
+ Search methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "crs1,crs2,crs3"
+literal "true"
+
+\end_inset
+
+, Simulated Annealing methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "simann1,simann2"
+literal "true"
+
+\end_inset
+
+, Differential Evolution methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "diffe1,diffe2"
+literal "true"
+
+\end_inset
+
+, Particle Swarm Optimization methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pso1,pso2"
+literal "true"
+
+\end_inset
+
+, Ant Colony Optimization 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "aco1,aco2"
+literal "false"
+
+\end_inset
+
+, Genetic algorithms 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ga1,ga2,ga3"
+literal "true"
+
+\end_inset
+
+ etc.
+\end_layout
+
+\begin_layout Standard
+This article proposes a new sampling technique for multistart based methods
+ aimed to enhance the speed and the efficiency of the underlying method.
+ The multistart method starts a local search optimizer such as BFGS 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "bfgs"
+literal "true"
+
+\end_inset
+
+ from different points (samples) and after some iterations the lowest discovered
+ minimum is the outcome of the algorithm.
+ Although, the method is rather simple it is the base for many other more
+ efficient methods and it has many applications such as the TSP problem
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "multistart-tsp"
+literal "true"
+
+\end_inset
+
+, the vehicle routing problem 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "multistart-vehicle"
+literal "true"
+
+\end_inset
+
+ etc.
+ During the past years many global optimization methods based on Multistart
+ have been presented in the relevant literature such as methods aim to discover
+ all the minima of a function 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "tmlsl,Salhi,minfinder"
+literal "false"
+
+\end_inset
+
+, hybrid multistart techniques 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mshybrid1,mshybrid2"
+literal "false"
+
+\end_inset
+
+, GRASP methods
+\begin_inset CommandInset citation
+LatexCommand cite
+key "grasp"
+literal "false"
+
+\end_inset
+
+ etc.
+ Also, many methods have been proposed to enhance the Multistart method
+ such as new stopping rules 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "msstop1,msstop2,msstop3"
+literal "false"
+
+\end_inset
+
+, parallel techniques
+\begin_inset CommandInset citation
+LatexCommand cite
+key "parallel-multistart,parallel-multistart2"
+literal "true"
+
+\end_inset
+
+ etc.
+ Although, the method is rather simple it is the base for many other more
+ efficient methods and it has many applications such as the TSP problem
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "multistart-tsp"
+literal "true"
+
+\end_inset
+
+, the vehicle routing problem 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "multistart-vehicle"
+literal "true"
+
+\end_inset
+
+ etc.
 \end_layout
 
 \begin_layout Section
@@ -196,6 +361,7 @@ name "fig:Plot-of-variance"
 \end_layout
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename termination_check.eps
 	scale 70
@@ -2251,6 +2417,552 @@ Y.
 \series default
 , pp.
  119-132, 1994.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "interval1"
+literal "true"
+
+\end_inset
+
+M.A.
+ Wolfe, Interval methods for global optimization, Applied Mathematics and
+ Computation 
+\series bold
+75
+\series default
+, pp.
+ 179-206, 1996.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "interval2"
+literal "true"
+
+\end_inset
+
+T.
+ Csendes and D.
+ Ratz, Subdivision Direction Selection in Interval Methods for Global Optimizati
+on, SIAM J.
+ Numer.
+ Anal.
+ 
+\series bold
+34
+\series default
+, pp.
+ 922–938, 1997.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "crs1"
+literal "true"
+
+\end_inset
+
+W.
+ L.
+ Price, Global optimization by controlled random search, Journal of Optimization
+ Theory and Applications 
+\series bold
+40
+\series default
+, pp.
+ 333-348, 1983.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "crs2"
+literal "true"
+
+\end_inset
+
+Ivan Křivý, Josef Tvrdík, The controlled random search algorithm in optimizing
+ regression models, Computational Statistics & Data Analysis 
+\series bold
+20
+\series default
+, pp.
+ 229-234, 1995.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "crs3"
+literal "false"
+
+\end_inset
+
+M.M.
+ Ali, A.
+ Törn, and S.
+ Viitanen, A Numerical Comparison of Some Modified Controlled Random Search
+ Algorithms, Journal of Global Optimization 
+\series bold
+11
+\series default
+,pp.
+ 377–385,1997.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "simann1"
+literal "true"
+
+\end_inset
+
+L.
+ Ingber, Very fast simulated re-annealing, Mathematical and Computer Modelling
+ 
+\series bold
+12
+\series default
+, pp.
+ 967-973, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "simann2"
+literal "true"
+
+\end_inset
+
+R.W.
+ Eglese, Simulated annealing: A tool for operational research, Simulated
+ annealing: A tool for operational research 
+\series bold
+46
+\series default
+, pp.
+ 271-281, 1990.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "diffe1"
+literal "true"
+
+\end_inset
+
+R.
+ Storn, K.
+ Price, Differential Evolution - A Simple and Efficient Heuristic for Global
+ Optimization over Continuous Spaces, Journal of Global Optimization 
+\series bold
+11
+\series default
+, pp.
+ 341-359, 1997.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "diffe2"
+literal "false"
+
+\end_inset
+
+J.
+ Liu, J.
+ Lampinen, A Fuzzy Adaptive Differential Evolution Algorithm.
+ Soft Comput 
+\series bold
+9
+\series default
+, pp.448–462, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso1"
+literal "true"
+
+\end_inset
+
+Riccardo Poli, James Kennedy kennedy, Tim Blackwell, Particle swarm optimization
+ An Overview, Swarm Intelligence 
+\series bold
+1
+\series default
+, pp 33-57, 2007.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso2"
+literal "true"
+
+\end_inset
+
+Ioan Cristian Trelea, The particle swarm optimization algorithm: convergence
+ analysis and parameter selection, Information Processing Letters 
+\series bold
+85
+\series default
+, pp.
+ 317-325, 2003.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "aco1"
+literal "false"
+
+\end_inset
+
+M.
+ Dorigo, M.
+ Birattari and T.
+ Stutzle, Ant colony optimization, IEEE Computational Intelligence Magazine
+ 
+\series bold
+1
+\series default
+, pp.
+ 28-39, 2006.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "aco2"
+literal "false"
+
+\end_inset
+
+K.
+ Socha, M.
+ Dorigo, Ant colony optimization for continuous domains, European Journal
+ of Operational Research 185, pp.
+ 1155-1173, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ga1"
+literal "true"
+
+\end_inset
+
+D.
+ Goldberg, Genetic Algorithms in Search, Optimization and Machine Learning,
+ Addison-Wesley Publishing Company, Reading, Massachussets, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ga2"
+literal "true"
+
+\end_inset
+
+Z.
+ Michaelewicz, Genetic Algorithms + Data Structures = Evolution Programs.
+ Springer - Verlag, Berlin, 1996.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ga3"
+literal "true"
+
+\end_inset
+
+S.A.
+ Grady, M.Y.
+ Hussaini, M.M.
+ Abdullah, Placement of wind turbines using genetic algorithms, Renewable
+ Energy 
+\series bold
+30
+\series default
+, pp.
+ 259-270, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "bfgs"
+literal "true"
+
+\end_inset
+
+Ya-Xiang Yuan, A Modified BFGS Algorithm for Unconstrained Optimization,
+ IMA Journal of Numerical Analysis 
+\series bold
+11
+\series default
+, pp.
+ 325–332, 1991.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "tmlsl"
+literal "false"
+
+\end_inset
+
+M.M.
+ Ali, C.
+ Storey, Topographical multilevel single linkage, J.
+ Global Optimization 5 (1994) 349–358
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Salhi"
+literal "false"
+
+\end_inset
+
+S.
+ Salhi, N.M.
+ Queen, A hybrid algorithm for identifying global and local minima when
+ optimizing functions with many minima, European J.
+ Oper.
+ Res.
+ 155(2004) 51–67.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "minfinder"
+literal "false"
+
+\end_inset
+
+I.
+ G.
+ Tsoulos and I.
+ E.
+ Lagaris, MinFinder: Locating all the local minima of a function, Computer
+ Physics Communications 
+\series bold
+174
+\series default
+, pp.
+ 166-179, 2006.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "mshybrid1"
+literal "false"
+
+\end_inset
+
+M.
+ Perez, F.
+ Almeida and J.
+ M.
+ Moreno-Vega, "Genetic algorithm with multistart search for the p-Hub median
+ problem," Proceedings.
+ 24th EUROMICRO Conference (Cat.
+ No.98EX204), Vasteras, Sweden, 1998, pp.
+ 702-707 vol.2.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "mshybrid2"
+literal "false"
+
+\end_inset
+
+H.
+ C.
+ B.
+ d.
+ Oliveira, G.
+ C.
+ Vasconcelos and G.
+ B.
+ Alvarenga, "A Multi-Start Simulated Annealing Algorithm for the Vehicle
+ Routing Problem with Time Windows," 2006 Ninth Brazilian Symposium on Neural
+ Networks (SBRN'06), Ribeirao Preto, Brazil, 2006, pp.
+ 137-142.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "grasp"
+literal "false"
+
+\end_inset
+
+Festa P., Resende M.G.C.
+ (2009) Hybrid GRASP Heuristics.
+ In: Abraham A., Hassanien AE., Siarry P., Engelbrecht A.
+ (eds) Foundations of Computational Intelligence Volume 3.
+ Studies in Computational Intelligence, vol 203.
+ Springer, Berlin, Heidelberg.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "msstop1"
+literal "false"
+
+\end_inset
+
+B.
+ Betro`, F.
+ Schoen, Optimal and sub-optimal stopping rules for the multistart algorithm
+ in global optimization, Math.
+ Program.
+ 
+\series bold
+57
+\series default
+, pp.
+ 445–458, 1992.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "msstop2"
+literal "false"
+
+\end_inset
+
+W.E.
+ Hart, Sequential stopping rules for random optimization methods with applicatio
+ns to multistart local search, Siam J.
+ Optim.
+ 
+\series bold
+9
+\series default
+, pp.
+ 270–290, 1998.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "msstop3"
+literal "false"
+
+\end_inset
+
+I.E.
+ Lagaris and I.G.
+ Tsoulos, Stopping Rules for Box-Constrained Stochastic Global Optimization,
+ Applied Mathematics and Computation 
+\series bold
+197
+\series default
+, pp.
+ 622-632, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "parallel-multistart"
+literal "true"
+
+\end_inset
+
+J.
+ Larson and S.M.
+ Wild, Asynchronously parallel optimization solver for finding multiple
+ minima, Mathematical Programming Computation 
+\series bold
+10
+\series default
+, pp.
+ 303-332, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "parallel-multistart2"
+literal "true"
+
+\end_inset
+
+H.P.J.
+ Bolton, J.F.
+ Schutte, A.A.
+ Groenwold, Multiple Parallel Local Searches in Global Optimization.
+ In: Dongarra J., Kacsuk P., Podhorszki N.
+ (eds) Recent Advances in Parallel Virtual Machine and Message Passing Interface.
+ EuroPVM/MPI 2000.
+ Lecture Notes in Computer Science, vol 1908.
+ Springer, Berlin, Heidelberg, 2000.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "multistart-tsp"
+literal "true"
+
+\end_inset
+
+Li W., A Parallel Multi-start Search Algorithm for Dynamic Traveling Salesman
+ Problem.
+ In: Pardalos P.M., Rebennack S.
+ (eds) Experimental Algorithms.
+ SEA 2011.
+ Lecture Notes in Computer Science, vol 6630.
+ Springer, Berlin, Heidelberg, 2011.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "multistart-vehicle"
+literal "true"
+
+\end_inset
+
+Olli Bräysy, Geir Hasle, Wout Dullaert, A multi-start local search algorithm
+ for the vehicle routing problem with time windows, European Journal of
+ Operational Research 
+\series bold
+159
+\series default
+, pp.
+ 586-605, 2004.
 \end_layout
 
 \begin_layout Bibliography
