@@ -82,6 +82,17 @@ An impoved multi start method for global optimization problems
 \begin_layout Author
 Ioannis G.
  Tsoulos
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Corresponding author.
+ Email: itsoulos@uoi.gr
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Date
@@ -232,10 +243,11 @@ literal "true"
 \begin_layout Standard
 This article introduces a novel method which is based on the multistart
  method to discover the global minimum of continouous functions.
- The method incorporates an efficient stopping rule as well as The multistart
- method is one of the simplest global optimization technique which start
- a local search optimizer such as BFGS from diffrent random points and yelds
- the lowest discovered minimum as the global one.
+ The method incorporates an efficient stopping rule as well as an asymptotic
+ criterion to prevent the algorithm from unecessary local optimization calls.
+ The multistart method is one of the simplest global optimization technique
+ which start a local search optimizer such as BFGS from diffrent random
+ points and yelds the lowest discovered minimum as the global one.
  Due to its simplicity the method has been used in many problems such as
  the TSP problem
 \series bold
@@ -274,11 +286,8 @@ literal "false"
 \end_inset
 
  etc.
-
-\series bold
- During the past years many global optimization methods based on Multistart
- have been presented in the relevant literature such as methods aim to discover
- all the minima of a function 
+ The method multisttart has been exteended in the relevant literature with
+ methods aim to discover all the local minima of a function 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "tmlsl,Salhi,minfinder"
@@ -302,9 +311,7 @@ literal "false"
 
 \end_inset
 
- etc.
- Also, many methods have been proposed to enhance the Multistart method
- such as new stopping rules 
+, new stopping rules 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "msstop1,msstop2,msstop3"
@@ -321,33 +328,315 @@ literal "true"
 \end_inset
 
  etc.
- Although, the method is rather simple it is the base for many other more
- efficient methods and it has many applications such as the TSP problem
+
+\series bold
  
-\begin_inset CommandInset citation
-LatexCommand cite
-key "multistart-tsp"
-literal "true"
-
-\end_inset
-
-, the vehicle routing problem 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "multistart-vehicle"
-literal "true"
-
-\end_inset
-
- etc.
 \end_layout
 
 \begin_layout Standard
-//na milisoume gia clustering methodous edo??
+The rest of this article is organized as follows: in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Method-description"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ the proposed method is described in detail, in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Experiments"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ the experimental results are demonstrated and finally in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Conclusions"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ some conclusions and guidelines for future work are provided.
+ 
 \end_layout
 
 \begin_layout Section
 Method description 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Method-description"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The main steps of the proposed algorithm.
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:The-main-steps"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initialization Step
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Set 
+\begin_inset Formula $K$
+\end_inset
+
+, the maximum number of allowed iterations.
+\end_layout
+
+\begin_layout Enumerate
+Set 
+\begin_inset Formula $N$
+\end_inset
+
+, the number points that will be samples at each iteration.
+\end_layout
+
+\begin_layout Enumerate
+Set 
+\begin_inset Formula $r_{C}=0$
+\end_inset
+
+, the distance for the gradient check algorithm.
+\end_layout
+
+\begin_layout Enumerate
+Set 
+\begin_inset Formula $X^{*}=\emptyset$
+\end_inset
+
+, the set of local minima discovered by the local search procedure.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Main Step
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1..N$
+\end_inset
+
+ 
+\series bold
+do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Sample
+\series default
+ randomly a point 
+\begin_inset Formula $x\in$
+\end_inset
+
+S.
+\end_layout
+
+\begin_layout Enumerate
+Check if 
+\begin_inset Formula $x$
+\end_inset
+
+ is a valid starting point for the local search procedure using the method
+ gradientCheck(x) given in algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:The-procedure-gradientCheck(x)."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+If
+\series default
+ gradientCheck(x)=false 
+\series bold
+then
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Start
+\series default
+ a local search procedure 
+\begin_inset Formula $y=L(x)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Compute
+\series default
+ the distance 
+\begin_inset Formula $r_{C}$
+\end_inset
+
+ using the equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eq2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $x\notin X^{*}$
+\end_inset
+
+ then 
+\begin_inset Formula $X^{*}=X^{*}\cup x$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+End if
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+End For
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Termination Check Step
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float algorithm
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The procedure gradientCheck(x).
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:The-procedure-gradientCheck(x)."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The distance 
+\begin_inset Formula $r_{C}$
+\end_inset
+
+ is calculated using
+\begin_inset Formula 
+\begin{equation}
+r_{C}=\frac{1}{M}\sum_{i=1}^{M}\left\Vert x_{i}-L\left(x_{i}\right)\right\Vert \label{eq:eq2}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Gradient Criterion 
+\end_layout
+
+\begin_layout Subsection
+Stopping rule
 \end_layout
 
 \begin_layout Standard
@@ -398,6 +687,13 @@ name "fig:Plot-of-variance"
 
 \begin_layout Section
 Experiments
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Experiments"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2277,6 +2573,13 @@ name "fig:Average-number-of-1"
 
 \begin_layout Section
 Conclusions
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Conclusions"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Bibliography
