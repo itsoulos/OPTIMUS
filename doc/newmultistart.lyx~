@@ -5,6 +5,10 @@
 \save_transient_properties true
 \origin unavailable
 \textclass article
+\begin_preamble
+
+\newcommand{\argmin}{\mathop{\mathrm{arg\,min}}}
+\end_preamble
 \use_default_options true
 \maintain_unincluded_children false
 \language english
@@ -29,6 +33,7 @@
 \bibtex_command default
 \index_command default
 \paperfontsize default
+\spacing single
 \use_hyperref false
 \papersize default
 \use_geometry false
@@ -44,6 +49,7 @@
 \use_package undertilde 1
 \cite_engine basic
 \cite_engine_type default
+\biblio_style plain
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
@@ -76,7 +82,7 @@
 \begin_body
 
 \begin_layout Title
-An impoved multi start method for global optimization problems
+An improved multistart based method for global optimization problems
 \end_layout
 
 \begin_layout Author
@@ -101,7 +107,24 @@ Department of Informatics and Telecommunications, University of Ioannina,
 \end_layout
 
 \begin_layout Abstract
-Write some abstract here
+The problem of locating the global minimum of a function finds application
+ in many scientific and real world problems.
+ One of the most used and simplest method to tackle this problem is the
+ so called Multistart method.
+ This article proposes novel method based on the Multistart, that utilizes
+ a mechanism to prevent unnecessary local optimization calls as well as
+ an asymptotic stopping rule.
+ The proposed method is tested against Multistart on a wide set of well
+ - known benchmark optimization problems from the relevant literature and
+ the results are reported.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Keywords
+\series default
+: Global optimization, stochastic methods, termination rules.
 \end_layout
 
 \begin_layout Section
@@ -242,12 +265,13 @@ literal "true"
 
 \begin_layout Standard
 This article introduces a novel method which is based on the multistart
- method to discover the global minimum of continouous functions.
+ method to discover the global minimum of continuous functions.
  The method incorporates an efficient stopping rule as well as an asymptotic
- criterion to prevent the algorithm from unecessary local optimization calls.
+ criterion to prevent the algorithm from unnecessary local optimization
+ calls.
  The multistart method is one of the simplest global optimization technique
- which start a local search optimizer such as BFGS from diffrent random
- points and yelds the lowest discovered minimum as the global one.
+ which start a local search optimizer such as BFGS from different random
+ points and yields the lowest discovered minimum as the global one.
  Due to its simplicity the method has been used in many problems such as
  the TSP problem
 \series bold
@@ -286,7 +310,7 @@ literal "false"
 \end_inset
 
  etc.
- The method multisttart has been exteended in the relevant literature with
+ The method multistart has been extended in the relevant literature with
  methods aim to discover all the local minima of a function 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -380,6 +404,30 @@ name "sec:Method-description"
 \end_layout
 
 \begin_layout Standard
+The proposed method works for a predefined number of iterations.
+ At every iteration a number of samples is taken in the feasible region
+ of the objective problem.
+ Some of them are considered as starting points for a local search procedure
+ and the rest are discarded.
+ The method continues until the maximum number of iterations is reached
+ or an asymptotic termination rule is satisfied.
+ The main steps of the proposed algorithm are outlined in Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:The-main-steps"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ In the following subsection the main parts of the proposed algorithm which
+ are the discarding procedure and the proposed stopping rule are described
+ in detail.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float algorithm
 wide false
 sideways false
@@ -412,7 +460,11 @@ Initialization Step
 
 \begin_deeper
 \begin_layout Enumerate
-Set 
+
+\series bold
+Set
+\series default
+ 
 \begin_inset Formula $K$
 \end_inset
 
@@ -420,7 +472,11 @@ Set
 \end_layout
 
 \begin_layout Enumerate
-Set 
+
+\series bold
+Set
+\series default
+ 
 \begin_inset Formula $N$
 \end_inset
 
@@ -428,7 +484,11 @@ Set
 \end_layout
 
 \begin_layout Enumerate
-Set 
+
+\series bold
+Set
+\series default
+ 
 \begin_inset Formula $r_{C}=0$
 \end_inset
 
@@ -436,7 +496,11 @@ Set
 \end_layout
 
 \begin_layout Enumerate
-Set 
+
+\series bold
+Set
+\series default
+ 
 \begin_inset Formula $X^{*}=\emptyset$
 \end_inset
 
@@ -448,6 +512,13 @@ Set
 
 \series bold
 Main Step
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:Main-Step"
+
+\end_inset
+
+
 \end_layout
 
 \begin_deeper
@@ -479,7 +550,11 @@ S.
 \end_layout
 
 \begin_layout Enumerate
-Check if 
+
+\series bold
+Check
+\series default
+ if 
 \begin_inset Formula $x$
 \end_inset
 
@@ -523,7 +598,7 @@ Start
 \begin_layout Enumerate
 
 \series bold
-Compute
+Update
 \series default
  the distance 
 \begin_inset Formula $r_{C}$
@@ -572,20 +647,70 @@ End For
 \begin_layout Enumerate
 
 \series bold
-Termination Check Step
+Termination Check Step.
+ 
+\series default
+Check the termination rule as described in subsection 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Stopping-rule"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+If 
+\series default
+the termination rule holds 
+\series bold
+then
+\series default
+ terminate
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+else goto
+\series default
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:Main-Step"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+End if
+\end_layout
+
+\end_deeper
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float algorithm
 wide false
 sideways false
-status collapsed
-
-\begin_layout Plain Layout
-
-\end_layout
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -608,22 +733,127 @@ name "alg:The-procedure-gradientCheck(x)."
 
 \begin_layout Plain Layout
 
+\series bold
+boolean
+\series default
+ gradientCheck(x)
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $d=\min_{y\in X^{*}}\left\Vert y-x\right\Vert $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $z=\arg\min_{y\in X^{*}}\left\Vert y-x\right\Vert $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+If
+\series default
+ 
+\begin_inset Formula $d<r_{C}$
+\end_inset
+
+ AND 
+\begin_inset Formula $\left(x-z\right)^{T}\left(\nabla f(x)-\nabla f(z)\right)>0$
+\end_inset
+
+ 
+\series bold
+then return
+\series default
+ true
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+else return
+\series default
+ false
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+end
+\series default
+ gradientCheck
 \end_layout
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+Discarding procedure
 \end_layout
 
 \begin_layout Standard
-The distance 
-\begin_inset Formula $r_{C}$
-\end_inset
+The discarding procedure has two major elements:
+\end_layout
 
- is calculated using
+\begin_layout Itemize
+The first is the typical distance that is calculated after every local search
+ and it is given by 
 \begin_inset Formula 
 \begin{equation}
-r_{C}=\frac{1}{M}\sum_{i=1}^{M}\left\Vert x_{i}-L\left(x_{i}\right)\right\Vert \label{eq:eq2}
+r_{C}=\frac{1}{M}\sum_{i=1}^{M}\left\Vert x_{i}-x_{iL}\right\Vert \label{eq:eq2}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ are starting points for the local search procedure 
+\begin_inset Formula $L(x)$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{iL}$
+\end_inset
+
+ is the outcome of 
+\begin_inset Formula $L\left(x_{i}\right)$
+\end_inset
+
+.
+ If a point 
+\begin_inset Formula $x$
+\end_inset
+
+ is close enough to an already discovered local minima then it is highly
+ possible that the point belongs to the so called region of attraction of
+ the minima.
+ The region of attraction of a local minimum 
+\begin_inset Formula $z$
+\end_inset
+
+ is defined as:
+\begin_inset Formula 
+\begin{equation}
+A\left(z\right)=\left\{ x:x\in S,\ L(x)=z\right\} 
 \end{equation}
 
 \end_inset
@@ -631,23 +861,246 @@ r_{C}=\frac{1}{M}\sum_{i=1}^{M}\left\Vert x_{i}-L\left(x_{i}\right)\right\Vert \
 
 \end_layout
 
-\begin_layout Subsection
-Gradient Criterion 
+\begin_layout Itemize
+The second element is a gradient check performed between a candidate starting
+ point and an already discovered local minimum.
+ The value of the objective function 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ near to an already discovered local minimum can be calculated using:
+\begin_inset Formula 
+\begin{equation}
+f(x)\simeq f(z)+\frac{1}{2}\left(x-z\right)^{T}B\left(x-z\right)\label{eq:eq4}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $B$
+\end_inset
+
+ is the Hessian matrix at the minimum 
+\begin_inset Formula $z.$
+\end_inset
+
+ By taking gradients in both sides of Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eq4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ we obtain:
+\begin_inset Formula 
+\begin{equation}
+\nabla f(x)\simeq B\left(x-z\right)\label{eq:eq5}
+\end{equation}
+
+\end_inset
+
+Of course equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eq5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ holds for any other point 
+\begin_inset Formula $y$
+\end_inset
+
+ near to 
+\begin_inset Formula $z$
+\end_inset
+
+ 
+\begin_inset Formula 
+\begin{equation}
+\nabla f(y)\simeq B\left(y-z\right)\label{eq:eq6}
+\end{equation}
+
+\end_inset
+
+By subtracting the equation 
+\begin_inset Formula $\ref{eq:eq6}$
+\end_inset
+
+ from 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eq5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and by multiplying with 
+\begin_inset Formula $\left(x-y\right)^{T}$
+\end_inset
+
+ we have the following equation:
+\begin_inset Formula 
+\begin{equation}
+\left(x-y\right)^{T}\left(\nabla f(x)-\nabla f(y)\right)\simeq\left(x-y\right)^{T}B\left(x-y\right)^{T}>0\label{eq:eq7}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+From the above two points a criterion to reject a point 
+\begin_inset Formula $x$
+\end_inset
+
+ from beeing a starting point for the local search procedure could be the
+ equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eq7"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Although, the point 
+\begin_inset Formula $x$
+\end_inset
+
+ should be close enough to some local minimum and for this purpose the equation
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eq2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is used as a distance measure.
 \end_layout
 
 \begin_layout Subsection
 Stopping rule
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Stopping-rule"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A common way to terminate a global optimization procedure is to use the
+ maximum number of allowed iterations, i.e.
+ terminate when 
+\begin_inset Formula $\mbox{iter}\ge K$
+\end_inset
+
+.
+ Although, this may be a simple criterion but is not an efficent one since,
+ small values of the parameter 
+\begin_inset Formula $K$
+\end_inset
+
+ mean that the algorithm probably should terminate prematurely.
+ On the other hand higher values for this parameter require more function
+ calls function calls and higher computation times.
+ The termination rule used here is derived from 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "psotsoulos"
+literal "true"
+
+\end_inset
+
+: At every iteration 
+\begin_inset Formula $k$
+\end_inset
+
+ the variance of 
+\begin_inset Formula $f\left(x^{*}\right)$
+\end_inset
+
+ is measured, where 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+is the located global minimum so far.
+ Denote this variance with 
+\begin_inset Formula $\sigma^{(k)}$
+\end_inset
+
+.
+ If there is no any new minimum found for a number of generations, then
+ it is highly possible that the algorithm has found the global minimum and
+ hence it should terminate.
+ The algorithm terminates when 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+k\ge k_{\mbox{min}}\ \mbox{AND\ }\sigma^{(k)}\le\frac{\sigma^{\left(k_{\mbox{last}}\right)}}{2}\label{eq:termination_mine}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $k_{\mbox{last}}$
+\end_inset
+
+ is the last iteration where a new minimum was found and 
+\begin_inset Formula $k_{\mbox{min}}$
+\end_inset
+
+ is a predifined minimum number of iterations, in order to prevent the algorithm
+ from premature termination.
+ In figure the values 
+\begin_inset Formula $\sigma^{(k)}$
+\end_inset
+
+ denoted as VARIANCE and the value 
+\begin_inset Formula $\frac{\sigma^{\left(k_{\mbox{last}}\right)}}{2}$
+\end_inset
+
+ denoted as STOPAT are plotted.
+ The objective function used is the EXP8 function given by:
+\begin_inset Formula 
+\begin{equation}
+f(x)=-\exp\left(-0.5\sum_{i=1}^{8}x_{i}^{2}\right),\quad-1\le x_{i}\le1
+\end{equation}
+
+\end_inset
+
+ The value of 
+\begin_inset Formula $k_{\mbox{min}}$
+\end_inset
+
+ is set to 20 iterations and the maximum number of iterations is 200.
+ The algorithm terminates succesfully in 40 generation without spending
+ unecessary function calls for about 160 generations.
+ 
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
-status open
-
-\begin_layout Plain Layout
-
-\end_layout
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1467,6 +1920,99 @@ with
 
 \begin_layout Subsection
 Experimental results
+\end_layout
+
+\begin_layout Standard
+The proposed method is compared against the multistart method with the same
+ number of samples at every generation and the same stopping rule and the
+ results are reported in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Average-number-of"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The column PROBLEM denotes the objective function, the column MULTISTART
+ denotes the average function calls for the multistart method and the PROPOSED
+ column denotes the average function calls for the proposed method.
+ The number in the cells denotes average function calls for 30 independent
+ runs using different seed for the random generator each time.
+ The numbers in parentheses denote the fraction of runs where the global
+ minimum was located.
+ If this number is missing then the global minimum was discovered in every
+ independent run (100% success).
+ The last row in all tables (denoted by TOTAL) is the total number of function
+ calls for listed test problems.
+ The parameters used in the experiments are listed in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Parameter-values-for"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ As it is evident from the conducted experiments there is a significant
+ improvement in terms of function evaluations at about 80%.
+ 
+\end_layout
+
+\begin_layout Standard
+Also, in order to measure the efficiency of the proposed method for as the
+ dimension of the objective functions increases an additional experiments
+ was conducted: The function Exponential was used with different values
+ of the dimension 
+\begin_inset Formula $n$
+\end_inset
+
+ from 2 to 20.
+ The proposed method is tested against Multistart and the results are plotted
+ in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Average-number-of"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The average function calls required by the proposed method are in the range
+ [4000,6000] when the Multistart requires 5 or 6 times more function calls.
+ 
+\end_layout
+
+\begin_layout Standard
+Additionally another experiment was conducted using the Exponential function
+ with 
+\begin_inset Formula $n=10$
+\end_inset
+
+ with different values for the number of samples 
+\begin_inset Formula $N$
+\end_inset
+
+ and the results are plotted in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Average-number-of-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Again the Multistart requires much more function calls than the proposed
+ method and also the Multistart function calls tends to increase very rapidly
+ as compared to the calls of the proposed method.
 \end_layout
 
 \begin_layout Standard
@@ -2480,7 +3026,7 @@ TOTAL
 \end_inset
 
 
-\begin_inset Float figure
+\begin_inset Float table
 wide false
 sideways false
 status collapsed
@@ -2488,6 +3034,137 @@ status collapsed
 \begin_layout Plain Layout
 
 \end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Parameter values for the experiments.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Parameter-values-for"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PARAMETER
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+VALUE
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $K$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+200
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+25
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $k_{\mbox{min}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -2526,10 +3203,6 @@ name "fig:Average-number-of"
 wide false
 sideways false
 status open
-
-\begin_layout Plain Layout
-
-\end_layout
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -2580,6 +3253,18 @@ name "sec:Conclusions"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+A novell multistart based method is described and tested here for global
+ optimization problems.
+ The method utilizes an efficient discarding procedure to prevent the method
+ from unenecessary function calls and an asymptotic stopping rule to stop
+ the algorithm where there is a good probability that the global optimum
+ has been discovered.
+ The method was tested on a series of well known optimization problems from
+ the relevant literature and proved to be efficient and fast.
+ 
 \end_layout
 
 \begin_layout Bibliography
@@ -3324,6 +4009,24 @@ H.P.J.
  EuroPVM/MPI 2000.
  Lecture Notes in Computer Science, vol 1908.
  Springer, Berlin, Heidelberg, 2000.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psotsoulos"
+literal "true"
+
+\end_inset
+
+Ioannis G.
+ Tsoulos, Modifications of real code genetic algorithm for global optimization,
+ Applied Mathematics and Computation 
+\series bold
+203
+\series default
+, pp.
+ 598-607, 2008.
 \end_layout
 
 \begin_layout Bibliography
