@@ -37,6 +37,9 @@ DllProblem::DllProblem(QString filename,QJsonObject settings)
     Setp=(SETP)library->resolve("setParameter");
     if(Setp==NULL)
         Setp=(SETP)library->resolve("setParameter_");
+    Sampler=(SAMPLER)library->resolve("getSample");
+    if(Sampler==NULL)
+        Sampler=(SAMPLER)library->resolve("getSample_");
 }
 
 void    DllProblem::init(QJsonObject x)
@@ -71,6 +74,14 @@ QJsonObject DllProblem::done(Data &x)
 }
 
 
+void DllProblem::getSample(Data &x)
+{
+    if(Sampler!=NULL)
+        Sampler(x);
+    else
+        IntervalProblem::getSample(x);
+
+}
 DllProblem::~DllProblem()
 {
     library->unload();

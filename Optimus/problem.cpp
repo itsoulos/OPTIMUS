@@ -142,16 +142,19 @@ void Problem::granal(Data &x,Data &g)
 
 Data    Problem::getRandomPoint()
 {
+
     Data x;
     x.resize(dimension);
+    problem->getSample(x);
+    /*
     for(int i=0;i<dimension;i++)
     {
         double r=randomDouble();
-	double middle=lmargin[i]+(rmargin[i]-lmargin[i])/2.0;
-	double delta = (r-1.0);
-	x[i]=middle+delta*(0.1 * (rmargin[i]-lmargin[i]));
-        //x[i]=lmargin[i]+r*(rmargin[i]-lmargin[i]);
-    }
+        //double middle=lmargin[i]+(rmargin[i]-lmargin[i])/2.0;
+        //double delta = (r-1.0);
+        //x[i]=middle+delta*(0.1 * (rmargin[i]-lmargin[i]));
+        x[i]=lmargin[i]+r*(rmargin[i]-lmargin[i]);
+    }*/
     return x;
 }
 

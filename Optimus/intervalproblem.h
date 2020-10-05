@@ -40,6 +40,7 @@ public:
     double              getVolume(IntervalData &x) const;
     void                boundInterval(IntervalData &x);
     void                printData(IntervalData &x);
+    virtual void                getSample(Data &x);
     double              randomDouble();
     void                setRandomSeed(int k);
     void                setRandomSeedForThreads(int k,int t);

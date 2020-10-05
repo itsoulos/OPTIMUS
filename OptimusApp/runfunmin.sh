@@ -1,4 +1,4 @@
-METHOD=Multistart
+METHOD=Genetic
 METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then
@@ -16,4 +16,4 @@ fi
 
 PROBLEM=$1
 NATOMS=$2
-./OptimusApp --filename=../PROBLEMS/lib$PROBLEM.so  --opt_method=$METHOD  --natoms=$NATOMS  $METHODPARAMS --threads=1 --iterations=1
+./OptimusApp --filename=../PROBLEMS/lib$PROBLEM.so  --opt_method=$METHOD  --natoms=$NATOMS  $METHODPARAMS --threads=12 --iterations=30
