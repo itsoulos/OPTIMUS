@@ -3,7 +3,6 @@
 #include <math.h>
 #include <limits.h>
 # include "grand.h"
-
 /* ---------------------------------------------- */
 /* K-Means Clusteriing Algorithm                  */
 /* Reads data from data_vectors matrix,           */

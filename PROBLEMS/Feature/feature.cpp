@@ -145,22 +145,22 @@ void    init(QJsonObject obj)
         testfile=obj["testName"].toString();
     }
     if(obj.contains("leftmargin"))
-        leftMargin=obj["leftmargin"].toDouble();
+        leftMargin=obj["leftmargin"].toString().toDouble();
     if(obj.contains("rightmargin"))
-        rightMargin=obj["rightmargin"].toDouble();
+        rightMargin=obj["rightmargin"].toString().toDouble();
     if(obj.contains("chromosomesize"))
-        chromosomeSize=obj["chromosomesize"].toInt();
+        chromosomeSize=obj["chromosomesize"].toString().toInt();
     if(obj.contains("features"))
-        features=obj["features"].toInt();
+        features=obj["features"].toString().toInt();
 
     if(obj.contains("weights"))
-        weights=obj["weights"].toInt();
+        weights=obj["weights"].toString().toInt();
 
     if(obj.contains("factor"))
-        scale_factor=obj["factor"].toDouble();
+        scale_factor=obj["factor"].toString().toDouble();
 
     if(obj.contains("seed"))
-        random_seed=obj["seed"].toInt();
+        random_seed=obj["seed"].toString().toInt();
 
     if(obj.contains("logfile"))
         logfile=obj["logfile"].toString();

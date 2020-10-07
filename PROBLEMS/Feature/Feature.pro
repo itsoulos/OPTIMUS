@@ -24,7 +24,6 @@ DEFINES += FEATURE_LIBRARY
 
 SOURCES += feature.cpp \
     doublestack.cc \
-    interval.cpp \
     symbol.cc \
     rule.cc \
     program.cc \
@@ -41,6 +40,7 @@ SOURCES += feature.cpp \
     nnprogram.cc \
     knn.cc \
     rbf_model.cc \
+    interval.cpp \
     Rbf.cc \
     tolmin.cc
 
@@ -50,8 +50,10 @@ HEADERS += feature.h\
     interval.h \
     symbol.h \
     rule.h \
-    grand.h \
+    interval.h \
+    tolmin.h \
     program.h \
+    grand.h \
     fptypes.hh \
     fpconfig.hh \
     fparser.hh \

@@ -329,7 +329,7 @@ void	GenSolver::local()
 	Info.p=problem;
 	Info.iters=21;
 	double v=fitness_array[0];
-	v=tolmin(g,Info.p,Info.iters);
+	v=tolmin(g,Info);
 	for(int j=0;j<g.size();j++) genome[0][j]=g[j];
 	fitness_array[0]=-v;
 }

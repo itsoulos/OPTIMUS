@@ -41,7 +41,7 @@ double Neural::train1()
 	MinInfo Info;
 	Info.p = this;
 	Info.iters=61;
-	return tolmin(weight,Info.p,Info.iters);
+	return tolmin(weight,Info);
 }
 
 double	Neural::countViolate(double limit)
@@ -79,7 +79,7 @@ double Neural::train2()
 	randomizeWeights();
 	
 	GenSolve(this,weight,v,1,0);
-	v=tolmin(weight,Info.p,Info.iters);
+	v=tolmin(weight,Info);
 	return v;
 }
 

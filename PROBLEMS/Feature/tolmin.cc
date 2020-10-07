@@ -2069,9 +2069,15 @@ extern int getmin_(integer *n, integer *m, integer *meq, double
     Problem *p);
 
 double oldmin=1e+100;
+double tolmin1(Data &x, Problem *p,int iters);
 #pragma omp threadprivate(oldmin)
 
-double tolmin(Data &x, Problem *p,int iters)
+double tolmin(Data &x,MinInfo &pp)
+{
+	return tolmin1(x,pp.p,pp.iters);
+}
+
+double tolmin1(Data &x, Problem *p,int iters)
 {
 	double fmin;
 	oldmin=1e+100;

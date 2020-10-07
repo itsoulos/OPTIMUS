@@ -7,7 +7,7 @@
 # include <knn.h>
 # include <mapper.h>
 # include <vector>
-# include <grand.h>
+# include "grand.h"
 using namespace std;
 
 # define MODEL_NEURAL		1
