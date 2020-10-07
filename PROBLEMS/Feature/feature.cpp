@@ -170,7 +170,7 @@ void    init(QJsonObject obj)
     program.resize(maxthreads);
     for(int i=0;i<maxthreads;i++)
     {
-    program[i].setData(MODEL_NEURAL,features,scale_factor,trainx,trainy);
+    program[i].setData(MODEL_RBF,features,scale_factor,trainx,trainy);
     program[i].getModel()->setNumOfWeights(weights);
     }
     populationCount=chromosomeSize * features;
@@ -225,8 +225,8 @@ QJsonObject    done(Data &x)
  
  QString bestProgram=QString::fromStdString(program[thread()].printF(genome));
  
-Neural *neural = new Neural(program[thread()].getMapper());
-// Rbf *neural = new Rbf(program[thread()].getMapper());
+//Neural *neural = new Neural(program[thread()].getMapper());
+Rbf *neural = new Rbf(program[thread()].getMapper());
  neural->setRand(program[thread()].getRand());
  neural->readPatterns(trainx,trainy);
  neural->setPatternDimension(features);
@@ -235,7 +235,7 @@ Neural *neural = new Neural(program[thread()].getMapper());
  {
  neural->train2();
  double testError=neural->testError(testx,testy);
- if(testError>1e+4) continue;
+ //if(testError>1e+4) continue;
  double classTestError=neural->classTestError(testx,testy);
  avg_test_error+=testError;
  avg_class_error+=classTestError;

@@ -198,8 +198,8 @@ void	GenSolver::calcFitnessArray()
 		if(f>minf) minf=f;
 		if(generation%10==0 && i%50==0) 
 		{
-		//	printf("%d:%lf ",i,minf);
-		//	fflush(stdout);
+        //	printf("%d:%lf ",i,minf);
+        //	fflush(stdout);
 		}
 		for(int j=0;j<genome_size;j++) genome[i][j]=g[j];
 	}
@@ -229,14 +229,14 @@ void	GenSolver::nextGeneration()
 	calcFitnessArray();
 	select();
 	crossover();
-	/*
+
 	if((generation+1) % 10==0) 
 	{
 		for(int  i=0;i<20;i++)
 			localSearch(rand() % genome_count);
 		select();
 	}
-	*/	
+
 	++generation;
 }
 
@@ -281,7 +281,6 @@ void	GenSolver::localSearch(int gpos)
 		{
 			for(int i=0;i<genome_size;i++) genome[pos][i]=g[i];
 			fitness_array[pos]=f;
-			printf("New Min %20.10lf\n",f);
 		}
 		else
 		{
@@ -292,7 +291,6 @@ void	GenSolver::localSearch(int gpos)
 			{
 				for(int i=0;i<genome_size;i++) genome[pos][i]=g[i];
 				fitness_array[pos]=f;
-				printf("New Min %20.10lf\n",f);
 			}
 		}
 	}
@@ -386,7 +384,7 @@ void	GenSolve(Problem *p,Matrix &x,double &y,double mx,int flag,int gcount)
 void	GenSolve(Problem *p,Matrix &x,double &y,double mx,int flag)
 {
 	const int genome_count =200;
-	const int max_generations =100;
+    const int max_generations =500;
 	GenSolver pop(genome_count,p,mx,flag);
 	Neural *nn=(Neural *)p;
 	vector<double> g;
@@ -405,8 +403,8 @@ void	GenSolve(Problem *p,Matrix &x,double &y,double mx,int flag)
 		x2+=fabs(pop.getBestFitness()-oldBest)*fabs(pop.getBestFitness()-oldBest);
 		double variance=x2/(i+1)-x1/(i+1)*x1/(i+1);
 		if(i>=10 && variance<=stopat) break;
-		//if(i%1==0 &&i)
-		//	pop.local();
+
+
 		if(pop.getBestFitness()>oldBest)
 		{
 			stopat=variance/2.0;
