@@ -1,4 +1,4 @@
-METHOD=Genetic
+METHOD=IntervalMethod
 METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then
@@ -12,6 +12,9 @@ then
 elif [ $METHOD = "Multistart" ]
 then
 	METHODPARAMS="--multistart_samples=25"
+elif [ $METHOD = "IntervalMethod" ]
+then
+	METHODPARAMS="--interval_samples=20"
 fi
 
 PROBLEM=$1

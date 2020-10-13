@@ -68,10 +68,10 @@ void loadTrain()
    fp.close();
 }
 
-void	getSample(vector<double> &x)
+/*void	getSample(vector<double> &x)
 {
 	for(int i=0;i<x.size();i++) x[i]=2.0*drand48()-1.0;
-}
+}*/
 
 void setParameter(QString name,QVariant value)
 {

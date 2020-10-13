@@ -138,8 +138,9 @@ double *a,*xl,*xu,*xp,*b;
 long *iact;
 double *par,*w;
 public:
+    Tolmin(Problem *p,Data &left,Data &right);
     Tolmin(Problem *p);
-    double Solve(Data &x);
+    double Solve(Data &x,int iters=2001);
     ~Tolmin();
 };
 

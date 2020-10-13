@@ -26,7 +26,28 @@ Tolmin::Tolmin(Problem *p)
 }
 
 
-double Tolmin::Solve(Data &x)
+Tolmin::Tolmin(Problem *p,Data &left,Data &right)
+{
+    myProblem=p;
+    ifail=0;
+    c__0=0;
+    long n=p->getDimension();
+
+    a=new double[n*n];
+    b=new double[n];
+    xl=new double[n];
+    xu=new double[n];
+    xp=new double[n];
+    w=new double[12*n+n*n*n];
+    iact=new long[3*n];
+    par=new double[n];
+    for(int i=0;i<n;i++)
+    {
+        xl[i]=left[i];
+        xu[i]=right[i];
+    }
+}
+double Tolmin::Solve(Data &x,int iters)
 {
     long n=myProblem->getDimension();
     for(int i=0;i<n;i++)
@@ -36,7 +57,7 @@ double Tolmin::Solve(Data &x)
     double acc=1e-19;
     long nact;
     long iprint=0;
-    long info=2001;
+    long info=iters;
     long m=0;
     long meq=0;
     long ia=n;
