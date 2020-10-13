@@ -116,14 +116,8 @@ void    IntervalMethod::init()
 
 }
 
-double     IntervalMethod::fitness(Data &x)
+void   IntervalMethod::getInterval(Data &x,Data &leftArray,Data &rightArray)
 {
-    double average=0.0;
-    Data trialx;
-    trialx.resize(myProblem->getDimension());
-    int nsamples=params["interval_samples"].toString().toInt();
-    Data leftArray;
-    Data rightArray;
     leftArray.resize(myProblem->getDimension());
     rightArray.resize(myProblem->getDimension());
     for(int i=0;i<myProblem->getDimension();i++)
@@ -141,7 +135,17 @@ double     IntervalMethod::fitness(Data &x)
         leftArray[i]=left;
         rightArray[i]=right;
     }
+}
 
+double     IntervalMethod::fitness(Data &x)
+{
+    double average=0.0;
+    Data trialx;
+    trialx.resize(myProblem->getDimension());
+    int nsamples=params["interval_samples"].toString().toInt();
+    Data leftArray;
+    Data rightArray;
+    getInterval(x,leftArray,rightArray);
     for(int i=0;i<nsamples;i++)
     {
         for(int j=0;j<myProblem->getDimension();j++)
@@ -153,15 +157,23 @@ double     IntervalMethod::fitness(Data &x)
             if(trialx[j]>rmargin[j]) return 1e+100;
         }
         Tolmin mTolmin(myProblem,leftArray,rightArray);
-        double f=mTolmin.Solve(trialx,20);
-       if(i==0 || f<average) average=f;
+        double f=mTolmin.Solve(trialx,10);
+       if(i==0 || f<average){
+           bestx=trialx;
+           average=f;
+    }
     }
     return average;
 }
 
 void    IntervalMethod::done()
 {
-
+    Data leftArray;
+    Data rightArray;
+    getInterval(chromosome[0],leftArray,rightArray);
+    fitness(chromosome[0]);
+    Tolmin mTolmin(myProblem,leftArray,rightArray);
+    fitness_array[0]=mTolmin.Solve(bestx);
 }
 
 void    IntervalMethod::calcFitnessArray()

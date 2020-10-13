@@ -39,6 +39,8 @@ private:
     //for termination rule
     double x1,x2,stopat,variance,oldBesty;
     double RC;
+    int bestIndex;
+    Data bestx;
     int localSearchCount;
     int   generation;
     virtual bool terminated();
@@ -52,6 +54,7 @@ private:
     void    printMargin(Data &x);
     void	getTournamentElement(Data &x);
     void	tournament(Data &p1,Data &p2);
+    void    getInterval(Data &x,Data &leftArray,Data &rightArray);
 public:
     IntervalMethod(Problem *p);
     virtual void Solve();
