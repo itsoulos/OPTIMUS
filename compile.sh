@@ -7,6 +7,7 @@ else
 		(cd PROBLEMS; for file in *.pro; do  qmake $file; make clean; make; done)
 		(cd Optimus; qmake; make clean; make install)
 		(cd Multistart; qmake; make clean; make install)
+		(cd IntervalMethod; qmake; make clean; make install)
 		(cd Genetic; qmake; make clean; make install)
 		(cd Pso; qmake; make clean; make install)
 		(cd Minfinder; qmake; make clean; make install)

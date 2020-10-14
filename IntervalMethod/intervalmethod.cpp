@@ -3,7 +3,7 @@ IntervalMethod::IntervalMethod(Problem *p)
     :Optimizer(p)
 {
     addParameter("interval_chromosomes","200","Number of chromosomes");
-    addParameter("interval_generations","200","Maximum number of generations");
+    addParameter("interval_generations","20","Maximum number of generations");
     addParameter("interval_selection_rate","0.1","Selection rate");
     addParameter("interval_mutation_rate","0.05","Mutation rate");
     addParameter("interval_localsearch_rate","0.0","Local search rate");
