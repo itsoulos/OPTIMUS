@@ -3,7 +3,7 @@ DATAPATH=/home/sheridan/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfoldin
 #DATAPATH=/home/sheridan/Desktop/ERGASIES/SECDATA/
 NODES=10
 
-METHOD=IntervalMethod
+METHOD=Pso
 METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then

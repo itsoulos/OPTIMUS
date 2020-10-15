@@ -64,7 +64,7 @@ bool IntervalMethod::terminated()
     printMargin(chromosome[0]);
 
 
-    return generation>=max_generations || (variance<=stopat && generation>=10);
+    return generation>=max_generations || (variance<=stopat);
 }
 
 void    IntervalMethod::step()
@@ -157,7 +157,7 @@ double     IntervalMethod::fitness(Data &x)
             if(trialx[j]>rmargin[j]) return 1e+100;
         }
         Tolmin mTolmin(myProblem,leftArray,rightArray);
-        double f=mTolmin.Solve(trialx,10);
+        double f=  mTolmin.Solve(trialx,10);
        if(i==0 || f<average){
            bestx=trialx;
            average=f;
@@ -171,7 +171,6 @@ void    IntervalMethod::done()
     Data leftArray;
     Data rightArray;
     getInterval(chromosome[0],leftArray,rightArray);
-    fitness(chromosome[0]);
     Tolmin mTolmin(myProblem,leftArray,rightArray);
     fitness_array[0]=mTolmin.Solve(bestx);
 }
