@@ -441,7 +441,8 @@ optimizer.o: optimizer.cpp optimizer.h \
 		intervalproblem.h \
 		interval.h \
 		tolmin.h \
-		gradientdescent.h
+		gradientdescent.h \
+		adam.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o optimizer.o optimizer.cpp
 
 optimus.o: optimus.cpp optimus.h \
