@@ -26,6 +26,7 @@ QMAKE_CFLAGS += -O3 -march=native -fopenmp -unroll-loops -omit-frame-pointer -Wi
 QMAKE_LFLAGS += -O3
 SOURCES += \
     dllproblem.cpp \
+    gradientdescent.cpp \
     interval.cpp \
     intervalproblem.cpp \
     optimizer.cpp \
@@ -36,6 +37,7 @@ SOURCES += \
 HEADERS += \
     Optimus_global.h \
     dllproblem.h \
+    gradientdescent.h \
     interval.h \
     intervalproblem.h \
     optimizer.h \

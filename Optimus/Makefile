@@ -53,6 +53,7 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = dllproblem.cpp \
+		gradientdescent.cpp \
 		interval.cpp \
 		intervalproblem.cpp \
 		optimizer.cpp \
@@ -60,6 +61,7 @@ SOURCES       = dllproblem.cpp \
 		problem.cpp \
 		tolmin.cc 
 OBJECTS       = dllproblem.o \
+		gradientdescent.o \
 		interval.o \
 		intervalproblem.o \
 		optimizer.o \
@@ -144,12 +146,14 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		Optimus.pro Optimus_global.h \
 		dllproblem.h \
+		gradientdescent.h \
 		interval.h \
 		intervalproblem.h \
 		optimizer.h \
 		optimus.h \
 		problem.h \
 		tolmin.h dllproblem.cpp \
+		gradientdescent.cpp \
 		interval.cpp \
 		intervalproblem.cpp \
 		optimizer.cpp \
@@ -354,8 +358,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents Optimus_global.h dllproblem.h interval.h intervalproblem.h optimizer.h optimus.h problem.h tolmin.h $(DISTDIR)/
-	$(COPY_FILE) --parents dllproblem.cpp interval.cpp intervalproblem.cpp optimizer.cpp optimus.cpp problem.cpp tolmin.cc $(DISTDIR)/
+	$(COPY_FILE) --parents Optimus_global.h dllproblem.h gradientdescent.h interval.h intervalproblem.h optimizer.h optimus.h problem.h tolmin.h $(DISTDIR)/
+	$(COPY_FILE) --parents dllproblem.cpp gradientdescent.cpp interval.cpp intervalproblem.cpp optimizer.cpp optimus.cpp problem.cpp tolmin.cc $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -408,6 +412,12 @@ dllproblem.o: dllproblem.cpp dllproblem.h \
 		intervalproblem.h \
 		interval.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dllproblem.o dllproblem.cpp
+
+gradientdescent.o: gradientdescent.cpp gradientdescent.h \
+		problem.h \
+		intervalproblem.h \
+		interval.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gradientdescent.o gradientdescent.cpp
 
 interval.o: interval.cpp interval.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o interval.o interval.cpp
