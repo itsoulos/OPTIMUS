@@ -4,7 +4,7 @@
 # include <Optimus/problem.h>
 # include <Optimus/optimizer.h>
 # include <Optimus/tolmin.h>
-
+# include <Optimus/gradientdescent.h>
 #include <QtCore/qglobal.h>
 
 #if defined(GENETIC_LIBRARY)
@@ -56,6 +56,7 @@ private:
     void	getTournamentElement(Data &x);
     void	tournament(Data &p1,Data &p2);
     bool  checkForGradientCriterion(Data &x);
+    double  localSearch(Data &x);
 public:
     Genetic(Problem *p);
     virtual         void Solve();

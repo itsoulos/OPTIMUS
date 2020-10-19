@@ -10,10 +10,10 @@ then
 	METHODPARAMS="--minfinder_samples=25 --minfinder_sampling=repulsion"
 elif [ $METHOD = "Genetic" ]
 then
-	METHODPARAMS="--localsearch_rate=0.05"
+	METHODPARAMS="--genetic_localsearch_method=gradient --localsearch_rate=0.05"
 elif [ $METHOD = "Pso" ]
 then
-	METHODPARAMS="--pso_localsearch_rate=0.00"
+	METHODPARAMS="--pso_localsearch_rate=0.05"
 elif [ $METHOD = "Multistart" ]
 then
 	METHODPARAMS=="--multistart_samples=25"
