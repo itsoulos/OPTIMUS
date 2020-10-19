@@ -1,8 +1,9 @@
 #ifndef OPTIMIZER_H
 #define OPTIMIZER_H
 #include "problem.h"
-
-
+# include "tolmin.h"
+# include "gradientdescent.h"
+# include "adam.h"
 class Optimizer
 {
 protected:
@@ -15,9 +16,10 @@ protected:
     virtual void done();
 public:
     Optimizer(Problem *p);
-    void setProblem(Problem *p);
-    virtual void setSettings(QJsonObject settings);
-    void setThreads(int t);
+    void            setProblem(Problem *p);
+    virtual void    setSettings(QJsonObject settings);
+    void            setThreads(int t);
+    double          localSearch(Data &x);
     Problem         *getProblem();
     virtual         void Solve();
     void            addParameter(QString name,QString value,QString description);

@@ -3,6 +3,43 @@
 Optimizer::Optimizer(Problem *p)
 {
     myProblem=p;
+    addParameter("localsearch_method","bfgs","The desired local search method(bfgs,gradient,adam)");
+    addParameter("bfgs_iterations","2001","The maximum number of iterations for BFGS");
+    addParameter("gradient_rate","0.01","The learning rate for gradient descent");
+    addParameter("gradient_iterations","10000","The maximum number of iterations for gradient descent");
+    addParameter("adam_b1","0.9","The parameter b1 of Adam algorithm");
+    addParameter("adam_b2","0.999","The parameter b2 of Adam algorithm");
+    addParameter("adam_rate","0.01","The learning rate for Adam algorithm");
+    addParameter("adam_iterations","10000","The maximum number of iterations for Adam algorithm");
+}
+
+
+double  Optimizer::localSearch(Data &x)
+{
+    QString method=params["localsearch_method"].toString();
+    if(method=="bfgs")
+    {
+        Tolmin mt(myProblem);
+        return mt.Solve(x,params["bfgs_iterations"].toString().toInt());
+    }
+    else
+    if(method=="gradient")
+    {
+        GradientDescent des(myProblem);
+        des.setIters(params["gradient_iterations"].toString().toInt());
+        des.setRate(params["gradient_rate"].toString().toDouble());
+        return des.Solve(x);
+    }
+    else
+    if(method=="adam")
+    {
+        Adam at(myProblem);
+        at.setB1(params["adam_b1"].toString().toDouble());
+        at.setB2(params["adam_b2"].toString().toDouble());
+        at.setLearningRate(params["adam_rate"].toString().toDouble());
+        at.setIterations(params["adam_iterations"].toString().toInt());
+        return at.Solve(x);
+    }
 }
 
 void Optimizer::setProblem(Problem *p)

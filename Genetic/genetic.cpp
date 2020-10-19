@@ -10,8 +10,7 @@ Genetic::Genetic(Problem *p)
     addParameter("mutation_rate","0.05","Mutation rate");
     addParameter("localsearch_rate","0.0","Local search rate");
     addParameter("maxiters","1","Number of iterations of the algorithm");
-    addParameter("genetic_localsearch_method","bfgs","The required local search method(bfgs,gradient,adam)");
-    addParameter("genetic_bfgs_iterations","2001","The maximum number of bfgs iterations.");
+
 }
 
 Genetic::~Genetic()
@@ -241,25 +240,6 @@ chromosome[genome_count-i-1]=children[i];
 }
 }
 
-
-double Genetic::localSearch(Data &x)
-{
-    QString genetic_localsearch_method=params["genetic_localsearch_method"].toString();
-    if(genetic_localsearch_method=="bfgs")
-    {
-        int iters=params["genetic_bfgs_iterations"].toString().toInt();
-        Tolmin mTolmin(myProblem);
-        double f=mTolmin.Solve(x,iters);
-        return f;
-    }
-    else
-    if(genetic_localsearch_method=="gradient")
-    {
-        GradientDescent descent(myProblem);
-        double f=descent.Solve(x);
-        return f;
-    }
-}
 
 void    Genetic::mutate()
 {

@@ -56,7 +56,6 @@ private:
     void	getTournamentElement(Data &x);
     void	tournament(Data &p1,Data &p2);
     bool  checkForGradientCriterion(Data &x);
-    double  localSearch(Data &x);
 public:
     Genetic(Problem *p);
     virtual         void Solve();
