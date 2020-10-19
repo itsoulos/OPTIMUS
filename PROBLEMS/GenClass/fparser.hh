@@ -152,7 +152,6 @@ private:
     int CompileOr(const char*, int);
     int CompileExpression(const char*, int, bool=false);
 
-
     void MakeTree(void*) const;
 };
 

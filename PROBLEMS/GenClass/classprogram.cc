@@ -3,7 +3,6 @@
 # define NAN_CLASS	1e+10
 
 
-int	problem_dimension;
 
 ClassProgram::ClassProgram()
 {
@@ -39,9 +38,7 @@ void    ClassProgram::setData(QVector<Data> &x,Data &y)
         }
         if(!flag)
         {
-            int s=vclass.size();
-            vclass.resize(s+1);
-            vclass[s]=trainy[i];
+		vclass.push_back(trainy[i]);
         }
     }
     //sort vclass
@@ -69,11 +66,9 @@ void    ClassProgram::setData(QVector<Data> &x,Data &y)
 
     program = new Cprogram(dimension,vclass.size()-1);
     setStartSymbol(program->getStartSymbol());
-    pstring.resize(vclass.size());
-    for(int i=0;i<pstring.size();i++) pstring[i]=" ";
-    pgenome.resize(0);
     nclass = vclass.size();
     outy.resize(trainy.size());
+pstring.resize(nclass-1);
 }
 
 ClassProgram::ClassProgram(QVector<Data> &x, Data &y)
@@ -87,11 +82,13 @@ string	ClassProgram::printF(vector<int> &genome)
 	string ret="";
 	if(pgenome.size()!=genome.size()/(nclass-1))
 		pgenome.resize(genome.size()/(nclass-1));
-	char str[100];
+	char str[1024];
 	for(int i=0;i<nclass-1;i++)
 	{
 		for(int j=0;j<genome.size()/(nclass-1);j++)
+		{
 			pgenome[j]=genome[i*genome.size()/(nclass-1)+j];
+		}
 		int redo=0;
 		pstring[i]=printRandomProgram(pgenome,redo);
 		if(redo>=REDO_MAX) return "";
@@ -163,7 +160,7 @@ int	ClassProgram::getClass() const
 
 double 	ClassProgram::fitness(vector<int> &genome)
 {
-    	double X[problem_dimension];
+    	double *X=new double[problem_dimension];
 	double value=0.0;
 	if(pgenome.size()!=genome.size()/(nclass-1))
 		pgenome.resize(genome.size()/(nclass-1));
@@ -172,10 +169,14 @@ double 	ClassProgram::fitness(vector<int> &genome)
 	for(int i=0;i<nclass-1;i++)
 	{
 		for(int j=0;j<pgenome.size();j++)
-			pgenome[j]=genome[i*genome.size()/(nclass-1)+j];
+		{
+			int index=i * genome.size()/(nclass-1)+j;
+			if(index>=genome.size()) printf("ALERT %d => %d \n",index,genome.size());
+			pgenome[j]=genome[index];
+		}
 		int redo=0;
 		string s = printRandomProgram(pgenome,redo);
-		if(redo>=REDO_MAX) return -1e+8;
+		if(redo>=REDO_MAX) {delete[] X;return -1e+8;}
 		pstring[i]=s;
 	}
 	
@@ -186,57 +187,41 @@ double 	ClassProgram::fitness(vector<int> &genome)
         {
             qDebug()<<"Failed string is "<<QString(pstring[j].c_str())<<endl;
         }
-        if(!retvalue) return -1e+8;
+        if(!retvalue) {delete[] X;return -1e+8;}
 		for(int i=0;i<trainy.size();i++)
 		{
 			if(fabs(outy[i]-NAN_CLASS)>1e-5) continue;
             for(int k=0;k<problem_dimension;k++)X[k]=trainx[i][k];
             double v=program->Eval(X);
-            if(std::isnan(v) || std::isinf(v) ) return -1e+8;
+            if(std::isnan(v) || std::isinf(v) ) {delete[] X;return -1e+8;}
 			if(fabs(v-1.0)<1e-5) outy[i]=vclass[j];
 		}
 	}
 	
 
-	vector<int> fail;
+	
+	/*vector<int> fail;
 	vector<int> belong;
 	fail.resize(nclass);
 	belong.resize(nclass);
 	for(int i=0;i<nclass;i++)
-		fail[i]=belong[i]=0;
+		fail[i]=belong[i]=0;*/
 	for(int i=0;i<trainy.size();i++)
 	{
 		if(fabs(outy[i]-NAN_CLASS)<1e-5) 	outy[i]=vclass[nclass-1];
 		int pos=findMapper(trainy[i]);
 		value=value+((fabs(findMapper(trainy[i])-outy[i]))>1e-5);	
-		belong[pos]++;
+		/*belong[pos]++;
 		if(fabs(findMapper(trainy[i])-outy[i])>1e-5)
 		{
 			fail[pos]++;
-		}
+		}*/
 		//value=value+ pow(trainy[i]-outy[i],2.0);
 	}
+	delete[] X;
     	if(std::isnan(value) || std::isinf(value)) return -1e+8;
     return -value*100.0/trainy.size();
 
-    /*
-    for(int i=0;i<nclass;i++)
-	{
-		printf("CLASS[%3d (%3d)] FAIL=%5.2lf%% \n",i,belong[i],fail[i]*100.0/belong[i]);
-	}
-    */
-	double value1=0.0;
-	double value1_max=value1;
-	for(int i=0;i<nclass;i++)
-	{
-		double f=fail[i]*100.0/belong[i];
-		value1=value1+f*f;
-		if(f>value1_max)
-			value1_max=f;
-		
-	}
-
-	return -value1;
 }
 
 ClassProgram::~ClassProgram()

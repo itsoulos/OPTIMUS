@@ -49,7 +49,7 @@ bool       Genetic::terminated()
 
 
 
-    return generation>=max_generations || (variance<=stopat && generation>=10);
+    return generation>=max_generations || (variance<=stopat && generation>=20);
 }
 
 

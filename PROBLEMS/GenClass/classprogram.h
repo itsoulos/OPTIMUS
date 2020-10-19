@@ -11,14 +11,15 @@ class ClassProgram	:public Program
 {
 	private:
 		vector<double> vclass;
-		vector<string> pstring;
-		vector<int>    pgenome;
         	QVector<Data> trainx;
         	Data          trainy;
-		vector<double>  outy;
 		Cprogram *program;
 		vector<double> mapper;
 		int dimension,nclass;
+int	problem_dimension;
+	vector<string> pstring;
+	vector<int>    pgenome;
+	vector<double>  outy;
 	public:
         ClassProgram(QVector<Data> &x,Data &y);
         ClassProgram();

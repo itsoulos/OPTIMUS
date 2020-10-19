@@ -1,10 +1,11 @@
 //==============================
 // Function parser v2.8 by Warp
 //==============================
-#include <QDebug>
+
 #include "fparser.hh"
 #include "fpconfig.hh"
 #include "fptypes.hh"
+#include "omp.h"
 using namespace FUNCTIONPARSERTYPES;
 
 
@@ -14,6 +15,9 @@ using namespace FUNCTIONPARSERTYPES;
 #include <cmath>
 
 using namespace std;
+
+#pragma GCC optimize("unroll-loops","omit-frame-pointer","inline", "unsafe-math-optimizations")
+#pragma GCC option("arch=native","tune=native","no-zero-upper")
 
 int lastVariable;
 #ifndef M_PI
@@ -152,6 +156,7 @@ FunctionParser::Data::Data(const Data& cpy):
     if(StackSize) Stack = new double[StackSize];
 
     for(unsigned i=0; i<ByteCodeSize; ++i) ByteCode[i] = cpy.ByteCode[i];
+#pragma omp simd
     for(unsigned i=0; i<ImmedSize; ++i) Immed[i] = cpy.Immed[i];
 
     // No need to copy the stack contents because it's obsolete outside Eval()
@@ -297,12 +302,10 @@ int FunctionParser::Parse(const std::string& Function,
                           bool useDegrees)
 {
     copyOnWrite();
-
     data->Variables.clear();
 
     if(!ParseVars(Vars, data->Variables))
     {
-        qDebug()<<"Invalid variables"<<endl;
         parseErrorType = INVALID_VARS;
         return Function.size();
     }
@@ -313,17 +316,11 @@ int FunctionParser::Parse(const std::string& Function,
     parseErrorType = FP_NO_ERROR;
 
     int Result = CheckSyntax(Func);
-    if(Result>=0)
-    {
-        qDebug()<<"Problem in checksyntax "<<Result<<endl;
-        return Result;
-    }
+    if(Result>=0) return Result;
+
     data->useDegreeConversion = useDegrees;
-    if(!Compile(Func))
-    {
-        qDebug()<<"Problem in compile func"<<endl;
-        return Function.size();
-    }
+    if(!Compile(Func)) return Function.size();
+
     data->Variables.clear();
 
     parseErrorType = FP_NO_ERROR;
@@ -375,7 +372,7 @@ FunctionParser::FindVariable(const char* F, const Data::VarMap_t& vars) const
         {
             string name(F, ind);
 		/**GIANNIS **/
-        if(name[0]=='x' && isdigit(name[1])) lastVariable = atoi(name.substr(1).c_str());
+		if(name[0]=='x' && isdigit(name[1])) lastVariable = atoi(name.substr(1).c_str());
 		/**END OF GIANNIS **/
             return vars.find(name);
         }
@@ -423,9 +420,7 @@ int FunctionParser::CheckSyntax(const char* Function)
 
         // Check for leading - or !
         if(c=='-' || c=='!') { sws(Function, ++Ind); c=Function[Ind]; }
-        if(c==0) {
-            qDebug()<<"Premature EOS"<<endl;
-            parseErrorType=PREMATURE_EOS; return Ind; }
+        if(c==0) { parseErrorType=PREMATURE_EOS; return Ind; }
 
         // Check for math function
         bool foundFunc = false;
@@ -482,9 +477,7 @@ int FunctionParser::CheckSyntax(const char* Function)
         {
             ++ParenthCnt;
             sws(Function, ++Ind);
-            if(Function[Ind]==')') {
-                qDebug()<<"Empty_PARENTH"<<endl;
-                parseErrorType=EMPTY_PARENTH; return Ind;}
+            if(Function[Ind]==')') { parseErrorType=EMPTY_PARENTH; return Ind;}
             continue;
         }
 
@@ -504,14 +497,13 @@ int FunctionParser::CheckSyntax(const char* Function)
                 Ind += vIter->first.size();
             else
             {
-                // Check for constant
+                // Check for constantca
                 Data::ConstMap_t::const_iterator cIter =
                     FindConstant(&Function[Ind]);
                 if(cIter != Constants.end())
                     Ind += cIter->first.size();
                 else
-                { qDebug()<<"SYNTAX ERROR"<<endl;
-                    parseErrorType=SYNTAX_ERROR; return Ind; }
+                { parseErrorType=SYNTAX_ERROR; return Ind; }
             }
             sws(Function, Ind);
             c = Function[Ind];
@@ -523,9 +515,7 @@ int FunctionParser::CheckSyntax(const char* Function)
             if(functionParenthDepth.size() &&
                functionParenthDepth.back() == ParenthCnt)
                 functionParenthDepth.pop_back();
-            if((--ParenthCnt)<0) {
-                qDebug()<<"MISM PARENTH"<<endl;
-                parseErrorType=MISM_PARENTH; return Ind; }
+            if((--ParenthCnt)<0) { parseErrorType=MISM_PARENTH; return Ind; }
             sws(Function, ++Ind);
             c=Function[Ind];
         }
@@ -545,9 +535,7 @@ int FunctionParser::CheckSyntax(const char* Function)
         else
             opSize = IsOperator(Function+Ind);
         if(opSize == 0)
-        {
-            qDebug()<<"EXPECT OPERATOR"<<endl;
-            parseErrorType=EXPECT_OPERATOR; return Ind; }
+        { parseErrorType=EXPECT_OPERATOR; return Ind; }
 
 // If we get here, we have an operand and an operator; the next loop will
 // check for another operand (must appear)
@@ -555,9 +543,7 @@ int FunctionParser::CheckSyntax(const char* Function)
     } // while
 
     // Check that all opened parentheses are also closed
-    if(ParenthCnt>0) {
-        qDebug()<<"MISSING PARENTH"<<endl;
-        parseErrorType=MISSING_PARENTH; return Ind; }
+    if(ParenthCnt>0) { parseErrorType=MISSING_PARENTH; return Ind; }
 
 // The string is ok
     parseErrorType=FP_NO_ERROR;
@@ -1029,7 +1015,7 @@ namespace
         return radians*(180.0/M_PI);
     }
 }
-
+//void cabs(& double* const stack, )
 double FunctionParser::Eval(const double* Vars)
 {
     const unsigned* const ByteCode = data->ByteCode;
@@ -1250,7 +1236,6 @@ double FunctionParser::Eval(const double* Vars)
     }
 
     evalErrorType=0;
-    if(SP<0) {evalErrorType=1;return 0;}
     return Stack[SP];
 }
 

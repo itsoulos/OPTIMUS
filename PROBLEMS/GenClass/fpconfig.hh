@@ -42,9 +42,9 @@
  If you are unsure, just leave it. It won't slow down the other parts of
  the library.
 */
-#ifndef NO_SUPPORT_OPTIMIZER
-#define SUPPORT_OPTIMIZER
-#endif
+//#ifndef NO_SUPPORT_OPTIMIZER
+//#define SUPPORT_OPTIMIZER
+//#endif
 
 
 /*

@@ -51,6 +51,7 @@ string	Rule::printRule(vector<int> genome,int &pos,int &redo)
 	for(int i=0;i<length;i++)
 	{
 		Symbol *s=data[i];
+		if(s==NULL) return "";
 		if(s->getTerminalStatus())
 		{
 			str=str+s->getName();	
