@@ -32,6 +32,17 @@ public:
 
 };
 
+//CROSSOVER CONSTANTS
+# define CROSSOVER_DOUBLE   1
+# define CROSSOVER_UNIFORM  2
+# define CROSSOVER_LAPLACE  3
+# define CROSSOVER_ONEPOINT 4
+
+//MUTATION CONSTANTS
+# define MUTATION_RANDOM    1
+# define MUTATION_DOUBLE    2
+# define MUTATION_PSO       3
+
 class  Genetic :public Optimizer,GeneticInterface
 {
 private:
@@ -48,14 +59,23 @@ private:
     virtual void step();
     virtual void init();
     virtual void done();
-    void calcFitnessArray();
-    void select();
-    /** test comment **/
-    void crossover();
-    void mutate();
+    void    calcFitnessArray();
+    void    select();
+    void    crossover();
+    void    mutate();
     void	getTournamentElement(Data &x);
     void	tournament(Data &p1,Data &p2);
-    bool  checkForGradientCriterion(Data &x);
+    bool    checkForGradientCriterion(Data &x);
+    void    doubleCrossover(Data &parent1,Data &parent2,Data &children1,Data &children2);
+    void    laplaceCrossover(Data &parent1,Data &parent2,Data &children1,Data &children2);
+    void    uniformCrossover(Data &parent1,Data &parent2,Data &children1,Data &children2);
+    void    onepointCrossover(Data &parent1,Data &parent2,Data &children1,Data &children2);
+
+    int crossover_type;
+    int mutation_type;
+    int chromosome_count;
+    int chromosome_size;
+
 public:
     Genetic(Problem *p);
     virtual         void Solve();

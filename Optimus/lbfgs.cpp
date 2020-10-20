@@ -1206,7 +1206,6 @@ L556:
        if (*gd >= 0.) {
            /*  the directional derivative >=0. */
            /*  Line search is impossible. */
-           printf("ascend direction in projection gd = %.2e\n", *gd );
            *info = -4;
            return 0;
        }
@@ -2510,7 +2509,7 @@ int Lbfgs::prn1lb(integer *n, integer *m, double *l,
     --l;
 
     /* Function Body */
-    if (*iprint >= 0) {
+    if (*iprint >= 1) {
         printf("           * * *\n");
         printf("        RUNNING THE L-BFGS-B CODE\n");
         printf("           * * *\n");
@@ -2666,7 +2665,7 @@ int Lbfgs::prn3lb(integer *n, double *x, double *f, integer *
     if ( IS_ERROR(*task) ) {
         goto L999;
     }
-    if (*iprint >= 0) {
+    if (*iprint >= 1) {
 
 
         printf("           * * * \n");
@@ -2695,7 +2694,7 @@ int Lbfgs::prn3lb(integer *n, double *x, double *f, integer *
         }
     }
 L999:
-    if (*iprint >= 0) {
+    if (*iprint >= 1) {
         printf("%ld\n",*task);
         if (*info != 0) {
             if (*info == -1) {
@@ -2902,7 +2901,7 @@ int Lbfgs::active(integer *n, double *l, double *u,
     }
 /* L20: */
     }
-    if (*iprint >= 0) {
+    if (*iprint >= 1) {
     if (*prjctd) {
         printf("The initial X is infeasible. Restart with its projection\n");
     }
@@ -3302,7 +3301,7 @@ int Lbfgs::cauchy(integer *n, double *x, double *l,
 
     /* Function Body */
     if (*sbgnrm <= 0.) {
-        if (*iprint >= 0) {
+        if (*iprint >= 1) {
             printf("Subnorm = 0. GCP = X.\n");
         }
         dcopy(n, &x[1], &c__1, &xcp[1], &c__1);
@@ -4899,8 +4898,7 @@ int Lbfgs::projgr(integer *n, double *l, double *u,
     }
     if (dd_p__ > 0.) {
         dcopy(n, &xp[1], &c__1, &x[1], &c__1);
-        printf("Positive dir derivative in projection \n");
-        printf("Using the backtracking step\n");
+
     } else {
         goto L911;
     }

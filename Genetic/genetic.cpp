@@ -10,7 +10,8 @@ Genetic::Genetic(Problem *p)
     addParameter("mutation_rate","0.05","Mutation rate");
     addParameter("localsearch_rate","0.0","Local search rate");
     addParameter("maxiters","1","Number of iterations of the algorithm");
-
+    addParameter("genetic_crossover_type","double","The value used for crossover(double,uniform,laplace,onepoint");
+    addParameter("genetic_mutation_type","double","The value  used for mutation (double,random,pso)");
 }
 
 Genetic::~Genetic()
@@ -82,17 +83,17 @@ bool  Genetic::checkForGradientCriterion(Data &x)
 
 void    Genetic::calcFitnessArray()
 {
-    int genome_count = chromosome.size();
+
     double localsearch_rate = params["localsearch_rate"].toString().toDouble();
     double dmin=1e+100;
 
     QVector<double> randomNums;
-    for(int i=0;i<genome_count;i++)
+    for(int i=0;i<chromosome_count;i++)
         randomNums<<myProblem->randomDouble();
 
 //#pragma omp parallel for reduction(+:RC)
 #pragma omp parallel for num_threads(threads)
-    for(int i=0;i<genome_count;i++)
+    for(int i=0;i<chromosome_count;i++)
     {
 
         if(localsearch_rate>0 && randomNums[i]<=localsearch_rate)
@@ -132,13 +133,11 @@ void    Genetic::calcFitnessArray()
 
 void    Genetic::select()
 {
-    int genome_size=myProblem->getDimension();
-    int genome_count=chromosome.size();
     Data itemp;
-    itemp.resize(genome_size);
-    for(int i=0;i<genome_count;i++)
+    itemp.resize(chromosome_size);
+    for(int i=0;i<chromosome_count;i++)
     {
-        for(int j=0;j<genome_count-1;j++)
+        for(int j=0;j<chromosome_count-1;j++)
         {
             if(fitness_array[j+1]<fitness_array[j])
             {
@@ -158,13 +157,12 @@ void    Genetic::select()
 
 void	Genetic::getTournamentElement(Data &x)
 {
-    int genome_count=chromosome.size();
-        const int tournament_size =(genome_count<=100)?4:10;
+   const int tournament_size =(chromosome_count<=100)?4:10;
     double max_fitness=1e+100;
     int    max_index=-1;
         for(int j=0;j<tournament_size;j++)
         {
-        int r=rand() % (genome_count);
+        int r=rand() % (chromosome_count);
                 if(j==0 || fitness_array[r]<max_fitness)
                 {
                         max_index=r;
@@ -181,63 +179,108 @@ void	Genetic::tournament(Data &p1,Data &p2)
 }
 
 
+void    Genetic::doubleCrossover(Data &parent1,Data &parent2,Data &children1,Data &children2)
+{
+    for(int i=0;i<parent1.size();i++)
+    {
+        double x1=parent1[i];
+        double x2=parent2[i];
+        double alfa=-0.5+2.0*myProblem->randomDouble();
+        double g1=alfa*x1+(1.0-alfa)*x2;
+        double g2=alfa*x2+(1.0-alfa)*x1;
+        if(g1>rmargin[i] || g1<lmargin[i])  g1=x1;
+        if(g2>rmargin[i] || g2<lmargin[i])  g2=x2;
+        children1[i]=g1;
+        children2[i]=g2;
+    }
+}
+
+void    Genetic::laplaceCrossover(Data &parent1, Data &parent2, Data &children1, Data &children2)
+{
+    for(int i=0;i<parent1.size();i++)
+    {
+        double x1=parent1[i];
+        double x2=parent2[i];
+        double u=myProblem->randomDouble();
+        double alfa=0.0;
+        double b=0.0;
+        if(u<=0.5) b=alfa-b*log(u); else b=alfa+b*log(u);
+        double g1=x1+b*fabs(x1-x2);
+        double g2=x2+b*fabs(x1-x2);
+        if(g1>rmargin[i] || g1<lmargin[i])  g1=x1;
+        if(g2>rmargin[i] || g2<lmargin[i])  g2=x2;
+        children1[i]=g1;
+        children2[i]=g2;
+    }
+}
+
+void Genetic::uniformCrossover(Data &parent1, Data &parent2, Data &children1, Data &children2)
+{
+    for(int i=0;i<parent1.size();i++)
+    {
+        double x1=parent1[i];
+        double x2=parent2[i];
+        double g1,g2;
+        double alfa=myProblem->randomDouble();
+        if(alfa<0.5)
+        {
+            g1=x1;
+            g2=x2;
+        }
+        else
+        {
+            g2=x1;
+            g1=x2;
+        }
+        children1[i]=g1;
+        children2[i]=g2;
+    }
+}
+
+void    Genetic::onepointCrossover(Data &parent1, Data &parent2, Data &children1, Data &children2)
+{
+    int cutPoint=(int)(myProblem->randomDouble()*chromosome_size);
+    std::copy(parent1.begin(),parent1.begin()+cutPoint,children1.begin());
+    std::copy(parent2.begin()+cutPoint,parent2.end(),children1.begin()+cutPoint);
+    std::copy(parent2.begin(),parent2.begin()+cutPoint,children2.begin());
+    std::copy(parent1.begin()+cutPoint,parent1.end(),children2.begin()+cutPoint);
+}
+
 void    Genetic::crossover()
 {
     double selection_rate=params["selection_rate"].toString().toDouble();
-    int genome_count=chromosome.size();
-    int nchildren=(int)((1.0 - selection_rate) * genome_count);
-if(!(nchildren%2==0)) nchildren++;
+    int nchildren=(int)((1.0 - selection_rate) * chromosome_count);
+    if(!(nchildren%2==0)) nchildren++;
     int count_children=0;
-    int genome_size=myProblem->getDimension();
-int total_success=0;
-while(1)
-{
-tournament(parent0,parent1);
-for(int i=0;i<genome_size;i++)
-{
-    double alfa,b,u,g1,g2;
-    double x1,x2;
-    int p1,p2;
-    x1=parent0[i];
-    x2=parent1[i];
-#ifdef LAPLACE_CROSSOVER
-    u=problem->randomDouble();
-    alfa=0.0;
-    if(u<=0.5) b=alfa-b*log(u); else b=alfa+b*log(u);
-    g1=x1+b*fabs(x1-x2);
-    g2=x2+b*fabs(x1-x2);
-#endif
-#ifdef DOUBLE_CROSSOVER
-alfa=-0.5+2.0*myProblem->randomDouble();
-g1=alfa*x1+(1.0-alfa)*x2;
-g2=alfa*x2+(1.0-alfa)*x1;
-#endif
-#ifdef UNIFORM_CROSSOVER
-    alfa=problem->randomDouble();
-    if(alfa<0.5)
+    while(1)
     {
-        g1=x1;
-        g2=x2;
+        tournament(parent0,parent1);
+        if(crossover_type==CROSSOVER_DOUBLE)
+        {
+            doubleCrossover(parent0,parent1,children[count_children], children[count_children+1]);
+        }
+        else
+        if(crossover_type==CROSSOVER_LAPLACE)
+        {
+            laplaceCrossover(parent0,parent1,children[count_children], children[count_children+1]);
+        }
+        else
+        if(crossover_type==CROSSOVER_UNIFORM)
+        {
+            uniformCrossover(parent0,parent1,children[count_children], children[count_children+1]);
+        }
+        else
+        if(crossover_type==CROSSOVER_ONEPOINT)
+        {
+            onepointCrossover(parent0,parent1,children[count_children], children[count_children+1]);
+        }
+    count_children+=2;
+    if(count_children>=nchildren) break;
     }
-    else
+    for(int i=0;i<nchildren;i++)
     {
-        g2=x1;
-        g1=x2;
+        chromosome[chromosome_count-i-1]=children[i];
     }
-#endif
-    if(g1>rmargin[i] || g1<lmargin[i])  g1=x1;
-    if(g2>rmargin[i] || g2<lmargin[i])  g2=x2;
-
-    children[count_children][i]=g1;
-    children[count_children+1][i]=g2;
-}
-count_children+=2;
-if(count_children>=nchildren) break;
-}
-for(int i=0;i<nchildren;i++)
-{
-chromosome[genome_count-i-1]=children[i];
-}
 }
 
 
@@ -246,12 +289,10 @@ void    Genetic::mutate()
     int start = 1;
     int maxGenerations=params["max_generations"].toString().toDouble();
     const double b=(1.0-generation*1.0/maxGenerations)*5.0;
-    int genome_count=chromosome.size();
     double mutation_rate=params["mutation_rate"].toString().toDouble();
-    int genome_size=myProblem->getDimension();
-    for(int i=start;i<genome_count;i++)
+    for(int i=start;i<chromosome_count;i++)
     {
-        for(int j=0;j<genome_size;j++)
+        for(int j=0;j<chromosome_size;j++)
         {
             double r=myProblem->randomDouble();
             if(r<mutation_rate)
@@ -322,24 +363,39 @@ void       Genetic::init()
     stopat=0.0;
     oldBesty=1e+100;
 
-    int gcount=params["chromosome_count"].toString().toInt();
-    int gsize=myProblem->getDimension();
+    chromosome_count=params["chromosome_count"].toString().toInt();
+    chromosome_size=myProblem->getDimension();
+    crossover_type=CROSSOVER_DOUBLE;
+    mutation_type=MUTATION_DOUBLE;
+
+    QString crossover_type_string=params["genetic_mutation_type"].toString();
+    if(crossover_type_string=="double")
+        crossover_type=CROSSOVER_DOUBLE;
+    else
+    if(crossover_type_string=="uniform")
+        crossover_type=CROSSOVER_UNIFORM;
+    else
+    if(crossover_type_string=="laplace")
+        crossover_type=CROSSOVER_LAPLACE;
+    else
+    if(crossover_type_string=="onepoint")
+        crossover_type=CROSSOVER_ONEPOINT;
 
     if(chromosome.size()==0)
     {
-        chromosome.resize(gcount);
-        fitness_array.resize(gcount);
-        children.resize(gcount);
+        chromosome.resize(chromosome_count);
+        fitness_array.resize(chromosome_count);
+        children.resize(chromosome_count);
         int gsize=myProblem->getDimension();
-        for(int i=0;i<gcount;i++)
+        for(int i=0;i<chromosome_count;i++)
         {
-            chromosome[i].resize(gsize);
-            children[i].resize(gsize);
+            chromosome[i].resize(chromosome_size);
+            children[i].resize(chromosome_size);
         }
         lmargin=myProblem->getLeftMargin();
         rmargin=myProblem->getRightMargin();
-        parent0.resize(gsize);
-        parent1.resize(gsize);
+        parent0.resize(chromosome_size);
+        parent1.resize(chromosome_size);
         iterNumber=1;
     }
 
@@ -350,7 +406,7 @@ void       Genetic::init()
         minimax.resize(0);
         RC=0.0;
 
-        for(int i=0;i<gcount;i++)
+        for(int i=0;i<chromosome_count;i++)
         {
             chromosome[i]=myProblem->getRandomPoint();
             fitness_array[i]=fitness(chromosome[i]);
@@ -360,8 +416,7 @@ void       Genetic::init()
 
 void       Genetic::done()
 {
-    Tolmin mTolmin(myProblem);
-    fitness_array[0]=mTolmin.Solve(chromosome[0]);
+    fitness_array[0]=localSearch(chromosome[0]);
 }
 
 void	Genetic::Solve()

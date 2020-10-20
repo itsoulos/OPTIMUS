@@ -436,7 +436,8 @@ genclass.o: genclass.cpp classprogram.h \
 		doublestack.h \
 		cprogram.h \
 		fparser.hh \
-		qreplytimeout.h
+		qreplytimeout.h \
+		interval.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o genclass.o genclass.cpp
 
 interval.o: interval.cpp interval.h
