@@ -388,7 +388,8 @@ intervalmethod.o: intervalmethod.cpp intervalmethod.h \
 		../../../../Desktop/ERGASIES/OPTIMUS/Optimus/optimizer.h \
 		../../../../Desktop/ERGASIES/OPTIMUS/Optimus/tolmin.h \
 		../../../../Desktop/ERGASIES/OPTIMUS/Optimus/gradientdescent.h \
-		../../../../Desktop/ERGASIES/OPTIMUS/Optimus/adam.h
+		../../../../Desktop/ERGASIES/OPTIMUS/Optimus/adam.h \
+		../../../../Desktop/ERGASIES/OPTIMUS/Optimus/lbfgs.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o intervalmethod.o intervalmethod.cpp
 
 ####### Install

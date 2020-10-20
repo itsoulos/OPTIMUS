@@ -2,9 +2,7 @@
 # define __TOLMIN__H
 # include "problem.h"
 
-# define integer long
-# define double double
-# define real float
+
 #define totcal_1 totcal_
 #define units_1 units_
 

@@ -30,6 +30,7 @@ SOURCES += \
     gradientdescent.cpp \
     interval.cpp \
     intervalproblem.cpp \
+    lbfgs.cpp \
     optimizer.cpp \
     optimus.cpp \
     problem.cpp \
@@ -42,6 +43,7 @@ HEADERS += \
     gradientdescent.h \
     interval.h \
     intervalproblem.h \
+    lbfgs.h \
     optimizer.h \
     optimus.h \
     problem.h \

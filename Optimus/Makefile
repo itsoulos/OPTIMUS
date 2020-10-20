@@ -57,6 +57,7 @@ SOURCES       = adam.cpp \
 		gradientdescent.cpp \
 		interval.cpp \
 		intervalproblem.cpp \
+		lbfgs.cpp \
 		optimizer.cpp \
 		optimus.cpp \
 		problem.cpp \
@@ -66,6 +67,7 @@ OBJECTS       = adam.o \
 		gradientdescent.o \
 		interval.o \
 		intervalproblem.o \
+		lbfgs.o \
 		optimizer.o \
 		optimus.o \
 		problem.o \
@@ -152,6 +154,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		gradientdescent.h \
 		interval.h \
 		intervalproblem.h \
+		lbfgs.h \
 		optimizer.h \
 		optimus.h \
 		problem.h \
@@ -160,6 +163,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		gradientdescent.cpp \
 		interval.cpp \
 		intervalproblem.cpp \
+		lbfgs.cpp \
 		optimizer.cpp \
 		optimus.cpp \
 		problem.cpp \
@@ -362,8 +366,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents Optimus_global.h adam.h dllproblem.h gradientdescent.h interval.h intervalproblem.h optimizer.h optimus.h problem.h tolmin.h $(DISTDIR)/
-	$(COPY_FILE) --parents adam.cpp dllproblem.cpp gradientdescent.cpp interval.cpp intervalproblem.cpp optimizer.cpp optimus.cpp problem.cpp tolmin.cc $(DISTDIR)/
+	$(COPY_FILE) --parents Optimus_global.h adam.h dllproblem.h gradientdescent.h interval.h intervalproblem.h lbfgs.h optimizer.h optimus.h problem.h tolmin.h $(DISTDIR)/
+	$(COPY_FILE) --parents adam.cpp dllproblem.cpp gradientdescent.cpp interval.cpp intervalproblem.cpp lbfgs.cpp optimizer.cpp optimus.cpp problem.cpp tolmin.cc $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -436,13 +440,20 @@ intervalproblem.o: intervalproblem.cpp intervalproblem.h \
 		interval.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o intervalproblem.o intervalproblem.cpp
 
+lbfgs.o: lbfgs.cpp lbfgs.h \
+		problem.h \
+		intervalproblem.h \
+		interval.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o lbfgs.o lbfgs.cpp
+
 optimizer.o: optimizer.cpp optimizer.h \
 		problem.h \
 		intervalproblem.h \
 		interval.h \
 		tolmin.h \
 		gradientdescent.h \
-		adam.h
+		adam.h \
+		lbfgs.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o optimizer.o optimizer.cpp
 
 optimus.o: optimus.cpp optimus.h \

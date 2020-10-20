@@ -141,8 +141,7 @@ void Minfinder::step()
         if(!checkForGradientCriterion(tx))
         {
             Data txold=tx;
-            Tolmin mTolmin(myProblem);
-            double y=mTolmin.Solve(tx);
+	    double y=localSearch(tx);
             RC+=getDistance(txold,tx);
             localSearchCount++;
 #pragma omp critical

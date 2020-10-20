@@ -375,6 +375,7 @@ main.o: main.cpp ../../../../Desktop/ERGASIES/OPTIMUS/Optimus/dllproblem.h \
 		../../../../Desktop/ERGASIES/OPTIMUS/Optimus/tolmin.h \
 		../../../../Desktop/ERGASIES/OPTIMUS/Optimus/gradientdescent.h \
 		../../../../Desktop/ERGASIES/OPTIMUS/Optimus/adam.h \
+		../../../../Desktop/ERGASIES/OPTIMUS/Optimus/lbfgs.h \
 		getoptions.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 

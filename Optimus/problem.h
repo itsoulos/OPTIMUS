@@ -1,7 +1,11 @@
 #ifndef PROBLEM_H
 #define PROBLEM_H
 # include "intervalproblem.h"
-
+# define integer long
+# define double double
+# define real float
+typedef long int ftnlen;
+typedef long int logical;
 class Problem
 {
 private:

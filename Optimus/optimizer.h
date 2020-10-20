@@ -4,6 +4,7 @@
 # include "tolmin.h"
 # include "gradientdescent.h"
 # include "adam.h"
+# include "lbfgs.h"
 class Optimizer
 {
 protected:

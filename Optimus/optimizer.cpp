@@ -3,7 +3,7 @@
 Optimizer::Optimizer(Problem *p)
 {
     myProblem=p;
-    addParameter("localsearch_method","bfgs","The desired local search method(bfgs,gradient,adam)");
+    addParameter("localsearch_method","bfgs","The desired local search method(bfgs,gradient,adam,lbfgs)");
     addParameter("bfgs_iterations","2001","The maximum number of iterations for BFGS");
     addParameter("gradient_rate","0.01","The learning rate for gradient descent");
     addParameter("gradient_iterations","10000","The maximum number of iterations for gradient descent");
@@ -39,6 +39,12 @@ double  Optimizer::localSearch(Data &x)
         at.setLearningRate(params["adam_rate"].toString().toDouble());
         at.setIterations(params["adam_iterations"].toString().toInt());
         return at.Solve(x);
+    }
+    else
+    if(method=="lbfgs")
+    {
+        Lbfgs lt(myProblem);
+        return lt.Solve(x);
     }
 }
 
