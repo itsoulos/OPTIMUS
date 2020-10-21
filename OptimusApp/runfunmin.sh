@@ -6,7 +6,7 @@ then
 	METHODPARAMS="--minfinder_samples=25 --minfinder_sampling=repulsion"
 elif [ $METHOD = "Genetic" ]
 then
-	METHODPARAMS="--localsearch_rate=0.1 --localsearch_method=bfgs --genetic_crossover_type=uniform"
+	METHODPARAMS="--localsearch_rate=0.1 --localsearch_method=bfgs --genetic_crossover_type=double"
 elif [ $METHOD = "Pso" ]
 then
 	METHODPARAMS="--pso_localsearch_rate=0.1"

@@ -73,7 +73,7 @@ double	funmin(double *x)
 }
 
 
-void	granal(double *x,double *g)
+void	granal(vector<double> &x,vector<double> &g)
 {
 	for(int i=0;i<3 * NAT;i++)
 	{

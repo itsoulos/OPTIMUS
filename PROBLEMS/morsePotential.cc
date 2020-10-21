@@ -13,6 +13,7 @@ extern "C"{
 int natoms=20;
 double leftmargin=  -2.00;
 double rightmargin=  2.00;
+double rhoValue = 3.0;
 typedef vector<double> Data;
 
 int	getdimension()
@@ -27,6 +28,8 @@ void    init(QJsonObject data)
         leftmargin=data["leftmargin"].toString().toDouble();
     if(data.contains("rightmargin"))
         rightmargin=data["rightmargin"].toString().toDouble();
+    if(data.contains("rhoValue"))
+	    rhoValue=data["rhoValue"].toString().toDouble();
 }
 
 void 	getmargins(vector<Interval> &x)
@@ -35,62 +38,33 @@ void 	getmargins(vector<Interval> &x)
     {
             x[i]=Interval(leftmargin,rightmargin);
     }
-//    for(int i=0;i<6;i++) x[i]=Interval(0.0,0.0);
 }
 
 double dpot(double r)
 {
-    double  eps=1.0;
-    double  sig =1.0;
-    double  eps4=4.0 *eps;
-    //double sbyr6=pow(sig/r,6.0);
-    double sbyr6=sig*sig*sig*sig*sig*sig/r/r/r/r/r/r;
-    return eps4 * sbyr6*(sbyr6-1.0);
+	double eps=1.0;
+	double sigma=1.0;
+	double d=1.0-exp(rhoValue*(1.0-r/sigma));
+	return d * d-1.0;
 }
 
 double gpot(double r)
 {
-    double  eps=1.0;
-    double  sig =1.0;
-    double  eps4=4.0 *eps;
-    double sl = 0.0;
-
-    //double sbyr7 = pow((sig/r),7.0);
-    //double sbyr6 = pow((sig/r),6.0);
-    double sbyr6=sig*sig*sig*sig*sig*sig/r/r/r/r/r/r;
-    double sbyr7=sbyr6*sig/r;
-
-    double s6div=sig * sig *sig *sig *sig * sig *(-6)*(1.0/(r * r * r * r *r * r * r));
-    return eps4 * s6div*(sbyr6-1.0)+eps4*sbyr6*s6div;
-     return  eps4*sbyr6*(-12.0*sbyr7 + 6.0*(sig/r))+sl/(r*r);
-
+	double eps=1.0;
+	double sigma=1.0;
+	double d=1.0-exp(rhoValue*(1.0-r/sigma));
+	return  2.0 * d * (-exp(rhoValue*(1.0-r/sigma)*(-1.0/sigma)));
 }
 
 double	funmin(Data &x)
 {
-    //double *x = &x1[0];
     double value=0.0;
-    //Data xx; xx.resize(natoms);
-    //Data yy; yy.resize(natoms);
-    //Data zz; zz.resize(natoms);
-    /*
-           for(int i=1;i<=natoms;i++)
-           {
-                   int i3=3 * i;
-                   xx[i-1]=x[i3-2-1];
-                   yy[i-1]=x[i3-1-1];
-                   zz[i-1]=x[i3-1];
-           }*/
            for(int i=1;i<=natoms;i++)
            {
 		   int i31 = 3*i;
                    for(int j=i+1;j<=natoms;j++)
                    {
 			   int i32 = 3*j;
-                           //double dx=xx[i-1]-xx[j-1];
-                           //double dy=yy[i-1]-yy[j-1];
-                           //double dz=zz[i-1]-zz[j-1];
-                           //double rij=sqrt(dx*dx+dy*dy+dz*dz);
 			   double rij = sqrt( (x[i31-2-1] - x[i32-2-1])*(x[i31-2-1] - x[i32-2-1])+
 				       	      (x[i31-1-1] - x[i32-1-1])*(x[i31-1-1] - x[i32-1-1])+
 					      (x[i31-1] - x[i32-1])*(x[i31-1] - x[i32-1]) );
@@ -108,17 +82,6 @@ void    granal1(vector<double> &x,vector<double> &g)
 
 
 
-    //Data xx; xx.resize(natoms);
-    //Data yy; yy.resize(natoms);
-    //Data zz; zz.resize(natoms);
-    /*
-    for(int i=1;i<=natoms;i++)
-    {
-       int i3=3 * i;
-       xx[i-1]=x[i3-2-1];
-       yy[i-1]=x[i3-1-1];
-       zz[i-1]=x[i3-1];
-     }*/
     for(int i=1;i<=natoms;i++)
     {
 	    int i31=3*i; 
@@ -131,10 +94,6 @@ void    granal1(vector<double> &x,vector<double> &g)
 		    int i32=3*j;
 		    if(j!=i)
 		    {
-			//double dx=xx[i-1]-xx[j-1];
-                        //double dy=yy[i-1]-yy[j-1];
-                        //double dz=zz[i-1]-zz[j-1];
-			//double rij=sqrt(dx*dx+dy*dy+dz*dz);
 			double rij = sqrt( (x[i31-2-1] - x[i32-2-1])*(x[i31-2-1] - x[i32-2-1])+
                                               (x[i31-1-1] - x[i32-1-1])*(x[i31-1-1] - x[i32-1-1])+
                                               (x[i31-1] - x[i32-1])*(x[i31-1] - x[i32-1]) );
