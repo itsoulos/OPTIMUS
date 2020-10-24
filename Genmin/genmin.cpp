@@ -19,8 +19,6 @@ bool Genmin::terminated()
     if(f<initialy)
     {
 
-        printf("New f is %lf\n",f);
-
         vector<int> genome;genome.resize(pop->getSize());
         Data trialx;
         trialx.resize(bestx.size());

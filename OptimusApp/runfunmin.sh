@@ -1,4 +1,4 @@
-METHOD=Genmin
+METHOD=Genprice
 METHODPARAMS=""
 ### Available local search methods: bfgs, gradient, adam, lbfgs
 if [ $METHOD = "Minfinder" ]
