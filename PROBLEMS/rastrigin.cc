@@ -26,17 +26,14 @@ void    getmargins(vector<Interval> &x)
                 x[i]=Interval(-1,1);
 }
 
-/*
-interval ifunmin(vector<interval> &x)
-{
-        return abs(x[0]*x[0])+abs(x[1]*x[1])-cos(18.0 * x[0])-cos(18.0*x[1]);
-}*/
 
+//f(x)
 double	funmin(vector<double> &x)
 {
-   return abs(x[0]*x[0])+abs(x[1]*x[1])-cos(18.0*x[0])-cos(18.0*x[1]);
+   return (x[0]*x[0])+(x[1]*x[1])-cos(18.0*x[0])-cos(18.0*x[1]);
 }
 
+//f'(x)
 void    granal(vector<double> &x,vector<double> &g)
 {
       g[0]=2.0*x[0]+18.0*sin(18.0*x[0]);

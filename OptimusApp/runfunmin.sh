@@ -1,4 +1,4 @@
-METHOD=Genprice
+METHOD=Pso
 METHODPARAMS=""
 ### Available local search methods: bfgs, gradient, adam, lbfgs
 if [ $METHOD = "Minfinder" ]
@@ -6,10 +6,10 @@ then
 	METHODPARAMS="--minfinder_samples=25 --minfinder_sampling=repulsion"
 elif [ $METHOD = "Genetic" ]
 then
-	METHODPARAMS="--localsearch_rate=0.1 --localsearch_method=bfgs --genetic_crossover_type=double"
+	METHODPARAMS="--localsearch_rate=0.00 --localsearch_method=bfgs --genetic_crossover_type=double"
 elif [ $METHOD = "Pso" ]
 then
-	METHODPARAMS="--pso_localsearch_rate=0.1"
+	METHODPARAMS="--pso_localsearch_rate=0.00 --localsearch_method=adam"
 elif [ $METHOD = "Multistart" ]
 then
 	METHODPARAMS="--multistart_samples=25"

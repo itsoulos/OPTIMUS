@@ -83,7 +83,7 @@ void GenPrice::step()
     if(!myProblem->isPointIn(xk)) goto step2;
     fk=myProblem->funmin(xk);
     Solver->Solve(xk,fk);
-
+printf("fk is %lf \n",fk);
     if(fk<=fmax)
     {
         sample->replaceSample(posmax,xk,fk);

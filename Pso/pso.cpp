@@ -110,8 +110,7 @@ void Pso::init()
 
 void Pso::done()
 {
-    Tolmin mTolmin(myProblem);
-    besty=mTolmin.Solve(bestx);
+    besty=localSearch(bestx);
 }
 
 void Pso::calcFitnessArray()
@@ -163,8 +162,7 @@ void Pso::calcFitnessArray()
                     && !checkGradientCriterion(particle[i]))
             {
                 Data dg=particle[i];
-                Tolmin mTolmin(myProblem);
-                fitness_array[i]=mTolmin.Solve(particle[i]);
+                fitness_array[i]=localSearch(particle[i]);
                 RC+=getDistance(dg,particle[i]);
                 localSearchCount++;
                 #pragma omp critical
