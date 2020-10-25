@@ -6,6 +6,7 @@
 # include <collection.h>
 # include "grs.h"
 # include <vector>
+# include "Genprice_global.h"
 using namespace std;
 
 
@@ -44,4 +45,8 @@ class GenPrice :public Optimizer, GenpriceInterface
 		void	setM(int m);
         virtual ~GenPrice();
 };
+
+extern "C" GENPRICE_EXPORT Optimizer *createOptimizer(Problem *p);
+
+
 # endif

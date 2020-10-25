@@ -83,6 +83,7 @@ void GenPrice::step()
     if(!myProblem->isPointIn(xk)) goto step2;
     fk=myProblem->funmin(xk);
     Solver->Solve(xk,fk);
+
     if(fk<=fmax)
     {
         sample->replaceSample(posmax,xk,fk);
@@ -160,3 +161,9 @@ GenPrice::~GenPrice()
     delete Solver;
 
 }
+
+extern "C" GENPRICE_EXPORT Optimizer *createOptimizer(Problem *p)
+{
+    return new GenPrice(p);
+}
+
