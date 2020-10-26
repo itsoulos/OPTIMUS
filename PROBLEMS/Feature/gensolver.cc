@@ -61,6 +61,7 @@ double 	GenSolver::fitness(vector<double> &g)
 	/*	
 //	problem->funmin(g);
 //	return -((Model*)problem)->classTrainError();
+*/
 #ifdef VIOLATE
 	double v=problem->funmin(g);
 	double violate=((Neural *)problem)->countViolate(10.0);
@@ -68,9 +69,9 @@ double 	GenSolver::fitness(vector<double> &g)
 	v=-v*(1.0+factor * violate*violate);
 	return v;	
 #else
-*/
+
 	return -problem->funmin(g);
-//#endif
+#endif
 }
 
 void	GenSolver::select()
@@ -384,7 +385,7 @@ void	GenSolve(Problem *p,Matrix &x,double &y,double mx,int flag,int gcount)
 void	GenSolve(Problem *p,Matrix &x,double &y,double mx,int flag)
 {
 	const int genome_count =200;
-    const int max_generations =500;
+    const int max_generations =5;
 	GenSolver pop(genome_count,p,mx,flag);
 	Neural *nn=(Neural *)p;
 	vector<double> g;

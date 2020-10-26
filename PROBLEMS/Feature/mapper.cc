@@ -73,7 +73,7 @@ int	Mapper::map(Matrix x,Matrix &x1)
 		if(parser[i]->EvalError()) {
 		delete[] xx;return 0;}
         //x1[i]=fmod(x1[i],scale_factor);
-		if(fabs(x1[i])>1e+2) {delete[] xx;return 0;}
+	//	if(fabs(x1[i])>1e+2) {delete[] xx;return 0;}
 	}
 	delete[] xx;
 	return 1;

@@ -2101,8 +2101,8 @@ double tolmin1(Data &x, Problem *p,int iters)
         xp[i]=x[i];
         xl[i]=x1[i];
         xu[i]=x2[i];
-	xl[i]=-100;
-	xu[i]= 100;
+	xl[i]=-10;
+	xu[i]= 10;
 	}
 	double acc=1e-19;
 	long iact[3*n];

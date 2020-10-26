@@ -225,8 +225,8 @@ QJsonObject    done(Data &x)
  
  QString bestProgram=QString::fromStdString(program[thread()].printF(genome));
  
-//Neural *neural = new Neural(program[thread()].getMapper());
-Rbf *neural = new Rbf(program[thread()].getMapper());
+Neural *neural = new Neural(program[thread()].getMapper());
+//Rbf *neural = new Rbf(program[thread()].getMapper());
  neural->setRand(program[thread()].getRand());
  neural->readPatterns(trainx,trainy);
  neural->setPatternDimension(features);

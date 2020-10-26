@@ -17,31 +17,44 @@ GenPrice::GenPrice(Problem *p)
 
 bool GenPrice::terminated()
 {
-    for(int i=0;i<M;i++)
-    {
-        double y=sample->getSampleY(i);
-        if(y<fmin)
-        {
-            posmin=i;
-            fmin = y;
-            sample->getSampleX(i,xmin);
-        }
-        if(y>fmax)
-        {
-            posmax=i;
-            fmax = y;
-            sample->getSampleX(i,xmax);
-        }
-    }
+	double oldfmin=fmin;
+    	for(int i=0;i<M;i++)
+    	{
+        	double y=sample->getSampleY(i);
+        	if(y<fmin)
+        	{
+            		posmin=i;
+            		fmin = y;
+            		sample->getSampleX(i,xmin);
+        	}
+       		 if(y>fmax)
+        	{
+            	posmax=i;
+            	fmax = y;
+           	 sample->getSampleX(i,xmax);
+        	}
+    	}
+    	double diff=fabs(fmax-fmin);
+	double v=fabs(diff-olddiff);
+	olddiff=diff;
+    	x1+=fabs(v);
+    	x2+= v * v;
+	variance=x2/iters-(x1/iters)*(x1/iters);
+	if(variance<0) variance=-variance;
+	if(fabs(fmin-oldfmin)>1e-4)
+	{
+		stopat=variance/2.0;
+	}
     if(iters>=100000)
     {
         return true;
     }
-    printf("iters=%d fmin=%.10lg diff=%.10lg\n",iters,fmin,fabs(fmax-fmin));
+    printf("iters=%d fmin=%.10lg diff=%.10lg variance=%.10lf stopat=%.10lf\n",iters,fmin,fabs(fmax-fmin),variance,stopat);
     if(fabs(fmax-fmin)<1e-6)
     {
         return true;
     }
+    if(variance<stopat && iters>=5) return true;
     return false;
 }
 
@@ -83,11 +96,11 @@ void GenPrice::step()
     if(!myProblem->isPointIn(xk)) goto step2;
     fk=myProblem->funmin(xk);
     Solver->Solve(xk,fk);
-printf("fk is %lf \n",fk);
     if(fk<=fmax)
     {
+	    fk=localSearch(xk);
         sample->replaceSample(posmax,xk,fk);
-        iters++;
+    	iters++;
     }
 }
 
@@ -97,6 +110,7 @@ void    GenPrice::init()
         dimension = myProblem->getDimension();
 
     M =25 * myProblem->getDimension();
+    olddiff=0.0;
     xmin.resize(myProblem->getDimension());
     xmax.resize(myProblem->getDimension());
     sample=new Collection(myProblem->getDimension());
@@ -131,6 +145,8 @@ void    GenPrice::init()
         sample->addSample(x,y);
     }
 
+    x1=0;
+    x2=0;
 }
 
 void GenPrice::done()

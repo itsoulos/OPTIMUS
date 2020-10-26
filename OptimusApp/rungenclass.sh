@@ -23,5 +23,5 @@ PROBLEM=GenClass/libGenClass.so
 
 MLPARAMS="--trainName=file://$DATAPATH/$1.train --testName=file://$DATAPATH/$1.test "
 echo ./OptimusApp --filename=../PROBLEMS/$PROBLEM  --opt_method=$METHOD   $METHODPARAMS  $MLPARAMS --threads=12 
-./OptimusApp --filename=../PROBLEMS/$PROBLEM  --opt_method=$METHOD   $METHODPARAMS  $MLPARAMS --threads=12
+./OptimusApp --filename=../PROBLEMS/$PROBLEM  --opt_method=$METHOD   $METHODPARAMS  $MLPARAMS --threads=12 --iterations=1
 

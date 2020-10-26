@@ -190,7 +190,7 @@ QJsonObject 	done(vector<double> &x)
     QString bestProgram=QString::fromStdString(program[omp_get_thread_num()].printF(genome));
     result["nodes"]=10;
     result["testError"]=testError;
-    result["classError"]=trainError;
+    result["classError"]=testError;
     result["string"]=bestProgram;
     return result;
     /*

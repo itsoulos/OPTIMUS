@@ -29,6 +29,9 @@ class GenPrice :public Optimizer, GenpriceInterface
 		int M;
         vector<int> index;
         Data xk;
+	double x1,x2;
+	double olddiff;
+	double stopat,variance;
         int posmin,posmax;
         int dimension;
         int success=0;
