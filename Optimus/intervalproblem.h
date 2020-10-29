@@ -10,6 +10,9 @@ using namespace  std;
 typedef vector<double> Data;
 typedef vector<Interval> IntervalData;
 
+/** This class used to represent the objective problem
+ * as an interval problem. Objects from this class will
+   be used as fields in Problem class.**/
 
 class IntervalProblem
 {
@@ -21,8 +24,14 @@ protected:
     int threads;
     QVector<QRandomGenerator> threadGen;
 public:
+    /** @param d is the dimension of the objective problem **/
     IntervalProblem(int d);
+
+    /** @param d is the dimension of the problem. The method
+     *  modifies the dimension of the class **/
     void                setDimension(int d);
+
+
     void                setMargins(IntervalData &m);
     IntervalData        getMargins() const;
     int                 getDimension() const;

@@ -189,7 +189,7 @@ void	GenSolver::calcFitnessArray()
 	vector<double> g;
 	g.resize(genome_size);
 	double minf=-1e+10;
-#pragma omp parallel for num_threads(MAXTHREADS) schedule(static) reduction(min:minf)
+//#pragma omp parallel for num_threads(MAXTHREADS) schedule(static) reduction(min:minf)
 	for(int i=0;i<genome_count;i++)
 	{
 		for(int j=0;j<genome_size;j++)

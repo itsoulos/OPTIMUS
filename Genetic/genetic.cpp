@@ -246,6 +246,43 @@ void    Genetic::onepointCrossover(Data &parent1, Data &parent2, Data &children1
     std::copy(parent1.begin()+cutPoint,parent1.end(),children2.begin()+cutPoint);
 }
 
+
+void   Genetic::randomSearch(int pos)
+{
+    int size=chromosome[0].size();
+        int count=chromosome.size();
+        vector<double> tempx;
+        tempx.resize(size);
+        for(int iters=1;iters<=100;iters++)
+        {
+           int gpos=rand() % count;
+           //*
+           int cutpoint=rand() % size;
+           for(int j=0;j<cutpoint;j++)    tempx[j]=chromosome[pos][j];
+           for(int j=cutpoint;j<size;j++) tempx[j]=chromosome[gpos][j];
+           double f=fitness(tempx);
+           if(fabs(f)<fabs(fitness_array[pos]))
+           {
+               for(int j=0;j<size;j++) chromosome[pos][j]=tempx[j];
+               fitness_array[pos]=f;
+               break;
+            }
+            else
+            {
+              for(int j=0;j<cutpoint;j++) tempx[j]=chromosome[gpos][j];
+              for(int j=cutpoint;j<size;j++) tempx[j]=chromosome[pos][j];
+              double f=fitness(tempx);
+              if(fabs(f)<fabs(fitness_array[pos]))
+              {
+                 for(int j=0;j<size;j++) chromosome[pos][j]=tempx[j];
+                 fitness_array[pos]=f;
+                 break;
+                }
+             }//*/
+            }
+
+}
+
 void    Genetic::crossover()
 {
     double selection_rate=params["selection_rate"].toString().toDouble();
@@ -279,6 +316,9 @@ void    Genetic::crossover()
     }
     for(int i=0;i<nchildren;i++)
     {
+        double f1=fitness_array[chromosome_count-i-1];
+        double f2=fitness(children[i]);
+        if(f2<=f1)
         chromosome[chromosome_count-i-1]=children[i];
     }
 }

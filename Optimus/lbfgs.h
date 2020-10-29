@@ -96,6 +96,8 @@
 #define WORD_CON 1 /*  the subspace minimization converged. */
 #define WORD_BND 2 /* the subspace minimization stopped at a bound. */
 #define WORD_TNT 3 /*  the truncated Newton step has been used. */
+
+/** This class is used to implement the L-BFGS local optimizer **/
 class Lbfgs
 {
 private:

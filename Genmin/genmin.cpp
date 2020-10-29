@@ -3,7 +3,7 @@
 Genmin::Genmin(Problem *p)
     :Optimizer(p)
 {
-    addParameter("genmin_chromosome_count","200","Number of chromosomes");
+    addParameter("genmin_chromosome_count","1000","Number of chromosomes");
     addParameter("genmin_chromosome_size","100","Size of the chromosomes");
     addParameter("genmin_max_generations","200","Maximum number of generations");
     addParameter("genmin_selection_rate","0.1","Selection rate");
@@ -23,13 +23,14 @@ bool Genmin::terminated()
         Data trialx;
         trialx.resize(bestx.size());
         genome=pop->getBestGenome();
-        program->getX(genome,trialx);
+ //       program->getX(genome,trialx);
 
- //     program->getX(initialx,genome,trialx);
-        double trialy=  localSearch(trialx);
+        program->getX(initialx,genome,trialx);
+        double trialy=  myProblem->funmin(trialx);// localSearch(trialx);
         if(trialy<besty)
         {
            iflag=1;
+    //       trialy=localSearch(trialx);
            besty=trialy;
            bestx=trialx;
           //set back to population this value

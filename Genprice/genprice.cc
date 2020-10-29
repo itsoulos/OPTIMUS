@@ -21,24 +21,29 @@ bool GenPrice::terminated()
     	for(int i=0;i<M;i++)
     	{
         	double y=sample->getSampleY(i);
-        	if(y<fmin)
+        	if(i==0 || y<fmin)
         	{
             		posmin=i;
             		fmin = y;
             		sample->getSampleX(i,xmin);
         	}
-       		 if(y>fmax)
+       		 if(i==0 || y>fmax)
         	{
             	posmax=i;
             	fmax = y;
            	 sample->getSampleX(i,xmax);
         	}
     	}
+        if(fmin<oldfmin)
+        {
+            fmin=localSearch(xmin);
+            sample->replaceSample(posmin,xmin,fmin);
+        }
     	double diff=fabs(fmax-fmin);
 	double v=fabs(diff-olddiff);
 	olddiff=diff;
     	x1+=fabs(v);
-    	x2+= v * v;
+    	x2+= v* v;
 	variance=x2/iters-(x1/iters)*(x1/iters);
 	if(variance<0) variance=-variance;
 	if(fabs(fmin-oldfmin)>1e-4)
@@ -54,7 +59,7 @@ bool GenPrice::terminated()
     {
         return true;
     }
-    if(variance<stopat && iters>=5) return true;
+   // if(variance<stopat && iters>=5) return true;
     return false;
 }
 
@@ -98,7 +103,8 @@ void GenPrice::step()
     Solver->Solve(xk,fk);
     if(fk<=fmax)
     {
-	    fk=localSearch(xk);
+//	    fk=localSearch(xk);
+	    printf("Replace %d with %lf \n",posmax,fk);
         sample->replaceSample(posmax,xk,fk);
     	iters++;
     }

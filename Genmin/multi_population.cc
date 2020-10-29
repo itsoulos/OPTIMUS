@@ -50,7 +50,7 @@ void	MultiPopulation::reset()
 
 double 	MultiPopulation::fitness(vector<int> &g)
 {
-    return program->fitness(g);
+  //  return program->fitness(g);
     return program->fitness(initialx,g);
 }
 

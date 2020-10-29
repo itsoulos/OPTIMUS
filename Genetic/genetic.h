@@ -75,7 +75,7 @@ private:
     int mutation_type;
     int chromosome_count;
     int chromosome_size;
-
+    void    randomSearch(int pos);
 public:
     Genetic(Problem *p);
     virtual         void Solve();
