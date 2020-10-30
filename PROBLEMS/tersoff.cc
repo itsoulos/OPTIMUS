@@ -17,6 +17,7 @@ double	A=3264.7;
 double  B=95.373;
 double l1=3.2394;
 double l2=1.3258;
+double l3=1.3258;
 double gammaValue=0.33675;
 double n = 22.956;
 double d = 2.0417;
@@ -68,10 +69,9 @@ double g(double theta)
 
 double fc(double r)
 {
-//	printf("r %lf R %lf D %lf \n",r,R,D);
-	if(r<R-D) return 1.0;
+	if(r<=R-D) return 1.0;
 	else
-	if(r>=(R-D) && r<=(R+D)) return 0.5-0.5 * sin(M_PI *(r-R)/(2.0*D));
+	if(r>(R-D) && r<(R+D)) return 0.5-0.5 * sin(M_PI *(r-R)/(2.0*D));
 	else return 0.0;	
 }
 
@@ -141,11 +141,11 @@ double	funmin(Data &x)
 				   if(k==i) continue;
 				   if(k>=j) continue;
 				   double cosv=costheta(x,i,j,k);
-				   ksiValue+=fc(rvalue(x,i,k))*gfunction(cosv);
+				   ksiValue+=fc(rvalue(x,i,k))*gfunction(cosv)*exp(l3 *l3 *l3 *pow(rvalue(x,i,j)-rvalue(x,i,k),3.0));
 				   
 			   }
 			   biValue=pow(1.0+pow(gammaValue*ksiValue,n),-1.0/(2.0*n));
-		   	value+=fc(rij)*(VR(rij)+biValue*VA(rij));	   
+		   	value+=fc(rij)*(VR(rij)-biValue*VA(rij));	   
                    }
            }
            return  value;
