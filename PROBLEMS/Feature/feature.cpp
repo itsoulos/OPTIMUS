@@ -225,25 +225,31 @@ QJsonObject    done(Data &x)
  
  QString bestProgram=QString::fromStdString(program[thread()].printF(genome));
  
-Neural *neural = new Neural(program[thread()].getMapper());
 //Rbf *neural = new Rbf(program[thread()].getMapper());
+ const int threads=12;
+#pragma omp parallel for num_threads(threads)
+ for(int i=1;i<=ntimes;i++)
+ {
+Rbf *neural = new Rbf(program[0].getMapper());
+//Neural *neural = new Neural(program[0].getMapper());
  neural->setRand(program[thread()].getRand());
  neural->readPatterns(trainx,trainy);
  neural->setPatternDimension(features);
  neural->setNumOfWeights(10);
- for(int i=1;i<=ntimes;i++)
- {
  neural->train2();
  double testError=neural->testError(testx,testy);
  //if(testError>1e+4) continue;
+#pragma omp critical
+ {
  double classTestError=neural->classTestError(testx,testy);
  avg_test_error+=testError;
  avg_class_error+=classTestError;
  }
+ delete neural;
+ }
  avg_test_error/=ntimes;
  avg_class_error/=ntimes;
  printf("Average test is %lf \n",avg_class_error);
- delete neural;
 /*
      QEventLoop loop;
      QUrl serviceUrl = QUrl(urlpath+QString("upload_result.php"));

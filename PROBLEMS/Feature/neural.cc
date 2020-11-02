@@ -38,10 +38,14 @@ double Neural::train1()
 		}
 	}
 	double v;
+	GenSolve2(this,weight,v,0,1);
+	return v;
+	/*
 	MinInfo Info;
 	Info.p = this;
 	Info.iters=61;
 	return tolmin(weight,Info);
+	*/
 }
 
 double	Neural::countViolate(double limit)
@@ -79,6 +83,16 @@ double Neural::train2()
 	randomizeWeights();
 	
 	GenSolve(this,weight,v,1,0);
+	lmargin.resize(weight.size());
+	rmargin.resize(weight.size());
+	for(int i=0;i<weight.size();i++)
+	{
+		lmargin[i]=-5.0*fabs(weight[i]);
+		rmargin[i]= 5.0*fabs(weight[i]);
+	}
+	setLeftMargin(lmargin);
+	setRightMargin(rmargin);
+	//GenSolve(this,weight,v,0,1);
 	v=tolmin(weight,Info);
 	return v;
 }

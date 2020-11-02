@@ -2101,12 +2101,6 @@ double tolmin1(Data &x, Problem *p,int iters)
         xp[i]=x[i];
         xl[i]=x1[i];
         xu[i]=x2[i];
-	if(x[i]>-10)
-	xl[i]=-10;
-	else xl[i]=-2.0 * fabs(x[i]);
-	if(x[i]<10) 
-	xu[i]= 10;
-	else xu[i]=2.0 * fabs(x[i]);
 	}
 	double acc=1e-19;
 	long iact[3*n];

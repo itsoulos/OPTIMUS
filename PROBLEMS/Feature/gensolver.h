@@ -15,7 +15,6 @@ class GenSolver
 		double  maxx;
 
 		double 	fitness(vector<double> &g);
-		void	select();
 		void	crossover();
 		void	mutate();
 		void	calcFitnessArray();
@@ -23,6 +22,7 @@ class GenSolver
 		Problem	*problem;
 		int	small_tolmin_flag;
 	public:
+		void	select();
 		void	local();
 		GenSolver(int gcount,Problem *p,double mx,int f);
 		void	setElitism(int s);
@@ -44,7 +44,6 @@ class GenSolver
 		
 };
 extern void GenSolve(Problem *p,Matrix &x,double &y,double mx,int f);
-extern void GenSolve(Problem *p,Matrix &x,double &y,double mx,int f,int gcount);
 extern void GenSolve2(Problem *p,Matrix &x,double &y,double mx,int f);
 # define __POPULATION__H
 # endif

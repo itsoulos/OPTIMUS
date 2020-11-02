@@ -62,16 +62,16 @@ double 	GenSolver::fitness(vector<double> &g)
 //	problem->funmin(g);
 //	return -((Model*)problem)->classTrainError();
 */
-#ifdef VIOLATE
+	if(maxx) 
+	{
 	double v=problem->funmin(g);
 	double violate=((Neural *)problem)->countViolate(10.0);
 	double factor=10.0;//computeFactor(violate);
 	v=-v*(1.0+factor * violate*violate);
 	return v;	
-#else
-
+	}
+	else
 	return -problem->funmin(g);
-#endif
 }
 
 void	GenSolver::select()
@@ -174,8 +174,8 @@ void	GenSolver::mutate()
 			double r=drand48();
 			if(r<mutation_rate)
 			{
-			double percent=exp(-generation * 1.0/2.0);
-			//	percent = 0.25;
+			//double percent=exp(-generation * 1.0/2.0);
+			double	percent = 0.25;
 				genome[i][j]*=(1.0+2.0*drand48()*percent-percent);
 	
 				
@@ -189,7 +189,8 @@ void	GenSolver::calcFitnessArray()
 	vector<double> g;
 	g.resize(genome_size);
 	double minf=-1e+10;
-//#pragma omp parallel for num_threads(MAXTHREADS) schedule(static) reduction(min:minf)
+	int threads=12;
+//#pragma omp parallel for num_threads(threads)
 	for(int i=0;i<genome_count;i++)
 	{
 		for(int j=0;j<genome_size;j++)
@@ -326,7 +327,7 @@ void	GenSolver::local()
 	for(int i=0;i<g.size();i++) g[i]=genome[0][i];
 	MinInfo Info;
 	Info.p=problem;
-	Info.iters=21;
+	Info.iters=201;
 	double v=fitness_array[0];
 	v=tolmin(g,Info);
 	for(int j=0;j<g.size();j++) genome[0][j]=g[j];
@@ -346,10 +347,11 @@ GenSolver::~GenSolver()
 }
 
 
-void	GenSolve(Problem *p,Matrix &x,double &y,double mx,int flag,int gcount)
+void	GenSolve(Problem *p,Matrix &x,double &y,double mx,int flag)
 {
-	const int genome_count =gcount;
-	const int max_generations =10;
+	 int genome_count =200;
+     int max_generations =20;
+     if(flag) max_generations=100;
 	GenSolver pop(genome_count,p,mx,flag);
 	Neural *nn=(Neural *)p;
 	vector<double> g;
@@ -361,31 +363,32 @@ void	GenSolve(Problem *p,Matrix &x,double &y,double mx,int flag,int gcount)
 	for(int i=0;i<max_generations;i++)
 	{
 		pop.nextGeneration();
+		pop.select();
 		g=pop.getBestGenome();
 		if(fabs(pop.getBestFitness())<1e-7) break;
 		pop.evaluateBestFitness();
-		double violate = nn->countViolate(20.0);
+		if(flag && i%5==0)
+			pop.local();
 		x1+=fabs(pop.getBestFitness()-oldBest);
 		x2+=fabs(pop.getBestFitness()-oldBest)*fabs(pop.getBestFitness()-oldBest);
 		double variance=x2/(i+1)-x1/(i+1)*x1/(i+1);
 		if(i>=10 && variance<=stopat) break;
-	//	if(i%5==0)
-		//	pop.local();
+
+
 		if(pop.getBestFitness()>oldBest)
 		{
 			stopat=variance/2.0;
 			oldBest=pop.getBestFitness();
-		}
+        }
 	}
 	for(int i=0;i<g.size();i++) x[i]=g[i];
 	y=-pop.getBestFitness();
 	delete[] xx;	
 }
-
-void	GenSolve(Problem *p,Matrix &x,double &y,double mx,int flag)
+void	GenSolve2(Problem *p,Matrix &x,double &y,double mx,int flag)
 {
-	const int genome_count =200;
-    const int max_generations =5;
+	 int genome_count =50;
+     int max_generations =5;
 	GenSolver pop(genome_count,p,mx,flag);
 	Neural *nn=(Neural *)p;
 	vector<double> g;
@@ -397,9 +400,12 @@ void	GenSolve(Problem *p,Matrix &x,double &y,double mx,int flag)
 	for(int i=0;i<max_generations;i++)
 	{
 		pop.nextGeneration();
+		pop.select();
 		g=pop.getBestGenome();
 		if(fabs(pop.getBestFitness())<1e-7) break;
 		pop.evaluateBestFitness();
+		if(flag && i%5==0)
+			pop.local();
 		x1+=fabs(pop.getBestFitness()-oldBest);
 		x2+=fabs(pop.getBestFitness()-oldBest)*fabs(pop.getBestFitness()-oldBest);
 		double variance=x2/(i+1)-x1/(i+1)*x1/(i+1);

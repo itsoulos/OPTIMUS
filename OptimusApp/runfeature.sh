@@ -1,6 +1,6 @@
 #!/bin/bash
 DATAPATH=/home/sheridan/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfolding/
-#DATAPATH=/home/sheridan/Desktop/ERGASIES/SECDATA/
+DATAPATH=/home/sheridan/Desktop/ERGASIES/SECDATA/
 NODES=10
 
 METHOD=Genetic

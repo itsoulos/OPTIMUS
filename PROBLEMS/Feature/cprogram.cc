@@ -209,7 +209,7 @@ void	Cprogram::makeRules()
 
 	r=newRule();
 	rule[r]->addSymbol(&Exp);
-	function.addRule(rule[r]);
+	//function.addRule(rule[r]);
 
 	r=newRule();
 	rule[r]->addSymbol(&Log);
@@ -256,7 +256,7 @@ void	Cprogram::makeRules()
 	rule[r]->addSymbol(&Digit0);
 	rule[r]->addSymbol(&Digit0);
 	rule[r]->addSymbol(&Digit0);
-	DigitList.addRule(rule[r]);
+	//DigitList.addRule(rule[r]);
 
 	r=newRule();
 	rule[r]->addSymbol(&DigitList);
