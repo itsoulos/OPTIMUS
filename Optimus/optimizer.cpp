@@ -1,4 +1,5 @@
 #include "optimizer.h"
+# include <QStringList>
 
 Optimizer::Optimizer(Problem *p)
 {

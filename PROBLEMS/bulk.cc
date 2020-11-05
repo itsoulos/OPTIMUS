@@ -21,21 +21,10 @@ extern "C"
 	const double elnn=0.7;
 	const double mhln=0.6*m0;
 	const double hbar=4.135e-15;
-void    init(QJsonObject data)
-{
-
-}
-
-int	getdimension()
-{
-	return 2;
-}
-void    getmargins(vector<Interval> &x)
-{
-	x[0]=Interval(0,0.147);
-	x[1]=Interval(0.0,1.0);
-}
-
+	//the xvalue for plot
+	const double xvalue = 1;
+	const double epsilon0=8.8541878128e-12;
+	const double epsilonR=14.6 +10.4*(1.0 - xvalue);	
 
 double calculateElectronMass(double X)
 {
@@ -48,13 +37,38 @@ double calculateHoleMass(double X)
 	return mhgan +X*(mhln-mhgan);
 }
 
+double abQuantity()
+{
+	double m1=calculateElectronMass(xvalue);
+	double m2=calculateHoleMass(xvalue);
+	double meff=(m1 * m2)/(m1+m2);
+	double q=1.602176634*1e-19;
+	double ab= (4.0 * M_PI * epsilon0 * epsilonR * hbar * hbar)/(meff * q * q);
+	return ab;
+}
+
+void    init(QJsonObject data)
+{
+
+}
+
+int	getdimension()
+{
+	return 1;
+}
+void    getmargins(vector<Interval> &x)
+{
+	x[0]=Interval(0,abQuantity());
+}
+
+
+
 double	funmin(vector<double> &x)
 {
-	double X=x[0];
-	double R=x[1];
+	double X=xvalue;
+	double R=x[0];
 	double ebulk=X*elnn+(1.0-X)*egan-beta*X*(1.0-X);
 	double secondTerm = hbar * hbar /(8.0 * R * R) *(1.0/calculateElectronMass(X)+1.0/calculateHoleMass(X));	
-	printf("terms %lf %lf \n",ebulk,secondTerm);
 	return ebulk + secondTerm;
 
 }
@@ -81,6 +95,8 @@ void    granal(vector<double> &x,vector<double> &g)
 
 QJsonObject    done(vector<double> &x)
 {
+	funmin(x);
+	printf("R = %lf \n",x[0]);
     return QJsonObject();
 }
 
