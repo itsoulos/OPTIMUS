@@ -12,7 +12,7 @@
 # include <adept_arrays.h>
 # include <omp.h>
 using namespace std;
-# define ADEPT_GRANAL
+//# define ADEPT_GRANAL
 //adept::Stack stack;
 //NNTEST EXAMPLE  // normal train != 1 grad
 extern "C"
