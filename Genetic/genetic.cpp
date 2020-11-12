@@ -9,7 +9,7 @@ Genetic::Genetic(Problem *p)
     addParameter("selection_rate","0.1","Selection rate");
     addParameter("mutation_rate","0.05","Mutation rate");
     addParameter("localsearch_rate","0.0","Local search rate");
-    addParameter("maxiters","1","Number of iterations of the algorithm");
+    addParameter("maxiters","1","Number of iterations of the algorithm"); 
     addParameter("genetic_crossover_type","double","The value used for crossover(double,uniform,laplace,onepoint");
     addParameter("genetic_mutation_type","double","The value  used for mutation (double,random,pso)");
 }
@@ -256,7 +256,6 @@ void   Genetic::randomSearch(int pos)
         for(int iters=1;iters<=100;iters++)
         {
            int gpos=rand() % count;
-           //*
            int cutpoint=rand() % size;
            for(int j=0;j<cutpoint;j++)    tempx[j]=chromosome[pos][j];
            for(int j=cutpoint;j<size;j++) tempx[j]=chromosome[gpos][j];
@@ -278,7 +277,7 @@ void   Genetic::randomSearch(int pos)
                  fitness_array[pos]=f;
                  break;
                 }
-             }//*/
+             }
             }
 
 }
