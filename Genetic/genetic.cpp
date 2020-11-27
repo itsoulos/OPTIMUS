@@ -48,6 +48,7 @@ bool       Genetic::terminated()
     printf("Generation fit: %d value: %lf variance: %lf stopat: %lf\n",
            generation,
             fitness_array[0],variance,stopat);
+    return generation>=max_generations;
 
 
 
