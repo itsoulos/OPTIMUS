@@ -1,4 +1,3 @@
-#define __SSP_STRONG__ 3
 #define __DBL_MIN_EXP__ (-1021)
 #define __cpp_attributes 200809L
 #define __UINT_LEAST16_MAX__ 0xffff
@@ -30,7 +29,6 @@
 #define __FLT_EVAL_METHOD__ 0
 #define __cpp_binary_literals 201304L
 #define __FLT64_DECIMAL_DIG__ 17
-#define __CET__ 3
 #define __GCC_ATOMIC_CHAR32_T_LOCK_FREE 2
 #define __cpp_variadic_templates 200704L
 #define __UINT_FAST64_MAX__ 0xffffffffffffffffUL
@@ -71,7 +69,6 @@
 #define __WCHAR_MIN__ (-__WCHAR_MAX__ - 1)
 #define __INT64_C(c) c ## L
 #define __GCC_ATOMIC_POINTER_LOCK_FREE 2
-#define _FORTIFY_SOURCE 2
 #define __FLT32X_MANT_DIG__ 53
 #define __GCC_ATOMIC_CHAR16_T_LOCK_FREE 2
 #define __USER_LABEL_PREFIX__ 

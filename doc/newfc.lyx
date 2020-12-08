@@ -120,6 +120,649 @@ Introduction
 Method description
 \end_layout
 
+\begin_layout Standard
+The proposed method has two major phases.
+ During the first phase a procedure based on the Grammatical Evolution technique
+ is utilized in order to create new features from the old ones.
+ The new features are evaluated using an RBF neural network with 
+\begin_inset Formula $k$
+\end_inset
+
+ hidden nodes.
+ In the second phase, a hybrid genetic algorithm is to a neural network
+ trained using the constructed features of the first phase.
+ The main steps of the algorithm used in the first phase are listed below:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initialization step
+\series default
+
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ iter=0, the current generation number.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $N_{c}$
+\end_inset
+
+ the number of chromosomes
+\series bold
+ 
+\series default
+and 
+\begin_inset Formula $N_{f}$
+\end_inset
+
+ the number of constructed features.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initialize
+\series default
+ randomly in range 
+\begin_inset Formula $[0,255]$
+\end_inset
+
+ the integer chromosomes 
+\begin_inset Formula $X_{i},i=1\ldots N_{c}$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $N_{g}$
+\end_inset
+
+ the maximum number of generations.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $p_{s}\in[0,1]$
+\end_inset
+
+ as the selection rate and 
+\begin_inset Formula $p_{m}\in[0,1]$
+\end_inset
+
+ the mutation rate.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Termination check.
+
+\series default
+ 
+\series bold
+If
+\series default
+ iter>=
+\begin_inset Formula $N_{g}$
+\end_inset
+
+ 
+\series bold
+goto
+\series default
+ step 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:Obtain-the-best"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:Termination-check.-If"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Calculate
+\series default
+ the fitness 
+\begin_inset Formula $f_{i}$
+\end_inset
+
+ for every chromosome of the population:
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:Calculate-the-corresponding"
+
+\end_inset
+
+
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Transform
+\series default
+ the original train data using the procedure described in subsection 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Transformation-procedure"
+
+\end_inset
+
+ and create 
+\begin_inset Formula $N_{f}$
+\end_inset
+
+ features.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Train
+\series default
+ a classification model 
+\begin_inset Formula $C_{i}$
+\end_inset
+
+ using the following train error
+\begin_inset Formula 
+\begin{equation}
+E=\sum_{j=1}^{M}\left(C_{i}\left(x_{j}\right)-t_{j}\right)^{2}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $M$
+\end_inset
+
+ denotes the number of input patterns in train data, 
+\begin_inset Formula $x_{j}$
+\end_inset
+
+ is the 
+\begin_inset Formula $j$
+\end_inset
+
+ pattern of the modified train data and 
+\begin_inset Formula $t_{j}$
+\end_inset
+
+ is the desired output.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Assign
+\series default
+ the train error 
+\begin_inset Formula $E$
+\end_inset
+
+ to fitness value 
+\begin_inset Formula $f_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Genetic Operators
+\series default
+
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Selection procedure
+\series default
+: The chromosomes are sorted in descending order according to their fitness
+ value.
+ The first 
+\begin_inset Formula $\left(1-p_{s}\right)\times N_{c}$
+\end_inset
+
+ chromosomes are transfered to the next generation.
+ The rest of the chromosomes are substituted by offsprings created through
+ crossover procedure: For every offspring two chromosomes (parents) are
+ selected from the old population using tournament selection.
+ The procedure of tournament selection has as follows: A set of 
+\begin_inset Formula $N>1$
+\end_inset
+
+ randomly selected chromosomes is produced and the chromosome with the best
+ fitness value in this set is selected and the others are discarded.
+ Each offspring is created by the parents using the one point crossover.
+ During one point crossover the parent chromosomes are cut at a randomly
+ selected point and their right-hand side subchromosomes are exchanged as
+ show in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:One-point-crossover."
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Mutation procedure:
+\series default
+ For every element of each chromosome a random number 
+\begin_inset Formula $r$
+\end_inset
+
+ in range 
+\begin_inset Formula $\left[0,1\right]$
+\end_inset
+
+ is produced.
+ If 
+\begin_inset Formula $r\le p_{m}$
+\end_inset
+
+ then the corresponding element is randomly altered.
+ For the case of grammatical evolution simply a new integer in the range
+ 
+\begin_inset Formula $[0,255]$
+\end_inset
+
+ is produced.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Replace
+\series default
+ the 
+\begin_inset Formula $p_{s}\times N_{c}$
+\end_inset
+
+ worst chromosomes in the population with the offsprings created by the
+ genetic operators.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ iter=iter+1 and 
+\series bold
+goto
+\series default
+ Step 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:Termination-check.-If"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Obtain 
+\series default
+the best value in the population, denoted as 
+\begin_inset Formula $f_{l}$
+\end_inset
+
+ for the corresponding chromosome 
+\series bold
+
+\begin_inset Formula $x_{l}$
+\end_inset
+
+ 
+\series default
+and Terminate.
+\series bold
+
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:Obtain-the-best"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The steps of the hybrid genetic algorithm used in the second phase are the
+ following:
+\end_layout
+
+\begin_layout Subsection
+Transformation procedure
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Transformation-procedure"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The BNF grammar used to produce through non linear mappings a new feature
+ from the original ones is shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:BNF-grammar-of"
+
+\end_inset
+
+.
+ The parameter N denotes the number of original features.
+
+\series bold
+ 
+\series default
+Each number in the parentheses denotes the sequence number of the production
+ rule.
+
+\series bold
+ 
+\series default
+Each chromosome is a series of integer number with each number being in
+ the range 
+\begin_inset Formula $[0,255].$
+\end_inset
+
+ For example, consider the chromosome 
+\begin_inset Formula $x=\left[9,8,6,4,16,10,17,23,8,14\right]$
+\end_inset
+
+ and 
+\begin_inset Formula $N=3$
+\end_inset
+
+.
+ The steps to produce the valid expression 
+\begin_inset Formula $f(x)=x_{2}+\cos\left(x_{3}\right)$
+\end_inset
+
+ are listed in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:table_with_steps"
+
+\end_inset
+
+.
+ The process to produce 
+\begin_inset Formula $N_{f}$
+\end_inset
+
+ features from the original ones are shown graphically in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figure_construction"
+
+\end_inset
+
+ and have as follows:
+\end_layout
+
+\begin_layout Enumerate
+Every chromosome 
+\begin_inset Formula $X$
+\end_inset
+
+ is split into 
+\begin_inset Formula $N_{f}$
+\end_inset
+
+ parts.
+ Each part 
+\begin_inset Formula $g_{i}$
+\end_inset
+
+ will be used to construct a feature.
+\end_layout
+
+\begin_layout Enumerate
+For every part 
+\begin_inset Formula $g_{i}$
+\end_inset
+
+ construct a feature 
+\begin_inset Formula $f_{i}$
+\end_inset
+
+ using the grammar given in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:BNF-grammar-of"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+BNF grammar of the proposed method.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:BNF-grammar-of"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+S::=<expr>   (0) 
+\end_layout
+
+\begin_layout LyX-Code
+<expr> ::=  (<expr> <op> <expr>)  (0)             
+\end_layout
+
+\begin_layout LyX-Code
+           | <func> ( <expr> )    (1)             
+\end_layout
+
+\begin_layout LyX-Code
+           |<terminal>            (2) 
+\end_layout
+
+\begin_layout LyX-Code
+<op> ::=     +      (0)             
+\end_layout
+
+\begin_layout LyX-Code
+           | -      (1)             
+\end_layout
+
+\begin_layout LyX-Code
+           | *      (2)             
+\end_layout
+
+\begin_layout LyX-Code
+           | /      (3)
+\end_layout
+
+\begin_layout LyX-Code
+<func> ::=   sin  (0)             
+\end_layout
+
+\begin_layout LyX-Code
+           | cos  (1)             
+\end_layout
+
+\begin_layout LyX-Code
+           |exp   (2)             
+\end_layout
+
+\begin_layout LyX-Code
+           |log   (3)
+\end_layout
+
+\begin_layout LyX-Code
+<terminal>::=<xlist>                (0)                      
+\end_layout
+
+\begin_layout LyX-Code
+           |<digitlist>.<digitlist> (1)
+\end_layout
+
+\begin_layout LyX-Code
+<xlist>::=x1    (0)              
+\end_layout
+
+\begin_layout LyX-Code
+           | x2 (1)              
+\end_layout
+
+\begin_layout LyX-Code
+           ………             
+\end_layout
+
+\begin_layout LyX-Code
+           | xN (N)
+\end_layout
+
+\begin_layout LyX-Code
+<digitlist>::=<digit>                  (0)                 
+\end_layout
+
+\begin_layout LyX-Code
+           | <digit><digit>            (1)
+\end_layout
+
+\begin_layout LyX-Code
+           | <digit><digit><digit>     (2)
+\end_layout
+
+\begin_layout LyX-Code
+<digit>  ::= 0 (0)             
+\end_layout
+
+\begin_layout LyX-Code
+           | 1 (1)             
+\end_layout
+
+\begin_layout LyX-Code
+           | 2 (2)             
+\end_layout
+
+\begin_layout LyX-Code
+           | 3 (3)             
+\end_layout
+
+\begin_layout LyX-Code
+           | 4 (4)             
+\end_layout
+
+\begin_layout LyX-Code
+           | 5 (5)             
+\end_layout
+
+\begin_layout LyX-Code
+           | 6 (6)             
+\end_layout
+
+\begin_layout LyX-Code
+           | 7 (7)             
+\end_layout
+
+\begin_layout LyX-Code
+           | 8 (8)             
+\end_layout
+
+\begin_layout LyX-Code
+           | 9 (9)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Experiments 
 \begin_inset CommandInset label
@@ -207,7 +850,7 @@ name "tab:Experimental-parameters."
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="8" columns="2">
+<lyxtabular version="3" rows="7" columns="2">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -236,7 +879,7 @@ VALUE
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $k$
+\begin_inset Formula $w$
 \end_inset
 
 
@@ -271,7 +914,7 @@ VALUE
 \begin_inset Text
 
 \begin_layout Plain Layout
-200
+500
 \end_layout
 
 \end_inset
@@ -282,7 +925,30 @@ VALUE
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $P_{s}$
+\begin_inset Formula $N_{f}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p_{s}$
 \end_inset
 
 
@@ -305,7 +971,7 @@ VALUE
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $P_{m}$
+\begin_inset Formula $p_{m}$
 \end_inset
 
 
@@ -324,57 +990,11 @@ VALUE
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $K_{ls}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-20
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $N_{ls}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-5
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $i_{max}$
+\begin_inset Formula $N_{g}$
 \end_inset
 
 
