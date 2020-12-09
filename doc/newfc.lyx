@@ -83,7 +83,7 @@ Constructing features using a hybrid genetic algorithm
 Ioannis G.
  Tsoulos
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Corresponding author.
@@ -101,7 +101,14 @@ Department of Informatics and Telecommunications, University of Ioannina,
 \end_layout
 
 \begin_layout Abstract
-Write some abstract here
+A hybrid procedure that incorporates Grammatical Evolution and a weight
+ decaying technique is proposed here for classification and regression problems.
+ The procedure is divided in two main phases: in the first phase new features
+ are created from the original ones and in second phase a hybrid genetic
+ algorithm is used to train neural networks on the previously created features.
+ The proposed procedure is applied on a wide range of classification and
+ regression problems from the relevant litearature and the results are reported
+ and discussed.
 \end_layout
 
 \begin_layout Standard
@@ -114,6 +121,103 @@ Keywords
 
 \begin_layout Section
 Introduction
+\end_layout
+
+\begin_layout Standard
+Neural networks are well - established parametric tools 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nn1,nn2"
+literal "true"
+
+\end_inset
+
+, used with success in many areas such as physics 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nnphysics1,nnphysics2,nnphysics3"
+literal "false"
+
+\end_inset
+
+, chemistry 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nnchem1,nnchem2,nnchem3"
+literal "false"
+
+\end_inset
+
+, economics 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nnecon1,nnecon2"
+literal "false"
+
+\end_inset
+
+, medicine 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nnmed1,nnmed2"
+literal "false"
+
+\end_inset
+
+ etc.
+ A neural network usually is expressed as a function 
+\begin_inset Formula $N(\overrightarrow{x},\overrightarrow{w})$
+\end_inset
+
+, where
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+ is the input vector and 
+\begin_inset Formula $\overrightarrow{w}$
+\end_inset
+
+ is the weight vector to be calculated through some optimization process.
+ This optimization process should estimate the weight vector by minimizing
+ the following error function:
+\begin_inset Formula 
+\begin{equation}
+E\left(N\left(\overrightarrow{x},\overrightarrow{w}\right)\right)=\sum_{i=1}^{M}\left(N\left(\overrightarrow{x}_{i},\overrightarrow{w}\right)-y_{i}\right)^{2}\label{eq:eq1}
+\end{equation}
+
+\end_inset
+
+In the above equation the set 
+\begin_inset Formula $\left(\overrightarrow{x_{i}},y_{i}\right),\ i=1,...,M$
+\end_inset
+
+ is the data used to train the neural network, where symbol 
+\begin_inset Formula $y_{i}$
+\end_inset
+
+ represents the actual output for the point 
+\begin_inset Formula $\overrightarrow{x_{i}}$
+\end_inset
+
+ .
+ In many cases the neural netork 
+\begin_inset Formula $N(\overrightarrow{x},\overrightarrow{w})$
+\end_inset
+
+ can be expressed as a weighted sumation of processing units such as:
+\begin_inset Formula 
+\begin{equation}
+N\left(\overrightarrow{x},\overrightarrow{w}\right)=\sum_{i=1}^{H}w_{(d+2)i-(d+1)}\sigma\left(\sum_{j=1}^{d}x_{j}w_{(d+2)i-(d+1)+j}+w_{(d+2)i}\right)\label{eq:nn}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+All the previously mentioned methods have to overcome some problems such
+ as the dimensionality of the datasets as well as the ovetfitting problem.
 \end_layout
 
 \begin_layout Section
@@ -499,6 +603,169 @@ name "enu:Obtain-the-best"
 \begin_layout Standard
 The steps of the hybrid genetic algorithm used in the second phase are the
  following:
+\end_layout
+
+\begin_layout Standard
+The proposed algorithm has the following steps:
+\end_layout
+
+\begin_layout Enumerate
+Using an Genetic algorithm described in detail in subsection 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:The-genetic-algorithm"
+
+\end_inset
+
+ and the function 
+\begin_inset Formula $\mathcal{V}\left(N\left(\overrightarrow{x},\overrightarrow{w}\right),F\right)$
+\end_inset
+
+ 
+\series bold
+compute
+\series default
+ the best vector of weights 
+\begin_inset Formula $p$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ every weight 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ 
+\series bold
+Do
+\series default
+
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $L_{i}=-\alpha\left|p_{i}\right|$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $R_{i}=\ \alpha\left|p_{i}\right|$
+\end_inset
+
+ , 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ being a positive number with 
+\begin_inset Formula $\alpha>1$
+\end_inset
+
+ .
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $L^{*}=\mathcal{L}\left(\overrightarrow{p},\overrightarrow{L},\overrightarrow{R}\right)$
+\end_inset
+
+.
+ The method 
+\begin_inset Formula $\mathcal{L}()$
+\end_inset
+
+ is a local optimization method which preserves the rectangular bounds defined
+ by the vectors 
+\begin_inset Formula $\left(\overrightarrow{L},\overrightarrow{R}\right)$
+\end_inset
+
+.
+ The local method will return a local minimum 
+\begin_inset Formula $\overrightarrow{p*}$
+\end_inset
+
+ with the following property: 
+\begin_inset Formula $L_{i}\le p_{i}^{*}\le R_{i},\ i=1..n$
+\end_inset
+
+ where 
+\begin_inset Formula $n$
+\end_inset
+
+ the number of elements for 
+\begin_inset Formula $\overrightarrow{p*}$
+\end_inset
+
+.
+ The TOLMIN 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "tolmin"
+literal "true"
+
+\end_inset
+
+ local optimization procedure used in the above algorithm.
+ The TOLMIN is an extension of the well – known BFGS (Broyden–Fletcher–Goldfarb–
+Shanno) local optimization procedure
+\begin_inset CommandInset citation
+LatexCommand citet
+key "bfgs2"
+literal "true"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Return the vector 
+\begin_inset Formula $\overrightarrow{p*}$
+\end_inset
+
+ as the located vector for the weights.
+\end_layout
+
+\begin_layout Standard
+The above algorithm first uses an evolutionary approach to estimate a region
+ where the neural network has good generalization capabilities and then
+ using a local search method optimizes the weights of the neural network
+ inside the located region.
+ The genetic algorithm utilized by the proposed algorithm is explained in
+ the following subsection.
 \end_layout
 
 \begin_layout Subsection
@@ -2487,6 +2754,254 @@ Compliance with Ethical Standards
 
 \begin_layout Standard
 All authors declare that they have no has no conict of interest.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nn1"
+literal "true"
+
+\end_inset
+
+C.
+ Bishop, Neural Networks for Pattern Recognition, Oxford University Press,
+ 1995.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nn2"
+literal "true"
+
+\end_inset
+
+G.
+ Cybenko, Approximation by superpositions of a sigmoidal function, Mathematics
+ of Control Signals and Systems 
+\series bold
+2
+\series default
+, pp.
+ 303-314, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnphysics1"
+literal "false"
+
+\end_inset
+
+P.
+ Baldi, K.
+ Cranmer, T.
+ Faucett et al, Parameterized neural networks for high-energy physics, Eur.
+ Phys.
+ J.
+ C 
+\series bold
+76
+\series default
+, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnphysics2"
+literal "true"
+
+\end_inset
+
+J.
+ J.
+ Valdas and G.
+ Bonham-Carter, Time dependent neural network models for detecting changes
+ of state in complex processes: Applications in earth sciences and astronomy,
+ Neural Networks 19, pp.
+ 196-207, 2006
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnphysics3"
+literal "false"
+
+\end_inset
+
+G.
+ Carleo,M.
+ Troyer, Solving the quantum many-body problem with artificial neural networks,
+ Science 
+\series bold
+355
+\series default
+, pp.
+ 602-606, 2017.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnchem1"
+literal "false"
+
+\end_inset
+
+Lin Shen, Jingheng Wu, and Weitao Yang, Multiscale Quantum Mechanics/Molecular
+ Mechanics Simulations with Neural Networks, Journal of Chemical Theory
+ and Computation 
+\series bold
+12
+\series default
+, pp.
+ 4934-4946, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnchem2"
+literal "false"
+
+\end_inset
+
+Sergei Manzhos, Richard Dawes, Tucker Carrington, Neural network‐based approache
+s for building high dimensional and quantum dynamics‐friendly potential
+ energy surfaces, Int.
+ J.
+ Quantum Chem.
+ 
+\series bold
+115
+\series default
+, pp.
+ 1012-1020, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnchem3"
+literal "false"
+
+\end_inset
+
+Jennifer N.
+ Wei, David Duvenaud, and Alán Aspuru-Guzik, Neural Networks for the Prediction
+ of Organic Chemistry Reactions, ACS Central Science 
+\series bold
+2
+\series default
+, pp.
+ 725-732, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnecon1"
+literal "false"
+
+\end_inset
+
+Lukas Falat and Lucia Pancikova, Quantitative Modelling in Economics with
+ Advanced Artificial Neural Networks, Procedia Economics and Finance 
+\series bold
+34
+\series default
+, pp.
+ 194-201, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnecon2"
+literal "false"
+
+\end_inset
+
+Mohammad Namazi, Ahmad Shokrolahi, Mohammad Sadeghzadeh Maharluie, Detecting
+ and ranking cash flow risk factors via artificial neural networks technique,
+ Journal of Business Research 
+\series bold
+69
+\series default
+, pp.
+ 1801-1806, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnmed1"
+literal "false"
+
+\end_inset
+
+Igor I.
+ Baskin, David Winkler and Igor V.
+ Tetko, A renaissance of neural networks in drug discovery, Expert Opinion
+ on Drug Discovery 
+\series bold
+11
+\series default
+, pp.
+ 785-795, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnmed2"
+literal "false"
+
+\end_inset
+
+Ronadl Bartzatt, Prediction of Novel Anti-Ebola Virus Compounds Utilizing
+ Artificial Neural Network (ANN), Chemistry Faculty Publications 
+\series bold
+49
+\series default
+, pp.
+ 16-34, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "tolmin"
+literal "false"
+
+\end_inset
+
+M.J.D.
+ Powell, A Tolerant Algorithm for Linearly Constrained Optimization Calculations
+, Mathematical Programming 45, pp 547, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "bfgs2"
+literal "true"
+
+\end_inset
+
+R.
+ Fletcher, A new approach to variable metric algorithms, Computer Journal
+ 
+\series bold
+13
+\series default
+, pp.
+ 317-322, 1970.
  
 \end_layout
 

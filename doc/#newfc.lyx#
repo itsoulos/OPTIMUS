@@ -83,7 +83,7 @@ Constructing features using a hybrid genetic algorithm
 Ioannis G.
  Tsoulos
 \begin_inset Foot
-status collapsed
+status open
 
 \begin_layout Plain Layout
 Corresponding author.
@@ -103,7 +103,7 @@ Department of Informatics and Telecommunications, University of Ioannina,
 \begin_layout Abstract
 A hybrid procedure that incorporates Grammatical Evolution and a weight
  decaying technique is proposed here for classification and regression problems.
- The procedure is divided in two main phases: in the first phase new features
+ The procedure is divided in two main steps: in the first step new features
  are created from the original ones and in second phase a hybrid genetic
  algorithm is used to train neural networks on the previously created features.
  The proposed procedure is applied on a wide range of classification and
@@ -140,32 +140,8 @@ literal "false"
 
 \end_inset
 
-, chemistry 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "nnchem1,nnchem2,nnchem3"
-literal "false"
-
-\end_inset
-
-, economics 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "nnecon1,nnecon2"
-literal "false"
-
-\end_inset
-
-, medicine 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "nnmed1,nnmed2"
-literal "false"
-
-\end_inset
-
- etc.
- A neural network usually is expressed as a function 
+, chemistry, medicine etc.
+ A neural network can be expressed as a function 
 \begin_inset Formula $N(\overrightarrow{x},\overrightarrow{w})$
 \end_inset
 
@@ -177,9 +153,11 @@ literal "false"
 \begin_inset Formula $\overrightarrow{w}$
 \end_inset
 
- is the weight vector to be calculated through some optimization process.
- This optimization process should estimate the weight vector by minimizing
- the following error function:
+ is the vector of the parameters to be estimated.
+ The latest is usually called weight vector.
+ The modification of the vector of parameters (neural network training)
+ is implemented by minimizing the following equation (also named error function)
+:
 \begin_inset Formula 
 \begin{equation}
 E\left(N\left(\overrightarrow{x},\overrightarrow{w}\right)\right)=\sum_{i=1}^{M}\left(N\left(\overrightarrow{x}_{i},\overrightarrow{w}\right)-y_{i}\right)^{2}\label{eq:eq1}
@@ -191,33 +169,16 @@ In the above equation the set
 \begin_inset Formula $\left(\overrightarrow{x_{i}},y_{i}\right),\ i=1,...,M$
 \end_inset
 
- is the data used to train the neural network, where symbol 
+ is the data used to train the neural network.
+ The symbol 
 \begin_inset Formula $y_{i}$
 \end_inset
 
- represents the actual output for the point 
+ stands for the output of the function estimated at the point 
 \begin_inset Formula $\overrightarrow{x_{i}}$
 \end_inset
 
- .
- In many cases the neural netork 
-\begin_inset Formula $N(\overrightarrow{x},\overrightarrow{w})$
-\end_inset
-
- can be expressed as a weighted sumation of processing units such as:
-\begin_inset Formula 
-\begin{equation}
-N\left(\overrightarrow{x},\overrightarrow{w}\right)=\sum_{i=1}^{H}w_{(d+2)i-(d+1)}\sigma\left(\sum_{j=1}^{d}x_{j}w_{(d+2)i-(d+1)+j}+w_{(d+2)i}\right)
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-All the previously mentioned methods have to overcome some problems such
- as the dimensionality of the datasets as well as the ovetfitting problem.
+ 
 \end_layout
 
 \begin_layout Section
@@ -2848,129 +2809,11 @@ G.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
-key "nnchem1"
-literal "false"
+key "key-7"
 
 \end_inset
 
-Lin Shen, Jingheng Wu, and Weitao Yang, Multiscale Quantum Mechanics/Molecular
- Mechanics Simulations with Neural Networks, Journal of Chemical Theory
- and Computation 
-\series bold
-12
-\series default
-, pp.
- 4934-4946, 2016.
-\end_layout
 
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "nnchem2"
-literal "false"
-
-\end_inset
-
-Sergei Manzhos, Richard Dawes, Tucker Carrington, Neural network‐based approache
-s for building high dimensional and quantum dynamics‐friendly potential
- energy surfaces, Int.
- J.
- Quantum Chem.
- 
-\series bold
-115
-\series default
-, pp.
- 1012-1020, 2015.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "nnchem3"
-literal "false"
-
-\end_inset
-
-Jennifer N.
- Wei, David Duvenaud, and Alán Aspuru-Guzik, Neural Networks for the Prediction
- of Organic Chemistry Reactions, ACS Central Science 
-\series bold
-2
-\series default
-, pp.
- 725-732, 2016.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "nnecon1"
-literal "false"
-
-\end_inset
-
-Lukas Falat and Lucia Pancikova, Quantitative Modelling in Economics with
- Advanced Artificial Neural Networks, Procedia Economics and Finance 
-\series bold
-34
-\series default
-, pp.
- 194-201, 2015.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "nnecon2"
-literal "false"
-
-\end_inset
-
-Mohammad Namazi, Ahmad Shokrolahi, Mohammad Sadeghzadeh Maharluie, Detecting
- and ranking cash flow risk factors via artificial neural networks technique,
- Journal of Business Research 
-\series bold
-69
-\series default
-, pp.
- 1801-1806, 2016.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "nnmed1"
-literal "false"
-
-\end_inset
-
-Igor I.
- Baskin, David Winkler and Igor V.
- Tetko, A renaissance of neural networks in drug discovery, Expert Opinion
- on Drug Discovery 
-\series bold
-11
-\series default
-, pp.
- 785-795, 2016.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "nnmed2"
-literal "false"
-
-\end_inset
-
-Ronadl Bartzatt, Prediction of Novel Anti-Ebola Virus Compounds Utilizing
- Artificial Neural Network (ANN), Chemistry Faculty Publications 
-\series bold
-49
-\series default
-, pp.
- 16-34, 2018.
 \end_layout
 
 \begin_layout Bibliography
