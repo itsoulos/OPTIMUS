@@ -25,7 +25,7 @@
 \use_dash_ligatures true
 \graphics default
 \default_output_format default
-\output_sync 0
+\output_sync 1
 \bibtex_command default
 \index_command default
 \paperfontsize default
@@ -151,7 +151,7 @@ literal "false"
 , economics 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "nnecon1,nnecon2"
+key "nnecon1,nnecon2,nncecon3"
 literal "false"
 
 \end_inset
@@ -204,24 +204,328 @@ In the above equation the set
 \begin_inset Formula $N(\overrightarrow{x},\overrightarrow{w})$
 \end_inset
 
- can be expressed as a weighted sumation of processing units such as:
+ can be expressed as a weighted sumation of processing units as proposed
+ in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nnc"
+literal "false"
+
+\end_inset
+
+ and defined such as:
 \begin_inset Formula 
 \begin{equation}
-N\left(\overrightarrow{x},\overrightarrow{w}\right)=\sum_{i=1}^{H}w_{(d+2)i-(d+1)}\sigma\left(\sum_{j=1}^{d}x_{j}w_{(d+2)i-(d+1)+j}+w_{(d+2)i}\right)
+N\left(\overrightarrow{x},\overrightarrow{w}\right)=\sum_{i=1}^{H}w_{(d+2)i-(d+1)}\sigma\left(\sum_{j=1}^{d}x_{j}w_{(d+2)i-(d+1)+j}+w_{(d+2)i}\right)\label{eq:nn}
 \end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $H$
+\end_inset
+
+ is the number of processing units of the neural network and 
+\begin_inset Formula $d$
+\end_inset
+
+ is the dimension of vector 
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+.
+ From the above equation, the dimension of weight vector 
+\begin_inset Formula $w$
+\end_inset
+
+ is computed as: 
+\begin_inset Formula $w=(d+2)H$
+\end_inset
+
+.
+ The function of equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eq1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ has been minimized with a variety of optimization methods during the past
+ years such as: the Back Propagation method 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "bpnn,bpnn2"
+literal "false"
+
+\end_inset
+
+, the RPROP method 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rpropnn,rpropnn3,rpropnn2"
+literal "false"
+
+\end_inset
+
+, Quasi Newton methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "quasinn,quasinn2"
+literal "false"
+
+\end_inset
+
+, Genetic Algorithms 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "geneticnn,geneticnn2"
+literal "false"
+
+\end_inset
+
+, Particle Swarm Optimization 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "psonn,psonn2"
+literal "false"
+
+\end_inset
+
+ etc.
+ All the previously mentioned methods have to overcome two major problems:
+\end_layout
+
+\begin_layout Itemize
+Excessive computational times, because they require processing time proportional
+ to the dimension of the objective problem and the number of processing
+ units as well.
+ For example, a neural network of 
+\begin_inset Formula $H=10$
+\end_inset
+
+ processing units applied to a test data with 
+\begin_inset Formula $d=3$
+\end_inset
+
+, is considered as an optimization problem with dimension 
+\begin_inset Formula $w=(d+2)H=50$
+\end_inset
+
+.
+ A discussion on the effects of the dimensionality on neural netwotks is
+ provided in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nndimension"
+literal "false"
+
+\end_inset
+
+.
+ A common approach to overcome this problem is to use the PCA technique
+ to reduce the dimensionality of the objective problem 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nnpca1,nnpca2,nnpca3"
+literal "false"
+
+\end_inset
+
+ i.e.
+ the parameter 
+\begin_inset Formula $d$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The ovetfitting problem.
+ It is common for these methods to produce poorer results when they are
+ applied to data (test data) not previosly used in the optimization process.
+ This problem is discussed in detail in the article of Geman et all 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nngeman"
+literal "true"
+
+\end_inset
+
+ as well as in the article of Hawkins 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nnhawkins"
+literal "false"
+
+\end_inset
+
+.
+ A variety of methods have been proposed to overcome this problem such as
+ are weight sharing 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nnsharing1"
+literal "true"
+
+\end_inset
+
+, pruning 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nnprunning1,nnprunning2,nnprunning3"
+literal "true"
+
+\end_inset
+
+, the dropout technique 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nndrop1"
+literal "false"
+
+\end_inset
+
+, early stopping 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nnearly1,nnearly2"
+literal "true"
+
+\end_inset
+
+, and weight decaying 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nndecay1,nndecay2"
+literal "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+This article proposes a method that tackle both the above problems using
+ two major steps.
+ During the first step new features are created from the original ones using
+ a procedure based on the Grammatical Evolution technique 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ge1"
+literal "false"
+
+\end_inset
+
+.
+ This procedure was introduced in the work of Gavrilis et al 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "fc1"
+literal "false"
+
+\end_inset
+
+ and it has been with success in many areas such as Spam Identification
+\series bold
+ 
+\series default
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "fc2"
+literal "true"
+
+\end_inset
+
+
+\series bold
+, 
+\series default
+Fetal heart classification
+\series bold
+ 
+\series default
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "fc3"
+literal "true"
+
+\end_inset
+
+
+\series bold
+, 
+\series default
+epileptic oscillations in clinical intracranial electroencephalograms 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "fc4"
+literal "true"
+
+\end_inset
+
+ etc.
+ The outcomes of the first phase are the modified training and testing data
+ according to the created features.
+ During the second step, a genetic algorithm that incorporates a weight
+ decaying procedure is used to train a neural network on the modified data
+ of the first step.
+\end_layout
+
+\begin_layout Standard
+The rest of this article is organized as follows: in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Method-description"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ the proposed method is described in detail, in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Experiments"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ the proposed method is tested on a series of well know datasets from the
+ relevant literature and the results are compared to those of a simple genetic
+ algorithm and finally in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Conclusions"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ some conclusions are presented.
+\end_layout
+
+\begin_layout Section
+Method description
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Method-description"
 
 \end_inset
 
 
 \end_layout
 
-\begin_layout Standard
-All the previously mentioned methods have to overcome some problems such
- as the dimensionality of the datasets as well as the ovetfitting problem.
-\end_layout
-
-\begin_layout Section
-Method description
+\begin_layout Subsection
+Feature construction 
 \end_layout
 
 \begin_layout Standard
@@ -229,7 +533,7 @@ The proposed method has two major phases.
  During the first phase a procedure based on the Grammatical Evolution technique
  is utilized in order to create new features from the old ones.
  The new features are evaluated using an RBF neural network with 
-\begin_inset Formula $k$
+\begin_inset Formula $H$
 \end_inset
 
  hidden nodes.
@@ -598,6 +902,10 @@ name "enu:Obtain-the-best"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+Application of genetic algorithm
 \end_layout
 
 \begin_layout Standard
@@ -1146,7 +1454,7 @@ VALUE
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $w$
+\begin_inset Formula $H$
 \end_inset
 
 
@@ -2748,6 +3056,17 @@ s the Kmeans Rbf in terms of efficiency.
  datasets.
 \end_layout
 
+\begin_layout Section
+Conclusions
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Conclusions"
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection*
 Compliance with Ethical Standards 
 \end_layout
@@ -2822,7 +3141,11 @@ J.
  Valdas and G.
  Bonham-Carter, Time dependent neural network models for detecting changes
  of state in complex processes: Applications in earth sciences and astronomy,
- Neural Networks 19, pp.
+ Neural Networks 
+\series bold
+19
+\series default
+, pp.
  196-207, 2006
 \end_layout
 
@@ -2940,6 +3263,24 @@ Mohammad Namazi, Ahmad Shokrolahi, Mohammad Sadeghzadeh Maharluie, Detecting
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "nncecon3"
+literal "false"
+
+\end_inset
+
+G.
+ Tkacz, Neural network forecasting of Canadian GDP growth, International
+ Journal of Forecasting 
+\series bold
+17
+\series default
+, pp.
+ 57-69, 2001.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "nnmed1"
 literal "false"
 
@@ -2976,6 +3317,594 @@ Ronadl Bartzatt, Prediction of Novel Anti-Ebola Virus Compounds Utilizing
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "nnc"
+literal "false"
+
+\end_inset
+
+I.G.
+ Tsoulos, D.
+ Gavrilis, E.
+ Glavas, Neural network construction and training using grammatical evolution,
+ Neurocomputing 
+\series bold
+72
+\series default
+, pp.
+ 269-277, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "bpnn"
+literal "false"
+
+\end_inset
+
+D.E.
+ Rumelhart, G.E.
+ Hinton and R.J.
+ Williams, Learning representations by back-propagating errors, Nature 
+\series bold
+323
+\series default
+, pp.
+ 533 - 536 , 1986.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "bpnn2"
+literal "false"
+
+\end_inset
+
+T.
+ Chen and S.
+ Zhong, Privacy-Preserving Backpropagation Neural Network Learning, IEEE
+ Transactions on Neural Networks 
+\series bold
+20
+\series default
+, , pp.
+ 1554-1564, 2009.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rpropnn"
+literal "false"
+
+\end_inset
+
+M.
+ Riedmiller and H.
+ Braun, A Direct Adaptive Method for Faster Backpropagation Learning: The
+ RPROP algorithm, Proc.
+ of the IEEE Intl.
+ Conf.
+ on Neural Networks, San Francisco, CA, pp.
+ 586–591, 1993.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rpropnn3"
+literal "false"
+
+\end_inset
+
+T.
+ Pajchrowski, K.
+ Zawirski and K.
+ Nowopolski, Neural Speed Controller Trained Online by Means of Modified
+ RPROP Algorithm, IEEE Transactions on Industrial Informatics 
+\series bold
+11
+\series default
+, pp.
+ 560-568, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rpropnn2"
+literal "false"
+
+\end_inset
+
+Rinda Parama Satya Hermanto, Suharjito, Diana, Ariadi Nugroho, Waiting-Time
+ Estimation in Bank Customer Queues using RPROP Neural Networks, Procedia
+ Computer Science 
+\series bold
+ 135
+\series default
+, pp.
+ 35-42, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "quasinn"
+literal "false"
+
+\end_inset
+
+B.
+ Robitaille and B.
+ Marcos and M.
+ Veillette and G.
+ Payre, Modified quasi-Newton methods for training neural networks, Computers
+ & Chemical Engineering 
+\series bold
+20
+\series default
+, pp.
+ 1133-1140, 1996.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "quasinn2"
+literal "false"
+
+\end_inset
+
+Q.
+ Liu, J.
+ Liu, R.
+ Sang, J.
+ Li, T.
+ Zhang and Q.
+ Zhang, Fast Neural Network Training on FPGA Using Quasi-Newton Optimization
+ Method,IEEE Transactions on Very Large Scale Integration (VLSI) Systems
+ 
+\series bold
+26
+\series default
+, pp.
+ 1575-1579, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "geneticnn"
+literal "false"
+
+\end_inset
+
+F.
+ H.
+ F.
+ Leung, H.
+ K.
+ Lam, S.
+ H.
+ Ling and P.
+ K.
+ S.
+ Tam, Tuning of the structure and parameters of a neural network using an
+ improved genetic algorithm, IEEE Transactions on Neural Networks 
+\series bold
+14
+\series default
+, pp.
+ 79-88, 2003
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "geneticnn2"
+literal "false"
+
+\end_inset
+
+X.
+ Yao, Evolving artificial neural networks, Proceedings of the IEEE, 87(9),
+ pp.
+ 1423-1447, 1999.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psonn"
+literal "false"
+
+\end_inset
+
+C.
+ Zhang, H.
+ Shao and Y.
+ Li, Particle swarm optimisation for evolving artificial neural network,
+ IEEE International Conference on Systems, Man, and Cybernetics, , pp.
+ 2487-2490, 2000.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psonn2"
+literal "false"
+
+\end_inset
+
+Jianbo Yu, Shijin Wang, Lifeng Xi, Evolving artificial neural networks using
+ an improved PSO and DPSO 
+\series bold
+71
+\series default
+, pp.
+ 1054-1060, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nndimension"
+literal "false"
+
+\end_inset
+
+Verleysen M., Francois D., Simon G., Wertz V., On the effects of dimensionality
+ on data analysis with neural networks.
+ In: Mira J., Álvarez J.R.
+ (eds) Artificial Neural Nets Problem Solving Methods.
+ IWANN 2003.
+ Lecture Notes in Computer Science, vol 2687.
+ Springer, Berlin, Heidelberg.
+ 2003.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnpca1"
+literal "false"
+
+\end_inset
+
+Burcu Erkmen, Tülay Yıldırım, Improving classification performance of sonar
+ targets by applying general regression neural network with PCA, Expert
+ Systems with Applications 
+\series bold
+35
+\series default
+, pp.
+ 472-475, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnpca2"
+literal "false"
+
+\end_inset
+
+Jing Zhou, Aihuang Guo, Branko Celler, Steven Su, Fault detection and identifica
+tion spanning multiple processes by integrating PCA with neural network,
+ Applied Soft Computing 
+\series bold
+14
+\series default
+, pp.
+ 4-11, 2014.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnpca3"
+literal "false"
+
+\end_inset
+
+Ravi Kumar G., Nagamani K., Anjan Babu G., A Framework of Dimensionality Reduction
+ Utilizing PCA for Neural Network Prediction.
+ In: Borah S., Emilia Balas V., Polkowski Z.
+ (eds) Advances in Data Science and Management.
+ Lecture Notes on Data Engineering and Communications Technologies, vol
+ 37.
+ Springer, Singapore.
+ 2020
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nngeman"
+literal "true"
+
+\end_inset
+
+S.
+ Geman, E.
+ Bienenstock and R.
+ Doursat, Neural networks and the bias/variance dilemma, Neural Computation
+ 4 , pp.
+ 1 - 58, 1992.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnhawkins"
+literal "false"
+
+\end_inset
+
+Douglas M.
+ Hawkins, The Problem of Overfitting, J.
+ Chem.
+ Inf.
+ Comput.
+ Sci.
+ 
+\series bold
+44
+\series default
+, pp.
+ 1–12, 2004.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnsharing1"
+literal "true"
+
+\end_inset
+
+S.J.
+ Nowlan and G.E.
+ Hinton, Simplifying neural networks by soft weight sharing, Neural Computation
+ 4, pp.
+ 473-493, 1992.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnprunning1"
+literal "true"
+
+\end_inset
+
+S.J.
+ Hanson and L.Y.
+ Pratt, Comparing biases for minimal network construction with back propagation,
+ In D.S.
+ Touretzky (Ed.), Advances in Neural Information Processing Systems, Volume
+ 1, pp.
+ 177-185, San Mateo, CA: Morgan Kaufmann, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnprunning2"
+literal "true"
+
+\end_inset
+
+M.C.
+ Mozer and P.
+ Smolensky, Skeletonization: a technique for trimming the fat from a network
+ via relevance assesment.
+ In D.S.
+ Touretzky (Ed.), Advances in Neural Processing Systems, Volume 1, pp.
+ 107-115, San Mateo CA: Morgan Kaufmann, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnprunning3"
+literal "false"
+
+\end_inset
+
+M.
+ Augasta and T.
+ Kathirvalavakumar, Pruning algorithms of neural networks — a comparative
+ study, Central European Journal of Computer Science, 2003.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nndrop1"
+literal "false"
+
+\end_inset
+
+Nitish Srivastava, G E Hinton, Alex Krizhevsky, Ilya Sutskever, Ruslan R
+ Salakhutdinov, Dropout: a simple way to prevent neural networks from overfittin
+g, Journal of Machine Learning Research 
+\series bold
+15
+\series default
+, pp.
+ 1929-1958, 2014.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnearly1"
+literal "false"
+
+\end_inset
+
+Lutz Prechelt, Automatic early stopping using cross validation: quantifying
+ the criteria, Neural Networks 
+\series bold
+11
+\series default
+, pp.
+ 761-767, 1998.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnearly2"
+literal "false"
+
+\end_inset
+
+X.
+ Wu and J.
+ Liu, A New Early Stopping Algorithm for Improving Neural Network Generalization
+, 2009 Second International Conference on Intelligent Computation Technology
+ and Automation, Changsha, Hunan, 2009, pp.
+ 15-18.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nndecay1"
+literal "false"
+
+\end_inset
+
+N.
+ K.
+ Treadgold and T.
+ D.
+ Gedeon, Simulated annealing and weight decay in adaptive learning: the
+ SARPROP algorithm,IEEE Transactions on Neural Networks 
+\series bold
+9
+\series default
+, pp.
+ 662-668, 1998.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nndecay2"
+literal "false"
+
+\end_inset
+
+M.
+ Carvalho and T.
+ B.
+ Ludermir, Particle Swarm Optimization of Feed-Forward Neural Networks with
+ Weight Decay, 2006 Sixth International Conference on Hybrid Intelligent
+ Systems (HIS'06), Rio de Janeiro, Brazil, 2006, pp.
+ 5-5.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ge1"
+literal "true"
+
+\end_inset
+
+M.
+ O’Neill, C.
+ Ryan, Grammatical evolution, IEEE Trans.
+ Evol.
+ Comput.
+ 
+\series bold
+5,
+\series default
+pp.
+ 349–358, 2001.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "fc1"
+literal "true"
+
+\end_inset
+
+Dimitris Gavrilis, Ioannis G.
+ Tsoulos, Evangelos Dermatas, Selecting and constructing features using
+ grammatical evolution, Pattern Recognition Letters 
+\series bold
+29
+\series default
+,pp.
+ 1358-1365, 2008.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "fc2"
+literal "true"
+
+\end_inset
+
+Dimitris Gavrilis, Ioannis G.
+ Tsoulos, Evangelos Dermatas, Neural Recognition and Genetic Features Selection
+ for Robust Detection of E-Mail Spam, Advances in Artificial Intelligence
+ Volume 3955 of the series Lecture Notes in Computer Science pp 498-501,
+ 2006.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "fc3"
+literal "true"
+
+\end_inset
+
+George Georgoulas, Dimitris Gavrilis, Ioannis G.
+ Tsoulos, Chrysostomos Stylios, João Bernardes, Peter P.
+ Groumpos, Novel approach for fetal heart rate classification introducing
+ grammatical evolution, Biomedical Signal Processing and Control 
+\series bold
+2
+\series default
+,pp.
+ 69-79, 2007 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "fc4"
+literal "true"
+
+\end_inset
+
+Otis Smart, Ioannis G.
+ Tsoulos, Dimitris Gavrilis, George Georgoulas, Grammatical evolution for
+ features of epileptic oscillations in clinical intracranial electroencephalogra
+ms, Expert Systems with Applications 
+\series bold
+38
+\series default
+, pp.
+ 9991-9999, 2011 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "tolmin"
 literal "false"
 
@@ -2983,7 +3912,11 @@ literal "false"
 
 M.J.D.
  Powell, A Tolerant Algorithm for Linearly Constrained Optimization Calculations
-, Mathematical Programming 45, pp 547, 1989.
+, Mathematical Programming 
+\series bold
+45
+\series default
+, pp 547, 1989.
 \end_layout
 
 \begin_layout Bibliography
