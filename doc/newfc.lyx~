@@ -524,22 +524,298 @@ name "sec:Method-description"
 
 \end_layout
 
+\begin_layout Standard
+The proposed method has two major phases.
+ During the first phase a procedure based on the Grammatical Evolution technique
+ is utilized in order to create new features from the old ones.
+ The new features are evaluated using an RBF 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rbf1"
+literal "false"
+
+\end_inset
+
+ neural network with 
+\begin_inset Formula $H$
+\end_inset
+
+ hidden nodes.
+ The RBF network is used during this phase instead of a neural network because
+ the training procedure for RBF networks are must faster than these of neural
+ networks of the Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:nn"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ In the second phase, a hybrid genetic algorithm is to a neural network
+ trained using the constructed features of the first phase.
+\end_layout
+
+\begin_layout Subsection
+Transformation procedure
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Transformation-procedure"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Grammatical evolution is a genetic programming procedure with chromosomes
+ being expressed as vectors of integers.
+ Each element of the vector denotes a production rule from the corresponding
+ grammar.
+ The production procedure starts from the start symbol of the grammar and
+ produces programs by replacing non terminal symbols with the right hand
+ of the production rules that will be selected according to the value of
+ each element in the chromosome
+\end_layout
+
+\begin_layout Standard
+The BNF grammar used to produce through non linear mappings a new feature
+ from the original ones is shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:BNF-grammar-of"
+
+\end_inset
+
+.
+ The parameter N denotes the number of original features.
+
+\series bold
+ 
+\series default
+Each number in the parentheses denotes the sequence number of the production
+ rule.
+
+\series bold
+ 
+\series default
+Each chromosome is a series of integer number with each number being in
+ the range 
+\begin_inset Formula $[0,255].$
+\end_inset
+
+ The process to produce 
+\begin_inset Formula $N_{f}$
+\end_inset
+
+ features from the original ones are shown graphically in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figure_construction"
+
+\end_inset
+
+ and have as follows:
+\end_layout
+
+\begin_layout Enumerate
+Every chromosome 
+\begin_inset Formula $X$
+\end_inset
+
+ is split into 
+\begin_inset Formula $N_{f}$
+\end_inset
+
+ parts.
+ Each part 
+\begin_inset Formula $g_{i}$
+\end_inset
+
+ will be used to construct a feature.
+\end_layout
+
+\begin_layout Enumerate
+For every part 
+\begin_inset Formula $g_{i}$
+\end_inset
+
+ construct a feature 
+\begin_inset Formula $f_{i}$
+\end_inset
+
+ using the grammar given in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:BNF-grammar-of"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+BNF grammar of the proposed method.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:BNF-grammar-of"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout LyX-Code
+S::=<expr>   (0) 
+\end_layout
+
+\begin_layout LyX-Code
+<expr> ::=  (<expr> <op> <expr>)  (0)             
+\end_layout
+
+\begin_layout LyX-Code
+           | <func> ( <expr> )    (1)             
+\end_layout
+
+\begin_layout LyX-Code
+           |<terminal>            (2) 
+\end_layout
+
+\begin_layout LyX-Code
+<op> ::=     +      (0)             
+\end_layout
+
+\begin_layout LyX-Code
+           | -      (1)             
+\end_layout
+
+\begin_layout LyX-Code
+           | *      (2)             
+\end_layout
+
+\begin_layout LyX-Code
+           | /      (3)
+\end_layout
+
+\begin_layout LyX-Code
+<func> ::=   sin  (0)             
+\end_layout
+
+\begin_layout LyX-Code
+           | cos  (1)             
+\end_layout
+
+\begin_layout LyX-Code
+           |exp   (2)             
+\end_layout
+
+\begin_layout LyX-Code
+           |log   (3)
+\end_layout
+
+\begin_layout LyX-Code
+<terminal>::=<xlist>                (0)                      
+\end_layout
+
+\begin_layout LyX-Code
+           |<digitlist>.<digitlist> (1)
+\end_layout
+
+\begin_layout LyX-Code
+<xlist>::=x1    (0)              
+\end_layout
+
+\begin_layout LyX-Code
+           | x2 (1)              
+\end_layout
+
+\begin_layout LyX-Code
+           ………             
+\end_layout
+
+\begin_layout LyX-Code
+           | xN (N)
+\end_layout
+
+\begin_layout LyX-Code
+<digitlist>::=<digit>                  (0)                 
+\end_layout
+
+\begin_layout LyX-Code
+           | <digit><digit>            (1)
+\end_layout
+
+\begin_layout LyX-Code
+           | <digit><digit><digit>     (2)
+\end_layout
+
+\begin_layout LyX-Code
+<digit>  ::= 0 (0)             
+\end_layout
+
+\begin_layout LyX-Code
+           | 1 (1)             
+\end_layout
+
+\begin_layout LyX-Code
+           | 2 (2)             
+\end_layout
+
+\begin_layout LyX-Code
+           | 3 (3)             
+\end_layout
+
+\begin_layout LyX-Code
+           | 4 (4)             
+\end_layout
+
+\begin_layout LyX-Code
+           | 5 (5)             
+\end_layout
+
+\begin_layout LyX-Code
+           | 6 (6)             
+\end_layout
+
+\begin_layout LyX-Code
+           | 7 (7)             
+\end_layout
+
+\begin_layout LyX-Code
+           | 8 (8)             
+\end_layout
+
+\begin_layout LyX-Code
+           | 9 (9)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Feature construction 
 \end_layout
 
 \begin_layout Standard
-The proposed method has two major phases.
- During the first phase a procedure based on the Grammatical Evolution technique
- is utilized in order to create new features from the old ones.
- The new features are evaluated using an RBF neural network with 
-\begin_inset Formula $H$
-\end_inset
-
- hidden nodes.
- In the second phase, a hybrid genetic algorithm is to a neural network
- trained using the constructed features of the first phase.
- The main steps of the algorithm used in the first phase are listed below:
+The main steps of the algorithm used in the first phase are listed below:
 \end_layout
 
 \begin_layout Enumerate
@@ -715,7 +991,7 @@ reference "subsec:Transformation-procedure"
 \series bold
 Train
 \series default
- a classification model 
+ an RBF neural network 
 \begin_inset Formula $C_{i}$
 \end_inset
 
@@ -800,16 +1076,7 @@ Selection procedure
  fitness value in this set is selected and the others are discarded.
  Each offspring is created by the parents using the one point crossover.
  During one point crossover the parent chromosomes are cut at a randomly
- selected point and their right-hand side subchromosomes are exchanged as
- show in Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:One-point-crossover."
-
-\end_inset
-
-.
- 
+ selected point and their right-hand side subchromosomes are exchanged.
 \end_layout
 
 \begin_layout Enumerate
@@ -1076,268 +1343,6 @@ The above algorithm first uses an evolutionary approach to estimate a region
  the following subsection.
 \end_layout
 
-\begin_layout Subsection
-Transformation procedure
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:Transformation-procedure"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The BNF grammar used to produce through non linear mappings a new feature
- from the original ones is shown in Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:BNF-grammar-of"
-
-\end_inset
-
-.
- The parameter N denotes the number of original features.
-
-\series bold
- 
-\series default
-Each number in the parentheses denotes the sequence number of the production
- rule.
-
-\series bold
- 
-\series default
-Each chromosome is a series of integer number with each number being in
- the range 
-\begin_inset Formula $[0,255].$
-\end_inset
-
- For example, consider the chromosome 
-\begin_inset Formula $x=\left[9,8,6,4,16,10,17,23,8,14\right]$
-\end_inset
-
- and 
-\begin_inset Formula $N=3$
-\end_inset
-
-.
- The steps to produce the valid expression 
-\begin_inset Formula $f(x)=x_{2}+\cos\left(x_{3}\right)$
-\end_inset
-
- are listed in Table 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:table_with_steps"
-
-\end_inset
-
-.
- The process to produce 
-\begin_inset Formula $N_{f}$
-\end_inset
-
- features from the original ones are shown graphically in Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:figure_construction"
-
-\end_inset
-
- and have as follows:
-\end_layout
-
-\begin_layout Enumerate
-Every chromosome 
-\begin_inset Formula $X$
-\end_inset
-
- is split into 
-\begin_inset Formula $N_{f}$
-\end_inset
-
- parts.
- Each part 
-\begin_inset Formula $g_{i}$
-\end_inset
-
- will be used to construct a feature.
-\end_layout
-
-\begin_layout Enumerate
-For every part 
-\begin_inset Formula $g_{i}$
-\end_inset
-
- construct a feature 
-\begin_inset Formula $f_{i}$
-\end_inset
-
- using the grammar given in 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:BNF-grammar-of"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-BNF grammar of the proposed method.
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:BNF-grammar-of"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout LyX-Code
-S::=<expr>   (0) 
-\end_layout
-
-\begin_layout LyX-Code
-<expr> ::=  (<expr> <op> <expr>)  (0)             
-\end_layout
-
-\begin_layout LyX-Code
-           | <func> ( <expr> )    (1)             
-\end_layout
-
-\begin_layout LyX-Code
-           |<terminal>            (2) 
-\end_layout
-
-\begin_layout LyX-Code
-<op> ::=     +      (0)             
-\end_layout
-
-\begin_layout LyX-Code
-           | -      (1)             
-\end_layout
-
-\begin_layout LyX-Code
-           | *      (2)             
-\end_layout
-
-\begin_layout LyX-Code
-           | /      (3)
-\end_layout
-
-\begin_layout LyX-Code
-<func> ::=   sin  (0)             
-\end_layout
-
-\begin_layout LyX-Code
-           | cos  (1)             
-\end_layout
-
-\begin_layout LyX-Code
-           |exp   (2)             
-\end_layout
-
-\begin_layout LyX-Code
-           |log   (3)
-\end_layout
-
-\begin_layout LyX-Code
-<terminal>::=<xlist>                (0)                      
-\end_layout
-
-\begin_layout LyX-Code
-           |<digitlist>.<digitlist> (1)
-\end_layout
-
-\begin_layout LyX-Code
-<xlist>::=x1    (0)              
-\end_layout
-
-\begin_layout LyX-Code
-           | x2 (1)              
-\end_layout
-
-\begin_layout LyX-Code
-           ………             
-\end_layout
-
-\begin_layout LyX-Code
-           | xN (N)
-\end_layout
-
-\begin_layout LyX-Code
-<digitlist>::=<digit>                  (0)                 
-\end_layout
-
-\begin_layout LyX-Code
-           | <digit><digit>            (1)
-\end_layout
-
-\begin_layout LyX-Code
-           | <digit><digit><digit>     (2)
-\end_layout
-
-\begin_layout LyX-Code
-<digit>  ::= 0 (0)             
-\end_layout
-
-\begin_layout LyX-Code
-           | 1 (1)             
-\end_layout
-
-\begin_layout LyX-Code
-           | 2 (2)             
-\end_layout
-
-\begin_layout LyX-Code
-           | 3 (3)             
-\end_layout
-
-\begin_layout LyX-Code
-           | 4 (4)             
-\end_layout
-
-\begin_layout LyX-Code
-           | 5 (5)             
-\end_layout
-
-\begin_layout LyX-Code
-           | 6 (6)             
-\end_layout
-
-\begin_layout LyX-Code
-           | 7 (7)             
-\end_layout
-
-\begin_layout LyX-Code
-           | 8 (8)             
-\end_layout
-
-\begin_layout LyX-Code
-           | 9 (9)
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Section
 Experiments 
 \begin_inset CommandInset label
@@ -1401,7 +1406,7 @@ noprefix "false"
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1964,7 +1969,7 @@ noprefix "false"
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -2647,7 +2652,7 @@ ZO_NF_S
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -3899,7 +3904,23 @@ ms, Expert Systems with Applications
 38
 \series default
 , pp.
- 9991-9999, 2011 
+ 9991-9999, 2011
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbf1"
+literal "false"
+
+\end_inset
+
+J.
+ Park and I.
+ W.
+ Sandberg, Universal Approximation Using Radial-Basis-Function Networks,
+ Neural Computation 3, pp.
+ 246-257, 1991.
 \end_layout
 
 \begin_layout Bibliography
