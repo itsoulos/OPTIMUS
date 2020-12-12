@@ -107,7 +107,7 @@ A hybrid procedure that incorporates Grammatical Evolution and a weight
  are created from the original ones and in second phase a hybrid genetic
  algorithm is used to train neural networks on the previously created features.
  The proposed procedure is applied on a wide range of classification and
- regression problems from the relevant litearature and the results are reported
+ regression problems from the relevant literature and the results are reported
  and discussed.
 \end_layout
 
@@ -200,11 +200,11 @@ In the above equation the set
 \end_inset
 
  .
- In many cases the neural netork 
+ In many cases the neural network 
 \begin_inset Formula $N(\overrightarrow{x},\overrightarrow{w})$
 \end_inset
 
- can be expressed as a weighted sumation of processing units as proposed
+ can be expressed as a weighted summation of processing units as proposed
  in 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -233,8 +233,29 @@ where
 \begin_inset Formula $\overrightarrow{x}$
 \end_inset
 
-.
- From the above equation, the dimension of weight vector 
+ and 
+\begin_inset Formula $\sigma(x)$
+\end_inset
+
+ is the sigmoid function defined as: 
+\begin_inset Formula 
+\begin{equation}
+\sigma(x)=\frac{1}{1+\exp(-x)}\label{eq:sig}
+\end{equation}
+
+\end_inset
+
+From the equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:nn"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ one can obtain that the dimension of weight vector 
 \begin_inset Formula $w$
 \end_inset
 
@@ -315,7 +336,7 @@ Excessive computational times, because they require processing time proportional
 \end_inset
 
 .
- A discussion on the effects of the dimensionality on neural netwotks is
+ A discussion on the effects of the dimensionality on neural networks is
  provided in 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -345,7 +366,7 @@ literal "false"
 \begin_layout Itemize
 The ovetfitting problem.
  It is common for these methods to produce poorer results when they are
- applied to data (test data) not previosly used in the optimization process.
+ applied to data (test data) not previously used in the optimization process.
  This problem is discussed in detail in the article of Geman et all 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -556,10 +577,11 @@ noprefix "false"
 .
  In the second phase, a hybrid genetic algorithm is to a neural network
  trained using the constructed features of the first phase.
+ 
 \end_layout
 
 \begin_layout Subsection
-Transformation procedure
+The usage of Grammatical Evolution
 \begin_inset CommandInset label
 LatexCommand label
 name "subsec:Transformation-procedure"
@@ -570,42 +592,52 @@ name "subsec:Transformation-procedure"
 \end_layout
 
 \begin_layout Standard
-Grammatical evolution is a genetic programming procedure with chromosomes
- being expressed as vectors of integers.
- Each element of the vector denotes a production rule from the corresponding
- grammar.
+Grammatical evolution is a genetic programming procedure where the chromosomes
+ are represent production rules from a BNF grammar.
  The production procedure starts from the start symbol of the grammar and
  produces programs by replacing non terminal symbols with the right hand
  of the production rules that will be selected according to the value of
- each element in the chromosome
-\end_layout
-
-\begin_layout Standard
-The BNF grammar used to produce through non linear mappings a new feature
- from the original ones is shown in Figure 
+ each element in the chromosome.
+ In the proposed method the BNF grammar of the Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:BNF-grammar-of"
 
 \end_inset
 
-.
+ was used to create a new feature from the original ones.
  The parameter N denotes the number of original features.
+ 
+\begin_inset Formula $[0,255].$
+\end_inset
+
+ For example, consider the chromosome 
+\begin_inset Formula $x=\left[9,8,6,4,16,10,17,23,8,14\right]$
+\end_inset
+
+ and 
+\begin_inset Formula $N=3$
+\end_inset
+
+.
+ The steps to produce the valid expression 
+\begin_inset Formula $f(x)=x_{2}+\cos\left(x_{3}\right)$
+\end_inset
+
+ are listed in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:table_with_steps"
+
+\end_inset
+
+.
 
 \series bold
  
 \series default
 Each number in the parentheses denotes the sequence number of the production
  rule.
-
-\series bold
- 
-\series default
-Each chromosome is a series of integer number with each number being in
- the range 
-\begin_inset Formula $[0,255].$
-\end_inset
-
  The process to produce 
 \begin_inset Formula $N_{f}$
 \end_inset
@@ -615,7 +647,7 @@ Each chromosome is a series of integer number with each number being in
 
 \begin_layout Enumerate
 Every chromosome 
-\begin_inset Formula $X$
+\begin_inset Formula $Z$
 \end_inset
 
  is split into 
@@ -636,7 +668,7 @@ For every part
 \end_inset
 
  construct a feature 
-\begin_inset Formula $f_{i}$
+\begin_inset Formula $t_{i}$
 \end_inset
 
  using the grammar given in 
@@ -649,11 +681,31 @@ reference "fig:BNF-grammar-of"
 
 \end_layout
 
+\begin_layout Enumerate
+Create a mapping function 
+\begin_inset Formula 
+\begin{equation}
+G(\overrightarrow{x},Z)=\left(t_{1}\left(\overrightarrow{x},Z\right),t_{2}\left(\overrightarrow{x},Z\right),\ldots,t_{N_{f}}\left(\overrightarrow{x},Z\right)\right)\label{eq:mapping}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+ is a pattern from the original set and 
+\begin_inset Formula $Z$
+\end_inset
+
+ is the chromosome.
+\end_layout
+
 \begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -801,10 +853,436 @@ S::=<expr>   (0)
 \end_inset
 
 
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Steps to produce a valid expression from the BNF grammar.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:table_with_steps"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="12" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+String
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Chromosome
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Operation
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+<expr>
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9,8,6,4,16,10,17,23,8,14
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $9\mod3=0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+(<expr><op><expr>)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8,6,4,16,10,17,23,8,14
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $8\mod3=2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+(<terminal><op><expr>)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6,4,16,10,17,23,8,14
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $6\mod2=0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+(<xlist><op><expr>)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4,16,10,17,23,8,14
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4\mod3=1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+(x2<op><expr>)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+16,10,17,23,8,14
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $16\mod4=0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+(x2+<expr>)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10,17,23,8,14
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10\mod3=1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+(x2+<func>(<expr>))
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17,23,8,14
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $17\mod4=1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+(x2+cos(<expr>))
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+23,8,14
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $23\mod2=1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+(x2+cos(<terminal>))
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8,14
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $8\mod2=0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+(x2+cos(<xlist>))
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+14
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $14\mod3=2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+(x2+cos(x3))
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
 Feature construction 
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Feature-construction"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -830,6 +1308,14 @@ Initialization step
 Set
 \series default
  iter=0, the current generation number.
+\end_layout
+
+\begin_layout Enumerate
+Set 
+\begin_inset Formula $\mbox{TR}=\left\{ \left(\overrightarrow{x_{1}},y_{1}\right),\left(\overrightarrow{x_{2}},y_{2}\right),\ldots,\left(\overrightarrow{x_{M}},y_{M}\right)\right\} $
+\end_inset
+
+ the original train set.
 \end_layout
 
 \begin_layout Enumerate
@@ -862,7 +1348,7 @@ Initialize
 \end_inset
 
  the integer chromosomes 
-\begin_inset Formula $X_{i},i=1\ldots N_{c}$
+\begin_inset Formula $Z_{i},i=1\ldots N_{c}$
 \end_inset
 
  
@@ -945,7 +1431,11 @@ Calculate
 \begin_inset Formula $f_{i}$
 \end_inset
 
- for every chromosome of the population:
+ for every chromosome 
+\begin_inset Formula $Z_{i}$
+\end_inset
+
+ of the population:
 \begin_inset CommandInset label
 LatexCommand label
 name "enu:Calculate-the-corresponding"
@@ -963,9 +1453,9 @@ name "enu:Calculate-the-corresponding"
 \begin_layout Enumerate
 
 \series bold
-Transform
+Use
 \series default
- the original train data using the procedure described in subsection 
+ the procedure described in subsection 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "subsec:Transformation-procedure"
@@ -982,51 +1472,42 @@ reference "subsec:Transformation-procedure"
 \begin_layout Enumerate
 
 \series bold
-Train
+Create
 \series default
- an RBF neural network 
-\begin_inset Formula $C_{i}$
-\end_inset
-
- using the following train error
+ a modified training set 
 \begin_inset Formula 
 \begin{equation}
-E=\sum_{j=1}^{M}\left(C_{i}\left(x_{j}\right)-t_{j}\right)^{2}
+\mbox{TN}=\left\{ \left(G\left(\overrightarrow{x_{1}},Z_{i}\right),y_{1}\right),\left(G\left(\overrightarrow{x_{2}},Z_{i}\right),y_{2}\right),\ldots,\left(G\left(\overrightarrow{x_{M}},Z_{i}\right),y_{M}\right)\right\} 
 \end{equation}
 
 \end_inset
 
-where 
-\begin_inset Formula $M$
-\end_inset
-
- denotes the number of input patterns in train data, 
-\begin_inset Formula $x_{j}$
-\end_inset
-
- is the 
-\begin_inset Formula $j$
-\end_inset
-
- pattern of the modified train data and 
-\begin_inset Formula $t_{j}$
-\end_inset
-
- is the desired output.
  
 \end_layout
 
 \begin_layout Enumerate
 
 \series bold
-Assign
+Train
 \series default
- the train error 
-\begin_inset Formula $E$
+ an RBF neural network 
+\begin_inset Formula $C$
 \end_inset
 
- to fitness value 
-\begin_inset Formula $f_{i}$
+ with 
+\begin_inset Formula $H$
+\end_inset
+
+ processing units on the modified training set 
+\begin_inset Formula $\mbox{TN }$
+\end_inset
+
+using the following train error
+\begin_inset Formula 
+\begin{equation}
+f_{i}=\sum_{j=1}^{M}\left(C\left(G\left(\overrightarrow{x_{j}},Z_{i}\right)\right)-y_{j}\right)^{2}
+\end{equation}
+
 \end_inset
 
 
@@ -1057,12 +1538,12 @@ Selection procedure
 \begin_inset Formula $\left(1-p_{s}\right)\times N_{c}$
 \end_inset
 
- chromosomes are transfered to the next generation.
+ chromosomes are transferred to the next generation.
  The rest of the chromosomes are substituted by offsprings created through
  crossover procedure: For every offspring two chromosomes (parents) are
  selected from the old population using tournament selection.
  The procedure of tournament selection has as follows: A set of 
-\begin_inset Formula $N>1$
+\begin_inset Formula $K>1$
 \end_inset
 
  randomly selected chromosomes is produced and the chromosome with the best
@@ -1091,12 +1572,6 @@ Mutation procedure:
 \end_inset
 
  then the corresponding element is randomly altered.
- For the case of grammatical evolution simply a new integer in the range
- 
-\begin_inset Formula $[0,255]$
-\end_inset
-
- is produced.
 \end_layout
 
 \begin_layout Enumerate
@@ -1147,7 +1622,7 @@ the best value in the population, denoted as
  for the corresponding chromosome 
 \series bold
 
-\begin_inset Formula $x_{l}$
+\begin_inset Formula $Z_{l}$
 \end_inset
 
  
@@ -1165,40 +1640,89 @@ name "enu:Obtain-the-best"
 \end_layout
 
 \begin_layout Subsection
-Application of genetic algorithm
+Weight decay mechanism
 \end_layout
 
 \begin_layout Standard
-The steps of the hybrid genetic algorithm used in the second phase are the
- following:
-\end_layout
+The quantity 
+\begin_inset Formula $x$
+\end_inset
 
-\begin_layout Standard
-The proposed algorithm has the following steps:
-\end_layout
-
-\begin_layout Enumerate
-Using an Genetic algorithm described in detail in subsection 
+ in the equation 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "subsec:The-genetic-algorithm"
+reference "eq:sig"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
- and the function 
-\begin_inset Formula $\mathcal{V}\left(N\left(\overrightarrow{x},\overrightarrow{w}\right),F\right)$
+ of the sigmoid function is calculated through many calculations involving
+ the input patterns as well as the weight vector.
+ If the absolute value of 
+\begin_inset Formula $x$
 \end_inset
 
- 
-\series bold
-compute
-\series default
- the best vector of weights 
-\begin_inset Formula $p$
+ is too large i.e greater than 20, then the sigmoid function tends to be
+ zero or one and the neural network may lost its generalization capabilities.
+ In order to measure the above effect we can define the bound quantity 
+\begin_inset Formula $B\left(N\left(\overrightarrow{x},\overrightarrow{w}\right),F\right)$
+\end_inset
+
+ as shown in the Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:CalculationBound"
+plural "false"
+caps "false"
+noprefix "false"
+
 \end_inset
 
 .
  
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Calculation of the bounding quantity for neural network 
+\begin_inset Formula $N(x,w)$
+\end_inset
+
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:CalculationBound"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $b=0$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Enumerate
@@ -1206,11 +1730,364 @@ compute
 \series bold
 For
 \series default
- every weight 
-\begin_inset Formula $p_{i}$
+ 
+\begin_inset Formula $i=1..K$
 \end_inset
 
  
+\series bold
+Do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $j=1..M$
+\end_inset
+
+ 
+\series bold
+Do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $v=\sum_{kT=1}^{d}w_{(d+2)i-(d+i)+k}x_{jk}+w_{(d+2)i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+If
+\series default
+ 
+\begin_inset Formula $\left|v\right|>F$
+\end_inset
+
+ 
+\series bold
+set
+\series default
+ 
+\begin_inset Formula $b=b+1$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Return
+\series default
+ 
+\begin_inset Formula $\frac{b}{K\star M}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Application of genetic algorithm
+\end_layout
+
+\begin_layout Standard
+The steps of the hybrid genetic algorithm used in the second phase of the
+ proposed algorithm are the following:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initialization step
+\series default
+
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ iter=0, the current generation number.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ TN the modified training set, where
+\begin_inset Formula 
+\begin{equation}
+\mbox{TN}=\left\{ \left(G\left(\overrightarrow{x_{1}},Z_{l}\right),y_{1}\right),\left(G\left(\overrightarrow{x_{2}},Z_{l}\right),y_{2}\right),\ldots,\left(G\left(\overrightarrow{x_{M}},Z_{l}\right),y_{M}\right)\right\} 
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initialize
+\series default
+ randomly the double precision chromosomes 
+\begin_inset Formula $D_{i},i=1\ldots N_{c}$
+\end_inset
+
+ in range 
+\begin_inset Formula $\left[L_{N},R_{N}\right]$
+\end_inset
+
+.
+ The size of each chromosome is set to 
+\begin_inset Formula $W=\left(N_{f}+2\right)H$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Termination check.
+
+\series default
+ 
+\series bold
+If
+\series default
+ iter>=
+\begin_inset Formula $N_{g}$
+\end_inset
+
+ 
+\series bold
+goto
+\series default
+ step 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:Local-Search-step."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:Termination-check.-If-1"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Fitness calculation step
+\series default
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ every chromosome 
+\begin_inset Formula $D_{i}$
+\end_inset
+
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Calculate
+\series default
+ the quantity 
+\begin_inset Formula $B_{i}=\sum_{x\in\mbox{TN}}\left(B\left(N\left(x,D_{i}\right),F\right)\right)$
+\end_inset
+
+ using the algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:CalculationBound"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Calculate
+\series default
+ the quantity 
+\begin_inset Formula $E_{i}=\sum_{(x,y)\in\mbox{TN}}\left(N\left(x,D_{i}\right)-y\right)^{2}$
+\end_inset
+
+ , the training error of the neural network where the chromosome 
+\begin_inset Formula $D_{i}$
+\end_inset
+
+ is used as the weight vector.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $f_{i}=-E_{i}\left(1+\lambda B_{i}^{2}\right)$
+\end_inset
+
+, where 
+\begin_inset Formula $\lambda>0$
+\end_inset
+
+ as the fitness of 
+\begin_inset Formula $D_{i}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+End For
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Genetic operations Step
+\series default
+.
+ Apply the same genetic operations as in the first algorithm of subsection
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Feature-construction"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ iter=iter+1 and 
+\series bold
+goto
+\series default
+ step 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:Termination-check.-If-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Local Search step.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:Local-Search-step."
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Obtain 
+\series default
+the best chromosome 
+\begin_inset Formula $D^{*}$
+\end_inset
+
+ in the genetic population.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ i=1..W 
 \series bold
 Do
 \series default
@@ -1228,7 +2105,19 @@ Do
 Set
 \series default
  
-\begin_inset Formula $L_{i}=-\alpha\left|p_{i}\right|$
+\begin_inset Formula $p_{i}=D_{i}^{*}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $LM_{i}=-\alpha\left|p_{i}\right|$
 \end_inset
 
  
@@ -1240,7 +2129,7 @@ Set
 Set
 \series default
  
-\begin_inset Formula $R_{i}=\ \alpha\left|p_{i}\right|$
+\begin_inset Formula $RM_{i}=\ \alpha\left|p_{i}\right|$
 \end_inset
 
  , 
@@ -1267,34 +2156,19 @@ EndFor
 Set
 \series default
  
-\begin_inset Formula $L^{*}=\mathcal{L}\left(\overrightarrow{p},\overrightarrow{L},\overrightarrow{R}\right)$
-\end_inset
-
-.
- The method 
-\begin_inset Formula $\mathcal{L}()$
-\end_inset
-
- is a local optimization method which preserves the rectangular bounds defined
- by the vectors 
-\begin_inset Formula $\left(\overrightarrow{L},\overrightarrow{R}\right)$
-\end_inset
-
-.
- The local method will return a local minimum 
-\begin_inset Formula $\overrightarrow{p*}$
-\end_inset
-
- with the following property: 
-\begin_inset Formula $L_{i}\le p_{i}^{*}\le R_{i},\ i=1..n$
+\begin_inset Formula $L^{*}=\mathcal{L}\left(D^{*},LM,RM\right)$
 \end_inset
 
  where 
-\begin_inset Formula $n$
+\begin_inset Formula $\mathcal{L}()$
 \end_inset
 
- the number of elements for 
-\begin_inset Formula $\overrightarrow{p*}$
+ is a local optimization method that searches for a local optimum of 
+\begin_inset Formula $N\left(x,D^{*}\right)$
+\end_inset
+
+ inside the bounds 
+\begin_inset Formula $\left[\overrightarrow{LM},\overrightarrow{RM}\right]$
 \end_inset
 
 .
@@ -1306,9 +2180,8 @@ literal "true"
 
 \end_inset
 
- local optimization procedure used in the above algorithm.
- The TOLMIN is an extension of the well – known BFGS (Broyden–Fletcher–Goldfarb–
-Shanno) local optimization procedure
+ local optimization procedure used in the above algorithm, which is modified
+ version BFGS (Broyden–Fletcher–Goldfarb–Shanno) local optimization procedure
 \begin_inset CommandInset citation
 LatexCommand citet
 key "bfgs2"
@@ -1320,22 +2193,19 @@ literal "true"
 \end_layout
 
 \begin_layout Enumerate
-Return the vector 
-\begin_inset Formula $\overrightarrow{p*}$
+
+\series bold
+Apply
+\series default
+ the optimized neural network 
+\begin_inset Formula $N\left(x,D^{*}\right)$
 \end_inset
 
- as the located vector for the weights.
+ to the test set, that has been modified using the same transformation procedure
+ as in the train set and report the final results.
 \end_layout
 
-\begin_layout Standard
-The above algorithm first uses an evolutionary approach to estimate a region
- where the neural network has good generalization capabilities and then
- using a local search method optimizes the weights of the neural network
- inside the located region.
- The genetic algorithm utilized by the proposed algorithm is explained in
- the following subsection.
-\end_layout
-
+\end_deeper
 \begin_layout Section
 Experiments 
 \begin_inset CommandInset label
@@ -1348,22 +2218,11 @@ name "sec:Experiments"
 \end_layout
 
 \begin_layout Standard
-The hybrid method was tested against the traditional RBF model (denoted
- as KMEANS RBF) on a series of classification and regression datasets.
- The software for the algorithm was coded using ANSI C++ and the freely
- available QT library, available from 
-\begin_inset Flex URL
-status collapsed
-
-\begin_layout Plain Layout
-
-http://www.qt.io
-\end_layout
-
-\end_inset
-
-.
- All the experiments were conducted using the OpenMP library 
+The proposed method was tested against neural network trained by a genetic
+ algorithm (denoted as MLP GEN) on a series of classification and regression
+ datasets.
+ The software for the algorithm was coded using ANSI C++ and all the experiments
+ were conducted using the OpenMP library 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "openmp"
@@ -1399,7 +2258,7 @@ noprefix "false"
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1423,7 +2282,7 @@ name "tab:Experimental-parameters."
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="7" columns="2">
+<lyxtabular version="3" rows="12" columns="2">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -1563,7 +2422,7 @@ VALUE
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1575,11 +2434,126 @@ VALUE
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 200
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $L_{N}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-10.0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $R_{N}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $F$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20.0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\lambda$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+100.0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\alpha$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5.0
 \end_layout
 
 \end_inset
@@ -1633,7 +2607,7 @@ https://sci2s.ugr.es/keel/
 \series bold
 Balance
 \series default
- dataset:Used to model psychological experimental results.
+ dataset: Used to model psychological experimental results.
  The dataset has 625 instances with 4 features each.
 \end_layout
 
@@ -1653,7 +2627,11 @@ Dermatology
 \series bold
 Glass
 \series default
- dataset:
+ dataset.
+ This dataset contains glass component analysis for glass pieces that belong
+ to 6 classes.
+ The dataset contains 214 examples with 10 features each.
+ 
 \end_layout
 
 \begin_layout Enumerate
@@ -1703,7 +2681,17 @@ Ionosphere
 \series bold
 Parkinsons
 \series default
- dataset:
+ dataset: This dataset
+\begin_inset CommandInset citation
+LatexCommand cite
+key "parkinson"
+literal "false"
+
+\end_inset
+
+ is composed of a range of biomedical voice measurements from 31 people,
+ 23 with Parkinson's disease (PD).The dataset has 22 features.
+ 
 \end_layout
 
 \begin_layout Enumerate
@@ -1763,11 +2751,7 @@ Wdbc
 \series default
  dataset: The Wisconsin diagnostic breast cancer dataset (WDBC) contains
  data for breast tumors.
- The dataset has 
-\series bold
-30
-\series default
- features.
+ The dataset has 30 features.
  
 \end_layout
 
@@ -1822,7 +2806,17 @@ In the third (
 \series bold
 Z_O_N_F_S
 \series default
-) dataset,
+) dataset The dataset consists of five sets (denoted as Z, O, N, F and S)
+ each containing 100 single-channel EEG segments each having 23.6 sec duration.
+ Sets Z and O have been taken from surface EEG recordings of five healthy
+ volunteers with eye open and closed, respectively.
+ Signals in two sets have been measured in seizure-free intervals from five
+ patients in the epileptogenic zone (F) and from the hippocampal formation
+ of the opposite hemisphere of the brain (N).
+ Set S contains seizure activity, selected from all recording sites exhibiting
+ ictal activity.
+ Sets Z and O have been recorded extracranially, whereas sets N, F and S
+ have been recorded intracranially.
 \end_layout
 
 \begin_layout Standard
@@ -1837,15 +2831,26 @@ ftp://lib.stat.cmu.edu/datasets/index.html
 
 \end_inset
 
-: 
+ and other sources: 
 \end_layout
 
 \begin_layout Enumerate
 
 \series bold
-BK 
+BK
 \series default
-dataset
+ dataset.
+ This dataset comes from Smoothing Methods in Statistics 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Stat"
+literal "false"
+
+\end_inset
+
+ and is used to estimate the points scored per minute in a basketball game.
+ The dataset has 96 patterns of 4 features each.
+ 
 \end_layout
 
 \begin_layout Enumerate
@@ -1918,11 +2923,48 @@ Quake
 \end_layout
 
 \begin_layout Enumerate
-Fa dataset
+
+\series bold
+FA
+\series default
+ dataset.
+ The FA dataset contains percentage of body fat, age, weight, height, and
+ ten body circumference measurements.
+ The goal is to fit body fat to the other measurements.
+ The number of the features is 18.
+ The total number of patterns is 252.
+ 
 \end_layout
 
 \begin_layout Enumerate
-Py Dataset
+
+\series bold
+PY
+\series default
+ dataset (Pyrimidines problem).
+ The source of this dataset is the URL: 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+https://www.dcc.fc.up.pt/~ltorgo/Regression/DataSets.html
+\end_layout
+
+\end_inset
+
+ and it is a problem of 27 attributes and 74 number of patterns.
+ The task consists of Learning Quantitative Structure Activity Relationships
+ (QSARs) and provided by 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pydataset"
+literal "false"
+
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -1953,9 +2995,25 @@ noprefix "false"
 \end_inset
 
 .
- The column KMEANS RBF denotes the original RBF network using the Kmeans
- algorithm to estimate the centers and GEN RBF denotes the results using
- the proposed method.
+ The column MLP GEN denotes the neural network with 
+\begin_inset Formula $H$
+\end_inset
+
+ hidden nodes that was trained by a genetic algorithm with 
+\begin_inset Formula $N_{g}$
+\end_inset
+
+ chromosomes and the column FC MLP denotes the proposed method.
+ Also, the column GAIN indicates the percentage gain in test error (classificati
+on or regression) obtained by the proposed method.
+ From the conducted experiments it is evident that the proposed method outperfor
+ms the simple genetic algorithm in terms of efficiency.
+ Also, the percentage gain is too high in many cases like in the regression
+ datasets.
+ On the other hand the proposed method is slower than a simple genetic algorithm
+ because it relies on two steps and every step involves the usage of a genetic
+ algorithm.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -3047,13 +4105,6 @@ PY
 
 \end_layout
 
-\begin_layout Standard
-From the conducted experiments it is evident that the proposed method outperform
-s the Kmeans Rbf in terms of efficiency.
- Also, the percentage gain is too high in many cases like the the regression
- datasets.
-\end_layout
-
 \begin_layout Section
 Conclusions
 \begin_inset CommandInset label
@@ -3065,12 +4116,26 @@ name "sec:Conclusions"
 
 \end_layout
 
+\begin_layout Standard
+A hybrid method was proposed here for classification and regression problems.
+ The method is composed by two steps: during the first step a recently introduce
+d method was used to create artificial features from the original ones.
+ The feature construction method has utilized the commonly used technique
+ of Grammatical Evolution to produce artificial features.
+ The outcome of the first step was the modified train and test sets of the
+ objective problem.
+ During the second step, a hybrid genetic algorithm which preserves the
+ generalization abilities of the neural network was incorporated.
+ The proposed method was tested on a variety of classification and regression
+ problems and the results were very promising.
+\end_layout
+
 \begin_layout Subsection*
 Compliance with Ethical Standards 
 \end_layout
 
 \begin_layout Standard
-All authors declare that they have no has no conict of interest.
+All authors declare that they have no has no conflict of interest.
  
 \end_layout
 
@@ -3993,6 +5058,27 @@ B.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "parkinson"
+literal "false"
+
+\end_inset
+
+Max A.
+ Little, Patrick E.
+ McSharry, Eric J.
+ Hunter, Lorraine O.
+ Ramig (2008), 'Suitability of dysphonia measurements for telemonitoring
+ of Parkinson's disease', IEEE Transactions on Biomedical Engineering 
+\series bold
+56
+\series default
+, pp.
+ 1015-1022, 2009.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "eeg1"
 literal "true"
 
@@ -4037,6 +5123,18 @@ A.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "Stat"
+literal "false"
+
+\end_inset
+
+J.S.
+ Simonoff, Smooting Methods in Statistics, Springer - Verlag, 1996.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "key23"
 literal "true"
 
@@ -4070,6 +5168,31 @@ Mackowiak, P.A., Wasserman, S.S., Levine, M.M., 1992.
  Med.
  Assoc.
  268, 1578–1580
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pydataset"
+literal "false"
+
+\end_inset
+
+R.D.
+ King, S.
+ Muggleton, R.
+ Lewis, M.J.E.
+ Sternberg, Proc.
+ Nat.
+ Acad.
+ Sci.
+ USA 
+\series bold
+89
+\series default
+, pp.
+ 11322–11326, 1992.
+ 
 \end_layout
 
 \end_body

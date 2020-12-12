@@ -1,0 +1,939 @@
+%% LyX 2.3.6 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage[active]{srcltx}
+\usepackage{float}
+\usepackage{url}
+\usepackage{amsmath}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+\floatstyle{ruled}
+\newfloat{algorithm}{tbp}{loa}
+\providecommand{\algorithmname}{Algorithm}
+\floatname{algorithm}{\protect\algorithmname}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\newenvironment{lyxcode}
+	{\par\begin{list}{}{
+		\setlength{\rightmargin}{\leftmargin}
+		\setlength{\listparindent}{0pt}% needed for AMS classes
+		\raggedright
+		\setlength{\itemsep}{0pt}
+		\setlength{\parsep}{0pt}
+		\normalfont\ttfamily}%
+	 \item[]}
+	{\end{list}}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+\title{Constructing features using a hybrid genetic algorithm}
+\author{Ioannis G. Tsoulos\thanks{Corresponding author. Email: itsoulos@uoi.gr}}
+\date{Department of Informatics and Telecommunications, University of Ioannina,
+Greece}
+\maketitle
+\begin{abstract}
+A hybrid procedure that incorporates Grammatical Evolution and a weight
+decaying technique is proposed here for classification and regression
+problems. The procedure is divided in two main phases: in the first
+phase new features are created from the original ones and in second
+phase a hybrid genetic algorithm is used to train neural networks
+on the previously created features. The proposed procedure is applied
+on a wide range of classification and regression problems from the
+relevant literature and the results are reported and discussed.
+\end{abstract}
+\textbf{Keywords}: Genetic algorithm, machine learning, neural networks,
+Grammatical Evolution.
+
+\section{Introduction}
+
+Neural networks are well - established parametric tools \cite{nn1,nn2},
+used with success in many areas such as physics \cite{nnphysics1,nnphysics2,nnphysics3},
+chemistry \cite{nnchem1,nnchem2,nnchem3}, economics \cite{nnecon1,nnecon2,nncecon3},
+medicine \cite{nnmed1,nnmed2} etc. A neural network usually is expressed
+as a function $N(\overrightarrow{x},\overrightarrow{w})$, where$\overrightarrow{x}$
+is the input vector and $\overrightarrow{w}$ is the weight vector
+to be calculated through some optimization process. This optimization
+process should estimate the weight vector by minimizing the following
+error function:
+\begin{equation}
+E\left(N\left(\overrightarrow{x},\overrightarrow{w}\right)\right)=\sum_{i=1}^{M}\left(N\left(\overrightarrow{x}_{i},\overrightarrow{w}\right)-y_{i}\right)^{2}\label{eq:eq1}
+\end{equation}
+In the above equation the set $\left(\overrightarrow{x_{i}},y_{i}\right),\ i=1,...,M$
+is the data used to train the neural network, where symbol $y_{i}$
+represents the actual output for the point $\overrightarrow{x_{i}}$
+. In many cases the neural network $N(\overrightarrow{x},\overrightarrow{w})$
+can be expressed as a weighted summation of processing units as proposed
+in \cite{nnc} and defined such as:
+\begin{equation}
+N\left(\overrightarrow{x},\overrightarrow{w}\right)=\sum_{i=1}^{H}w_{(d+2)i-(d+1)}\sigma\left(\sum_{j=1}^{d}x_{j}w_{(d+2)i-(d+1)+j}+w_{(d+2)i}\right)\label{eq:nn}
+\end{equation}
+where $H$ is the number of processing units of the neural network
+and $d$ is the dimension of vector $\overrightarrow{x}$ and $\sigma(x)$
+is the sigmoid function defined as: 
+\begin{equation}
+\sigma(x)=\frac{1}{1+\exp(-x)}\label{eq:sig}
+\end{equation}
+From the equation \ref{eq:nn} one can obtain that the dimension of
+weight vector $w$ is computed as: $w=(d+2)H$. The function of equation
+\ref{eq:eq1} has been minimized with a variety of optimization methods
+during the past years such as: the Back Propagation method \cite{bpnn,bpnn2},
+the RPROP method \cite{rpropnn,rpropnn3,rpropnn2}, Quasi Newton methods
+\cite{quasinn,quasinn2}, Genetic Algorithms \cite{geneticnn,geneticnn2},
+Particle Swarm Optimization \cite{psonn,psonn2} etc. All the previously
+mentioned methods have to overcome two major problems:
+\begin{itemize}
+\item Excessive computational times, because they require processing time
+proportional to the dimension of the objective problem and the number
+of processing units as well. For example, a neural network of $H=10$
+processing units applied to a test data with $d=3$, is considered
+as an optimization problem with dimension $w=(d+2)H=50$. A discussion
+on the effects of the dimensionality on neural networks is provided
+in \cite{nndimension}. A common approach to overcome this problem
+is to use the PCA technique to reduce the dimensionality of the objective
+problem \cite{nnpca1,nnpca2,nnpca3} i.e. the parameter $d$.
+\item The ovetfitting problem. It is common for these methods to produce
+poorer results when they are applied to data (test data) not previously
+used in the optimization process. This problem is discussed in detail
+in the article of Geman et all \cite{nngeman} as well as in the article
+of Hawkins \cite{nnhawkins}. A variety of methods have been proposed
+to overcome this problem such as are weight sharing \cite{nnsharing1},
+pruning \cite{nnprunning1,nnprunning2,nnprunning3}, the dropout technique
+\cite{nndrop1}, early stopping \cite{nnearly1,nnearly2}, and weight
+decaying \cite{nndecay1,nndecay2}. 
+\end{itemize}
+This article proposes a method that tackle both the above problems
+using two major steps. During the first step new features are created
+from the original ones using a procedure based on the Grammatical
+Evolution technique \cite{ge1}. This procedure was introduced in
+the work of Gavrilis et al \cite{fc1} and it has been with success
+in many areas such as Spam Identification\textbf{ }\cite{fc2}\textbf{,
+}Fetal heart classification\textbf{ }\cite{fc3}\textbf{, }epileptic
+oscillations in clinical intracranial electroencephalograms \cite{fc4}
+etc. The outcomes of the first phase are the modified training and
+testing data according to the created features. During the second
+step, a genetic algorithm that incorporates a weight decaying procedure
+is used to train a neural network on the modified data of the first
+step.
+
+The rest of this article is organized as follows: in section \ref{sec:Method-description}
+the proposed method is described in detail, in section \ref{sec:Experiments}
+the proposed method is tested on a series of well know datasets from
+the relevant literature and the results are compared to those of a
+simple genetic algorithm and finally in section \ref{sec:Conclusions}
+some conclusions are presented.
+
+\section{Method description\label{sec:Method-description}}
+
+The proposed method has two major phases. During the first phase a
+procedure based on the Grammatical Evolution technique is utilized
+in order to create new features from the old ones. The new features
+are evaluated using an RBF \cite{rbf1} neural network with $H$ hidden
+nodes. The RBF network is used during this phase instead of a neural
+network because the training procedure for RBF networks are must faster
+than these of neural networks of the Equation \ref{eq:nn}. In the
+second phase, a hybrid genetic algorithm is to a neural network trained
+using the constructed features of the first phase. 
+
+\subsection{The usage of Grammatical Evolution\label{subsec:Transformation-procedure}}
+
+Grammatical evolution is a genetic programming procedure where the
+chromosomes are represent production rules from a BNF grammar. The
+production procedure starts from the start symbol of the grammar and
+produces programs by replacing non terminal symbols with the right
+hand of the production rules that will be selected according to the
+value of each element in the chromosome. In the proposed method the
+BNF grammar of the Figure \ref{fig:BNF-grammar-of} was used to create
+a new feature from the original ones. The parameter N denotes the
+number of original features. $[0,255].$ For example, consider the
+chromosome $x=\left[9,8,6,4,16,10,17,23,8,14\right]$ and $N=3$.
+The steps to produce the valid expression $f(x)=x_{2}+\cos\left(x_{3}\right)$
+are listed in Table \ref{tab:table_with_steps}.\textbf{ }Each number
+in the parentheses denotes the sequence number of the production rule.
+The process to produce $N_{f}$ features from the original  have as
+follows:
+\begin{enumerate}
+\item Every chromosome $Z$ is split into $N_{f}$ parts. Each part $g_{i}$
+will be used to construct a feature.
+\item For every part $g_{i}$ construct a feature $t_{i}$ using the grammar
+given in \ref{fig:BNF-grammar-of}
+\item Create a mapping function 
+\begin{equation}
+G(\overrightarrow{x},Z)=\left(t_{1}\left(\overrightarrow{x},Z\right),t_{2}\left(\overrightarrow{x},Z\right),\ldots,t_{N_{f}}\left(\overrightarrow{x},Z\right)\right)\label{eq:mapping}
+\end{equation}
+where $\overrightarrow{x}$ is a pattern from the original set and
+$Z$ is the chromosome.
+\end{enumerate}
+\begin{figure}
+\caption{BNF grammar of the proposed method.\label{fig:BNF-grammar-of}}
+
+\begin{lyxcode}
+S::=<expr>~~~(0)~
+
+<expr>~::=~~(<expr>~<op>~<expr>)~~(0)~~~~~~~~~~~~~
+
+~~~~~~~~~~~|~<func>~(~<expr>~)~~~~(1)~~~~~~~~~~~~~
+
+~~~~~~~~~~~|<terminal>~~~~~~~~~~~~(2)~
+
+<op>~::=~~~~~+~~~~~~(0)~~~~~~~~~~~~~
+
+~~~~~~~~~~~|~-~~~~~~(1)~~~~~~~~~~~~~
+
+~~~~~~~~~~~|~{*}~~~~~~(2)~~~~~~~~~~~~~
+
+~~~~~~~~~~~|~/~~~~~~(3)
+
+<func>~::=~~~sin~~(0)~~~~~~~~~~~~~
+
+~~~~~~~~~~~|~cos~~(1)~~~~~~~~~~~~~
+
+~~~~~~~~~~~|exp~~~(2)~~~~~~~~~~~~~
+
+~~~~~~~~~~~|log~~~(3)
+
+<terminal>::=<xlist>~~~~~~~~~~~~~~~~(0)~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~|<digitlist>.<digitlist>~(1)
+
+<xlist>::=x1~~~~(0)~~~~~~~~~~~~~~
+
+~~~~~~~~~~~|~x2~(1)~~~~~~~~~~~~~~
+
+~~~~~~~~~~~\dots \dots \dots{}~~~~~~~~~~~~~
+
+~~~~~~~~~~~|~xN~(N)
+
+<digitlist>::=<digit>~~~~~~~~~~~~~~~~~~(0)~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~|~<digit><digit>~~~~~~~~~~~~(1)
+
+~~~~~~~~~~~|~<digit><digit><digit>~~~~~(2)
+
+<digit>~~::=~0~(0)~~~~~~~~~~~~~
+
+~~~~~~~~~~~|~1~(1)~~~~~~~~~~~~~
+
+~~~~~~~~~~~|~2~(2)~~~~~~~~~~~~~
+
+~~~~~~~~~~~|~3~(3)~~~~~~~~~~~~~
+
+~~~~~~~~~~~|~4~(4)~~~~~~~~~~~~~
+
+~~~~~~~~~~~|~5~(5)~~~~~~~~~~~~~
+
+~~~~~~~~~~~|~6~(6)~~~~~~~~~~~~~
+
+~~~~~~~~~~~|~7~(7)~~~~~~~~~~~~~
+
+~~~~~~~~~~~|~8~(8)~~~~~~~~~~~~~
+
+~~~~~~~~~~~|~9~(9)
+\end{lyxcode}
+\end{figure}
+\begin{table}
+\caption{Steps to produce a valid expression from the BNF grammar.\label{tab:table_with_steps}}
+
+\begin{tabular}{|c|c|c|}
+\hline 
+String & Chromosome & Operation\tabularnewline
+\hline 
+\hline 
+<expr> & 9,8,6,4,16,10,17,23,8,14 & $9\mod3=0$\tabularnewline
+\hline 
+(<expr><op><expr>) & 8,6,4,16,10,17,23,8,14 & $8\mod3=2$\tabularnewline
+\hline 
+(<terminal><op><expr>) & 6,4,16,10,17,23,8,14 & $6\mod2=0$\tabularnewline
+\hline 
+(<xlist><op><expr>) & 4,16,10,17,23,8,14 & $4\mod3=1$\tabularnewline
+\hline 
+(x2<op><expr>) & 16,10,17,23,8,14 & $16\mod4=0$\tabularnewline
+\hline 
+(x2+<expr>) & 10,17,23,8,14 & $10\mod3=1$\tabularnewline
+\hline 
+(x2+<func>(<expr>)) & 17,23,8,14 & $17\mod4=1$\tabularnewline
+\hline 
+(x2+cos(<expr>)) & 23,8,14 & $23\mod2=1$\tabularnewline
+\hline 
+(x2+cos(<terminal>)) & 8,14 & $8\mod2=0$\tabularnewline
+\hline 
+(x2+cos(<xlist>)) & 14 & $14\mod3=2$\tabularnewline
+\hline 
+(x2+cos(x3)) &  & \tabularnewline
+\hline 
+\end{tabular}
+\end{table}
+
+
+\subsection{Feature construction \label{subsec:Feature-construction}}
+
+The main steps of the algorithm used in the first phase are listed
+below:
+\begin{enumerate}
+\item \textbf{Initialization step}
+
+\begin{enumerate}
+\item \textbf{Set} iter=0, the current generation number.
+\item Set $\mbox{TR}=\left\{ \left(\overrightarrow{x_{1}},y_{1}\right),\left(\overrightarrow{x_{2}},y_{2}\right),\ldots,\left(\overrightarrow{x_{M}},y_{M}\right)\right\} $
+the original train set.
+\item \textbf{Set} $N_{c}$ the number of chromosomes\textbf{ }and $N_{f}$
+the number of constructed features.
+\item \textbf{Initialize} randomly in range $[0,255]$ the integer chromosomes
+$Z_{i},i=1\ldots N_{c}$ 
+\item \textbf{Set} $N_{g}$ the maximum number of generations.
+\item \textbf{Set} $p_{s}\in[0,1]$ as the selection rate and $p_{m}\in[0,1]$
+the mutation rate.
+\end{enumerate}
+\item \textbf{Termination check.} \textbf{If} iter>=$N_{g}$ \textbf{goto}
+step \ref{enu:Obtain-the-best}. \label{enu:Termination-check.-If}
+\item \textbf{Calculate} the fitness $f_{i}$ for every chromosome $Z_{i}$
+of the population:\label{enu:Calculate-the-corresponding}
+
+\begin{enumerate}
+\item \textbf{Use} the procedure described in subsection \ref{subsec:Transformation-procedure}
+and create $N_{f}$ features.
+\item \textbf{Create} a modified training set 
+\begin{equation}
+\mbox{TN}=\left\{ \left(G\left(\overrightarrow{x_{1}},Z_{i}\right),y_{1}\right),\left(G\left(\overrightarrow{x_{2}},Z_{i}\right),y_{2}\right),\ldots,\left(G\left(\overrightarrow{x_{M}},Z_{i}\right),y_{M}\right)\right\} 
+\end{equation}
+ 
+\item \textbf{Train} an RBF neural network $C$ with $H$ processing units
+on the modified training set $\mbox{TN }$using the following train
+error
+\begin{equation}
+f_{i}=\sum_{j=1}^{M}\left(C\left(G\left(\overrightarrow{x_{j}},Z_{i}\right)\right)-y_{j}\right)^{2}
+\end{equation}
+\end{enumerate}
+\item \textbf{Genetic Operators}
+
+\begin{enumerate}
+\item \textbf{Selection procedure}: The chromosomes are sorted in descending
+order according to their fitness value. The first $\left(1-p_{s}\right)\times N_{c}$
+chromosomes are transferred to the next generation. The rest of the
+chromosomes are substituted by offsprings created through crossover
+procedure: For every offspring two chromosomes (parents) are selected
+from the old population using tournament selection. The procedure
+of tournament selection has as follows: A set of $K>1$ randomly selected
+chromosomes is produced and the chromosome with the best fitness value
+in this set is selected and the others are discarded. Each offspring
+is created by the parents using the one point crossover. During one
+point crossover the parent chromosomes are cut at a randomly selected
+point and their right-hand side subchromosomes are exchanged.
+\item \textbf{Mutation procedure:} For every element of each chromosome
+a random number $r$ in range $\left[0,1\right]$ is produced. If
+$r\le p_{m}$ then the corresponding element is randomly altered.
+\item \textbf{Replace} the $p_{s}\times N_{c}$ worst chromosomes in the
+population with the offsprings created by the genetic operators.
+\end{enumerate}
+\item \textbf{Set} iter=iter+1 and \textbf{goto} Step \ref{enu:Termination-check.-If}.
+\item \textbf{Obtain }the best value in the population, denoted as $f_{l}$
+for the corresponding chromosome \textbf{$Z_{l}$ }and Terminate.\textbf{\label{enu:Obtain-the-best}}
+\end{enumerate}
+
+\subsection{Weight decay mechanism}
+
+The quantity $x$ in the equation \ref{eq:sig} of the sigmoid function
+is calculated through many calculations involving the input patterns
+as well as the weight vector. If the absolute value of $x$ is too
+large i.e greater than 20, then the sigmoid function tends to be zero
+or one and the neural network may lost its generalization capabilities.
+In order to measure the above effect we can define the bound quantity
+$B\left(N\left(\overrightarrow{x},\overrightarrow{w}\right),F\right)$
+as shown in the Algorithm \ref{alg:CalculationBound}. 
+
+\begin{algorithm}
+\caption{Calculation of the bounding quantity for neural network $N(x,w)$.\label{alg:CalculationBound}}
+
+\begin{enumerate}
+\item \textbf{Set} $b=0$
+\item \textbf{For} $i=1..K$ \textbf{Do}
+\begin{enumerate}
+\item \textbf{For} $j=1..M$ \textbf{Do}
+\begin{enumerate}
+\item \textbf{Set} $v=\sum_{kT=1}^{d}w_{(d+2)i-(d+i)+k}x_{jk}+w_{(d+2)i}$
+\item \textbf{If} $\left|v\right|>F$ \textbf{set} $b=b+1$
+\end{enumerate}
+\item \textbf{EndFor}
+\end{enumerate}
+\item \textbf{EndFor}
+\item \textbf{Return} $\frac{b}{K\star M}$
+\end{enumerate}
+\end{algorithm}
+
+
+\subsection{Application of genetic algorithm}
+
+The steps of the hybrid genetic algorithm used in the second phase
+of the proposed algorithm are the following:
+\begin{enumerate}
+\item \textbf{Initialization step}
+
+\begin{enumerate}
+\item \textbf{Set} iter=0, the current generation number.
+\item \textbf{Set} TN the modified training set, where
+\begin{equation}
+\mbox{TN}=\left\{ \left(G\left(\overrightarrow{x_{1}},Z_{l}\right),y_{1}\right),\left(G\left(\overrightarrow{x_{2}},Z_{l}\right),y_{2}\right),\ldots,\left(G\left(\overrightarrow{x_{M}},Z_{l}\right),y_{M}\right)\right\} 
+\end{equation}
+\item \textbf{Initialize} randomly the double precision chromosomes $D_{i},i=1\ldots N_{c}$
+in range $\left[L_{N},R_{N}\right]$. The size of each chromosome
+is set to $W=\left(N_{f}+2\right)H$
+\end{enumerate}
+\item \textbf{Termination check.} \textbf{If} iter>=$N_{g}$ \textbf{goto}
+step \ref{enu:Local-Search-step.}\label{enu:Termination-check.-If-1}
+\item \textbf{Fitness calculation step}.
+\begin{enumerate}
+\item \textbf{For} every chromosome $D_{i}$ 
+\begin{enumerate}
+\item \textbf{Calculate} the quantity $B_{i}=\sum_{x\in\mbox{TN}}\left(B\left(N\left(x,D_{i}\right),F\right)\right)$
+using the algorithm \ref{alg:CalculationBound}.
+\item \textbf{Calculate} the quantity $E_{i}=\sum_{(x,y)\in\mbox{TN}}\left(N\left(x,D_{i}\right)-y\right)^{2}$
+, the training error of the neural network where the chromosome $D_{i}$
+is used as the weight vector.
+\item \textbf{Set} $f_{i}=-E_{i}\left(1+\lambda B_{i}^{2}\right)$, where
+$\lambda>0$ as the fitness of $D_{i}$. 
+\end{enumerate}
+\item \textbf{End For}
+\end{enumerate}
+\item \textbf{Genetic operations Step}. Apply the same genetic operations
+as in the first algorithm of subsection \ref{subsec:Feature-construction}.
+\item \textbf{Set} iter=iter+1 and \textbf{goto} step \ref{enu:Termination-check.-If-1}
+\item \textbf{Local Search step. \label{enu:Local-Search-step.}}
+\begin{enumerate}
+\item \textbf{Obtain }the best chromosome $D^{*}$ in the genetic population.
+\item \textbf{For} i=1..W \textbf{Do}
+
+\begin{enumerate}
+\item \textbf{Set} $p_{i}=D_{i}^{*}$
+\item \textbf{Set} $LM_{i}=-\alpha\left|p_{i}\right|$ 
+\item \textbf{Set} $RM_{i}=\ \alpha\left|p_{i}\right|$ , $\alpha$ being
+a positive number with $\alpha>1$ .
+\end{enumerate}
+\item \textbf{EndFor}
+\item \textbf{Set} $L^{*}=\mathcal{L}\left(D^{*},LM,RM\right)$ where $\mathcal{L}()$
+is a local optimization method that searches for a local optimum of
+$N\left(x,D^{*}\right)$ inside the bounds $\left[\overrightarrow{LM},\overrightarrow{RM}\right]$.
+The TOLMIN \cite{tolmin} local optimization procedure used in the
+above algorithm, which is modified version BFGS (Broyden--Fletcher--Goldfarb--Shanno)
+local optimization procedure\cite{bfgs2}.
+\item \textbf{Apply} the optimized neural network $N\left(x,D^{*}\right)$
+to the test set, that has been modified using the same transformation
+procedure as in the train set and report the final results.
+\end{enumerate}
+\end{enumerate}
+
+\section{Experiments \label{sec:Experiments}}
+
+The proposed method was tested against neural network trained by a
+genetic algorithm (denoted as MLP GEN) on a series of classification
+and regression datasets. The software for the algorithm was coded
+using ANSI C++ and all the experiments were conducted using the OpenMP
+library \cite{openmp} for parallelization. The experiments were executed
+30 times using different seed for the random generator each time and
+averages were taken. For classification datasets the average classification
+error on the test set is reported and for regression datasets the
+average mean squared error on the test set is shown.\textbf{ }10 fold
+cross validation is used in the conducted experiments. The parameters
+used in the experiments are listed in Table \ref{tab:Experimental-parameters.}.
+
+\begin{table}
+\caption{Experimental parameters.\label{tab:Experimental-parameters.}}
+
+\centering{}%
+\begin{tabular}{|c|c|}
+\hline 
+PARAMETER & VALUE\tabularnewline
+\hline 
+\hline 
+$H$ & 10\tabularnewline
+\hline 
+$N_{c}$ & 500\tabularnewline
+\hline 
+$N_{f}$ & 2\tabularnewline
+\hline 
+$p_{s}$ & 0.10\tabularnewline
+\hline 
+$p_{m}$ & 0.05\tabularnewline
+\hline 
+$N_{g}$ & 200\tabularnewline
+\hline 
+$L_{N}$ & -10.0\tabularnewline
+\hline 
+$R_{N}$ & 10.0\tabularnewline
+\hline 
+$F$ & 20.0\tabularnewline
+\hline 
+$\lambda$ & 100.0\tabularnewline
+\hline 
+$\alpha$ & 5.0\tabularnewline
+\hline 
+\end{tabular}
+\end{table}
+
+
+\subsection{Experimental datasets }
+
+The following classification datasets were acquired from the Machine
+Learning Repository \url{http://www.ics.uci.edu/~mlearn/MLRepository.html  }
+and from \url{https://sci2s.ugr.es/keel/}: 
+\begin{enumerate}
+\item \textbf{Balance} dataset: Used to model psychological experimental
+results. The dataset has 625 instances with 4 features each.
+\item \textbf{Dermatology} dataset: Dataset used for differential diagnosis
+of erythemato-squamous diseases. The dataset has 366 instances of
+34 features each. 
+\item \textbf{Glass} dataset. This dataset contains glass component analysis
+for glass pieces that belong to 6 classes. The dataset contains 214
+examples with 10 features each. 
+\item \textbf{Hayes Roth} dataset: This dataset\cite{hayesroth} contains
+\textbf{5} numeric-valued attributes and 132 patterns. 
+\item \textbf{Heart} dataset: Dataset used to discriminate between absence
+or presence of heart disease. The dataset has 270 instances of 13
+features each.
+\item \textbf{Ionosphere} dataset: The ionosphere dataset (ION in the following
+tables) contains data from the Johns Hopkins Ionosphere database.
+The two-class dataset contains 351 examples of 34 features each. 
+\item \textbf{Parkinsons} dataset: This dataset\cite{parkinson} is composed
+of a range of biomedical voice measurements from 31 people, 23 with
+Parkinson's disease (PD).The dataset has 22 features. 
+\item \textbf{Pima }dataset: The Pima Indians Diabetes dataset contains
+768 examples of 8 attributes each that are classified into two categories:
+healthy and diabetic.
+\item \textbf{PopFailures} dataset: Dataset used in meteorology. The dataset
+has 540 instances of 18 features each.
+\item \textbf{Spiral} dataset: The spiral artificial dataset contains 1000
+two-dimensional examples that belong to two classes (500 examples
+each). The number of the features is 2. The data in the first class
+are created using the following formula: $x_{1}=0.5t\cos\left(0.08t\right),\ x_{2}=0.5t\cos\left(0.08t+\frac{\pi}{2}\right)$
+and the second class data using\textbf{: $x_{1}=0.5t\cos\left(0.08t+\pi\right),\ x_{2}=0.5t\cos\left(0.08t+\frac{3\pi}{2}\right)$}
+\item \textbf{Wine}: The wine recognition dataset (WINE) contains data from
+wine chemical analysis. It contains 178 examples of 13 features each
+that are classified into three classes. 
+\item \textbf{Wdbc} dataset: The Wisconsin diagnostic breast cancer dataset
+(WDBC) contains data for breast tumors. The dataset has 30 features. 
+\end{enumerate}
+Also an EEG dataset was used, that is is available from \cite{eeg1,eeg2}
+and includes recordings for both healthy and epileptic subjects, is
+used. The dataset includes five subsets (denoted as Z, O, N, F, and
+S) each containing 100 single-channel EEG segments, each one having
+23.6-second duration. In the current work two variants of the dataset
+was used: 
+
+\begin{enumerate}
+\item In the first (\textbf{ZO\_NF\_S}), all the EEG segments from the dataset
+were used and they were classified into three different classes: Z
+and O types of EEG segments were combined to a single class, N and
+F types were also combined to a single class, and type S was the third
+class. This set is the one closest to real medical applications including
+three categories; normal (i.e., types Z and O), seizure free (i.e.,
+types N and F) and seizure (i.e., type S). 
+\item In the second (\textbf{Z\_F\_S}) dataset, which is similar with the
+first one, a subset of the EEG segments from the dataset were employed.
+The normal class includes only the Z-type EEG segments, the seizure-free
+class the F-type EEG segments, and the seizure class the S-type. 
+\item In the third (\textbf{Z\_O\_N\_F\_S}) dataset The dataset consists
+of five sets (denoted as Z, O, N, F and S) each containing 100 single-channel
+EEG segments each having 23.6 sec duration. Sets Z and O have been
+taken from surface EEG recordings of five healthy volunteers with
+eye open and closed, respectively. Signals in two sets have been measured
+in seizure-free intervals from five patients in the epileptogenic
+zone (F) and from the hippocampal formation of the opposite hemisphere
+of the brain (N). Set S contains seizure activity, selected from all
+recording sites exhibiting ictal activity. Sets Z and O have been
+recorded extracranially, whereas sets N, F and S have been recorded
+intracranially.
+\end{enumerate}
+The regression datasets are available from the Statlib URL \url{ftp://lib.stat.cmu.edu/datasets/index.html }
+and other sources: 
+\begin{enumerate}
+\item \textbf{BK} dataset. This dataset comes from Smoothing Methods in
+Statistics \cite{Stat} and is used to estimate the points scored
+per minute in a basketball game. The dataset has 96 patterns of 4
+features each. 
+\item \textbf{BL} dataset: This dataset can be downloaded from StatLib.
+It contains data from an experiment on the affects of machine adjustments
+on the time to count bolts. It contains 40 patters of 7 features each.
+\item \textbf{Housing} dataset. This dataset was taken from the StatLib
+library which is maintained at Carnegie Mellon University and it is
+described in \cite{key23}.
+\item \textbf{Laser} dataset. Dataset used in laser experiments. The dataset
+has 993 instances of 4 features each.
+\item \textbf{NT} dataset. This dataset contains data from \cite{ntdataset}
+that examined whether the true mean body temperature is 98.6 F. The
+number of patterns is 131 and the number of features 2. 
+\item \textbf{Quake} dataset. The objective here is to approximate the strength
+of a earthquake. The dataset has 2178 instances of 3 features each. 
+\item \textbf{FA} dataset. The FA dataset contains percentage of body fat,
+age, weight, height, and ten body circumference measurements. The
+goal is to fit body fat to the other measurements. The number of the
+features is 18. The total number of patterns is 252. 
+\item \textbf{PY} dataset (Pyrimidines problem). The source of this dataset
+is the URL: \url{https://www.dcc.fc.up.pt/~ltorgo/Regression/DataSets.html}
+and it is a problem of 27 attributes and 74 number of patterns. The
+task consists of Learning Quantitative Structure Activity Relationships
+(QSARs) and provided by \cite{pydataset}. 
+\end{enumerate}
+
+\subsection{Experimental results}
+
+For the case of classification datasets the results are reported in
+Table \ref{tab:exp1} and for the case of regression datasets the
+results are reported in Table \ref{tab:exp2}. The column MLP GEN
+denotes the neural network with $H$ hidden nodes that was trained
+by a genetic algorithm with $N_{g}$ chromosomes and the column FC
+MLP denotes the proposed method. Also, the column GAIN indicates the
+percentage gain in test error (classification or regression) obtained
+by the proposed method. From the conducted experiments it is evident
+that the proposed method outperforms the simple genetic algorithm
+in terms of efficiency. Also, the percentage gain is too high in many
+cases like in the regression datasets. On the other hand the proposed
+method is slower than a simple genetic algorithm because it relies
+on two steps and every step involves the usage of a genetic algorithm. 
+
+\begin{table}
+\caption{Experimental results for classification datasets.\label{tab:exp1}}
+
+\centering{}%
+\begin{tabular}{|c|c|c|c|}
+\hline 
+DATASET & MLP GEN & FC MLP & \textbf{GAIN}\tabularnewline
+\hline 
+\hline 
+BALANCE & 8.23\% & 0.30\% & \textbf{96.35\%}\tabularnewline
+\hline 
+DERMATOLOGY & 10.01\% & 4.98\% & \textbf{50.25\%}\tabularnewline
+\hline 
+GLASS & 58.03\% & 45.84\% & \textbf{21.00\%}\tabularnewline
+\hline 
+HAYES ROTH & 35.26\% & 23.26\% & \textbf{34.03\%}\tabularnewline
+\hline 
+HEART & 25.46\% & 17.71\% & \textbf{30.44\%}\tabularnewline
+\hline 
+IONOSPHERE & 13.67\% & 8.42\% & \textbf{38.41\%}\tabularnewline
+\hline 
+PARKINSONS & 17.47\% & 10.10\% & \textbf{36.46\%}\tabularnewline
+\hline 
+PIMA & 32.98\% & 23.76\% & \textbf{27.96\%}\tabularnewline
+\hline 
+POPFAILURES & 7.66\% & 4.66\% & \textbf{39.16\%}\tabularnewline
+\hline 
+SPIRAL & 45.71\% & 26.53\% & \textbf{41.96\%}\tabularnewline
+\hline 
+WINE & 20.82\% & 7.31\% & \textbf{64.89\%}\tabularnewline
+\hline 
+WDBC & 6.32\% & 3.47\% & \textbf{45.09\%}\tabularnewline
+\hline 
+Z\_F\_S & 9.42\% & 5.52\% & \textbf{41.40\%}\tabularnewline
+\hline 
+Z\_O\_N\_F\_S & 60.38\% & 31.20\% & \textbf{48.33\%}\tabularnewline
+\hline 
+ZO\_NF\_S & 8.06\% & 4.00\% & \textbf{50.37\%}\tabularnewline
+\hline 
+\end{tabular}
+\end{table}
+\begin{table}
+\caption{Experiments for regression datasets.\label{tab:exp2}}
+
+\centering{}%
+\begin{tabular}{|c|c|c|c|}
+\hline 
+DATASET & MLP GEN & FC MLP & \textbf{GAIN}\tabularnewline
+\hline 
+\hline 
+BK & 0.21 & 0.03 & \textbf{85.71\%}\tabularnewline
+\hline 
+BL & 0.84 & 0.005 & \textbf{99.40\%}\tabularnewline
+\hline 
+Housing & 30.05 & 10.77 & \textbf{64.16\%}\tabularnewline
+\hline 
+Laser & 0.003 & 0.002 & \textbf{33.33\%}\tabularnewline
+\hline 
+NT & 1.11 & 0.01 & \textbf{99.10\%}\tabularnewline
+\hline 
+Quake & 0.07 & 0.03 & \textbf{57.14\%}\tabularnewline
+\hline 
+FA & 0.04 & 0.01 & \textbf{75.00\%}\tabularnewline
+\hline 
+PY & 0.21 & 0.02 & \textbf{90.47\%}\tabularnewline
+\hline 
+\end{tabular}
+\end{table}
+
+
+\section{Conclusions\label{sec:Conclusions}}
+
+A hybrid method was proposed here for classification and regression
+problems. The method is composed by two steps: during the first step
+a recently introduced method was used to create artificial features
+from the original ones. The feature construction method has utilized
+the commonly used technique of Grammatical Evolution to produce artificial
+features. The outcome of the first step was the modified train and
+test sets of the objective problem. During the second step, a hybrid
+genetic algorithm which preserves the generalization abilities of
+the neural network was incorporated. The proposed method was tested
+on a variety of classification and regression problems and the results
+were very promising.
+
+\subsection*{Compliance with Ethical Standards }
+
+All authors declare that they have no has no conflict of interest. 
+\begin{thebibliography}{10}
+\bibitem{nn1}C. Bishop, Neural Networks for Pattern Recognition,
+Oxford University Press, 1995.
+
+\bibitem{nn2}G. Cybenko, Approximation by superpositions of a sigmoidal
+function, Mathematics of Control Signals and Systems \textbf{2}, pp.
+303-314, 1989.
+
+\bibitem{nnphysics1}P. Baldi, K. Cranmer, T. Faucett et al, Parameterized
+neural networks for high-energy physics, Eur. Phys. J. C \textbf{76},
+2016.
+
+\bibitem{nnphysics2}J. J. Valdas and G. Bonham-Carter, Time dependent
+neural network models for detecting changes of state in complex processes:
+Applications in earth sciences and astronomy, Neural Networks \textbf{19},
+pp. 196-207, 2006
+
+\bibitem{nnphysics3}G. Carleo,M. Troyer, Solving the quantum many-body
+problem with artificial neural networks, Science \textbf{355}, pp.
+602-606, 2017.
+
+\bibitem{nnchem1}Lin Shen, Jingheng Wu, and Weitao Yang, Multiscale
+Quantum Mechanics/Molecular Mechanics Simulations with Neural Networks,
+Journal of Chemical Theory and Computation \textbf{12}, pp. 4934-4946,
+2016.
+
+\bibitem{nnchem2}Sergei Manzhos, Richard Dawes, Tucker Carrington,
+Neural network-based approaches for building high dimensional and
+quantum dynamics-friendly potential energy surfaces, Int. J. Quantum
+Chem. \textbf{115}, pp. 1012-1020, 2015.
+
+\bibitem{nnchem3}Jennifer N. Wei, David Duvenaud, and Alán Aspuru-Guzik,
+Neural Networks for the Prediction of Organic Chemistry Reactions,
+ACS Central Science \textbf{2}, pp. 725-732, 2016.
+
+\bibitem{nnecon1}Lukas Falat and Lucia Pancikova, Quantitative Modelling
+in Economics with Advanced Artificial Neural Networks, Procedia Economics
+and Finance \textbf{34}, pp. 194-201, 2015.
+
+\bibitem{nnecon2}Mohammad Namazi, Ahmad Shokrolahi, Mohammad Sadeghzadeh
+Maharluie, Detecting and ranking cash flow risk factors via artificial
+neural networks technique, Journal of Business Research \textbf{69},
+pp. 1801-1806, 2016.
+
+\bibitem{nncecon3}G. Tkacz, Neural network forecasting of Canadian
+GDP growth, International Journal of Forecasting \textbf{17}, pp.
+57-69, 2001.
+
+\bibitem{nnmed1}Igor I. Baskin, David Winkler and Igor V. Tetko,
+A renaissance of neural networks in drug discovery, Expert Opinion
+on Drug Discovery \textbf{11}, pp. 785-795, 2016.
+
+\bibitem{nnmed2}Ronadl Bartzatt, Prediction of Novel Anti-Ebola Virus
+Compounds Utilizing Artificial Neural Network (ANN), Chemistry Faculty
+Publications \textbf{49}, pp. 16-34, 2018.
+
+\bibitem{nnc}I.G. Tsoulos, D. Gavrilis, E. Glavas, Neural network
+construction and training using grammatical evolution, Neurocomputing
+\textbf{72}, pp. 269-277, 2008.
+
+\bibitem{bpnn}D.E. Rumelhart, G.E. Hinton and R.J. Williams, Learning
+representations by back-propagating errors, Nature \textbf{323}, pp.
+533 - 536 , 1986.
+
+\bibitem{bpnn2}T. Chen and S. Zhong, Privacy-Preserving Backpropagation
+Neural Network Learning, IEEE Transactions on Neural Networks \textbf{20},
+, pp. 1554-1564, 2009.
+
+\bibitem{rpropnn}M. Riedmiller and H. Braun, A Direct Adaptive Method
+for Faster Backpropagation Learning: The RPROP algorithm, Proc. of
+the IEEE Intl. Conf. on Neural Networks, San Francisco, CA, pp. 586--591,
+1993.
+
+\bibitem{rpropnn3}T. Pajchrowski, K. Zawirski and K. Nowopolski,
+Neural Speed Controller Trained Online by Means of Modified RPROP
+Algorithm, IEEE Transactions on Industrial Informatics \textbf{11},
+pp. 560-568, 2015.
+
+\bibitem{rpropnn2}Rinda Parama Satya Hermanto, Suharjito, Diana,
+Ariadi Nugroho, Waiting-Time Estimation in Bank Customer Queues using
+RPROP Neural Networks, Procedia Computer Science \textbf{ 135}, pp.
+35-42, 2018.
+
+\bibitem{quasinn}B. Robitaille and B. Marcos and M. Veillette and
+G. Payre, Modified quasi-Newton methods for training neural networks,
+Computers \& Chemical Engineering \textbf{20}, pp. 1133-1140, 1996.
+
+\bibitem{quasinn2}Q. Liu, J. Liu, R. Sang, J. Li, T. Zhang and Q.
+Zhang, Fast Neural Network Training on FPGA Using Quasi-Newton Optimization
+Method,IEEE Transactions on Very Large Scale Integration (VLSI) Systems
+\textbf{26}, pp. 1575-1579, 2018.
+
+\bibitem{geneticnn}F. H. F. Leung, H. K. Lam, S. H. Ling and P. K.
+S. Tam, Tuning of the structure and parameters of a neural network
+using an improved genetic algorithm, IEEE Transactions on Neural Networks
+\textbf{14}, pp. 79-88, 2003
+
+\bibitem{geneticnn2}X. Yao, Evolving artificial neural networks,
+Proceedings of the IEEE, 87(9), pp. 1423-1447, 1999.
+
+\bibitem{psonn}C. Zhang, H. Shao and Y. Li, Particle swarm optimisation
+for evolving artificial neural network, IEEE International Conference
+on Systems, Man, and Cybernetics, , pp. 2487-2490, 2000.
+
+\bibitem{psonn2}Jianbo Yu, Shijin Wang, Lifeng Xi, Evolving artificial
+neural networks using an improved PSO and DPSO \textbf{71}, pp. 1054-1060,
+2008.
+
+\bibitem{nndimension}Verleysen M., Francois D., Simon G., Wertz V.,
+On the effects of dimensionality on data analysis with neural networks.
+In: Mira J., Álvarez J.R. (eds) Artificial Neural Nets Problem Solving
+Methods. IWANN 2003. Lecture Notes in Computer Science, vol 2687.
+Springer, Berlin, Heidelberg. 2003.
+
+\bibitem{nnpca1}Burcu Erkmen, Tülay Y\i ld\i r\i m, Improving classification
+performance of sonar targets by applying general regression neural
+network with PCA, Expert Systems with Applications \textbf{35}, pp.
+472-475, 2008.
+
+\bibitem{nnpca2}Jing Zhou, Aihuang Guo, Branko Celler, Steven Su,
+Fault detection and identification spanning multiple processes by
+integrating PCA with neural network, Applied Soft Computing \textbf{14},
+pp. 4-11, 2014.
+
+\bibitem{nnpca3}Ravi Kumar G., Nagamani K., Anjan Babu G., A Framework
+of Dimensionality Reduction Utilizing PCA for Neural Network Prediction.
+In: Borah S., Emilia Balas V., Polkowski Z. (eds) Advances in Data
+Science and Management. Lecture Notes on Data Engineering and Communications
+Technologies, vol 37. Springer, Singapore. 2020
+
+\bibitem{nngeman}S. Geman, E. Bienenstock and R. Doursat, Neural
+networks and the bias/variance dilemma, Neural Computation 4 , pp.
+1 - 58, 1992.
+
+\bibitem{nnhawkins}Douglas M. Hawkins, The Problem of Overfitting,
+J. Chem. Inf. Comput. Sci. \textbf{44}, pp. 1--12, 2004.
+
+\bibitem{nnsharing1}S.J. Nowlan and G.E. Hinton, Simplifying neural
+networks by soft weight sharing, Neural Computation 4, pp. 473-493,
+1992.
+
+\bibitem{nnprunning1}S.J. Hanson and L.Y. Pratt, Comparing biases
+for minimal network construction with back propagation, In D.S. Touretzky
+(Ed.), Advances in Neural Information Processing Systems, Volume 1,
+pp. 177-185, San Mateo, CA: Morgan Kaufmann, 1989.
+
+\bibitem{nnprunning2}M.C. Mozer and P. Smolensky, Skeletonization:
+a technique for trimming the fat from a network via relevance assesment.
+In D.S. Touretzky (Ed.), Advances in Neural Processing Systems, Volume
+1, pp. 107-115, San Mateo CA: Morgan Kaufmann, 1989.
+
+\bibitem{nnprunning3}M. Augasta and T. Kathirvalavakumar, Pruning
+algorithms of neural networks --- a comparative study, Central European
+Journal of Computer Science, 2003.
+
+\bibitem{nndrop1}Nitish Srivastava, G E Hinton, Alex Krizhevsky,
+Ilya Sutskever, Ruslan R Salakhutdinov, Dropout: a simple way to prevent
+neural networks from overfitting, Journal of Machine Learning Research
+\textbf{15}, pp. 1929-1958, 2014.
+
+\bibitem{nnearly1}Lutz Prechelt, Automatic early stopping using cross
+validation: quantifying the criteria, Neural Networks \textbf{11},
+pp. 761-767, 1998.
+
+\bibitem{nnearly2}X. Wu and J. Liu, A New Early Stopping Algorithm
+for Improving Neural Network Generalization, 2009 Second International
+Conference on Intelligent Computation Technology and Automation, Changsha,
+Hunan, 2009, pp. 15-18.
+
+\bibitem{nndecay1}N. K. Treadgold and T. D. Gedeon, Simulated annealing
+and weight decay in adaptive learning: the SARPROP algorithm,IEEE
+Transactions on Neural Networks \textbf{9}, pp. 662-668, 1998.
+
+\bibitem{nndecay2}M. Carvalho and T. B. Ludermir, Particle Swarm
+Optimization of Feed-Forward Neural Networks with Weight Decay, 2006
+Sixth International Conference on Hybrid Intelligent Systems (HIS'06),
+Rio de Janeiro, Brazil, 2006, pp. 5-5.
+
+\bibitem{ge1}M. O\textquoteright Neill, C. Ryan, Grammatical evolution,
+IEEE Trans. Evol. Comput. \textbf{5,}pp. 349--358, 2001.
+
+\bibitem{fc1}Dimitris Gavrilis, Ioannis G. Tsoulos, Evangelos Dermatas,
+Selecting and constructing features using grammatical evolution, Pattern
+Recognition Letters \textbf{29},pp. 1358-1365, 2008. 
+
+\bibitem{fc2}Dimitris Gavrilis, Ioannis G. Tsoulos, Evangelos Dermatas,
+Neural Recognition and Genetic Features Selection for Robust Detection
+of E-Mail Spam, Advances in Artificial Intelligence Volume 3955 of
+the series Lecture Notes in Computer Science pp 498-501, 2006.
+
+\bibitem{fc3}George Georgoulas, Dimitris Gavrilis, Ioannis G. Tsoulos,
+Chrysostomos Stylios, João Bernardes, Peter P. Groumpos, Novel approach
+for fetal heart rate classification introducing grammatical evolution,
+Biomedical Signal Processing and Control \textbf{2},pp. 69-79, 2007 
+
+\bibitem{fc4}Otis Smart, Ioannis G. Tsoulos, Dimitris Gavrilis, George
+Georgoulas, Grammatical evolution for features of epileptic oscillations
+in clinical intracranial electroencephalograms, Expert Systems with
+Applications \textbf{38}, pp. 9991-9999, 2011
+
+\bibitem{rbf1}J. Park and I. W. Sandberg, Universal Approximation
+Using Radial-Basis-Function Networks, Neural Computation 3, pp. 246-257,
+1991.
+
+\bibitem{tolmin}M.J.D. Powell, A Tolerant Algorithm for Linearly
+Constrained Optimization Calculations, Mathematical Programming \textbf{45},
+pp 547, 1989.
+
+\bibitem{bfgs2}R. Fletcher, A new approach to variable metric algorithms,
+Computer Journal \textbf{13}, pp. 317-322, 1970. 
+
+\bibitem{openmp}R. Chandra, L. Dagum, D. Kohr, D. Maydan,J. McDonald
+and R. Menon, Parallel Programming in OpenMP, Morgan Kaufmann Publishers
+Inc., 2001.
+
+\bibitem{hayesroth}B. Hayes-Roth, B., F. Hayes-Roth. Concept learning
+and the recognition and classification of exemplars. Journal of Verbal
+Learning and Verbal Behavior \textbf{16}, pp. 321-338, 1977.
+
+\bibitem{parkinson}Max A. Little, Patrick E. McSharry, Eric J. Hunter,
+Lorraine O. Ramig (2008), 'Suitability of dysphonia measurements for
+telemonitoring of Parkinson's disease', IEEE Transactions on Biomedical
+Engineering \textbf{56}, pp. 1015-1022, 2009.
+
+\bibitem{eeg1}R. G. Andrzejak, K. Lehnertz, F.Mormann, C. Rieke,
+P. David, and C. E. Elger, \textquotedblleft Indications of nonlinear
+deterministic and finite-dimensional structures in time series of
+brain electrical activity: dependence on recording region and brain
+state,\textquotedblright{} Physical Review E, vol. 64, no. 6, Article
+ID 061907, 8 pages, 2001. 
+
+\bibitem{eeg2}A. T. Tzallas, M. G. Tsipouras, and D. I. Fotiadis,
+\textquotedblleft Automatic Seizure Detection Based on Time-Frequency
+Analysis and Artificial Neural Networks,\textquotedblright{} Computational
+Intelligence and Neuroscience, vol. 2007, Article ID 80510, 13 pages,
+2007. doi:10.1155/2007/80510
+
+\bibitem{Stat}J.S. Simonoff, Smooting Methods in Statistics, Springer
+- Verlag, 1996.
+
+\bibitem{key23}D. Harrison and D.L. Rubinfeld, Hedonic prices and
+the demand for clean ai, J. Environ. Economics \& Management \textbf{5},
+pp. 81-102, 1978.
+
+\bibitem{ntdataset}Mackowiak, P.A., Wasserman, S.S., Levine, M.M.,
+1992. A critical appraisal of 98.6 degrees f, the upper limit of the
+normal body temperature, and other legacies of Carl Reinhold August
+Wunderlich. J. Amer. Med. Assoc. 268, 1578--1580
+
+\bibitem{pydataset}R.D. King, S. Muggleton, R. Lewis, M.J.E. Sternberg,
+Proc. Nat. Acad. Sci. USA \textbf{89}, pp. 11322--11326, 1992. 
+\end{thebibliography}
+
+\end{document}
