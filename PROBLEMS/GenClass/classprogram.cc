@@ -200,22 +200,22 @@ double 	ClassProgram::fitness(vector<int> &genome)
 	
 
 	
-	/*vector<int> fail;
+vector<int> fail;
 	vector<int> belong;
 	fail.resize(nclass);
 	belong.resize(nclass);
 	for(int i=0;i<nclass;i++)
-		fail[i]=belong[i]=0;*/
+		fail[i]=belong[i]=0;
 	for(int i=0;i<trainy.size();i++)
 	{
 		if(fabs(outy[i]-NAN_CLASS)<1e-5) 	outy[i]=vclass[nclass-1];
 		int pos=findMapper(trainy[i]);
 		value=value+((fabs(findMapper(trainy[i])-outy[i]))>1e-5);	
-		/*belong[pos]++;
+		belong[pos]++;
 		if(fabs(findMapper(trainy[i])-outy[i])>1e-5)
 		{
 			fail[pos]++;
-		}*/
+		}
 		//value=value+ pow(trainy[i]-outy[i],2.0);
 	}
 	delete[] X;

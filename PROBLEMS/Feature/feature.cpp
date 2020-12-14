@@ -230,8 +230,8 @@ QJsonObject    done(Data &x)
 #pragma omp parallel for num_threads(threads)
  for(int i=1;i<=ntimes;i++)
  {
-Rbf *neural = new Rbf(program[0].getMapper());
-//Neural *neural = new Neural(program[0].getMapper());
+//Rbf *neural = new Rbf(program[0].getMapper());
+Neural *neural = new Neural(program[0].getMapper());
  neural->setRand(program[thread()].getRand());
  neural->readPatterns(trainx,trainy);
  neural->setPatternDimension(features);
