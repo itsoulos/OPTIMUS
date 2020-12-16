@@ -12,7 +12,7 @@
 # include <adept_arrays.h>
 # include <omp.h>
 using namespace std;
-//# define ADEPT_GRANAL
+# define ADEPT_GRANAL
 //adept::Stack stack;
 //NNTEST EXAMPLE  // normal train != 1 grad
 extern "C"
@@ -32,7 +32,7 @@ double initialLeft=-100.0;
 double initialRight= 100.0;
 Interval maxWidth;
 int failCount=0;
-int normalTrain=1;
+int normalTrain=0;
 
 void loadTrain()
 {
@@ -226,6 +226,7 @@ void getOriginalGranal(Data &node,Data &g)
 
 void	getGradient(Data &node,Data &g)
 {
+
     adept::Stack stack;
     g.resize(node.size());
     for(int i=0;i<g.size();i++) g[i]=0.0;
@@ -256,7 +257,6 @@ void	getGradient(Data &node,Data &g)
 	{
         getDeriv(node,trainx[i],gtemp);
         double per=dgetValue(node,trainx[i],fcount)-trainy[i];
-#pragma omp simd
         for(int j=0;j<g.size();j++)	g[j]+=gtemp[j]*per;
 	}
     for(int j=0;j<(dimension+2)*nodes;j++) g[j]*=2.0;
@@ -268,21 +268,17 @@ adept::adouble afunmin(adept::aVector &Weights){
     adept::adouble per=0.0;
     int fcount=0;
     Data A;
-    //std::cout << Weights.size()<< std::endl;
     A.resize(Weights.size());
     for(unsigned i = 0; i < A.size();i++) {
-        //std::cout << i << " " << Weights[i].value() << std::endl;
         A[i] = double(Weights[i].value());
     }
-    //std::cout << Weights.size() << " " << trainx.size() << " " << trainy.size() << std::endl;
     for(int i=0;i<trainx.size();i++)
     {
         per=adgetValue(Weights,trainx[i],fcount)-trainy[i];
         sum+=per * per;
     }
-    //std::cout << sum.value() << std::endl;
     if(normalTrain==1) return sum;
-    return sum+100.0*pow(fcount*1.0/(nodes * trainx.size()),2.0);
+    return sum*(1.0+10.0*pow(fcount*1.0/(nodes * trainx.size()),2.0));
 
 }
 
@@ -297,14 +293,34 @@ double	funmin(vector<double> &x)
         sum+=per * per;
     }
     if(normalTrain==1) return sum;
-    return sum+100.0*pow(fcount*1.0/(nodes * trainx.size()),2.0);
+    return sum*(1.0+10.0*pow(fcount*1.0/(nodes * trainx.size()),2.0));
+}
+
+
+        static double dmax(double a,double b)
+{
+        return a>b?a:b;
 }
 
 void    granal(vector<double> &x,vector<double> &g)
 {
 	if(normalTrain==1) getOriginalGranal(x,g);
 	else
+	{
     getGradient(x,g);
+return;
+		  for(int i=0;i<getdimension();i++)
+        {
+                double eps=pow(1e-18,1.0/3.0)*dmax(1.0,fabs(x[i]));
+                x[i]+=eps;
+                double v1=funmin(x);
+                x[i]-=2.0 *eps;
+                double v2=funmin(x);
+                g[i]=(v1-v2)/(2.0 * eps);
+                x[i]+=eps;
+        }
+
+	}
 }
 
 
@@ -384,6 +400,7 @@ QJsonObject    done(Data &x)
     if(omp_get_thread_num()==0)
 	    fp=fopen("neural.plot","a");
     int fcount=0;
+normalTrain=1;
     for(int i=0;i<testx.size();i++)
     {
         double neuralOutput=dgetValue(x,testx[i],fcount);
@@ -393,6 +410,7 @@ QJsonObject    done(Data &x)
 	if(omp_get_thread_num()==0)
 		fprintf(fp,"%lf %lf %lf\n",testx[i][0],neuralOutput,testy[i]);
     }
+normalTrain=0;
     if(omp_get_thread_num()==0)
 	    fclose(fp);
     QJsonObject result;
