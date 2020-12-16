@@ -226,7 +226,7 @@ void getOriginalGranal(Data &node,Data &g)
 
 void	getGradient(Data &node,Data &g)
 {
-
+{
     adept::Stack stack;
     g.resize(node.size());
     for(int i=0;i<g.size();i++) g[i]=0.0;
@@ -238,7 +238,7 @@ void	getGradient(Data &node,Data &g)
     stack.continue_recording();
 
     adept::aVector w(node.size());
-    for(unsigned i = 0; i < node.size();i++) w[i] = node[i];
+    for(unsigned i = 0; i < node.size();i++) w<<node[i];// w[i] = node[i];
     stack.new_recording();
     adept::adouble error;
 
@@ -262,6 +262,7 @@ void	getGradient(Data &node,Data &g)
     for(int j=0;j<(dimension+2)*nodes;j++) g[j]*=2.0;
 #endif
 }
+}
 
 adept::adouble afunmin(adept::aVector &Weights){
     adept::adouble sum=0.0;
@@ -278,6 +279,7 @@ adept::adouble afunmin(adept::aVector &Weights){
         sum+=per * per;
     }
     if(normalTrain==1) return sum;
+
     return sum*(1.0+10.0*pow(fcount*1.0/(nodes * trainx.size()),2.0));
 
 }
@@ -309,7 +311,7 @@ void    granal(vector<double> &x,vector<double> &g)
 	{
     getGradient(x,g);
 return;
-		  for(int i=0;i<getdimension();i++)
+          for(int i=0;i<getdimension();i++)
         {
                 double eps=pow(1e-18,1.0/3.0)*dmax(1.0,fabs(x[i]));
                 x[i]+=eps;
