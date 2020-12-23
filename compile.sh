@@ -15,7 +15,7 @@ else
 		(cd Genetic; qmake; make clean; make install)
 		(cd Pso; qmake; make clean; make install)
 		(cd Minfinder; qmake; make clean; make install)
-		(cd OptimusApp; qmake ; make clean; make)
+		(cd bin; qmake ; make clean; make)
 	else
 		echo "qmake is not present;"
 	fi
