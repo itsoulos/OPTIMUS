@@ -7,6 +7,7 @@ else
 		(cd PROBLEMS; for file in *.pro; do  qmake $file; make clean; make; done)
 		(cd PROBLEMS/Feature; for file in *.pro; do  qmake $file; make clean; make; done)
 		(cd PROBLEMS/GenClass; for file in *.pro; do  qmake $file; make clean; make; done)
+		(cd PROBLEMS/NNC; for file in *.pro; do  qmake $file; make clean; make; done)
 		(cd Optimus; qmake; make clean; make install)
 		(cd Genmin; qmake; make clean; make install )
 		(cd Genprice; qmake; make clean; make install )

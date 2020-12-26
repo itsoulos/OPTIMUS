@@ -23,6 +23,7 @@ SOURCES += \
     cprogram.cc \
     doublestack.cc \
     fparser.cc \
+    interval.cpp \
     neuralparser.cc \
     neuralprogram.cc \
     nnc.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     cprogram.h \
     doublestack.h \
     fparser.hh \
+    interval.h \
     neuralparser.h \
     neuralprogram.h \
     nnc.h \
