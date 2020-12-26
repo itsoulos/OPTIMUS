@@ -17,6 +17,9 @@ class NNCNeuralProgram :
 		Data		test_ypoint;
 		Data		categ;
 	public:
+        NNCNeuralProgram();
+        void setAll1(int Dimension,QString TrainFile,QString TestFile);
+        void setAll(int Dimension,vector<Data> &xx,Data &y,vector<Data> &tx,Data &ty);
         NNCNeuralProgram(int Dimension,QString TrainFile,QString TestFile);
 		int	isvalidation;
 		virtual double	getTrainError();

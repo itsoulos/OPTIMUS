@@ -2,85 +2,151 @@
 # include <math.h>
 # include <QFile>
 # include <QTextStream>
-# define IMBALANCED
-NNCNeuralProgram::NNCNeuralProgram(int Dimension,QString TrainFile,QString TestFile):
-	NeuralProgram(Dimension)
+# include <stdio.h>
+# include <stdlib.h>
+
+NNCNeuralProgram::NNCNeuralProgram()
+    :NeuralProgram(1)
 {
 
-	isvalidation=0;
+}
+
+void NNCNeuralProgram::setAll(int Dimension,vector<Data> &xx,Data &yy,vector<Data> &tx,Data &ty)
+{
+    setDimension(Dimension);
+    isvalidation=0;
+    dimension=xx[0].size();
+        xtemp=new double[dimension];
+    int tcount=xx.size();
+    train_xpoint.resize(tcount);
+    train_ypoint.resize(tcount);
+    xmax.resize(dimension);
+    xmin.resize(dimension);
+    for(int i=0;i<tcount;i++)
+    {
+            train_xpoint[i].resize(dimension);
+            for(int j=0;j<dimension;j++)
+            {
+                train_xpoint[i][j]=xx[i][j];
+                if(i==0 || train_xpoint[i][j]>xmax[j]) xmax[j]=train_xpoint[i][j];
+                if(i==0 || train_xpoint[i][j]<xmin[j]) xmin[j]=train_xpoint[i][j];
+            }
+            train_ypoint[i]=yy[i];
+    }
+
+    tcount=tx.size();
+    test_xpoint.resize(tcount);
+    test_ypoint.resize(tcount);
+    categ.resize(0);
+    for(int i=0;i<tcount;i++)
+    {
+            test_xpoint[i].resize(dimension);
+            for(int j=0;j<dimension;j++)
+                test_xpoint[i][j]=tx[i][j];
+            test_ypoint[i]=ty[i];
+            int found=0;
+            for(int j=0;j<categ.size();j++)
+                if(fabs(categ[j]-test_ypoint[i])<1e-7)
+                {
+
+                    found=1;
+                    break;
+                }
+            if(!found)
+            {
+                int s=categ.size();
+                categ.resize(s+1);
+                categ[s]=test_ypoint[i];
+            }
+
+    }
+    program=new SigProgram(dimension);
+    setStartSymbol(program->getStartSymbol());
+    neuralparser=new NeuralParser(dimension);
+}
+
+void NNCNeuralProgram::setAll1(int Dimension, QString TrainFile, QString TestFile)
+{
+    setDimension(Dimension);
+    isvalidation=0;
     char cfile1[1024],cfile2[1024];
     strcpy(cfile1,TrainFile.toStdString().c_str());
     strcpy(cfile2,TestFile.toStdString().c_str());
-	if(TrainFile!=NULL)
-	{
+    if(TrainFile!=NULL)
+    {
         FILE *fp=fopen(cfile1,"r");
-		if(!fp)  exit(EXIT_FAILURE);
-		int d;
-		fscanf(fp,"%d",&dimension);
-		xtemp=new double[dimension];
-		int tcount;
-		fscanf(fp,"%d",&tcount);
-		if(tcount<=0) {fclose(fp); return ;}
-		train_xpoint.resize(tcount);
-		train_ypoint.resize(tcount);
-		xmax.resize(dimension);
-		xmin.resize(dimension);
-		for(int i=0;i<tcount;i++)
-		{
-			train_xpoint[i].resize(dimension);
-			for(int j=0;j<dimension;j++) 
-			{
-				fscanf(fp,"%lf",&train_xpoint[i][j]);	
-				if(i==0 || train_xpoint[i][j]>xmax[j]) xmax[j]=train_xpoint[i][j];
-				if(i==0 || train_xpoint[i][j]<xmin[j]) xmin[j]=train_xpoint[i][j];
-			}
-			fscanf(fp,"%lf",&train_ypoint[i]);
-		}
+        if(!fp)  exit(EXIT_FAILURE);
+        int d;
+        fscanf(fp,"%d",&dimension);
+        xtemp=new double[dimension];
+        int tcount;
+        fscanf(fp,"%d",&tcount);
+        if(tcount<=0) {fclose(fp); return ;}
+        train_xpoint.resize(tcount);
+        train_ypoint.resize(tcount);
+        xmax.resize(dimension);
+        xmin.resize(dimension);
+        for(int i=0;i<tcount;i++)
+        {
+            train_xpoint[i].resize(dimension);
+            for(int j=0;j<dimension;j++)
+            {
+                fscanf(fp,"%lf",&train_xpoint[i][j]);
+                if(i==0 || train_xpoint[i][j]>xmax[j]) xmax[j]=train_xpoint[i][j];
+                if(i==0 || train_xpoint[i][j]<xmin[j]) xmin[j]=train_xpoint[i][j];
+            }
+            fscanf(fp,"%lf",&train_ypoint[i]);
+        }
 
-		fclose(fp);
-	}
+        fclose(fp);
+    }
     if(TestFile!="")
-	{
+    {
         FILE *fp=fopen(cfile2,"r");
-		if(!fp) return;
-		int d;
-		fscanf(fp,"%d",&d);
-		if(d!=dimension) {fclose(fp); return ;}
-		int tcount;
-		fscanf(fp,"%d",&tcount);
-		if(tcount<=0) {fclose(fp); return ;}
-		test_xpoint.resize(tcount);
-		test_ypoint.resize(tcount);
-		categ.resize(0);
-		for(int i=0;i<tcount;i++)
-		{
-			test_xpoint[i].resize(dimension);
-			for(int j=0;j<dimension;j++)
-				fscanf(fp,"%lf",&test_xpoint[i][j]);
-			fscanf(fp,"%lf",&test_ypoint[i]);
-			int found=0;
-			for(int j=0;j<categ.size();j++)
-				if(fabs(categ[j]-test_ypoint[i])<1e-7)
-				{
+        if(!fp) return;
+        int d;
+        fscanf(fp,"%d",&d);
+        if(d!=dimension) {fclose(fp); return ;}
+        int tcount;
+        fscanf(fp,"%d",&tcount);
+        if(tcount<=0) {fclose(fp); return ;}
+        test_xpoint.resize(tcount);
+        test_ypoint.resize(tcount);
+        categ.resize(0);
+        for(int i=0;i<tcount;i++)
+        {
+            test_xpoint[i].resize(dimension);
+            for(int j=0;j<dimension;j++)
+                fscanf(fp,"%lf",&test_xpoint[i][j]);
+            fscanf(fp,"%lf",&test_ypoint[i]);
+            int found=0;
+            for(int j=0;j<categ.size();j++)
+                if(fabs(categ[j]-test_ypoint[i])<1e-7)
+                {
 
-					found=1;
-					break;
-				}
-			if(!found)
-			{
-				int s=categ.size();
-				categ.resize(s+1);
-				printf("New category %lf\n",test_ypoint[i]);
-				categ[s]=test_ypoint[i];
-			}
+                    found=1;
+                    break;
+                }
+            if(!found)
+            {
+                int s=categ.size();
+                categ.resize(s+1);
+                categ[s]=test_ypoint[i];
+            }
 
-		}
-		fclose(fp);
-	}
-	program=new SigProgram(dimension);
-	setStartSymbol(program->getStartSymbol());
-	neuralparser=new NeuralParser(dimension);
+        }
+        fclose(fp);
+    }
+    program=new SigProgram(dimension);
+    setStartSymbol(program->getStartSymbol());
+    neuralparser=new NeuralParser(dimension);
 
+}
+
+NNCNeuralProgram::NNCNeuralProgram(int Dimension,QString TrainFile,QString TestFile):
+	NeuralProgram(Dimension)
+{
+    setAll1(Dimension,TrainFile,TestFile);
 }
 
 static void mymap(Data x,Data &x1)

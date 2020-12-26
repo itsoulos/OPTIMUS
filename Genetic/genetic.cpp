@@ -391,6 +391,7 @@ void       Genetic::step()
     select();
     crossover();
     ++generation;
+
 	if(generation %10==0)
 	{
 		for(int i=0;i<20;i++)
