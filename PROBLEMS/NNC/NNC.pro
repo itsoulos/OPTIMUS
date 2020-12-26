@@ -20,6 +20,7 @@ SOURCES += \
     neuralparser.cc \
     neuralprogram.cc \
     nnc.cpp \
+    tolmin.cc \
     nncneuralprogram.cc \
     program.cc \
     rule.cc \
@@ -39,6 +40,7 @@ HEADERS += \
     nncneuralprogram.h \
     program.h \
     rule.h \
+    tolmin.h \
     sigprogram.h \
     symbol.h
 

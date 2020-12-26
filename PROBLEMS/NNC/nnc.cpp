@@ -1,6 +1,7 @@
 #include "nnc.h"
 # include "interval.h"
 # include "omp.h"
+# include "tolmin.h"
 extern "C"
 {
     //parameters
@@ -11,7 +12,7 @@ extern "C"
     QString testfile="";
     QString urlpath="http://itsoulos.teiep.gr/genclass/";
     //QString urlpath="https://app-1525680166.000webhostapp.com/";
-    int chromosomeSize=100;
+    int chromosomeSize=200;
     //end of parameters
     //names: leftmargin, rightmargin, trainfile, testfile, chromosomesize
 
@@ -197,10 +198,31 @@ extern "C"
     {
         double sum=0.0;
         vector<int> genome;
-genome.resize(getdimension());
+	genome.resize(getdimension());
         for(int i=0;i<getdimension();i++)
             genome[i]=(int)fabs(x[i]);
-     double ff=program[thread()].fitness(genome);
+     	double ff=program[thread()].fitness(genome);
+ 	int tries=0;
+   	MinInfo Info1;
+        Info1.iters=2001;
+        Info1.problem=&program[thread()];
+	double value=0.0;
+	double old_f=0.0;
+	Data w;
+        program[thread()].neuralparser->getWeights(w);
+        do
+        {
+           value=program[thread()].getTrainError();
+           printf("Neural[%3d]=%20.10lf\n",tries,value);
+           value=tolmin(w,Info1);
+           program[thread()].neuralparser->getWeights(w);
+           if(fabs(old_f-value)<1e-5) break;
+           old_f=value;
+           fflush(stdout);
+           tries++;
+           if(tries>=20) break;
+         }while(1);
+
 
         QJsonObject result;
         result["nodes"]=10;
