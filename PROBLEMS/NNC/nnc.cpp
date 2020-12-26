@@ -2,6 +2,7 @@
 # include "interval.h"
 # include "omp.h"
 # include "tolmin.h"
+# include "converter.h"
 extern "C"
 {
     //parameters
@@ -174,7 +175,11 @@ extern "C"
       vector<int>  genome;
       genome.resize(getdimension());
       for(int i=0;i<getdimension();i++) genome[i]=(int)fabs(x[i]);
+	program[thread()].neuralparser->sigcount=0;
+	program[thread()].neuralparser->violcount=0;
       double f=program[thread()].fitness(genome);
+	double percent=program[thread()].neuralparser->violcount*1.0/program[thread()].neuralparser->sigcount;
+	return -f * (1.0+percent);
       return -f;
     }
     double dmax(double a,double b){return a>b?a:b;}
@@ -222,6 +227,12 @@ extern "C"
            tries++;
            if(tries>=20) break;
          }while(1);
+	  program[thread()].neuralparser->getWeights(w);
+          value=program[thread()].getTrainError();
+	  Converter con(w,w.size()/(dimension+2),dimension);
+          con.convert(genome);
+     	ff=program[thread()].fitness(genome);
+
 
 
         QJsonObject result;

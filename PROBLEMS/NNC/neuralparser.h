@@ -27,6 +27,7 @@ class NeuralParser
 		vector<Node> 	node;
 		vector<double>	weight;
 	public:
+		int   sigcount,violcount;
 		NeuralParser(int Dimension);
 		int	getDimension() const;
 		void	makeVector(string str);

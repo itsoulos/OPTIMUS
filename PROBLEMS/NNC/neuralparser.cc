@@ -194,6 +194,11 @@ double	NeuralParser::eval(double  *xpoint)
 		}
 		arg+=weight[(dimension+2)*i-1];
 		per+=weight[(dimension+2)*i-(dimension+1)-1]*sig(arg);
+		if(fabs(weight[(dimension+2)*i-(dimension+1)-1])>1e-5)
+		{
+			sigcount++;
+			if(fabs(arg)>=10.0) violcount++;
+		}
 	}
 	return per;
 }
