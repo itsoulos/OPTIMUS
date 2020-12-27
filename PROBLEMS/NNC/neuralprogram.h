@@ -38,7 +38,8 @@ class NeuralProgram :
 		virtual double 	penalty4();
 		virtual double  getPartError();
 		virtual double  getPartError(Data &value);
-        virtual void    printOutput(QString filename)=0;
+        	virtual void    printOutput(QString filename)=0;
+		int getWeightSize() ;
 		~NeuralProgram();
 };
 

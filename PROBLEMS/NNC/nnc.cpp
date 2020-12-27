@@ -3,6 +3,7 @@
 # include "omp.h"
 # include "tolmin.h"
 # include "converter.h"
+# include "gensolver.h"
 extern "C"
 {
     //parameters
@@ -179,7 +180,7 @@ extern "C"
 	program[thread()].neuralparser->violcount=0;
       double f=program[thread()].fitness(genome);
 	double percent=program[thread()].neuralparser->violcount*1.0/program[thread()].neuralparser->sigcount;
-	return -f * (1.0+percent);
+//	return -f * (1.0+percent);
       return -f;
     }
     double dmax(double a,double b){return a>b?a:b;}
@@ -215,6 +216,8 @@ extern "C"
 	double old_f=0.0;
 	Data w;
         program[thread()].neuralparser->getWeights(w);
+	GenSolve(&program[thread()],w,value,0,0);
+
         do
         {
            value=program[thread()].getTrainError();

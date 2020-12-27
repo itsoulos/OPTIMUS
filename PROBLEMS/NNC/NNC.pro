@@ -25,6 +25,7 @@ SOURCES += \
     program.cc \
     rule.cc \
     sigprogram.cc \
+    gensolver.cc \
     symbol.cc
 
 HEADERS += \
@@ -41,6 +42,7 @@ HEADERS += \
     program.h \
     rule.h \
     tolmin.h \
+    gensolver.h \
     sigprogram.h \
     symbol.h
 

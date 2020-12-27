@@ -32,6 +32,10 @@ double	NeuralParser::valError()
 	return 0.0;
 }
 
+int	NeuralParser::getWeightSize()
+{
+return weight.size();
+}
 int	NeuralParser::getDimension() const
 {
 	return dimension;

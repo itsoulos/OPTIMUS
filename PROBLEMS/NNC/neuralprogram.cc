@@ -164,6 +164,11 @@ double	NeuralProgram::getTestError()
 	return 0.0;
 }
 
+int	NeuralProgram::getWeightSize()
+{
+	return neuralparser->getWeightSize();
+}
+
 void	NeuralProgram::getDeriv(Data &g)
 {
 	Data x;

@@ -2119,7 +2119,7 @@ int fgcalc_(long *n,double *x,double *f,double *g,
 	*f=info.problem->getTrainError(Xa);
 	if(*f<oldmin)  
 	{
-            printf("iter=%d minimum=%lf\n",totcal_1.itnocs,*f);oldmin=*f;
+            //printf("iter=%d minimum=%lf\n",totcal_1.itnocs,*f);oldmin=*f;
 	}
 	
 	info.problem->getDeriv(Ga);

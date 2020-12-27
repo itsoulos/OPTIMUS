@@ -44,6 +44,7 @@ class NeuralParser
 		virtual double	valError();
 		void	getMargins(Data &l,Data &r);
 		string  print();
+		int getWeightSize();
 		~NeuralParser();
 };
 # endif
