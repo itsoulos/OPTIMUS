@@ -180,7 +180,7 @@ extern "C"
 	program[thread()].neuralparser->violcount=0;
       double f=program[thread()].fitness(genome);
 	double percent=program[thread()].neuralparser->violcount*1.0/program[thread()].neuralparser->sigcount;
-//	return -f * (1.0+percent);
+	//return -f * (1.0+percent);
       return -f;
     }
     double dmax(double a,double b){return a>b?a:b;}
@@ -216,8 +216,19 @@ extern "C"
 	double old_f=0.0;
 	Data w;
         program[thread()].neuralparser->getWeights(w);
+	Data x1,x2;
+	x1.resize(w.size());
+	x2.resize(w.size());
+	for(int i=0;i<w.size();i++)
+	{
+		x1[i]=-5.0 *fabs(w[i]);
+		x2[i]= 5.0 *fabs(w[i]);
+	}
+	program[thread()].neuralparser->setleftmargin(x1);
+	program[thread()].neuralparser->setrightmargin(x2);
 	GenSolve(&program[thread()],w,value,0,0);
-
+	program[thread()].neuralparser->setWeights(w);
+	printf("After genetic value = %lf \n",value);
         do
         {
            value=program[thread()].getTrainError();
@@ -228,7 +239,7 @@ extern "C"
            old_f=value;
            fflush(stdout);
            tries++;
-           if(tries>=20) break;
+           if(tries>=40) break;
          }while(1);
 	  program[thread()].neuralparser->getWeights(w);
           value=program[thread()].getTrainError();

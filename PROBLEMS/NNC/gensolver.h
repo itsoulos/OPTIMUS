@@ -23,9 +23,10 @@ class GenSolver
 		NeuralProgram	*problem;
 		int	small_tolmin_flag;
 	public:
+		GenSolver(int gcount,NeuralProgram *p,double mx,int f);
+		GenSolver(int gcount,NeuralProgram *p,vector<double> &xx);
 		void	select();
 		void	local();
-		GenSolver(int gcount,NeuralProgram *p,double mx,int f);
 		void	setElitism(int s);
 		int	getGeneration() const;
 		int	getCount() const;

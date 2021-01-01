@@ -32,6 +32,29 @@ double	NeuralParser::valError()
 	return 0.0;
 }
 
+void NeuralParser::setleftmargin(Data &x)
+{
+	left.resize(x.size());
+	left=x;
+}
+
+void NeuralParser::setrightmargin(Data &x)
+{
+	right.resize(x.size());
+	right=x;
+}
+
+Data 	NeuralParser::getleftmargin()
+{
+	return left;
+}
+
+
+Data NeuralParser::getrightmargin()
+{
+	return right;
+}
+
 int	NeuralParser::getWeightSize()
 {
 return weight.size();

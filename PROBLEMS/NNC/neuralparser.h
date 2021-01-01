@@ -26,7 +26,12 @@ class NeuralParser
 		vector<int> 	fixstatus;
 		vector<Node> 	node;
 		vector<double>	weight;
+		Data left,right;
 	public:
+		void setleftmargin(Data &x);
+		void setrightmargin(Data &x);
+		Data getleftmargin();
+		Data getrightmargin();
 		int   sigcount,violcount;
 		NeuralParser(int Dimension);
 		int	getDimension() const;

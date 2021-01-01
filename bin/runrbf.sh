@@ -22,7 +22,7 @@ fi
 PROBLEM=RbfTest
 NODES=$2
 
-MLPARAMS="--trainName=$DATAPATH/$1.train --testName=$DATAPATH/$1.test --nodes=$NODES"
+MLPARAMS="--trainName=$DATAPATH/$1.train --testName=$DATAPATH/$1.test --nodes=$NODES --natoms=$2"
 echo ./OptimusApp --filename=../PROBLEMS/RbfTest/lib$PROBLEM.so  --opt_method=$METHOD   $METHODPARAMS  $MLPARAMS --interval_generations=50 --threads=12  --iterations=30
 ./OptimusApp --filename=../PROBLEMS/RbfTest/lib$PROBLEM.so  --opt_method=$METHOD   $METHODPARAMS  $MLPARAMS --interval_generations=50 --threads=12  --iterations=30
 
