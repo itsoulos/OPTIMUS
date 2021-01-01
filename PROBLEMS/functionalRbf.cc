@@ -117,7 +117,7 @@ void    init(QJsonObject data)
     if(data.contains("testName"))
         testName=data["testName"].toString();
     if(data.contains("nodes"))
-        nodes=data["nodes"].toInt();
+        nodes=data["nodes"].toString().toInt();
     if(data.contains("initialLeft"))
         initialLeft=data["initialLeft"].toDouble();
     if(data.contains("initialRight"))

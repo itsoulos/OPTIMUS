@@ -287,8 +287,13 @@ double  Rbf::getOutput(Data &pattern)
     Data px;
     int j;
     for(j=0;j<centroid.size();j++)
-      px<<gauss_function(pattern,centroid[j],variance[j]);
-    return product(weight,px);
+	{
+		double val=gauss_function(pattern,centroid[j],variance[j]);
+		px<<val;
+	}	
+    double d= product(weight,px);
+		printf("d = %lf \n",d);
+	return d;
 }
 double  Rbf::getOutput(Data &w,Data &pattern)
 {
@@ -325,6 +330,7 @@ double	Rbf::getTrainError(Data &w)
     for(i=0;i<trainSet->getpatterns();i++)
     {
         Data x=trainSet->getpoint(i);
+
         sum+=pow(getOutput(w,x)-trainSet->gety(i),2.0);
     }
     return sum;

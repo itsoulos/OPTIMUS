@@ -3,7 +3,7 @@ DATAPATH=/home/sheridan/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfoldin
 #DATAPATH=/home/sheridan/Desktop/ERGASIES/SECDATA/
 NODES=10
 
-METHOD=Multistart
+METHOD=Genetic
 METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then
@@ -19,10 +19,10 @@ then
 	METHODPARAMS=="--multistart_samples=25"
 fi
 
-PROBLEM=RbfTest
+PROBLEM=functionalRbf
 NODES=$2
 
 MLPARAMS="--trainName=$DATAPATH/$1.train --testName=$DATAPATH/$1.test --nodes=$NODES --natoms=$2"
 echo ./OptimusApp --filename=../PROBLEMS/RbfTest/lib$PROBLEM.so  --opt_method=$METHOD   $METHODPARAMS  $MLPARAMS --interval_generations=50 --threads=12  --iterations=30
-./OptimusApp --filename=../PROBLEMS/RbfTest/lib$PROBLEM.so  --opt_method=$METHOD   $METHODPARAMS  $MLPARAMS --interval_generations=50 --threads=12  --iterations=30
+./OptimusApp --filename=../PROBLEMS/lib$PROBLEM.so  --opt_method=$METHOD   $METHODPARAMS  $MLPARAMS --interval_generations=50 --threads=12  --iterations=30
 
