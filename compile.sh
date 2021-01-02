@@ -10,6 +10,7 @@ else
 		(cd PROBLEMS/NNC; for file in *.pro; do  qmake $file; make clean; make; done)
 		(cd PROBLEMS/RbfTest; for file in *.pro; do  qmake $file; make clean; make; done)
 		(cd Optimus; qmake; make clean; make install)
+		(cd Bfgs; qmake; make clean; make install )
 		(cd Genmin; qmake; make clean; make install )
 		(cd Genprice; qmake; make clean; make install )
 		(cd Multistart; qmake; make clean; make install)
