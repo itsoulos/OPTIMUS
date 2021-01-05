@@ -12,6 +12,7 @@ else
 		(cd Optimus; qmake; make clean; make install)
 		(cd Bfgs; qmake; make clean; make install )
 		(cd Genmin; qmake; make clean; make install )
+  		(cd SMGDescent; qmake; make clean; make install )
 		(cd Genprice; qmake; make clean; make install )
 		(cd Multistart; qmake; make clean; make install)
 		(cd IntervalMethod; qmake; make clean; make install)
