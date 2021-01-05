@@ -159,7 +159,7 @@ void  loadOptimizers()
     QStringList optimizerFile;
 
     optimizerFile<<"libGenetic.so"<<"libMultistart.so"<<"libPso.so"<<"libMinfinder.so"<<
-                   "libIntervalMethod.so"<<"libGenmin.so"<<"libGenprice.so"<<"libBfgs.so"<<"libMGDescent.so";
+                   "libIntervalMethod.so"<<"libGenmin.so"<<"libGenprice.so"<<"libBfgs.so"<<"libSMGDescent.so";
     for(int i=0;i<optimizerFile.size();i++)
     {
         QString name=optimizerFile[i];
