@@ -105,7 +105,6 @@ double	funmin(vector<double> &x)
     myrbf[omp_get_thread_num()]->setParameters(x);
     myrbf[omp_get_thread_num()]->train();
     double f=myrbf[omp_get_thread_num()]->getTrainError();
-	printf("fx = %lf \n",f);
     return f;
 }
 double dmax(double a,double b){return a>b?a:b;}

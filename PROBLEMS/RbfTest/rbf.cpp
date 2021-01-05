@@ -150,7 +150,9 @@ Matrix  Rbf::matrix_mult(Matrix &x,Matrix &y)
                 for(k=0;k<p;k++)
                 {
                     z[i][j]=z[i][j]+x[i][k]*y[k][j];
+
                 }
+
             }
         }
         return z;
@@ -278,8 +280,10 @@ void    Rbf::train()
     Matrix pA=matrix_pseudoinverse(A);
     Matrix pW=matrix_mult(pA,RealOutput);
     for(i=0;i<pW.size();i++)
-        weight[i]=pW[i][0];
+    {
 
+        weight[i]=pW[i][0];
+     }
 }
 
 double  Rbf::getOutput(Data &pattern)
@@ -289,10 +293,11 @@ double  Rbf::getOutput(Data &pattern)
     for(j=0;j<centroid.size();j++)
 	{
 		double val=gauss_function(pattern,centroid[j],variance[j]);
-		px<<val;
+
+        px<<val;
 	}	
     double d= product(weight,px);
-		printf("d = %lf \n",d);
+
 	return d;
 }
 double  Rbf::getOutput(Data &w,Data &pattern)
@@ -353,7 +358,6 @@ double  Rbf::product(Data &x, Data &y)
 {
     int i;
     double sum=0.0;
-#pragma omp simd reduction(+:sum)
     for(i=0;i<x.size();i++)
         sum+=x[i]*y[i];
     return sum;

@@ -29,270 +29,391 @@ using namespace std;
 extern "C"
 {
 
-
-class Point{
-
-private:
-    int pointId, clusterId;
-    int dimensions;
-    vector<double> values;
-
-public:
-    Point(int id, string line){
-        dimensions = 0;
-        pointId = id;
-        stringstream is(line);
-        double val;
-        while(is >> val){
-            values.push_back(val);
-            dimensions++;
-        }
-    values.pop_back();
-    dimensions--;
-        clusterId = 0; //Initially not assigned to any cluster
-    }
-
-    int getDimensions(){
-        return dimensions;
-    }
-
-    int getCluster(){
-        return clusterId;
-    }
-
-    int getID(){
-        return pointId;
-    }
-
-    void setCluster(int val){
-        clusterId = val;
-    }
-
-    double getVal(int pos){
-        return values[pos];
-    }
-};
-class Cluster{
-
-private:
-    int clusterId;
-    vector<double> centroid;
-    vector<Point> points;
-    vector<double> variance;
-public:
-    vector<double> getCentroid() { return centroid; }
-    Cluster(int clusterId, Point centroid){
-        this->clusterId = clusterId;
-        for(int i=0; i<centroid.getDimensions(); i++){
-            this->centroid.push_back(centroid.getVal(i));
-        }
-        this->addPoint(centroid);
-    }
-    vector<double> getVariance()
-    {
-        calculateVariance();
-        return variance;
-    }
-    void calculateVariance()
-    {
-        int i;
-        variance.resize(1);
-        for(i=0;i<variance.size();i++) variance[i]=0.0;
-        for(i=0;i<points.size();i++)
-        {
-            Point pt=points[i];
-            int d=centroid.size();
-            for(int j=0;j<d;j++)
-            {
-                variance[0]+=pow(pt.getVal(j)-centroid[j],2.0);
-            }
-            variance[0]=sqrt(variance[0])/(d * d);
-
-        }
-    }
-
-    void addPoint(Point p){
-        p.setCluster(this->clusterId);
-        points.push_back(p);
-    }
-
-    bool removePoint(int pointId){
-        int size = points.size();
-
-        for(int i = 0; i < size; i++)
-        {
-            if(points[i].getID() == pointId)
-            {
-                points.erase(points.begin() + i);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    int getId(){
-        return clusterId;
-    }
-
-    Point getPoint(int pos){
-        return points[pos];
-    }
-
-    int getSize(){
-        return points.size();
-    }
-
-    double getCentroidByPos(int pos) {
-        return centroid[pos];
-    }
-
-    void setCentroidByPos(int pos, double val){
-        this->centroid[pos] = val;
-    }
-};
-
-
-class KMeans{
-private:
-    int K, iters, dimensions, total_points;
-    vector<Cluster> clusters;
-
-    int getNearestClusterId(Point point){
-        double sum = 0.0, min_dist;
-        int NearestClusterId;
-
-        for(int i = 0; i < dimensions; i++)
-        {
-            sum += pow(clusters[0].getCentroidByPos(i) - point.getVal(i), 2.0);
-        }
-
-        min_dist = sqrt(sum);
-        NearestClusterId = clusters[0].getId();
-
-        for(int i = 1; i < K; i++)
-        {
-            double dist;
-            sum = 0.0;
-
-            for(int j = 0; j < dimensions; j++)
-            {
-                sum += pow(clusters[i].getCentroidByPos(j) - point.getVal(j), 2.0);
-            }
-
-            dist = sqrt(sum);
-
-            if(dist < min_dist)
-            {
-                min_dist = dist;
-                NearestClusterId = clusters[i].getId();
-            }
-        }
-
-        return NearestClusterId;
-    }
-
-public:
-    KMeans(int K, int iterations){
-        this->K = K;
-        this->iters = iterations;
-    }
-    vector<Cluster> getClusters() {return clusters;}
-    void run(vector<Point>& all_points){
-
-        total_points = all_points.size();
-        dimensions = all_points[0].getDimensions();
-
-
-        //Initializing Clusters
-        vector<int> used_pointIds;
-
-        for(int i=1; i<=K; i++)
-        {
-            while(true)
-            {
-                int index = rand() % total_points;
-
-                if(find(used_pointIds.begin(), used_pointIds.end(), index) == used_pointIds.end())
-                {
-                    used_pointIds.push_back(index);
-                    all_points[index].setCluster(i);
-                    Cluster cluster(i, all_points[index]);
-                    clusters.push_back(cluster);
-                    break;
-                }
-            }
-        }
-        int iter = 1;
-        while(true)
-        {
-            cout<<"Iter - "<<iter<<"/"<<iters<<endl;
-            bool done = true;
-
-            // Add all points to their nearest cluster
-            for(int i = 0; i < total_points; i++)
-            {
-                int currentClusterId = all_points[i].getCluster();
-                int nearestClusterId = getNearestClusterId(all_points[i]);
-
-                if(currentClusterId != nearestClusterId)
-                {
-                    if(currentClusterId != 0){
-                        for(int j=0; j<K; j++){
-                            if(clusters[j].getId() == currentClusterId){
-                                clusters[j].removePoint(all_points[i].getID());
-                            }
-                        }
-                    }
-
-                    for(int j=0; j<K; j++){
-                        if(clusters[j].getId() == nearestClusterId){
-                            clusters[j].addPoint(all_points[i]);
-                        }
-                    }
-                    all_points[i].setCluster(nearestClusterId);
-                    done = false;
-                }
-            }
-
-            // Recalculating the center of each cluster
-            for(int i = 0; i < K; i++)
-            {
-                int ClusterSize = clusters[i].getSize();
-
-                for(int j = 0; j < dimensions; j++)
-                {
-                    double sum = 0.0;
-                    if(ClusterSize > 0)
-                    {
-                        for(int p = 0; p < ClusterSize; p++)
-                            sum += clusters[i].getPoint(p).getVal(j);
-                        clusters[i].setCentroidByPos(j, sum / ClusterSize);
-                    }
-                }
-            }
-
-            if(done || iter >= iters)
-            {
-                cout << "Clustering completed in iteration : " <<iter<<endl<<endl;
-                break;
-            }
-            iter++;
-        }
-
-
-        //Print pointIds in each cluster
-        for(int i=0; i<K; i++){
-            cout<<"Points in cluster "<<clusters[i].getId()<<" : ";
-            for(int j=0; j<clusters[i].getSize(); j++){
-                cout<<clusters[i].getPoint(j).getID()<<" ";
-            }
-            cout<<endl<<endl;
-        }
-    }
-};
 typedef vector<double> Data;
 
+/* ---------------------------------------------------- */
+/* Matrix Multiplication                                */
+/* Computes the product:  [C] = [A][B]                  */
+/* Input Parameters:                                    */
+/*      a : pointer to matrix [A] (m rows, p columns)   */
+/*      b : pointer to matrix [B] (p rows, n columns)   */
+/*      c : pointer to matrix [C] (result of [A][B])    */
+/*      m : rows of [A] and [C]                         */
+/*      p : columns of [A] and rows of [B]              */
+/*      n : columns of [B] and [C]                      */
+/* ---------------------------------------------------- */
 
+
+void matrix_mult(double * a, double * b, double * c,
+                 int m, int p, int n)
+{
+   int i,j,k;
+
+   for(i=0; i<m; ++i)
+    for(j=0; j<n; ++j) {
+        c[i*n + j]=0.0;
+        for(k=0; k<p; ++k)
+            c[i*n + j] = c[i*n +j] + a[i*p +k] * b[k*n +j];
+    }
+
+}
+
+
+
+/* ---------------------------------------------------- */
+/* Transpose Matrix                                     */
+/* Computes the transpose of matrix [A]                 */
+/* The result matrix is [C]                             */
+/* Input Parameters:                                    */
+/*      a : pointer to matrix [A] (m rows, n columns)   */
+/*      c : pointer to matrix [C] (transpose of [A])    */
+/*      m : rows of [A] and columns of [C]              */
+/*      n : columns of [A] and rows of [C]              */
+/* ---------------------------------------------------- */
+
+
+void matrix_transpose(double * a, double * c, int m, int n)
+{
+   int i,j;
+
+   for(i=0; i<m; ++i)
+    for(j=0; j<n; ++j)
+        c[j*m + i] = a[i*n + j];
+}
+
+
+
+/* ---------------------------------------------------- */
+/* Inverse Matrix                                       */
+/* Computes the inverse of matrix [A]                   */
+/* The result matrix is [C]                             */
+/* Input Parameters:                                    */
+/*      a   : pointer to matrix [A] (n rows, n columns) */
+/*      c   : pointer to matrix [C] (inverse of [A])    */
+/*      n   : order of matrix (n x n)                   */
+/*      det : determinant of [A]                        */
+/* Returns:                                             */
+/*      0   : if successful                             */
+/*      1   : if matrix is singular                     */
+/* ---------------------------------------------------- */
+
+
+int matrix_inverse(double * a, double * c, int n, double *det)
+{
+   int npivot; /* no of times rows are interchanged */
+   int pass, row, col, maxrow, i, j, error_flag;
+   double temp, pivot, mult;
+
+   /* Initialization */
+   /* store the identity matrix */
+   /* it will be replaced by the inverse */
+   for(i=0; i<n; ++i) {
+    for(j=0; j<n; ++j) {
+        if(i==j) {
+        c[i*n + j] = 1.0;
+        } else {
+        c[i*n + j] = 0.0;
+          }
+    }
+   }
+
+   *det=1.0;
+   npivot=0;
+
+   /* Partial pivoting
+      For each pass find the largest element in the column
+      containing the pivot element. The pivot column is pass.
+      maxrow is the row containing the largest element in
+      the pivot column. It is initially set equal to the
+      pivot row. */
+
+   for(pass=0; pass<n; ++pass) {
+    maxrow=pass;
+    for(row=pass; row<n; ++row)
+        if(fabs(a[row*n + pass]) > fabs(a[maxrow*n + pass]))
+        maxrow=row;
+
+    /* increment npivot if rows are to be interchanged */
+    if(maxrow != pass)
+        ++npivot;
+
+    /* Interchange pivot row with the row containing the largest
+           element in the pivot column in both [A] and [C] */
+    for(col=0; col<n; ++col) {
+        temp=a[pass*n + col];
+        a[pass*n + col] = a[maxrow*n + col];
+        a[maxrow*n + col] = temp;
+        temp = c[pass*n + col];
+        c[pass*n + col] = c[maxrow*n + col];
+        c[maxrow*n + col] = temp;
+    }
+
+    /* Compute determinant and check for singularity.
+       Determinant is the product of the pivot elements.
+       Pivot element is a[pass][pass] */
+    pivot = a[pass*n + pass];
+    *det *= pivot;
+
+
+    if(fabs(*det) < 1.0e-40) {
+        /* Matrix is singular. Set error flag and exit */
+        error_flag=1;
+        return(error_flag);
+    }
+
+
+    /* Normalization.
+       Divide pivot row by the pivot element so pivot element
+       is reduced to 1 */
+    for(col=0; col<n; ++col) {
+        a[pass*n + col] = a[pass*n + col]/pivot;
+        c[pass*n + col] = c[pass*n + col]/pivot;
+    }
+
+    /* Elimination.
+       Reduce all elements in pivot column to zero */
+    for(row=0; row<n; ++row) {
+        if(row != pass) {
+            mult = a[row*n + pass];
+            for(col=0; col<n; ++col) {
+                a[row*n + col] = a[row*n + col] - a[pass*n + col] * mult;
+                c[row*n + col] = c[row*n + col] - c[pass*n + col] * mult;
+            }
+        }
+    }
+
+   }
+
+   if(npivot % 2 != 0)
+    *det = *det * (-1.0);
+    error_flag = 0;
+    return(error_flag);
+
+}
+
+
+
+/* ---------------------------------------------------- */
+/* Pseudo Inverse Matrix                                */
+/* Computes the pseudo inverse matrix of [A]            */
+/* The result is matrix [C] = ([A]^T * [A])^-1 * [A]^T  */
+/* Input Parameters:                                    */
+/*      a : pointer to matrix [A] (m rows, n columns)   */
+/*      c : pointer to matrix [C] (n rows, m columns)   */
+/*      m : rows of [A] and columns of [C]              */
+/*      n : columns of [A] and rows of [C]              */
+/* ---------------------------------------------------- */
+
+
+void matrix_pseudo_inverse(double * a, double * c, int m, int n)
+{
+   double * b = (double*)malloc(sizeof(double)*n*m);   /* transpose of [a] */
+   //double * e = (double*)malloc(sizeof(double)*m*n);   /* product [b][a] */
+  double * e = (double*)malloc(sizeof(double)*n*n);   /* product [b][a] */
+  // double * e = (double*)malloc(sizeof(double)*m*m);   /* product [b][a] */
+   double * d = (double*)malloc(sizeof(double)*n*n);   /* inverse of [c] */
+   double det;
+
+   /*   [b] = [a]^T    */
+   /*   [e] = [b][a]   */
+   /*   [d] = [e]^-1   */
+   /*   [c] = [d][b]   */
+
+   matrix_transpose(a,b,m,n);
+   matrix_mult(b,a,e,n,m,n);
+   matrix_inverse(e,d,n,&det);
+   matrix_mult(d,b,c,n,n,m);
+
+   free(d);
+   free(e);
+   free(b);
+
+}
+
+
+
+
+/* ---------------------------------------------------- */
+/* Matrix Addition                                      */
+/* Computes the sum of matrices:  [C] = [A] + [B]       */
+/* Input Parameters:                                    */
+/*      a : pointer to matrix [A] (m rows, n columns)   */
+/*      b : pointer to matrix [B] (m rows, n columns)   */
+/*      c : pointer to matrix [C] (m rows, n columns)   */
+/*      m : rows of [A], [B] and [C]                    */
+/*      b : columns of [A], [B] and [C]                 */
+/* ---------------------------------------------------- */
+
+
+void matrix_add(double * a, double * b, double * c, int m, int n)
+{
+   int i,j;
+
+   for(i=0; i<m; ++i)            /* loop over rows    */
+    for(j=0; j<n; ++j)       /* loop over columns */
+        c[n*i + j] = a[n*i +j] + b[n*i + j];
+
+}
+
+
+
+
+/* ---------------------------------------------------- */
+/* Matrix Substraction                                  */
+/* Computes the difference of matrices: [C] = [A] - [B] */
+/* Input Parameters:                                    */
+/*      a : pointer to matrix [A] (m rows, n columns)   */
+/*      b : pointer to matrix [B] (m rows, n columns)   */
+/*      c : pointer to matrix [C] (m rows, n columns)   */
+/*      m : rows of [A], [B] and [C]                    */
+/*      b : columns of [A], [B] and [C]                 */
+/* ---------------------------------------------------- */
+
+
+void matrix_sub(double * a, double * b, double * c, int m, int n)
+{
+   int i,j;
+
+   for(i=0; i<m; ++i)            /* loop over rows    */
+    for(j=0; j<n; ++j)       /* loop over columns */
+        c[n*i + j] = a[n*i +j] - b[n*i + j];
+
+}
+/* -------------------------------------------- */
+/* Trains an RBF Neural Netowrk                 */
+/* Input Parameters:                            */
+/*      in_n      : number of inputs            */
+/*                  (in the input layer)        */
+/*      hid_n     : number of synapses          */
+/*                  in the hidden layer         */
+/*      out_n     : number of outputs           */
+/*                  (in the output layer)       */
+/*      samples_n : number of training samples  */
+/*      centers   : pointer to centers matrix   */
+/*                  (hid_n rows, in_n columns)  */
+/*      variances : pointer to variances matrix */
+/*                  (hid_n rows, in_n columns)  */
+/*      weights   : pointer to weights matrix   */
+/*                  (hid_n columns)             */
+/*      input     : pointer to input vector     */
+/*                  (in_n columns)              */
+/*      output    : pointer to output vector    */
+/*                  (out_n columns)             */
+/* -------------------------------------------- */
+
+double violate;
+int train_rbf(int in_n, int hid_n, int out_n, int samples_n,
+          double * centers, double * variances,
+          double * weights, double * input, double * output)
+{
+
+   int i,j;
+   double result, var_diag=0.05;
+   double in_cen[in_n], in_cen_tr[in_n];
+   double G[samples_n][hid_n];
+   double Gp[hid_n][samples_n];
+
+   // -----------------------------------
+    var_diag=0;
+    for(i=0; i<hid_n; i++) {
+        for(j=0; j<in_n; j++) {
+            var_diag += variances[i*in_n + j];
+        }
+    }
+    if(var_diag<0.00000001) var_diag=0.001;
+   // -----------------------------------
+
+    int violcount=0;
+   for(i=0; i<samples_n; i++) {
+    for(j=0; j<hid_n; j++) {
+        /* Ypologizw ton pinaka Input-Centers gia kathe hidden neuron */
+        matrix_sub(&input[i*in_n],&centers[j*in_n],&in_cen[0],1,in_n);
+
+        /* Ypologizw ton anastrofo pinaka tou prohgoumenou */
+        matrix_transpose(&in_cen[0],&in_cen_tr[0],in_n,1);
+
+        /* Pollaplasiazw ta dyo parapanw gia na parw ena pinaka stoixeio */
+        matrix_mult(&in_cen_tr[0],&in_cen[0],&result,1,in_n,1);
+
+
+        G[i][j] = exp((-1.0*result)/(2.0 * var_diag));
+
+
+    }
+   }
+   matrix_pseudo_inverse(&G[0][0],&Gp[0][0],samples_n,hid_n);
+
+   /* Kanw ton pol/smo [Gp]*[Output] gia na brw ta weights */
+
+   matrix_mult(&Gp[0][0],output,weights,hid_n,samples_n,out_n);
+ return 0;
+}
+
+
+
+/* -------------------------------------------- */
+/* Creates an RBF Neural Netowrk                */
+/* Input Parameters:                            */
+/*      in_n      : number of inputs            */
+/*                  (in the input layer)        */
+/*      hid_n     : number of synapses          */
+/*                  in the hidden layer         */
+/*      out_n     : number of outputs           */
+/*                  (in the output layer)       */
+/*      centers   : pointer to centers matrix   */
+/*                  (hid_n rows, in_n columns)  */
+/*      variances : pointer to variances matrix */
+/*                  (hid_n rows, in_n columns)  */
+/*      weights   : pointer to weights matrix   */
+/*                  (hid_n rows, out_n columns) */
+/*      input     : pointer to input vector     */
+/*                  (1 row, in_n columns)       */
+/*      output    : pointer to output vector    */
+/*                  (1 row, out_n columns)      */
+/* -------------------------------------------- */
+
+int create_rbf(int in_n, int hid_n, int out_n,
+          double * centers, double * variances,
+          double * weights, double * input, double * output)
+{
+
+   int i,j;
+   double result, var_diag=0.05;
+   double in_cen[in_n], in_cen_tr[in_n];
+   double G[hid_n];
+
+   // -----------------------------------
+    var_diag=0;
+    for(i=0; i<hid_n; i++) {
+        for(j=0; j<in_n; j++) {
+            var_diag += variances[i*in_n + j];
+        }
+    }
+    if(var_diag<0.00000001) var_diag=0.001;
+   // -----------------------------------
+
+   for(i=0; i<hid_n; i++) {
+    /* Ypologizw ton pinaka Input-Centers gia kathe hidden neuron */
+    matrix_sub(&input[0],&centers[i*in_n],&in_cen[0],1,in_n);
+
+    /* Ypologizw ton anastrofo pinaka tou prohgoumenou */
+    matrix_transpose(&in_cen[0],&in_cen_tr[0],in_n,1);
+
+    /* Pollaplasiazw ta dyo parapanw gia na parw ena pinaka stoixeio */
+    matrix_mult(&in_cen_tr[0],&in_cen[0],&result,1,in_n,1);
+
+    G[i] = exp((-1.0*result)/(2.0 * var_diag));
+
+    /* Auto einai gia bias = 1 */
+    /* G[hid_n-1]=1; */
+   }
+
+   /* Kanw ton pol/smo [G]*[Weights] gia na brw tin exodo */
+
+   matrix_mult(&G[0],weights,output,1,hid_n,out_n);
+
+ return 0;
+}
 void Kmeans(double * data_vectors, double * centers,
             double * variances, int m, int n, int K)
 {
@@ -499,7 +620,8 @@ double initialRight= 1000.0;
 Interval maxWidth;
 int failCount=0;
 int normalTrain=0;
-vector<Cluster> clusters;
+double *xinput=0;
+double *yinput=0;
 
 void loadTrain()
 {
@@ -586,23 +708,29 @@ void    init(QJsonObject data)
     if(testName!="xy.data") loadTest();
 
 #ifdef KMEANS
-    double *data_vectors=new double[ trainx.size() * trainx[0].size()];
+    xinput=new double[ trainx.size() * trainx[0].size()];
+    yinput=new double[ trainx.size()];
     centers=new double[nodes * trainx[0].size()];
     variances=new double[nodes * trainx[0].size()];
     int icount=0;
     for(int i=0;i<trainx.size();i++)
     {
         for(int j=0;j<trainx[0].size();j++)
-            data_vectors[icount++]=trainx[i][j];
+            xinput[icount++]=trainx[i][j];
+        yinput[i]=trainy[i];
     }
-    Kmeans(data_vectors,centers,variances,trainx.size(),trainx[0].size(),nodes);
-    delete[] data_vectors;
+    Kmeans(xinput,centers,variances,trainx.size(),trainx[0].size(),nodes);
+
 #endif
 }
 
 int	getdimension()
 {
+#ifdef KMEANS
+    return 2*(trainx[0].size())*nodes;
+#else
     return (dimension+1) * nodes;
+#endif
 }
 
 void 	getmargins(vector<Interval> &x)
@@ -611,6 +739,7 @@ void 	getmargins(vector<Interval> &x)
     {
             x[i]=Interval(initialLeft,initialRight);
     }
+
     if(variances)
     {
             int icount=0;
@@ -631,13 +760,12 @@ void 	getmargins(vector<Interval> &x)
                 for(int j=0;j<trainx[0].size();j++)
                 {
                     double vx=variances[i * trainx[0].size()+j];
-                    norm = norm  + vx * vx;
+                    x[icount++]=Interval(-5.0*sqrt(vx),5.0 * sqrt(vx));
 
                 }
-                x[icount++]=Interval(-5.0*sqrt(norm),5.0 * sqrt(norm));
+
             }
-            delete[] centers;
-            delete[] variances;
+
     }
 }
 
@@ -664,16 +792,46 @@ arma::vec train( vector<double> &x ){
         }
     }
     arma::vec RetVal= arma::vec(arma::pinv(A)*B);
-    if(RetVal.has_nan() || RetVal.has_inf()) {
+   /* if(RetVal.has_nan() || RetVal.has_inf()) {
         RetVal = arma::zeros(arma::size(RetVal));
-        }
+        }*/
     return RetVal;
 }
 
 double	funmin(vector<double> &x)
 {
+#ifdef KMEANS
+    int pattern_dimension=trainx[0].size();
+    double *weights=new double[nodes];
+    int icount=0;
+    memcpy(centers,x.data(),nodes * pattern_dimension*sizeof(double));
+    double *d=x.data();
+    memcpy(variances,&d[nodes*pattern_dimension],nodes*pattern_dimension*sizeof(double));
+    train_rbf(trainx[0].size(),nodes,1,trainx.size(),
+                            centers,variances,weights,xinput,yinput);
+    double sum=0.0;
+    double *xt=new double[pattern_dimension];
+
+    for(int i=0;i<(int)trainx.size();i++)
+    {
+        double outv[1];
+        for(int j=0;j<pattern_dimension;j++) xt[j]=trainx[i][j];
+       create_rbf(trainx[0].size(),nodes,1,
+                                       centers,variances,weights,xt,outv);
+        sum+=(trainy[i]-outv[0])*(trainy[i]-outv[0]);
+    }
+    delete[] weights;
+    delete[] xt;
+    return sum;
+#else
     double errorSum=0.0;  
     arma::vec Linear = train(x);
+    double norm = 0.0;
+    for(int j=0;j<nodes;j++)
+        norm+=Linear(j)*Linear(j);
+    norm = sqrt(norm);
+    if(norm>100) return 1e+8;
+
     for(unsigned i = 0; i < trainx.size(); i++){
         Data pattern = trainx[i];
         arma::vec neuronOuts(nodes);
@@ -686,6 +844,7 @@ double	funmin(vector<double> &x)
     }
 
     return errorSum;
+#endif
 }
 
 adept::adouble aneuronOutput( vector<adept::adouble> &x, vector<double> &patt, unsigned pattDim, unsigned offset ){
@@ -719,7 +878,7 @@ adept::adouble afunmin( vector<adept::adouble> &x, vector<double> &x1 ){
 
 static double dmax(double a,double b){return a>b?a:b;}
 
-void    granal2(vector<double> &x,vector<double> &g)
+void    granal(vector<double> &x,vector<double> &g)
 {
     for(int i=0;i<x.size();i++)
             {
@@ -734,7 +893,7 @@ void    granal2(vector<double> &x,vector<double> &g)
 
 }
 
-void    granal(vector<double> &x,vector<double> &g)
+void    granal2(vector<double> &x,vector<double> &g)
 {
     g = vector<double>(x.size(),0.0);
     adept::Stack s;
@@ -756,54 +915,7 @@ void    granal(vector<double> &x,vector<double> &g)
 
 QString toString(Data &x)
 {
-    QString s="";
-    for(int i=1;i<=nodes;i++)
-    {
-        QString inner="";
-        for(int j=1;j<=dimension;j++)
-        {
-            QString isLeftParenthesis="(";
-            QString isRightParenthesis=")";
-            double node=x[(dimension+2)*i-(dimension+1)+j-1];
-           /* if(node>=0)
-            {
-                isLeftParenthesis="";
-                isRightParenthesis="";
-            }*/
-            if(fabs(node)<1e-7) continue;
-
-            inner=inner+isLeftParenthesis+QString::number(node)+isRightParenthesis+"*x"+QString::number(j);
-            if(j!=dimension) inner=inner+"+";
-        }
-        QString isLeftParenthesis="(";
-        QString isRightParenthesis=")";
-        double bias=x[(dimension+2)*i-(dimension+1)+i-1];
-        /*if(bias>=0)
-        {
-            isLeftParenthesis="";
-            isRightParenthesis="";
-        }*/
-        QString isPlus="+";
-        if(inner.isEmpty()) continue;
-        if(inner.endsWith("+")) isPlus="";
-
-        if(fabs(bias)>1e-7)
-            inner=inner+isPlus+isLeftParenthesis+QString::number(bias)+isRightParenthesis;
-        double outer=x[(dimension+2)*i-(dimension+1)-1];
-        if(fabs(outer)<1e-7) continue;
-        isLeftParenthesis="(";
-        isRightParenthesis=")";
-       /* if(outer>=0)
-        {
-            isLeftParenthesis="";
-            isRightParenthesis="";
-        }*/
-        s=s+isLeftParenthesis+QString::number(outer)+isRightParenthesis+"*sig("+inner+")";
-        if(i!=nodes) s=s+"+";
-    }
-    if(s.endsWith("+"))
-        s=s.remove(s.size()-1,1);
-    return s;
+    return "RBF";
 }
 
 double nearestClass(double y)
@@ -825,8 +937,23 @@ QJsonObject    done(Data &x)
     double sum=0.0;
     double per=0.0;
     double classError=0.0;
-    int fcount=0;
-    
+#ifdef KMEANS
+    funmin(x);
+    double *weights=new double[nodes];
+    train_rbf(dimension,nodes,1,trainx.size(),
+                            centers,variances,weights,xinput,yinput);
+    double *xt=new double[dimension];
+    for(int i=0;i<(int)testx.size();i++)
+    {
+        double outv[1];
+        for(int j=0;j<dimension;j++) xt[j]=testx[i][j];
+       create_rbf(dimension,nodes,1,centers,variances,weights,xt,outv);
+        sum+=(testy[i]-outv[0])*(testy[i]-outv[0]);
+        classError+=fabs(testy[i]-nearestClass(outv[0]))>1e-7;
+
+    }
+    delete[] weights;
+#else
     arma::vec Linear = train(x);
     for(int i=0;i<testx.size();i++)
     {
@@ -841,6 +968,7 @@ QJsonObject    done(Data &x)
         classError+=fabs(testy[i]-nearestClass(tempOut))>1e-7;
         sum+=per * per;
     }
+#endif
     QJsonObject result;
     result["nodes"]=nodes;
     result["testError"]=sum;
