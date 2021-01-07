@@ -811,7 +811,16 @@ double	funmin(vector<double> &x)
                             centers,variances,weights,xinput,yinput);
     double sum=0.0;
     double *xt=new double[pattern_dimension];
-
+    double penalty=0.0;
+    double norm =0.0;
+    for(int i=0;i<nodes;i++)
+       {
+if(fabs(weights[i])>100.0)
+           penalty=1;
+        norm=norm+weights[i]*weights[i];
+    }
+    norm = 1.0/nodes * sqrt(norm);
+    if(penalty) penalty=norm;
     for(int i=0;i<(int)trainx.size();i++)
     {
         double outv[1];
@@ -822,7 +831,7 @@ double	funmin(vector<double> &x)
     }
     delete[] weights;
     delete[] xt;
-    return sum;
+    return sum*(1.0+100.0 * penalty);
 #else
     double errorSum=0.0;  
     arma::vec Linear = train(x);

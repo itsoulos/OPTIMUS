@@ -1,9 +1,10 @@
 METHOD=SMGDescent
+METHOD=Minfinder
 METHODPARAMS=""
 ### Available local search methods: bfgs, gradient, adam, lbfgs
 if [ $METHOD = "Minfinder" ]
 then
-	METHODPARAMS="--minfinder_samples=25 --minfinder_sampling=repulsion"
+	METHODPARAMS="--minfinder_samples=100 --minfinder_sampling=repulsion"
 elif [ $METHOD = "Genetic" ]
 then
 	METHODPARAMS="--localsearch_rate=0.1 --localsearch_method=bfgs --genetic_crossover_type=double"

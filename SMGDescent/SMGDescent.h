@@ -2,19 +2,18 @@
 #define SMGDESCENT_H
 
 #include "SMGDescent_global.h"
-# include <Optimus/optimizer.h>
-# include <Optimus/tolmin.h>
+#include <Optimus/optimizer.h>
+#include <Optimus/tolmin.h>
 
 class SMGDescentInterface
 {
 public:
     virtual ~SMGDescentInterface()
     {
-
     }
 };
 
-class SMGDESCENT_EXPORT SMGDescent :public Optimizer,SMGDescentInterface
+class SMGDESCENT_EXPORT SMGDescent : public Optimizer, SMGDescentInterface
 {
 private:
     virtual bool terminated();
@@ -22,8 +21,10 @@ private:
     virtual void init();
     virtual void done();
     int currentStep;
-    long points;    
+    long points;
     double min;
+	double dmin;
+	int    imin;
     vector<Data> r;
     vector<Data> rOld;
     vector<int> rejectedPoints;
@@ -39,14 +40,14 @@ private:
     double fluctuation;
     bool checkifClose();
     bool checkifClose2();
-    bool criteria_f(vector<int> v,int p);
-    void rejectedP();
+    bool criteria_f(vector<int> v, int p);
+    void rejectedP(unsigned, double);
+
 public:
     SMGDescent(Problem *p);
-    virtual void Solve() {Optimizer::Solve();};
+    virtual void Solve() { Optimizer::Solve(); };
     virtual ~SMGDescent();
 };
-
 
 extern "C" SMGDESCENT_EXPORT Optimizer *createOptimizer(Problem *p);
 

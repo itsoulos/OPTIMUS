@@ -12,7 +12,7 @@ bool SMGDescent::checkifClose()
 {
     //critiria with learingRate
     double mm = 0.0;
-    for (unsigned i = 0; i < r.size(); i++)
+    for (unsigned i = 0; i < r.size() - 1; i++)
     {
         for (unsigned j = 0; j < r[i].size(); j++)
         {
@@ -49,7 +49,7 @@ bool SMGDescent::terminated()
     int SMGDescent_maxiterations = params["SMGDescent_maxiterations"].toString().toInt();
     if (SMGDescent_maxiterations < SMGDescent_samples)
         SMGDescent_samples = SMGDescent_maxiterations;
-    return currentStep >= SMGDescent_samples;// || checkifClose2();
+    return currentStep >= SMGDescent_samples || checkifClose2();
     //return currentStep >= SMGDescent_samples;
 }
 bool SMGDescent::criteria_f(vector<int> v, int p)
@@ -57,47 +57,35 @@ bool SMGDescent::criteria_f(vector<int> v, int p)
     for (auto x : v)
         if (x == p)
             return true;
-
     return false;
 }
-void SMGDescent::rejectedP()
+void SMGDescent::rejectedP(unsigned i, double td)
 {
-    //int *pos;
-    double d,max=0.0;
-    int pos=-1;
-    for (int i = 0; i < r.size() - 1; i++)
+    double d;
+    for (unsigned j = i + 1; j < r.size(); j++)
     {
-        for (unsigned j = i + 1; j < r.size(); j++)
-	{
-        	d = 0.0;
-            	for (unsigned t = 0; t < gradient[i].size(); t++)
-                	d += pow((r[i][t] - r[j][t]), 2);
-        	d = sqrt(fabs(d));
-
-		if(d<0.5)
-            	rejectedPoints.push_back(i);
-	}
+        d = 0.0;
+        for (unsigned t = 0; t < gradient[i].size(); t++)
+            d += pow((r[i][t] - r[j][t]), 2);
+        d = sqrt(fabs(d));
+        if (d < td)
+            rejectedPoints.push_back(i);
+        //printf("%d %d %f %f\n",i,j,d,td);
     }
-
-    printf("-------------------------------------------\n");
-    for (unsigned i = 0; i < rejectedPoints.size(); i++)
-    {
-        printf("%d] %d \n", i, rejectedPoints[i]);
-    }
-
-    printf("Maximum distance %lf at %d\n", max, pos);
-
+    printf("%d %f %f", i, d, td);
+    if (d < td)
+        printf(" Rejected");
+    printf("\n");
 }
 void SMGDescent::step()
 {
     ++currentStep;
+    double d;
     for (unsigned i = 0; i < r.size(); i++)
     {
-
-        if (criteria_f(rejectedPoints, i))
-            continue;
+        if (!criteria_f(rejectedPoints, i))
+            m[i] = myProblem->funmin(r[i]);
         rOld[i] = r[i];
-        m[i] = myProblem->funmin(r[i]);
         myProblem->granal(r[i], gradient[i]);
         double meter = 0.0;
         //printf("%d\n", gradient[i].size());
@@ -105,17 +93,22 @@ void SMGDescent::step()
             meter += gradient[i][k] * gradient[i][k];
         learingRate[i] = gama * learingRate[i] + (1 - gama) * meter;
         //printf("%d learingRate is %lf Quotient %lf Minimum% lf\n", currentStep, learingRate[i], rate/sqrt(learingRate[i] + 1e-7), m[i]);
-
+        d = 0;
         for (unsigned j = 0; j < gradient[i].size(); j++)
         {
             r[i][j] -= rate * gradient[i][j] / sqrt(learingRate[i] + 1e-7);
-            if (r[i][j] > rM[i])
-                r[i][j] = rM[i];
-            if (r[i][j] < lM[i])
-                r[i][j] = lM[i];
+            if (r[i][j] > rM[j])
+                r[i][j] = rM[j];
+            if (r[i][j] < lM[j])
+                r[i][j] = lM[j];
+            d += pow((rOld[i][j] - r[i][j]), 2);
         }
+        d = sqrt(d);
+	dmin+=d;
+	imin++;
+        //d = double(d / i + 1.0);
+        rejectedP(i, dmin/imin);
     }
-
     min = *min_element(m.begin(), m.end());
     mins.push_back(min);
     //fprintf(pFile,"%d %lf\n",currentStep,min);
@@ -136,7 +129,6 @@ void SMGDescent::init()
     rOld.resize(r.size());
     m.resize(r.size());
     learingRate.resize(r.size());
-    //rejectedPoints.resize(r.size());
     lM = myProblem->getLeftMargin();
     rM = myProblem->getRightMargin();
     gradient.resize(points);
@@ -148,7 +140,8 @@ void SMGDescent::init()
     }
     pFile = fopen("plot", "w");
     gama = .4;
-    rejectedP();
+	dmin = 0.0;
+	imin = 0;
 }
 
 void SMGDescent::done()
@@ -167,6 +160,7 @@ void SMGDescent::done()
     //fprintf(pFile,"%d %lf\n",currentStep,min);
     fprintf(pFile, "%d %lf %lf\n", currentStep, min, fluctuation);
     fclose(pFile);
+    printf("-------------------------------------------------------------------\n");
 }
 
 SMGDescent::~SMGDescent()
