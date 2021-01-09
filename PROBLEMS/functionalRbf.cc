@@ -12,7 +12,7 @@
 #include <armadillo>
 #pragma GCC optimize("-Ofast")
 using namespace std;
-# define KMEANS
+//# define KMEANS
 //-------------------------------------
 // [0, pattern_dim)                   |
 // [pattern_dim 2*pattern_dim)        |
@@ -707,7 +707,7 @@ void    init(QJsonObject data)
     loadTrain();  
     if(testName!="xy.data") loadTest();
 
-#ifdef KMEANS
+//#ifdef KMEANS
     xinput=new double[ trainx.size() * trainx[0].size()];
     yinput=new double[ trainx.size()];
     centers=new double[nodes * trainx[0].size()];
@@ -721,7 +721,7 @@ void    init(QJsonObject data)
     }
     Kmeans(xinput,centers,variances,trainx.size(),trainx[0].size(),nodes);
 
-#endif
+//#endif
 }
 
 int	getdimension()
@@ -743,28 +743,57 @@ void 	getmargins(vector<Interval> &x)
     if(variances)
     {
             int icount=0;
+	    	double f=1.0;
             for(int i=0;i<nodes;i++)
             {
+                printf("Centroid[%d]=",i);
                 for(int j=0;j<trainx[0].size();j++)
                 {
 
                     double cx=centers[i * trainx[0].size()+j];
-                    x[icount++]=Interval(-5.0 * fabs(cx),
-                                          5.0 * fabs(cx));
+                    printf("%lf ",cx);
+                    if(fabs(cx)<5.0) cx=5.0;
+                    x[icount++]=Interval(-f * fabs(cx),
+                                          f * fabs(cx));
                 }
+                printf("\n");
             }
-
+#ifdef KMEANS
             for(int i=0;i<nodes;i++)
             {
                 double norm=0.0;
+		double maxvx=0.0;
                 for(int j=0;j<trainx[0].size();j++)
                 {
                     double vx=variances[i * trainx[0].size()+j];
-                    x[icount++]=Interval(-5.0*sqrt(vx),5.0 * sqrt(vx));
+		    if(fabs(vx)>maxvx) maxvx=fabs(vx);
+		}
+		if(maxvx<0.1) maxvx=1.0;
+		for(int j=0;j<trainx[0].size();j++)
+		{
+                    x[icount++]=Interval(-f*maxvx,f * maxvx);
 
                 }
 
             }
+#else
+	    for(int i=0;i<nodes;i++)
+	    {
+		double maxvx=0.0;
+        printf("VARIANCE[%d]=",i);
+                for(int j=0;j<trainx[0].size();j++)
+                {
+                    double vx=variances[i * trainx[0].size()+j];
+                    printf("%lf ",vx);
+                    maxvx+=vx;
+		}
+                printf("\n");
+        if(maxvx<0.1) maxvx=1.0;
+
+        x[icount++]=Interval(-f * maxvx,f * maxvx);
+		   
+	    }
+#endif
 
     }
 }
@@ -812,14 +841,17 @@ double	funmin(vector<double> &x)
     double sum=0.0;
     double *xt=new double[pattern_dimension];
     double penalty=0.0;
-    double norm =0.0;
+	double norm = 0.0;
     for(int i=0;i<nodes;i++)
        {
-if(fabs(weights[i])>100.0)
+	       if(fabs(weights[i])>1000)
+	       {
            penalty=1;
-        norm=norm+weights[i]*weights[i];
+        norm=norm+(weights[i]-1000.0)*(weights[i]-1000.0);
+	       }
     }
-    norm = 1.0/nodes * sqrt(norm);
+
+    norm =  sqrt(norm);
     if(penalty) penalty=norm;
     for(int i=0;i<(int)trainx.size();i++)
     {
@@ -831,16 +863,16 @@ if(fabs(weights[i])>100.0)
     }
     delete[] weights;
     delete[] xt;
-    return sum*(1.0+100.0 * penalty);
+    return sum*1.0+1.0 * penalty;
 #else
     double errorSum=0.0;  
     arma::vec Linear = train(x);
     double norm = 0.0;
     for(int j=0;j<nodes;j++)
-        norm+=Linear(j)*Linear(j);
+	    if(fabs(Linear(j))>100.0)
+        norm+=(Linear(j)-100.0)*(Linear(j)-100.0);
     norm = sqrt(norm);
-    if(norm>100) return 1e+8;
-
+	norm=0.0;
     for(unsigned i = 0; i < trainx.size(); i++){
         Data pattern = trainx[i];
         arma::vec neuronOuts(nodes);
@@ -852,7 +884,7 @@ if(fabs(weights[i])>100.0)
         errorSum += ( tempOut - trainy[i] ) * ( tempOut - trainy[i] );
     }
 
-    return errorSum;
+    return errorSum*(1.0+10*norm);
 #endif
 }
 
@@ -882,12 +914,18 @@ adept::adouble afunmin( vector<adept::adouble> &x, vector<double> &x1 ){
         errorSum += ( tempOut - trainy[i] ) * ( tempOut - trainy[i] );
     }
 
-    return errorSum;
+     double norm = 0.0;
+    for(int j=0;j<nodes;j++)
+            if(fabs(Linear(j))>100.0)
+        norm+=(Linear(j)-100.0)*(Linear(j)-100.0);
+    norm = sqrt(norm);
+	norm = 0.0;
+    return errorSum*(1.0+10.0*norm);
 }
 
 static double dmax(double a,double b){return a>b?a:b;}
 
-void    granal(vector<double> &x,vector<double> &g)
+void    granal2(vector<double> &x,vector<double> &g)
 {
     for(int i=0;i<x.size();i++)
             {
@@ -902,7 +940,7 @@ void    granal(vector<double> &x,vector<double> &g)
 
 }
 
-void    granal2(vector<double> &x,vector<double> &g)
+void    granal(vector<double> &x,vector<double> &g)
 {
     g = vector<double>(x.size(),0.0);
     adept::Stack s;
@@ -952,12 +990,23 @@ QJsonObject    done(Data &x)
     train_rbf(dimension,nodes,1,trainx.size(),
                             centers,variances,weights,xinput,yinput);
     double *xt=new double[dimension];
+    printf("WEIGHTS ");
+    for(int i=0;i<nodes;i++)
+	    printf("%lf ",weights[i]);
+    printf("\n");
+
     for(int i=0;i<(int)testx.size();i++)
     {
         double outv[1];
-        for(int j=0;j<dimension;j++) xt[j]=testx[i][j];
+	printf("TEST ");
+        for(int j=0;j<dimension;j++) 
+	{
+		xt[j]=testx[i][j];
+		printf("%lf ",xt[j]);
+	}
        create_rbf(dimension,nodes,1,centers,variances,weights,xt,outv);
         sum+=(testy[i]-outv[0])*(testy[i]-outv[0]);
+	printf("(%lf -> %lf )\n",testy[i],outv[0]);
         classError+=fabs(testy[i]-nearestClass(outv[0]))>1e-7;
 
     }

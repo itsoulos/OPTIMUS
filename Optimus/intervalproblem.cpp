@@ -22,6 +22,8 @@ void    IntervalProblem::setDimension(int d)
 
 void   IntervalProblem::getSample(Data &x)
 {
+
+	
     for(int i=0;i<margin.size();i++)
         x[i]=margin[i].leftValue() +randomDouble()*(margin[i].rightValue()-margin[i].leftValue());
 }

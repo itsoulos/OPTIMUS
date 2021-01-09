@@ -46,9 +46,6 @@ bool       Genetic::terminated()
 
     if(stopat<1e-8 && generation>=10) return true;
     printf("Generation fit: %d value: %lf variance: %lf stopat: %lf\n",generation, fitness_array[0],variance,stopat);
-    return generation>=max_generations;
-
-
 
     return generation>=max_generations || (variance<=stopat && generation>=20);
 }

@@ -64,6 +64,12 @@ void SMGDescent::rejectedP(unsigned i, double td)
     double d;
     for (unsigned j = i + 1; j < r.size(); j++)
     {
+
+	double xx=0.0;
+	for(int k=0;k<myProblem->getDimension();k++)
+  		xx+=r[i][k]*r[i][k];
+	xx=sqrt(xx);
+
         d = 0.0;
         for (unsigned t = 0; t < gradient[i].size(); t++)
             d += pow((r[i][t] - r[j][t]), 2);
