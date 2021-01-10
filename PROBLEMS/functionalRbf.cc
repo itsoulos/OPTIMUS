@@ -415,7 +415,8 @@ int create_rbf(int in_n, int hid_n, int out_n,
  return 0;
 }
 void Kmeans(double * data_vectors, double * centers,
-            double * variances, int m, int n, int K)
+            double * variances, int m, int n, int K,
+            vector<int>& num_of_cluster_members)
 {
     int i=0;
     int j=0;
@@ -425,7 +426,8 @@ void Kmeans(double * data_vectors, double * centers,
     int **cluster_members=new int*[K];
     for(int i=0;i<K;i++)
         cluster_members[i]=new int[m];
-    int *num_of_cluster_members=new int[K];
+    num_of_cluster_members.resize(K);
+
     double distance=0;
     double total_distance=0;
     double min_distance=0;
@@ -598,7 +600,6 @@ void Kmeans(double * data_vectors, double * centers,
 
 
    free(new_centers);
-   delete[] num_of_cluster_members;
    delete[] random_centers;
    for(int i=0;i<K;i++) delete[] cluster_members[i];
    delete[] cluster_members;
@@ -622,7 +623,8 @@ int failCount=0;
 int normalTrain=0;
 double *xinput=0;
 double *yinput=0;
-
+vector<int> num_of_cluster_members;
+vector<double> xleft,xright;
 void loadTrain()
 {
    QFile fp(trainName);
@@ -633,12 +635,18 @@ void loadTrain()
    st>>count;
    trainx.resize(count);
    trainy.resize(count);
+   xleft.resize(dimension);
+   xright.resize(dimension);
+
    for(int i=0;i<count;i++)
    {
        trainx[i].resize(dimension);
        for(int j=0;j<dimension;j++)
        {
-           st>>trainx[i][j];
+              st>>trainx[i][j];
+           if(i==0 || trainx[i][j]<xleft[j]) xleft[j]=trainx[i][j];
+           if(i==0 || trainx[i][j]>xright[j]) xright[j]=trainx[i][j];
+
        }
        st>>trainy[i];
        bool found=false;
@@ -667,8 +675,8 @@ void setParameter(QString name,QVariant value)
     }
 }
 
-double *centers=NULL;
-double *variances=NULL;
+double *centers=0;
+double *variances=0;
 
 void loadTest()
 {
@@ -706,12 +714,13 @@ void    init(QJsonObject data)
         initialRight=data["initialRight"].toDouble();
     loadTrain();  
     if(testName!="xy.data") loadTest();
-
+    bool redo=false;
+    int startNodes=nodes;
 //#ifdef KMEANS
+
     xinput=new double[ trainx.size() * trainx[0].size()];
     yinput=new double[ trainx.size()];
-    centers=new double[nodes * trainx[0].size()];
-    variances=new double[nodes * trainx[0].size()];
+
     int icount=0;
     for(int i=0;i<trainx.size();i++)
     {
@@ -719,7 +728,57 @@ void    init(QJsonObject data)
             xinput[icount++]=trainx[i][j];
         yinput[i]=trainy[i];
     }
-    Kmeans(xinput,centers,variances,trainx.size(),trainx[0].size(),nodes);
+        again:
+    centers=new double[nodes * trainx[0].size()];
+    variances=new double[nodes * trainx[0].size()];
+    Kmeans(xinput,centers,variances,trainx.size(),trainx[0].size(),nodes,
+            num_of_cluster_members);
+    for(int i=0;i<nodes;i++)
+    {
+        double f=num_of_cluster_members[i]*1.0/trainx.size();
+        double limitDown=1.0/(2.0 * startNodes);
+        if(f<limitDown) redo=true;
+        printf("members[%d]=%.2lf%%\n",i,num_of_cluster_members[i]*100.0/trainx.size());
+    }
+    for(int i=0;i<nodes;i++)
+    {
+        for(int j=0;j<dimension;j++)
+        {
+            if(i==0 || centers[i*dimension+j]<xleft[j])  xleft[j]=centers[i*dimension+j];
+            if(i==0 || centers[i*dimension+j]>xright[j]) xright[j]=centers[i*dimension+j];
+        }
+    }
+
+    for(int i=0;i<nodes;i++)
+    {
+        double minDist=1e+100;
+        for(int j=0;j<i;j++)
+        {
+            double dist=0.0;
+
+            for(int k=0;k<dimension;k++)
+            {
+                double diff=centers[i*dimension+k]-centers[j*dimension+k];
+                diff=diff/(xright[k]-xleft[k]);
+
+                dist+=fabs(diff) ;
+            }
+            dist/=dimension;
+            if(dist<minDist) minDist=dist;
+
+        }
+        if(i)
+         printf("Dist[%d]=%10.2lf\n",i,minDist);
+        if(minDist<0.1) redo=true;
+        if(redo)
+        {
+            nodes = nodes-1;
+            redo=false;
+            delete[] centers;
+            delete[] variances;
+            goto again;
+        }
+    }
 
 //#endif
 }
