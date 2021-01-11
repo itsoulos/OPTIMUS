@@ -35,7 +35,7 @@ QMAKE_LFLAGS_RELEASE -= -O1 -O2
 QMAKE_LFLAGS += -O1 -O2
 
 DEFINES+=ADEPT_RECORDING_PAUSABLE
-LIBS += -ladept
+LIBS += -ladept -larmadillo
 
 SOURCES += \
     dataset.cpp \

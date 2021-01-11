@@ -4,6 +4,8 @@
 #include <iostream>
 #include <stdio.h>
 #include <adept.h>
+
+using namespace std;
 #pragma GCC optimize("-Ofast")
 Rbf::Rbf()
 {
@@ -14,7 +16,6 @@ Rbf::Rbf()
     weight.resize(nweights);
    trainSet=NULL;
     testSet=NULL;
-    alg=NULL;
 }
 
 void    Rbf::init_arrays()
@@ -159,9 +160,10 @@ Matrix  Rbf::matrix_mult(Matrix &x,Matrix &y)
     }
 }
 
-Matrix  Rbf::matrix_inverse(Matrix x)
+Matrix  Rbf::matrix_inverse(Matrix x,bool &ok)
 {
     Matrix c=x;
+    ok=true;
     int npivot;
     double det;
     int pass, row, col, maxrow, i, j, error_flag;
@@ -203,15 +205,22 @@ Matrix  Rbf::matrix_inverse(Matrix x)
         pivot = x[pass][pass];
         det *= pivot;
 
+        /*
         if(fabs(det) < 1.0e-40) {
-            //printf("Matrix is singular\n");
+           ok=false;
             return c;
-        }
+        }*/
 
 
         for(col=0; col<n; ++col) {
+            if(fabs(pivot)<1e-7)
+            {
+                ok=false;
+                return c;
+            }
             x[pass][col] = x[pass][col]/pivot;
             c[pass][col] = c[pass][col]/pivot;
+
         }
 
         for(row=0; row<n; ++row) {
@@ -231,16 +240,21 @@ Matrix  Rbf::matrix_inverse(Matrix x)
       return c;
 }
 
-Matrix  Rbf::matrix_pseudoinverse(Matrix &a)
+Matrix  Rbf::matrix_pseudoinverse(Matrix &a,bool &ok)
 {
+
+    //armaA=zeros(a.size(),a[0].size());
+    //armaA=pinv(armaA,0.001);
+
     Matrix b=matrix_transpose(a);
     Matrix e=matrix_mult(b,a);
-    Matrix d=matrix_inverse(e);
+
+    Matrix d=matrix_inverse(e,ok);
     Matrix c=matrix_mult(d,b);
     return c;
 }
 
-void    Rbf::train()
+bool    Rbf::train()
 {
     //phase1
     /*
@@ -254,6 +268,9 @@ void    Rbf::train()
 
     //phase2
     int i,j;
+    armaA=zeros(trainSet->getpatterns(),centroid.size());
+    armaRealOutput=zeros(trainSet->getpatterns(),1);
+    /*
     if(A.size()==0)
     {
 	    A.resize(trainSet->getpatterns());
@@ -275,30 +292,45 @@ void    Rbf::train()
           A[i][j]=gauss_function(x,centroid[j],variance[j]);
 
         }
+    }*/
+    int n= trainSet->getpatterns();
+    int m= centroid.size();
+    for(int i=0;i<n;i++)
+    {
+        armaRealOutput(i,0)=trainSet->gety(i);
+        Data x=trainSet->getpoint(i);
+        for(int j=0;j<m;j++)
+            armaA(i,j)=gauss_function(x,centroid[j],variance[j]);
     }
 
-    Matrix pA=matrix_pseudoinverse(A);
-    Matrix pW=matrix_mult(pA,RealOutput);
-    for(i=0;i<pW.size();i++)
-    {
+    bool ok=true;
 
-        weight[i]=pW[i][0];
+    armaA=pinv(armaA);
+    vec armaPw=armaA * armaRealOutput;
+
+    //Matrix pA=matrix_pseudoinverse(A,ok);
+    //Matrix pW=matrix_mult(pA,RealOutput);
+    bool retvalue=true;
+    for(i=0;i<m;i++)
+    {
+        weight[i]=armaPw(i);
+        //weight[i]=pW[i][0];
+        if(!ok && fabs(weight[i])>100.0) retvalue=false;
      }
+    return retvalue;
 }
 
 double  Rbf::getOutput(Data &pattern)
 {
-    Data px;
     int j;
+    if(!px.size())
     px.resize(centroid.size());
     for(j=0;j<centroid.size();j++)
 	{
 		double val=gauss_function(pattern,centroid[j],variance[j]);
-
         px[j]=val;
 	}	
     double d= product(weight,px);
-
 	return d;
 }
 double  Rbf::getOutput(Data &w,Data &pattern)
@@ -376,7 +408,16 @@ double  Rbf::getTestError()
     for(i=0;i<testSet->getpatterns();i++)
     {
         Data x=testSet->getpoint(i);
-        sum+=pow(getOutput(x)-testSet->gety(i),2.0);
+        double per = getOutput(x);
+        printf("TESTING: %lf -> %lf \n",per,testSet->gety(i));
+        if(fabs(per)>100)
+        {
+            printf("WEIGHTS=");
+            for(int j=0;j<weight.size();j++)
+                printf(" %lf ",weight[j]);
+            printf("\n");
+        }
+        sum+=pow(per-testSet->gety(i),2.0);
     }
     return sum;
 }
@@ -449,5 +490,4 @@ adept::adouble Rbf::getTrainError(QVector<adept::adouble> &x){
 
 Rbf::~Rbf()
 {
-	if(alg!=NULL) delete alg;
 }

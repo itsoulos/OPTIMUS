@@ -30,8 +30,8 @@ Data trainy;
 vector<Data> testx;
 Data testy;
 Data dclass;
-double initialLeft=-10000.0;
-double initialRight= 10000.0;
+double initialLeft=-100.0;
+double initialRight= 100.0;
 int failCount=0;
 int normalTrain=0;
 QVector<Rbf*> myrbf;
@@ -59,7 +59,8 @@ void loadTest()
    test=new Dataset(testName.toStdString().c_str());
 }
 
-
+QVector<Data> centroid;
+Data variance;
 void    init(QJsonObject data)
 {
     if(data.contains("trainName"))
@@ -79,9 +80,16 @@ void    init(QJsonObject data)
 		
 		myrbf[i]=new Rbf();
 		myrbf[i]->setNumberOfWeights(nodes);
-		if(train!=NULL) myrbf[i]->setTrainSet(train);
-		if(test!=NULL)  myrbf[i]->setTestSet(test);
+        if(train!=0) myrbf[i]->setTrainSet(train);
+        if(test!=0)  myrbf[i]->setTestSet(test);
 	}
+
+
+       /* kmeans    *alg=new kmeans(train,nodes);
+        alg->runAlgorithm();
+        centroid=alg->getCenters();
+        variance=alg->getVariances();
+        delete alg;*/
 }
 
 
@@ -98,12 +106,42 @@ void 	getmargins(vector<Interval> &x)
     {
             x[i]=Interval(initialLeft,initialRight);
     }
+    /*if(variance.size()!=0)
+    {
+        int icount=0;
+        double fx=10.0;
+        Data xmax;
+        xmax.resize(centroid[0].size());
+        for(int i=0;i<nodes;i++)
+        {
+            for(int j=0;j<xmax.size();j++)
+            {
+                if(i==0 || fabs(centroid[i][j])>xmax[j])
+                    xmax[j]=fabs(centroid[i][j]);
+            }
+        }
+        for(int i=0;i<centroid.size();i++)
+        {
+            int d=centroid[i].size();
+            for(int j=0;j<d;j++)
+            {
+                double cx= xmax[j];
+                if(fabs(cx)<1) cx=1;
+                x[icount++]=Interval(-fx * cx,
+                                     fx * cx);
+            }
+        }
+        //for(int i=0;i<variance.size();i++)
+        //    x[icount++]=Interval(-fx * variance[i],fx * variance[i]);
+
+    }*/
 }
 
 double	funmin(vector<double> &x)
 {
     myrbf[omp_get_thread_num()]->setParameters(x);
-    myrbf[omp_get_thread_num()]->train();
+    bool ok=myrbf[omp_get_thread_num()]->train();
+    if(!ok) return 1e+8;
     double f=myrbf[omp_get_thread_num()]->getTrainError();
     return f;
 }

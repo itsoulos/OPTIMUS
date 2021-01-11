@@ -5,6 +5,8 @@
 # include <QVector>
 # include <vector>
 #include <adept.h>
+# include <armadillo>
+using namespace arma;
 using namespace  std;
 typedef QVector<Data> Matrix;
 class Rbf
@@ -13,18 +15,19 @@ private:
     Data weight;
     QVector<Data> centroid;
     Data variance;
-    kmeans *alg;
     Dataset *trainSet,*testSet;
     int   nweights;//centroids
     int   pattern_dimension;
      Data    classVector;
+     Data px;
     Matrix A,RealOutput;
+    mat armaA,armaRealOutput;
     void    init_arrays();
     double  gauss_function(Data &pattern,Data &center,double sigma);
     Matrix  matrix_transpose(Matrix &x);
     Matrix  matrix_mult(Matrix &x,Matrix &y);
-    Matrix  matrix_inverse(Matrix x);
-    Matrix  matrix_pseudoinverse(Matrix &x);
+    Matrix  matrix_inverse(Matrix x,bool &ok);
+    Matrix  matrix_pseudoinverse(Matrix &x,bool &ok);
 public:
     Rbf();
     void setWeights(Data &x);
@@ -34,7 +37,7 @@ public:
     int     getNumberOfWeights();
     void    setTrainSet(Dataset *t);
     void    setTestSet(Dataset *t);
-    void    train();
+    bool    train();
     double	getOutput(Data &w,Data &pattern);
     void	setParameters(vector<double> &x);
     double  getOutput(Data &pattern);
