@@ -72,6 +72,8 @@ void    Rbf::setTrainSet(Dataset *t)
         if(classVector.indexOf(y)==-1)
             classVector<<y;
     }
+    armaA=zeros(trainSet->getpatterns(),centroid.size());
+    armaRealOutput=zeros(trainSet->getpatterns());
 }
 
 void    Rbf::setTestSet(Dataset *t)
@@ -268,8 +270,7 @@ bool    Rbf::train()
 
     //phase2
     int i,j;
-    armaA=zeros(trainSet->getpatterns(),centroid.size());
-    armaRealOutput=zeros(trainSet->getpatterns(),1);
+    
     /*
     if(A.size()==0)
     {
@@ -295,27 +296,31 @@ bool    Rbf::train()
     }*/
     int n= trainSet->getpatterns();
     int m= centroid.size();
+    
     for(int i=0;i<n;i++)
     {
-        armaRealOutput(i,0)=trainSet->gety(i);
+        armaRealOutput(i)=trainSet->gety(i);
         Data x=trainSet->getpoint(i);
         for(int j=0;j<m;j++)
             armaA(i,j)=gauss_function(x,centroid[j],variance[j]);
     }
 
+
+    mat armaB=zeros(n,m);
+    armaB=pinv(armaA);
+    vec armaPw=armaB * armaRealOutput;
+
     bool ok=true;
-
-    armaA=pinv(armaA);
-    vec armaPw=armaA * armaRealOutput;
-
-    //Matrix pA=matrix_pseudoinverse(A,ok);
-    //Matrix pW=matrix_mult(pA,RealOutput);
+    /*
+    Matrix pA=matrix_pseudoinverse(A,ok);
+    Matrix pW=matrix_mult(pA,RealOutput);
+    */
     bool retvalue=true;
     for(i=0;i<m;i++)
     {
         weight[i]=armaPw(i);
         //weight[i]=pW[i][0];
-        if(!ok && fabs(weight[i])>100.0) retvalue=false;
+        if(!ok && fabs(weight[i])>10000.0) retvalue=false;
      }
     return retvalue;
 }

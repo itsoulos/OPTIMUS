@@ -21,7 +21,8 @@ private:
      Data    classVector;
      Data px;
     Matrix A,RealOutput;
-    mat armaA,armaRealOutput;
+    mat armaA;
+    vec armaRealOutput;
     void    init_arrays();
     double  gauss_function(Data &pattern,Data &center,double sigma);
     Matrix  matrix_transpose(Matrix &x);
