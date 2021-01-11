@@ -414,8 +414,10 @@ int create_rbf(int in_n, int hid_n, int out_n,
 
  return 0;
 }
-void Kmeans(double * data_vectors, double * centers,
-            double * variances, int m, int n, int K,
+void Kmeans(double * data_vectors,
+            vector<double> &centers,
+            vector<double> &variances,
+            int m, int n, int K,
             vector<int>& num_of_cluster_members)
 {
     int i=0;
@@ -675,8 +677,8 @@ void setParameter(QString name,QVariant value)
     }
 }
 
-double *centers=0;
-double *variances=0;
+vector<double> centers;
+vector<double> variances;
 
 void loadTest()
 {
@@ -715,6 +717,7 @@ void    init(QJsonObject data)
     loadTrain();  
     if(testName!="xy.data") loadTest();
     bool redo=false;
+    int posRedo=-1;
     int startNodes=nodes;
 //#ifdef KMEANS
 
@@ -728,16 +731,21 @@ void    init(QJsonObject data)
             xinput[icount++]=trainx[i][j];
         yinput[i]=trainy[i];
     }
+    centers.resize(nodes * trainx[0].size());
+    variances.resize(nodes * trainx[0].size());
         again:
-    centers=new double[nodes * trainx[0].size()];
-    variances=new double[nodes * trainx[0].size()];
+
     Kmeans(xinput,centers,variances,trainx.size(),trainx[0].size(),nodes,
             num_of_cluster_members);
     for(int i=0;i<nodes;i++)
     {
         double f=num_of_cluster_members[i]*1.0/trainx.size();
         double limitDown=1.0/(2.0 * startNodes);
-        if(f<limitDown) redo=true;
+        if(f<limitDown)
+        {
+           redo=true;
+           posRedo=i;
+        }
         printf("members[%d]=%.2lf%%\n",i,num_of_cluster_members[i]*100.0/trainx.size());
     }
     for(int i=0;i<nodes;i++)
@@ -769,13 +777,15 @@ void    init(QJsonObject data)
         }
         if(i)
          printf("Dist[%d]=%10.2lf\n",i,minDist);
-        if(minDist<0.1) redo=true;
+        //if(minDist<0.1) redo=true;
         if(redo)
         {
             nodes = nodes-1;
+            centers.erase(centers.begin()+posRedo * dimension,
+                          centers.begin()+posRedo * dimension+dimension);
+            variances.erase(variances.begin()+posRedo * dimension,
+                          variances.begin()+posRedo * dimension+dimension);
             redo=false;
-            delete[] centers;
-            delete[] variances;
             goto again;
         }
     }
@@ -799,23 +809,20 @@ void 	getmargins(vector<Interval> &x)
             x[i]=Interval(initialLeft,initialRight);
     }
 
-    if(variances)
+    if(variances.size()!=0)
     {
             int icount=0;
 	    	double f=1.0;
             for(int i=0;i<nodes;i++)
             {
-                printf("Centroid[%d]=",i);
                 for(int j=0;j<trainx[0].size();j++)
                 {
 
                     double cx=centers[i * trainx[0].size()+j];
-                    printf("%lf ",cx);
                     if(fabs(cx)<5.0) cx=5.0;
                     x[icount++]=Interval(-f * fabs(cx),
                                           f * fabs(cx));
                 }
-                printf("\n");
             }
 #ifdef KMEANS
             for(int i=0;i<nodes;i++)
@@ -839,14 +846,11 @@ void 	getmargins(vector<Interval> &x)
 	    for(int i=0;i<nodes;i++)
 	    {
 		double maxvx=0.0;
-        printf("VARIANCE[%d]=",i);
                 for(int j=0;j<trainx[0].size();j++)
                 {
                     double vx=variances[i * trainx[0].size()+j];
-                    printf("%lf ",vx);
                     maxvx+=vx;
 		}
-                printf("\n");
         if(maxvx<0.1) maxvx=1.0;
 
         x[icount++]=Interval(-f * maxvx,f * maxvx);
@@ -864,8 +868,8 @@ double neuronOutput( vector<double> &x, vector<double> &patt, unsigned pattDim, 
         out += (patt[i] - x[offset*pattDim + i]) * (patt[i] - x[offset*pattDim + i]);
     }
     double df=(-out / (x[nodes*pattDim+offset] * x[nodes*pattDim+offset]) );
-    //if(fabs(df)>100) return 1e+8;
-    //if(fabs(df)>100)return 1.0;// return 1000;
+  //  if(fabs(df)>100) return 1e+8;
+  //  if(fabs(df)>100)return 1.0;// return 1000;
     return exp(df);
 }
 
@@ -880,9 +884,9 @@ arma::vec train( vector<double> &x ){
         }
     }
     arma::vec RetVal= arma::vec(arma::pinv(A)*B);
-   /* if(RetVal.has_nan() || RetVal.has_inf()) {
+    if(RetVal.has_nan() || RetVal.has_inf()) {
         RetVal = arma::zeros(arma::size(RetVal));
-        }*/
+        }
     return RetVal;
 }
 
@@ -928,10 +932,10 @@ double	funmin(vector<double> &x)
     arma::vec Linear = train(x);
     double norm = 0.0;
     for(int j=0;j<nodes;j++)
-	    if(fabs(Linear(j))>100.0)
-        norm+=(Linear(j)-100.0)*(Linear(j)-100.0);
+
+        norm+=(Linear(j))*(Linear(j));
     norm = sqrt(norm);
-	norm=0.0;
+
     for(unsigned i = 0; i < trainx.size(); i++){
         Data pattern = trainx[i];
         arma::vec neuronOuts(nodes);
@@ -943,7 +947,8 @@ double	funmin(vector<double> &x)
         errorSum += ( tempOut - trainy[i] ) * ( tempOut - trainy[i] );
     }
 
-    return errorSum*(1.0+10*norm);
+  if(norm>1000) return errorSum*(1.0+norm);
+  return errorSum;
 #endif
 }
 
@@ -975,11 +980,11 @@ adept::adouble afunmin( vector<adept::adouble> &x, vector<double> &x1 ){
 
      double norm = 0.0;
     for(int j=0;j<nodes;j++)
-            if(fabs(Linear(j))>100.0)
-        norm+=(Linear(j)-100.0)*(Linear(j)-100.0);
+
+        norm+=(Linear(j))*(Linear(j));
     norm = sqrt(norm);
-	norm = 0.0;
-    return errorSum*(1.0+10.0*norm);
+    if(norm>1000) return errorSum*(1.0+norm);
+    return errorSum;
 }
 
 static double dmax(double a,double b){return a>b?a:b;}
@@ -1072,6 +1077,11 @@ QJsonObject    done(Data &x)
     delete[] weights;
 #else
     arma::vec Linear = train(x);
+    printf("WEIGHTS ");
+    for(int i=0;i<nodes;i++)
+        printf("%lf ",Linear[i]);
+    printf("\n");
+
     for(int i=0;i<testx.size();i++)
     {
 	       Data pattern = testx[i];
@@ -1085,6 +1095,8 @@ QJsonObject    done(Data &x)
         classError+=fabs(testy[i]-nearestClass(tempOut))>1e-7;
         sum+=per * per;
     }
+    printf("CLASSERROR=%.2lf%% TESTERROR=%10.5lf\n",
+           classError*100.0/testy.size(),sum);
 #endif
     QJsonObject result;
     result["nodes"]=nodes;

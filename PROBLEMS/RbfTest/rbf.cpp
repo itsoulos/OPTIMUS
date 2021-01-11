@@ -290,11 +290,12 @@ double  Rbf::getOutput(Data &pattern)
 {
     Data px;
     int j;
+    px.resize(centroid.size());
     for(j=0;j<centroid.size();j++)
 	{
 		double val=gauss_function(pattern,centroid[j],variance[j]);
 
-        px<<val;
+        px[j]=val;
 	}	
     double d= product(weight,px);
 
@@ -329,28 +330,32 @@ double  Rbf::getClass(Data &pattern)
 
 double	Rbf::getTrainError(Data &w)
 {
-    if(trainSet==NULL) return -1.0;
+    if(trainSet==0) return -1.0;
     double sum=0.0;
     int i;
     for(i=0;i<trainSet->getpatterns();i++)
     {
         Data x=trainSet->getpoint(i);
-
-        sum+=pow(getOutput(w,x)-trainSet->gety(i),2.0);
+        double per=getOutput(w,x);
+        double y=trainSet->gety(i);
+        sum+=pow(per-y,2.0);
     }
     return sum;
 }
 
 double  Rbf::getTrainError()
 {
-    if(trainSet==NULL) return -1.0;
+    if(trainSet==0) return -1.0;
     double sum=0.0;
     int i;
     for(i=0;i<trainSet->getpatterns();i++)
     {
         Data x=trainSet->getpoint(i);
-        sum+=pow(getOutput(x)-trainSet->gety(i),2.0);
+        double per=getOutput(x);
+        double y=trainSet->gety(i);
+        sum+=pow(per-y,2.0);
     }
+   // printf("Sum = %10.5lf\n",sum);
     return sum;
 }
 
@@ -365,7 +370,7 @@ double  Rbf::product(Data &x, Data &y)
 
 double  Rbf::getTestError()
 {
-    if(testSet==NULL) return -1.0;
+    if(testSet==0) return -1.0;
     double sum=0.0;
     int i;
     for(i=0;i<testSet->getpatterns();i++)
@@ -378,7 +383,7 @@ double  Rbf::getTestError()
 
 double  Rbf::getClassError()
 {
-    if(testSet==NULL) return -1.0;
+    if(testSet==0) return -1.0;
     int missed=0;
     int i;
     for(i=0;i<testSet->getpatterns();i++)

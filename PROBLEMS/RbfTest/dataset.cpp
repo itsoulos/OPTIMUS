@@ -1,5 +1,7 @@
 #include "dataset.h"
-
+# include <QLocale>
+# include <QFile>
+# include <QTextStream>
 Dataset::Dataset()
 {
 dimension=0;
@@ -7,11 +9,16 @@ dimension=0;
 
 Dataset::Dataset(const char *filename)
 {
-    FILE *fp=fopen(filename,"r");
-    if(!fp) return;
+    QLocale curLocale(QLocale("en_US"));
+    QLocale::setDefault(curLocale);
+    QFile fp(filename);
+    fp.open(QIODevice::ReadOnly|QIODevice::Text);
+    QTextStream st(&fp);
+
     int count,i,j;
-    fscanf(fp,"%d",&dimension);
-    fscanf(fp,"%d",&count);
+    st>>dimension;
+    st>>count;
+
     xpoint.resize(count);
     ypoint.resize(count);
     for(i=0;i<count;i++)
@@ -19,11 +26,11 @@ Dataset::Dataset(const char *filename)
         xpoint[i].resize(dimension);
         for(j=0;j<dimension;j++)
         {
-            fscanf(fp,"%lf",&xpoint[i][j]);
+            st>>xpoint[i][j];
         }
-        fscanf(fp,"%lf",&ypoint[i]);
+        st>>ypoint[i];
     }
-    fclose(fp);
+    fp.close();
 }
 
 double Dataset::gety(int pos)
