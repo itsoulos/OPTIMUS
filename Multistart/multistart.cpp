@@ -22,7 +22,7 @@ bool Multistart::terminated()
         stopat=variance/2.0;
     }
     if(fabs(stopat)<1e-8) stopat=variance/2.0;
-    return (iteration>=multistart_maxiterations || (variance<=stopat && iteration>=20));
+    return (iteration>=multistart_maxiterations || (variance<=stopat && iteration>=10));
 }
 
 void    Multistart::step()

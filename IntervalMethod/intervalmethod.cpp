@@ -157,7 +157,7 @@ double     IntervalMethod::fitness(Data &x)
             if(trialx[j]>rmargin[j]) return 1e+100;
         }
         Tolmin mTolmin(myProblem,leftArray,rightArray);
-        double f=  mTolmin.Solve(trialx,10);
+        double f=  mTolmin.Solve(trialx,20);
        if(i==0 || f<average){
            bestx=trialx;
            average=f;

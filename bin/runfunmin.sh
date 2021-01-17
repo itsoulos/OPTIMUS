@@ -1,5 +1,4 @@
-METHOD=SMGDescent
-METHOD=Minfinder
+METHOD=Multistart
 METHODPARAMS=""
 ### Available local search methods: bfgs, gradient, adam, lbfgs
 if [ $METHOD = "Minfinder" ]

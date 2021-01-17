@@ -32,7 +32,7 @@ double initialLeft=-100.0;
 double initialRight= 100.0;
 Interval maxWidth;
 int failCount=0;
-int normalTrain=0;
+int normalTrain=1;
 
 void loadTrain()
 {
@@ -412,7 +412,6 @@ normalTrain=1;
 	if(omp_get_thread_num()==0)
 		fprintf(fp,"%lf %lf %lf\n",testx[i][0],neuralOutput,testy[i]);
     }
-normalTrain=0;
     if(omp_get_thread_num()==0)
 	    fclose(fp);
     QJsonObject result;
