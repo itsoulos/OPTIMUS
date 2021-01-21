@@ -30,9 +30,11 @@ SOURCES += \
     gradientdescent.cpp \
     interval.cpp \
     intervalproblem.cpp \
+    kmeans.cpp \
     lbfgs.cpp \
     optimizer.cpp \
     optimus.cpp \
+    point.cpp \
     problem.cpp \
     tolmin.cc
 
@@ -43,9 +45,11 @@ HEADERS += \
     gradientdescent.h \
     interval.h \
     intervalproblem.h \
+    kmeans.h \
     lbfgs.h \
     optimizer.h \
     optimus.h \
+    point.h \
     problem.h \
     tolmin.h
 

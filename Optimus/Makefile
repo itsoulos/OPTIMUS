@@ -57,9 +57,11 @@ SOURCES       = adam.cpp \
 		gradientdescent.cpp \
 		interval.cpp \
 		intervalproblem.cpp \
+		kmeans.cpp \
 		lbfgs.cpp \
 		optimizer.cpp \
 		optimus.cpp \
+		point.cpp \
 		problem.cpp \
 		tolmin.cc 
 OBJECTS       = adam.o \
@@ -67,9 +69,11 @@ OBJECTS       = adam.o \
 		gradientdescent.o \
 		interval.o \
 		intervalproblem.o \
+		kmeans.o \
 		lbfgs.o \
 		optimizer.o \
 		optimus.o \
+		point.o \
 		problem.o \
 		tolmin.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -155,18 +159,22 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		gradientdescent.h \
 		interval.h \
 		intervalproblem.h \
+		kmeans.h \
 		lbfgs.h \
 		optimizer.h \
 		optimus.h \
+		point.h \
 		problem.h \
 		tolmin.h adam.cpp \
 		dllproblem.cpp \
 		gradientdescent.cpp \
 		interval.cpp \
 		intervalproblem.cpp \
+		kmeans.cpp \
 		lbfgs.cpp \
 		optimizer.cpp \
 		optimus.cpp \
+		point.cpp \
 		problem.cpp \
 		tolmin.cc
 QMAKE_TARGET  = Optimus
@@ -369,8 +377,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents Optimus_global.h adam.h dllproblem.h gradientdescent.h interval.h intervalproblem.h lbfgs.h optimizer.h optimus.h problem.h tolmin.h $(DISTDIR)/
-	$(COPY_FILE) --parents adam.cpp dllproblem.cpp gradientdescent.cpp interval.cpp intervalproblem.cpp lbfgs.cpp optimizer.cpp optimus.cpp problem.cpp tolmin.cc $(DISTDIR)/
+	$(COPY_FILE) --parents Optimus_global.h adam.h dllproblem.h gradientdescent.h interval.h intervalproblem.h kmeans.h lbfgs.h optimizer.h optimus.h point.h problem.h tolmin.h $(DISTDIR)/
+	$(COPY_FILE) --parents adam.cpp dllproblem.cpp gradientdescent.cpp interval.cpp intervalproblem.cpp kmeans.cpp lbfgs.cpp optimizer.cpp optimus.cpp point.cpp problem.cpp tolmin.cc $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -443,6 +451,10 @@ intervalproblem.o: intervalproblem.cpp intervalproblem.h \
 		interval.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o intervalproblem.o intervalproblem.cpp
 
+kmeans.o: kmeans.cpp kmeans.h \
+		point.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o kmeans.o kmeans.cpp
+
 lbfgs.o: lbfgs.cpp lbfgs.h \
 		problem.h \
 		intervalproblem.h \
@@ -462,6 +474,9 @@ optimizer.o: optimizer.cpp optimizer.h \
 optimus.o: optimus.cpp optimus.h \
 		Optimus_global.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o optimus.o optimus.cpp
+
+point.o: point.cpp point.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o point.o point.cpp
 
 problem.o: problem.cpp problem.h \
 		intervalproblem.h \

@@ -8,6 +8,7 @@ else
 		(cd Optimus; qmake; make clean)
 		(cd Genmin; qmake ; make clean )
 		(cd Genprice; qmake ; make clean )
+		(cd MinCenter; qmake; make clean )
 		(cd Multistart; qmake; make clean)
 		(cd IntervalMethod; qmake; make clean)
 		(cd Genetic; qmake; make clean)
