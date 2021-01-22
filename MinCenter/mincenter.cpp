@@ -21,6 +21,7 @@ void    MinCenter::step()
         allSamples[i] = myProblem->getRandomPoint();
      kmeans->getNewSamples(allSamples);
      kmeans->run();
+     kmeans->printMeans();
 }
 
 void    MinCenter::init()

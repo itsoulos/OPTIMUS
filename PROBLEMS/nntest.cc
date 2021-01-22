@@ -393,6 +393,12 @@ QString toString(Data &x)
     return s;
 }
 
+void    getSample(vector<double> &x)
+{
+        for(int i=0;i<x.size();i++) x[i]=2.0*drand48()-1.0;
+}
+
+
 QJsonObject    done(Data &x)
 {
     double sum=0.0;
