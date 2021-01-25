@@ -254,6 +254,7 @@ int main(int argc, char *argv[])
 {
   QCoreApplication app(argc,argv);
   env=QProcessEnvironment::systemEnvironment();
+  setlocale(LC_ALL,"C");
   OptimusPath=env.value("OPTIMUSPATH");
   if(OptimusPath.isEmpty())
   {
@@ -270,7 +271,6 @@ int main(int argc, char *argv[])
       printParams();
       exit(EXIT_FAILURE);
   }
-  setlocale(LC_ALL,"C");
 
   //run the selected optimizer
   if(!optMethod.isEmpty())

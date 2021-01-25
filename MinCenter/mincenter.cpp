@@ -24,7 +24,7 @@ void MinCenter::step()
 
 void MinCenter::init()
 {
-    currentIteration = 0;    
+    currentIteration = 0;
     iterations = params["mincenter_iterations"].toString().toInt();
     centers = params["mincenter_centers"].toString().toInt();
     samples = params["mincenter_samples"].toString().toInt();
@@ -54,43 +54,42 @@ bool MinCenter::checkiterator(){
 }
 vector<Point> MinCenter::checkSameMeans(vector<Point> m){
     vector<Point> tmp;
-	double minDist=1e+100;
-	vector<int> ok;
-	ok.resize(m.size());
-    for (unsigned i = 0; i < m.size(); i++)
-	{
-		ok[i]=1;
-        for (unsigned j=i+1 ; j < m.size(); j++)
-	{
-		double d=Point::distance(m.at(i),m.at(j));
-		if(d<minDist) minDist=d;
-    //        	if (d<0.27)
-    //            tmp.erase(tmp.begin()+i);
+    double max  = Point::distance(m.at(0),m.at(1));
+    double min  = Point::distance(m.at(0),m.at(1));
+    unsigned i,j,e=0;
+    double d=0.0;
+    for (i = 0; i < m.size(); i++){
+        for (j=i+1 ; j < m.size(); j++){
+            double dis = Point::distance(m.at(i),m.at(j));
+		Point pt=m.at(i);
+            d+=dis;
+            if (max < dis)
+                max = dis;
+            if (min > dis)
+                min = dis;
+            e++;
         }
-}
-    for (unsigned i = 0; i < m.size(); i++)
-	{
-		bool found=false;
-        	for (unsigned j=i+1 ; j < m.size(); j++)
-		{
-			double d=Point::distance(m.at(i),m.at(j));
-			if(d<  5  * minDist) ok[j]=false;
-		
-		}	
-	}
-	for(int i=0;i<m.size();i++) 
-		if(ok[i])
-			tmp.push_back(m.at(i));
-		
+    }
+    d/=e*4;
+    for (i = 0; i < m.size(); i++)
+        for (j=i+1 ; j < m.size(); j++){
+            double distance = Point::distance(m.at(i),m.at(j));
+            printf("distance: %lf min: %lf max: %lf\ mo: %lf \n", Point::distance(m.at(i),m.at(j)),min,max,d);
+            if ( distance <  d ){
+                ;//tmp.erase(tmp.begin()+i);
+
+            }
+		else tmp.push_back(m.at(i));
+        }
     return tmp;
 }
 void MinCenter::done()
 {
     Data bestx;
-    double mbesty = 1e+100;    
+    double mbesty = 1e+100;
     vector<Point> tmp = checkSameMeans(kmeans->getMeans());
     allmeans.clear();
-	allmeans=tmp;
+    copy(tmp.begin(), tmp.end(), back_inserter(allmeans));
     printf("NumberOfMeans => %ld\n",allmeans.size());
     //allmeans = kmeans->getMeans();
 #pragma omp parallel for num_threads(threads)
@@ -99,9 +98,9 @@ void MinCenter::done()
         Point p = allmeans[i];
         Tolmin mTolmin(myProblem);
         Data trialx = p.data_;
-	for(int j=0;j<trialx.size();j++) printf("%lf ",trialx[j]);
-        double y = mTolmin.Solve(trialx);
-	printf("\nNow y = %lf \n",y);
+        for(int j=0;j<trialx.size();j++) printf("%lf ",trialx[j]);
+            double y = mTolmin.Solve(trialx);
+        printf("\nNow y = %lf \n",y);
 #pragma omp critical
         {
             if (y < mbesty)
