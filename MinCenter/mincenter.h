@@ -23,11 +23,12 @@ private:
     virtual void done();
     vector<Point> allSamples;
     vector<Point> allmeans;
-    vector<Point> omeans;
     vector<Point> checkSameMeans(vector<Point>);
+    vector<Point> filterMeans(vector<Point>);
     bool checkiterator();
     KMeans *kmeans;
-    int         centers,iterations,samples,currentIteration;
+    KMeans *omeans;
+    int centers, iterations, samples, currentIteration, rate;
 public:
     MinCenter(Problem *p);
     virtual ~MinCenter();

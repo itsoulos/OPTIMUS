@@ -12,8 +12,37 @@
 
 using namespace std;
   KMeans::KMeans(int max_iterations) : max_iterations_(max_iterations){ }
+
 void KMeans::setClusters(int k){
-  this->num_clusters_=k;
+
+    this->num_clusters_=k;
+    this->meansPoints.resize(num_clusters_);
+
+}
+
+void KMeans::deleteMean(int pos){
+
+    tmpMeansPoints.clear();
+    if (meansPoints[pos].size() != 0)
+        for (Point &point : meansPoints[pos])
+            tmpMeansPoints.push_back(point);
+
+    meansPoints.erase(meansPoints.begin()+pos);
+    num_clusters_--;
+    means_.erase(means_.begin()+pos);
+    //a
+    //meansPoints[0].insert(meansPoints[0].begin(),tmpMeansPoints.begin(),tmpMeansPoints.end());
+    //or b
+    for (Point &point : tmpMeansPoints){
+        //point.cluster_=findNearestCluster(point);
+        //point.update(findNearestCluster(point));
+         //point.add(point);
+        meansPoints[findNearestCluster(point)].push_back(point);
+
+    }
+    this->assign();
+    this->update_means();
+
 }
 bool KMeans::getNewSamples(const std::vector<Point> &points){
 
@@ -29,7 +58,7 @@ KMeans::KMeans(int k, int max_iterations) : num_clusters_(k), max_iterations_(ma
 bool KMeans::init(const std::vector<Point> &points) {
   // Store all points and create a vector that looks like [0, 1, 2, ... N]
   std::vector<int> points_indices;
-  int point_num = 0;
+  long point_num = 0;
   points_.clear();
 
   for (const Point &p : points) {
@@ -40,7 +69,7 @@ bool KMeans::init(const std::vector<Point> &points) {
 
   // Initialize the means randomly: shuffle the array of unique index
   // integers. This prevents assigning the mean to the same point twice.
-  //std::random_device rd;
+  std::random_device rd;
   std::mt19937 rng(1);
   std::shuffle(points_indices.begin(), points_indices.end(), rng);
 
@@ -62,10 +91,16 @@ bool KMeans::run() {
 
     update_means();
 
-    //if (!changed) {
+    if (!changed) {
+        //meansPoints.clear();
+        //this->meansPoints.resize(num_clusters_);
+        for (int idx = 0; idx < points_.size(); ++idx){
+            Point p=points_[idx];
+            meansPoints[p.cluster_].push_back(p);
+        }
       //cout << "KMeans has converged after " << iteration <<  " iterations."<< endl;
       return true;
-   // }
+    }
   }
   return false;
 }
@@ -87,21 +122,21 @@ int KMeans::findNearestCluster(const Point &point) {
 }
 
 bool KMeans::assign() {
-  bool changed = false;
-  // Assign each point to the nearest cluster: iterate over all points, find
-  // the nearest cluster, and assign.
-  for (Point &point : points_) {
-    const int new_cluster = findNearestCluster(point);
+    bool changed = false;
+    // Assign each point to the nearest cluster: iterate over all points, find
+    // the nearest cluster, and assign.
+    for (Point &point : points_) {
+      const int new_cluster = findNearestCluster(point);
 
-    // set changed to true if the cluster was updated. Note that we cannot
-    // inline (changed = changed || update) since the compiler will
-    // 'optimize out' the update step.
-    bool ret = point.update(new_cluster);
-    changed = changed || ret;
+      // set changed to true if the cluster was updated. Note that we cannot
+      // inline (changed = changed || update) since the compiler will
+      // 'optimize out' the update step.
+      bool ret = point.update(new_cluster);
+      changed = changed || ret;
 
-    //cout << "Assigned point " << point << " to cluster: "<< new_cluster << endl;
-  }
-  return changed;
+      //cout << "Assigned point " << point << " to cluster: "<< new_cluster << endl;
+    }
+    return changed;
 }
 
 bool KMeans::update_means() {
@@ -149,7 +184,7 @@ void KMeans::computeClusterMean(
 }
 
 void KMeans::printMeans() {
-  for (const Point &mean : means_) {
+  for (const auto &mean : means_) {
     cout << "Mean: " << mean << endl;
   }
 }

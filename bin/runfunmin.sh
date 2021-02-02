@@ -15,7 +15,7 @@ then
 	METHODPARAMS="--multistart_samples=25"
 elif [ $METHOD = "MinCenter" ]
 then
-	METHODPARAMS="--mincenter_samples=1000 --mincenter_centers=500 --mincenter_iterations=200"
+	METHODPARAMS="--mincenter_samples=2000 --mincenter_centers=200 --mincenter_iterations=100"
 fi
 
 PROBLEM=$1

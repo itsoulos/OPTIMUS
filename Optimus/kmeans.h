@@ -9,7 +9,7 @@
 
 class KMeans {
  public:
-  KMeans(int max_iterations = 100);
+  KMeans(int max_iterations = 200);
   // K is the number of clusters we want. Max iterations is just to prevent
   // running forever.
   KMeans(int k, int max_iterations = 100);
@@ -50,8 +50,16 @@ class KMeans {
   int max_iterations_;
   std::vector<Point> means_;
   std::vector<Point> points_;
+  std::vector<std::vector<Point>> meansPoints;
+  std::vector<Point> tmpMeansPoints;
 
  public:
+
+  void deleteMean(int pos);
+
+  std::vector<std::vector<Point>> getMeansWithPoints(){
+      return meansPoints;
+  }
   const std::vector<Point> &getPoints() const {
     return points_;
   }
