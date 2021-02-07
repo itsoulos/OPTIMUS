@@ -1,58 +1,89 @@
-#include <cassert>
-#include <cmath>
+#include <vector>
+#include <sstream>
+#include <istream>
 #include "point.h"
 
-Point::Point(int num_dimensions, bool init_zeros) : cluster_(-1),  dimensions_(num_dimensions) {
-  if (init_zeros) {  // default is true.
-    for (int idx = 0; idx < dimensions_; ++idx) {
-      data_.push_back(0.0);
+Point::Point()
+{
+    dimensions = 0;
+    pointId = 0;
+    clusterId = 0;
+
+}
+
+Point::Point(int id, std::string line)
+{
+    dimensions = 0;
+    pointId = id;
+    std::stringstream is(line);
+    double val;
+    while (is >> val)
+    {
+        values.push_back(val);
+        dimensions++;
     }
-  }
+    clusterId = 0; //Initially not assigned to any cluster
 }
 
-Point::Point(double x, double y, double z) : Point(3, false) {
-  data_.clear();
-  data_.push_back(x);
-  data_.push_back(y);
-  data_.push_back(z);
+Point::Point(int id, std::vector<double> v)
+{
+    dimensions = 0;
+    pointId = id;
+    for(double val : v){
+        values.push_back(val);
+        dimensions++;
+    }
+    clusterId = 0; //Initially not assigned to any cluster
+}
+Point::Point(int id, int cid, std::vector<double> vdata)
+{
+    this->dimensions = 0;
+    this->pointId = id;
+    this->clusterId = cid;
+    for(double val : vdata){
+        values.push_back(val);
+        dimensions++;
+    }
+}
+std::vector<double> Point::getData()
+{
+    std::vector<double> tmp;
+    for (int idx=0;idx<this->getDimensions();idx++)
+        tmp.push_back(this->getVal(idx));
+    return tmp;
+}
+int Point::getDimensions()
+{
+    return dimensions;
 }
 
-Point::Point(const std::vector<double> &vector) : cluster_(-1) {
-  dimensions_ = (int) vector.size();
-  data_.clear();
-  data_.insert(data_.begin(), vector.begin(), vector.end());
+int Point::getCluster()
+{
+    return clusterId;
 }
 
-bool Point::update(int k) {
-  const bool ret = cluster_ != k;
-  cluster_ = k;
-  return ret;
+int Point::getID()
+{
+    return pointId;
 }
 
-// static
-double Point::distance(const Point &p1, const Point &p2) {
-  assert(p1.dimensions_ == p2.dimensions_);
+void Point::setCluster(int val)
+{
+    clusterId = val;
+}
+
+double Point::getVal(int pos)
+{
+    return values[pos];
+}
+double Point::distance(Point &p1, Point &p2) {
+  //assert(p1.getDimensions() == p2.getDimensions());
   double dist = 0.0;
 
-  for (int idx = 0; idx < p1.dimensions_; ++idx) {
-    const double tmp = p1.data_[idx] - p2.data_[idx];
+  for (int idx = 0; idx < p1.getDimensions(); ++idx) {
+    const double tmp = p1.getVal(idx) - p2.getVal(idx);
     dist += tmp * tmp;
   }
   return sqrt(dist);
 }
 
-void Point::add(const Point &point) {
-  assert(dimensions_ == point.dimensions_);
-  for (int idx = 0; idx < dimensions_; ++idx) {
-    data_[idx] += point.data_[idx];
-  }
-}
-
-std::ostream &operator<<(std::ostream &target, const Point &point) {
-  target << "[";
-  for (const double &d : point.data_) {
-    target << d << ", ";
-  }
-  target << "]";
-  return target;
-}

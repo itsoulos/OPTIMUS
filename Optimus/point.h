@@ -1,39 +1,27 @@
-#ifndef __KMEANS_POINT_H__
-#define __KMEANS_POINT_H__
+#ifndef POINT__H
+#define POINT__H
 
 #include <vector>
-#include <iostream>
+#include <cassert>
+#include <cmath>
+class Point
+{
+private:
+    int pointId, clusterId;
+    int dimensions;
+    std::vector<double> values;
 
-class Point {
- public:
-  Point() { }
-
-  // Initialize the number of dimensions, optionally set all values to zero.
-  Point(int num_dimensions, bool init_zeros = true);
-
-  Point(double x, double y, double z);
-
-  // Initialize from a vector.
-  Point(const std::vector<double> &vector);
-
-  ~Point() { }
-
-  // Compute distance between two points.
-  static double distance(const Point &p1, const Point &p2);
-
-  // Adds a point to the current point.
-  void add(const Point &point);
-
-  // Update the cluster assignment. Returns true if cluster assignment
-  // changed, false if it stayed the same.
-  bool update(int k);
-
-  // Members: the data, the number of dimensions, and the cluster ID.
-  std::vector<double> data_;
-  int dimensions_;
-  int cluster_;
-
-  friend std::ostream &operator<<(std::ostream &target, const Point &point);
+public:
+    Point();
+    Point(int id, std::string line);
+    Point(int id, std::vector<double> v);
+    Point(int id, int cid, std::vector<double> vdata);
+    int getDimensions();
+    int getCluster();
+    int getID();
+    void setCluster(int val);
+    double getVal(int pos);
+    std::vector<double> getData();
+    static double distance(Point &p1, Point &p2);
 };
-
-#endif  // __KMEANS_POINT_H_
+#endif

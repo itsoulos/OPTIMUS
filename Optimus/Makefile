@@ -53,6 +53,7 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = adam.cpp \
+		cluster.cpp \
 		dllproblem.cpp \
 		gradientdescent.cpp \
 		interval.cpp \
@@ -65,6 +66,7 @@ SOURCES       = adam.cpp \
 		problem.cpp \
 		tolmin.cc 
 OBJECTS       = adam.o \
+		cluster.o \
 		dllproblem.o \
 		gradientdescent.o \
 		interval.o \
@@ -165,7 +167,9 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		optimus.h \
 		point.h \
 		problem.h \
+		cluster.h \
 		tolmin.h adam.cpp \
+		cluster.cpp \
 		dllproblem.cpp \
 		gradientdescent.cpp \
 		interval.cpp \
@@ -377,8 +381,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents Optimus_global.h adam.h dllproblem.h gradientdescent.h interval.h intervalproblem.h kmeans.h lbfgs.h optimizer.h optimus.h point.h problem.h tolmin.h $(DISTDIR)/
-	$(COPY_FILE) --parents adam.cpp dllproblem.cpp gradientdescent.cpp interval.cpp intervalproblem.cpp kmeans.cpp lbfgs.cpp optimizer.cpp optimus.cpp point.cpp problem.cpp tolmin.cc $(DISTDIR)/
+	$(COPY_FILE) --parents Optimus_global.h adam.h dllproblem.h gradientdescent.h interval.h intervalproblem.h kmeans.h lbfgs.h optimizer.h optimus.h point.h problem.h cluster.h tolmin.h $(DISTDIR)/
+	$(COPY_FILE) --parents adam.cpp cluster.cpp dllproblem.cpp gradientdescent.cpp interval.cpp intervalproblem.cpp kmeans.cpp lbfgs.cpp optimizer.cpp optimus.cpp point.cpp problem.cpp tolmin.cc $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -433,6 +437,10 @@ adam.o: adam.cpp adam.h \
 		interval.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o adam.o adam.cpp
 
+cluster.o: cluster.cpp cluster.h \
+		point.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cluster.o cluster.cpp
+
 dllproblem.o: dllproblem.cpp dllproblem.h \
 		intervalproblem.h \
 		interval.h
@@ -452,6 +460,7 @@ intervalproblem.o: intervalproblem.cpp intervalproblem.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o intervalproblem.o intervalproblem.cpp
 
 kmeans.o: kmeans.cpp kmeans.h \
+		cluster.h \
 		point.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o kmeans.o kmeans.cpp
 

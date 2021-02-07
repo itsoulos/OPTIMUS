@@ -26,6 +26,7 @@ QMAKE_CFLAGS += -O3 -march=native -fopenmp -unroll-loops -omit-frame-pointer -Wi
 QMAKE_LFLAGS += -O3
 SOURCES += \
     adam.cpp \
+    cluster.cpp \
     dllproblem.cpp \
     gradientdescent.cpp \
     interval.cpp \
@@ -51,6 +52,7 @@ HEADERS += \
     optimus.h \
     point.h \
     problem.h \
+    cluster.h \
     tolmin.h
 
 # Default rules for deployment.

@@ -15,10 +15,10 @@ then
 	METHODPARAMS="--multistart_samples=25"
 elif [ $METHOD = "MinCenter" ]
 then
-	METHODPARAMS="--mincenter_samples=2000 --mincenter_centers=200 --mincenter_iterations=100"
+	METHODPARAMS="--mincenter_samples=200 --mincenter_centers=50 --mincenter_iterations=100"
 fi
 
 PROBLEM=$1
 NATOMS=$2
 echo ./OptimusApp --filename=../PROBLEMS/lib$PROBLEM.so  --opt_method=$METHOD  --natoms=$NATOMS  $METHODPARAMS --threads=12 --iterations=30
-./OptimusApp --filename=../PROBLEMS/lib$PROBLEM.so  --opt_method=$METHOD  --natoms=$NATOMS  $METHODPARAMS --threads=1 --iterations=30
+./OptimusApp --filename=../PROBLEMS/lib$PROBLEM.so  --opt_method=$METHOD  --natoms=$NATOMS  $METHODPARAMS --threads=1 --iterations=1

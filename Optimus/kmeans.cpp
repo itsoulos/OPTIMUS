@@ -1,231 +1,216 @@
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <fstream>
+#include <algorithm>
+
 #include "kmeans.h"
 
-#include <algorithm>
-#include <cassert>
-#include <fstream>
-#include <iterator>
-#include <random>
-#include <sstream>
-#include <string>
-#include <utility>
-#include <vector>
-
-using namespace std;
-  KMeans::KMeans(int max_iterations) : max_iterations_(max_iterations){ }
-
-void KMeans::setClusters(int k){
-
-    this->num_clusters_=k;
-    this->meansPoints.resize(num_clusters_);
-
+KMeans::KMeans(int K, int iterations)
+{
+    this->K = K;
+    this->iters = iterations;
+    this->means.clear();
 }
 
-void KMeans::deleteMean(int pos){
+int KMeans::getNearestClusterId(Point point)
+{
+    double sum = 0.0, min_dist;
+    int NearestClusterId;
 
-    tmpMeansPoints.clear();
-    if (meansPoints[pos].size() != 0)
-        for (Point &point : meansPoints[pos])
-            tmpMeansPoints.push_back(point);
-
-    meansPoints.erase(meansPoints.begin()+pos);
-    num_clusters_--;
-    means_.erase(means_.begin()+pos);
-    //a
-    //meansPoints[0].insert(meansPoints[0].begin(),tmpMeansPoints.begin(),tmpMeansPoints.end());
-    //or b
-    for (Point &point : tmpMeansPoints){
-        //point.cluster_=findNearestCluster(point);
-        //point.update(findNearestCluster(point));
-         //point.add(point);
-        meansPoints[findNearestCluster(point)].push_back(point);
-
+    for (int i = 0; i < dimensions; i++)
+    {
+        sum += pow(clusters[0].getCentroidByPos(i) - point.getVal(i), 2.0);
     }
-    this->assign();
-    this->update_means();
 
-}
-bool KMeans::getNewSamples(const std::vector<Point> &points){
+    min_dist = sqrt(sum);
+    NearestClusterId = clusters[0].getId();
 
-    points_.clear();
+    for (int i = 1; i < K; i++)
+    {
+        double dist;
+        sum = 0.0;
 
-    for (const Point &p : points) {
-      points_.push_back(p);
-    }
-    return true;
-}
-KMeans::KMeans(int k, int max_iterations) : num_clusters_(k), max_iterations_(max_iterations) { }
-
-bool KMeans::init(const std::vector<Point> &points) {
-  // Store all points and create a vector that looks like [0, 1, 2, ... N]
-  std::vector<int> points_indices;
-  long point_num = 0;
-  points_.clear();
-
-  for (const Point &p : points) {
-    points_.push_back(p);
-    points_indices.push_back(point_num);
-    point_num += 1;
-  }
-
-  // Initialize the means randomly: shuffle the array of unique index
-  // integers. This prevents assigning the mean to the same point twice.
-  std::random_device rd;
-  std::mt19937 rng(1);
-  std::shuffle(points_indices.begin(), points_indices.end(), rng);
-
-  // Sanity check
-  assert(points.size() >= num_clusters_);
-
-  for (int idx = 0; idx < num_clusters_; ++idx) {
-    Point mean(points[points_indices[idx]]);//moirazei ta points se k means
-    means_.push_back(mean);
-  }
-
-  return true;
-}
-
-bool KMeans::run() {
-  for (int iteration = 1; iteration <= max_iterations_; ++iteration) {
-    //cout << "== KMeans iteration " << iteration << " == " << endl;
-    bool changed = assign();
-
-    update_means();
-
-    if (!changed) {
-        //meansPoints.clear();
-        //this->meansPoints.resize(num_clusters_);
-        for (int idx = 0; idx < points_.size(); ++idx){
-            Point p=points_[idx];
-            meansPoints[p.cluster_].push_back(p);
+        for (int j = 0; j < dimensions; j++)
+        {
+            sum += pow(clusters[i].getCentroidByPos(j) - point.getVal(j), 2.0);
         }
-      //cout << "KMeans has converged after " << iteration <<  " iterations."<< endl;
-      return true;
+
+        dist = sqrt(sum);
+
+        if (dist < min_dist)
+        {
+            min_dist = dist;
+            NearestClusterId = clusters[i].getId();
+        }
     }
-  }
-  return false;
+
+    return NearestClusterId;
 }
 
+void KMeans::run(std::vector<Point> &all_points)
+{
+    means.clear();
+    total_points = all_points.size();
+    dimensions = all_points[0].getDimensions();
 
-int KMeans::findNearestCluster(const Point &point) {
-  double min_dist = 1e12;
-  int min_cluster = -1;
+    //Initializing Clusters
+    std::vector<int> used_pointIds;
 
-  for (int idx = 0; idx < num_clusters_; ++idx) {
-    const double dist = Point::distance(point, means_[idx]);
-    if (dist < min_dist) {
-      min_dist = dist;
-      min_cluster = idx;
+    for (int i = 1; i <= K; i++)
+    {
+        while (true)
+        {
+            int index = rand() % total_points;
+
+            if (std::find(used_pointIds.begin(), used_pointIds.end(), index) == used_pointIds.end())
+            {
+                used_pointIds.push_back(index);
+                all_points[index].setCluster(i);
+                Cluster cluster(i, all_points[index]);
+                clusters.push_back(cluster);
+                break;
+            }
+        }
     }
-  }
+    //std::cout << "Clusters initialized = " << clusters.size() << std::endl << std::endl;
 
-  return min_cluster;
-}
+    //std::cout << "Running K-Means Clustering.." << std::endl;
 
-bool KMeans::assign() {
-    bool changed = false;
-    // Assign each point to the nearest cluster: iterate over all points, find
-    // the nearest cluster, and assign.
-    for (Point &point : points_) {
-      const int new_cluster = findNearestCluster(point);
+    int iter = 1;
+    while (true)
+    {
+        //std::cout << "Iter - " << iter << "/" << iters << std::endl;
+        bool done = true;
 
-      // set changed to true if the cluster was updated. Note that we cannot
-      // inline (changed = changed || update) since the compiler will
-      // 'optimize out' the update step.
-      bool ret = point.update(new_cluster);
-      changed = changed || ret;
+        // Add all points to their nearest cluster
+        for (int i = 0; i < total_points; i++)
+        {
+            int currentClusterId = all_points[i].getCluster();
+            int nearestClusterId = getNearestClusterId(all_points[i]);
 
-      //cout << "Assigned point " << point << " to cluster: "<< new_cluster << endl;
+            if (currentClusterId != nearestClusterId)
+            {
+                if (currentClusterId != 0)
+                {
+                    for (int j = 0; j < K; j++)
+                    {
+                        if (clusters[j].getId() == currentClusterId)
+                        {
+                            clusters[j].removePoint(all_points[i].getID());
+                        }
+                    }
+                }
+
+                for (int j = 0; j < K; j++)
+                {
+                    if (clusters[j].getId() == nearestClusterId)
+                    {
+                        clusters[j].addPoint(all_points[i]);
+                    }
+                }
+                all_points[i].setCluster(nearestClusterId);
+                done = false;
+            }
+        }
+
+        // Recalculating the center of each cluster
+        for (int i = 0; i < K; i++)
+        {
+            int ClusterSize = clusters[i].getSize();
+
+            for (int j = 0; j < dimensions; j++)
+            {
+                double sum = 0.0;
+                if (ClusterSize > 0)
+                {
+                    for (int p = 0; p < ClusterSize; p++)
+                        sum += clusters[i].getPoint(p).getVal(j);
+                    clusters[i].setCentroidByPos(j, sum / ClusterSize);
+                }
+            }
+        }
+
+        if (done || iter >= iters)
+        {
+            //std::cout << "Clustering completed in iteration : " << iter << std::endl << std::endl;
+            break;
+        }
+        iter++;
     }
-    return changed;
+
+    //Print pointIds in each cluster
+    for (int i = 0; i < K; i++)
+    {
+        //std::cout << "Points in cluster " << clusters[i].getId() << " : ";
+        for (int j = 0; j < clusters[i].getSize(); j++)
+        {
+            //std::cout << clusters[i].getPoint(j).getID() << " ";
+        }
+        //std::cout << std::endl << std::endl;
+    }
+    //std::cout << "========================" << std::endl << std::endl;
+
+    //Write cluster centers to file
+    std::ofstream outfile;
+    outfile.open("clusters.txt");
+
+    if (outfile.is_open())
+    {
+
+        std::vector<double> tmp;
+        for (int i = 0; i < K; i++)
+        {
+            //std::cout << "Cluster " << clusters[i].getId() << " centroid : ";
+            //means.push_back(clusters[i].getPoint(i));
+            for (int j = 0; j < dimensions; j++)
+            {
+                tmp.push_back(clusters[i].getCentroidByPos(j) );
+                //std::cout << clusters[i].getCentroidByPos(j) << " ";    //Output to console
+                //outfile << clusters[i].getCentroidByPos(j) << " "; //Output to file
+            }
+            //std::cout<<i<<std::endl;
+            Point p(i, clusters[i].getId(), tmp);
+            means.push_back(p);
+            tmp.clear();
+            //std::cout << std::endl;
+            //outfile << std::endl;
+        }
+
+        outfile.close();
+    }
+    else
+    {
+        //std::cout << "Error: Unable to write to clusters.txt";
+    }
 }
 
-bool KMeans::update_means() {
-  // Compute each mean as the mean of the points in that cluster.
+std::vector<Point> KMeans::getMeans(){
 
-  // First, compute a map of the cluster assignments. This prevents us from
-  // iterating over the data k times.
-  std::multimap<int, const Point *> point_cluster_map;
-  for (const Point &point : points_) {
-    // Map is cluster_index -> Point*
-    auto pair = std::pair<int, const Point *>(point.cluster_, &point);
-    point_cluster_map.insert(pair);
-  }
-
-  // Iterate over each cluster, computing the mean.
-  for (int cluster_idx = 0; cluster_idx < num_clusters_; ++cluster_idx) {
-    computeClusterMean(point_cluster_map, cluster_idx, &means_[cluster_idx]);
-  }
-  return true;
+    return means;
 }
 
-void KMeans::computeClusterMean(
-  const std::multimap<int, const Point *> &multimap,
-  int cluster,
-  Point *mean) {
-  // Zero-out the mean.
-  for (int dim = 0; dim < mean->dimensions_; ++dim)
-    mean->data_[dim] = 0.0;
+std::vector<std::vector<Point>> KMeans::pointsOfMeans()
+{
+    std::vector<std::vector<Point>> tmp;
+    std::vector<int> idx;
+    for (int i = 0; i < K; i++)
+    {
+        //std::cout << "Points in cluster " << clusters[i].getId() << " : \n";
+        for (int j = 0; j < clusters[i].getSize(); j++)
+        {
+            //std::cout << clusters[i].getPoint(j).getID() << " ";
+            idx.push_back(clusters[i].getPoint(j).getID());
+        }
+        //std::cout << std::endl << std::endl;
+    }
+    for (int i = 0; i < K; i++)
+    {
+        //for (int d=0;d<clusters[0].getPoint(0).getDimensions();d++)
+        //{
+        //    tmp[i].push_back(clusters[i].getPoint(j).getVal(d));
+        //}
+    }
 
-  // Find all the points in the given cluster, this returns an iterator pair
-  // (begin and end).
-  auto in_cluster = multimap.equal_range(cluster);
-  int num_points = 0;
-
-  // Compute the mean: sum over all points, then divide by the number.
-  for (auto itr = in_cluster.first; itr != in_cluster.second; ++itr) {
-    mean->add(*(itr->second));
-
-    num_points += 1;
-  }
-
-  for (unsigned int idx = 0; idx < mean->dimensions_; ++idx) {
-    mean->data_[idx] /= float(num_points);
-  }
-}
-
-void KMeans::printMeans() {
-  for (const auto &mean : means_) {
-    cout << "Mean: " << mean << endl;
-  }
-}
-
-// static
-bool KMeans::loadPoints(const string &filepath, vector<Point> *points) {
-  std::ifstream file_stream(filepath, std::ios_base::in);
-  if (!file_stream) {
-    cout << "Could not open file " << filepath << endl;
-    return false;
-  }
-
-  std::string line;
-  // Split up each line of the file.
-  while (getline(file_stream, line, '\n')) {
-    std::stringstream line_stream(line);
-
-    // Get a vector of numbers directly from a stream iterator.
-    std::istream_iterator<double> start(line_stream), end;
-    std::vector<double> numbers(start, end);
-
-    Point p(numbers);
-    points->push_back(p);
-  }
-
-  return true;
-}
-
-void KMeans::writeMeans(const std::string &filepath) {
-  std::ofstream file_stream(filepath, std::ios_base::out);
-  if (!file_stream) {
-    cout << "Could not open file " << filepath << endl;
-    return;
-  }
-
-  // Copy all data to file_stream, then append a newline.
-  for (Point &mean : means_) {
-    std::ostream_iterator<double> itr(file_stream, " ");
-    std::copy(mean.data_.begin(), mean.data_.end(), itr);
-    file_stream << endl;
-  }
-  return;
-
+    return PMeans;
 }

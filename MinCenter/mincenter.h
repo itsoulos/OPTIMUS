@@ -2,9 +2,12 @@
 #define MINCENTER_H
 
 #include "MinCenter_global.h"
-# include <Optimus/optimizer.h>
-# include <Optimus/tolmin.h>
-# include <Optimus/kmeans.h>
+#include <Optimus/optimizer.h>
+#include <Optimus/tolmin.h>
+#include <Optimus/kmeans.h>
+#include <Optimus/cluster.h>
+#include <Optimus/point.h>
+
 class MinCenterInterface
 {
 public:
@@ -23,9 +26,9 @@ private:
     virtual void done();
     vector<Point> allSamples;
     vector<Point> allmeans;
-    vector<Point> checkSameMeans(vector<Point>);
-    vector<Point> filterMeans(vector<Point>);
-    bool checkiterator();
+    vector<Point> nearMeans(vector<Point>);
+    vector<Point> filterMeans();
+    //bool checkiterator();
     KMeans *kmeans;
     KMeans *omeans;
     int centers, iterations, samples, currentIteration, rate;
