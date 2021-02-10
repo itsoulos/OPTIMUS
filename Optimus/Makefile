@@ -53,7 +53,6 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = adam.cpp \
-		cluster.cpp \
 		dllproblem.cpp \
 		gradientdescent.cpp \
 		interval.cpp \
@@ -64,9 +63,9 @@ SOURCES       = adam.cpp \
 		optimus.cpp \
 		point.cpp \
 		problem.cpp \
-		tolmin.cc 
+		tolmin.cc \
+		cluster.cpp 
 OBJECTS       = adam.o \
-		cluster.o \
 		dllproblem.o \
 		gradientdescent.o \
 		interval.o \
@@ -77,7 +76,8 @@ OBJECTS       = adam.o \
 		optimus.o \
 		point.o \
 		problem.o \
-		tolmin.o
+		tolmin.o \
+		cluster.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -167,9 +167,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		optimus.h \
 		point.h \
 		problem.h \
-		cluster.h \
-		tolmin.h adam.cpp \
-		cluster.cpp \
+		tolmin.h \
+		cluster.h adam.cpp \
 		dllproblem.cpp \
 		gradientdescent.cpp \
 		interval.cpp \
@@ -180,7 +179,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		optimus.cpp \
 		point.cpp \
 		problem.cpp \
-		tolmin.cc
+		tolmin.cc \
+		cluster.cpp
 QMAKE_TARGET  = Optimus
 DESTDIR       = 
 TARGET        = libOptimus.so.1.0.0
@@ -381,8 +381,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents Optimus_global.h adam.h dllproblem.h gradientdescent.h interval.h intervalproblem.h kmeans.h lbfgs.h optimizer.h optimus.h point.h problem.h cluster.h tolmin.h $(DISTDIR)/
-	$(COPY_FILE) --parents adam.cpp cluster.cpp dllproblem.cpp gradientdescent.cpp interval.cpp intervalproblem.cpp kmeans.cpp lbfgs.cpp optimizer.cpp optimus.cpp point.cpp problem.cpp tolmin.cc $(DISTDIR)/
+	$(COPY_FILE) --parents Optimus_global.h adam.h dllproblem.h gradientdescent.h interval.h intervalproblem.h kmeans.h lbfgs.h optimizer.h optimus.h point.h problem.h tolmin.h cluster.h $(DISTDIR)/
+	$(COPY_FILE) --parents adam.cpp dllproblem.cpp gradientdescent.cpp interval.cpp intervalproblem.cpp kmeans.cpp lbfgs.cpp optimizer.cpp optimus.cpp point.cpp problem.cpp tolmin.cc cluster.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -436,10 +436,6 @@ adam.o: adam.cpp adam.h \
 		intervalproblem.h \
 		interval.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o adam.o adam.cpp
-
-cluster.o: cluster.cpp cluster.h \
-		point.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cluster.o cluster.cpp
 
 dllproblem.o: dllproblem.cpp dllproblem.h \
 		intervalproblem.h \
@@ -497,6 +493,10 @@ tolmin.o: tolmin.cc tolmin.h \
 		intervalproblem.h \
 		interval.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tolmin.o tolmin.cc
+
+cluster.o: cluster.cpp cluster.h \
+		point.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cluster.o cluster.cpp
 
 ####### Install
 

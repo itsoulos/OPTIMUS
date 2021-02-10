@@ -4,8 +4,6 @@
 #include "cluster.h"
 #include "point.h"
 
-
-
 Cluster::Cluster(int clusterId, Point centroid)
 {
     this->clusterId = clusterId;

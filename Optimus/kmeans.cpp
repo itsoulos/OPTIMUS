@@ -6,11 +6,13 @@
 
 #include "kmeans.h"
 
-KMeans::KMeans(int K, int iterations)
+KMeans::KMeans(int K, int iterations, int minK)
 {
     this->K = K;
     this->iters = iterations;
-    this->means.clear();
+    this->minK = minK;
+    this->means.resize(K);
+    this->PMeans.resize(K);
 }
 
 int KMeans::getNearestClusterId(Point point)
@@ -50,11 +52,10 @@ int KMeans::getNearestClusterId(Point point)
 
 void KMeans::run(std::vector<Point> &all_points)
 {
-    means.clear();
+
     total_points = all_points.size();
     dimensions = all_points[0].getDimensions();
 
-    //Initializing Clusters
     std::vector<int> used_pointIds;
 
     for (int i = 1; i <= K; i++)
@@ -73,17 +74,14 @@ void KMeans::run(std::vector<Point> &all_points)
             }
         }
     }
-    //std::cout << "Clusters initialized = " << clusters.size() << std::endl << std::endl;
 
-    //std::cout << "Running K-Means Clustering.." << std::endl;
 
     int iter = 1;
     while (true)
     {
-        //std::cout << "Iter - " << iter << "/" << iters << std::endl;
+
         bool done = true;
 
-        // Add all points to their nearest cluster
         for (int i = 0; i < total_points; i++)
         {
             int currentClusterId = all_points[i].getCluster();
@@ -114,7 +112,6 @@ void KMeans::run(std::vector<Point> &all_points)
             }
         }
 
-        // Recalculating the center of each cluster
         for (int i = 0; i < K; i++)
         {
             int ClusterSize = clusters[i].getSize();
@@ -126,7 +123,7 @@ void KMeans::run(std::vector<Point> &all_points)
                 {
                     for (int p = 0; p < ClusterSize; p++)
                         sum += clusters[i].getPoint(p).getVal(j);
-                    clusters[i].setCentroidByPos(j, sum / ClusterSize);
+                    clusters[i].setCentroidByPos(j, (double)sum / (double)ClusterSize);
                 }
             }
         }
@@ -139,19 +136,35 @@ void KMeans::run(std::vector<Point> &all_points)
         iter++;
     }
 
-    //Print pointIds in each cluster
+    PMeans.clear();
+    PMeans.resize(K);
+    std::vector<Point> pp;
+    std::vector<double> ppp;
+
     for (int i = 0; i < K; i++)
     {
         //std::cout << "Points in cluster " << clusters[i].getId() << " : ";
-        for (int j = 0; j < clusters[i].getSize(); j++)
+        for (int j = 0; j < clusters[j].getSize(); j++)
         {
+            for (int e = 0; e < dimensions; e++)
+            {
+                ppp.push_back(clusters[i].getCentroidByPos(e));
+            }
+            Point p(clusters[i].getId(), ppp);
+            pp.push_back(p);
+            ppp.clear();
             //std::cout << clusters[i].getPoint(j).getID() << " ";
         }
+        PMeans[i] = pp;
+        pp.clear();
         //std::cout << std::endl << std::endl;
     }
-    //std::cout << "========================" << std::endl << std::endl;
 
-    //Write cluster centers to file
+    sizes.clear();
+    sizes.resize(K);
+    for (int i = 0; i < K; i++)
+        sizes[i] = clusters[i].getSize();
+
     std::ofstream outfile;
     outfile.open("clusters.txt");
 
@@ -162,16 +175,14 @@ void KMeans::run(std::vector<Point> &all_points)
         for (int i = 0; i < K; i++)
         {
             //std::cout << "Cluster " << clusters[i].getId() << " centroid : ";
-            //means.push_back(clusters[i].getPoint(i));
             for (int j = 0; j < dimensions; j++)
             {
-                tmp.push_back(clusters[i].getCentroidByPos(j) );
+                tmp.push_back(clusters[i].getCentroidByPos(j));
                 //std::cout << clusters[i].getCentroidByPos(j) << " ";    //Output to console
                 //outfile << clusters[i].getCentroidByPos(j) << " "; //Output to file
             }
-            //std::cout<<i<<std::endl;
             Point p(i, clusters[i].getId(), tmp);
-            means.push_back(p);
+            means.at(i) = p;
             tmp.clear();
             //std::cout << std::endl;
             //outfile << std::endl;
@@ -185,32 +196,32 @@ void KMeans::run(std::vector<Point> &all_points)
     }
 }
 
-std::vector<Point> KMeans::getMeans(){
+std::vector<Point> KMeans::getMeans()
+{
 
     return means;
 }
 
 std::vector<std::vector<Point>> KMeans::pointsOfMeans()
 {
-    std::vector<std::vector<Point>> tmp;
-    std::vector<int> idx;
-    for (int i = 0; i < K; i++)
-    {
-        //std::cout << "Points in cluster " << clusters[i].getId() << " : \n";
-        for (int j = 0; j < clusters[i].getSize(); j++)
-        {
-            //std::cout << clusters[i].getPoint(j).getID() << " ";
-            idx.push_back(clusters[i].getPoint(j).getID());
-        }
-        //std::cout << std::endl << std::endl;
-    }
-    for (int i = 0; i < K; i++)
-    {
-        //for (int d=0;d<clusters[0].getPoint(0).getDimensions();d++)
-        //{
-        //    tmp[i].push_back(clusters[i].getPoint(j).getVal(d));
-        //}
-    }
-
     return PMeans;
+}
+std::vector<int> KMeans::getSizes()
+{
+
+    return sizes;
+}
+
+void KMeans::deleteMean(int idx)
+{
+    if (K >= this->minK)
+    {
+        K--;
+        std::vector<Point> tmp = PMeans.at(idx);
+        means.erase(means.begin() + idx);
+    }
+}
+void KMeans::setCenters(int centers)
+{
+    this->K = centers;
 }

@@ -10,30 +10,18 @@ MinCenter::MinCenter(Problem *p)
 
 bool MinCenter::terminated()
 {
-    return currentIteration >= iterations;// || checkiterator();
-    //return true;
+    return currentIteration >= iterations; 
 }
 
 void MinCenter::step()
 {
-
-    //omeans = *kmeans;
     ++currentIteration;
-    //printf("--->%d\n", samples);
-
-    for (int i = 0; i < samples; i++){
-        std::vector<double> v = myProblem->getRandomPoint();   
+    for (int i = 0; i < samples; i++)
+    {
+        std::vector<double> v = myProblem->getRandomPoint();
         Point point(i, v);
         allSamples.push_back(point);
     }
-    /*
-    for (int i = 0; i < allSamples.size(); i++){
-        for (int j = 0; j < allSamples[i].getDimensions(); j++){
-            printf("point %d---->%lf \n",i , allSamples[i].getVal(j));
-        }
-        printf("\n");
-    }
-    */
     kmeans->run(allSamples);
 }
 
@@ -43,81 +31,47 @@ void MinCenter::init()
     iterations = params["mincenter_iterations"].toString().toInt();
     centers = params["mincenter_centers"].toString().toInt();
     samples = params["mincenter_samples"].toString().toInt();
-    int it=100;
-    kmeans = new KMeans(centers,it);
-    //omeans = new KMeans(centers,it);
+    minK = params["mincenter_minimum_centers"].toString().toInt();
+    int it = 100;
+    kmeans = new KMeans(centers, it, minK);
     allmeans.resize(centers);
-    //printf("allmeans size %d \n",allmeans.size());
 }
-/*
-bool MinCenter::checkiterator()
+
+vector<Point> MinCenter::meansWithFewPoints()
 {
-    double mm = 0.0;
-    for (unsigned i = 0; i < kmeans->getMeans().size(); i++)
+    std::vector<int> s = kmeans->getSizes();
+    for (unsigned i = 0; i < s.size(); i++)
     {
-        Point p = kmeans->getMeans()[i].data_;
-        Point p2 = omeans->getMeans()[i].data_;
-        Data dimension = (Data)p.data_;
-        for (unsigned j = 0; j < dimension.size(); j++)
-            mm += pow(p.data_[j] - p2.data_[j],2) + pow(p.data_[j] - p2.data_[j],2);
-        mm = sqrt(mm);
-        //printf("dif: %lf\n",mm);
-        if (mm < 0.05)
-            return true;
-    }
-    return false;
-}
-*/
-
-vector<Point> MinCenter::filterMeans()
-{
-
-
-    std::vector<std::vector<Point>> mPoints = kmeans->pointsOfMeans();
-    long sum=0;
-
-    for (unsigned i = 0; i < mPoints.size(); i++){
-        //printf("Total: %d i => %d size %ld\n",mPoints.size(),i, mPoints[i].size());
-        if( mPoints[i].size() < rate ){
-                //kmeans->deleteMean(i);
+        if (s[i] < rate)
+        {
+            kmeans->deleteMean(i);
         }
-        sum+=mPoints[i].size();
     }
-    printf("--------------------> sum1 => %ld \n", sum);
-    //kmeans->runUpdate();
-    mPoints = kmeans->pointsOfMeans();
-    sum=0.0;
-    for (unsigned i = 0; i < mPoints.size(); i++){
-        printf("i => %d size %ld\n", i, mPoints[i].size());
-        sum+=mPoints[i].size();
-    }
-    printf("--------------------> sum2 => %ld \n", sum);
-
+    kmeans->run(allSamples);
     return kmeans->getMeans();
-
-
 }
-
 
 vector<Point> MinCenter::nearMeans(vector<Point> m)
 {
+
     vector<Point> tmp = m;
     double min = Point::distance(m.at(0), m.at(1));
     unsigned i, j, e = 0;
     double d = 0.0;
-	min = 1e+100;
+    min = 1e+100;
     for (i = 0; i < m.size(); i++)
     {
         for (j = i + 1; j < m.size(); j++)
         {
             double dis = Point::distance(m.at(i), m.at(j));
-            if (min > dis){
+            if (min > dis)
+            {
                 min = dis;
             }
         }
     }
-	d = min;
-	d = d * 2;
+    d = min;
+    d *= 1.2; // 20%
     for (i = 0; i < m.size(); i++)
         for (j = i + 1; j < m.size(); j++)
         {
@@ -125,7 +79,7 @@ vector<Point> MinCenter::nearMeans(vector<Point> m)
             if (distance <= d)
             {
                 tmp.erase(tmp.begin() + i);
-			break;
+                break;
             }
         }
     return tmp;
@@ -133,39 +87,23 @@ vector<Point> MinCenter::nearMeans(vector<Point> m)
 
 void MinCenter::done()
 {
-
-	rate =  (iterations * samples) / centers;
-    rate = rate / 2;
+    rate = (iterations * samples) / centers;
+    rate *= .95; //95%
     Data bestx;
     double mbesty = 1e+100;
 
-    vector<Point> tmp = filterMeans();
+    vector<Point> tmp = meansWithFewPoints();
     allmeans.clear();
     copy(tmp.begin(), tmp.end(), back_inserter(allmeans));
     printf("\nInit samples => %d \n", samples);
     printf("Init centers => %d \n", centers);
-    printf("rate => %d \n", rate);
-    printf("CENTERS (subtract means with 0 or a few points) ==> %ld\n", centers - allmeans.size());
+    printf("CENTERS (means with few points) ==> %ld\n", centers - allmeans.size());
     tmp = nearMeans(allmeans);
-    int k=allmeans.size();
+    int k = allmeans.size();
     allmeans.clear();
     copy(tmp.begin(), tmp.end(), back_inserter(allmeans));
     printf("CENTERS (nearby means) ==> %ld\n", k - allmeans.size());
     printf("TOTAL CENTERS ==> %ld\n", allmeans.size());
-/*
-    std::vector<Point> vp;
-    vp.resize(centers);
-    vp=kmeans->getMeans();
-    printf("\n");
-    for (int i = 0; i < vp.size(); i++){
-        printf("Cluster %d \n",i+1);
-        for (int j = 0; j < vp[i].getDimensions(); j++){
-            printf(" %lf \n",i , vp.at(i).getVal(j));
-        }
-        printf("\n");
-    }
-*/
-    //allmeans = kmeans->getMeans();
 
 #pragma omp parallel for num_threads(threads)
     for (unsigned int i = 0; i < allmeans.size(); i++)
@@ -188,12 +126,10 @@ void MinCenter::done()
     }
     mbesty = myProblem->funmin(bestx);
 
-
+    this->allmeans.clear();
+    this->allSamples.clear();
     if (kmeans != 0)
         delete kmeans;
-    //if (omeans != 0)
-    //    delete omeans;
-
 }
 
 MinCenter::~MinCenter()
