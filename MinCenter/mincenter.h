@@ -29,7 +29,8 @@ private:
     vector<Point> nearMeans(vector<Point>);
     vector<Point> meansWithFewPoints();
     KMeans *kmeans;
-    int centers, iterations, samples, currentIteration, rate, minK;
+    int centers, iterations, samples, currentIteration, rate1, minK;
+    double rate2;
 public:
     MinCenter(Problem *p);
     virtual ~MinCenter();
