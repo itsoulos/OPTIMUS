@@ -1,0 +1,12 @@
+#ifndef WMINCENTER_GLOBAL_H
+#define WMINCENTER_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(WMINCENTER_LIBRARY)
+#  define WMINCENTER_EXPORT Q_DECL_EXPORT
+#else
+#  define WMINCENTER_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // WMINCENTER_GLOBAL_H

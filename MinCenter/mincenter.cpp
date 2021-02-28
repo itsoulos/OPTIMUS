@@ -101,24 +101,33 @@ vector<Point> MinCenter::nearMeans(vector<Point> m)
 	{
 		stdValue[i]=-1.0;
 		int stdCount=0;
+		int minCount=0;
 		for(int j=i+1;j<m.size();j++)
 		{
 			distanceArray[i][j]/=max;
 			if(stdValue[i]<0) stdValue[i]=0.0;
-			stdValue[i]+=pow(distanceArray[i][j]-min,2.0);
+			//stdValue[i]+=pow(distanceArray[i][j]-min,2.0);
+			if(distanceArray[i][j]<1.5 * min) minCount++;
 			stdCount++;
 		}
 		if(stdCount!=0) 
 		{
 			stdValue[i]/=stdCount;
-			printf("STD[%4d]=%.5lf\n",i,stdValue[i]);
+			stdValue[i]=minCount;
+			printf("STD[%4d]=%.5lf Average: %lf MinCount: %4d\n",i,stdValue[i],sumDist,minCount);
 		}
 		
 	}
+	
     vector<Point> newTemp;
 	for(int i=0;i<tmp.size();i++)
-		if(stdValue[i]>=0 && stdValue[i]>0.15)
+		if(stdValue[i]>=0 && stdValue[i]<3)
 			newTemp.push_back(tmp[i]);
+	if(newTemp.size()<=2)
+	{
+		for(int i=0;i<5;i++)
+			newTemp.push_back(tmp[rand() % tmp.size()]);
+	}
 	return newTemp;
 
     for (i = 0; i < m.size(); i++)
@@ -183,23 +192,43 @@ void MinCenter::done()
     printf("CENTERS (nearby means) ==> %ld\n", k - allmeans.size());
     printf("TOTAL CENTERS ==> %ld\n", allmeans.size());
 
+	double xx1=0.0;
+	double xx2=0.0;
+	double besty=1e+100;
+	double stopat=1e+100;
+	double variance=1e+100;
+	double y;
+	volatile bool exitFlag=false;
+	Data trialx;
 #pragma omp parallel for num_threads(threads)
-    for (unsigned int i = 0; i < allmeans.size(); i++)
+    for (unsigned int i = 0; i<allmeans.size(); i++)
     {
+	{
         Point p = allmeans[i];
         Tolmin mTolmin(myProblem);
-        Data trialx = p.getData();
+        trialx = p.getData();
+        y = mTolmin.Solve(trialx);
+	}
         //for (unsigned j = 0; j < trialx.size(); j++)
         //    printf("%lf ", trialx[j]);
-        double y = mTolmin.Solve(trialx);
-        //printf("\nNow y = %lf \n", y);
 #pragma omp critical
+	if(!exitFlag)
         {
+	double v= (mbesty);
+	if(i==0) v=y;
+	xx1+=v;
+	xx2+=v * v;
+	int ic=i+1;
+	variance = xx1/(ic+1) *xx1/(ic+1)-xx2/(ic+1);
+	variance=fabs(variance);
             if (y < mbesty)
             {
                 bestx = trialx;
                 mbesty = y;
+		stopat=variance/2.0;
             }
+	//printf("Y=%lf Variance = %20.10lf Stopat=%20.10lf\n",mbesty,variance,stopat);
+	if(variance <=stopat) exitFlag=true;
         }
     }
     mbesty = myProblem->funmin(bestx);
