@@ -76,7 +76,7 @@
 \begin_body
 
 \begin_layout Title
-MinCenter: a novel clustering technique for global optimization
+MinCenter: a novell multistart based method for global optimization problems
 \end_layout
 
 \begin_layout Author
@@ -88,8 +88,7 @@ Vasileios Charilogis, Ioannis G.
 \begin_inset Formula $ $
 \end_inset
 
-Department of Informatics and Telecommunications, University of Ioannina,
- Greece
+
 \end_layout
 
 \begin_layout Abstract
@@ -260,138 +259,11 @@ literal "false"
 
 \end_inset
 
-, Ali 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "ali_cluster"
-literal "false"
-
-\end_inset
-
-, Tsoulos 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "minfinder"
-literal "false"
-
-\end_inset
-
-, etc.
- These methods are try to estimate the clusters of function in order to
- minimize the effort required to compute the global minimum or all the local
- minima of the function.
- The term cluster refers to a set of points that are believed, under some
- asymptotic considerations, to belong to the same region of attraction of
- the function.
- The region of attraction for a local minimum 
-\begin_inset Formula $x^{*}$
-\end_inset
-
- is defined as:
-\begin_inset Formula 
-\begin{equation}
-A\left(x^{*}\right)=\left\{ x:\ x\in S\subset R^{n},\ L(x)=x^{*}\right\} 
-\end{equation}
-
-\end_inset
-
- where 
-\begin_inset Formula $L(x)$
-\end_inset
-
- is a local search procedure that starts from a given point 
-\begin_inset Formula $x$
-\end_inset
-
- and terminates when a local minimum is discovered.
- Common local search procedures are BFGS
-\begin_inset CommandInset citation
-LatexCommand cite
-key "bfgs,powell"
-literal "false"
-
-\end_inset
-
-, Steepest Descent
-\begin_inset CommandInset citation
-LatexCommand cite
-key "steepest"
-literal "false"
-
-\end_inset
-
-, L-Bfgs 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "lbfgs"
-literal "false"
-
-\end_inset
-
- for large scaled functions etc.
- The proposed method creates clusters iteratively using the well - known
- technique of the K-Means clustering introduced by MacQueen
-\begin_inset CommandInset citation
-LatexCommand cite
-key "kmeans"
-literal "false"
-
-\end_inset
-
-.
- For every cluster a representative is constructed using the K-means method
- and afterwards a rejection procedure is utilized in order to reduce the
- number of representatives.
- Finally, for every remain point a local search procedure is started to
- locate the global minimum of the function.
-\end_layout
-
-\begin_layout Standard
-The rest of this article is organized as follows: in section 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:Method-description"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- the proposed method is described in detail, in section 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:Experiments"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- some experimental test functions from the relevant literature are described
- and a series of test are performed on those functions and finally in section
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:Conclusions"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- some conclusions are discussed as well as some guidelines to improve the
- proposed method.
+, Ali, Tsoulos, etc.
 \end_layout
 
 \begin_layout Section
 Method description 
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:Method-description"
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -568,7 +440,7 @@ If
 \begin_layout Enumerate
 
 \series bold
-EndFor
+EndForkey-6
 \end_layout
 
 \end_deeper
@@ -584,13 +456,6 @@ The proposed method replaces the sampling step with the usage of centroids
 
 \begin_layout Section
 Experiments 
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:Experiments"
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsection
@@ -4049,22 +3914,11 @@ SUM
 \end_layout
 
 \begin_layout Section
-Conclusions 
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:Conclusions"
-
-\end_inset
-
-
+Conclusions
 \end_layout
 
 \begin_layout Standard
 Use better rejection rules such as
-\end_layout
-
-\begin_layout Enumerate
-Better selection of K in kmeans
 \end_layout
 
 \begin_layout Enumerate
@@ -4572,148 +4426,11 @@ literal "false"
 \end_inset
 
 A.H.G.
- Rinnooy Kan and G.T.
+ Rinnooy Kan, G.T.
  Timmer, Stochastic global optimization methods, Part II: Multilevel methods,
  Math.
  Programm.
- 
-\series bold
-39
-\series default
- , pp.
- 57–78, 1987.
- 
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "ali_cluster"
-literal "false"
-
-\end_inset
-
-M.M.
- Ali and C.
- Storey, Topographical multilevel single linkage, Journal of Global Optimization
- 
-\series bold
-5
-\series default
-, pp.
- 349–358, 1994.
- 
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "minfinder"
-literal "false"
-
-\end_inset
-
-I.
- G.
- Tsoulos and I.
- E.
- Lagaris, MinFinder: Locating all the local minima of a function, Computer
- Physics Communications 
-\series bold
-174
-\series default
-, pp.
- 166-179, 2006.
- 
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "bfgs"
-literal "false"
-
-\end_inset
-
-R.
- Fletcher, A new approach to variable metric algorithms, Comput.
- J.
- 
-\series bold
-13
-\series default
-, pp.
- 317–322, 1970.
- 
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "powell"
-literal "true"
-
-\end_inset
-
-M.J.D Powell, A Tolerant Algorithm for Linearly Constrained Optimization Calculati
-ons, Mathematical Programming 
-\series bold
-45
-\series default
-, pp.
- 547-566, 1989.
- 
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "steepest"
-literal "false"
-
-\end_inset
-
-Ya-xiang Yuan, A new stepsize for the steepest descent method, Journal of
- Computational Mathematics 24, pp.
- 149-156, 2006.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "lbfgs"
-literal "false"
-
-\end_inset
-
-Ciyou Zhu, Richard H.
- Byrd, Peihuang Lu, and Jorge Nocedal, Algorithm 778: L-BFGS-B: Fortran
- subroutines for large-scale bound-constrained optimization.
- ACM Trans.
- Math.
- Softw.
- 
-\series bold
-23
-\series default
-, pp.
- 550–560, 1997.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "kmeans"
-literal "false"
-
-\end_inset
-
-MacQueen, J.: Some methods for classification and analysis of multivariate
- observations, in: Proceedings of the fifth Berkeley symposium on mathematical
- statistics and probability, Vol.
- 1, No.
- 14, pp.
- 281-297, 1967.
+ 39 (1987) 57–78.
  
 \end_layout
 
