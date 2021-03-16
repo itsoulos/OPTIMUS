@@ -311,9 +311,6 @@ void    Genetic::crossover()
     }
     for(int i=0;i<nchildren;i++)
     {
-        double f1=fitness_array[chromosome_count-i-1];
-        double f2=fitness(children[i]);
-        if(f2<=f1)
         chromosome[chromosome_count-i-1]=children[i];
     }
 }
