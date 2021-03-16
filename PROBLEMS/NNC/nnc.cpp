@@ -14,7 +14,7 @@ extern "C"
     QString testfile="";
     QString urlpath="http://itsoulos.teiep.gr/genclass/";
     //QString urlpath="https://app-1525680166.000webhostapp.com/";
-    int chromosomeSize=200;
+    int chromosomeSize=50;
     //end of parameters
     //names: leftmargin, rightmargin, trainfile, testfile, chromosomesize
 
@@ -179,7 +179,7 @@ extern "C"
 	program[thread()].neuralparser->sigcount=0;
 	program[thread()].neuralparser->violcount=0;
       double f=program[thread()].fitness(genome);
-	double percent=program[thread()].neuralparser->violcount*1.0/program[thread()].neuralparser->sigcount;
+	//double percent=program[thread()].neuralparser->violcount*1.0/program[thread()].neuralparser->sigcount;
 	//return -f * (1.0+percent);
       return -f;
     }
@@ -197,7 +197,7 @@ extern "C"
                  g[i]=(v1-v2)/(2.0 * eps);
                  x[i]+=eps;
              }
-
+	funmin(x);
     }
 
     QJsonObject    done(Data &x)
@@ -239,7 +239,7 @@ extern "C"
            old_f=value;
            fflush(stdout);
            tries++;
-           if(tries>=40) break;
+           if(tries>=200) break;
          }while(1);
 	  program[thread()].neuralparser->getWeights(w);
           value=program[thread()].getTrainError();

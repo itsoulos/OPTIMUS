@@ -1846,6 +1846,7 @@ int Tolmin::fgcalc_(long *n,double *x,double *f,double *g)
     for(int i=0;i<*n;i++)
         tempx[i]=x[i];
     *f=myProblem->funmin(tempx);
+//	printf("Fstar %lf \n",*f);
     myProblem->granal(tempx,tempg);
     for(int i=0;i<*n;i++)
     {

@@ -200,6 +200,7 @@ double	NNCNeuralProgram::getTrainError()
 	double value=0.0;
 	Data xx;
 	xx.resize(dimension);
+        double *xtemp=new double[dimension];
 #ifndef IMBALANCED
 	int start=0;
 	int end=train_ypoint.size();
@@ -214,6 +215,7 @@ double	NNCNeuralProgram::getTrainError()
 		double v=neuralparser->eval(xtemp);
         if(program->EvalError() || std::isnan(v) || std::isinf(v))
 		{
+			delete[] xtemp;
 			return 1e+8;
 		}
 		v=(v-train_ypoint[i]);
@@ -272,6 +274,7 @@ double	NNCNeuralProgram::getTrainError()
 	}
 	return value1;
 #endif
+	delete[] xtemp;
     return value;
 }
 

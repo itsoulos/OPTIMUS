@@ -6,7 +6,7 @@ then
 	METHODPARAMS="--minfinder_samples=100 --minfinder_sampling=repulsion"
 elif [ $METHOD = "Genetic" ]
 then
-	METHODPARAMS="--localsearch_rate=0.1 --localsearch_method=bfgs --genetic_crossover_type=double"
+	METHODPARAMS="--localsearch_rate=0.2 --localsearch_method=bfgs --genetic_crossover_type=double --chromosomes=500"
 elif [ $METHOD = "Pso" ]
 then
 	METHODPARAMS="--pso_localsearch_rate=0.1 --localsearch_method=bfgs"
@@ -21,4 +21,4 @@ fi
 PROBLEM=$1
 NATOMS=$2
 echo ./OptimusApp --filename=../PROBLEMS/lib$PROBLEM.so  --opt_method=$METHOD  --natoms=$NATOMS  $METHODPARAMS --threads=12 --iterations=30
-./OptimusApp --filename=../PROBLEMS/lib$PROBLEM.so  --opt_method=$METHOD  --natoms=$NATOMS  $METHODPARAMS --threads=8 --iterations=1
+./OptimusApp --filename=../PROBLEMS/lib$PROBLEM.so  --opt_method=$METHOD  --natoms=$NATOMS  $METHODPARAMS --threads=1 --iterations=1
