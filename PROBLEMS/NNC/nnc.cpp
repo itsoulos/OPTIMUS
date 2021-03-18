@@ -221,14 +221,14 @@ extern "C"
 	x2.resize(w.size());
 	for(int i=0;i<w.size();i++)
 	{
-		x1[i]=-5.0 *fabs(w[i]);
-		x2[i]= 5.0 *fabs(w[i]);
+		x1[i]=-2.0 *fabs(w[i]);
+		x2[i]= 2.0 *fabs(w[i]);
 	}
 	program[thread()].neuralparser->setleftmargin(x1);
 	program[thread()].neuralparser->setrightmargin(x2);
-	GenSolve(&program[thread()],w,value,0,0);
+	GenSolve(&program[thread()],w,ff,0,0);
 	program[thread()].neuralparser->setWeights(w);
-	printf("After genetic value = %lf \n",value);
+	printf("After genetic value = %lf \n",ff);
         do
         {
            value=program[thread()].getTrainError();
@@ -242,6 +242,14 @@ extern "C"
            if(tries>=200) break;
          }while(1);
 	  program[thread()].neuralparser->getWeights(w);
+        QJsonObject result;
+        result["nodes"]=10;
+        result["testError"]=program[thread()].getTestError();
+        result["classError"]=program[thread()].getClassTestError(genome);
+	QString bestProgram=program[thread()].printProgram(genome).c_str();
+	printf("Train Error %10.5lf Test Error %10.5lf Class Error %10.5lf%%\n",
+			value,result["testError"].toDouble(),result["classError"].toDouble());
+        result["string"]=bestProgram;
           value=program[thread()].getTrainError();
 	  Converter con(w,w.size()/(dimension+2),dimension);
           con.convert(genome);
@@ -249,12 +257,6 @@ extern "C"
 
 
 
-        QJsonObject result;
-        result["nodes"]=10;
-        result["testError"]=program[thread()].getTestError();
-        result["classError"]=program[thread()].getClassTestError(genome);
-	QString bestProgram=program[thread()].printProgram(genome).c_str();
-        result["string"]=bestProgram;
         return result;
     }
 

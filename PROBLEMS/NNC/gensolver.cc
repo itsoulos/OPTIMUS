@@ -364,7 +364,7 @@ void	GenSolve(NeuralProgram *p,Matrix &x,double &y,double mx,int flag)
 	double oldBest=-1e+100;
 	double *xx=new double[x.size()];
 	for(int i=0;i<x.size();i++) xx[i]=x[i];
-	//pop.setBest(xx,y);
+	pop.setBest(xx,y);
 	double x1=0,x2=0;
 	double stopat=-1e+100;
 	for(int i=0;i<max_generations;i++)
