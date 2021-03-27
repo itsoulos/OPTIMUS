@@ -93,14 +93,9 @@ Department of Informatics and Telecommunications, University of Ioannina,
 \end_layout
 
 \begin_layout Abstract
-
-\series bold
-//GIANNIS REWRITE
-\end_layout
-
-\begin_layout Abstract
-A common method for finding minimum optimization issues, uses random samples
- and through parallel local optimizations you achieve universal optimization.
+//GIANNIS REWERA common method for finding minimum optimization issues,
+ uses random samples and through parallel local optimizations you achieve
+ universal optimization.
  This article proposes a new sampling technique which is called “mincenter”,
  that use sample representatives for multi-stage methods, which use an artificia
 l neural network as an approach to the original objective function.
@@ -401,17 +396,9 @@ name "sec:Method-description"
 \end_layout
 
 \begin_layout Standard
-The proposed method creates clusters from the objective function.
-\end_layout
-
-\begin_layout Standard
 
 \series bold
 //GIANIS rephrase here
-\end_layout
-
-\begin_layout Standard
-//GIANNIS Justify the usage of the Multistart procedure
 \end_layout
 
 \begin_layout Standard
@@ -1162,18 +1149,10 @@ Do
 
 \begin_deeper
 \begin_layout Enumerate
-
-\series bold
-If
-\series default
- 
+If 
 \begin_inset Formula $\left\Vert c_{i}-c_{j}\right\Vert \le FD_{\mbox{\mbox{min}}}$
 \end_inset
 
- 
-\series bold
-then
-\series default
  
 \begin_inset Formula $\ N=N+1$
 \end_inset
@@ -1986,237 +1965,6 @@ Experimental Results
 \end_layout
 
 \begin_layout Standard
-The proposed method was tested agains the traditional multistart global
- optimization method on the series of benchmark problems.
- The parameters used in the conducted experiments are listed in Table 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:The-values-for"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
- The method was coded using the OpenMP library
-\begin_inset CommandInset citation
-LatexCommand cite
-key "openmp"
-literal "false"
-
-\end_inset
-
- in order to take advantage of multi - core modern computing systems and
- the experiments were conducted on a cluster of systems running the Linux
- operating system.
- The results from the experiments are listed in Tables 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Multistart-results."
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- and 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:The-proposed-method."
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
- The number in the cells denotes average function calls for 30 independent
- runs using different seed for the random generator each time.
- The numbers in parentheses denote the fraction of runs where the global
- minimum was located.
- If this number is missing then the global minimum was discovered in every
- independent run (100% success).
- The last row in all tables (denoted by TOTAL) is the total number of function
- calls for listed test problems.
-\end_layout
-
-\begin_layout Standard
-In Table 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Multistart-results."
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- the results for the Multistart global optimization procedure are shown.
- 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float table
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-The values for the parameters used in the conducted experiments.
-\begin_inset CommandInset label
-LatexCommand label
-name "tab:The-values-for"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="5" columns="2">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-PARAMETER
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-VALUE
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $K$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-100
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $K_{\mbox{max}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-100
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $F$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.5
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $N_{\mbox{min}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-3
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 
 \series bold
 //GIANNIS Description of the table columns
@@ -2226,7 +1974,7 @@ VALUE
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -2270,10 +2018,7 @@ Function
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $M=100$
-\end_inset
-
-
+MSTART=100
 \end_layout
 
 \end_inset
@@ -2282,10 +2027,7 @@ Function
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $M=100$
-\end_inset
-
-
+MSTART=200
 \end_layout
 
 \end_inset
@@ -2294,10 +2036,7 @@ Function
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $M=100,$
-\end_inset
-
-Rejection
+MSTART WITH REJECTION
 \end_layout
 
 \end_inset
@@ -3716,7 +3455,7 @@ TEST2n7
 \begin_layout Plain Layout
 
 \series bold
-TOTAL
+SUM
 \end_layout
 
 \end_inset
@@ -3768,7 +3507,11 @@ TOTAL
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -4906,7 +4649,7 @@ TEST2n7
 \begin_layout Plain Layout
 
 \series bold
-TOTAL
+SUM
 \end_layout
 
 \end_inset
@@ -4968,33 +4711,29 @@ name "sec:Conclusions"
 \end_layout
 
 \begin_layout Standard
-A new clustering method was introduced in this article to tackle to global
- optimization problem.
- For every cluster gradually a representative is created using the well
- - known Kmeans method.
- Afterwards, the clusters are reduced in number using a simple rejection
- procedure.
- The proposed method was tested on a series of benchmark problems from the
- relevant literature and it is compared against the Multistart method and
- the results are reported.
- Judging from the reported results, the proposed method seems to be very
- promising and a series of enhancements could be applied on the method such
- as:
+
+\series bold
+//GIANNIS Rewrite
+\end_layout
+
+\begin_layout Standard
+Use better rejection rules such as
 \end_layout
 
 \begin_layout Enumerate
-Dynamic selection of K in Kmeans algorithm.
- 
+Better selection of K in kmeans
 \end_layout
 
 \begin_layout Enumerate
-Better estimation of the critical distance between clusters in the rejection
- procedure.
+Typical distance
 \end_layout
 
 \begin_layout Enumerate
-Usage of more efficient stopping rules to prevent the method from unnecessary
- local searches, that could lead to the same global optimum many times.
+Gradient criterion
+\end_layout
+
+\begin_layout Enumerate
+etc...
 \end_layout
 
 \begin_layout Subsection*
@@ -5727,24 +5466,6 @@ J.E.
 \series default
 , pp.
  463–477, 1924.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "openmp"
-literal "false"
-
-\end_inset
-
-R.
- Chandra, L.
- Dagum, D.
- Kohr, D.
- Maydan,J.
- McDonald and R.
- Menon, Parallel Programming in OpenMP, Morgan Kaufmann Publishers Inc.,
- 2001.
 \end_layout
 
 \end_body

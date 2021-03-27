@@ -76,7 +76,7 @@
 \begin_body
 
 \begin_layout Title
-MinCenter: a novell clustering techniqe for global optimization
+MinCenter: a novel clustering technique for global optimization
 \end_layout
 
 \begin_layout Author
@@ -90,6 +90,12 @@ Vasileios Charilogis, Ioannis G.
 
 Department of Informatics and Telecommunications, University of Ioannina,
  Greece
+\end_layout
+
+\begin_layout Abstract
+
+\series bold
+//GIANNIS REWRITE
 \end_layout
 
 \begin_layout Abstract
@@ -341,8 +347,8 @@ literal "false"
 .
  For every cluster a representative is constructed using the K-means method
  and afterwards a rejection procedure is utilized in order to reduce the
- number of representives.
- Finally, for every remain point a local search proceudure is started to
+ number of representatives.
+ Finally, for every remain point a local search procedure is started to
  locate the global minimum of the function.
 \end_layout
 
@@ -395,6 +401,16 @@ name "sec:Method-description"
 \end_layout
 
 \begin_layout Standard
+The proposed method creates clusters from the objective function.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+//GIANIS rephrase here
+\end_layout
+
+\begin_layout Standard
 The main steps of a typical Multistart procedure are shown in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -412,7 +428,7 @@ noprefix "false"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -448,34 +464,14 @@ Initialization
 Set
 \series default
  
+\series bold
+
 \begin_inset Formula $M$
 \end_inset
 
- as the number of samples.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Set
-\series default
- 
-\series bold
-
-\begin_inset Formula $K_{\mbox{MAX}}$
-\end_inset
-
  
 \series default
-as the maximum number of iterations
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Set
-\series default
- K=0, the iteration number.
+as the total number of samples.
 \end_layout
 
 \begin_layout Enumerate
@@ -505,14 +501,6 @@ Evaluation
 \end_layout
 
 \begin_deeper
-\begin_layout Enumerate
-
-\series bold
-Set
-\series default
- K=K+1
-\end_layout
-
 \begin_layout Enumerate
 
 \series bold
@@ -579,7 +567,665 @@ EndFor
 
 \begin_layout Standard
 The proposed method replaces the sampling step with the usage of centroids
- constructed by Kmeans clustering
+ constructed by Kmeans clustering.
+ The main steps of the Kmeans method are given in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:The-algorithm-Kmeans."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The proposed method is described in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:The-proposed-method."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The algorithm Kmeans.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:The-algorithm-Kmeans."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Repeat
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $S_{j}=\left\{ \right\} ,\ j=1..K$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ every sample 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ 
+\series bold
+Do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $j^{*}=\min_{i=1}^{K}\left\{ D\left(x_{i},c_{j}\right)\right\} $
+\end_inset
+
+, where 
+\begin_inset Formula $j^{*}$
+\end_inset
+
+ is the nearest center for sample 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $S_{j^{*}}=S_{j^{*}}\cup\left\{ x_{i}\right\} $
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ every center 
+\begin_inset Formula $c_{j}$
+\end_inset
+
+ 
+\series bold
+Do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $M_{j}$
+\end_inset
+
+=number of elements in 
+\begin_inset Formula $S_{j}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Update
+\series default
+ 
+\begin_inset Formula $c_{j}$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula 
+\[
+c_{j}=\frac{1}{M_{j}}\sum_{i=1}^{M_{j}}x_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\series default
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Terminate
+\series default
+ when 
+\begin_inset Formula $c_{j}$
+\end_inset
+
+ no longer change.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The proposed method.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:The-proposed-method."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initialization
+\series default
+ step.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $M$
+\end_inset
+
+ as the number of samples.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $\left(x^{*},y^{*}\right)$
+\end_inset
+
+ as the global minimum.
+ Initialize 
+\begin_inset Formula $y^{*}$
+\end_inset
+
+ to a very large value.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set 
+\series default
+
+\begin_inset Formula $K$
+\end_inset
+
+ the number of teams, where 
+\begin_inset Formula $K<M$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $K_{\mbox{MAX}}$
+\end_inset
+
+ the number of construction iterations for the KMeans algorithm.
+\end_layout
+
+\begin_layout Enumerate
+Set 
+\begin_inset Formula $C=\left\{ \right\} $
+\end_inset
+
+, as the set of constructed centers.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Construction
+\series default
+ step.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1..K_{\mbox{MAX}}$
+\end_inset
+
+ 
+\series bold
+Do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Sample
+\series default
+ 
+\begin_inset Formula $M$
+\end_inset
+
+ points from the objective function 
+\begin_inset Formula $S=\left\{ x_{1},x_{2},\ldots,x_{M}\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Update
+\series default
+ the centers 
+\begin_inset Formula $C$
+\end_inset
+
+ with the set 
+\begin_inset Formula $S$
+\end_inset
+
+, using Kmeans.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Create the set 
+\begin_inset Formula $R$
+\end_inset
+
+ from 
+\begin_inset Formula $C$
+\end_inset
+
+ using the rejection algorithm of Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:The-rejection-mechanism."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Evaluation
+\series default
+ step.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1\ldots\left|R\right|$
+\end_inset
+
+ 
+\series bold
+Do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $x_{i}=R_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $y_{i}=\mbox{LS}\left(x_{i}\right)$
+\end_inset
+
+.
+ Where LS(x) is a local search procedure.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+If
+\series default
+ 
+\begin_inset Formula $y_{i}\le y^{*}$
+\end_inset
+
+ then 
+\begin_inset Formula $x^{*}=x_{i},y^{*}=y_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\end_deeper
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The rejection algorithm.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:The-rejection-mechanism."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $C$
+\end_inset
+
+ the set of centers.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $R=\emptyset$
+\end_inset
+
+ the outcome of the rejection algorithm.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $D_{\mbox{min}}=\min_{i\ne j}\left\Vert c_{i}-c_{j}\right\Vert $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $F>1$
+\end_inset
+
+, a double value.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $N_{\mbox{min}}>1$
+\end_inset
+
+, an integer value.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ every center 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+ 
+\series bold
+Do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $N=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ every center 
+\begin_inset Formula $c_{j},\ i\ne j$
+\end_inset
+
+ 
+\series bold
+Do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+If
+\series default
+ 
+\begin_inset Formula $\left\Vert c_{i}-c_{j}\right\Vert \le FD_{\mbox{\mbox{min}}}$
+\end_inset
+
+ 
+\series bold
+then
+\series default
+ 
+\begin_inset Formula $\ N=N+1$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+If
+\series default
+ 
+\begin_inset Formula $N<N_{\mbox{min}}\ $
+\end_inset
+
+ 
+\series bold
+then
+\series default
+ 
+\begin_inset Formula $R=R\cup c_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Return
+\series default
+ 
+\begin_inset Formula $R$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -1336,6 +1982,243 @@ Experimental Results
 \end_layout
 
 \begin_layout Standard
+The proposed method was tested agains the traditional multistart global
+ optimization method on the series of benchmark problems.
+ The parameters used in the conducted experiments are listed in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:The-values-for"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The method was coded using the OpenMP library
+\begin_inset CommandInset citation
+LatexCommand cite
+key "openmp"
+literal "false"
+
+\end_inset
+
+ in order to take advantage of multi - core modern computing systems and
+ the experiments were conducted on a cluster of systems running the Linux
+ operating system.
+ The results from the experiments are listed in Tables 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Multistart-results."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:The-proposed-method."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The number in the cells denotes average function calls for 30 independent
+ runs using different seed for the random generator each time.
+ The numbers in parentheses denote the fraction of runs where the global
+ minimum was located.
+ If this number is missing then the global minimum was discovered in every
+ independent run (100% success).
+ The last row in all tables (denoted by TOTAL) is the total number of function
+ calls for listed test problems.
+\end_layout
+
+\begin_layout Standard
+In Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Multistart-results."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ the results for the Multistart global optimization procedure are shown.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The values for the parameters used in the conducted experiments.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:The-values-for"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PARAMETER
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+VALUE
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $K$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+100
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $K_{\mbox{max}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+100
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $F$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.5
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{\mbox{min}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+//GIANNIS Description of the table columns
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float table
 wide false
 sideways false
@@ -1383,7 +2266,10 @@ Function
 \begin_inset Text
 
 \begin_layout Plain Layout
-MSTART=100
+\begin_inset Formula $M=100$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1392,7 +2278,10 @@ MSTART=100
 \begin_inset Text
 
 \begin_layout Plain Layout
-MSTART=200
+\begin_inset Formula $M=100$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1401,7 +2290,10 @@ MSTART=200
 \begin_inset Text
 
 \begin_layout Plain Layout
-MSTART WITH REJECTION
+\begin_inset Formula $M=100,$
+\end_inset
+
+Rejection
 \end_layout
 
 \end_inset
@@ -2820,7 +3712,7 @@ TEST2n7
 \begin_layout Plain Layout
 
 \series bold
-SUM
+TOTAL
 \end_layout
 
 \end_inset
@@ -2829,6 +3721,8 @@ SUM
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 281454(0.93)
 \end_layout
 
@@ -2838,6 +3732,8 @@ SUM
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 562038(0.98)
 \end_layout
 
@@ -2847,6 +3743,8 @@ SUM
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 259160(0.92)
 \end_layout
 
@@ -2867,10 +3765,6 @@ SUM
 wide false
 sideways false
 status open
-
-\begin_layout Plain Layout
-
-\end_layout
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -4008,7 +4902,7 @@ TEST2n7
 \begin_layout Plain Layout
 
 \series bold
-SUM
+TOTAL
 \end_layout
 
 \end_inset
@@ -4017,6 +4911,8 @@ SUM
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 103198(0.95)
 \end_layout
 
@@ -4026,6 +4922,8 @@ SUM
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 84067(0.93)
 \end_layout
 
@@ -4048,6 +4946,12 @@ SUM
 
 \end_layout
 
+\begin_layout Standard
+
+\series bold
+//GIANNIS Add some discussion here
+\end_layout
+
 \begin_layout Section
 Conclusions 
 \begin_inset CommandInset label
@@ -4060,23 +4964,33 @@ name "sec:Conclusions"
 \end_layout
 
 \begin_layout Standard
-Use better rejection rules such as
+A new clustering method was introduced in this article to tackle to global
+ optimization problem.
+ For every cluster gradually a representative is created using the well
+ - known Kmeans method.
+ Afterwards, the clusters are reduced in number using a simple rejection
+ procedure.
+ The proposed method was tested on a series of benchmark problems from the
+ relevant literature and it is compared against the Multistart method and
+ the results are reported.
+ Judging from the reported results, the proposed method seems to be very
+ promising and a series of enhancements could be applied on the method such
+ as:
 \end_layout
 
 \begin_layout Enumerate
-Better selection of K in kmeans
+Dynamic selection of K in Kmeans algorithm.
+ 
 \end_layout
 
 \begin_layout Enumerate
-Typical distance
+Better estimation of the critical distance between clusters in the rejection
+ procedure.
 \end_layout
 
 \begin_layout Enumerate
-Gradient criterion
-\end_layout
-
-\begin_layout Enumerate
-etc...
+Usage of more efficient stopping rules to prevent the method from unnecessary
+ local searches, that could lead to the same global optimum many times.
 \end_layout
 
 \begin_layout Subsection*
@@ -4809,6 +5723,24 @@ J.E.
 \series default
 , pp.
  463–477, 1924.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "openmp"
+literal "false"
+
+\end_inset
+
+R.
+ Chandra, L.
+ Dagum, D.
+ Kohr, D.
+ Maydan,J.
+ McDonald and R.
+ Menon, Parallel Programming in OpenMP, Morgan Kaufmann Publishers Inc.,
+ 2001.
 \end_layout
 
 \end_body
