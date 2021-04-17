@@ -47,6 +47,12 @@ double  Optimizer::localSearch(Data &x)
         Lbfgs lt(myProblem);
         return lt.Solve(x);
     }
+    else
+    if(method=="gslbfgs")
+    {
+        //GSlBfgs xx(myProblem);
+        //return xx.Solve(x);
+    }
 }
 
 void Optimizer::setProblem(Problem *p)

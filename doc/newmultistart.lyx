@@ -89,7 +89,7 @@ An improved multistart based method for global optimization problems
 Ioannis G.
  Tsoulos
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Corresponding author.
@@ -98,7 +98,7 @@ Corresponding author.
 
 \end_inset
 
-
+, Alexandros Tzallas
 \end_layout
 
 \begin_layout Date
@@ -1919,6 +1919,244 @@ with
 \end_layout
 
 \begin_layout Subsection
+Constrained optimization problems
+\end_layout
+
+\begin_layout Subsubsection*
+Levy problem 
+\end_layout
+
+\begin_layout Standard
+This problem is described in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Levy"
+literal "true"
+
+\end_inset
+
+ and it is given by: 
+\begin_inset Formula 
+\[
+\min_{x}f(x)=-x_{1}-x_{2}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[0,1]^{2}$
+\end_inset
+
+, subject to 
+\begin_inset Formula 
+\[
+g_{1}(x)=\left\lfloor \left(x_{1}-1\right)^{2}+\left(x_{2}-1\right)\right\rfloor \left(\frac{1}{2a^{2}}-\frac{1}{2b^{2}}\right)+\left(x_{1}-1\right)\left(x_{2}-1\right)\left(\frac{1}{a^{2}}-\frac{1}{b^{2}}\right)-1\ge0
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $a=2,\ b=0.25$
+\end_inset
+
+.
+ The value of global minimum is 
+\begin_inset Formula $f_{\mbox{min}}=-1.8729$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection*
+Salkin problem 
+\end_layout
+
+\begin_layout Standard
+This problem is described in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Salkin"
+literal "true"
+
+\end_inset
+
+ and it is given by: 
+\begin_inset Formula 
+\[
+\max_{x}f(x)=3x_{1}+x_{2}+2x_{3}+x_{4}-x_{5}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $1\le x_{1}\le4,\ 80\le x_{2}\le88,\ 30\le x_{3}\le35,\ 145\le x_{4}\le150,\ 0\le x_{5}\le2$
+\end_inset
+
+ subject to 
+\begin_inset Formula 
+\begin{eqnarray*}
+g_{1}(x) & = & 25x_{1}-40x_{2}+16x_{3}+21x_{4}+x5\le300\\
+g_{2}(x) & = & x_{1}+20x_{2}-50x_{3}+x_{4}-x_{5}\le200\\
+g_{3}(x) & = & 60x_{1}+x_{2}-x_{3}+2x_{4}+x_{5}\le600\\
+g_{4}(x) & = & -7x_{1}+4x_{2}+15x_{3}-x_{4}+65x_{5}\le700
+\end{eqnarray*}
+
+\end_inset
+
+This global maximum is 
+\begin_inset Formula $f_{\mbox{max}}=320$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection*
+Hess problem
+\end_layout
+
+\begin_layout Standard
+This problem is described in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Hess"
+literal "true"
+
+\end_inset
+
+ and it is given by:
+\begin_inset Formula 
+\[
+\max_{x}f(x)=25\left(x_{1}-2\right)^{2}+\left(x_{2}-2\right)^{2}+\left(x_{3}-1\right)^{2}+\left(x_{4}-4\right)^{2}+\left(x_{5}-1\right)^{2}+\left(x_{6}-4\right)^{2}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $0\le x_{1}\le5,\ 0\le x_{2}\le1,\ 1\le x_{3}\le5,\ 0\le x_{4}\le6,\ 0\le x_{5}\le5,\ 0\le x_{6}\le10$
+\end_inset
+
+ subject to:
+\begin_inset Formula 
+\begin{eqnarray*}
+g_{1}(x) & = & x_{1}+x_{2}-2\ge0\\
+g_{2}(x) & = & -x_{1}+x_{2}+6\ge0\\
+g_{3}(x) & = & x_{1}-x_{2}+2\ge0\\
+g_{4}(x) & = & -x_{1}+3x_{2}+2\ge0\\
+g_{5}(x) & = & \left(x_{3}-3\right)^{2}+x_{4}-4\ge0\\
+g_{6}(x) & = & \left(x_{5}-3\right)^{2}+x_{6}-4\ge0
+\end{eqnarray*}
+
+\end_inset
+
+The value of global maximum is 
+\begin_inset Formula $f_{\mbox{max}}=310.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Chootinan1 problem
+\end_layout
+
+\begin_layout Standard
+This problem is described in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "choot"
+literal "true"
+
+\end_inset
+
+ and it is given by:
+\begin_inset Formula 
+\[
+\min_{x}f(x)=5\sum_{i=1}^{4}x_{i}-5\sum_{i=1}^{4}x_{i}^{2}-\sum_{i=1}^{13}x_{i}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $0\le x_{i}\le1$
+\end_inset
+
+ for 
+\begin_inset Formula $i=1,..,9,13$
+\end_inset
+
+, 
+\begin_inset Formula $0\le x_{i}\le100$
+\end_inset
+
+ for 
+\begin_inset Formula $i=10,11,12$
+\end_inset
+
+ with the following constraints:
+\begin_inset Formula 
+\begin{eqnarray*}
+g_{1}(x) & = & 10-\left(2x_{1}+2x_{2}+x_{10}+x_{11}\right)\ge0\\
+g_{2}(x) & = & 10-\left(2x_{1}+2x_{3}+x_{10}+x_{12}\right)\ge0\\
+g_{3}(x) & = & 10-\left(2x_{2}+2x_{3}+x_{11}+x_{12}\right)\ge0\\
+g_{4}(x) & = & 8x_{1}-x_{10}\ge0\\
+g_{5}(x) & = & 8x_{2}-x_{11}\ge0\\
+g_{6}(x) & = & 8x_{3}-x_{12}\ge0\\
+g_{7}(x) & = & 2x_{4}+x_{5}-x_{10}\ge0\\
+g_{8}(x) & = & 2x_{6}+x_{7}-x_{11}\ge0\\
+g_{9}(x) & = & 2x_{8}+x_{9}-x_{12}\ge0
+\end{eqnarray*}
+
+\end_inset
+
+The value of global minimum is 
+\begin_inset Formula $f_{\mbox{min}}=-15.0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection*
+G15 problem 
+\end_layout
+
+\begin_layout Standard
+This problem is described in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "G15"
+literal "true"
+
+\end_inset
+
+ and it is given by:
+\begin_inset Formula 
+\[
+\min_{x}f(x)=1000-x_{1}^{2}-2x_{2}^{2}-x_{3}^{2}-x_{1}x_{2}-x_{1}x_{3}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[0,10]^{3}$
+\end_inset
+
+ subject to the following constraints:
+\begin_inset Formula 
+\begin{eqnarray*}
+h_{1}(x) & = & x_{1}^{2}+x_{2}^{2}+x_{3}^{2}-25=0\\
+h_{2}(x) & = & 8x_{1}+14x_{2}+7x_{3}-56=0
+\end{eqnarray*}
+
+\end_inset
+
+The value of the global minimum is 
+\begin_inset Formula $f_{\mbox{min}}=961.7150$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 Experimental results
 \end_layout
 
@@ -3032,10 +3270,6 @@ sideways false
 status collapsed
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -3164,7 +3398,7 @@ VALUE
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -3202,7 +3436,7 @@ name "fig:Average-number-of"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -3236,6 +3470,227 @@ name "fig:Average-number-of-1"
 \end_layout
 
 \begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Average function calls from comparisons of the proposed method and Multistart
+ for the constrained optimization problems.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Results-from-comparisons"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PROBLEM
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MULTISTART
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PROPOSED
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Levy
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17491
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1301
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Salkin
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+48816
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1010
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Hess
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+27775
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9524
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Chootinan1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+293459
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+15035
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+G15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+318162
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+63542
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
 
 \end_layout
 
@@ -4143,6 +4598,104 @@ J.E.
 \series default
 , pp.
  463–477, 1924.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Levy"
+literal "true"
+
+\end_inset
+
+A.V.
+ Levy, A.
+ Montalvo, The tunneling algorithm for global optimization of functions,
+ SIAM Journal of Scientific and Statistical Computing 
+\series bold
+6
+\series default
+, pp.
+ 15-29, 1985.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Salkin"
+literal "true"
+
+\end_inset
+
+H.M.
+ Salkin, Integer programming, Edison Wesley Publishing Com., Amsterdam, 1975.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Hess"
+literal "true"
+
+\end_inset
+
+R.
+ Hess, A heuristic search for estimating a global solution of non convex
+ programming problems, Operations Research 
+\series bold
+21
+\series default
+, pp.
+ 1267-1280, 1973.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "choot"
+literal "true"
+
+\end_inset
+
+P.
+ Chootinan, A.
+ Chen, Constraint handling in genetic algorithms using a gradient - based
+ repair method, Computer and Operations Research 
+\series bold
+33
+\series default
+, pp.
+ 2263-2281, 2006.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "G15"
+literal "true"
+
+\end_inset
+
+J.J.
+ Liang, T.P.
+ Runarsson, E.
+ Mezura-Montes, M.
+ Clerc, P.N.
+ Suganthan, C.A.C.
+ Coello, K.
+ Deb, Problem definitions and evaluation criteria for the CEC2006 special
+ session on constrained real-parameter optimization, 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.ntu.edu.sg/home/EPNSugan/index_files/CEC-06/CEC06.htm
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body

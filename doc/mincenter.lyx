@@ -82,6 +82,17 @@ MinCenter: a novel clustering technique for global optimization
 \begin_layout Author
 Vasileios Charilogis, Ioannis G.
  Tsoulos
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Corresponding author.
+ Email: itsoulos@uoi.gr
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Date
@@ -93,21 +104,25 @@ Department of Informatics and Telecommunications, University of Ioannina,
 \end_layout
 
 \begin_layout Abstract
-
-\series bold
-//GIANNIS REWRITE
+A common problem arises in many scientific fields is that of locating the
+ global minimum of a multimodal function.
+ A novel clustering technique that tackles this problem is introduced here.
+ The proposed method creates clusters from uniform samples of the objective
+ function with the usage of the Kmeans clustering technique.
+ For every cluster a center is created.
+ Finally, a simple rejection procedure is applied to the created clusters
+ in order to remove clusters that are close to others.
+ The proposed method is tested on a series of well - known optimization
+ problems from the relevant literature and the results are reported and
+ compared against the simple Multistart global optimization method.
 \end_layout
 
-\begin_layout Abstract
-A common method for finding minimum optimization issues, uses random samples
- and through parallel local optimizations you achieve universal optimization.
- This article proposes a new sampling technique which is called “mincenter”,
- that use sample representatives for multi-stage methods, which use an artificia
-l neural network as an approach to the original objective function.
- The proposed sampling technique is tested against sampling without representati
-ves on a wide range of known optimization problems, with reference from
- the relevant literature and the results reported.
- 
+\begin_layout Standard
+
+\series bold
+Keywords
+\series default
+: Global optimization, clustering, hubrid methods, numerical methods.
 \end_layout
 
 \begin_layout Section
@@ -184,9 +199,10 @@ literal "false"
 
 \end_inset
 
- etc Global optimization methods usually are divided into two main categories:
+ etc.
+ Global optimization methods usually are divided into two main categories:
  deterministic and random search methods.
- Common methods of the first category are the the so called Interval methods
+ Common methods of the first category are the so called Interval methods
  
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -201,7 +217,7 @@ literal "true"
 
  is divided iteratively in subregions using some criteria.
  On the other hand, random search methods are used in the majority of cases,
- because they can be implement easy and they do not depend on a some priori
+ because they can be implement easy and they do not depend on a some a priori
  information about the objective function.
  A small set of random search methods may include Controlled Random Search
  methods 
@@ -401,21 +417,41 @@ name "sec:Method-description"
 \end_layout
 
 \begin_layout Standard
-The proposed method creates clusters from the objective function.
-\end_layout
+The proposed method is initially based on the commonly used global optimization
+ method named Multistart.
+ The proposed method creates clusters from the objective function.
+ The multistart method is one of the simplest global optimization technique
+ which start a local search optimizer such as BFGS from different random
+ points and yields the lowest discovered minimum as the global one.
+ As it was demonstrated by various researchers 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "stop1,stop2"
+literal "false"
 
-\begin_layout Standard
+\end_inset
 
-\series bold
-//GIANIS rephrase here
-\end_layout
+, if the number of local minimum is finite then Multistart method is capable
+ to locate the global minimum.
+ Due to its simplicity, the Multistart method is the base method for a series
+ of stochastic methods in the relevant literature such as hybrid methods
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mshybrid1,mshybrid2"
+literal "false"
 
-\begin_layout Standard
-//GIANNIS Justify the usage of the Multistart procedure
-\end_layout
+\end_inset
 
-\begin_layout Standard
-The main steps of a typical Multistart procedure are shown in Figure 
+, GRASP methods
+\begin_inset CommandInset citation
+LatexCommand cite
+key "grasp"
+literal "false"
+
+\end_inset
+
+ etc.
+ The main steps of a typical Multistart procedure are shown in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:The-main-steps"
@@ -499,7 +535,7 @@ Set
 \begin_layout Enumerate
 
 \series bold
-Evaluation
+Sampling
 \series default
  step.
 \end_layout
@@ -570,8 +606,8 @@ EndFor
 \end_layout
 
 \begin_layout Standard
-The proposed method replaces the sampling step with the usage of centroids
- constructed by Kmeans clustering.
+The proposed method replaces the sampling step of the Multistart method
+ with the usage of centroids constructed by Kmeans clustering.
  The main steps of the Kmeans method are given in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -583,6 +619,15 @@ noprefix "false"
 \end_inset
 
 .
+ The estimated centroids are iteratively enhanced with Kmeans and new samples
+ that added each time for a predefined number of times.
+ Having created the centroids a rejection procedure is applied to reduce
+ the number of centroids.
+ The rejection procedure removes from the set of centers, points that have
+ many neighbors in a predefined radius.
+ The rejection procedure is necessary to remove from the set samples, that
+ possible will yeld the same local optimum after the application of the
+ local search procedure.
  The proposed method is described in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -782,7 +827,7 @@ Terminate
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -870,7 +915,11 @@ Set
 \end_layout
 
 \begin_layout Enumerate
-Set 
+
+\series bold
+Set
+\series default
+ 
 \begin_inset Formula $C=\left\{ \right\} $
 \end_inset
 
@@ -943,7 +992,11 @@ EndFor
 
 \end_deeper
 \begin_layout Enumerate
-Create the set 
+
+\series bold
+Create
+\series default
+ the set 
 \begin_inset Formula $R$
 \end_inset
 
@@ -1038,7 +1091,7 @@ EndFor
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1986,7 +2039,7 @@ Experimental Results
 \end_layout
 
 \begin_layout Standard
-The proposed method was tested agains the traditional multistart global
+The proposed method was tested against the traditional multistart global
  optimization method on the series of benchmark problems.
  The parameters used in the conducted experiments are listed in Table 
 \begin_inset CommandInset ref
@@ -2039,6 +2092,16 @@ noprefix "false"
  independent run (100% success).
  The last row in all tables (denoted by TOTAL) is the total number of function
  calls for listed test problems.
+ The local search procedure used (denotes as LS(x)) was a BFGS variant due
+ to Powell
+\begin_inset CommandInset citation
+LatexCommand cite
+key "powell"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -2053,7 +2116,83 @@ noprefix "false"
 \end_inset
 
  the results for the Multistart global optimization procedure are shown.
+ The column 
+\begin_inset Formula $M=100$
+\end_inset
+
+ denotes the application of the algorithm given in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:The-main-steps"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ with 
+\begin_inset Formula $M=100$
+\end_inset
+
+ samples.
+ The column 
+\begin_inset Formula $M=200$
+\end_inset
+
+ stands for the Multistart algorithm using 200 samples.
+ The last column stands for the results of the Multistart method with 100
+ samples and the application of the proposed rejection procedure of algorithm
+ in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:The-rejection-mechanism."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ in the samples before the application of the local search procedure.
+ It is evident that the application of the rejection procedure does not
+ reduce significantly the number of function calls for the multistart case.
+\end_layout
+
+\begin_layout Standard
+In Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:The-proposed-method."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ the experimental results for the proposed method are listed.
+ The column 
+\begin_inset Formula $M=100$
+\end_inset
+
+ stands for the usage of 100 samples in the proposed method (parameter 
+\begin_inset Formula $M$
+\end_inset
+
+) and the column 
+\begin_inset Formula $M=200$
+\end_inset
+
+ for 200 samples.
+ The proposed method has significantly lower number of function calls than
+ the Multistart method and as the number of samples increases (parameter
  
+\begin_inset Formula $M$
+\end_inset
+
+) the method requires lower amount of function calls to estimate the global
+ minimum.
+ This means that the method tends to create more accurate clusters (clusters
+ that emulate the true regions of attraction) of the objective function
+ as the number of samples increases.
 \end_layout
 
 \begin_layout Standard
@@ -2061,10 +2200,6 @@ noprefix "false"
 wide false
 sideways false
 status collapsed
-
-\begin_layout Plain Layout
-
-\end_layout
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -2217,16 +2352,10 @@ VALUE
 \end_layout
 
 \begin_layout Standard
-
-\series bold
-//GIANNIS Description of the table columns
-\end_layout
-
-\begin_layout Standard
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -3765,16 +3894,23 @@ TOTAL
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-The proposed method with 100 initial centers.
+The proposed method with 
+\begin_inset Formula $K=100$
+\end_inset
+
+ centers.
 \begin_inset CommandInset label
 LatexCommand label
 name "tab:The-proposed-method."
@@ -3811,7 +3947,10 @@ Function
 \begin_inset Text
 
 \begin_layout Plain Layout
-SAMPLES=100
+\begin_inset Formula $M=100$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -3820,7 +3959,10 @@ SAMPLES=100
 \begin_inset Text
 
 \begin_layout Plain Layout
-SAMPLES=200
+\begin_inset Formula $M=200$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -4950,12 +5092,6 @@ TOTAL
 
 \end_layout
 
-\begin_layout Standard
-
-\series bold
-//GIANNIS Add some discussion here
-\end_layout
-
 \begin_layout Section
 Conclusions 
 \begin_inset CommandInset label
@@ -5015,7 +5151,7 @@ Compliance with Ethical Standards
 \end_layout
 
 \begin_layout Standard
-All authors declare that they have no has no conict of interest.
+All authors declare that they have no has no conflict of interest.
  
 \end_layout
 
@@ -5632,6 +5768,105 @@ MacQueen, J.: Some methods for classification and analysis of multivariate
  1, No.
  14, pp.
  281-297, 1967.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "stop1"
+literal "false"
+
+\end_inset
+
+C.G.E.
+ Boender, A.H.G.
+ Kan Rinnooy, Bayesian stopping rules for multistart global optimization
+ methods, Math.
+ Program.
+ 
+\series bold
+37, 
+\series default
+pp.
+ 59–80, 1987.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "stop2"
+literal "false"
+
+\end_inset
+
+I.E.
+ Lagaris, I.G.
+ Tsoulos, Stopping rules for box-constrained stochastic global optimization,
+ Applied Mathematics and Computation 
+\series bold
+197
+\series default
+, pp.
+ 622–632, 2008.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "mshybrid1"
+literal "false"
+
+\end_inset
+
+M.
+ Perez, F.
+ Almeida and J.
+ M.
+ Moreno-Vega, "Genetic algorithm with multistart search for the p-Hub median
+ problem," Proceedings.
+ 24th EUROMICRO Conference (Cat.
+ No.98EX204), Vasteras, Sweden, 1998, pp.
+ 702-707 vol.2.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "mshybrid2"
+literal "false"
+
+\end_inset
+
+H.
+ C.
+ B.
+ d.
+ Oliveira, G.
+ C.
+ Vasconcelos and G.
+ B.
+ Alvarenga, "A Multi-Start Simulated Annealing Algorithm for the Vehicle
+ Routing Problem with Time Windows," 2006 Ninth Brazilian Symposium on Neural
+ Networks (SBRN'06), Ribeirao Preto, Brazil, 2006, pp.
+ 137-142.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "grasp"
+literal "false"
+
+\end_inset
+
+Festa P., Resende M.G.C.
+ (2009) Hybrid GRASP Heuristics.
+ In: Abraham A., Hassanien AE., Siarry P., Engelbrecht A.
+ (eds) Foundations of Computational Intelligence Volume 3.
+ Studies in Computational Intelligence, vol 203.
+ Springer, Berlin, Heidelberg.
  
 \end_layout
 

@@ -32,9 +32,8 @@ void    Multistart::step()
 #pragma omp parallel for num_threads(threads)
     for(int i=0;i<Multistart_samples;i++)
     {
-        Tolmin mTolmin(myProblem);
         Data trialx=myProblem->getRandomPoint();
-        double y=mTolmin.Solve(trialx);
+        double y=localSearch(trialx);
 #pragma omp critical
 {
         if(y<mbesty)
