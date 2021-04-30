@@ -107,16 +107,15 @@ Department of Informatics and Telecommunications, University of Ioannina,
 \end_layout
 
 \begin_layout Abstract
-The problem of locating the global minimum of a function finds application
- in many scientific and real world problems.
- One of the most used and simplest method to tackle this problem is the
- so called Multistart method.
+There is a great need to discover the global optimum of multimodal functions
+ that arises from many scientifical and practical problems.
+ A base method used to solve this problem is the Multistart method.
  This article proposes novel method based on the Multistart, that utilizes
  a mechanism to prevent unnecessary local optimization calls as well as
  an asymptotic stopping rule.
- The proposed method is tested against other global optimization methods
- on a wide set of well - known benchmark optimization problems from the
- relevant literature and the results are reported.
+ The proposed method has been evaluated on a series of global optimization
+ functions from the relevant literature and it is compared against some
+ other optimization methods and the experimental results are presented.
 \end_layout
 
 \begin_layout Standard
@@ -132,7 +131,7 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-A new method for the task of locating the global minimum of a continuous
+A novell method for the task of locating the global minimum of a continuous
  and differentiable function 
 \begin_inset Formula $f:S\rightarrow R,S\subset R^{n}$
 \end_inset
@@ -270,8 +269,8 @@ This article introduces a novel method which is based on the multistart
  criterion to prevent the algorithm from unnecessary local optimization
  calls.
  The multistart method is one of the simplest global optimization technique
- which start a local search optimizer such as BFGS from different random
- points and yields the lowest discovered minimum as the global one.
+ which starts a local optimization method from different random samples
+ and yields the lowest discovered minimum as the global one.
  Due to its simplicity the method has been used in many problems such as
  the TSP problem
 \series bold
@@ -310,8 +309,9 @@ literal "false"
 \end_inset
 
  etc.
- The method multistart has been extended in the relevant literature with
- methods aim to discover all the local minima of a function 
+ During the past year, the method multistart has been enchanced in the relevant
+ literature with methods that target to discover all the local minima of
+ a function 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "tmlsl,Salhi,minfinder"
@@ -405,8 +405,8 @@ name "sec:Method-description"
 
 \begin_layout Standard
 The proposed method works for a predefined number of iterations.
- At every iteration a number of samples is taken in the feasible region
- of the objective problem.
+ At every iteration a number of samples is taken in the bounding box of
+ the objective problem.
  Some of them are considered as starting points for a local search procedure
  and the rest are discarded.
  The method continues until the maximum number of iterations is reached
@@ -710,7 +710,7 @@ End if
 \begin_inset Float algorithm
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -822,12 +822,12 @@ r_{C}=\frac{1}{M}\sum_{i=1}^{M}\left\Vert x_{i}-x_{iL}\right\Vert \label{eq:eq2}
 
 \end_inset
 
-where 
-\begin_inset Formula $x_{i}$
+where the local search procedure 
+\begin_inset Formula $L(x)$
 \end_inset
 
- are starting points for the local search procedure 
-\begin_inset Formula $L(x)$
+ initiates from 
+\begin_inset Formula $x_{i}$
 \end_inset
 
  and 
@@ -1006,19 +1006,24 @@ name "subsec:Stopping-rule"
 \begin_layout Standard
 A common way to terminate a global optimization procedure is to use the
  maximum number of allowed iterations, i.e.
- terminate when 
+ stop when 
 \begin_inset Formula $\mbox{iter}\ge K$
 \end_inset
 
 .
- Although, this may be a simple criterion but is not an efficient one since,
- small values of the parameter 
+ Although, it is a simple criterion but is not an efficient one since, if
+ 
 \begin_inset Formula $K$
 \end_inset
 
- mean that the algorithm probably should terminate prematurely.
- On the other hand higher values for this parameter require more function
- calls function calls and higher computation times.
+ is tool small, then the algorithm will terminate without locating the global
+ optimum.
+ Also, when 
+\begin_inset Formula $K$
+\end_inset
+
+ is too high, the optimization algoirithm will spend time in unecessary
+ function calls.
  The termination rule used here is derived from 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1027,28 +1032,27 @@ literal "true"
 
 \end_inset
 
-: At every iteration 
-\begin_inset Formula $k$
+: denote with 
+\begin_inset Formula $\sigma^{(k)}$
 \end_inset
 
  the variance of 
 \begin_inset Formula $f\left(x^{*}\right)$
 \end_inset
 
- is measured, where 
+, where 
+\begin_inset Formula $k$
+\end_inset
+
+ is the current iteration and 
 \begin_inset Formula $x^{*}$
 \end_inset
 
-is the located global minimum so far.
- Denote this variance with 
-\begin_inset Formula $\sigma^{(k)}$
-\end_inset
-
-.
- If there is no any new minimum found for a number of generations, then
- it is highly possible that the algorithm has found the global minimum and
- hence it should terminate.
- The algorithm terminates when 
+ is the so far located global minimum.
+ If the algorithm did not manage to locate new minimum for a number of generatio
+ns, then probably the algorithm has located the global minimum and it should
+ terminate.
+ The termination rule stops the algorithm when 
 \end_layout
 
 \begin_layout Standard
@@ -1063,7 +1067,8 @@ where
 \begin_inset Formula $k_{\mbox{last}}$
 \end_inset
 
- is the last iteration where a new minimum was found and 
+ stands for iteration where a new minimum was found.
+ The value 
 \begin_inset Formula $k_{\mbox{min}}$
 \end_inset
 
@@ -1323,6 +1328,7 @@ literal "false"
 Particle swarm optimization, denoted as PSO in the results.
 \end_layout
 
+\begin_deeper
 \begin_layout Standard
 The experimental results are reported in Table 
 \begin_inset CommandInset ref
@@ -1335,10 +1341,10 @@ noprefix "false"
 \end_inset
 
 .
- The number in the cells denotes average function calls for 30 independent
- runs using different seed for the random generator each time.
- The numbers in parentheses denote the fraction of runs where the global
- minimum was located.
+ The number in the cells denotes average function calls for 30 runs using
+ with seed for the random generator each time.
+ The fraction in parentheses stands for the fractionof runs where the global
+ optimus was found.
  If this number is missing then the global minimum was discovered in every
  independent run (100% success).
  The parameters used in the experiments are listed in Table 
@@ -1352,9 +1358,18 @@ noprefix "false"
 \end_inset
 
 .
- As it is evident from the conducted experiments there is a significant
- improvement in terms of function evaluations at about 80% against Multistart
- and the other methods.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+
+\series bold
+//REWRITE HERE
+\series default
+As it is evident from the conducted experiments there is a significant improveme
+nt in terms of function evaluations at about 80% against Multistart and
+ the other methods.
  CRS and SA are better than other methods only for small problems of limited
  number of dimensions, like BF1 or the Branin function.
  
