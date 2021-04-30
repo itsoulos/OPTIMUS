@@ -4,7 +4,7 @@ Pso::Pso(Problem *p)
     :Optimizer(p)
 {
     addParameter("pso_particles","500","Number of pso particles");
-    addParameter("pso_generations","500","Maximum number of pso generations");
+    addParameter("pso_generations","200","Maximum number of pso generations");
     addParameter("pso_c1","1.0","Pso c1 parameter");
     addParameter("pso_c2","1.0","Pso c2 parameter");
     addParameter("pso_inertia_start","0.4","Start value for inertia");
@@ -53,7 +53,7 @@ bool Pso::terminated()
     if(stopat<1e-8 && !isnan(variance)) stopat=variance/2.0;
     printf("Generation %d value: %lf variance: %lf stopat: %lf\n",generation,besty,
             variance,stopat);
-    return generation>=max_generations;// || (variance<=stopat && generation>=20);
+    return generation>=max_generations || (variance<=stopat && generation>=20);
 }
 
 void Pso::step()

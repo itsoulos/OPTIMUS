@@ -1,15 +1,18 @@
-METHOD=Minfinder
+METHOD=gcrs
 METHODPARAMS=""
 ### Available local search methods: bfgs, gradient, adam, lbfgs
 if [ $METHOD = "Minfinder" ]
 then
 	METHODPARAMS="--minfinder_samples=50"
+elif [ $METHOD = "gcrs" ]
+then
+	METHODPARAMS="--gcrs_samples=25 --gcrs_maxiterations=100000"	
 elif [ $METHOD = "Genetic" ]
 then
-	METHODPARAMS="--localsearch_rate=0.01  --genetic_crossover_type=double --chromosomes=100"
+	METHODPARAMS="--localsearch_rate=0.00  --genetic_crossover_type=double --chromosomes=25"
 elif [ $METHOD = "Pso" ]
 then
-	METHODPARAMS="--pso_localsearch_rate=0.1 --localsearch_method=bfgs"
+	METHODPARAMS="--pso_particles=100 --pso_localsearch_rate=0.00 --localsearch_method=bfgs"
 elif [ $METHOD = "Multistart" ]
 then
 	METHODPARAMS="--multistart_samples=25"

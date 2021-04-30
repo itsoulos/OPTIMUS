@@ -6,6 +6,7 @@ else
 	then
 		(cd PROBLEMS; for file in *.pro; do  qmake $file; make clean;done)
 		(cd Optimus; qmake; make clean)
+		(cd GCRS; make ; make clean )
 		(cd Genmin; qmake ; make clean )
 		(cd Genprice; qmake ; make clean )
 		(cd MinCenter; qmake; make clean )
