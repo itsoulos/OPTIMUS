@@ -33,22 +33,22 @@ Alexandros Tzallas}
 Greece}
 \maketitle
 \begin{abstract}
-The problem of locating the global minimum of a function finds application
-in many scientific and real world problems. One of the most used and
-simplest method to tackle this problem is the so called Multistart
-method. This article proposes novel method based on the Multistart,
-that utilizes a mechanism to prevent unnecessary local optimization
-calls as well as an asymptotic stopping rule. The proposed method
-is tested against other global optimization methods on a wide set
-of well - known benchmark optimization problems from the relevant
-literature and the results are reported.
+There is a great need to discover the global optimum of multimodal
+functions that arises from many scientifical and practical problems.
+A base method used to solve this problem is the Multistart method.
+This article proposes novel method based on the Multistart, that utilizes
+a mechanism to prevent unnecessary local optimization calls as well
+as an asymptotic stopping rule. The proposed method has been evaluated
+on a series of global optimization functions from the relevant literature
+and it is compared against some other optimization methods and the
+experimental results are presented.
 \end{abstract}
 \textbf{Keywords}: Global optimization, stochastic methods, termination
 rules.
 
 \section{Introduction }
 
-A new method for the task of locating the global minimum of a continuous
+A novel method for the task of locating the global minimum of a continuous
 and differentiable function $f:S\rightarrow R,S\subset R^{n}$ is
 introduced here. The task of locating the global optimum can be formulated
 as, determine 
@@ -79,15 +79,16 @@ method to discover the global minimum of continuous functions. The
 method incorporates an efficient stopping rule as well as an asymptotic
 criterion to prevent the algorithm from unnecessary local optimization
 calls. The multistart method is one of the simplest global optimization
-technique which start a local search optimizer such as BFGS from different
-random points and yields the lowest discovered minimum as the global
+technique which starts a local optimization method from different
+random samples and yields the lowest discovered minimum as the global
 one. Due to its simplicity the method has been used in many problems
 such as the TSP problem\textbf{ }\cite{multistart-tsp}, the vehicle
 routing problem \cite{multistart-vehicle}, the facility location
 problem \cite{multistart_fac}, the maximum clique problem \cite{multistart_clique}
-etc. The method multistart has been extended in the relevant literature
-with methods aim to discover all the local minima of a function \cite{tmlsl,Salhi,minfinder},
-hybrid multistart techniques \cite{mshybrid1,mshybrid2}, GRASP methods\cite{grasp},
+etc. During the past year, the method multistart has been enhanced
+in the relevant literature with methods that target to discover all
+the local minima of a function \cite{tmlsl,Salhi,minfinder}, hybrid
+multistart techniques \cite{mshybrid1,mshybrid2}, GRASP methods\cite{grasp},
 new stopping rules \cite{msstop1,msstop2,msstop3}, parallel techniques\cite{parallel-multistart,parallel-multistart2}
 etc.\textbf{ }
 
@@ -99,13 +100,13 @@ some conclusions and guidelines for future work are provided.
 \section{Method description \label{sec:Method-description}}
 
 The proposed method works for a predefined number of iterations. At
-every iteration a number of samples is taken in the feasible region
-of the objective problem. Some of them are considered as starting
-points for a local search procedure and the rest are discarded. The
-method continues until the maximum number of iterations is reached
-or an asymptotic termination rule is satisfied. The main steps of
-the proposed algorithm are outlined in Algorithm \ref{alg:The-main-steps}.
-In the following subsection the main parts of the proposed algorithm
+every iteration a number of samples is taken in the bounding box of
+the objective problem. Some of them are considered as starting points
+for a local search procedure and the rest are discarded. The method
+continues until the maximum number of iterations is reached or an
+asymptotic termination rule is satisfied. The main steps of the proposed
+algorithm are outlined in Algorithm \ref{alg:The-main-steps}. In
+the following subsection the main parts of the proposed algorithm
 which are the discarding procedure and the proposed stopping rule
 are described in detail.
 
@@ -173,12 +174,12 @@ search and it is given by
 \begin{equation}
 r_{C}=\frac{1}{M}\sum_{i=1}^{M}\left\Vert x_{i}-x_{iL}\right\Vert \label{eq:eq2}
 \end{equation}
-where $x_{i}$ are starting points for the local search procedure
-$L(x)$ and $x_{iL}$ is the outcome of $L\left(x_{i}\right)$. If
-a point $x$ is close enough to an already discovered local minima
-then it is highly possible that the point belongs to the so called
-region of attraction of the minima. The region of attraction of a
-local minimum $z$ is defined as:
+where the local search procedure $L(x)$ initiates from $x_{i}$ and
+$x_{iL}$ is the outcome of $L\left(x_{i}\right)$. If a point $x$
+is close enough to an already discovered local minima then it is highly
+possible that the point belongs to the so called region of attraction
+of the minima. The region of attraction of a local minimum $z$ is
+defined as:
 \begin{equation}
 A\left(z\right)=\left\{ x:x\in S,\ L(x)=z\right\} 
 \end{equation}
@@ -215,25 +216,25 @@ is used as a distance measure.
 \subsection{Stopping rule\label{subsec:Stopping-rule}}
 
 A common way to terminate a global optimization procedure is to use
-the maximum number of allowed iterations, i.e. terminate when $\mbox{iter}\ge K$.
-Although, this may be a simple criterion but is not an efficient one
-since, small values of the parameter $K$ mean that the algorithm
-probably should terminate prematurely. On the other hand higher values
-for this parameter require more function calls function calls and
-higher computation times. The termination rule used here is derived
-from \cite{psotsoulos}: At every iteration $k$ the variance of $f\left(x^{*}\right)$
-is measured, where $x^{*}$is the located global minimum so far. Denote
-this variance with $\sigma^{(k)}$. If there is no any new minimum
-found for a number of generations, then it is highly possible that
-the algorithm has found the global minimum and hence it should terminate.
-The algorithm terminates when 
+the maximum number of allowed iterations, i.e. stop when $\mbox{iter}\ge K$.
+Although, it is a simple criterion but is not an efficient one since,
+if $K$ is tool small, then the algorithm will terminate without locating
+the global optimum. Also, when $K$ is too high, the optimization
+algorithm will spend computation time in unnecessary function calls.
+The termination rule used here is derived from \cite{psotsoulos}:
+denote with $\sigma^{(k)}$ the variance of $f\left(x^{*}\right)$,
+where $k$ is the current iteration and $x^{*}$ is the so far located
+global minimum. If the algorithm did not manage to locate new minimum
+for a number of generations, then probably the algorithm has located
+the global minimum and it should terminate. The termination rule stops
+the algorithm when 
 
 \begin{equation}
 k\ge k_{\mbox{min}}\ \mbox{AND\ }\sigma^{(k)}\le\frac{\sigma^{\left(k_{\mbox{last}}\right)}}{2}\label{eq:termination_mine}
 \end{equation}
-where $k_{\mbox{last}}$ is the last iteration where a new minimum
-was found and $k_{\mbox{min}}$ is a predefined minimum number of
-iterations, in order to prevent the algorithm from premature termination.
+where $k_{\mbox{last}}$ stands for iteration where a new minimum
+was found. The value $k_{\mbox{min}}$ is a predefined minimum number
+of iterations, in order to prevent the algorithm from premature termination.
 In figure the values $\sigma^{(k)}$ denoted as VARIANCE and the value
 $\frac{\sigma^{\left(k_{\mbox{last}}\right)}}{2}$ denoted as STOPAT
 are plotted. The objective function used is the EXP8 function given
@@ -254,326 +255,17 @@ of Potential with 20 atoms.\label{fig:Plot-of-variance}}
 \end{figure}
 
 
-\section{Experiments\label{sec:Experiments}}
-
-In order to measure the effectiveness of the proposed approach we
-utilize several benchmark functions from the relevant literature \cite{Ali1,Floudas1}.
-
-\subsection{Benchmark functions }
-
-\subsubsection*{Bf1 Function }
-
-The function Bohachevsky 1 is given by the equation
-
-\[
-f(x)=x_{1}^{2}+2x_{2}^{2}-\frac{3}{10}\cos\left(3\pi x_{1}\right)-\frac{4}{10}\cos\left(4\pi x_{2}\right)+\frac{7}{10}
-\]
-with $x\in[-100,100]^{2}$. The value of global minimum is 0.0.
-
-\subsubsection*{Bf2 Function }
-
-The function Bohachevsky 2 is given by the equation 
-\[
-f(x)=x_{1}^{2}+2x_{2}^{2}-\frac{3}{10}\cos\left(3\pi x_{1}\right)\cos\left(4\pi x_{2}\right)+\frac{3}{10}
-\]
-with $x\in[-50,50]^{2}$. The value of the global minimum is 0.0.
-
-\subsubsection*{Branin function }
-
-The function is defined by
-
-$f(x)=\left(x_{2}-\frac{5.1}{4\pi^{2}}x_{1}^{2}+\frac{5}{\pi}x_{1}-6\right)^{2}+10\left(1-\frac{1}{8\pi}\right)\cos(x_{1})+10$
-with $-5\le x_{1}\le10,\ 0\le x_{2}\le15$. The value of global minimum
-is 0.397887.with $x\in[-10,10]^{2}$. The value of global minimum
-is -0.352386.
-
-\subsubsection*{Cosine Mixture function (CM)}
-
-The function is given by the equation 
-\[
-f(x)=\sum_{i=1}^{n}x_{i}^{2}-\frac{1}{10}\sum_{i=1}^{n}\cos\left(5\pi x_{i}\right)
-\]
-with $x\in[-1,1]^{n}$. The value of the global minimum is -0.4 and
-in our experiments we have used $n=4$.
-
-\subsubsection*{\emph{Camel function} }
-
-The function is given by 
-\[
-f(x)=4x_{1}^{2}-2.1x_{1}^{4}+\frac{1}{3}x_{1}^{6}+x_{1}x_{2}-4x_{2}^{2}+4x_{2}^{4},\quad x\in[-5,5]^{2}
-\]
-The global minimum has the value of $f\left(x^{*}\right)=-1.0316$
-
-\subsubsection*{\emph{DiffPower function }}
-
-The Sum of Different Powers function is defined 
-\[
-f(x)=\sum_{i=1}^{n}\left|x_{i}\right|^{i+1}
-\]
-and the global minimum is is $f\left(x^{*}\right)=0$. The value $n=10$
-was used in the conducted experiments and the associated function
-is denoted as Diffpower10.
-
-\subsubsection*{Easom function }
-
-The function is given by the equation 
-\[
-f(x)=-\cos\left(x_{1}\right)\cos\left(x_{2}\right)\exp\left(\left(x_{2}-\pi\right)^{2}-\left(x_{1}-\pi\right)^{2}\right)
-\]
-with $x\in[-100,100]^{2}.$ The value of the global minimum is -1.0
-
-\subsubsection*{\emph{Exponential function}. }
-
-The function is given by 
-\[
-f(x)=-\exp\left(-0.5\sum_{i=1}^{n}x_{i}^{2}\right),\quad-1\le x_{i}\le1
-\]
-The global minimum is located at $x^{*}=(0,0,...,0)$ with value $-1$.
-In our experiments we used this function with $n=8,32$ and the corresponding
-functions are denoted by the labels EXP8,EXP32.
-
-\subsubsection*{\emph{Griewank2 function}.}
-
-The function is given by
-\[
-f(x)=1+\frac{1}{200}\sum_{i=1}^{2}x_{i}^{2}-\prod_{i=1}^{2}\frac{\cos(x_{i})}{\sqrt{(i)}},\quad x\in[-100,100]^{2}
-\]
-The global minimum is located at the $x^{*}=(0,0,...,0)$ with value
-0.
-
-\subsubsection*{Griewank10 }
-
-The function is given by the equation 
-\[
-f(x)=\sum_{i=1}^{n}\frac{x_{i}^{2}}{4000}-\prod_{i=1}^{n}\cos\left(\frac{x_{i}}{\sqrt{i}}\right)+1
-\]
-In our experiments we have used $n=10$ and the global minimum is
-0.0 The function has several local minima in the specified range.
-
-\subsubsection*{\emph{Gkls function}.}
-
-$f(x)=\mbox{Gkls}(x,n,w)$, is a function with $w$ local minima,
-described in \cite{gkls} with $x\in[-1,1]^{n}$ and $n$ a positive
-integer between 2 and 100. The value of the global minimum is -1 and
-in our experiments we have used $n=2,3$ and $w=50$. The corresponding
-functions are denoted by the labels GKLS250 and GKLS350. 
-
-\subsubsection*{Hansen function }
-
-$f(x)=\sum_{i=1}^{5}i\cos\left[(i-1)x_{1}+i\right]\sum_{j=1}^{5}j\cos\left[(j+1)x_{2}+j\right]$,
-$x\in[-10,10]^{2}$ . The global minimum of the function is -176.541793.
-
-\subsubsection*{Hartman 3 function}
-
-The function is given by
-\[
-f(x)=-\sum_{i=1}^{4}c_{i}\exp\left(-\sum_{j=1}^{3}a_{ij}\left(x_{j}-p_{ij}\right)^{2}\right)
-\]
-with $x\in[0,1]^{3}$ and $a=\left(\begin{array}{ccc}
-3 & 10 & 30\\
-0.1 & 10 & 35\\
-3 & 10 & 30\\
-0.1 & 10 & 35
-\end{array}\right),\ c=\left(\begin{array}{c}
-1\\
-1.2\\
-3\\
-3.2
-\end{array}\right)$ and
-\[
-p=\left(\begin{array}{ccc}
-0.3689 & 0.117 & 0.2673\\
-0.4699 & 0.4387 & 0.747\\
-0.1091 & 0.8732 & 0.5547\\
-0.03815 & 0.5743 & 0.8828
-\end{array}\right)
-\]
-The value of global minimum is -3.862782.
-
-\subsubsection*{Hartman6 }
-
-$ $
-\[
-f(x)=-\sum_{i=1}^{4}c_{i}\exp\left(-\sum_{j=1}^{6}a_{ij}\left(x_{j}-p_{ij}\right)^{2}\right)
-\]
-
-with $x\in[0,1]^{6}$ and $a=\left(\begin{array}{cccccc}
-10 & 3 & 17 & 3.5 & 1.7 & 8\\
-0.05 & 10 & 17 & 0.1 & 8 & 14\\
-3 & 3.5 & 1.7 & 10 & 17 & 8\\
-17 & 8 & 0.05 & 10 & 0.1 & 14
-\end{array}\right),\ c=\left(\begin{array}{c}
-1\\
-1.2\\
-3\\
-3.2
-\end{array}\right)$ and
-\[
-p=\left(\begin{array}{cccccc}
-0.1312 & 0.1696 & 0.5569 & 0.0124 & 0.8283 & 0.5886\\
-0.2329 & 0.4135 & 0.8307 & 0.3736 & 0.1004 & 0.9991\\
-0.2348 & 0.1451 & 0.3522 & 0.2883 & 0.3047 & 0.6650\\
-0.4047 & 0.8828 & 0.8732 & 0.5743 & 0.1091 & 0.0381
-\end{array}\right)
-\]
-The value of global minimum is -3.322368.
-
-\subsubsection*{\emph{Potential function}. }
-
-The molecular conformation corresponding to the global minimum of
-the energy of N atoms interacting via the Lennard-Jones potential\cite{Jones}
-is used as a test case here. The function to be minimized is given
-by:
-\begin{equation}
-V_{LJ}(r)=4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^{6}\right]\label{eq:potential}
-\end{equation}
-In the current experiments three different cases were studied: $N=5,\ 10,\ 20$
-
-\subsubsection*{\emph{Rastrigin function}. }
-
-The function is given by 
-\[
-f(x)=x_{1}^{2}+x_{2}^{2}-\cos(18x_{1})-\cos(18x_{2}),\quad x\in[-1,1]^{2}
-\]
-The global minimum is located at $x^{*}=(0,0)$ with value -2.0.
-
-\subsubsection*{Shekel7 }
-
-\[
-f(x)=-\sum_{i=1}^{7}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}
-\]
- with $x\in[0,10]^{4}$ and $a=\left(\begin{array}{cccc}
-4 & 4 & 4 & 4\\
-1 & 1 & 1 & 1\\
-8 & 8 & 8 & 8\\
-6 & 6 & 6 & 6\\
-3 & 7 & 3 & 7\\
-2 & 9 & 2 & 9\\
-5 & 3 & 5 & 3
-\end{array}\right),\ c=\left(\begin{array}{c}
-0.1\\
-0.2\\
-0.2\\
-0.4\\
-0.4\\
-0.6\\
-0.3
-\end{array}\right)$. The value of global minimum is -10.342378.
-
-\subsubsection*{Shekel 5 }
-
-\[
-f(x)=-\sum_{i=1}^{5}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}
-\]
- with $x\in[0,10]^{4}$ and $a=\left(\begin{array}{cccc}
-4 & 4 & 4 & 4\\
-1 & 1 & 1 & 1\\
-8 & 8 & 8 & 8\\
-6 & 6 & 6 & 6\\
-3 & 7 & 3 & 7
-\end{array}\right),\ c=\left(\begin{array}{c}
-0.1\\
-0.2\\
-0.2\\
-0.4\\
-0.4
-\end{array}\right)$. The value of global minimum is -10.107749.
-
-\subsubsection*{Shekel 7 }
-
-\[
-f(x)=-\sum_{i=1}^{7}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}
-\]
- with $x\in[0,10]^{4}$ and $a=\left(\begin{array}{cccc}
-4 & 4 & 4 & 4\\
-1 & 1 & 1 & 1\\
-8 & 8 & 8 & 8\\
-6 & 6 & 6 & 6\\
-3 & 7 & 3 & 7\\
-2 & 9 & 2 & 9\\
-5 & 3 & 5 & 3
-\end{array}\right),\ c=\left(\begin{array}{c}
-0.1\\
-0.2\\
-0.2\\
-0.4\\
-0.4\\
-0.6\\
-0.3
-\end{array}\right)$. The value of global minimum is -10.342378.
-
-\subsubsection*{Shekel 10 }
-
-\[
-f(x)=-\sum_{i=1}^{10}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}
-\]
- with $x\in[0,10]^{4}$ and $a=\left(\begin{array}{cccc}
-4 & 4 & 4 & 4\\
-1 & 1 & 1 & 1\\
-8 & 8 & 8 & 8\\
-6 & 6 & 6 & 6\\
-3 & 7 & 3 & 7\\
-2 & 9 & 2 & 9\\
-5 & 5 & 3 & 3\\
-8 & 1 & 8 & 1\\
-6 & 2 & 6 & 2\\
-7 & 3.6 & 7 & 3.6
-\end{array}\right),\ c=\left(\begin{array}{c}
-0.1\\
-0.2\\
-0.2\\
-0.4\\
-0.4\\
-0.6\\
-0.3\\
-0.7\\
-0.5\\
-0.6
-\end{array}\right)$. The value of global minimum is -10.536410.
-
-\subsubsection*{\emph{Sinusoidal function}.}
-
-The function is given by 
-\[
-f(x)=-\left(2.5\prod_{i=1}^{n}\sin\left(x_{i}-z\right)+\prod_{i=1}^{n}\sin\left(5\left(x_{i}-z\right)\right)\right),\quad0\le x_{i}\le\pi.
-\]
-The global minimum is located at $x^{*}=(2.09435,2.09435,...,2.09435)$
-with $f\left(x^{*}\right)=-3.5$. In our experiments we used $n=8,32$
-and $z=\frac{\pi}{6}$ and the corresponding functions are denoted
-by the labels SINU8 and SINU32 respectively.
-
-\subsubsection*{\emph{Test2N function}. }
-
-This function is given by the equation 
-\[
-f(x)=\frac{1}{2}\sum_{i=1}^{n}x_{i}^{4}-16x_{i}^{2}+5x_{i},\quad x_{i}\in[-5,5].
-\]
-The function has $2^{n}$ in the specified range and in our experiments
-we used $n=4,5,6,7$. The corresponding values of global minimum is
--156.664663 for $n=4$, -195.830829 for $n=5$, -234.996994 for $n=6$
-and -274.163160 for $n=7$.
-
-\subsubsection*{\emph{Test30N function}. }
-
-This function is given by 
-\[
-f(x)=\frac{1}{10}\sin^{2}\left(3\pi x_{1}\right)\sum_{i=2}^{n-1}\left(\left(x_{i}-1\right)^{2}\left(1+\sin^{2}\left(3\pi x_{i+1}\right)\right)\right)+\left(x_{n}-1\right)^{2}\left(1+\sin^{2}\left(2\pi x_{n}\right)\right)
-\]
-with $x\in[-10,10]$. The function has $30^{n}$ local minima in the
-specified range and we used $n=3,4$ in our experiments. The value
-of global minimum for this function is 0.0
-
 \subsection{Constrained optimization problems}
 
-The proposed method was also tested in constrained optimization problems,
+The proposed method can be used also in constrained optimization problems,
 where the main objective problem is defined as:
 \begin{eqnarray}
 \min_{x} & f(x) & \mbox{subject to}\nonumber \\
  & g_{i}(x)\le0 & \ i=1,\ldots,m\nonumber \\
  & h_{j}(x)=0 & \ j=1,\ldots,p\label{eq:eq1-1}
 \end{eqnarray}
-where $x_{i}\in\left[a_{i},b_{i}\right],\ i=1,\ldots,n$, which is
-a commonly arised in many practical fields such as physics \cite{ConPhysics},
+where $x_{i}\in\left[a_{i},b_{i}\right],\ i=1,\ldots,n$, which finds
+application in many practical fields such as physics \cite{ConPhysics},
 astronomy \cite{ConAstro}, chemistry \cite{ConChem}, biology \cite{ConBio}
 etc. The constrained optimization problem if transformed to a single
 function for the proposed method using the following:\\
@@ -600,116 +292,39 @@ v(x)=v_{1}(x)+\lambda v_{2}(x)+\lambda v_{3}(x)\label{eq:fitness}
 \end{equation}
 where $\lambda>0$.
 \end{enumerate}
-The following problems were used from the relevant literature.
 
-\subsubsection*{Levy problem }
+\section{Experiments\label{sec:Experiments}}
 
-This problem is described in \cite{Levy} and it is given by: 
-\[
-\min_{x}f(x)=-x_{1}-x_{2}
-\]
-with $x\in[0,1]^{2}$, subject to 
-\[
-g_{1}(x)=\left\lfloor \left(x_{1}-1\right)^{2}+\left(x_{2}-1\right)\right\rfloor \left(\frac{1}{2a^{2}}-\frac{1}{2b^{2}}\right)+\left(x_{1}-1\right)\left(x_{2}-1\right)\left(\frac{1}{a^{2}}-\frac{1}{b^{2}}\right)-1\ge0
-\]
-with $a=2,\ b=0.25$. The value of global minimum is $f_{\mbox{min}}=-1.8729$.
-
-\subsubsection*{Salkin problem }
-
-This problem is described in \cite{Salkin} and it is given by: 
-\[
-\max_{x}f(x)=3x_{1}+x_{2}+2x_{3}+x_{4}-x_{5}
-\]
-with $1\le x_{1}\le4,\ 80\le x_{2}\le88,\ 30\le x_{3}\le35,\ 145\le x_{4}\le150,\ 0\le x_{5}\le2$
-subject to 
-\begin{eqnarray*}
-g_{1}(x) & = & 25x_{1}-40x_{2}+16x_{3}+21x_{4}+x5\le300\\
-g_{2}(x) & = & x_{1}+20x_{2}-50x_{3}+x_{4}-x_{5}\le200\\
-g_{3}(x) & = & 60x_{1}+x_{2}-x_{3}+2x_{4}+x_{5}\le600\\
-g_{4}(x) & = & -7x_{1}+4x_{2}+15x_{3}-x_{4}+65x_{5}\le700
-\end{eqnarray*}
-This global maximum is $f_{\mbox{max}}=320$.
-
-\subsubsection*{Hess problem}
-
-This problem is described in \cite{Hess} and it is given by:
-\[
-\max_{x}f(x)=25\left(x_{1}-2\right)^{2}+\left(x_{2}-2\right)^{2}+\left(x_{3}-1\right)^{2}+\left(x_{4}-4\right)^{2}+\left(x_{5}-1\right)^{2}+\left(x_{6}-4\right)^{2}
-\]
-with $0\le x_{1}\le5,\ 0\le x_{2}\le1,\ 1\le x_{3}\le5,\ 0\le x_{4}\le6,\ 0\le x_{5}\le5,\ 0\le x_{6}\le10$
-subject to:
-\begin{eqnarray*}
-g_{1}(x) & = & x_{1}+x_{2}-2\ge0\\
-g_{2}(x) & = & -x_{1}+x_{2}+6\ge0\\
-g_{3}(x) & = & x_{1}-x_{2}+2\ge0\\
-g_{4}(x) & = & -x_{1}+3x_{2}+2\ge0\\
-g_{5}(x) & = & \left(x_{3}-3\right)^{2}+x_{4}-4\ge0\\
-g_{6}(x) & = & \left(x_{5}-3\right)^{2}+x_{6}-4\ge0
-\end{eqnarray*}
-The value of global maximum is $f_{\mbox{max}}=310.$
-
-\subsubsection*{Chootinan1 problem}
-
-This problem is described in \cite{choot} and it is given by:
-\[
-\min_{x}f(x)=5\sum_{i=1}^{4}x_{i}-5\sum_{i=1}^{4}x_{i}^{2}-\sum_{i=1}^{13}x_{i}
-\]
-with $0\le x_{i}\le1$ for $i=1,..,9,13$, $0\le x_{i}\le100$ for
-$i=10,11,12$ with the following constraints:
-\begin{eqnarray*}
-g_{1}(x) & = & 10-\left(2x_{1}+2x_{2}+x_{10}+x_{11}\right)\ge0\\
-g_{2}(x) & = & 10-\left(2x_{1}+2x_{3}+x_{10}+x_{12}\right)\ge0\\
-g_{3}(x) & = & 10-\left(2x_{2}+2x_{3}+x_{11}+x_{12}\right)\ge0\\
-g_{4}(x) & = & 8x_{1}-x_{10}\ge0\\
-g_{5}(x) & = & 8x_{2}-x_{11}\ge0\\
-g_{6}(x) & = & 8x_{3}-x_{12}\ge0\\
-g_{7}(x) & = & 2x_{4}+x_{5}-x_{10}\ge0\\
-g_{8}(x) & = & 2x_{6}+x_{7}-x_{11}\ge0\\
-g_{9}(x) & = & 2x_{8}+x_{9}-x_{12}\ge0
-\end{eqnarray*}
-The value of global minimum is $f_{\mbox{min}}=-15.0$.
-
-\subsubsection*{G15 problem }
-
-This problem is described in \cite{G15} and it is given by:
-\[
-\min_{x}f(x)=1000-x_{1}^{2}-2x_{2}^{2}-x_{3}^{2}-x_{1}x_{2}-x_{1}x_{3}
-\]
-with $x\in[0,10]^{3}$ subject to the following constraints:
-\begin{eqnarray*}
-h_{1}(x) & = & x_{1}^{2}+x_{2}^{2}+x_{3}^{2}-25=0\\
-h_{2}(x) & = & 8x_{1}+14x_{2}+7x_{3}-56=0
-\end{eqnarray*}
-The value of the global minimum is $f_{\mbox{min}}=961.7150$
-
-\subsection{Experimental results}
-
-The proposed method is compared against the multistart method with
-the same number of samples at every generation and the same stopping
-rule and the results are reported in Table \ref{tab:Average-number-of}.
-The column PROBLEM denotes the objective function, the column MULTISTART
-denotes the average function calls for the multistart method, the
-column CRS denotes the results from the application of Controlled
-Random Search\cite{crs3} to the objective functions, the column SA
-denotes the application of the Simulated Annealing\cite{simann2}
-method to the test probelms and the PROPOSED column denotes the average
-function calls for the proposed method. The number in the cells denotes
-average function calls for 30 independent runs using different seed
-for the random generator each time. The numbers in parentheses denote
-the fraction of runs where the global minimum was located. If this
-number is missing then the global minimum was discovered in every
-independent run (100\% success). The parameters used in the experiments
-are listed in Table \ref{tab:Parameter-values-for}. As it is evident
-from the conducted experiments there is a significant improvement
-in terms of function evaluations at about 80\% against Multistart
-and the other methods. CRS and SA are better than other methods only
-for small problems of limited number of dimensions, like BF1 or the
-Branin function. 
+The proposed method was tested on a series of unconstrained and constrained
+optimization functions that are listed in the Appendix. The method
+was tested against four methods from the relevant literature:
+\begin{enumerate}
+\item Multistart method.
+\item Controlled Random Search\cite{crs3} denoted as CRS in the results.
+\item Simulated Annealing\cite{simann2}, denoted as SA in the results.
+\item Particle swarm optimization, denoted as PSO in the results.
+\end{enumerate}
+The experimental results are reported in Table \ref{tab:Average-number-of}.
+The number in the cells denotes average function calls for 30 runs
+using with seed for the random generator each time. The fraction in
+parentheses stands for the fraction of runs where the global optimum
+was found. If this number is missing then the global minimum was discovered
+in every independent run (100\% success). The parameters used in the
+experiments are listed in Table \ref{tab:Parameter-values-for}. The
+bold letters were used to demonstrate the method that achieved the
+best average result. The proposed method seems to require less number
+of function calls than the other methods and the PSO technique shown
+to work well for small problems like BF1 or BRANIN but failed to work
+on bigger problems such Potential20, a problem with 60 dimensions
+and thousands of local minima. On the other hand, the Simulated Annealing
+managed to solve with success all the optimization problems, although
+it requires more function calls than the proposed method and the same
+holds for the simple Multistart method.
 
 In Table \ref{tab:Results-from-comparisons} the results from the
 comparison of Multistart and the proposed method for the constrained
 optimization test problems are listed. Again, the proposed method
-has managed to handel the test problems using less number of function
+has managed to handle the test problems using less number of function
 evaluations than the Multistart method.
 
 Also, in order to measure the efficiency of the proposed method for
@@ -732,72 +347,72 @@ rapidly as compared to the calls of the proposed method.
 \caption{Average number of function calls for the proposed functions. \label{tab:Average-number-of}}
 
 \begin{centering}
-\begin{tabular}{|c|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|c|}
 \hline 
-PROBLEM & MULTISTART & CRS & SA & PROPOSED\tabularnewline
+PROBLEM & MULTISTART & CRS & SA & PSO & PROPOSED\tabularnewline
 \hline 
 \hline 
-BF1 & 22533 & 2218 & 3845 & 2833\tabularnewline
+BF1 & 22533 & 2218 & 3845 & \textbf{2494} & 2833\tabularnewline
 \hline 
-BF2 & 18809 & 2207 & 3340 & 2629\tabularnewline
+BF2 & 18809 & 2207 & 3340 & 2641 & \textbf{2629}\tabularnewline
 \hline 
-BRANIN & 9735 & 1744 & 4816 & 1753\tabularnewline
+BRANIN & 9735 & 1744 & 4816 & \textbf{1636} & 1753\tabularnewline
 \hline 
-CM4 & 27037 & 4746 & 9652 & 2293\tabularnewline
+CM4 & 27037 & 4746 & 9652 & 2988 & \textbf{2293}\tabularnewline
 \hline 
-CAMEL & 13688 & 1882 & 4820 & 1732\tabularnewline
+CAMEL & 13688 & 1882 & 4820 & \textbf{1639} & 1732\tabularnewline
 \hline 
-DIFFPOWER10 & 1194776 & 78634 & 25918 & 19572\tabularnewline
+DIFFPOWER10 & 1194776 & 78634 & 25918 & 15500(0.87) & \textbf{19572}\tabularnewline
 \hline 
-EASOM & 5372 & 588 & 4807 & 199\tabularnewline
+EASOM & 5372 & 588 & 4807 & 866 & \textbf{199}\tabularnewline
 \hline 
-EXP8 & 12022 & 13239 & 19233 & 2830\tabularnewline
+EXP8 & 12022 & 13239 & 19233 & 3084 & \textbf{2830}\tabularnewline
 \hline 
-EXP32 & 18294 & 93520 & 76842 & 3265\tabularnewline
+EXP32 & 18294 & 93520 & 76842 & 5055 & \textbf{3265}\tabularnewline
 \hline 
-GKLS250 & 17333(0.77) & 1633 & 4120 & 2415\tabularnewline
+GKLS250 & 17333(0.77) & 1633 & 4120 & \textbf{1459} & 2415\tabularnewline
 \hline 
-GKLS350 & 10104 & 3329 & 7229 & 243\tabularnewline
+GKLS350 & 10104 & 3329 & 7229 & 2259(0.97) & \textbf{243}\tabularnewline
 \hline 
-GRIEWANK2 & 13003 & 2111 & 3830 & 1786\tabularnewline
+GRIEWANK2 & 13003 & 2111 & 3830 & 2595(0.83) & \textbf{1786}\tabularnewline
 \hline 
-GRIEWANK10 & 53372 & 32037 & 24118 & 7184\tabularnewline
+GRIEWANK10 & 53372 & 32037 & 24118 & 8378(0.25) & \textbf{7184}\tabularnewline
 \hline 
-HANSEN & 15294 & 3348 & 3323 & 1510\tabularnewline
+HANSEN & 15294 & 3348 & 3323 & 4284 & \textbf{1510}\tabularnewline
 \hline 
-HARTMAN3 & 14815 & 2898 & 7227 & 11463\tabularnewline
+HARTMAN3 & 14815 & 2898 & 7227 & \textbf{2448} & 11463\tabularnewline
 \hline 
-HARTMAN6 & 19459 & 9276 & 14440 & 3740\tabularnewline
+HARTMAN6 & 19459 & 9276 & 14440 & 4645 & \textbf{3740}\tabularnewline
 \hline 
-POTENTIAL5 & 111631 & 95027 & 36084 & 49601\tabularnewline
+POTENTIAL5 & 111631 & 95027 & 36084 & \textbf{20100} & 49601\tabularnewline
 \hline 
-POTENTIAL10 & 208405 & 193066 & 172166 & 91094\tabularnewline
+POTENTIAL10 & 208405 & 193066 & 172166 & 19610(0.13) & \textbf{91094}\tabularnewline
 \hline 
-POTENTIAL20 & 280575 & 189591(0.53) & 244314 & 170524(0.97)\tabularnewline
+POTENTIAL20 & 280575 & 189591(0.53) & 244314 & 18466(0.03) & \textbf{170524(0.97)}\tabularnewline
 \hline 
-RASTRIGIN & 16968 & 1906 & 3343 & 675\tabularnewline
+RASTRIGIN & 16968 & 1906 & 3343 & 2258 & \textbf{675}\tabularnewline
 \hline 
-SHEKEL5 & 19224 & 6345 & 9635 & 3465\tabularnewline
+SHEKEL5 & 19224 & 6345 & 9635 & 4791 & \textbf{3465}\tabularnewline
 \hline 
-SHEKEL7 & 20985 & 6528 & 9334 & 2976\tabularnewline
+SHEKEL7 & 20985 & 6528 & 9334 & 5722 & \textbf{2976}\tabularnewline
 \hline 
-SHEKEL10 & 20284 & 6477 & 9998 & 3566\tabularnewline
+SHEKEL10 & 20284 & 6477 & 9998 & 5354 & \textbf{3566}\tabularnewline
 \hline 
-SINU8 & 21860 & 16950 & 19241 & 549\tabularnewline
+SINU8 & 21860 & 16950 & 19241 & 5398 & \textbf{549}\tabularnewline
 \hline 
-SINU32 & 39905 & 100887 & 13858 & 1296\tabularnewline
+SINU32 & 39905 & 100887 & 13858 & 6887 & \textbf{1296}\tabularnewline
 \hline 
-TEST2n4 & 15938 & 6754 & 9631 & 2890\tabularnewline
+TEST2n4 & 15938 & 6754 & 9631 & 5219 & \textbf{2890}\tabularnewline
 \hline 
-TEST2n5 & 18085 & 12717 & 12036 & 3262\tabularnewline
+TEST2n5 & 18085 & 12717 & 12036 & 7672 & \textbf{3262}\tabularnewline
 \hline 
-TEST2n6 & 19879 & 12822 & 14438 & 3451\tabularnewline
+TEST2n6 & 19879 & 12822 & 14438 & 8039 & \textbf{3451}\tabularnewline
 \hline 
-TEST2n7 & 21432 & 18620 & 16840 & 4002\tabularnewline
+TEST2n7 & 21432 & 18620 & 16840 & 8220 & \textbf{4002}\tabularnewline
 \hline 
-TEST30n3 & 24450 & 2768 & 9616 & 10818\tabularnewline
+TEST30n3 & 24450 & 2768 & 9616 & \textbf{2456} & 10818\tabularnewline
 \hline 
-TEST30n4 & 26514 & 3894 & 10617 & 13320\tabularnewline
+TEST30n4 & 26514 & \textbf{3894} & 10617 & 4528 & 13320\tabularnewline
 \hline 
 \end{tabular}
 \par\end{centering}
@@ -866,6 +481,321 @@ an asymptotic stopping rule to stop the algorithm where there is a
 good probability that the global optimum has been discovered. The
 method was tested on a series of well known optimization problems
 from the relevant literature and proved to be efficient and fast. 
+
+\section*{Appendix - Test functions}
+
+In order to measure the effectiveness of the proposed approach we
+utilize several benchmark functions from the relevant literature \cite{Ali1,Floudas1}.
+
+\subsection*{Unconstrained optimization functions}
+\begin{itemize}
+\item \textbf{Bf1} function. The function Bohachevsky 1 is given by the
+equation
+\end{itemize}
+\[
+f(x)=x_{1}^{2}+2x_{2}^{2}-\frac{3}{10}\cos\left(3\pi x_{1}\right)-\frac{4}{10}\cos\left(4\pi x_{2}\right)+\frac{7}{10}
+\]
+with $x\in[-100,100]^{2}$. The value of global minimum is 0.0.
+\begin{itemize}
+\item \textbf{Bf2} function. The function Bohachevsky 2 is given by the
+equation 
+\[
+f(x)=x_{1}^{2}+2x_{2}^{2}-\frac{3}{10}\cos\left(3\pi x_{1}\right)\cos\left(4\pi x_{2}\right)+\frac{3}{10}
+\]
+with $x\in[-50,50]^{2}$. The value of the global minimum is 0.0.
+\item \textbf{Branin} function. The function is defined by $f(x)=\left(x_{2}-\frac{5.1}{4\pi^{2}}x_{1}^{2}+\frac{5}{\pi}x_{1}-6\right)^{2}+10\left(1-\frac{1}{8\pi}\right)\cos(x_{1})+10$
+with $-5\le x_{1}\le10,\ 0\le x_{2}\le15$. The value of global minimum
+is 0.397887.with $x\in[-10,10]^{2}$. The value of global minimum
+is -0.352386.
+\item \textbf{CM} function. The Cosine Mixture function is given by the
+equation 
+\[
+f(x)=\sum_{i=1}^{n}x_{i}^{2}-\frac{1}{10}\sum_{i=1}^{n}\cos\left(5\pi x_{i}\right)
+\]
+with $x\in[-1,1]^{n}$. The value of the global minimum is -0.4 and
+in our experiments we have used $n=4$.
+\item \textbf{Camel} function. The function is given by 
+\[
+f(x)=4x_{1}^{2}-2.1x_{1}^{4}+\frac{1}{3}x_{1}^{6}+x_{1}x_{2}-4x_{2}^{2}+4x_{2}^{4},\quad x\in[-5,5]^{2}
+\]
+The global minimum has the value of $f\left(x^{*}\right)=-1.0316$
+\item \textbf{DiffPower} function. The Sum of Different Powers function
+is defined 
+\[
+f(x)=\sum_{i=1}^{n}\left|x_{i}\right|^{i+1}
+\]
+and the global minimum is is $f\left(x^{*}\right)=0$. The value $n=10$
+was used in the conducted experiments and the associated function
+is denoted as Diffpower10.
+\item \textbf{Easom} function. The function is given by the equation 
+\[
+f(x)=-\cos\left(x_{1}\right)\cos\left(x_{2}\right)\exp\left(\left(x_{2}-\pi\right)^{2}-\left(x_{1}-\pi\right)^{2}\right)
+\]
+with $x\in[-100,100]^{2}.$ The value of the global minimum is -1.0
+\item \textbf{Exponential} function. The function is given by 
+\[
+f(x)=-\exp\left(-0.5\sum_{i=1}^{n}x_{i}^{2}\right),\quad-1\le x_{i}\le1
+\]
+The global minimum is located at $x^{*}=(0,0,...,0)$ with value $-1$.
+In our experiments we used this function with $n=8,32$ and the corresponding
+functions are denoted by the labels EXP8,EXP32.
+\item \textbf{Griewank2} function. The function is given by
+\[
+f(x)=1+\frac{1}{200}\sum_{i=1}^{2}x_{i}^{2}-\prod_{i=1}^{2}\frac{\cos(x_{i})}{\sqrt{(i)}},\quad x\in[-100,100]^{2}
+\]
+The global minimum is located at the $x^{*}=(0,0,...,0)$ with value
+0.
+\item \textbf{Griewank10} function. The function is given by the equation
+\[
+f(x)=\sum_{i=1}^{n}\frac{x_{i}^{2}}{4000}-\prod_{i=1}^{n}\cos\left(\frac{x_{i}}{\sqrt{i}}\right)+1
+\]
+In our experiments we have used $n=10$ and the global minimum is
+0.0 The function has several local minima in the specified range.
+\item \textbf{Gkls} function. $f(x)=\mbox{Gkls}(x,n,w)$, is a function
+with $w$ local minima, described in \cite{gkls} with $x\in[-1,1]^{n}$
+and $n$ a positive integer between 2 and 100. The value of the global
+minimum is -1 and in our experiments we have used $n=2,3$ and $w=50$.
+The corresponding functions are denoted by the labels GKLS250 and
+GKLS350. 
+\item \textbf{Hansen} function. $f(x)=\sum_{i=1}^{5}i\cos\left[(i-1)x_{1}+i\right]\sum_{j=1}^{5}j\cos\left[(j+1)x_{2}+j\right]$,
+$x\in[-10,10]^{2}$ . The global minimum of the function is -176.541793.
+\item \textbf{Hartman 3} function. The function is given by
+\[
+f(x)=-\sum_{i=1}^{4}c_{i}\exp\left(-\sum_{j=1}^{3}a_{ij}\left(x_{j}-p_{ij}\right)^{2}\right)
+\]
+with $x\in[0,1]^{3}$ and $a=\left(\begin{array}{ccc}
+3 & 10 & 30\\
+0.1 & 10 & 35\\
+3 & 10 & 30\\
+0.1 & 10 & 35
+\end{array}\right),\ c=\left(\begin{array}{c}
+1\\
+1.2\\
+3\\
+3.2
+\end{array}\right)$ and
+\[
+p=\left(\begin{array}{ccc}
+0.3689 & 0.117 & 0.2673\\
+0.4699 & 0.4387 & 0.747\\
+0.1091 & 0.8732 & 0.5547\\
+0.03815 & 0.5743 & 0.8828
+\end{array}\right)
+\]
+The value of global minimum is -3.862782.
+\item \textbf{Hartman 6} function.
+\[
+f(x)=-\sum_{i=1}^{4}c_{i}\exp\left(-\sum_{j=1}^{6}a_{ij}\left(x_{j}-p_{ij}\right)^{2}\right)
+\]
+with $x\in[0,1]^{6}$ and $a=\left(\begin{array}{cccccc}
+10 & 3 & 17 & 3.5 & 1.7 & 8\\
+0.05 & 10 & 17 & 0.1 & 8 & 14\\
+3 & 3.5 & 1.7 & 10 & 17 & 8\\
+17 & 8 & 0.05 & 10 & 0.1 & 14
+\end{array}\right),\ c=\left(\begin{array}{c}
+1\\
+1.2\\
+3\\
+3.2
+\end{array}\right)$ and
+\[
+p=\left(\begin{array}{cccccc}
+0.1312 & 0.1696 & 0.5569 & 0.0124 & 0.8283 & 0.5886\\
+0.2329 & 0.4135 & 0.8307 & 0.3736 & 0.1004 & 0.9991\\
+0.2348 & 0.1451 & 0.3522 & 0.2883 & 0.3047 & 0.6650\\
+0.4047 & 0.8828 & 0.8732 & 0.5743 & 0.1091 & 0.0381
+\end{array}\right)
+\]
+the value of global minimum is -3.322368.
+\item \textbf{Potential} function. The molecular conformation corresponding
+to the global minimum of the energy of N atoms interacting via the
+Lennard-Jones potential\cite{Jones} is used as a test case here.
+The function to be minimized is given by:
+\begin{equation}
+V_{LJ}(r)=4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^{6}\right]\label{eq:potential}
+\end{equation}
+In the current experiments three different cases were studied: $N=5,\ 10,\ 20$
+\item \textbf{Rastrigin} function. The function is given by 
+\[
+f(x)=x_{1}^{2}+x_{2}^{2}-\cos(18x_{1})-\cos(18x_{2}),\quad x\in[-1,1]^{2}
+\]
+The global minimum is located at $x^{*}=(0,0)$ with value -2.0.
+\item \textbf{Shekel 7} function.
+\end{itemize}
+\[
+f(x)=-\sum_{i=1}^{7}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}
+\]
+
+with $x\in[0,10]^{4}$ and $a=\left(\begin{array}{cccc}
+4 & 4 & 4 & 4\\
+1 & 1 & 1 & 1\\
+8 & 8 & 8 & 8\\
+6 & 6 & 6 & 6\\
+3 & 7 & 3 & 7\\
+2 & 9 & 2 & 9\\
+5 & 3 & 5 & 3
+\end{array}\right),\ c=\left(\begin{array}{c}
+0.1\\
+0.2\\
+0.2\\
+0.4\\
+0.4\\
+0.6\\
+0.3
+\end{array}\right)$. The value of global minimum is -10.342378.
+\begin{itemize}
+\item \textbf{Shekel 5 }function.
+\end{itemize}
+\[
+f(x)=-\sum_{i=1}^{5}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}
+\]
+ 
+
+with $x\in[0,10]^{4}$ and $a=\left(\begin{array}{cccc}
+4 & 4 & 4 & 4\\
+1 & 1 & 1 & 1\\
+8 & 8 & 8 & 8\\
+6 & 6 & 6 & 6\\
+3 & 7 & 3 & 7
+\end{array}\right),\ c=\left(\begin{array}{c}
+0.1\\
+0.2\\
+0.2\\
+0.4\\
+0.4
+\end{array}\right)$. The value of global minimum is -10.107749.
+\begin{itemize}
+\item \textbf{Shekel 10} function.
+\end{itemize}
+\[
+f(x)=-\sum_{i=1}^{10}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}
+\]
+ 
+
+with $x\in[0,10]^{4}$ and $a=\left(\begin{array}{cccc}
+4 & 4 & 4 & 4\\
+1 & 1 & 1 & 1\\
+8 & 8 & 8 & 8\\
+6 & 6 & 6 & 6\\
+3 & 7 & 3 & 7\\
+2 & 9 & 2 & 9\\
+5 & 5 & 3 & 3\\
+8 & 1 & 8 & 1\\
+6 & 2 & 6 & 2\\
+7 & 3.6 & 7 & 3.6
+\end{array}\right),\ c=\left(\begin{array}{c}
+0.1\\
+0.2\\
+0.2\\
+0.4\\
+0.4\\
+0.6\\
+0.3\\
+0.7\\
+0.5\\
+0.6
+\end{array}\right)$. The value of global minimum is -10.536410.
+\begin{itemize}
+\item \textbf{Sinusoidal} function. The function is given by 
+\[
+f(x)=-\left(2.5\prod_{i=1}^{n}\sin\left(x_{i}-z\right)+\prod_{i=1}^{n}\sin\left(5\left(x_{i}-z\right)\right)\right),\quad0\le x_{i}\le\pi.
+\]
+The global minimum is located at $x^{*}=(2.09435,2.09435,...,2.09435)$
+with $f\left(x^{*}\right)=-3.5$. In our experiments we used $n=8,32$
+and $z=\frac{\pi}{6}$ and the corresponding functions are denoted
+by the labels SINU8 and SINU32 respectively.
+\item \textbf{Test2N} function. This function is given by the equation 
+\[
+f(x)=\frac{1}{2}\sum_{i=1}^{n}x_{i}^{4}-16x_{i}^{2}+5x_{i},\quad x_{i}\in[-5,5].
+\]
+The function has $2^{n}$ in the specified range and in our experiments
+we used $n=4,5,6,7$. The corresponding values of global minimum is
+-156.664663 for $n=4$, -195.830829 for $n=5$, -234.996994 for $n=6$
+and -274.163160 for $n=7$.
+\item Test30N function. This function is given by 
+\[
+f(x)=\frac{1}{10}\sin^{2}\left(3\pi x_{1}\right)\sum_{i=2}^{n-1}\left(\left(x_{i}-1\right)^{2}\left(1+\sin^{2}\left(3\pi x_{i+1}\right)\right)\right)+\left(x_{n}-1\right)^{2}\left(1+\sin^{2}\left(2\pi x_{n}\right)\right)
+\]
+with $x\in[-10,10]$. The function has $30^{n}$ local minima in the
+specified range and we used $n=3,4$ in our experiments. The value
+of global minimum for this function is 0.0
+\end{itemize}
+
+\subsection*{Constrained optimization test fuctions}
+
+The following functions were used from the relevant literature.
+\begin{itemize}
+\item \textbf{Levy} function. This problem is described in \cite{Levy}
+and it is given by: 
+\[
+\min_{x}f(x)=-x_{1}-x_{2}
+\]
+with $x\in[0,1]^{2}$, subject to 
+\[
+g_{1}(x)=\left\lfloor \left(x_{1}-1\right)^{2}+\left(x_{2}-1\right)\right\rfloor \left(\frac{1}{2a^{2}}-\frac{1}{2b^{2}}\right)+\left(x_{1}-1\right)\left(x_{2}-1\right)\left(\frac{1}{a^{2}}-\frac{1}{b^{2}}\right)-1\ge0
+\]
+with $a=2,\ b=0.25$. The value of global minimum is $f_{\mbox{min}}=-1.8729$.
+\item \textbf{Salkin} function. This problem is described in \cite{Salkin}
+and it is given by: 
+\[
+\max_{x}f(x)=3x_{1}+x_{2}+2x_{3}+x_{4}-x_{5}
+\]
+with $1\le x_{1}\le4,\ 80\le x_{2}\le88,\ 30\le x_{3}\le35,\ 145\le x_{4}\le150,\ 0\le x_{5}\le2$
+subject to 
+\begin{eqnarray*}
+g_{1}(x) & = & 25x_{1}-40x_{2}+16x_{3}+21x_{4}+x5\le300\\
+g_{2}(x) & = & x_{1}+20x_{2}-50x_{3}+x_{4}-x_{5}\le200\\
+g_{3}(x) & = & 60x_{1}+x_{2}-x_{3}+2x_{4}+x_{5}\le600\\
+g_{4}(x) & = & -7x_{1}+4x_{2}+15x_{3}-x_{4}+65x_{5}\le700
+\end{eqnarray*}
+This global maximum is $f_{\mbox{max}}=320$.
+\item \textbf{Hess} function. This problem is described in \cite{Hess}
+and it is given by:
+\[
+\max_{x}f(x)=25\left(x_{1}-2\right)^{2}+\left(x_{2}-2\right)^{2}+\left(x_{3}-1\right)^{2}+\left(x_{4}-4\right)^{2}+\left(x_{5}-1\right)^{2}+\left(x_{6}-4\right)^{2}
+\]
+with $0\le x_{1}\le5,\ 0\le x_{2}\le1,\ 1\le x_{3}\le5,\ 0\le x_{4}\le6,\ 0\le x_{5}\le5,\ 0\le x_{6}\le10$
+subject to:
+\begin{eqnarray*}
+g_{1}(x) & = & x_{1}+x_{2}-2\ge0\\
+g_{2}(x) & = & -x_{1}+x_{2}+6\ge0\\
+g_{3}(x) & = & x_{1}-x_{2}+2\ge0\\
+g_{4}(x) & = & -x_{1}+3x_{2}+2\ge0\\
+g_{5}(x) & = & \left(x_{3}-3\right)^{2}+x_{4}-4\ge0\\
+g_{6}(x) & = & \left(x_{5}-3\right)^{2}+x_{6}-4\ge0
+\end{eqnarray*}
+The value of global maximum is $f_{\mbox{max}}=310.$
+\item \textbf{Chootinan1} function. This problem is described in \cite{choot}
+and it is given by:
+\[
+\min_{x}f(x)=5\sum_{i=1}^{4}x_{i}-5\sum_{i=1}^{4}x_{i}^{2}-\sum_{i=1}^{13}x_{i}
+\]
+with $0\le x_{i}\le1$ for $i=1,..,9,13$, $0\le x_{i}\le100$ for
+$i=10,11,12$ with the following constraints:
+\begin{eqnarray*}
+g_{1}(x) & = & 10-\left(2x_{1}+2x_{2}+x_{10}+x_{11}\right)\ge0\\
+g_{2}(x) & = & 10-\left(2x_{1}+2x_{3}+x_{10}+x_{12}\right)\ge0\\
+g_{3}(x) & = & 10-\left(2x_{2}+2x_{3}+x_{11}+x_{12}\right)\ge0\\
+g_{4}(x) & = & 8x_{1}-x_{10}\ge0\\
+g_{5}(x) & = & 8x_{2}-x_{11}\ge0\\
+g_{6}(x) & = & 8x_{3}-x_{12}\ge0\\
+g_{7}(x) & = & 2x_{4}+x_{5}-x_{10}\ge0\\
+g_{8}(x) & = & 2x_{6}+x_{7}-x_{11}\ge0\\
+g_{9}(x) & = & 2x_{8}+x_{9}-x_{12}\ge0
+\end{eqnarray*}
+The value of global minimum is $f_{\mbox{min}}=-15.0$.
+\item \textbf{G15} function. This problem is described in \cite{G15} and
+it is given by:
+\[
+\min_{x}f(x)=1000-x_{1}^{2}-2x_{2}^{2}-x_{3}^{2}-x_{1}x_{2}-x_{1}x_{3}
+\]
+with $x\in[0,10]^{3}$ subject to the following constraints:
+\begin{eqnarray*}
+h_{1}(x) & = & x_{1}^{2}+x_{2}^{2}+x_{3}^{2}-25=0\\
+h_{2}(x) & = & 8x_{1}+14x_{2}+7x_{3}-56=0
+\end{eqnarray*}
+The value of the global minimum is $f_{\mbox{min}}=961.7150$
+\end{itemize}
 
 \subsection*{Compliance with Ethical Standards }
 

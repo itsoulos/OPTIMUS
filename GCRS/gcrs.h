@@ -2,6 +2,7 @@
 #define GCRS_H
 
 #include <map>
+#include <algorithm>
 #include "gcrs_global.h"
 #include <Optimus/optimizer.h>
 #include <Optimus/tolmin.h>
@@ -23,10 +24,10 @@ private:
     virtual void done();
     int iteration;
     Data xmax, xmin, center, x, xk;
-    double fmax,fmin, fk, y;
+    double fmax,fmin, fk, y, x1, x2, stopat, variance, oldBesty;
     bool stopIt, flagF;
     int M, dimension, success, posmax, posmin;
-    std::map<int, pair <Data, double>> sample,sample2;    
+    std::map<int, pair <Data, double>> sample,sample2;
     vector<int> index;
 public:
     Gcrs(Problem *p);
