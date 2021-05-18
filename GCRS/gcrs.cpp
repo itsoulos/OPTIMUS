@@ -11,7 +11,7 @@ bool Gcrs::terminated()
 {
 
     int gcrs_maxiterations = params["gcrs_maxiterations"].toString().toInt();
-	double my = fabs(1.0 + fabs(fmin));
+double my = fabs(1.0 + fabs(fk));
     x1 = x1 + my;
     x2 = x2 + my * my;
     variance = x2 / (iteration + 1) - ( x1 / (iteration + 1) ) * ( x1 / (iteration + 1) );
@@ -23,7 +23,7 @@ bool Gcrs::terminated()
     }
     if( stopat < 1e-8 && iteration >=10 ) return true;
     printf("GCRS. Iteration: %4d Fitness: %10.5lf Variance: %10.5lf Stopat: %10.5lf \n", iteration, fmin, variance, stopat);
-    return (( iteration >=gcrs_maxiterations ) || ( variance <= stopat && iteration >= 20 ));
+    return (( iteration >=gcrs_maxiterations ));// || ( variance <= stopat && iteration >= 200 ));
     //return (iteration >= gcrs_maxiterations || stopIt);
 }
 
