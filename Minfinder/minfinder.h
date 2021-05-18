@@ -22,6 +22,7 @@ private:
     virtual void init();
     virtual void done();
 
+	int sumOfSamples;
     vector<Data> minimax,startx,samplex;
     Data         minimay,starty;
     int          bestIndex;

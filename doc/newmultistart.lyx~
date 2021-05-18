@@ -221,7 +221,7 @@ literal "true"
 , Simulated Annealing methods 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "simann1,simann2"
+key "simann_major,simann1,simann2"
 literal "true"
 
 \end_inset
@@ -237,7 +237,7 @@ literal "true"
 , Particle Swarm Optimization methods 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "pso1,pso2"
+key "pso_major,pso1,pso2"
 literal "true"
 
 \end_inset
@@ -259,7 +259,24 @@ literal "true"
 \end_inset
 
  etc.
- 
+ Also many hybrid methods have been proposed such as combing the Simplex
+ method and Inductive search 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "hybrid1"
+literal "false"
+
+\end_inset
+
+, methods that using PSO in conjuction with other methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "hybrid2,hybrid3"
+literal "false"
+
+\end_inset
+
+, etc.
 \end_layout
 
 \begin_layout Standard
@@ -404,13 +421,22 @@ name "sec:Method-description"
 \end_layout
 
 \begin_layout Standard
-The proposed method works for a predefined number of iterations.
- At every iteration a number of samples is taken in the bounding box of
- the objective problem.
+At every iteration of the proposed method a number of samples is taken in
+ the bounding box of the objective problem.
  Some of them are considered as starting points for a local search procedure
  and the rest are discarded.
  The method continues until the maximum number of iterations is reached
- or an asymptotic termination rule is satisfied.
+ or an asymptotic termination rule, defined in subsection 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Stopping-rule"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is satisfied.
  The main steps of the proposed algorithm are outlined in Algorithm 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -710,7 +736,7 @@ End if
 \begin_inset Float algorithm
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -986,42 +1012,126 @@ noprefix "false"
 
  holds.
  A measure to identify if a point is close enough to some other located
- local minima is the distance rC calculated after every local minimizer.
+ local minima is the distance 
+\begin_inset Formula $r_{C}$
+\end_inset
+
+ calculated after every local minimization.
 \end_layout
 
 \begin_layout Standard
-From the above two points a criterion to reject a point 
-\begin_inset Formula $x$
-\end_inset
-
- from being a starting point for the local search procedure could be the
- equation 
+In order to measure the efficiency of the above rejection procedure two
+ tests were performed on two benchmark functions: Rastrigin and Exp16.
+ In these test the proportion of local search starts over total number of
+ samples were measured.
+ The plot of this measurement for 20 iterations is plotted in Figures 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "eq:eq7"
+reference "fig:Plot-for-Rastrigin"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-.
- Although, the point 
-\begin_inset Formula $x$
-\end_inset
-
- should be close enough to some local minimum and for this purpose the equation
- 
+ and 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "eq:eq2"
+reference "fig:Plot-for-exp16"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- is used as a distance measure.
+ respectively.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Plot for Rastrigin function and the discarding procedure.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Plot-for-Rastrigin"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename rastrigin_start.eps
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Plot for the function Exp16 and the discarding procedure.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Plot-for-exp16"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename exp16_start.eps
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -1106,7 +1216,17 @@ where
 
  is a predefined minimum number of iterations, in order to prevent the algorithm
  from premature termination.
- In figure the values 
+ In figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Plot-of-variance"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ the values 
 \begin_inset Formula $\sigma^{(k)}$
 \end_inset
 
@@ -1115,14 +1235,7 @@ where
 \end_inset
 
  denoted as STOPAT are plotted.
- The objective function used is the EXP8 function given by:
-\begin_inset Formula 
-\begin{equation}
-f(x)=-\exp\left(-0.5\sum_{i=1}^{8}x_{i}^{2}\right),\quad-1\le x_{i}\le1
-\end{equation}
-
-\end_inset
-
+ The objective function used is the EXP8 function.
  The value of 
 \begin_inset Formula $k_{\mbox{min}}$
 \end_inset
@@ -1137,7 +1250,7 @@ f(x)=-\exp\left(-0.5\sum_{i=1}^{8}x_{i}^{2}\right),\quad-1\le x_{i}\le1
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1180,8 +1293,8 @@ Constrained optimization problems
 \end_layout
 
 \begin_layout Standard
-The proposed method can be used also in constrained optimization problems,
- where the main objective problem is defined as:
+The proposed method can also be used to constrained optimization problems,
+ which general formulation is:
 \begin_inset Formula 
 \begin{eqnarray}
 \min_{x} & f(x) & \mbox{subject to}\nonumber \\
@@ -1228,8 +1341,45 @@ literal "true"
 \end_inset
 
  etc.
- The constrained optimization problem if transformed to a single function
- for the proposed method using the following:
+ Many methods have been proposed to tackle this problem such as Lagrange
+ multiplier methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "cons1"
+literal "true"
+
+\end_inset
+
+, Trust region methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "cons2"
+literal "false"
+
+\end_inset
+
+, interval methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "cons3"
+literal "false"
+
+\end_inset
+
+, methods based differential evolution 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "cons4"
+literal "false"
+
+\end_inset
+
+ etc.
+ The constrained optimization problem can transformed to a single function
+ for the proposed method.
+ The transformation is performed in a way that when a solution is infeasible
+ then the function value is penalized according to the constraint violations.
+ The steps for the transformation are the following:
 \begin_inset Newline newline
 \end_inset
 
@@ -1325,39 +1475,76 @@ name "sec:Experiments"
 \begin_layout Standard
 The proposed method was tested on a series of unconstrained and constrained
  optimization functions that are listed in the Appendix.
+ The local search procedure in all experiments and methods was a BFGS variant
+ of Powell
+\begin_inset CommandInset citation
+LatexCommand cite
+key "powell"
+literal "false"
+
+\end_inset
+
+.
  The method was tested against four methods from the relevant literature:
 \end_layout
 
 \begin_layout Enumerate
 Multistart method.
+ This is simple method, who samples a series of points each time (the same
+ number as the proposed method) and performs a local search procedure from
+ every sample.
+ In order to be the results comparable against the proposed method the same
+ stopping rule was used also in the Multistart method.
+ The code was implemented in ANSI C++.
 \end_layout
 
 \begin_layout Enumerate
-Controlled Random Search
+Controlled Random Search denoted as CRS in the results.
+ The implementation used here is based on the algorithm of Price
 \begin_inset CommandInset citation
 LatexCommand cite
-key "crs3"
+key "crs1"
 literal "false"
 
 \end_inset
 
- denoted as CRS in the results.
+ made in Ansi C++.
+ The method uses the suggested 
+\begin_inset Formula $N=25n$
+\end_inset
+
+ from price value for the initial number of samples in the set.
+ Also, the implementation utilizes the application of the Local search procedure
+ after the termination of the algorithm to enhance the located global optimum.
 \end_layout
 
 \begin_layout Enumerate
-Simulated Annealing
+Simulated Annealing, denoted as SA in the results.
+ The used software here is the work of Corana
 \begin_inset CommandInset citation
 LatexCommand cite
-key "simann2"
+key "corana"
 literal "false"
 
 \end_inset
 
-, denoted as SA in the results.
+.
+ 
 \end_layout
 
 \begin_layout Enumerate
-Particle swarm optimization, denoted as PSO in the results.
+Particle swarm optimization
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pso_major"
+literal "false"
+
+\end_inset
+
+, denoted as PSO in the results.
+ The implemented software here is coded in ANSI C++ and utilizes the same
+ stopping rule as in the proposed method.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1394,7 +1581,7 @@ noprefix "false"
  The proposed method seems to require less number of function calls than
  the other methods and the PSO technique shown to work well for small problems
  like BF1 or BRANIN but failed to work on bigger problems such Potential20,
- a problem with 60 dimensions and thousands of local minima.
+ a problem with dimension 60 and thousands of local minima..
  On the other hand, the Simulated Annealing managed to solve with success
  all the optimization problems, although it requires more function calls
  than the proposed method and the same holds for the simple Multistart method.
@@ -5081,6 +5268,24 @@ M.M.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "simann_major"
+literal "false"
+
+\end_inset
+
+S.
+ Kirkpatrick, CD Gelatt, , MP Vecchi, Optimization by simulated annealing,
+ Science 
+\series bold
+220
+\series default
+, pp.
+ 671-680, 1983.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "simann1"
 literal "true"
 
@@ -5149,6 +5354,21 @@ J.
 9
 \series default
 , pp.448–462, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso_major"
+literal "false"
+
+\end_inset
+
+J.
+ Kennedy and R.
+ Eberhart, "Particle swarm optimization," Proceedings of ICNN'95 - International
+ Conference on Neural Networks, 1995, pp.
+ 1942-1948 vol.4, doi: 10.1109/ICNN.1995.488968.
 \end_layout
 
 \begin_layout Bibliography
@@ -5264,6 +5484,62 @@ S.A.
 \series default
 , pp.
  259-270, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "hybrid1"
+literal "false"
+
+\end_inset
+
+Offord C., Bajzer Ž.
+ (2001) A Hybrid Global Optimization Algorithm Involving Simplex and Inductive
+ Search.
+ In: Alexandrov V.N., Dongarra J.J., Juliano B.A., Renner R.S., Tan C.J.K.
+ (eds) Computational Science - ICCS 2001.
+ ICCS 2001.
+ Lecture Notes in Computer Science, vol 2074.
+ Springer, Berlin, Heidelberg.
+ https://doi.org/10.1007/3-540-45718-6_73
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "hybrid2"
+literal "false"
+
+\end_inset
+
+M.
+ Pant, R.
+ Thangaraj, C.
+ Grosan and A.
+ Abraham, "Hybrid Differential Evolution - Particle Swarm Optimization Algorithm
+ for Solving Global Optimization Problems," 2008 Third International Conference
+ on Digital Information Management, 2008, pp.
+ 18-24, doi: 10.1109/ICDIM.2008.4746766.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "hybrid3"
+literal "false"
+
+\end_inset
+
+Niu B., Li L.
+ (2008) A Novel PSO-DE-Based Hybrid Algorithm for Global Optimization.
+ In: Huang DS., Wunsch D.C., Levine D.S., Jo KH.
+ (eds) Advanced Intelligent Computing Theories and Applications.
+ With Aspects of Artificial Intelligence.
+ ICIC 2008.
+ Lecture Notes in Computer Science, vol 5227.
+ Springer, Berlin, Heidelberg.
+ https://doi.org/10.1007/978-3-540-85984-0_20
 \end_layout
 
 \begin_layout Bibliography
@@ -5586,6 +5862,43 @@ Ioannis G.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "powell"
+literal "true"
+
+\end_inset
+
+M.J.D Powell, A Tolerant Algorithm for Linearly Constrained Optimization Calculati
+ons, Mathematical Programming 
+\series bold
+45
+\series default
+, pp.
+ 547-566, 1989.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "corana"
+literal "false"
+
+\end_inset
+
+[3] A.
+ Corana, M.
+ Marchesi, C.
+ Martini, S.
+ Ridella, Minimizing multimodal functions of continuous variables with the
+ “Simulated Annealing” algorithm, ACM Trans.
+ Math.
+ Software 13 (1987) 262–280.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "Ali1"
 literal "true"
 
@@ -5750,6 +6063,81 @@ G.A.
 \series default
 , pp.
  523-547, 2001.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "cons1"
+literal "true"
+
+\end_inset
+
+P.E.
+ Gill, W.
+ Murray, The computation of Lagrange-multiplier estimates for constrained
+ minimization, Mathematical Programming 
+\series bold
+17
+\series default
+, pp.
+ 32-60, 1979.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "cons2"
+literal "true"
+
+\end_inset
+
+M.J.D.
+ Powell, Y.
+ Yuan, A trust region algorithm for equality constrained optimization, Mathemati
+cal Programming 
+\series bold
+49
+\series default
+, pp.
+ 189-211, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "cons3"
+literal "true"
+
+\end_inset
+
+K.
+ Ichida, Constrained optimization using interval analysis, Computers and
+ Industrial Engineering 
+\series bold
+31
+\series default
+, pp.
+ 933-937, 1996.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "cons4"
+literal "true"
+
+\end_inset
+
+R.L.
+ Becerra, C.A.C.
+ Coello, Cultured differential evolution for constrained optimization, Computer
+ Methods in Applied Mechanics and Engineering 
+\series bold
+195
+\series default
+, pp.
+ 4303-4322, 2006.
 \end_layout
 
 \begin_layout Bibliography

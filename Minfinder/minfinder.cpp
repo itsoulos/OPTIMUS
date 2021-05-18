@@ -60,8 +60,8 @@ bool Minfinder::terminated()
     }
 
     if(stopat<eps && iteration>=20) return true;
-    printf("Iteration %d  Best value: %lf variance: %lf stopat: %lf\n",
-           iteration,mbesty,variance,stopat);
+    printf("Iteration %d  Best value: %lf variance: %lf stopat: %lf starting: %.2lf%%\n",
+           iteration,mbesty,variance,stopat,localSearchCount*100.0/sumOfSamples);
 
     return iteration>=max_generations || (variance<=stopat && iteration>=20);
 }
@@ -75,6 +75,7 @@ double Minfinder::mdelta(double a,double r0,double r)
 
 Data  Minfinder::getSample()
 {
+	++sumOfSamples;
     QString sampling=params["minfinder_sampling"].toString();
 
     Data tx;
@@ -170,6 +171,7 @@ void Minfinder::init()
 {
     x1=0.0;
     x2=0.0;
+	sumOfSamples=0;
     iteration=0;
     variance=0.0;
     stopat=0.0;
