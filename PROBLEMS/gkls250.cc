@@ -1296,9 +1296,10 @@ return error_code;
 # define MY_GKLS_DIMENSION		2
 # define MY_GKLS_MINIMA			50
 
+int natoms=2;
 int	getdimension()
 {
-	return		MY_GKLS_DIMENSION;
+	return		natoms;
 }
 
 void 	getmargins(vector<Interval> &x)
@@ -1314,8 +1315,10 @@ QJsonObject    done(vector<double> &x)
 }
 void    init(QJsonObject data)
 {
+    if(data.contains("natoms"))
+        natoms=data["natoms"].toString().toInt();
 
-		GKLS_dim = MY_GKLS_DIMENSION;
+		GKLS_dim = natoms;
 		GKLS_num_minima = MY_GKLS_MINIMA;
 		GKLS_domain_alloc();
 		GKLS_global_dist=2.0/3.0;
