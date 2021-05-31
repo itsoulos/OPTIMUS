@@ -36,12 +36,14 @@ Greece}
 There is a great need to discover the global optimum of multimodal
 functions that arises from many scientifical and practical problems.
 A base method used to solve this problem is the Multistart method.
-This article proposes novel method based on the Multistart, that utilizes
-a mechanism to prevent unnecessary local optimization calls as well
-as an asymptotic stopping rule. The proposed method has been evaluated
-on a series of global optimization functions from the relevant literature
-and it is compared against some other optimization methods and the
-experimental results are presented.
+The proposed method extends the traditional method by adding two major
+features: the first one is a rejection mechanism to prevent the method
+from spending time in unnecessary function evaluations and the second
+is a stopping rule aimed to terminate the method when the global minimum
+has been located with some certainty. The proposed method has been
+evaluated on a series of global optimization functions from the relevant
+literature and it is compared against some other optimization methods
+and the experimental results are presented.
 \end{abstract}
 \textbf{Keywords}: Global optimization, stochastic methods, termination
 rules.
@@ -69,10 +71,15 @@ where the set $S$ is divided iteratively in subregions and some subregions
 that not contain the global solution are discarded using some pre
 defined criteria. On the other hand, in the second category there
 are Controlled Random Search methods \cite{crs1,crs2,crs3}, Simulated
-Annealing methods \cite{simann1,simann2}, Differential Evolution
-methods \cite{diffe1,diffe2}, Particle Swarm Optimization methods
-\cite{pso1,pso2}, Ant Colony Optimization \cite{aco1,aco2}, Genetic
-algorithms \cite{ga1,ga2,ga3} etc. 
+Annealing methods \cite{simann_major,simann1,simann2}, Differential
+Evolution methods \cite{diffe1,diffe2}, Particle Swarm Optimization
+methods \cite{pso_major,pso1,pso2}, Ant Colony Optimization \cite{aco1,aco2},
+Genetic algorithms \cite{ga1,ga2,ga3} etc. Also many hybrid methods
+have been proposed such as combing the Simplex method and Inductive
+search \cite{hybrid1}, methods that using PSO in conjuction with
+other methods \cite{hybrid2,hybrid3}, etc. Recently many works have
+been appeared that take advantage of the GPU processing units to implement
+parallel global optimization methods \cite{gpu1,gpu2,gpu3}. 
 
 This article introduces a novel method which is based on the multistart
 method to discover the global minimum of continuous functions. The
@@ -99,16 +106,15 @@ some conclusions and guidelines for future work are provided.
 
 \section{Method description \label{sec:Method-description}}
 
-The proposed method works for a predefined number of iterations. At
-every iteration a number of samples is taken in the bounding box of
-the objective problem. Some of them are considered as starting points
-for a local search procedure and the rest are discarded. The method
-continues until the maximum number of iterations is reached or an
-asymptotic termination rule is satisfied. The main steps of the proposed
-algorithm are outlined in Algorithm \ref{alg:The-main-steps}. In
-the following subsection the main parts of the proposed algorithm
-which are the discarding procedure and the proposed stopping rule
-are described in detail.
+At every iteration of the proposed method a number of samples is taken
+in the bounding box of the objective problem. Some of them are considered
+as starting points for a local search procedure and the rest are discarded.
+The method continues until the maximum number of iterations is reached
+or an asymptotic termination rule, defined in subsection \ref{subsec:Stopping-rule}
+is satisfied. The main steps of the proposed algorithm are outlined
+in Algorithm \ref{alg:The-main-steps}. In the following subsection
+the main parts of the proposed algorithm which are the discarding
+procedure and the proposed stopping rule are described in detail.
 
 \begin{algorithm}
 \caption{The main steps of the proposed algorithm.\label{alg:The-main-steps}}
@@ -207,11 +213,35 @@ equation:
 \left(x-y\right)^{T}\left(\nabla f(x)-\nabla f(y)\right)\simeq\left(x-y\right)^{T}B\left(x-y\right)^{T}>0\label{eq:eq7}
 \end{equation}
 \end{itemize}
-From the above two points a criterion to reject a point $x$ from
-being a starting point for the local search procedure could be the
-equation \ref{eq:eq7}. Although, the point $x$ should be close enough
-to some local minimum and for this purpose the equation \ref{eq:eq2}
-is used as a distance measure.
+The distance $r_{C}$ is used with conjunction with equation \ref{eq:eq7}
+to reject a point. The method rejects points from being start points
+if they are close enough to some other located local minima and in
+the same time equation \ref{eq:eq7} holds. A measure to identify
+if a point is close enough to some other located local minima is the
+distance $r_{C}$ calculated after every local minimization.
+
+In order to measure the efficiency of the above rejection procedure
+two tests were performed on two benchmark functions: Rastrigin and
+Exp16. In these test the proportion of local search starts over total
+number of samples were measured. The plot of this measurement for
+20 iterations is plotted in Figures \ref{fig:Plot-for-Rastrigin}
+and \ref{fig:Plot-for-exp16} respectively.
+
+\begin{figure}
+\caption{Plot for Rastrigin function and the discarding procedure.\label{fig:Plot-for-Rastrigin}}
+
+\begin{centering}
+\includegraphics[scale=0.7]{rastrigin_start}
+\par\end{centering}
+\end{figure}
+\begin{figure}
+\caption{Plot for the function Exp16 and the discarding procedure.\label{fig:Plot-for-exp16}}
+
+\begin{centering}
+\includegraphics[scale=0.7]{exp16_start}
+\par\end{centering}
+\end{figure}
+
 
 \subsection{Stopping rule\label{subsec:Stopping-rule}}
 
@@ -235,17 +265,13 @@ k\ge k_{\mbox{min}}\ \mbox{AND\ }\sigma^{(k)}\le\frac{\sigma^{\left(k_{\mbox{las
 where $k_{\mbox{last}}$ stands for iteration where a new minimum
 was found. The value $k_{\mbox{min}}$ is a predefined minimum number
 of iterations, in order to prevent the algorithm from premature termination.
-In figure the values $\sigma^{(k)}$ denoted as VARIANCE and the value
-$\frac{\sigma^{\left(k_{\mbox{last}}\right)}}{2}$ denoted as STOPAT
-are plotted. The objective function used is the EXP8 function given
-by:
-\begin{equation}
-f(x)=-\exp\left(-0.5\sum_{i=1}^{8}x_{i}^{2}\right),\quad-1\le x_{i}\le1
-\end{equation}
- The value of $k_{\mbox{min}}$ is set to 20 iterations and the maximum
-number of iterations is 200. The algorithm terminates successfully
-in 40 generation without spending unnecessary function calls for about
-160 generations. 
+In figure \ref{fig:Plot-of-variance} the values $\sigma^{(k)}$ denoted
+as VARIANCE and the value $\frac{\sigma^{\left(k_{\mbox{last}}\right)}}{2}$
+denoted as STOPAT are plotted. The objective function used is the
+EXP8 function. The value of $k_{\mbox{min}}$ is set to 20 iterations
+and the maximum number of iterations is 200. The algorithm terminates
+successfully in 40 generation without spending unnecessary function
+calls for about 160 generations. 
 
 \begin{figure}
 \caption{Plot of variance along with the stopping quantity for the problem
@@ -257,8 +283,8 @@ of Potential with 20 atoms.\label{fig:Plot-of-variance}}
 
 \subsection{Constrained optimization problems}
 
-The proposed method can be used also in constrained optimization problems,
-where the main objective problem is defined as:
+The proposed method can also be used to constrained optimization problems,
+which general formulation is:
 \begin{eqnarray}
 \min_{x} & f(x) & \mbox{subject to}\nonumber \\
  & g_{i}(x)\le0 & \ i=1,\ldots,m\nonumber \\
@@ -267,8 +293,14 @@ where the main objective problem is defined as:
 where $x_{i}\in\left[a_{i},b_{i}\right],\ i=1,\ldots,n$, which finds
 application in many practical fields such as physics \cite{ConPhysics},
 astronomy \cite{ConAstro}, chemistry \cite{ConChem}, biology \cite{ConBio}
-etc. The constrained optimization problem if transformed to a single
-function for the proposed method using the following:\\
+etc. Many methods have been proposed to tackle this problem such as
+Lagrange multiplier methods \cite{cons1}, Trust region methods \cite{cons2},
+interval methods \cite{cons3}, methods based on differential evolution
+\cite{cons4} etc. The constrained optimization problem can transformed
+to a single function for the proposed method. The transformation is
+performed in a way that when a solution is infeasible then the function
+value is penalized according to the constraint violations. The steps
+for the transformation are the following:\\
 
 \begin{enumerate}
 \item \textbf{Set} $v_{1}(x)=f(x)$
@@ -296,13 +328,28 @@ where $\lambda>0$.
 \section{Experiments\label{sec:Experiments}}
 
 The proposed method was tested on a series of unconstrained and constrained
-optimization functions that are listed in the Appendix. The method
-was tested against four methods from the relevant literature:
+optimization functions that are listed in the Appendix. The local
+search procedure in all experiments and methods was a BFGS variant
+of Powell\cite{powell}. The method was tested against four methods
+from the relevant literature:
 \begin{enumerate}
-\item Multistart method.
-\item Controlled Random Search\cite{crs3} denoted as CRS in the results.
-\item Simulated Annealing\cite{simann2}, denoted as SA in the results.
-\item Particle swarm optimization, denoted as PSO in the results.
+\item Multistart method. This is simple method, who samples a series of
+points each time (the same number as the proposed method) and performs
+a local search procedure from every sample. In order to be the results
+comparable against the proposed method the same stopping rule was
+used also in the Multistart method. The code was implemented in ANSI
+C++.
+\item Controlled Random Search denoted as CRS in the results. The implementation
+used here is based on the algorithm of Price\cite{crs1} made in Ansi
+C++. The method uses the suggested $N=25n$ from price value for the
+initial number of samples in the set. Also, the implementation utilizes
+the application of the Local search procedure after the termination
+of the algorithm to enhance the located global optimum.
+\item Simulated Annealing, denoted as SA in the results. The used software
+here is the work of Corana\cite{corana}. 
+\item Particle swarm optimization\cite{pso_major}, denoted as PSO in the
+results. The implemented software here is coded in ANSI C++ and utilizes
+the same stopping rule as in the proposed method. 
 \end{enumerate}
 The experimental results are reported in Table \ref{tab:Average-number-of}.
 The number in the cells denotes average function calls for 30 runs
@@ -315,8 +362,8 @@ bold letters were used to demonstrate the method that achieved the
 best average result. The proposed method seems to require less number
 of function calls than the other methods and the PSO technique shown
 to work well for small problems like BF1 or BRANIN but failed to work
-on bigger problems such Potential20, a problem with 60 dimensions
-and thousands of local minima. On the other hand, the Simulated Annealing
+on bigger problems such Potential20, a problem with dimension 60 and
+thousands of local minima. On the other hand, the Simulated Annealing
 managed to solve with success all the optimization problems, although
 it requires more function calls than the proposed method and the same
 holds for the simple Multistart method.
@@ -325,7 +372,10 @@ In Table \ref{tab:Results-from-comparisons} the results from the
 comparison of Multistart and the proposed method for the constrained
 optimization test problems are listed. Again, the proposed method
 has managed to handle the test problems using less number of function
-evaluations than the Multistart method.
+evaluations than the Multistart method. The value of $\lambda=100$
+was used for the conducted experiments. Again, the proposed method
+overcomes the Multistart method to solve constrained optimization
+problems. 
 
 Also, in order to measure the efficiency of the proposed method for
 as the dimension of the objective functions increases an additional
@@ -342,6 +392,14 @@ $N$ and the results are plotted in Figure \ref{fig:Average-number-of-1}.
 Again the Multistart requires much more function calls than the proposed
 method and also the Multistart function calls tends to increase very
 rapidly as compared to the calls of the proposed method.
+
+To compare the proposed method with all the rest methods for different
+function calls, the Wilcoxon signed-rank test was used. The results
+obtained with this statistical test are shown in Figure \ref{fig:Box-plot-representation}.
+The results indicate that the proposed method is superior than the
+most of unconstrained optimization function (multistart, CSA and SA).
+There was not, however, a significant difference between PSO and the
+proposed method. 
 
 \begin{table}
 \caption{Average number of function calls for the proposed functions. \label{tab:Average-number-of}}
@@ -448,7 +506,6 @@ for the function EXP10.\label{fig:Average-number-of-1}}
 \par\end{centering}
 \end{figure}
 \begin{table}
-
 \caption{Average function calls from comparisons of the proposed method and
 Multistart for the constrained optimization problems.\label{tab:Results-from-comparisons}}
 
@@ -470,6 +527,15 @@ G15 & 318162 & 63542\tabularnewline
 \hline 
 \end{tabular}
 \end{table}
+\begin{figure}
+
+\caption{Box plot representation and Wilcoxon rank-sum test results of the
+comparison between the multistart, CRS, SA, and PSO method and the
+proposed method. A p-value of less than 0.05 (2-tailed) was used for
+statistical significance and has been marked with bold. \label{fig:Box-plot-representation}}
+
+\centering{}\includegraphics{methods_comparison}
+\end{figure}
 
 
 \section{Conclusions\label{sec:Conclusions}}
@@ -865,6 +931,9 @@ search algorithm in optimizing regression models, Computational Statistics
 of Some Modified Controlled Random Search Algorithms, Journal of Global
 Optimization \textbf{11},pp. 377--385,1997.
 
+\bibitem{simann_major}S. Kirkpatrick, CD Gelatt, , MP Vecchi, Optimization
+by simulated annealing, Science \textbf{220}, pp. 671-680, 1983.
+
 \bibitem{simann1}L. Ingber, Very fast simulated re-annealing, Mathematical
 and Computer Modelling \textbf{12}, pp. 967-973, 1989.
 
@@ -878,6 +947,10 @@ Journal of Global Optimization \textbf{11}, pp. 341-359, 1997.
 
 \bibitem{diffe2}J. Liu, J. Lampinen, A Fuzzy Adaptive Differential
 Evolution Algorithm. Soft Comput \textbf{9}, pp.448--462, 2005.
+
+\bibitem{pso_major}J. Kennedy and R. Eberhart, \textquotedbl Particle
+swarm optimization,\textquotedbl{} Proceedings of ICNN'95 - International
+Conference on Neural Networks, 1995, pp. 1942-1948 vol.4, doi: 10.1109/ICNN.1995.488968.
 
 \bibitem{pso1}Riccardo Poli, James Kennedy kennedy, Tim Blackwell,
 Particle swarm optimization An Overview, Swarm Intelligence \textbf{1},
@@ -905,6 +978,36 @@ Massachussets, 1989.
 \bibitem{ga3}S.A. Grady, M.Y. Hussaini, M.M. Abdullah, Placement
 of wind turbines using genetic algorithms, Renewable Energy \textbf{30},
 pp. 259-270, 2005.
+
+\bibitem{hybrid1}Offord C., Bajzer ´. (2001) A Hybrid Global Optimization
+Algorithm Involving Simplex and Inductive Search. In: Alexandrov V.N.,
+Dongarra J.J., Juliano B.A., Renner R.S., Tan C.J.K. (eds) Computational
+Science - ICCS 2001. ICCS 2001. Lecture Notes in Computer Science,
+vol 2074. Springer, Berlin, Heidelberg. https://doi.org/10.1007/3-540-45718-6\_73
+
+\bibitem{hybrid2}M. Pant, R. Thangaraj, C. Grosan and A. Abraham,
+\textquotedbl Hybrid Differential Evolution - Particle Swarm Optimization
+Algorithm for Solving Global Optimization Problems,\textquotedbl{}
+2008 Third International Conference on Digital Information Management,
+2008, pp. 18-24, doi: 10.1109/ICDIM.2008.4746766.
+
+\bibitem{hybrid3}Niu B., Li L. (2008) A Novel PSO-DE-Based Hybrid
+Algorithm for Global Optimization. In: Huang DS., Wunsch D.C., Levine
+D.S., Jo KH. (eds) Advanced Intelligent Computing Theories and Applications.
+With Aspects of Artificial Intelligence. ICIC 2008. Lecture Notes
+in Computer Science, vol 5227. Springer, Berlin, Heidelberg. https://doi.org/10.1007/978-3-540-85984-0\_20
+
+\bibitem{gpu1}Y. Zhou and Y. Tan, \textquotedbl GPU-based parallel
+particle swarm optimization,\textquotedbl{} 2009 IEEE Congress on
+Evolutionary Computation, 2009, pp. 1493-1500, doi: 10.1109/CEC.2009.4983119.
+
+\bibitem{gpu2}L. Dawson and I. Stewart, \textquotedbl Improving
+Ant Colony Optimization performance on the GPU using CUDA,\textquotedbl{}
+2013 IEEE Congress on Evolutionary Computation, 2013, pp. 1901-1908,
+doi: 10.1109/CEC.2013.6557791.
+
+\bibitem{gpu3}Barkalov, K., Gergel, V. Parallel global optimization
+on GPU. J Glob Optim 66, 3--20 (2016). https://doi.org/10.1007/s10898-016-0411-y
 
 \bibitem{multistart-tsp}Li W., A Parallel Multi-start Search Algorithm
 for Dynamic Traveling Salesman Problem. In: Pardalos P.M., Rebennack
@@ -984,6 +1087,15 @@ in Computer Science, vol 1908. Springer, Berlin, Heidelberg, 2000.
 genetic algorithm for global optimization, Applied Mathematics and
 Computation \textbf{203}, pp. 598-607, 2008.
 
+\bibitem{powell}M.J.D Powell, A Tolerant Algorithm for Linearly Constrained
+Optimization Calculations, Mathematical Programming \textbf{45}, pp.
+547-566, 1989. 
+
+\bibitem{corana}{[}3{]} A. Corana, M. Marchesi, C. Martini, S. Ridella,
+Minimizing multimodal functions of continuous variables with the \textquotedblleft Simulated
+Annealing\textquotedblright{} algorithm, ACM Trans. Math. Software
+13 (1987) 262--280. 
+
 \bibitem{Ali1}M. Montaz Ali, Charoenchai Khompatraporn, Zelda B.
 Zabinsky, A Numerical Evaluation of Several Stochastic Algorithms
 on Selected Continuous Global Optimization Test Problems, Journal
@@ -1021,6 +1133,22 @@ pp. 5104-5108, 1991.
 global optimization for estimating molecular structure from atomic
 distances, Journal of Computational Biology \textbf{8}, pp. 523-547,
 2001.
+
+\bibitem{cons1}P.E. Gill, W. Murray, The computation of Lagrange-multiplier
+estimates for constrained minimization, Mathematical Programming \textbf{17},
+pp. 32-60, 1979.
+
+\bibitem{cons2}M.J.D. Powell, Y. Yuan, A trust region algorithm for
+equality constrained optimization, Mathematical Programming \textbf{49},
+pp. 189-211, 2005.
+
+\bibitem{cons3}K. Ichida, Constrained optimization using interval
+analysis, Computers and Industrial Engineering \textbf{31}, pp. 933-937,
+1996.
+
+\bibitem{cons4}R.L. Becerra, C.A.C. Coello, Cultured differential
+evolution for constrained optimization, Computer Methods in Applied
+Mechanics and Engineering \textbf{195}, pp. 4303-4322, 2006.
 
 \bibitem{Levy}A.V. Levy, A. Montalvo, The tunneling algorithm for
 global optimization of functions, SIAM Journal of Scientific and Statistical

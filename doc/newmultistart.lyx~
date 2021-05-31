@@ -110,9 +110,11 @@ Department of Informatics and Telecommunications, University of Ioannina,
 There is a great need to discover the global optimum of multimodal functions
  that arises from many scientifical and practical problems.
  A base method used to solve this problem is the Multistart method.
- This article proposes novel method based on the Multistart, that utilizes
- a mechanism to prevent unnecessary local optimization calls as well as
- an asymptotic stopping rule.
+ The proposed method extends the traditional method by adding two major
+ features: the first one is a rejection mechanism to prevent the method
+ from spending time in unnecessary function evaluations and the second is
+ a stopping rule aimed to terminate the method when the global minimum has
+ been located with some certainty.
  The proposed method has been evaluated on a series of global optimization
  functions from the relevant literature and it is compared against some
  other optimization methods and the experimental results are presented.
@@ -277,6 +279,17 @@ literal "false"
 \end_inset
 
 , etc.
+ Recently many works have been appeared that take advantage of the GPU processin
+g units to implement parallel global optimization methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "gpu1,gpu2,gpu3"
+literal "false"
+
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1581,7 +1594,7 @@ noprefix "false"
  The proposed method seems to require less number of function calls than
  the other methods and the PSO technique shown to work well for small problems
  like BF1 or BRANIN but failed to work on bigger problems such Potential20,
- a problem with dimension 60 and thousands of local minima..
+ a problem with dimension 60 and thousands of local minima.
  On the other hand, the Simulated Annealing managed to solve with success
  all the optimization problems, although it requires more function calls
  than the proposed method and the same holds for the simple Multistart method.
@@ -1607,6 +1620,9 @@ noprefix "false"
 \end_inset
 
  was used for the conducted experiments.
+ Again, the proposed method overcomes the Multistart method to solve constrained
+ optimization problems.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1665,7 +1681,7 @@ noprefix "false"
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -3784,10 +3800,6 @@ sideways false
 status collapsed
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -3990,6 +4002,51 @@ G15
 </cell>
 </row>
 </lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Box plot representation and Wilcoxon rank-sum test results of the comparison
+ between the multistart, CRS, SA, and PSO method and the proposed method.
+ A p-value of less than 0.05 (2-tailed) was used for statistical significance
+ and has been marked with bold.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Box-plot-representation"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename methods_comparison.eps
 
 \end_inset
 
@@ -5545,6 +5602,50 @@ Niu B., Li L.
  Lecture Notes in Computer Science, vol 5227.
  Springer, Berlin, Heidelberg.
  https://doi.org/10.1007/978-3-540-85984-0_20
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gpu1"
+literal "false"
+
+\end_inset
+
+Y.
+ Zhou and Y.
+ Tan, "GPU-based parallel particle swarm optimization," 2009 IEEE Congress
+ on Evolutionary Computation, 2009, pp.
+ 1493-1500, doi: 10.1109/CEC.2009.4983119.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gpu2"
+literal "false"
+
+\end_inset
+
+L.
+ Dawson and I.
+ Stewart, "Improving Ant Colony Optimization performance on the GPU using
+ CUDA," 2013 IEEE Congress on Evolutionary Computation, 2013, pp.
+ 1901-1908, doi: 10.1109/CEC.2013.6557791.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gpu3"
+literal "false"
+
+\end_inset
+
+Barkalov, K., Gergel, V.
+ Parallel global optimization on GPU.
+ J Glob Optim 66, 3–20 (2016).
+ https://doi.org/10.1007/s10898-016-0411-y
 \end_layout
 
 \begin_layout Bibliography
