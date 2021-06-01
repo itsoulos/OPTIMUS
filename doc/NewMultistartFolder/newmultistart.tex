@@ -91,13 +91,17 @@ random samples and yields the lowest discovered minimum as the global
 one. Due to its simplicity the method has been used in many problems
 such as the TSP problem\textbf{ }\cite{multistart-tsp}, the vehicle
 routing problem \cite{multistart-vehicle}, the facility location
-problem \cite{multistart_fac}, the maximum clique problem \cite{multistart_clique}
-etc. During the past year, the method multistart has been enhanced
-in the relevant literature with methods that target to discover all
-the local minima of a function \cite{tmlsl,Salhi,minfinder}, hybrid
-multistart techniques \cite{mshybrid1,mshybrid2}, GRASP methods\cite{grasp},
-new stopping rules \cite{msstop1,msstop2,msstop3}, parallel techniques\cite{parallel-multistart,parallel-multistart2}
-etc.\textbf{ }
+problem \cite{multistart_fac}, the maximum clique problem \cite{multistart_clique},
+the maximum fire risk insured capital problem \cite{multistart_fire},
+aerodynamic shape problems \cite{multistart-aero} etc. During the
+past year, the method multistart has been enhanced in the relevant
+literature with methods that target to discover all the local minima
+of a function \cite{tmlsl,Salhi,minfinder}, hybrid multistart techniques
+\cite{mshybrid1,mshybrid2}, GRASP methods\cite{grasp}, new stopping
+rules \cite{msstop1,msstop2,msstop3}, parallel techniques\cite{parallel-multistart,parallel-multistart2},
+methods that utlize the modern GPU architectures to execute \cite{msgpu1,msgpu2},
+methods that introduces sampling in the multistart method using Neural
+Networks \cite{mssampling2} etc.
 
 The rest of this article is organized as follows: in section \ref{sec:Method-description}
 the proposed method is described in detail, in section \ref{sec:Experiments}
@@ -157,7 +161,8 @@ in subsection \ref{subsec:Stopping-rule}.
 \end{algorithm}
 
 \begin{algorithm}
-\caption{The procedure gradientCheck(x).\label{alg:The-procedure-gradientCheck(x).}}
+\caption{The procedure gradientCheck(x), used to reject points from being start
+points of the local search procedure.\label{alg:The-procedure-gradientCheck(x).}}
 
 \textbf{boolean} gradientCheck(x)
 \begin{enumerate}
@@ -228,14 +233,16 @@ number of samples were measured. The plot of this measurement for
 and \ref{fig:Plot-for-exp16} respectively.
 
 \begin{figure}
-\caption{Plot for Rastrigin function and the discarding procedure.\label{fig:Plot-for-Rastrigin}}
+\caption{Plot for the proportion of local search starts over total number of
+samples for the Rastrigin function for the first 20 iterations. \label{fig:Plot-for-Rastrigin}}
 
 \begin{centering}
 \includegraphics[scale=0.7]{rastrigin_start}
 \par\end{centering}
 \end{figure}
 \begin{figure}
-\caption{Plot for the function Exp16 and the discarding procedure.\label{fig:Plot-for-exp16}}
+\caption{Plot for the proportion of local search starts over total number of
+samples for the EXP16 function for the first 20 iterations.\label{fig:Plot-for-exp16}}
 
 \begin{centering}
 \includegraphics[scale=0.7]{exp16_start}
@@ -339,6 +346,10 @@ a local search procedure from every sample. In order to be the results
 comparable against the proposed method the same stopping rule was
 used also in the Multistart method. The code was implemented in ANSI
 C++.
+\item Multistart method with the repulsion sampling technique \cite{repulsion}
+(title MREP). During the repulsion sampling, any produced sample is
+repelled to a new location by the old starting points, in order to
+avoid already visited regions of attraction.
 \item Controlled Random Search denoted as CRS in the results. The implementation
 used here is based on the algorithm of Price\cite{crs1} made in Ansi
 C++. The method uses the suggested $N=25n$ from price value for the
@@ -366,7 +377,9 @@ on bigger problems such Potential20, a problem with dimension 60 and
 thousands of local minima. On the other hand, the Simulated Annealing
 managed to solve with success all the optimization problems, although
 it requires more function calls than the proposed method and the same
-holds for the simple Multistart method.
+holds for the simple Multistart method. Also, the Repulsion method
+seems to overcome the simple Multistart but in the majority of cases
+require significant more function calls than the proposed method.
 
 In Table \ref{tab:Results-from-comparisons} the results from the
 comparison of Multistart and the proposed method for the constrained
@@ -405,78 +418,79 @@ proposed method.
 \caption{Average number of function calls for the proposed functions. \label{tab:Average-number-of}}
 
 \begin{centering}
-\begin{tabular}{|c|c|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|c|c|}
 \hline 
-PROBLEM & MULTISTART & CRS & SA & PSO & PROPOSED\tabularnewline
+PROBLEM & MULTISTART & MREP & CRS & SA & PSO & PROPOSED\tabularnewline
 \hline 
 \hline 
-BF1 & 22533 & 2218 & 3845 & \textbf{2494} & 2833\tabularnewline
+BF1 & 22533 & 5767 & 2218 & 3845 & \textbf{2494} & 2833\tabularnewline
 \hline 
-BF2 & 18809 & 2207 & 3340 & 2641 & \textbf{2629}\tabularnewline
+BF2 & 18809 & 4873 & 2207 & 3340 & 2641 & \textbf{2629}\tabularnewline
 \hline 
-BRANIN & 9735 & 1744 & 4816 & \textbf{1636} & 1753\tabularnewline
+BRANIN & 9735 & 4221 & 1744 & 4816 & \textbf{1636} & 1753\tabularnewline
 \hline 
-CM4 & 27037 & 4746 & 9652 & 2988 & \textbf{2293}\tabularnewline
+CM4 & 27037 & 15216 & 4746 & 9652 & 2988 & \textbf{2293}\tabularnewline
 \hline 
-CAMEL & 13688 & 1882 & 4820 & \textbf{1639} & 1732\tabularnewline
+CAMEL & 13688 & 4828 & 1882 & 4820 & \textbf{1639} & 1732\tabularnewline
 \hline 
-DIFFPOWER10 & 1194776 & 78634 & 25918 & 15500(0.87) & \textbf{19572}\tabularnewline
+DIFFPOWER10 & 1194776 & 67129 & 78634 & 25918 & 15500(0.87) & \textbf{19572}\tabularnewline
 \hline 
-EASOM & 5372 & 588 & 4807 & 866 & \textbf{199}\tabularnewline
+EASOM & 5372 & 3834 & 588 & 4807 & 866 & \textbf{199}\tabularnewline
 \hline 
-EXP8 & 12022 & 13239 & 19233 & 3084 & \textbf{2830}\tabularnewline
+EXP8 & 12022 & 7226 & 13239 & 19233 & 3084 & \textbf{2830}\tabularnewline
 \hline 
-EXP32 & 18294 & 93520 & 76842 & 5055 & \textbf{3265}\tabularnewline
+EXP32 & 18294 & 7600 & 93520 & 76842 & 5055 & \textbf{3265}\tabularnewline
 \hline 
-GKLS250 & 17333(0.77) & 1633 & 4120 & \textbf{1459} & 2415\tabularnewline
+GKLS250 & 17333(0.77) & 3854 & 1633 & 4120 & \textbf{1459} & 2415\tabularnewline
 \hline 
-GKLS350 & 10104 & 3329 & 7229 & 2259(0.97) & \textbf{243}\tabularnewline
+GKLS350 & 10104 & 5081 & 3329 & 7229 & 2259(0.97) & \textbf{243}\tabularnewline
 \hline 
-GRIEWANK2 & 13003 & 2111 & 3830 & 2595(0.83) & \textbf{1786}\tabularnewline
+GRIEWANK2 & 13003 & 5031 & 2111 & 3830 & 2595(0.83) & \textbf{1786}\tabularnewline
 \hline 
-GRIEWANK10 & 53372 & 32037 & 24118 & 8378(0.25) & \textbf{7184}\tabularnewline
+GRIEWANK10 & 53372 & 28289 & 32037 & 24118 & 8378(0.25) & \textbf{7184}\tabularnewline
 \hline 
-HANSEN & 15294 & 3348 & 3323 & 4284 & \textbf{1510}\tabularnewline
+HANSEN & 15294 & 5268(0.97) & 3348 & 3323 & 4284 & \textbf{1510}\tabularnewline
 \hline 
-HARTMAN3 & 14815 & 2898 & 7227 & \textbf{2448} & 11463\tabularnewline
+HARTMAN3 & 14815 & 5807 & 2898 & 7227 & \textbf{2448} & 11463\tabularnewline
 \hline 
-HARTMAN6 & 19459 & 9276 & 14440 & 4645 & \textbf{3740}\tabularnewline
+HARTMAN6 & 19459 & 7598 & 9276 & 14440 & 4645 & \textbf{3740}\tabularnewline
 \hline 
-POTENTIAL5 & 111631 & 95027 & 36084 & \textbf{20100} & 49601\tabularnewline
+POTENTIAL5 & 111631 & 29281 & 95027 & 36084 & \textbf{20100} & 49601\tabularnewline
 \hline 
-POTENTIAL10 & 208405 & 193066 & 172166 & 19610(0.13) & \textbf{91094}\tabularnewline
+POTENTIAL10 & 208405 & \textbf{73080} & 193066 & 172166 & 19610(0.13) & 91094\tabularnewline
 \hline 
-POTENTIAL20 & 280575 & 189591(0.53) & 244314 & 18466(0.03) & \textbf{170524(0.97)}\tabularnewline
+POTENTIAL20 & 280575 & \textbf{135164} & 189591(0.53) & 244314 & 18466(0.03) & 170524(0.97)\tabularnewline
 \hline 
-RASTRIGIN & 16968 & 1906 & 3343 & 2258 & \textbf{675}\tabularnewline
+RASTRIGIN & 16968 & 4706 & 1906 & 3343 & 2258 & \textbf{675}\tabularnewline
 \hline 
-SHEKEL5 & 19224 & 6345 & 9635 & 4791 & \textbf{3465}\tabularnewline
+SHEKEL5 & 19224 & 6456 & 6345 & 9635 & 4791 & \textbf{3465}\tabularnewline
 \hline 
-SHEKEL7 & 20985 & 6528 & 9334 & 5722 & \textbf{2976}\tabularnewline
+SHEKEL7 & 20985 & 7116 & 6528 & 9334 & 5722 & \textbf{2976}\tabularnewline
 \hline 
-SHEKEL10 & 20284 & 6477 & 9998 & 5354 & \textbf{3566}\tabularnewline
+SHEKEL10 & 20284 & 6968 & 6477 & 9998 & 5354 & \textbf{3566}\tabularnewline
 \hline 
-SINU8 & 21860 & 16950 & 19241 & 5398 & \textbf{549}\tabularnewline
+SINU8 & 21860 & 13183 & 16950 & 19241 & 5398 & \textbf{549}\tabularnewline
 \hline 
-SINU32 & 39905 & 100887 & 13858 & 6887 & \textbf{1296}\tabularnewline
+SINU32 & 39905 & 92562 & 100887 & 13858 & 6887 & \textbf{1296}\tabularnewline
 \hline 
-TEST2n4 & 15938 & 6754 & 9631 & 5219 & \textbf{2890}\tabularnewline
+TEST2n4 & 15938 & 9860 & 6754 & 9631 & 5219 & \textbf{2890}\tabularnewline
 \hline 
-TEST2n5 & 18085 & 12717 & 12036 & 7672 & \textbf{3262}\tabularnewline
+TEST2n5 & 18085 & 11190 & 12717 & 12036 & 7672 & \textbf{3262}\tabularnewline
 \hline 
-TEST2n6 & 19879 & 12822 & 14438 & 8039 & \textbf{3451}\tabularnewline
+TEST2n6 & 19879 & 13185 & 12822 & 14438 & 8039 & \textbf{3451}\tabularnewline
 \hline 
-TEST2n7 & 21432 & 18620 & 16840 & 8220 & \textbf{4002}\tabularnewline
+TEST2n7 & 21432 & 14579 & 18620 & 16840 & 8220 & \textbf{4002}\tabularnewline
 \hline 
-TEST30n3 & 24450 & 2768 & 9616 & \textbf{2456} & 10818\tabularnewline
+TEST30n3 & 24450 & 13644 & 2768 & 9616 & \textbf{2456} & 10818\tabularnewline
 \hline 
-TEST30n4 & 26514 & \textbf{3894} & 10617 & 4528 & 13320\tabularnewline
+TEST30n4 & 26514 & 12004 & \textbf{3894} & 10617 & 4528 & 13320\tabularnewline
 \hline 
 \end{tabular}
 \par\end{centering}
 \end{table}
 \begin{table}
-\caption{Parameter values for the experiments. \label{tab:Parameter-values-for}}
+\caption{Parameter values for the experiments. The parameters are hold for
+Multistart, the Repulsion method and the proposed method. \label{tab:Parameter-values-for}}
 
 \centering{}%
 \begin{tabular}{|c|c|}
@@ -493,7 +507,8 @@ $k_{\mbox{min}}$ & 20\tabularnewline
 \end{tabular}
 \end{table}
 \begin{figure}
-\caption{Average number of function calls for the function Exponential.\label{fig:Average-number-of}}
+\caption{Average number of function calls for the function Exponential, as
+the dimension of the function increases.\label{fig:Average-number-of}}
 
 \centering{}\includegraphics[scale=0.7]{expplot}
 \end{figure}
@@ -1030,6 +1045,16 @@ J., Hart E., Middendorf M., Raidl G.R. (eds) Applications of Evolutionary
 Computing. EvoWorkshops 2002. Lecture Notes in Computer Science, vol
 2279. Springer, Berlin, Heidelberg. 
 
+\bibitem{multistart_fire}Gomes M.I., Afonso L.B., Chibeles-Martins
+N., Fradinho J.M. (2018) Multi-start Local Search Procedure for the
+Maximum Fire Risk Insured Capital Problem. In: Lee J., Rinaldi G.,
+Mahjoub A. (eds) Combinatorial Optimization. ISCO 2018. Lecture Notes
+in Computer Science, vol 10856. Springer, Cham. https://doi.org/10.1007/978-3-319-96151-4\_19
+
+\bibitem{multistart-aero}Streuber, Gregg M. and Zingg, David. W.,
+Evaluating the Risk of Local Optima in Aerodynamic Shape Optimization,
+AIAA Journal 59, pp. 75-87, 2012.
+
 \bibitem{bfgs}Ya-Xiang Yuan, A Modified BFGS Algorithm for Unconstrained
 Optimization, IMA Journal of Numerical Analysis \textbf{11}, pp. 325--332,
 1991.
@@ -1083,6 +1108,20 @@ J., Kacsuk P., Podhorszki N. (eds) Recent Advances in Parallel Virtual
 Machine and Message Passing Interface. EuroPVM/MPI 2000. Lecture Notes
 in Computer Science, vol 1908. Springer, Berlin, Heidelberg, 2000.
 
+\bibitem{msgpu1}R. Kamil, S. Reiji, An Efficient GPU Implementation
+of a Multi-Start TSP Solver for Large Problem Instances, Proceedings
+of the 14th Annual Conference Companion on Genetic and Evolutionary
+Computation, pp. 1441-1442, 2012.
+
+\bibitem{msgpu2}Van Luong T., Melab N., Talbi EG. (2011) GPU-Based
+Multi-start Local Search Algorithms. In: Coello C.A.C. (eds) Learning
+and Intelligent Optimization. LION 2011. Lecture Notes in Computer
+Science, vol 6683. Springer, Berlin, Heidelberg. https://doi.org/10.1007/978-3-642-25566-3\_24
+
+\bibitem{mssampling2}I.G. Tsoulos, E. Karvounis, A. Tzallas, A Novel
+Sampling Technique for Multistart-Based Methods, SN Computer Science
+2, pp.7, 2021.
+
 \bibitem{psotsoulos}Ioannis G. Tsoulos, Modifications of real code
 genetic algorithm for global optimization, Applied Mathematics and
 Computation \textbf{203}, pp. 598-607, 2008.
@@ -1095,6 +1134,10 @@ Optimization Calculations, Mathematical Programming \textbf{45}, pp.
 Minimizing multimodal functions of continuous variables with the \textquotedblleft Simulated
 Annealing\textquotedblright{} algorithm, ACM Trans. Math. Software
 13 (1987) 262--280. 
+
+\bibitem{repulsion}A.E. Sepulveda, L. Epstein, The repulsion algorithm
+a new multistart method for global optimization, Structural Optimization
+\textbf{11}, pp. 145-152, 1996 
 
 \bibitem{Ali1}M. Montaz Ali, Charoenchai Khompatraporn, Zelda B.
 Zabinsky, A Numerical Evaluation of Several Stochastic Algorithms

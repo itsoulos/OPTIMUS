@@ -76,7 +76,7 @@
 \begin_body
 
 \begin_layout Title
-MinCenter: a novel clustering technique for global optimization
+MinCenter: using clustering in global optimization
 \end_layout
 
 \begin_layout Author
@@ -96,9 +96,6 @@ Corresponding author.
 \end_layout
 
 \begin_layout Date
-\begin_inset Formula $ $
-\end_inset
-
 Department of Informatics and Telecommunications, University of Ioannina,
  Greece
 \end_layout
@@ -351,7 +348,11 @@ literal "false"
 \end_inset
 
  for large scaled functions etc.
- The proposed method creates clusters iteratively using the well - known
+ 
+\end_layout
+
+\begin_layout Standard
+The proposed method creates clusters iteratively using the well - known
  technique of the K-Means clustering introduced by MacQueen
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -433,7 +434,11 @@ literal "false"
 
 , if the number of local minimum is finite then Multistart method is capable
  to locate the global minimum.
- Due to its simplicity, the Multistart method is the base method for a series
+ 
+\end_layout
+
+\begin_layout Standard
+Due to its simplicity, the Multistart method is the base method for a series
  of stochastic methods in the relevant literature such as hybrid methods
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -451,7 +456,100 @@ literal "false"
 \end_inset
 
  etc.
- The main steps of a typical Multistart procedure are shown in Figure 
+ Also, it has been tested on many practical problems such as the TSP problem
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "multistart-tsp"
+literal "false"
+
+\end_inset
+
+, the vehicle routing problem 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "multistart-vehicle"
+literal "false"
+
+\end_inset
+
+, the maximum clique problem 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "multistart-clique"
+literal "false"
+
+\end_inset
+
+, flowshop rescheduling 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "multistart-res"
+literal "false"
+
+\end_inset
+
+, energy consumption etc.
+ The base method has been extended in different works such as enhanced stopping
+ rules for the multistart method 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "stop1,stop2,stop3,stop4"
+literal "false"
+
+\end_inset
+
+, parallel techniques 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "parallel-multistart,parallel-multistart2"
+literal "false"
+
+\end_inset
+
+, multistart hybrid methods executed on modern GPU architectures 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "msgpu1,msgpu2"
+literal "false"
+
+\end_inset
+
+ etc.
+ Also, a variety of methods have been introduced that enhance the sampling
+ in the procedure such as the repulsion sampling 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mssampling1"
+literal "false"
+
+\end_inset
+
+, methods where the sampling is guided by a neural network 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mssampling2"
+literal "false"
+
+\end_inset
+
+ etc.
+ Furthermore, the multistart method has been extended to solve also constrained
+ optimization problems 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mscons1"
+literal "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The main steps of a typical Multistart procedure are shown in Algorithm
+ 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:The-main-steps"
@@ -465,10 +563,10 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Float figure
+\begin_inset Float algorithm
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -608,7 +706,7 @@ EndFor
 \begin_layout Standard
 The proposed method replaces the sampling step of the Multistart method
  with the usage of centroids constructed by Kmeans clustering.
- The main steps of the Kmeans method are given in Figure 
+ The main steps of the Kmeans method are given in Algorithm 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:The-algorithm-Kmeans."
@@ -628,7 +726,7 @@ noprefix "false"
  The rejection procedure is necessary to remove from the set samples, that
  possible will yeld the same local optimum after the application of the
  local search procedure.
- The proposed method is described in Figure 
+ The proposed method is described in Algorithm 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:The-proposed-method."
@@ -642,10 +740,10 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Float figure
+\begin_inset Float algorithm
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -824,10 +922,10 @@ Terminate
 \end_inset
 
 
-\begin_inset Float figure
+\begin_inset Float algorithm
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1004,7 +1102,7 @@ Create
 \begin_inset Formula $C$
 \end_inset
 
- using the rejection algorithm of Figure 
+ using the rejection algorithm of Algorithm 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:The-rejection-mechanism."
@@ -1088,10 +1186,10 @@ EndFor
 \end_inset
 
 
-\begin_inset Float figure
+\begin_inset Float algorithm
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1315,7 +1413,7 @@ literal "true"
  
 \begin_inset CommandInset citation
 LatexCommand cite
-key "Tsoulos_snc"
+key "mssampling2"
 literal "false"
 
 \end_inset
@@ -1409,7 +1507,7 @@ noprefix "false"
 \begin_inset Formula $M=100$
 \end_inset
 
- denotes the application of the algorithm given in Figure 
+ denotes the application of the algorithm given in Algorithm 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:The-main-steps"
@@ -1431,7 +1529,7 @@ noprefix "false"
  stands for the Multistart algorithm using 200 samples.
  The last column stands for the results of the Multistart method with 100
  samples and the application of the proposed rejection procedure of algorithm
- in Figure 
+ in Algorithm 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:The-rejection-mechanism."
@@ -1482,13 +1580,47 @@ noprefix "false"
  This means that the method tends to create more accurate clusters (clusters
  that emulate the true regions of attraction) of the objective function
  as the number of samples increases.
+ To fully demonstrate it an additional run has been performed using different
+ values for the samples and constant number of centers: in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Plot-for-the"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ the number of required function calls for Function EXP4 are plotted against
+ the number of samples.
+ The number of samples varies between 100 and 900 and the number of centers
+ remains 
+\begin_inset Formula $K=100$
+\end_inset
+
+ for all the runs.
+ As is is evident, the number of function calls remains constant, regarding
+ the increase of samples.
+ Also, to compare the proposed method with M=100 with the M=200 for different
+ functions, the Wilcoxon signed-rank test was used.
+ The results obtained with this statistical test are shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Statistical-comparisons-for"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1644,7 +1776,7 @@ VALUE
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1700,7 +1832,7 @@ Function
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $M=100$
+\begin_inset Formula $M=200$
 \end_inset
 
 
@@ -4381,6 +4513,97 @@ TOTAL
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Plot for the EXP4 functions as the number of samples increases.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Plot-for-the"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename exp4.eps
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Scatter plot representation and Wilcoxon rank-sum test results of the comparison
+ between the samples M=100 with the M=200 for different functions.
+ A p-value of less than 0.05 (2-tailed) was used for statistical significance.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Statistical-comparisons-for"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename statistics_mincenter.eps
+	scale 120
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Conclusions 
 \begin_inset CommandInset label
@@ -4402,7 +4625,37 @@ A new clustering method was introduced in this article to tackle to global
  The proposed method was tested on a series of benchmark problems from the
  relevant literature and it is compared against the Multistart method and
  the results are reported.
- Judging from the reported results, the proposed method seems to be very
+ The proposed method outperforms traditional multistart due to creation
+ of the centers, that seem to be more accurate representatives of the regions
+ of attractions for the underlying function.
+ To achieve better representation of these regions of attractions, the centers
+ are gradually improved through repetitive sampling of the objective function.
+ 
+\end_layout
+
+\begin_layout Standard
+Despite the promising results, the method has some limitations that can
+ be addressed in future research.
+ First of all the method depends heavily on the Kmeans algorithm.
+ The method creates 
+\begin_inset Formula $K$
+\end_inset
+
+ clusters that are enhanced through sampling, but this processes can take
+ long especially for problems of higher dimension.
+ A possible solution could be to use parallel techniques for the estimation
+ of the clusters.
+ Also, the method requires an excessive memory storage just to hold the
+ member points for the 
+\begin_inset Formula $K$
+\end_inset
+
+ clusters and some efficient memory allocation mechanism should be incorporated
+ here.
+\end_layout
+
+\begin_layout Standard
+Judging from the reported results, the proposed method seems to be very
  promising and a series of enhancements could be applied on the method such
  as:
 \end_layout
@@ -4420,18 +4673,6 @@ Better estimation of the critical distance between clusters in the rejection
 \begin_layout Enumerate
 Usage of more efficient stopping rules to prevent the method from unnecessary
  local searches, that could lead to the same global optimum many times.
-\end_layout
-
-\begin_layout Subsection*
-Acknowledgments
-\end_layout
-
-\begin_layout Standard
-All experiments were conducted at the high performance computing system
- founded at Knowledge and Intelligent Computing Lab-oratory, Dept of Informatics
- and Telecommunications, University of Ioannina, acquired with the project
- "Educational Laboratory equipment of TEI of Epirus" with MIS 5007094 funded
- by the Operational Programme "Epirus" 2014-2020, by ERDF and national finds.
 \end_layout
 
 \begin_layout Subsection*
@@ -5161,6 +5402,272 @@ Festa P., Resende M.G.C.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "multistart-tsp"
+literal "true"
+
+\end_inset
+
+Li W., A Parallel Multi-start Search Algorithm for Dynamic Traveling Salesman
+ Problem.
+ In: Pardalos P.M., Rebennack S.
+ (eds) Experimental Algorithms.
+ SEA 2011.
+ Lecture Notes in Computer Science, vol 6630.
+ Springer, Berlin, Heidelberg, 2011.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "multistart-vehicle"
+literal "true"
+
+\end_inset
+
+Olli Bräysy, Geir Hasle, Wout Dullaert, A multi-start local search algorithm
+ for the vehicle routing problem with time windows, European Journal of
+ Operational Research 
+\series bold
+159
+\series default
+, pp.
+ 586-605, 2004.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "multistart-clique"
+literal "false"
+
+\end_inset
+
+Q.
+ Wu, JK.
+ Hao, An adaptive multistart tabu search approach to solve the maximum clique
+ problem, J Comb Optim 
+\series bold
+26
+\series default
+, pp.
+ 86–108, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "multistart-res"
+literal "false"
+
+\end_inset
+
+K.
+ Peng,Quan-Ke Pan, L.
+ Gao, X.
+ Li, S.
+ Das, B.
+ Zhang, A multi-start variable neighbourhood descent algorithm for hybrid
+ flowshop rescheduling, Swarm and Evolutionary Computation 
+\series bold
+45
+\series default
+, pp.
+ 92-112, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "multistart-energy"
+literal "false"
+
+\end_inset
+
+Y.
+ Kessaci, N.
+ Melab, E.G.
+ Talbi, A multi-start local search heuristic for an energy efficient VMs
+ assignment on top of the OpenNebula cloud manager, Future Generation Computer
+ Systems 
+\series bold
+36
+\series default
+, pp.
+ 237-256, 2014.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "stop3"
+literal "false"
+
+\end_inset
+
+B.
+ Betrò, F.
+ Schoen, Optimal and sub-optimal stopping rules for the Multistart algorithm
+ in global optimization, Mathematical Programming 
+\series bold
+57
+\series default
+, pp.
+ 445–458, 1992.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "stop4"
+literal "false"
+
+\end_inset
+
+W.E.
+ Hart, Sequential stopping rules for random optimization methods with applicatio
+ns to multistart local search, Siam J.
+ Optim.
+ 
+\series bold
+9
+\series default
+, pp.
+ 270–290, 1998.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "parallel-multistart"
+literal "true"
+
+\end_inset
+
+J.
+ Larson and S.M.
+ Wild, Asynchronously parallel optimization solver for finding multiple
+ minima, Mathematical Programming Computation 
+\series bold
+10
+\series default
+, pp.
+ 303-332, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "parallel-multistart2"
+literal "true"
+
+\end_inset
+
+H.P.J.
+ Bolton, J.F.
+ Schutte, A.A.
+ Groenwold, Multiple Parallel Local Searches in Global Optimization.
+ In: Dongarra J., Kacsuk P., Podhorszki N.
+ (eds) Recent Advances in Parallel Virtual Machine and Message Passing Interface.
+ EuroPVM/MPI 2000.
+ Lecture Notes in Computer Science, vol 1908.
+ Springer, Berlin, Heidelberg, 2000.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "msgpu1"
+literal "false"
+
+\end_inset
+
+R.
+ Kamil, S.
+ Reiji, An Efficient GPU Implementation of a Multi-Start TSP Solver for
+ Large Problem Instances, Proceedings of the 14th Annual Conference Companion
+ on Genetic and Evolutionary Computation, pp.
+ 1441-1442, 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "msgpu2"
+literal "false"
+
+\end_inset
+
+Van Luong T., Melab N., Talbi EG.
+ (2011) GPU-Based Multi-start Local Search Algorithms.
+ In: Coello C.A.C.
+ (eds) Learning and Intelligent Optimization.
+ LION 2011.
+ Lecture Notes in Computer Science, vol 6683.
+ Springer, Berlin, Heidelberg.
+ https://doi.org/10.1007/978-3-642-25566-3_24
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "mssampling1"
+literal "false"
+
+\end_inset
+
+A.E.
+ Sepulveda, L.
+ Epstein, The repulsion algorithm a new multistart method for global optimizatio
+n, Structural Optimization 
+\series bold
+11
+\series default
+, pp.
+ 145-152, 1996.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "mssampling2"
+literal "false"
+
+\end_inset
+
+I.G.
+ Tsoulos, E.
+ Karvounis, A.
+ Tzallas, A Novel Sampling Technique for Multistart-Based Methods, SN Computer
+ Science 2, pp.7, 2021.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "mscons1"
+literal "false"
+
+\end_inset
+
+J.O.H.
+ Sendín, J.R.
+ Banga, T.
+ Csendes, Extensions of a Multistart Clustering Algorithm for Constrained
+ Global Optimization Problems, Ind.
+ Eng.
+ Chem.
+ Res.
+ 
+\series bold
+48
+\series default
+, pp.
+ 3014–3023, 2009.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "Ali1"
 literal "true"
 
@@ -5205,23 +5712,6 @@ s, S.
  Meyer, C.
  Schweiger, Handbook of Test Problems in Local and Global Optimization,
  Kluwer Academic Publishers, Dordrecht, 1999.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "Tsoulos_snc"
-literal "false"
-
-\end_inset
-
-Tsoulos, I.G., Karvounis, E.
- & Tzallas, A.
- A Novel Sampling Technique for Multistart-Based Methods.
- SN COMPUT.
- SCI.
- 2, 7 (2021).
- https://doi.org/10.1007/s42979-020-00392-9
 \end_layout
 
 \begin_layout Bibliography

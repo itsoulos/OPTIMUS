@@ -338,6 +338,22 @@ literal "false"
 
 \end_inset
 
+, the maximum fire risk insured capital problem 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "multistart_fire"
+literal "false"
+
+\end_inset
+
+, aerodynamic shape problems 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "multistart-aero"
+literal "false"
+
+\end_inset
+
  etc.
  During the past year, the method multistart has been enhanced in the relevant
  literature with methods that target to discover all the local minima of
@@ -381,10 +397,24 @@ literal "true"
 
 \end_inset
 
- etc.
+, methods that utlize the modern GPU architectures to execute 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "msgpu1,msgpu2"
+literal "false"
 
-\series bold
- 
+\end_inset
+
+, methods that introduces sampling in the multistart method using Neural
+ Networks 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mssampling2"
+literal "false"
+
+\end_inset
+
+ etc.
 \end_layout
 
 \begin_layout Standard
@@ -755,7 +785,8 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-The procedure gradientCheck(x).
+The procedure gradientCheck(x), used to reject points from being start points
+ of the local search procedure.
 \begin_inset CommandInset label
 LatexCommand label
 name "alg:The-procedure-gradientCheck(x)."
@@ -1070,7 +1101,9 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Plot for Rastrigin function and the discarding procedure.
+Plot for the proportion of local search starts over total number of samples
+ for the Rastrigin function for the first 20 iterations.
+ 
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Plot-for-Rastrigin"
@@ -1112,7 +1145,8 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Plot for the function Exp16 and the discarding procedure.
+Plot for the proportion of local search starts over total number of samples
+ for the EXP16 function for the first 20 iterations.
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Plot-for-exp16"
@@ -1512,6 +1546,21 @@ Multistart method.
 \end_layout
 
 \begin_layout Enumerate
+Multistart method with the repulsion sampling technique 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "repulsion"
+literal "false"
+
+\end_inset
+
+ (title MREP).
+ During the repulsion sampling, any produced sample is repelled to a new
+ location by the old starting points, in order to avoid already visited
+ regions of attraction.
+\end_layout
+
+\begin_layout Enumerate
 Controlled Random Search denoted as CRS in the results.
  The implementation used here is based on the algorithm of Price
 \begin_inset CommandInset citation
@@ -1598,6 +1647,9 @@ noprefix "false"
  On the other hand, the Simulated Annealing managed to solve with success
  all the optimization problems, although it requires more function calls
  than the proposed method and the same holds for the simple Multistart method.
+ Also, the Repulsion method seems to overcome the simple Multistart but
+ in the majority of cases require significant more function calls than the
+ proposed method.
 \end_layout
 
 \begin_layout Standard
@@ -1702,7 +1754,7 @@ noprefix "false"
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1727,8 +1779,9 @@ name "tab:Average-number-of"
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="32" columns="6">
+<lyxtabular version="3" rows="32" columns="7">
 <features tabularvalignment="middle">
+<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -1750,6 +1803,15 @@ PROBLEM
 
 \begin_layout Plain Layout
 MULTISTART
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MREP
 \end_layout
 
 \end_inset
@@ -1806,6 +1868,15 @@ BF1
 
 \begin_layout Plain Layout
 22533
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5767
 \end_layout
 
 \end_inset
@@ -1872,6 +1943,15 @@ BF2
 \begin_inset Text
 
 \begin_layout Plain Layout
+4873
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 2207
 \end_layout
 
@@ -1922,6 +2002,15 @@ BRANIN
 
 \begin_layout Plain Layout
 9735
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4221
 \end_layout
 
 \end_inset
@@ -1988,6 +2077,15 @@ CM4
 \begin_inset Text
 
 \begin_layout Plain Layout
+15216
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 4746
 \end_layout
 
@@ -2038,6 +2136,15 @@ CAMEL
 
 \begin_layout Plain Layout
 13688
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4828
 \end_layout
 
 \end_inset
@@ -2104,6 +2211,15 @@ DIFFPOWER10
 \begin_inset Text
 
 \begin_layout Plain Layout
+67129
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 78634
 \end_layout
 
@@ -2154,6 +2270,15 @@ EASOM
 
 \begin_layout Plain Layout
 5372
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3834
 \end_layout
 
 \end_inset
@@ -2220,6 +2345,15 @@ EXP8
 \begin_inset Text
 
 \begin_layout Plain Layout
+7226
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 13239
 \end_layout
 
@@ -2270,6 +2404,15 @@ EXP32
 
 \begin_layout Plain Layout
 18294
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7600
 \end_layout
 
 \end_inset
@@ -2336,6 +2479,15 @@ GKLS250
 \begin_inset Text
 
 \begin_layout Plain Layout
+3854
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 1633
 \end_layout
 
@@ -2386,6 +2538,15 @@ GKLS350
 
 \begin_layout Plain Layout
 10104
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5081
 \end_layout
 
 \end_inset
@@ -2452,6 +2613,15 @@ GRIEWANK2
 \begin_inset Text
 
 \begin_layout Plain Layout
+5031
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 2111
 \end_layout
 
@@ -2502,6 +2672,15 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 53372
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+28289
 \end_layout
 
 \end_inset
@@ -2568,6 +2747,15 @@ HANSEN
 \begin_inset Text
 
 \begin_layout Plain Layout
+5268(0.97)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 3348
 \end_layout
 
@@ -2618,6 +2806,15 @@ HARTMAN3
 
 \begin_layout Plain Layout
 14815
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5807
 \end_layout
 
 \end_inset
@@ -2684,6 +2881,15 @@ HARTMAN6
 \begin_inset Text
 
 \begin_layout Plain Layout
+7598
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 9276
 \end_layout
 
@@ -2734,6 +2940,15 @@ POTENTIAL5
 
 \begin_layout Plain Layout
 111631
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+29281
 \end_layout
 
 \end_inset
@@ -2800,6 +3015,17 @@ POTENTIAL10
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
+73080
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 193066
 \end_layout
 
@@ -2827,8 +3053,6 @@ POTENTIAL10
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
 91094
 \end_layout
 
@@ -2850,6 +3074,17 @@ POTENTIAL20
 
 \begin_layout Plain Layout
 280575
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+135164
 \end_layout
 
 \end_inset
@@ -2885,8 +3120,6 @@ POTENTIAL20
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
 170524(0.97)
 \end_layout
 
@@ -2908,6 +3141,15 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 16968
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4706
 \end_layout
 
 \end_inset
@@ -2974,6 +3216,15 @@ SHEKEL5
 \begin_inset Text
 
 \begin_layout Plain Layout
+6456
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 6345
 \end_layout
 
@@ -3024,6 +3275,15 @@ SHEKEL7
 
 \begin_layout Plain Layout
 20985
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7116
 \end_layout
 
 \end_inset
@@ -3090,6 +3350,15 @@ SHEKEL10
 \begin_inset Text
 
 \begin_layout Plain Layout
+6968
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 6477
 \end_layout
 
@@ -3140,6 +3409,15 @@ SINU8
 
 \begin_layout Plain Layout
 21860
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13183
 \end_layout
 
 \end_inset
@@ -3206,6 +3484,15 @@ SINU32
 \begin_inset Text
 
 \begin_layout Plain Layout
+92562
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 100887
 \end_layout
 
@@ -3256,6 +3543,15 @@ TEST2n4
 
 \begin_layout Plain Layout
 15938
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9860
 \end_layout
 
 \end_inset
@@ -3322,6 +3618,15 @@ TEST2n5
 \begin_inset Text
 
 \begin_layout Plain Layout
+11190
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 12717
 \end_layout
 
@@ -3372,6 +3677,15 @@ TEST2n6
 
 \begin_layout Plain Layout
 19879
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13185
 \end_layout
 
 \end_inset
@@ -3438,6 +3752,15 @@ TEST2n7
 \begin_inset Text
 
 \begin_layout Plain Layout
+14579
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 18620
 \end_layout
 
@@ -3488,6 +3811,15 @@ TEST30n3
 
 \begin_layout Plain Layout
 24450
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13644
 \end_layout
 
 \end_inset
@@ -3554,6 +3886,15 @@ TEST30n4
 \begin_inset Text
 
 \begin_layout Plain Layout
+12004
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 
 \series bold
 3894
@@ -3606,13 +3947,15 @@ TEST30n4
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Parameter values for the experiments.
+ The parameters are hold for Multistart, the Repulsion method and the proposed
+ method.
  
 \begin_inset CommandInset label
 LatexCommand label
@@ -3737,13 +4080,14 @@ VALUE
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Average number of function calls for the function Exponential.
+Average number of function calls for the function Exponential, as the dimension
+ of the function increases.
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Average-number-of"
@@ -3775,7 +4119,7 @@ name "fig:Average-number-of"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -3818,7 +4162,7 @@ name "fig:Average-number-of-1"
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -5745,6 +6089,40 @@ E.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "multistart_fire"
+literal "false"
+
+\end_inset
+
+Gomes M.I., Afonso L.B., Chibeles-Martins N., Fradinho J.M.
+ (2018) Multi-start Local Search Procedure for the Maximum Fire Risk Insured
+ Capital Problem.
+ In: Lee J., Rinaldi G., Mahjoub A.
+ (eds) Combinatorial Optimization.
+ ISCO 2018.
+ Lecture Notes in Computer Science, vol 10856.
+ Springer, Cham.
+ https://doi.org/10.1007/978-3-319-96151-4_19
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "multistart-aero"
+literal "false"
+
+\end_inset
+
+Streuber, Gregg M.
+ and Zingg, David.
+ W., Evaluating the Risk of Local Optima in Aerodynamic Shape Optimization,
+ AIAA Journal 59, pp.
+ 75-87, 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "bfgs"
 literal "true"
 
@@ -5971,6 +6349,55 @@ H.P.J.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "msgpu1"
+literal "false"
+
+\end_inset
+
+R.
+ Kamil, S.
+ Reiji, An Efficient GPU Implementation of a Multi-Start TSP Solver for
+ Large Problem Instances, Proceedings of the 14th Annual Conference Companion
+ on Genetic and Evolutionary Computation, pp.
+ 1441-1442, 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "msgpu2"
+literal "false"
+
+\end_inset
+
+Van Luong T., Melab N., Talbi EG.
+ (2011) GPU-Based Multi-start Local Search Algorithms.
+ In: Coello C.A.C.
+ (eds) Learning and Intelligent Optimization.
+ LION 2011.
+ Lecture Notes in Computer Science, vol 6683.
+ Springer, Berlin, Heidelberg.
+ https://doi.org/10.1007/978-3-642-25566-3_24
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "mssampling2"
+literal "false"
+
+\end_inset
+
+I.G.
+ Tsoulos, E.
+ Karvounis, A.
+ Tzallas, A Novel Sampling Technique for Multistart-Based Methods, SN Computer
+ Science 2, pp.7, 2021.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "psotsoulos"
 literal "true"
 
@@ -6021,6 +6448,25 @@ literal "false"
  Math.
  Software 13 (1987) 262–280.
  
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "repulsion"
+literal "false"
+
+\end_inset
+
+A.E.
+ Sepulveda, L.
+ Epstein, The repulsion algorithm a new multistart method for global optimizatio
+n, Structural Optimization 
+\series bold
+11
+\series default
+, pp.
+ 145-152, 1996 
 \end_layout
 
 \begin_layout Bibliography

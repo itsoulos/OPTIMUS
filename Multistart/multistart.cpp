@@ -25,14 +25,47 @@ bool Multistart::terminated()
     return (iteration>=multistart_maxiterations || (variance<=stopat && iteration>=10));
 }
 
+double mdelta(double a,double r0,double r)
+{
+        double b=a/r0;
+        if(r>=0 && r<=r0) return a-b*r;
+        return 0.0;
+}
+
+vector<Data> samplex;
+
 void    Multistart::step()
 {
     int Multistart_samples=params["multistart_samples"].toString().toInt();
     ++iteration;
+	QString sampling="repulsion";
 #pragma omp parallel for num_threads(threads)
     for(int i=0;i<Multistart_samples;i++)
     {
         Data trialx=myProblem->getRandomPoint();
+    	if(sampling=="repulsion")
+    {
+        const double alpha=0.1;
+        const double rho0=0.25;
+        trialx=myProblem->getRandomPoint();
+        for(int j=0;j<trialx.size();j++)
+        {
+           double y=trialx[j];
+           for(int k=0;k<samplex.size();k++)
+           {
+              Data z=trialx;
+              z=samplex[k];
+              for(int l=0;l<z.size();l++)
+              {
+                  double r=getDistance(trialx,z);
+                  double u=y+mdelta(alpha,rho0,r)*(y-z[l])/r;
+                  trialx[j]=u;
+               }
+            }
+
+         }
+	samplex.push_back(trialx);
+    }
         double y=localSearch(trialx);
 #pragma omp critical
 {
@@ -54,6 +87,7 @@ void Multistart::init()
     oldBesty=1e+100;
     mbesty=1e+100;
     trialx.resize(myProblem->getDimension());
+	samplex.clear();
 }
 
 void Multistart::done()
