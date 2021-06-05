@@ -1,4 +1,4 @@
-METHOD=Multistart
+METHOD=Tmlsl
 METHODPARAMS=""
 ### Available local search methods: bfgs, gradient, adam, lbfgs
 if [ $METHOD = "Minfinder" ]

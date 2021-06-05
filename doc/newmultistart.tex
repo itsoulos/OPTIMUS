@@ -337,8 +337,10 @@ where $\lambda>0$.
 The proposed method was tested on a series of unconstrained and constrained
 optimization functions that are listed in the Appendix. The local
 search procedure in all experiments and methods was a BFGS variant
-of Powell\cite{powell}. The method was tested against four methods
-from the relevant literature:
+of Powell\cite{powell}. Two series of test were performed. In the
+first series the proposed method was tested against some other restarting
+techniques from the relevant literature and the results are listed
+in Table \ref{tab:restart}. These methods are:
 \begin{enumerate}
 \item Multistart method. This is simple method, who samples a series of
 points each time (the same number as the proposed method) and performs
@@ -350,6 +352,16 @@ C++.
 (title MREP). During the repulsion sampling, any produced sample is
 repelled to a new location by the old starting points, in order to
 avoid already visited regions of attraction.
+\item The Topographical Multilevel Single Linkage (TMLSL) method proposed
+in \cite{tmlsl}. This is another enhancement of the Multistart method,
+that is based on the discovery of the so - called graph minima in
+order to reduce the number of function calls. The implemented TMLSL
+algorithm uses the suggested $N=10n$ value for the number of samples
+used in every iteration of the method.
+\end{enumerate}
+In the second series of experiments the method was tested against
+some state of the art methods from the relevant literature:
+\begin{enumerate}
 \item Controlled Random Search denoted as CRS in the results. The implementation
 used here is based on the algorithm of Price\cite{crs1} made in Ansi
 C++. The method uses the suggested $N=25n$ from price value for the
@@ -362,24 +374,30 @@ here is the work of Corana\cite{corana}.
 results. The implemented software here is coded in ANSI C++ and utilizes
 the same stopping rule as in the proposed method. 
 \end{enumerate}
-The experimental results are reported in Table \ref{tab:Average-number-of}.
-The number in the cells denotes average function calls for 30 runs
-using with seed for the random generator each time. The fraction in
-parentheses stands for the fraction of runs where the global optimum
-was found. If this number is missing then the global minimum was discovered
-in every independent run (100\% success). The parameters used in the
-experiments are listed in Table \ref{tab:Parameter-values-for}. The
-bold letters were used to demonstrate the method that achieved the
-best average result. The proposed method seems to require less number
-of function calls than the other methods and the PSO technique shown
-to work well for small problems like BF1 or BRANIN but failed to work
-on bigger problems such Potential20, a problem with dimension 60 and
-thousands of local minima. On the other hand, the Simulated Annealing
-managed to solve with success all the optimization problems, although
-it requires more function calls than the proposed method and the same
-holds for the simple Multistart method. Also, the Repulsion method
-seems to overcome the simple Multistart but in the majority of cases
-require significant more function calls than the proposed method.
+The experimental results for the second series of the experiments
+are reported in Table \ref{tab:Average-number-of}. The number in
+the cells denotes average function calls for 30 runs using with seed
+for the random generator each time. The fraction in parentheses stands
+for the fraction of runs where the global optimum was found. If this
+number is missing then the global minimum was discovered in every
+independent run (100\% success). The parameters used in the experiments
+are listed in Table \ref{tab:Parameter-values-for}. The bold letters
+were used to demonstrate the method that achieved the best average
+result. 
+
+The proposed method seems to require less number of function calls
+than the other methods and the PSO technique shown to work well for
+small problems like BF1 or BRANIN but failed to work on bigger problems
+such Potential20, a problem with dimension 60 and thousands of local
+minima. Also, in some small problems the TMLSL required less function
+calls than the other methods, but in the majority of cases TMLSL did
+not manage to discover the global minimum of the mentioned test functions
+in every run. On the other hand, the Simulated Annealing managed to
+solve with success all the optimization problems, although it requires
+more function calls than the proposed method and the same holds for
+the simple Multistart method. Also, the Repulsion method seems to
+overcome the simple Multistart but in the majority of cases require
+significant more function calls than the proposed method.
 
 In Table \ref{tab:Results-from-comparisons} the results from the
 comparison of Multistart and the proposed method for the constrained
@@ -415,75 +433,152 @@ There was not, however, a significant difference between PSO and the
 proposed method. 
 
 \begin{table}
-\caption{Average number of function calls for the proposed functions. \label{tab:Average-number-of}}
+\caption{Comparison results between the proposed method and other restart methods.\label{tab:restart}}
 
 \begin{centering}
-\begin{tabular}{|c|c|c|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|}
 \hline 
-PROBLEM & MULTISTART & MREP & CRS & SA & PSO & PROPOSED\tabularnewline
+PROBLEM & MULTISTART & MREP & TMLSL & PROPOSED\tabularnewline
 \hline 
 \hline 
-BF1 & 22533 & 5767 & 2218 & 3845 & \textbf{2494} & 2833\tabularnewline
+BF1 & 22533 & 5767 & 601(0.8) & \textbf{2833}\tabularnewline
 \hline 
-BF2 & 18809 & 4873 & 2207 & 3340 & 2641 & \textbf{2629}\tabularnewline
+BF2 & 18809 & 4873 & 575(0.83) & \textbf{2629}\tabularnewline
 \hline 
-BRANIN & 9735 & 4221 & 1744 & 4816 & \textbf{1636} & 1753\tabularnewline
+BRANIN & 9735 & 4221 & \textbf{498} & 1753\tabularnewline
 \hline 
-CM4 & 27037 & 15216 & 4746 & 9652 & 2988 & \textbf{2293}\tabularnewline
+CM4 & 27037 & 15216 & 1125(0.4) & \textbf{2293}\tabularnewline
 \hline 
-CAMEL & 13688 & 4828 & 1882 & 4820 & \textbf{1639} & 1732\tabularnewline
+CAMEL & 13688 & 4828 & \textbf{503} & \textbf{1732}\tabularnewline
 \hline 
-DIFFPOWER10 & 1194776 & 67129 & 78634 & 25918 & 15500(0.87) & \textbf{19572}\tabularnewline
+DIFFPOWER10 & 1194776 & 67129 & 48847 & \textbf{19572}\tabularnewline
 \hline 
-EASOM & 5372 & 3834 & 588 & 4807 & 866 & \textbf{199}\tabularnewline
+EASOM & 5372 & 3834 & 471 & \textbf{199}\tabularnewline
 \hline 
-EXP8 & 12022 & 7226 & 13239 & 19233 & 3084 & \textbf{2830}\tabularnewline
+EXP8 & 12022 & 7226 & \textbf{1675} & 2830\tabularnewline
 \hline 
-EXP32 & 18294 & 7600 & 93520 & 76842 & 5055 & \textbf{3265}\tabularnewline
+EXP32 & 18294 & 7600 & 6462 & \textbf{3265}\tabularnewline
 \hline 
-GKLS250 & 17333(0.77) & 3854 & 1633 & 4120 & \textbf{1459} & 2415\tabularnewline
+GKLS250 & 17333(0.77) & 3854 & 3980 & \textbf{2415}\tabularnewline
 \hline 
-GKLS350 & 10104 & 5081 & 3329 & 7229 & 2259(0.97) & \textbf{243}\tabularnewline
+GKLS350 & 10104 & 5081 & 776(0.97) & \textbf{243}\tabularnewline
 \hline 
-GRIEWANK2 & 13003 & 5031 & 2111 & 3830 & 2595(0.83) & \textbf{1786}\tabularnewline
+GRIEWANK2 & 13003 & 5031 & 520(0.20) & \textbf{1786}\tabularnewline
 \hline 
-GRIEWANK10 & 53372 & 28289 & 32037 & 24118 & 8378(0.25) & \textbf{7184}\tabularnewline
+GRIEWANK10 & 53372 & 28289 & 2182(0.40) & \textbf{7184}\tabularnewline
 \hline 
-HANSEN & 15294 & 5268(0.97) & 3348 & 3323 & 4284 & \textbf{1510}\tabularnewline
+HANSEN & 15294 & 5268(0.97) & 702(0.97) & \textbf{1510}\tabularnewline
 \hline 
-HARTMAN3 & 14815 & 5807 & 2898 & 7227 & \textbf{2448} & 11463\tabularnewline
+HARTMAN3 & 14815 & 5807 & \textbf{1366} & 11463\tabularnewline
 \hline 
-HARTMAN6 & 19459 & 7598 & 9276 & 14440 & 4645 & \textbf{3740}\tabularnewline
+HARTMAN6 & 19459 & 7598 & \textbf{2762} & 3740\tabularnewline
 \hline 
-POTENTIAL5 & 111631 & 29281 & 95027 & 36084 & \textbf{20100} & 49601\tabularnewline
+POTENTIAL5 & 111631 & 29281 & \textbf{7196} & 49601\tabularnewline
 \hline 
-POTENTIAL10 & 208405 & \textbf{73080} & 193066 & 172166 & 19610(0.13) & 91094\tabularnewline
+POTENTIAL10 & 208405 & \textbf{73080} & 125410(0.93) & 91094\tabularnewline
 \hline 
-POTENTIAL20 & 280575 & \textbf{135164} & 189591(0.53) & 244314 & 18466(0.03) & 170524(0.97)\tabularnewline
+POTENTIAL20 & 280575 & \textbf{135164} & 143930 & 170524(0.97)\tabularnewline
 \hline 
-RASTRIGIN & 16968 & 4706 & 1906 & 3343 & 2258 & \textbf{675}\tabularnewline
+RASTRIGIN & 16968 & 4706 & 637(0.40) & \textbf{675}\tabularnewline
 \hline 
-SHEKEL5 & 19224 & 6456 & 6345 & 9635 & 4791 & \textbf{3465}\tabularnewline
+SHEKEL5 & 19224 & 6456 & \textbf{1020} & 3465\tabularnewline
 \hline 
-SHEKEL7 & 20985 & 7116 & 6528 & 9334 & 5722 & \textbf{2976}\tabularnewline
+SHEKEL7 & 20985 & 7116 & 1035(0.90) & \textbf{2976}\tabularnewline
 \hline 
-SHEKEL10 & 20284 & 6968 & 6477 & 9998 & 5354 & \textbf{3566}\tabularnewline
+SHEKEL10 & 20284 & 6968 & 1060(0.90) & \textbf{3566}\tabularnewline
 \hline 
-SINU8 & 21860 & 13183 & 16950 & 19241 & 5398 & \textbf{549}\tabularnewline
+SINU8 & 21860 & 13183 & 5489(0.93) & \textbf{549}\tabularnewline
 \hline 
-SINU32 & 39905 & 92562 & 100887 & 13858 & 6887 & \textbf{1296}\tabularnewline
+SINU32 & 39905 & 92562 & 111042(0.93) & \textbf{1296}\tabularnewline
 \hline 
-TEST2n4 & 15938 & 9860 & 6754 & 9631 & 5219 & \textbf{2890}\tabularnewline
+TEST2n4 & 15938 & 9860 & 1257(0.93) & \textbf{2890}\tabularnewline
 \hline 
-TEST2n5 & 18085 & 11190 & 12717 & 12036 & 7672 & \textbf{3262}\tabularnewline
+TEST2n5 & 18085 & 11190 & 2173(0.73) & \textbf{3262}\tabularnewline
 \hline 
-TEST2n6 & 19879 & 13185 & 12822 & 14438 & 8039 & \textbf{3451}\tabularnewline
+TEST2n6 & 19879 & 13185 & 2113(0.23) & \textbf{3451}\tabularnewline
 \hline 
-TEST2n7 & 21432 & 14579 & 18620 & 16840 & 8220 & \textbf{4002}\tabularnewline
+TEST2n7 & 21432 & 14579 & 8989(0.50) & \textbf{4002}\tabularnewline
 \hline 
-TEST30n3 & 24450 & 13644 & 2768 & 9616 & \textbf{2456} & 10818\tabularnewline
+TEST30n3 & 24450 & 13644 & \textbf{916} & 10818\tabularnewline
 \hline 
-TEST30n4 & 26514 & 12004 & \textbf{3894} & 10617 & 4528 & 13320\tabularnewline
+TEST30n4 & 26514 & 12004 & \textbf{1592} & 13320\tabularnewline
+\hline 
+\end{tabular}
+\par\end{centering}
+\end{table}
+
+\begin{table}
+\caption{Average number of function calls for the proposed functions. Comparison
+between the proposed method and some state of the art global optimization
+methods. \label{tab:Average-number-of}}
+
+\begin{centering}
+\begin{tabular}{|c|c|c|c|c|}
+\hline 
+PROBLEM & CRS & SA & PSO & PROPOSED\tabularnewline
+\hline 
+\hline 
+BF1 & 2218 & 3845 & \textbf{2494} & 2833\tabularnewline
+\hline 
+BF2 & 2207 & 3340 & 2641 & \textbf{2629}\tabularnewline
+\hline 
+BRANIN & 1744 & 4816 & \textbf{1636} & 1753\tabularnewline
+\hline 
+CM4 & 4746 & 9652 & 2988 & \textbf{2293}\tabularnewline
+\hline 
+CAMEL & 1882 & 4820 & \textbf{1639} & 1732\tabularnewline
+\hline 
+DIFFPOWER10 & 78634 & 25918 & 15500(0.87) & \textbf{19572}\tabularnewline
+\hline 
+EASOM & 588 & 4807 & 866 & \textbf{199}\tabularnewline
+\hline 
+EXP8 & 13239 & 19233 & 3084 & \textbf{2830}\tabularnewline
+\hline 
+EXP32 & 93520 & 76842 & 5055 & \textbf{3265}\tabularnewline
+\hline 
+GKLS250 & 1633 & 4120 & \textbf{1459} & 2415\tabularnewline
+\hline 
+GKLS350 & 3329 & 7229 & 2259(0.97) & \textbf{243}\tabularnewline
+\hline 
+GRIEWANK2 & 2111 & 3830 & 2595(0.83) & \textbf{1786}\tabularnewline
+\hline 
+GRIEWANK10 & 32037 & 24118 & 8378(0.25) & \textbf{7184}\tabularnewline
+\hline 
+HANSEN & 3348 & 3323 & 4284 & \textbf{1510}\tabularnewline
+\hline 
+HARTMAN3 & 2898 & 7227 & \textbf{2448} & 11463\tabularnewline
+\hline 
+HARTMAN6 & 9276 & 14440 & 4645 & \textbf{3740}\tabularnewline
+\hline 
+POTENTIAL5 & 95027 & 36084 & \textbf{20100} & 49601\tabularnewline
+\hline 
+POTENTIAL10 & 193066 & 172166 & 19610(0.13) & 91094\tabularnewline
+\hline 
+POTENTIAL20 & 189591(0.53) & 244314 & 18466(0.03) & 170524(0.97)\tabularnewline
+\hline 
+RASTRIGIN & 1906 & 3343 & 2258 & \textbf{675}\tabularnewline
+\hline 
+SHEKEL5 & 6345 & 9635 & 4791 & \textbf{3465}\tabularnewline
+\hline 
+SHEKEL7 & 6528 & 9334 & 5722 & \textbf{2976}\tabularnewline
+\hline 
+SHEKEL10 & 6477 & 9998 & 5354 & \textbf{3566}\tabularnewline
+\hline 
+SINU8 & 16950 & 19241 & 5398 & \textbf{549}\tabularnewline
+\hline 
+SINU32 & 100887 & 13858 & 6887 & \textbf{1296}\tabularnewline
+\hline 
+TEST2n4 & 6754 & 9631 & 5219 & \textbf{2890}\tabularnewline
+\hline 
+TEST2n5 & 12717 & 12036 & 7672 & \textbf{3262}\tabularnewline
+\hline 
+TEST2n6 & 12822 & 14438 & 8039 & \textbf{3451}\tabularnewline
+\hline 
+TEST2n7 & 18620 & 16840 & 8220 & \textbf{4002}\tabularnewline
+\hline 
+TEST30n3 & 2768 & 9616 & \textbf{2456} & 10818\tabularnewline
+\hline 
+TEST30n4 & \textbf{3894} & 10617 & 4528 & 13320\tabularnewline
 \hline 
 \end{tabular}
 \par\end{centering}
@@ -1060,7 +1155,7 @@ Optimization, IMA Journal of Numerical Analysis \textbf{11}, pp. 325--332,
 1991.
 
 \bibitem{tmlsl}M.M. Ali, C. Storey, Topographical multilevel single
-linkage, J. Global Optimization 5 (1994) 349--358
+linkage, J. Global Optimization \textbf{5}, pp. 349--358,1994
 
 \bibitem{Salhi}S. Salhi, N.M. Queen, A hybrid algorithm for identifying
 global and local minima when optimizing functions with many minima,
