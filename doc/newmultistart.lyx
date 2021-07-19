@@ -194,6 +194,18 @@ literal "false"
 \end_inset
 
  etc.
+ Additionally, global optimization methods have been widely applied to solve
+ nonlinear coeffient inverse problems 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "global_nonlinear1,global_nonlinear2,global_nonlinear3"
+literal "false"
+
+\end_inset
+
+.
+ These problems are of great interest for many areas such as acoustics,
+ electromagnetics, medical imaging etc.
  Global optimization methods usually are divided into two main categories:
  deterministic and stochastic methods.
  The most common methods of the first category are the so called Interval
@@ -220,7 +232,7 @@ literal "true"
 
 \end_inset
 
-, Simulated Annealing methods 
+ , Simulated Annealing methods 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "simann_major,simann1,simann2"
@@ -289,7 +301,6 @@ literal "false"
 \end_inset
 
 .
- 
 \end_layout
 
 \begin_layout Standard
@@ -355,7 +366,9 @@ literal "false"
 \end_inset
 
  etc.
- During the past year, the method multistart has been enhanced in the relevant
+ 
+\series bold
+During the past year, the method multistart has been enhanced in the relevant
  literature with methods that target to discover all the local minima of
  a function 
 \begin_inset CommandInset citation
@@ -5519,12 +5532,62 @@ name "sec:Conclusions"
 \begin_layout Standard
 A novel multistart based method is described and tested here for global
  optimization problems.
- The method utilizes an efficient discarding procedure to prevent the method
- from unnecessary function calls and an asymptotic stopping rule to stop
- the algorithm where there is a good probability that the global optimum
- has been discovered.
- The method was tested on a series of well known optimization problems from
- the relevant literature and proved to be efficient and fast.
+ The method incorporate an asymptotic stopping rule to prevent the method
+ from executing unnecessary local searches.
+ This stopping rule terminates the algorithm, when under some certainty
+ the global optimum has been located.
+ Also, the proposed method utilizes an efficient discarding procedure which
+ rejects points from being start points for the local search procedure if
+ are too close to some other located local minima.
+ This discarding procedure gradually creates a map of the regions of attraction
+ for the underlying objective problem.
+ Judging from the reported results, the method proved to be efficient and
+ fast.
+ The method also has been generalized to be applied in constrained optimization
+ problems by modifying the objective problem to take account the constraints
+ of the problem.
+ Of course the method can be improved in some areas such as:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Running time
+\series default
+.
+ Even though, the method rejects many points to be starting points, for
+ some problems it can require an excessive amount of computational time.
+ This effect can be minimized with the parallelization of the method using
+ advanced techniques such as MPI and OpenMP.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Termination check
+\series default
+.
+ The method terminates when an asymptotic termination rule is satisfied.
+ In some cases the termination rule can be either restrictive or lead to
+ an excessive number of function calls and hence more research should be
+ made in this area.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Discarding procedure
+\series default
+.
+ The discarding procedure is based heavily on the distance between two points,
+ called typical distance.
+
+\series bold
+ 
+\series default
+The same typical distance is used for all local minima, however this does
+ not reflect the true picture of the function and different distances should
+ probably be used for each local minimum.
  
 \end_layout
 
@@ -6675,6 +6738,62 @@ Y.
 \series default
 , pp.
  119-132, 1994.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "global_nonlinear1"
+literal "false"
+
+\end_inset
+
+Barbara Kaltenbacher and William Rundell, The inverse problem of reconstructing
+ reaction–diffusion systems, Invese Problems 
+\series bold
+36
+\series default
+, 2020.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "global_nonlinear2"
+literal "false"
+
+\end_inset
+
+N.
+ Levashova, A.
+ Gorbachev, R.
+ Argun, D.
+ Lukyanenko, The Problem of the Non-Uniqueness of the Solution to the Inverse
+ Problem of Recovering the Symmetric States of a Bistable Medium with Data
+ on the Position of an Autowave Front., Symmetry 
+\series bold
+13
+\series default
+, 2021.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "global_nonlinear3"
+literal "false"
+
+\end_inset
+
+Larisa Beilina, Michael V.
+ Klibanov, A Globally Convergent Numerical Method for a Coefficient Inverse
+ Problem, SIAM Journal on Scientific Computing 
+\series bold
+31
+\series default
+,pp.
+ 478-509, 2008.
+ 
 \end_layout
 
 \begin_layout Bibliography
