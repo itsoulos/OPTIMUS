@@ -1,14 +1,10 @@
 QT -= gui
 
 TEMPLATE = lib
-DEFINES += GENPRICE_LIBRARY
+DEFINES += PRICE_LIBRARY
 INCLUDEPATH += $$(OPTIMUSPATH)/
-
 CONFIG += c++11
-
-# You can make your code fail to compile if it uses deprecated APIs.
-# In order to do so, uncomment the following line.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+DEFINES += QT_DEPRECATED_WARNINGS
 LIBS+=  -lm -fopenmp
 
 QMAKE_CXXFLAGS_RELEASE += -O3 -march=native -fopenmp -unroll-loops -omit-frame-pointer -Winline -unsafe-math-optimizations -mtune=native -mno-vzeroupper -pthread -fopt-info-optimized-vec-loop-omp
@@ -18,30 +14,19 @@ QMAKE_CXXFLAGS += -O3 -march=native -fopenmp -unroll-loops -omit-frame-pointer -
 QMAKE_CFLAGS += -O3 -march=native -fopenmp -unroll-loops -omit-frame-pointer -Winline -unsafe-math-optimizations -mtune=native -mno-vzeroupper -pthread -fopt-info-optimized-vec-loop-omp
 
 QMAKE_LFLAGS += -O3
+# You can make your code fail to compile if it uses deprecated APIs.
+# In order to do so, uncomment the following line.
+#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+
 SOURCES += \
     collection.cc \
-    doublestack.cc \
-    fparser.cc \
-    genprice.cc \
-    grs.cc \
-    population.cc \
-    program.cc \
-    rlsprogram.cc \
-    rule.cc \
-    symbol.cc
+    price.cpp
 
 HEADERS += \
-    Genprice_global.h \
+    Price_global.h \
     collection.h \
-    doublestack.h \
-    fparser.hh \
-    genprice.h \
-    grs.h \
-    population.h \
-    program.h \
-    rlsprogram.h \
-    rule.h \
-    symbol.h
+    price.h
+
 
 LIBS += -L$(OPTIMUSPATH)/lib -lOptimus
 

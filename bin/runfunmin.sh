@@ -1,4 +1,4 @@
-METHOD=Tmlsl
+METHOD=Price
 METHODPARAMS=""
 ### Available local search methods: bfgs, gradient, adam, lbfgs
 if [ $METHOD = "Minfinder" ]
@@ -13,6 +13,9 @@ then
 elif [ $METHOD = "Pso" ]
 then
 	METHODPARAMS="--pso_particles=100 --pso_localsearch_rate=0.00 --localsearch_method=bfgs"
+elif [ $METHOD = "Price" ]
+then
+	METHODPARAMS="--price_iterations=10000 --price_newpoint=PRICE --price_stopping=DOUBLEBOX"
 elif [ $METHOD = "Multistart" ]
 then
 	METHODPARAMS="--multistart_samples=25"

@@ -8,7 +8,7 @@ else
 		(cd Optimus; qmake; make clean)
 		(cd GCRS; qmake ; make clean )
 		(cd Genmin; qmake ; make clean )
-		(cd Genprice; qmake ; make clean )
+		(cd Price; qmake ; make clean )
 		(cd MinCenter; qmake; make clean )
 		(cd Tmlsl; qmake; make clean )
 		(cd Multistart; qmake; make clean)
