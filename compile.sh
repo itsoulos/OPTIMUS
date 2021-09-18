@@ -14,6 +14,7 @@ else
 		(cd MinCenter; qmake; make clean; make install )
 		(cd Tmlsl; qmake; make clean; make install )
 		(cd GCRS; make ; make clean; make install )
+		(cd DE; make ; make clean; make install )
 		(cd Genmin; qmake; make clean; make install )
 		(cd Price; qmake; make clean; make install )
 		(cd Multistart; qmake; make clean; make install)
