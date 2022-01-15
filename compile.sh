@@ -13,6 +13,7 @@ else
 		(cd Bfgs; qmake; make clean; make install )
 		(cd MinCenter; qmake; make clean; make install )
 		(cd Tmlsl; qmake; make clean; make install )
+		(cd GENDE; qmake; make clean; make install )
 		(cd GCRS; make ; make clean; make install )
 		(cd DE; make ; make clean; make install )
 		(cd Genmin; qmake; make clean; make install )

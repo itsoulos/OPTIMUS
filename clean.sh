@@ -10,6 +10,7 @@ else
 		(cd Genmin; qmake ; make clean )
 		(cd Price; qmake ; make clean )
 		(cd MinCenter; qmake; make clean )
+		(cd GENDE; qmake; make clean )
 		(cd Tmlsl; qmake; make clean )
 		(cd Multistart; qmake; make clean)
 		(cd IntervalMethod; qmake; make clean)

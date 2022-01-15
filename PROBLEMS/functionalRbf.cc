@@ -618,8 +618,8 @@ Data trainy;
 vector<Data> testx;
 Data testy;
 Data dclass;
-double initialLeft=-1000.0;
-double initialRight= 1000.0;
+double initialLeft=-100.0;
+double initialRight= 100.0;
 Interval maxWidth;
 int failCount=0;
 int normalTrain=0;
@@ -780,13 +780,13 @@ void    init(QJsonObject data)
         //if(minDist<0.1) redo=true;
         if(redo)
         {
-            nodes = nodes-1;
+           /* nodes = nodes-1;
             centers.erase(centers.begin()+posRedo * dimension,
                           centers.begin()+posRedo * dimension+dimension);
             variances.erase(variances.begin()+posRedo * dimension,
                           variances.begin()+posRedo * dimension+dimension);
             redo=false;
-            goto again;
+            goto again;*/
         }
     }
 
@@ -808,20 +808,22 @@ void 	getmargins(vector<Interval> &x)
     {
             x[i]=Interval(initialLeft,initialRight);
     }
-
+	
     if(variances.size()!=0)
     {
             int icount=0;
-	    	double f=1.0;
+	    	double f=3.0;
             for(int i=0;i<nodes;i++)
             {
                 for(int j=0;j<trainx[0].size();j++)
                 {
 
-                    double cx=centers[i * trainx[0].size()+j];
-                    if(fabs(cx)<5.0) cx=5.0;
-                    x[icount++]=Interval(-f * fabs(cx),
-                                          f * fabs(cx));
+                    double cx=fabs(centers[i * trainx[0].size()+j]);
+                   // if(fabs(cx)<5.0) cx=5.0;
+		    //x[icount++]=Interval(-f * fabs(cx),f*fabs(cx));
+		    //x[icount++]=Interval(-f * fabs(cx),f*fabs(cx));
+		    //if(cx<1e+2) cx=1e+2;
+	x[icount++]=Interval(-f*cx,f*cx);
                 }
             }
 #ifdef KMEANS
@@ -851,9 +853,11 @@ void 	getmargins(vector<Interval> &x)
                     double vx=variances[i * trainx[0].size()+j];
                     maxvx+=vx;
 		}
-        if(maxvx<0.1) maxvx=1.0;
-
-        x[icount++]=Interval(-f * maxvx,f * maxvx);
+     //   if(maxvx<0.1) maxvx=1.0;
+	//if(fabs(maxvx)>100) maxvx = 100;
+        //x[icount++]=Interval(-f * maxvx,f * maxvx);
+	x[icount++]=Interval(-f * maxvx,f * maxvx);
+//		    x[icount++]=Interval(-f * fabs(maxvx),f*fabs(maxvx));
 		   
 	    }
 #endif
@@ -868,7 +872,7 @@ double neuronOutput( vector<double> &x, vector<double> &patt, unsigned pattDim, 
         out += (patt[i] - x[offset*pattDim + i]) * (patt[i] - x[offset*pattDim + i]);
     }
     double df=(-out / (x[nodes*pattDim+offset] * x[nodes*pattDim+offset]) );
-  //  if(fabs(df)>100) return 1e+8;
+    if(fabs(df)>100) return 1e+8;
   //  if(fabs(df)>100)return 1.0;// return 1000;
     return exp(df);
 }
@@ -883,7 +887,15 @@ arma::vec train( vector<double> &x ){
             A.at(i,j) = neuronOutput(x, trainx[i], trainx[0].size() , j);
         }
     }
-    arma::vec RetVal= arma::vec(arma::pinv(A)*B);
+    
+    arma::vec RetVal;
+   // try{
+    RetVal=arma::vec(arma::pinv(A)*B);
+    //RetVal=arma::vec(arma::pinv(A,1e-10,"dc")*B);
+    //}catch(std::runtime_error & e)
+    //{
+     //   RetVal = arma::zeros(arma::size(RetVal));
+    //}
     if(RetVal.has_nan() || RetVal.has_inf()) {
         RetVal = arma::zeros(arma::size(RetVal));
         }
@@ -947,7 +959,7 @@ double	funmin(vector<double> &x)
         errorSum += ( tempOut - trainy[i] ) * ( tempOut - trainy[i] );
     }
 
-  if(norm>1000) return errorSum*(1.0+norm);
+  //if(norm>1000) return errorSum*(1.0+norm);
   return errorSum;
 #endif
 }
@@ -958,7 +970,7 @@ adept::adouble aneuronOutput( vector<adept::adouble> &x, vector<double> &patt, u
         out += (patt[i] - x[offset*pattDim + i]) * (patt[i] - x[offset*pattDim + i]);
     }
     adept::adouble darg = out / (x[nodes*pattDim + offset] * x[nodes*pattDim + offset]);
-    //if(fabs(darg)>100) return 1e+8;
+    if(fabs(darg)>100) return 1e+8;
     return exp(-out / (x[nodes*pattDim + offset] * x[nodes*pattDim + offset]) );
 }
 
@@ -983,7 +995,7 @@ adept::adouble afunmin( vector<adept::adouble> &x, vector<double> &x1 ){
 
         norm+=(Linear(j))*(Linear(j));
     norm = sqrt(norm);
-    if(norm>1000) return errorSum*(1.0+norm);
+    //if(norm>1000) return errorSum*(1.0+norm);
     return errorSum;
 }
 
@@ -1077,10 +1089,6 @@ QJsonObject    done(Data &x)
     delete[] weights;
 #else
     arma::vec Linear = train(x);
-    printf("WEIGHTS ");
-    for(int i=0;i<nodes;i++)
-        printf("%lf ",Linear[i]);
-    printf("\n");
 
     for(int i=0;i<testx.size();i++)
     {

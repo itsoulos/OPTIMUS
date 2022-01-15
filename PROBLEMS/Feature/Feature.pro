@@ -21,6 +21,8 @@ QMAKE_CXXFLAGS += -O4 -fopenmp -march=native -unroll-loops -omit-frame-pointer -
 QMAKE_CFLAGS += -O4 -fopenmp -march=native -unroll-loops -omit-frame-pointer -Winline -unsafe-math-optimizations -mtune=native -mno-vzeroupper -ffast-math
 
 DEFINES += FEATURE_LIBRARY
+LIBS += -ladept
+DEFINES += ADEPT_RECORDING_PAUSABLE ADEPTSTORAGETHREADSAFE
 
 SOURCES += feature.cpp \
     doublestack.cc \
