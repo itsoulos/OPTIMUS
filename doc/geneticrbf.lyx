@@ -1,0 +1,4201 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+A novell genetic algorithm method to train RBF networks
+\end_layout
+
+\begin_layout Author
+Ioannis G.
+ Tsoulos, Alexandros Tzallas, Evangelos Karvounis
+\end_layout
+
+\begin_layout Date
+Department of Informatics and Telecommunications, University of Ioannina,
+ Greece
+\end_layout
+
+\begin_layout Abstract
+Write some abstract here
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+In machine learning appear many practical problems such as classification
+ and regression problems.
+ A good programmig tool that can be used to tackle this problem is Radial
+ Basis Function (RBF) networks
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rbf1"
+literal "false"
+
+\end_inset
+
+.
+ RBF netwroks are feedforward neural networks
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ann-bishop"
+literal "false"
+
+\end_inset
+
+ with three compuational layers:
+\series bold
+ the input layer where the patterns from the dataset are presented to the
+ network, a hidden layer and an output layer.
+ The input data are connected to the hidden layer, which process the data
+ using nonlinear functions.
+ A typical formulation of an RBF network is: 
+\begin_inset Formula 
+\begin{equation}
+y(x)=\sum_{i=1}^{k}w_{i}\phi\left(\left\Vert x-c_{i}\right\Vert \right)\label{eq:firstrbf}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\phi(x)$
+\end_inset
+
+ depends only on the distance between 
+\begin_inset Formula $x$
+\end_inset
+
+ and some fixed point 
+\begin_inset Formula $c$
+\end_inset
+
+, called centroid and 
+\begin_inset Formula $\overrightarrow{w}$
+\end_inset
+
+ is the weight vector.
+ The training error of an RBF network for a given dataset 
+\begin_inset Formula $\left(x_{i},t_{i}\right)$
+\end_inset
+
+ is defined as:
+\begin_inset Formula 
+\begin{equation}
+E\left(y\right)=\sum_{i=}^{m}\left(y\left(x_{i}\right)-t_{i}\right)^{2}\label{eq:eqrbf}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $m$
+\end_inset
+
+ is the total number of input patterns and 
+\begin_inset Formula $t_{i}$
+\end_inset
+
+ is the actual output for pattern 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+.
+ A commonly used function used as 
+\begin_inset Formula $\phi(x)$
+\end_inset
+
+ is the Gaussian function.
+ The Gaussian function is expressed as:
+\begin_inset Formula 
+\begin{equation}
+\phi(x)=\exp\left(-\frac{\left(x-c\right)^{2}}{\sigma^{2}}\right)
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+RBF networks have been widely used in many practical areas such as solution
+ of differential equations 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rbfde1,rbfde2"
+literal "false"
+
+\end_inset
+
+, digital communications 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rbfnetwork1,rbfnetwork2"
+literal "false"
+
+\end_inset
+
+, physics 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rbfphysics1,rbfphysics2"
+literal "false"
+
+\end_inset
+
+, chemistry 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rbfchemistry1,rbfchemistry2"
+literal "false"
+
+\end_inset
+
+, economics
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rbfecon1,rbfecon2"
+literal "false"
+
+\end_inset
+
+ etc and they have many advantages
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rbfadv"
+literal "false"
+
+\end_inset
+
+ such as: good generalization abilities, tolerance in noisy data, parallelizatio
+n ability
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rbfparallel"
+literal "false"
+
+\end_inset
+
+ etc.
+ Hence, during the past years many modifications and improvements of RBFs
+ have been published in the relevant literature such as methods aimed to
+ better initialize the RBF parameters 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rbfinit1,rbfinit2,rbfinit3"
+literal "false"
+
+\end_inset
+
+, pruning techniques used to reduce the number of network parameters 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rbfprun1,rbfprun2"
+literal "false"
+
+\end_inset
+
+, methods to estimate the RBF parameters using for example the PSO algorithm
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rbfpso1,rbfpso2"
+literal "false"
+
+\end_inset
+
+ or the Differential Evolution algorithm 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rbfdiff1,rbfdiff2"
+literal "false"
+
+\end_inset
+
+ etc
+\series default
+.
+\end_layout
+
+\begin_layout Section
+Method description
+\end_layout
+
+\begin_layout Standard
+On each client a genetic algorithm with the termination rule described in
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Tsoulos1"
+literal "true"
+
+\end_inset
+
+ accompanied with an additional local search operator is applied.
+ The steps of the algorithm are given below:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initialization step
+\series default
+
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ iter=0, where iter is the current number of generations
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $N_{f}$
+\end_inset
+
+ the number of desired features.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $N_{c}$
+\end_inset
+
+ as the total chromosomes.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initialize
+\series default
+ chromosomes 
+\begin_inset Formula $X_{i},i=1\ldots N_{c}$
+\end_inset
+
+ The chromosomes are initialized randomly as vectors of integers.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ ITERMAX as the maximum number of allowed generations.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $p_{s}$
+\end_inset
+
+ as the selection rate and 
+\begin_inset Formula $p_{m}$
+\end_inset
+
+ the mutation rate.
+ Both rates are in the range 
+\begin_inset Formula $[0,1]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $f_{l}=\infty$
+\end_inset
+
+, the best discovered fitness
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $L_{I}$
+\end_inset
+
+ the number of generations that should pass before the local search procedure
+ is applied.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $L_{c}$
+\end_inset
+
+ the number of chromosomes that will participate in local search procedure.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Termination check.
+
+\series default
+ At every generation the variance 
+\begin_inset Formula $\sigma^{(\mbox{iter})}$
+\end_inset
+
+ of 
+\begin_inset Formula $f_{l}$
+\end_inset
+
+ is calculated.
+ If there was no improvement of the genetic algorithm for a number of generation
+s, then the algorithm should terminate.
+ The stopping rule has as follows:
+\begin_inset Formula 
+\begin{equation}
+\left|f_{h}-f_{l}\right|\le e\ \mbox{OR}\ \sigma^{(\mbox{iter})}\le\frac{\sigma^{(\mbox{last})}}{2}\mbox{\ \ \ OR iter>ITERMAX }\label{eq:termination_mine}
+\end{equation}
+
+\end_inset
+
+Where last denotes the generation number where 
+\begin_inset Formula $f_{l}$
+\end_inset
+
+ was produced initially.
+ 
+\series bold
+If
+\series default
+ equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:termination_mine"
+
+\end_inset
+
+ is true 
+\series bold
+then
+\series default
+ 
+\series bold
+Goto
+\series default
+ step 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:Send--to"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Calculate
+\series default
+ the fitness 
+\begin_inset Formula $f_{i}$
+\end_inset
+
+ for every chromosome of the population:
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:Calculate-the-corresponding"
+
+\end_inset
+
+
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Transform
+\series default
+ the original train data using grammatical evolution and create 
+\begin_inset Formula $N_{f}$
+\end_inset
+
+ features.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Train
+\series default
+ a classification model 
+\begin_inset Formula $C_{i}$
+\end_inset
+
+ obtaining the train error 
+\begin_inset Formula $E$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Assign
+\series default
+ the train error 
+\begin_inset Formula $E$
+\end_inset
+
+ to fitness value 
+\begin_inset Formula $f_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Genetic Operators
+\series default
+
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Selection procedure
+\series default
+: The chromosomes are sorted in descending order according to their fitness
+ value.
+ The first 
+\begin_inset Formula $\left(1-p_{s}\right)\times N_{c}$
+\end_inset
+
+ chromosomes are transferred to the next generation.
+ The rest of the chromosomes are substituted by offsprings created through
+ one point crossover procedure.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Mutation procedure:
+\series default
+ For every element of each chromosome a random number 
+\begin_inset Formula $r$
+\end_inset
+
+ in range 
+\begin_inset Formula $\left[0,1\right]$
+\end_inset
+
+ is produced.
+ If 
+\begin_inset Formula $r\le p_{m}$
+\end_inset
+
+ then the corresponding element is randomly altered.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Replace
+\series default
+ the 
+\begin_inset Formula $p_{s}\times N_{c}$
+\end_inset
+
+ worst chromosomes in the population with the offsprings created by the
+ genetic operators.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ iter=iter+1
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Local Search Step 
+\series default
+
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+If 
+\series default
+
+\begin_inset Formula $\mbox{iters}\ \mod\ L_{i}=0$
+\end_inset
+
+ 
+\series bold
+Then
+\series default
+
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Select
+\series default
+ randomly 
+\begin_inset Formula $L_{C}$
+\end_inset
+
+ chromosomes from the genetic population and create the set 
+\begin_inset Formula $L_{S}$
+\end_inset
+
+ from these chromosomes
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ every chromosome 
+\begin_inset Formula $X_{i}$
+\end_inset
+
+ 
+\series bold
+in
+\series default
+ 
+\begin_inset Formula $L_{S}$
+\end_inset
+
+ 
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Select
+\series default
+ randomly another chromosome 
+\begin_inset Formula $Y$
+\end_inset
+
+ from the population
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Create
+\series default
+ an offspring of 
+\begin_inset Formula $X_{i}$
+\end_inset
+
+and Y using one point crossover.
+ Denote the offspring as 
+\begin_inset Formula $Z$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Obtain
+\series default
+ the fitness 
+\begin_inset Formula $f(Z)$
+\end_inset
+
+ of chromosome 
+\begin_inset Formula $Z$
+\end_inset
+
+
+\series bold
+.
+ If
+\series default
+ 
+\begin_inset Formula $f(z)<f_{i}$
+\end_inset
+
+ then 
+\begin_inset Formula $X_{i}=Z,\ f_{i}=f(Z)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Endif
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Obtain 
+\series default
+the best value in the population, denoted as 
+\begin_inset Formula $f_{l}$
+\end_inset
+
+ for the corresponding chromosome 
+\series bold
+
+\begin_inset Formula $x_{l}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Send
+\series default
+ 
+\begin_inset Formula $\left(x_{l},f_{l}\right)$
+\end_inset
+
+ to Server machine
+\series bold
+ 
+\series default
+and 
+\series bold
+Goto
+\series default
+ step 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:Calculate-the-corresponding"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Send
+\series default
+ 
+\begin_inset Formula $\left(x_{l},f_{l}\right)$
+\end_inset
+
+ to Server machine 
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:Send--to"
+
+\end_inset
+
+ and 
+\series bold
+Terminate
+\end_layout
+
+\begin_layout Subsection
+Termination check
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Termination-check"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+At every iteration 
+\begin_inset Formula $k$
+\end_inset
+
+ the variance 
+\begin_inset Formula $\sigma^{(k)}$
+\end_inset
+
+ of best fitness 
+\begin_inset Formula $f\left(x_{\mbox{best}}\right)$
+\end_inset
+
+ is calculated.
+ If there is no improvement for a number of generations, then it is highly
+ possible that the algorithm has found the global minimum and hence it terminate
+s when
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\sigma^{(k)}\le\frac{\sigma^{(\mbox{klast})}}{2}\label{eq:termination_mine-1}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\mbox{klast}$
+\end_inset
+
+ is the last iteration where a new minimum was found.
+\end_layout
+
+\begin_layout Section
+Experiments 
+\end_layout
+
+\begin_layout Subsection
+Experimental setup
+\end_layout
+
+\begin_layout Standard
+(nention the Optimus)
+\end_layout
+
+\begin_layout Subsection
+Experimental datasets 
+\end_layout
+
+\begin_layout Standard
+All the experiments were conducted 30 times using different seed for the
+ random generator each time and averages were taken.
+ The following datasets were used 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Wine
+\series default
+ dataset.
+ The wine recognition dataset contains data from wine chemical analysis.
+ It contains 178 examples of 13 features each that are classified into three
+ classes.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Glass
+\series default
+ dataset.
+ The dataset contains glass component analysis for glass pieces that belong
+ to 6 classes.
+ The dataset contains 214 examples with 10 attributes each.
+\end_layout
+
+\begin_layout Enumerate
+Liverdisorder: This dataset, which will be denoted by LIVER in the following
+ tables, contains blood analysis data from people with liver disorders.
+ It consists of 345 examples of 6 features each.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Tae
+\series default
+ dataset.
+ The data consist of evaluations of teaching performance over three regular
+ semesters and two summer semesters of 151 teaching assistant (TA) assignments
+ at the Statistics Department of the University of Wisconsin-Madison.
+\end_layout
+
+\begin_layout Enumerate
+Liverdisorder dataset.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Spiral
+\series default
+ dataset: The spiral artificial dataset contains 1000 two-dimensional examples
+ that belong to two classes (500 examples each).
+ The number of the features is 2.
+ The data in the first class are created using the following formula: 
+\begin_inset Formula $x_{1}=0.5t\cos\left(0.08t\right),\ x_{2}=0.5t\cos\left(0.08t+\frac{\pi}{2}\right)$
+\end_inset
+
+ and the second class data using
+\series bold
+: 
+\begin_inset Formula $x_{1}=0.5t\cos\left(0.08t+\pi\right),\ x_{2}=0.5t\cos\left(0.08t+\frac{3\pi}{2}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Pima
+\series default
+ dataset.
+ The Pima Indians Diabetes dataset contains 768 examples of 8 attributes
+ each that are classified into two categories: healthy and diabetic.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Ionosphere
+\series default
+ dataset.
+ The ionosphere dataset (ION in the following tables) contains data from
+ the Johns Hopkins Ionosphere database.
+ The two-class dataset contains 351 exam
+\backslash
+ples of 34 features each.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Appendictis
+\series default
+ dataset, proposed in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "appendicitis"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Australian
+\series default
+ dataset, the dataset concerns credit card applications.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Hayes roth
+\series default
+ dataset.
+ This dataset
+\begin_inset CommandInset citation
+LatexCommand cite
+key "hayesroth"
+literal "false"
+
+\end_inset
+
+ contains 
+\series bold
+5
+\series default
+ numeric-valued attributes and 132 patterns.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Alcohol
+\series default
+ dataset, a dataset about Alcohol consumption 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Alcohol"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Dermatology
+\series default
+ dataset.
+ Dataset used for differential diagnosis of erythemato-squamous diseases.
+ The dataset has 366 instances of 34 features each.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Balance
+\series default
+ dataset.
+ This data set was generated to model psychological experimental results.
+ It contains 625 patterns of 4 features each.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Regions2
+\series default
+ dataset.
+ It is created from liver biopsy images of patients with hepatitis C 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "regions"
+literal "true"
+
+\end_inset
+
+.
+ From each region in the acquired images, 18 shape-based and color-based
+ features were extracted, while it was also annotated form medical experts.
+ The resulting dataset includes 600 samples belonging into 6 classes.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Parkinsons
+\series default
+ dataset.
+ This dataset is composed of a range of biomedical voice measurements from
+ 31 people, 23 with Parkinson's disease (PD)
+\begin_inset CommandInset citation
+LatexCommand cite
+key "parkinsons"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Wdbc
+\series default
+ dataset.
+ The Wisconsin diagnostic breast cancer dataset (WDBC) contains data for
+ breast tumors.
+ It contains 569 patterns of 30 features each.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Popfailures
+\series default
+ dataset.
+ This dataset contains records of simulation crashes encountered during
+ climate model uncertainty quantification (UQ) ensembles.
+ It contains 540 patterns of 18 features each.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Heart
+\series default
+ dataset.
+ The task is to detect the absence or presence of heart disease.
+ It contains 270 patterns of 13 features each.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Haberman
+\series default
+ dataset.
+ A dataset about breast cancer from a study at the University of Chicago's
+ Billings Hospital.
+ It contains 306 patterns of 3 features each.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+HouseVotes
+\series default
+ dataset.
+ This data set includes votes for each of the U.S.
+ House of Representatives Congressmen on the 16 key votes.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Lymography
+\series default
+ dataset.
+ The aim here is to detect the presence of a lymphoma in patients.
+ It contains 148 patterns of 18 features each.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Mammographic
+\series default
+ dataset.
+ This dataset be used to identify the severity (benign or malignant) of
+ a mammographic mass lesion from BI-RADS attributes and the patient's age.
+ It contains 830 patterns of 5 features each.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+OptDigits
+\series default
+ dataset.
+ Optical Recognition of Handwritten Digits data set.
+ It contains 5620 patterns of 64 features each.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Page Blocks
+\series default
+ dataset.
+ The dataset contains blocks of the page layout of a document that has been
+ detected by a segmentation process.
+ It has 5473 patterns with 10 features each.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Penbased
+\series default
+ dataset.
+ This is a Pen-Based Recognition of Handwritten Digits data set with 10992
+ patterns of 16 features.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Saheart
+\series default
+ dataset.
+ The dataset is about to categorize persons if have a coronary heart disease.
+ The dataset contains 462 patterns with 9 features each.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Segment
+\series default
+ dataset.
+ This database contains patterns from a database of 7 outdoor images (classes).
+ The dataset contains 2310 patterns with 19 features each.
+\end_layout
+
+\begin_layout Enumerate
+Eeg dataset.
+ As an real word example, consider an EEG dataset described in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-20"
+literal "true"
+
+\end_inset
+
+ is used here.
+ The dataset consists of five sets (denoted as Z, O, N, F and S) each containing
+ 100 single-channel EEG segments each having 23.6 sec duration.
+ Sets Z and O have been taken from surface EEG recordings of five healthy
+ volunteers with eye open and closed, respectively.
+ Signals in two sets have been measured in seizure-free intervals from five
+ patients in the epileptogenic zone (F) and from the hippocampal formation
+ of the opposite hemisphere of the brain (N).
+ Set S contains seizure activity, selected from all recording sites exhibiting
+ ictal activity.
+ Sets Z and O have been recorded extracranially, whereas sets N, F and S
+ have been recorded intracranially.
+\end_layout
+
+\begin_layout Enumerate
+Fertility Data Set (FERT): 100 volunteers provide a semen sample analyzed
+ according to the WHO 2010 criteria.
+ Sperm concentration is related to socio-demographic data, environmental
+ factors, health status, and life habits.
+ It contains 100 examples of 10 features each.
+\end_layout
+
+\begin_layout Standard
+The regression datasets are available from the Statlib URL 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+ftp://lib.stat.cmu.edu/datasets/index.html 
+\end_layout
+
+\end_inset
+
+: 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Abalone
+\series default
+ dataset.
+ This data set can be used to obtain a model to predict the age of abalone
+ from physical measurements.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Airfoil 
+\series default
+dataset.
+ This is a NASA data set, obtained from a series of aerodynamic and acoustic
+ tests 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "airfoil"
+literal "false"
+
+\end_inset
+
+.
+ The dataset has 1503 instances of 6 features each.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Anacalt
+\series default
+ dataset.
+ This contains information about the decisions taken by a supreme court.
+ The dataset has 4052 instances of 7 features each.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+BK
+\series default
+ dataset.
+ This dataset comes from Smoothing Methods in Statistics 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Stat"
+literal "false"
+
+\end_inset
+
+ and is used to estimate the points scored per minute in a basketball game.
+ The dataset has 96 patterns of 4 features each.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+BL
+\series default
+ dataset: This dataset can be downloaded from StatLib.
+ It contains data from an experiment on the affects of machine adjustments
+ on the time to count bolts.
+ It contains 40 patters of 7 features each.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Concrete
+\series default
+ dataset.
+ This dataset is taken from civil engineering
+\begin_inset CommandInset citation
+LatexCommand cite
+key "concrete"
+literal "false"
+
+\end_inset
+
+.
+ The dataset has 1030 instances of 8 features each.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Housing
+\series default
+ dataset.
+ This dataset was taken from the StatLib library which is maintained at
+ Carnegie Mellon University and it is described in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key23"
+literal "true"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Laser
+\series default
+ dataset.
+ Dataset used in laser experiments.
+ The dataset has 993 instances of 4 features each.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+MB
+\series default
+ dataset.
+ This dataset is available from Smoothing Methods in Statistics 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key21"
+literal "true"
+
+\end_inset
+
+ and it includes 61 patterns.
+ The number of features is 2.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+NT
+\series default
+ dataset.
+ This dataset contains data from 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ntdataset"
+literal "false"
+
+\end_inset
+
+ that examined whether the true mean body temperature is 98.6 F.
+ The number of patterns is 131 and the number of features 2.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Quake
+\series default
+ dataset.
+ The objective here is to approximate the strength of a earthquake.
+ The dataset has 2178 instances of 3 features each.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Wankara
+\series default
+ dataset.
+ This dataset is used to predict the mean temperature for the Ankara.
+ The dataset has 1609 datasets of 9 features each.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+FA
+\series default
+ dataset.
+ The FA dataset contains percentage of body fat, age, weight, height, and
+ ten body circumference measurements.
+ The goal is to fit body fat to the other measurements.
+ The number of the features is 18.
+ The total number of patterns is 252.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+PY
+\series default
+ dataset (Pyrimidines problem).
+ The source of this dataset is the URL: 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+https://www.dcc.fc.up.pt/~ltorgo/Regression/DataSets.html
+\end_layout
+
+\end_inset
+
+ and it is a problem of 27 attributes and 74 number of patterns.
+ The task consists of Learning Quantitative Structure Activity Relationships
+ (QSARs) and provided by 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pydataset"
+literal "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Experimental results for classification problems.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Experimental-results"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="37" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+DATASET
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KRBF
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+GENRBF(3)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+GENRBF(5)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Alcohol
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+46.63%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Appendicitis
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12.23%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Australian
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+34.89%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Balance
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+33.42%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Bands
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+37.22%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cleveland
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+67.10%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dermatology
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+62.34%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ecoli
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+59.59%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Glass
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+50.16%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Haberman
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+25.10%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Hayes Roth
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+64.36%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Heart
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+31.20%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+HouseVotes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6.13%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ionosphere
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+16.22%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Liverdisorder
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+30.84%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Lymography
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+25.31%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Mammographic
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+21.38%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Page Blocks
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.09%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Parkinsons
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17.42%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pima
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+25.78%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Popfailures
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7.04%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Regions2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+38.29%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ring
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+21.65%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Saheart
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+32.19%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Segment
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+59.68%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sonar
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+27.85%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Spiral
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+44.87%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Tae
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+60.07%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Thyroid
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.52%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Wdbc
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7.27%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Wine
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+31.41%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Z_F_S
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13.16%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Z_O_N_F_S
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+48.71%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZO_NF_S
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9.02%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZONF_S
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.03%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZOO
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+21.93%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Experiments for regression datasets.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:exp2"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="13" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+DATASET
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+KMEANS RBF
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+GENRBF(3)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+GENRBF(5)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ABALONE
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7.371
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+AIRFOIL
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.037
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ANACALT
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11.628
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+BK
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.165
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+BL
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.05
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+CONCRETE
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+HOUSING
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+57.682
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+LASER
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.35
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MB
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.915
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+NT
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.755
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+QUAKE
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.071
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+WANKARA
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.18
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbf1"
+literal "false"
+
+\end_inset
+
+J.
+ Park and I.
+ W.
+ Sandberg, Universal Approximation Using Radial-Basis-Function Networks,
+ Neural Computation 3, pp.
+ 246-257, 1991.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ann-bishop"
+literal "false"
+
+\end_inset
+
+C.M.
+ Bishop, Neural networks and their applications, Review of Scientific Instrument
+s 
+\series bold
+65
+\series default
+, pp.
+ 1803-1832,1994.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfde1"
+literal "false"
+
+\end_inset
+
+Nam Mai-Duy, Thanh Tran-Cong, Numerical solution of differential equations
+ using multiquadric radial basis function networks, Neural Networks 14,
+ pp.
+ 185-199, 2001.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfde2"
+literal "false"
+
+\end_inset
+
+N.
+ Mai‐Duy, Solving high order ordinary differential equations with radial
+ basis function networks.
+ Int.
+ J.
+ Numer.
+ Meth.
+ Engng.
+ 
+\series bold
+62
+\series default
+, pp.
+ 824-852, 2005
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfnetwork1"
+literal "false"
+
+\end_inset
+
+C.
+ Laoudias, P.
+ Kemppi and C.
+ G.
+ Panayiotou, Localization Using Radial Basis Function Networks and Signal
+ Strength Fingerprints in WLAN, GLOBECOM 2009 - 2009 IEEE Global Telecommunicati
+ons Conference, Honolulu, HI, 2009, pp.
+ 1-6, 2009.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfnetwork2"
+literal "false"
+
+\end_inset
+
+S.
+ Chen, B.
+ Mulgrew and P.
+ M.
+ Grant, A clustering technique for digital communications channel equalization
+ using radial basis function networks, IEEE Transactions on Neural Networks
+ 
+\series bold
+4
+\series default
+, pp.
+ 570-590, 1993.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfphysics1"
+literal "false"
+
+\end_inset
+
+P.
+ Teng, Machine-learning quantum mechanics: Solving quantum mechanics problems
+ using radial basis function networks, Phys.
+ Rev.
+ E 
+\series bold
+98
+\series default
+, 033305, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfphysics2"
+literal "false"
+
+\end_inset
+
+R.
+ Jovanović, A.
+ Sretenovic, Ensemble of radial basis neural networks with K-means clustering
+ for heating energy consumption prediction, FME Transactions 
+\series bold
+45
+\series default
+, pp.
+ 51-57, 2017.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfchemistry1"
+literal "false"
+
+\end_inset
+
+Chuanhao Wan and Peter de B.
+ Harrington, Self-Configuring Radial Basis Function Neural Networks for
+ Chemical Pattern Recognition, J.
+ Chem.
+ Inf.
+ Comput.
+ Sci.
+ 
+\series bold
+39
+\series default
+, 1049–1056, 1999.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfchemistry2"
+literal "false"
+
+\end_inset
+
+Xiaojun Yao, Xiaoyun Zhang, Ruisheng Zhang, Mancang Liu, Zhide Hu, Botao
+ Fan, Prediction of enthalpy of alkanes by the use of radial basis function
+ neural networks, Computers & Chemistry 
+\series bold
+25
+\series default
+, pp.
+ 475-482, 2001.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfecon1"
+literal "false"
+
+\end_inset
+
+J.
+ A.
+ Momoh and S.
+ S.
+ Reddy, Combined Economic and Emission Dispatch using Radial Basis Function,
+ 2014 IEEE PES General Meeting | Conference & Exposition, National Harbor,
+ MD, 2014, pp.
+ 1-5, doi: 10.1109/PESGM.2014.6939506.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfecon2"
+literal "false"
+
+\end_inset
+
+Jau-Jia Guo and P.
+ B.
+ Luh, Selecting input factors for clusters of Gaussian radial basis function
+ networks to improve market clearing price prediction, IEEE Transactions
+ on Power Systems 
+\series bold
+18
+\series default
+, pp.
+ 665-672, 2003.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfadv"
+literal "false"
+
+\end_inset
+
+H.
+ Yu, T.
+ Xie, S.
+ Paszczynski and B.
+ M.
+ Wilamowski, Advantages of Radial Basis Function Networks for Dynamic System
+ Design,IEEE Transactions on Industrial Electronics v
+\series bold
+ 58
+\series default
+, pp.
+ 5438-5450, 2011.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfparallel"
+literal "false"
+
+\end_inset
+
+M.G.
+ Arenas, E.
+ Parras-Gutiérrez, V.M.
+ Rivas, P.A.
+ Castillo, M.J.
+ Del Jesus, J.J.
+ Merelo.
+ Parallelizing the Design of Radial Basis Function Neural Networks by Means
+ of Evolutionary Meta-algorithms.
+ In: Cabestany J., Sandoval F., Prieto A., Corchado J.M.
+ (eds) Bio-Inspired Systems: Computational and Ambient Intelligence.
+ IWANN 2009.
+ Lecture Notes in Computer Science, vol 5517.
+ Springer, Berlin, Heidelberg, 2009.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfinit2"
+literal "false"
+
+\end_inset
+
+M.
+ Kubat, Decision trees can initialize radial-basis function networks, IEEE
+ Transactions on Neural Networks.
+ 
+\series bold
+9
+\series default
+, pp.
+ 813-821, 1998.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfinit3"
+literal "false"
+
+\end_inset
+
+D.
+ G.
+ B.
+ Franco and M.
+ T.
+ A.
+ Steiner, New Strategies for Initialization and Training of Radial Basis
+ Function Neural Networks, IEEE Latin America Transactions.
+
+\series bold
+ 15
+\series default
+, pp.
+ 1182-1188, 2017.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfprun1"
+literal "false"
+
+\end_inset
+
+E.
+ Ricci, R.
+ Perfetti, Improved pruning strategy for radial basis function networks
+ with dynamic decay adjustment, Neurocomputing 
+\series bold
+69
+\series default
+, pp.
+ 1728-1732, 2006.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfprun2"
+literal "false"
+
+\end_inset
+
+M.
+ Bortman and M.
+ Aladjem, A Growing and Pruning Method for Radial Basis Function Networks,
+ IEEE Transactions on Neural Networks 
+\series bold
+20
+\series default
+, pp.
+ 1039-1045, 2009.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfpso1"
+literal "false"
+
+\end_inset
+
+J.
+ Y.
+ Chen, Z.
+ Qin and J.
+ Jia, A PSO-Based Subtractive Clustering Technique for Designing RBF Neural
+ Networks, 2008 IEEE Congress on Evolutionary Computation (IEEE World Congress
+ on Computational Intelligence), Hong Kong, pp.
+ 2047-2052, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfpso2"
+literal "false"
+
+\end_inset
+
+A.
+ Esmaeili and N.
+ Mozayani, Adjusting the parameters of radial basis function networks using
+ Particle Swarm Optimization, 2009 IEEE International Conference on Computationa
+l Intelligence for Measurement Systems and Applications, Hong Kong, pp.
+ 179-181, 2009.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfdiff1"
+literal "false"
+
+\end_inset
+
+B.
+ O'Hora, J.
+ Perera and A.
+ Brabazon, Designing Radial Basis Function Networks for Classification Using
+ Differential Evolution, The 2006 IEEE International Joint Conference on
+ Neural Network Proceedings, Vancouver, BC, pp.
+ 2932-2937, 2006.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Tsoulos1"
+literal "true"
+
+\end_inset
+
+B.
+ Yu , X.
+ He, Training Radial Basis Function Networks with Differential Evolution,
+ In Proceedings of IEEE International Conference on Granular Computing,
+ pp.
+ 934-941, 2006.
+ I.G.
+ Tsoulos, Modifications of real code genetic algorithm for global optimization,
+ Applied Mathematics and Computation 
+\series bold
+203
+\series default
+, pp.
+ 598-607, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Keel"
+literal "false"
+
+\end_inset
+
+J.
+ Alcalá-Fdez, A.
+ Fernandez, J.
+ Luengo, J.
+ Derrac, S.
+ García, L.
+ Sánchez, F.
+ Herrera.
+ KEEL Data-Mining Software Tool: Data Set Repository, Integration of Algorithms
+ and Experimental Analysis Framework.
+ Journal of Multiple-Valued Logic and Soft Computing 17, pp.
+ 255-287, 2011.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "appendicitis"
+literal "false"
+
+\end_inset
+
+Weiss, Sholom M.
+ and Kulikowski, Casimir A., Computer Systems That Learn: Classification
+ and Prediction Methods from Statistics, Neural Nets, Machine Learning,
+ and Expert Systems, Morgan Kaufmann Publishers Inc, 1991.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "hayesroth"
+literal "false"
+
+\end_inset
+
+B.
+ Hayes-Roth, B., F.
+ Hayes-Roth.
+ Concept learning and the recognition and classification of exemplars.
+ Journal of Verbal Learning and Verbal Behavior 
+\series bold
+16
+\series default
+, pp.
+ 321-338, 1977.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Alcohol"
+literal "false"
+
+\end_inset
+
+Tzimourta, Katerina D.
+ and Tsoulos, Ioannis and Bilero, Thanasis and Tzallas, Alexandros T.
+ and Tsipouras, Markos G.
+ and Giannakeas, Nikolaos, Direct Assessment of Alcohol Consumption in Mental
+ State Using Brain Computer Interfaces and Grammatical Evolution, Inventions
+ 
+\series bold
+3
+\series default
+, pp.
+ 1-12, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "parkinsons"
+literal "false"
+
+\end_inset
+
+Little MA, McSharry PE, Hunter EJ, Spielman J, Ramig LO.
+ Suitability of dysphonia measurements for telemonitoring of Parkinson's
+ disease.
+ IEEE Trans Biomed Eng.
+ 2009;56(4):1015.
+ doi:10.1109/TBME.2008.2005954
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "regions"
+literal "false"
+
+\end_inset
+
+Giannakeas, N., Tsipouras, M.G., Tzallas, A.T., Kyriakidi, K., Tsianou, Z.E., Manousou,
+ P., Hall, A., Karvounis, E.C., Tsianos, V., Tsianos, E.
+ A clustering based method for collagen proportional area extraction in
+ liver biopsy images (2015) Proceedings of the Annual International Conference
+ of the IEEE Engineering in Medicine and Biology Society, EMBS, 2015-November,
+ art.
+ no.
+ 7319047, pp.
+ 3097-3100.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-20"
+literal "true"
+
+\end_inset
+
+R.G.
+ Andrzejak, K.
+ Lehnertz, F.
+ Mormann, C.
+ Rieke, P.
+ David, and C.
+ E.
+ Elger, Indications of nonlinear deterministic and finite-dimensional structures
+ in time series of brain electrical activity: Dependence on recording region
+ and brain state, Phys.
+ Rev.
+ E 
+\series bold
+64
+\series default
+, pp.
+ 1-8, 2001.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "airfoil"
+literal "false"
+
+\end_inset
+
+T.F.
+ Brooks, D.S.
+ Pope, and A.M.
+ Marcolini.
+ Airfoil self-noise and prediction.
+ Technical report, NASA RP-1218, July 1989.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "concrete"
+literal "false"
+
+\end_inset
+
+I.Cheng Yeh, Modeling of strength of high performance concrete using artificial
+ neural networks, Cement and Concrete Research.
+ 
+\series bold
+28
+\series default
+, pp.
+ 1797-1808, 1998.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key23"
+literal "true"
+
+\end_inset
+
+D.
+ Harrison and D.L.
+ Rubinfeld, Hedonic prices and the demand for clean ai, J.
+ Environ.
+ Economics & Management 
+\series bold
+5
+\series default
+, pp.
+ 81-102, 1978.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key21"
+literal "true"
+
+\end_inset
+
+J.S.
+ Simonoff, Smooting Methods in Statistics, Springer - Verlag, 1996.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ntdataset"
+literal "false"
+
+\end_inset
+
+Mackowiak, P.A., Wasserman, S.S., Levine, M.M., 1992.
+ A critical appraisal of 98.6 degrees f, the upper limit of the normal body
+ temperature, and other legacies of Carl Reinhold August Wunderlich.
+ J.
+ Amer.
+ Med.
+ Assoc.
+ 268, 1578–1580
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Stat"
+literal "false"
+
+\end_inset
+
+J.S.
+ Simonoff, Smooting Methods in Statistics, Springer - Verlag, 1996.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pydataset"
+literal "false"
+
+\end_inset
+
+R.D.
+ King, S.
+ Muggleton, R.
+ Lewis, M.J.E.
+ Sternberg, Proc.
+ Nat.
+ Acad.
+ Sci.
+ USA 
+\series bold
+89
+\series default
+, pp.
+ 11322–11326, 1992.
+ 
+\end_layout
+
+\end_body
+\end_document
