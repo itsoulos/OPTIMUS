@@ -194,6 +194,14 @@ noprefix "false"
 
 \end_inset
 
+ for 
+\begin_inset Formula $c=0$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma=1$
+\end_inset
+
 .
 
 \series bold
@@ -319,11 +327,59 @@ literal "false"
 \end_inset
 
  etc.
- 
+ This article transforms the problem of RBF training into an optimization
+ problem and applies a modified genetic algorithm technique to solve it.
+ The global optimization problem is defined as :
+\begin_inset Formula 
+\begin{equation}
+\min\left(E\left(y\right)\right)=\sum_{i=}^{m}\left(y\left(x_{i}\right)-t_{i}\right)^{2}\label{eq:eqrbf}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $m$
+\end_inset
+
+ is the total number of input patterns and 
+\begin_inset Formula $t_{i}$
+\end_inset
+
+ is the output for pattern 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+.
+ The suggested approach has two phases: firstly reasonable bounds for the
+ RBF parameters are estimated using the Kmeans 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kmeans"
+literal "false"
+
+\end_inset
+
+ algorithm and in the second phase the modified algorithm is used to solve
+ the problem of equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eqrbf"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ inside the bounds located in the first phase.
+
 \series bold
-(Edo prepei na grafei pos to thema antimetopizetai san Global Optimization
- problem)This article proposes ....
  
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Na mpei edo kapoio keimeno gia alles douleies kai RBF
 \end_layout
 
 \begin_layout Standard
@@ -394,25 +450,62 @@ literal "true"
  The steps of the algorithm are given below:
 \end_layout
 
-\begin_layout Enumerate
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
 
-\series bold
-Initialization step
-\series default
+\begin_layout Plain Layout
+\begin_inset Caption Standard
 
-\begin_inset Separator latexpar
+\begin_layout Plain Layout
+Main steps of the algorithm.
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:Main-steps-of"
+
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initialization Step
 \end_layout
 
 \begin_deeper
 \begin_layout Enumerate
 
 \series bold
+Read
+\series default
+ the train set.
+ 
+\series bold
 Set
 \series default
- iter=0, where iter is the current number of generations
+ 
+\begin_inset Formula $n$
+\end_inset
+
+ the size of the patterns.
+ 
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $m$
+\end_inset
+
+ the number of patterns.
 \end_layout
 
 \begin_layout Enumerate
@@ -421,22 +514,10 @@ Set
 Set
 \series default
  
-\begin_inset Formula $N_{f}$
+\begin_inset Formula $k$
 \end_inset
 
- the number of desired features.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Set
-\series default
- 
-\begin_inset Formula $N_{c}$
-\end_inset
-
- as the total chromosomes.
+ the number of nodes for the RBF network.
 \end_layout
 
 \begin_layout Enumerate
@@ -444,41 +525,21 @@ Set
 \series bold
 Initialize
 \series default
- chromosomes 
-\begin_inset Formula $X_{i},i=1\ldots N_{c}$
+ a genetic population of 
+\begin_inset Formula $C$
 \end_inset
 
- The chromosomes are initialized randomly as vectors of integers.
- 
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Set
-\series default
- ITERMAX as the maximum number of allowed generations.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Set
-\series default
- 
-\begin_inset Formula $p_{s}$
+ random chromosomes inside 
+\begin_inset Formula $[-1,1]$
 \end_inset
 
- as the selection rate and 
-\begin_inset Formula $p_{m}$
+.
+ Each chromosome is an array of 
+\begin_inset Formula $2nm$
 \end_inset
 
- the mutation rate.
- Both rates are in the range 
-\begin_inset Formula $[0,1]$
-\end_inset
-
-
+ double precision values corresponding to the centroids and variances of
+ an RBF network.
 \end_layout
 
 \begin_layout Enumerate
@@ -487,216 +548,152 @@ Set
 Set
 \series default
  
-\begin_inset Formula $f_{l}=\infty$
+\begin_inset Formula $P_{s}\in[0,1]$
 \end_inset
 
-, the best discovered fitness
-\end_layout
+ as the selection rate, 
+\begin_inset Formula $P_{M}\in[0,1]$
+\end_inset
 
-\begin_layout Enumerate
-
-\series bold
-Set
-\series default
- 
-\begin_inset Formula $L_{I}$
+ as the mutation rate, 
+\begin_inset Formula $K_{ls}$
 \end_inset
 
  the number of generations that should pass before the local search procedure
- is applied.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Set
-\series default
- 
-\begin_inset Formula $L_{c}$
+ is applied, 
+\begin_inset Formula $N_{ls}$
 \end_inset
 
- the number of chromosomes that will participate in local search procedure.
+ the number of chromosomes that will be participated in the local search
+ procedure, 
+\begin_inset Formula $iter=0,$
+\end_inset
+
+ and 
+\begin_inset Formula $i_{max}$
+\end_inset
+
+ the maximum number of iterations allowed.
 \end_layout
 
 \end_deeper
 \begin_layout Enumerate
 
 \series bold
-Termination check.
+Evaluation Step
+\end_layout
 
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+For
 \series default
- At every generation the variance 
-\begin_inset Formula $\sigma^{(\mbox{iter})}$
+ every chromosome 
+\begin_inset Formula $g$
 \end_inset
 
- of 
-\begin_inset Formula $f_{l}$
+ 
+\series bold
+calculate
+\series default
+ the corresponding fitness value 
+\begin_inset Formula $f_{g}$
 \end_inset
 
- is calculated.
- If there was no improvement of the genetic algorithm for a number of generation
-s, then the algorithm should terminate.
- The stopping rule has as follows:
+, as defined by the error function (equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eqrbf"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Genetic step
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Transfer
+\series default
+ the best 
+\begin_inset Formula $(1-P_{s})\times N_{c}$
+\end_inset
+
+ chromosomes in the next population
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Select
+\series default
+ 
+\begin_inset Formula $P_{s}\times N_{c}$
+\end_inset
+
+ parents using tournament selection.
+ For every pair 
+\begin_inset Formula $(x,y)$
+\end_inset
+
+ of parents two offsprings 
+\begin_inset Formula $\tilde{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\tilde{y}$
+\end_inset
+
+ are created using:
 \begin_inset Formula 
-\begin{equation}
-\left|f_{h}-f_{l}\right|\le e\ \mbox{OR}\ \sigma^{(\mbox{iter})}\le\frac{\sigma^{(\mbox{last})}}{2}\mbox{\ \ \ OR iter>ITERMAX }\label{eq:termination_mine}
-\end{equation}
+\begin{eqnarray}
+\tilde{x_{i}} & = & a_{i}x_{i}+\left(1-a_{i}\right)y_{i}\nonumber \\
+\tilde{y_{i}} & = & a_{i}y_{i}+\left(1-a_{i}\right)x_{i}\label{eq:crossover_ali-1}
+\end{eqnarray}
 
 \end_inset
 
-Where last denotes the generation number where 
-\begin_inset Formula $f_{l}$
+where 
+\begin_inset Formula $a_{i}$
 \end_inset
 
- was produced initially.
+ are random numbers in 
+\begin_inset Formula $[-0.5,1.5]$
+\end_inset
+
  
-\series bold
-If
-\series default
- equation 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:termination_mine"
-
-\end_inset
-
- is true 
-\series bold
-then
-\series default
- 
-\series bold
-Goto
-\series default
- step 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "enu:Send--to"
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kaeloali"
+literal "true"
 
 \end_inset
 
 .
- 
 \end_layout
 
 \begin_layout Enumerate
 
 \series bold
-Calculate
+Mutate
 \series default
- the fitness 
-\begin_inset Formula $f_{i}$
-\end_inset
-
- for every chromosome of the population:
-\begin_inset CommandInset label
-LatexCommand label
-name "enu:Calculate-the-corresponding"
-
+ the produced offspring with probability 
+\begin_inset Formula $P_{m}.$
 \end_inset
 
 
-\begin_inset Separator latexpar
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-
-\series bold
-Transform
-\series default
- the original train data using grammatical evolution and create 
-\begin_inset Formula $N_{f}$
-\end_inset
-
- features.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Train
-\series default
- a classification model 
-\begin_inset Formula $C_{i}$
-\end_inset
-
- obtaining the train error 
-\begin_inset Formula $E$
-\end_inset
-
- 
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Assign
-\series default
- the train error 
-\begin_inset Formula $E$
-\end_inset
-
- to fitness value 
-\begin_inset Formula $f_{i}$
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-
-\series bold
-Genetic Operators
-\series default
-
-\begin_inset Separator latexpar
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-
-\series bold
-Selection procedure
-\series default
-: The chromosomes are sorted in descending order according to their fitness
- value.
- The first 
-\begin_inset Formula $\left(1-p_{s}\right)\times N_{c}$
-\end_inset
-
- chromosomes are transferred to the next generation.
- The rest of the chromosomes are substituted by offsprings created through
- one point crossover procedure.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Mutation procedure:
-\series default
- For every element of each chromosome a random number 
-\begin_inset Formula $r$
-\end_inset
-
- in range 
-\begin_inset Formula $\left[0,1\right]$
-\end_inset
-
- is produced.
- If 
-\begin_inset Formula $r\le p_{m}$
-\end_inset
-
- then the corresponding element is randomly altered.
- 
 \end_layout
 
 \begin_layout Enumerate
@@ -705,32 +702,17 @@ Mutation procedure:
 Replace
 \series default
  the 
-\begin_inset Formula $p_{s}\times N_{c}$
+\begin_inset Formula $P_{s}\times N_{c}$
 \end_inset
 
- worst chromosomes in the population with the offsprings created by the
- genetic operators.
+ worst chromosomes in the population with the produced offsprings.
 \end_layout
 
 \end_deeper
 \begin_layout Enumerate
 
 \series bold
-Set
-\series default
- iter=iter+1
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Local Search Step 
-\series default
-
-\begin_inset Separator latexpar
-\end_inset
-
-
+Local search step
 \end_layout
 
 \begin_deeper
@@ -740,7 +722,7 @@ Local Search Step
 If 
 \series default
 
-\begin_inset Formula $\mbox{iters}\ \mod\ L_{i}=0$
+\begin_inset Formula $\mbox{iter}\ \mod\ K_{ls}=0$
 \end_inset
 
  
@@ -761,14 +743,14 @@ Then
 Select
 \series default
  randomly 
-\begin_inset Formula $L_{C}$
+\begin_inset Formula $N_{ls}$
 \end_inset
 
  chromosomes from the genetic population and create the set 
 \begin_inset Formula $L_{S}$
 \end_inset
 
- from these chromosomes
+ from these chromosomes,
 \end_layout
 
 \begin_layout Enumerate
@@ -776,106 +758,33 @@ Select
 \series bold
 For
 \series default
- every chromosome 
-\begin_inset Formula $X_{i}$
-\end_inset
-
- 
-\series bold
-in
-\series default
- 
+ every chromosome in 
 \begin_inset Formula $L_{S}$
 \end_inset
 
  
-\begin_inset Separator latexpar
-\end_inset
+\series bold
+apply
+\series default
+ the local optimization procedure (BFGS procedure)
+\end_layout
 
+\end_deeper
+\end_deeper
+\begin_layout Enumerate
 
+\series bold
+Termination Check Step
 \end_layout
 
 \begin_deeper
 \begin_layout Enumerate
 
 \series bold
-Select
-\series default
- randomly another chromosome 
-\begin_inset Formula $Y$
-\end_inset
-
- from the population
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Create
-\series default
- an offspring of 
-\begin_inset Formula $X_{i}$
-\end_inset
-
-and Y using one point crossover.
- Denote the offspring as 
-\begin_inset Formula $Z$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Obtain
-\series default
- the fitness 
-\begin_inset Formula $f(Z)$
-\end_inset
-
- of chromosome 
-\begin_inset Formula $Z$
-\end_inset
-
-
-\series bold
-.
- If
+Set
 \series default
  
-\begin_inset Formula $f(z)<f_{i}$
-\end_inset
-
- then 
-\begin_inset Formula $X_{i}=Z,\ f_{i}=f(Z)$
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\end_deeper
-\begin_layout Enumerate
-
-\series bold
-Endif
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-
-\series bold
-Obtain 
-\series default
-the best value in the population, denoted as 
-\begin_inset Formula $f_{l}$
-\end_inset
-
- for the corresponding chromosome 
-\series bold
-
-\begin_inset Formula $x_{l}$
+\begin_inset Formula $iter=iter+1$
 \end_inset
 
 
@@ -884,49 +793,29 @@ the best value in the population, denoted as
 \begin_layout Enumerate
 
 \series bold
-Send
+If
 \series default
- 
-\begin_inset Formula $\left(x_{l},f_{l}\right)$
-\end_inset
-
- to Server machine
-\series bold
- 
-\series default
-and 
-\series bold
-Goto
-\series default
- step 
+ the termination criteria of subsection 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "enu:Calculate-the-corresponding"
+reference "subsec:Termination-check"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-
+ are met, then 
+\series bold
+terminate Else Goto
+\series default
+ Evaluation Step.
 \end_layout
 
-\begin_layout Enumerate
-
-\series bold
-Send
-\series default
- 
-\begin_inset Formula $\left(x_{l},f_{l}\right)$
+\end_deeper
 \end_inset
 
- to Server machine 
-\begin_inset CommandInset label
-LatexCommand label
-name "enu:Send--to"
 
-\end_inset
-
- and 
-\series bold
-Terminate
 \end_layout
 
 \begin_layout Subsection
@@ -983,7 +872,7 @@ Experimental setup
 \end_layout
 
 \begin_layout Standard
-(nention the Optimus)
+(nention the Optimus) pinakas me experimental parameters
 \end_layout
 
 \begin_layout Subsection
@@ -999,90 +888,17 @@ All the experiments were conducted 30 times using different seed for the
 \begin_layout Enumerate
 
 \series bold
-Wine
+Alcohol
 \series default
- dataset.
- The wine recognition dataset contains data from wine chemical analysis.
- It contains 178 examples of 13 features each that are classified into three
- classes.
- 
-\end_layout
+ dataset, a dataset about Alcohol consumption 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Alcohol"
+literal "false"
 
-\begin_layout Enumerate
-
-\series bold
-Glass
-\series default
- dataset.
- The dataset contains glass component analysis for glass pieces that belong
- to 6 classes.
- The dataset contains 214 examples with 10 attributes each.
-\end_layout
-
-\begin_layout Enumerate
-Liverdisorder: This dataset, which will be denoted by LIVER in the following
- tables, contains blood analysis data from people with liver disorders.
- It consists of 345 examples of 6 features each.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Tae
-\series default
- dataset.
- The data consist of evaluations of teaching performance over three regular
- semesters and two summer semesters of 151 teaching assistant (TA) assignments
- at the Statistics Department of the University of Wisconsin-Madison.
-\end_layout
-
-\begin_layout Enumerate
-Liverdisorder dataset.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Spiral
-\series default
- dataset: The spiral artificial dataset contains 1000 two-dimensional examples
- that belong to two classes (500 examples each).
- The number of the features is 2.
- The data in the first class are created using the following formula: 
-\begin_inset Formula $x_{1}=0.5t\cos\left(0.08t\right),\ x_{2}=0.5t\cos\left(0.08t+\frac{\pi}{2}\right)$
 \end_inset
 
- and the second class data using
-\series bold
-: 
-\begin_inset Formula $x_{1}=0.5t\cos\left(0.08t+\pi\right),\ x_{2}=0.5t\cos\left(0.08t+\frac{3\pi}{2}\right)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Pima
-\series default
- dataset.
- The Pima Indians Diabetes dataset contains 768 examples of 8 attributes
- each that are classified into two categories: healthy and diabetic.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Ionosphere
-\series default
- dataset.
- The ionosphere dataset (ION in the following tables) contains data from
- the Johns Hopkins Ionosphere database.
- The two-class dataset contains 351 exam
-\backslash
-ples of 34 features each.
- 
+.
 \end_layout
 
 \begin_layout Enumerate
@@ -1112,6 +928,50 @@ Australian
 \begin_layout Enumerate
 
 \series bold
+Balance
+\series default
+ dataset.
+ This data set was generated to model psychological experimental results.
+ It contains 625 patterns of 4 features each.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Cleveland
+\series default
+ dataset.
+ A dataset obtainedfrom the V.A.
+ Medical Center, Long Beach and Cleveland Clinic Foundation aimed to detect
+ the presence of heart disease in patients.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Dermatology
+\series default
+ dataset.
+ Dataset used for differential diagnosis of erythemato-squamous diseases.
+ The dataset has 366 instances of 34 features each.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Glass
+\series default
+ dataset.
+ The dataset contains glass component analysis for glass pieces that belong
+ to 6 classes.
+ The dataset contains 214 examples with 10 attributes each.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
 Hayes roth
 \series default
  dataset.
@@ -1134,12 +994,68 @@ literal "false"
 \begin_layout Enumerate
 
 \series bold
-Alcohol
+Heart
 \series default
- dataset, a dataset about Alcohol consumption 
+ dataset.
+ The task is to detect the absence or presence of heart disease.
+ It contains 270 patterns of 13 features each.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+HouseVotes
+\series default
+ dataset.
+ This data set includes votes for each of the U.S.
+ House of Representatives Congressmen on the 16 key votes.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Ionosphere
+\series default
+ dataset.
+ The ionosphere dataset (ION in the following tables) contains data from
+ the Johns Hopkins Ionosphere database.
+ The two-class dataset contains 351 examples of 34 features each.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Liverdisorder
+\series default
+: This dataset, which will be denoted by LIVER in the following tables,
+ contains blood analysis data from people with liver disorders.
+ It consists of 345 examples of 6 features each.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Mammographic
+\series default
+ dataset.
+ This dataset be used to identify the severity (benign or malignant) of
+ a mammographic mass lesion from BI-RADS attributes and the patient's age.
+ It contains 830 patterns of 5 features each.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Parkinsons
+\series default
+ dataset.
+ This dataset is composed of a range of biomedical voice measurements from
+ 31 people, 23 with Parkinson's disease (PD)
 \begin_inset CommandInset citation
 LatexCommand cite
-key "Alcohol"
+key "parkinsons"
 literal "false"
 
 \end_inset
@@ -1150,22 +1066,22 @@ literal "false"
 \begin_layout Enumerate
 
 \series bold
-Dermatology
+Pima
 \series default
  dataset.
- Dataset used for differential diagnosis of erythemato-squamous diseases.
- The dataset has 366 instances of 34 features each.
- 
+ The Pima Indians Diabetes dataset contains 768 examples of 8 attributes
+ each that are classified into two categories: healthy and diabetic.
 \end_layout
 
 \begin_layout Enumerate
 
 \series bold
-Balance
+Popfailures
 \series default
  dataset.
- This data set was generated to model psychological experimental results.
- It contains 625 patterns of 4 features each.
+ This dataset contains records of simulation crashes encountered during
+ climate model uncertainty quantification (UQ) ensembles.
+ It contains 540 patterns of 18 features each.
 \end_layout
 
 \begin_layout Enumerate
@@ -1191,125 +1107,11 @@ literal "true"
 \begin_layout Enumerate
 
 \series bold
-Parkinsons
+Ring
 \series default
  dataset.
- This dataset is composed of a range of biomedical voice measurements from
- 31 people, 23 with Parkinson's disease (PD)
-\begin_inset CommandInset citation
-LatexCommand cite
-key "parkinsons"
-literal "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Wdbc
-\series default
- dataset.
- The Wisconsin diagnostic breast cancer dataset (WDBC) contains data for
- breast tumors.
- It contains 569 patterns of 30 features each.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Popfailures
-\series default
- dataset.
- This dataset contains records of simulation crashes encountered during
- climate model uncertainty quantification (UQ) ensembles.
- It contains 540 patterns of 18 features each.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Heart
-\series default
- dataset.
- The task is to detect the absence or presence of heart disease.
- It contains 270 patterns of 13 features each.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Haberman
-\series default
- dataset.
- A dataset about breast cancer from a study at the University of Chicago's
- Billings Hospital.
- It contains 306 patterns of 3 features each.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-HouseVotes
-\series default
- dataset.
- This data set includes votes for each of the U.S.
- House of Representatives Congressmen on the 16 key votes.
- 
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Lymography
-\series default
- dataset.
- The aim here is to detect the presence of a lymphoma in patients.
- It contains 148 patterns of 18 features each.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Mammographic
-\series default
- dataset.
- This dataset be used to identify the severity (benign or malignant) of
- a mammographic mass lesion from BI-RADS attributes and the patient's age.
- It contains 830 patterns of 5 features each.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-OptDigits
-\series default
- dataset.
- Optical Recognition of Handwritten Digits data set.
- It contains 5620 patterns of 64 features each.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Page Blocks
-\series default
- dataset.
- The dataset contains blocks of the page layout of a document that has been
- detected by a segmentation process.
- It has 5473 patterns with 10 features each.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Penbased
-\series default
- dataset.
- This is a Pen-Based Recognition of Handwritten Digits data set with 10992
- patterns of 16 features.
+ It is an 20 dimensional problem with two classes.
+ Each class is drawn from a multivariate normal distribution.
 \end_layout
 
 \begin_layout Enumerate
@@ -1333,7 +1135,97 @@ Segment
 \end_layout
 
 \begin_layout Enumerate
-Eeg dataset.
+
+\series bold
+Sonar
+\series default
+ dataset.
+ This data set contains signals obtained from a variety of different aspect
+ angles, spanning 90 degrees for mines and 180 degrees for rocks.
+ Each pattern is a set of 60 numbers in the range 0.0 to 1.0, where each number
+ represents the energy within a particular frequency band, integrated over
+ a certain period of time.
+ The output attribute contains the letter R if the object is a rock and
+ M if it is a mine (metal cylinder).
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Spiral
+\series default
+ dataset: The spiral artificial dataset contains 1000 two-dimensional examples
+ that belong to two classes (500 examples each).
+ The number of the features is 2.
+ The data in the first class are created using the following formula: 
+\begin_inset Formula $x_{1}=0.5t\cos\left(0.08t\right),\ x_{2}=0.5t\cos\left(0.08t+\frac{\pi}{2}\right)$
+\end_inset
+
+ and the second class data using
+\series bold
+: 
+\begin_inset Formula $x_{1}=0.5t\cos\left(0.08t+\pi\right),\ x_{2}=0.5t\cos\left(0.08t+\frac{3\pi}{2}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Tae
+\series default
+ dataset.
+ The data consist of evaluations of teaching performance over three regular
+ semesters and two summer semesters of 151 teaching assistant (TA) assignments
+ at the Statistics Department of the University of Wisconsin-Madison.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Thyroid
+\series default
+ dataset: Thyroid disease records
+\begin_inset CommandInset citation
+LatexCommand cite
+key "thyroid"
+literal "true"
+
+\end_inset
+
+ with 7200 patterns of 21 features each.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Wdbc
+\series default
+ dataset.
+ The Wisconsin diagnostic breast cancer dataset (WDBC) contains data for
+ breast tumors.
+ It contains 569 patterns of 30 features each.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Wine
+\series default
+ dataset.
+ The wine recognition dataset contains data from wine chemical analysis.
+ It contains 178 examples of 13 features each that are classified into three
+ classes.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Eeg
+\series default
+ datasets.
  As an real word example, consider an EEG dataset described in 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1345,23 +1237,19 @@ literal "true"
  is used here.
  The dataset consists of five sets (denoted as Z, O, N, F and S) each containing
  100 single-channel EEG segments each having 23.6 sec duration.
- Sets Z and O have been taken from surface EEG recordings of five healthy
- volunteers with eye open and closed, respectively.
- Signals in two sets have been measured in seizure-free intervals from five
- patients in the epileptogenic zone (F) and from the hippocampal formation
- of the opposite hemisphere of the brain (N).
- Set S contains seizure activity, selected from all recording sites exhibiting
- ictal activity.
- Sets Z and O have been recorded extracranially, whereas sets N, F and S
- have been recorded intracranially.
+ With different combinations of these sets the produced datasets are Z_F_S,
+ ZO_NF_S, ZONF_S.
 \end_layout
 
 \begin_layout Enumerate
-Fertility Data Set (FERT): 100 volunteers provide a semen sample analyzed
- according to the WHO 2010 criteria.
- Sperm concentration is related to socio-demographic data, environmental
- factors, health status, and life habits.
- It contains 100 examples of 10 features each.
+
+\series bold
+Zoo
+\series default
+ dataset.
+ A simple database where the task is to classify animals in seven predefined
+ classes and most of the attributes are boolean-valued.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1544,66 +1432,11 @@ Quake
  
 \end_layout
 
-\begin_layout Enumerate
-
-\series bold
-Wankara
-\series default
- dataset.
- This dataset is used to predict the mean temperature for the Ankara.
- The dataset has 1609 datasets of 9 features each.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-FA
-\series default
- dataset.
- The FA dataset contains percentage of body fat, age, weight, height, and
- ten body circumference measurements.
- The goal is to fit body fat to the other measurements.
- The number of the features is 18.
- The total number of patterns is 252.
- 
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-PY
-\series default
- dataset (Pyrimidines problem).
- The source of this dataset is the URL: 
-\begin_inset Flex URL
-status collapsed
-
-\begin_layout Plain Layout
-
-https://www.dcc.fc.up.pt/~ltorgo/Regression/DataSets.html
-\end_layout
-
-\end_inset
-
- and it is a problem of 27 attributes and 74 number of patterns.
- The task consists of Learning Quantitative Structure Activity Relationships
- (QSARs) and provided by 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "pydataset"
-literal "false"
-
-\end_inset
-
-.
- 
-\end_layout
-
 \begin_layout Standard
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1627,9 +1460,8 @@ name "tab:Experimental-results"
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="37" columns="4">
+<lyxtabular version="3" rows="31" columns="3">
 <features tabularvalignment="middle">
-<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -1652,20 +1484,11 @@ KRBF
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-GENRBF(3)
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-GENRBF(5)
+PROPOSED
 \end_layout
 
 \end_inset
@@ -1690,20 +1513,11 @@ Alcohol
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+21.86%
 \end_layout
 
 \end_inset
@@ -1728,20 +1542,11 @@ Appendicitis
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+16.03%
 \end_layout
 
 \end_inset
@@ -1766,20 +1571,11 @@ Australian
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+22.97%
 \end_layout
 
 \end_inset
@@ -1804,58 +1600,11 @@ Balance
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Bands
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-37.22%
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+12.88%
 \end_layout
 
 \end_inset
@@ -1880,20 +1629,11 @@ Cleveland
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+51.75%
 \end_layout
 
 \end_inset
@@ -1918,58 +1658,11 @@ Dermatology
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Ecoli
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-59.59%
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+37.37%
 \end_layout
 
 \end_inset
@@ -1994,58 +1687,11 @@ Glass
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Haberman
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-25.10%
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+49.16%
 \end_layout
 
 \end_inset
@@ -2070,20 +1716,11 @@ Hayes Roth
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+35.26%
 \end_layout
 
 \end_inset
@@ -2108,20 +1745,11 @@ Heart
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+17.80%
 \end_layout
 
 \end_inset
@@ -2146,20 +1774,11 @@ HouseVotes
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3.67%
 \end_layout
 
 \end_inset
@@ -2184,20 +1803,11 @@ Ionosphere
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+10.33%
 \end_layout
 
 \end_inset
@@ -2222,58 +1832,11 @@ Liverdisorder
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Lymography
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-25.31%
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+28.73%
 \end_layout
 
 \end_inset
@@ -2298,58 +1861,11 @@ Mammographic
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Page Blocks
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-10.09%
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+17.25%
 \end_layout
 
 \end_inset
@@ -2374,20 +1890,11 @@ Parkinsons
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+17.37%
 \end_layout
 
 \end_inset
@@ -2412,20 +1919,11 @@ Pima
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+24.00%
 \end_layout
 
 \end_inset
@@ -2450,20 +1948,11 @@ Popfailures
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5.44%
 \end_layout
 
 \end_inset
@@ -2488,20 +1977,11 @@ Regions2
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+25.81%
 \end_layout
 
 \end_inset
@@ -2526,20 +2006,11 @@ Ring
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.09%
 \end_layout
 
 \end_inset
@@ -2564,20 +2035,11 @@ Saheart
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+29.38%
 \end_layout
 
 \end_inset
@@ -2602,20 +2064,11 @@ Segment
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+39.44%
 \end_layout
 
 \end_inset
@@ -2640,20 +2093,11 @@ Sonar
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+19.62%
 \end_layout
 
 \end_inset
@@ -2678,20 +2122,11 @@ Spiral
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+18.98%
 \end_layout
 
 \end_inset
@@ -2716,20 +2151,11 @@ Tae
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+52.44%
 \end_layout
 
 \end_inset
@@ -2754,20 +2180,11 @@ Thyroid
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+7.12%
 \end_layout
 
 \end_inset
@@ -2792,20 +2209,11 @@ Wdbc
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5.29%
 \end_layout
 
 \end_inset
@@ -2830,20 +2238,11 @@ Wine
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+8.67%
 \end_layout
 
 \end_inset
@@ -2868,58 +2267,11 @@ Z_F_S
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Z_O_N_F_S
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-48.71%
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+4.21%
 \end_layout
 
 \end_inset
@@ -2944,20 +2296,11 @@ ZO_NF_S
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4.17%
 \end_layout
 
 \end_inset
@@ -2982,20 +2325,11 @@ ZONF_S
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.18%
 \end_layout
 
 \end_inset
@@ -3020,20 +2354,11 @@ ZOO
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+9.00%
 \end_layout
 
 \end_inset
@@ -3052,7 +2377,7 @@ ZOO
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -3076,9 +2401,8 @@ name "tab:exp2"
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="13" columns="4">
+<lyxtabular version="3" rows="12" columns="3">
 <features tabularvalignment="middle">
-<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -3101,20 +2425,11 @@ KMEANS RBF
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-GENRBF(3)
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-GENRBF(5)
+PROPOSED
 \end_layout
 
 \end_inset
@@ -3134,16 +2449,7 @@ ABALONE
 \begin_inset Text
 
 \begin_layout Plain Layout
-7.371
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+2559.48
 \end_layout
 
 \end_inset
@@ -3152,7 +2458,7 @@ ABALONE
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1960.22
 \end_layout
 
 \end_inset
@@ -3172,16 +2478,7 @@ AIRFOIL
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.037
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+5.49
 \end_layout
 
 \end_inset
@@ -3190,7 +2487,7 @@ AIRFOIL
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.58
 \end_layout
 
 \end_inset
@@ -3215,20 +2512,11 @@ ANACALT
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.003
 \end_layout
 
 \end_inset
@@ -3248,16 +2536,7 @@ BK
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.165
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+0.17
 \end_layout
 
 \end_inset
@@ -3266,7 +2545,7 @@ BK
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.23
 \end_layout
 
 \end_inset
@@ -3291,20 +2570,11 @@ BL
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.0009
 \end_layout
 
 \end_inset
@@ -3329,20 +2599,11 @@ CONCRETE
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.52
 \end_layout
 
 \end_inset
@@ -3362,16 +2623,7 @@ HOUSING
 \begin_inset Text
 
 \begin_layout Plain Layout
-57.682
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+2884.09
 \end_layout
 
 \end_inset
@@ -3380,7 +2632,7 @@ HOUSING
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+693.22
 \end_layout
 
 \end_inset
@@ -3405,20 +2657,11 @@ LASER
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.04
 \end_layout
 
 \end_inset
@@ -3438,16 +2681,7 @@ MB
 \begin_inset Text
 
 \begin_layout Plain Layout
-1.915
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+11.33
 \end_layout
 
 \end_inset
@@ -3456,7 +2690,7 @@ MB
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.63
 \end_layout
 
 \end_inset
@@ -3476,16 +2710,7 @@ NT
 \begin_inset Text
 
 \begin_layout Plain Layout
-2.755
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+72.14
 \end_layout
 
 \end_inset
@@ -3494,14 +2719,14 @@ NT
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.09
 \end_layout
 
 \end_inset
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -3510,58 +2735,11 @@ QUAKE
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.071
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-WANKARA
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.18
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+15.36
 \end_layout
 
 \end_inset
@@ -3570,7 +2748,7 @@ WANKARA
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+7.86
 \end_layout
 
 \end_inset
@@ -4200,17 +3378,11 @@ B.
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
 key "Tsoulos1"
-literal "true"
+literal "false"
 
 \end_inset
 
-B.
- Yu , X.
- He, Training Radial Basis Function Networks with Differential Evolution,
- In Proceedings of IEEE International Conference on Granular Computing,
- pp.
- 934-941, 2006.
- I.G.
+I.G.
  Tsoulos, Modifications of real code genetic algorithm for global optimization,
  Applied Mathematics and Computation 
 \series bold
@@ -4218,6 +3390,23 @@ B.
 \series default
 , pp.
  598-607, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "kmeans"
+literal "false"
+
+\end_inset
+
+MacQueen, J.: Some methods for classification and analysis of multivariate
+ observations, in: Proceedings of the fifth Berkeley symposium on mathematical
+ statistics and probability, Vol.
+ 1, No.
+ 14, pp.
+ 281-297, 1967.
+ 
 \end_layout
 
 \begin_layout Bibliography
@@ -4431,6 +3620,22 @@ J.S.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "thyroid"
+literal "true"
+
+\end_inset
+
+Quinlan,J.R., Compton,P.J., Horn,K.A., and Lazurus,L.
+ (1986).
+ Inductive knowledge acquisition: A case study.
+ In Proceedings of the Second Australian Conference on Applications of Expert
+ Systems.
+ Sydney, Australia.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "ntdataset"
 literal "false"
 
@@ -4461,26 +3666,11 @@ J.S.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
-key "pydataset"
-literal "false"
+key "key-5"
 
 \end_inset
 
-R.D.
- King, S.
- Muggleton, R.
- Lewis, M.J.E.
- Sternberg, Proc.
- Nat.
- Acad.
- Sci.
- USA 
-\series bold
-89
-\series default
-, pp.
- 11322–11326, 1992.
- 
+
 \end_layout
 
 \end_body
