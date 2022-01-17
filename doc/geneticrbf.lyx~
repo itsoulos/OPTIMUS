@@ -90,6 +90,8 @@ Department of Informatics and Telecommunications, University of Ioannina,
 \end_layout
 
 \begin_layout Abstract
+
+\series bold
 Write some abstract here
 \end_layout
 
@@ -477,6 +479,13 @@ The proposed method can be divided into two main phases: during the first
 
 \begin_layout Subsection
 Bound location phase 
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Bound-location-phase"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -508,7 +517,17 @@ noprefix "false"
 \end_inset
 
  is the total number of processing units of the RBF network.
- The layout of each chromosome is presented in Figure .
+ The layout of each chromosome is presented in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:The-layout-of"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
  Every center 
 \begin_inset Formula $\overrightarrow{c_{i}}$
 \end_inset
@@ -536,8 +555,8 @@ noprefix "false"
 \end_inset
 
  function.
- The centroids are estimated using the Kmeans algorithm that described in
- algorithm 
+ The centroids and the corresponding variances are estimated using the Kmeans
+ algorithm that described in algorithm 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "alg:The-KMeans-algorithm."
@@ -548,20 +567,177 @@ noprefix "false"
 \end_inset
 
 .
- The variance 
+ The value 
 \begin_inset Formula $\sigma_{i}$
 \end_inset
 
+ for every 
+\begin_inset Formula $\phi_{i}(x)$
+\end_inset
+
+ is calculated as:
+\begin_inset Formula 
+\begin{equation}
+\sigma_{i}=\sum_{j=1}^{d}s_{ij}^{2}
+\end{equation}
+
+\end_inset
+
+After the estimation of 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma_{i}$
+\end_inset
+
+ the vectors 
+\begin_inset Formula $\overrightarrow{L},\ \overrightarrow{R}$
+\end_inset
+
+ with dimension 
+\begin_inset Formula $(d+1)\times k$
+\end_inset
+
+ are constructed.
+ These vectors will serve as the bounds for the chromosomes of the genetic
+ population.
+ These vector are constructed using the following procedure:
+\end_layout
+
+\begin_layout Enumerate
 
 \series bold
-.....
+Set
+\series default
+ m=0
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $F>1$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1..k$
+\end_inset
+
+ 
+\series bold
+do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $j=1..d$
+\end_inset
+
+ 
+\series bold
+do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $L_{m}$
+\end_inset
+
+=
+\begin_inset Formula $-F\times c_{ij}$
+\end_inset
+
+, 
+\begin_inset Formula $R_{m}$
+\end_inset
+
+=
+\begin_inset Formula $F\times c_{ij}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $m=m+1$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $L_{m}=-F\times\sigma_{i}$
+\end_inset
+
+, 
+\begin_inset Formula $R_{m}=F\times\sigma_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $m=m+1$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -974,7 +1150,7 @@ Calculate
  the corresponding variances 
 \begin_inset Formula 
 \[
-\sigma_{j}^{2}=\frac{\sum_{i=1}^{M_{j}}\left(x_{i}-c_{j}\right)^{2}}{M_{j}}
+s_{j}^{2}=\frac{\sum_{i=1}^{M_{j}}\left(x_{i}-c_{j}\right)^{2}}{M_{j}}
 \]
 
 \end_inset
@@ -1004,17 +1180,7 @@ Main algorithm
 \end_layout
 
 \begin_layout Standard
-On each client a genetic algorithm with the termination rule described in
- 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Tsoulos1"
-literal "true"
-
-\end_inset
-
- accompanied with an additional local search operator is applied.
- The steps of the algorithm are given below:
+The basic steps of the main algorithm are given below:
 \end_layout
 
 \begin_layout Enumerate
@@ -1063,6 +1229,25 @@ Set
 \end_layout
 
 \begin_layout Enumerate
+Estimated the vectors 
+\begin_inset Formula $\overrightarrow{L},\ \overrightarrow{R}$
+\end_inset
+
+ using the procedure of subsection 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Bound-location-phase"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
 
 \series bold
 Initialize
@@ -1072,16 +1257,13 @@ Initialize
 \end_inset
 
  random chromosomes inside 
-\begin_inset Formula $[-1,1]$
+\begin_inset Formula $[L,R]$
 \end_inset
 
 .
- Each chromosome is an array of 
-\begin_inset Formula $2nm$
-\end_inset
-
- double precision values corresponding to the centroids and variances of
- an RBF network.
+ 
+\series bold
+(stop here)
 \end_layout
 
 \begin_layout Enumerate
@@ -1153,7 +1335,10 @@ noprefix "false"
 
 \end_inset
 
-).
+)
+\series bold
+.
+ //edo einai RBF training, diladi ta weights ektimontai me to inversion.
 \end_layout
 
 \end_deeper
@@ -1257,7 +1442,76 @@ Replace
 Local search step
 \end_layout
 
+\begin_layout Enumerate
+
+\series bold
+Termination Check Step
+\end_layout
+
 \begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $iter=iter+1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+If
+\series default
+ the termination criteria of subsection 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Termination-check"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ are met, then 
+\series bold
+terminate Else Goto
+\series default
+ Evaluation Step.
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Fitness evaluation
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Fitness-evaluation"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+(edo na grapsoume pos einai me kanoniki ekpaideysi RBF)
+\end_layout
+
+\begin_layout Subsection
+Local optimization
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Local-optimization"
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Enumerate
 
 \series bold
@@ -1312,55 +1566,15 @@ apply
 \end_layout
 
 \end_deeper
-\end_deeper
-\begin_layout Enumerate
-
-\series bold
-Termination Check Step
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-
-\series bold
-Set
-\series default
- 
-\begin_inset Formula $iter=iter+1$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-If
-\series default
- the termination criteria of subsection 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:Termination-check"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- are met, then 
-\series bold
-terminate Else Goto
-\series default
- Evaluation Step.
-\end_layout
-
-\end_deeper
-\begin_layout Subsection
-Local optimization
-\end_layout
-
 \begin_layout Subsection
 Stopping rule
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Stopping-rule"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4010,6 +4224,25 @@ MacQueen, J.: Some methods for classification and analysis of multivariate
  14, pp.
  281-297, 1967.
  
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "kaeloali"
+literal "false"
+
+\end_inset
+
+P.
+ Kaelo, M.M.
+ Ali, Integrated crossover rules in real coded genetic algorithms, European
+ Journal of Operational Research 
+\series bold
+176
+\series default
+, pp.
+ 60-76, 2007.
 \end_layout
 
 \begin_layout Bibliography
