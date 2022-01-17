@@ -377,15 +377,39 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
+The rest of this paper is organized as follows: in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Method-description"
+plural "false"
+caps "false"
+noprefix "false"
 
-\series bold
-Na mpei edo kapoio keimeno gia alles douleies kai RBF
-\end_layout
+\end_inset
 
-\begin_layout Standard
+ the proposed method is described, in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Experiments"
+plural "false"
+caps "false"
+noprefix "false"
 
-\series bold
-The rest of this article is organized as follows ....
+\end_inset
+
+ the conducted experiments are listed and the proposed method is compared
+ against the traditional training of RBF networks and finally in section
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Conclusions"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ some conclusions are derived.
 \end_layout
 
 \begin_layout Standard
@@ -434,6 +458,549 @@ A typical plot of Gaussian function for
 
 \begin_layout Section
 Method description
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Method-description"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The proposed method can be divided into two main phases: during the first
+ phase an approximation for the bound of RBF parameters is made using the
+ K-Means algorithm in the second phase the optimization problem is solved
+ using a modified genetic algorithm.
+ These phases are outlined in detail in the following subsections.
+\end_layout
+
+\begin_layout Subsection
+Bound location phase 
+\end_layout
+
+\begin_layout Standard
+The proposed genetic algorithm has chromosomes with dimension 
+\begin_inset Formula $(d+1)\times k$
+\end_inset
+
+, where 
+\begin_inset Formula $d$
+\end_inset
+
+ is the dimension of the input problem, i.e.
+ the dimension of the vector 
+\begin_inset Formula $\overrightarrow{x_{i}}$
+\end_inset
+
+ in equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eqrbf"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset Formula $k$
+\end_inset
+
+ is the total number of processing units of the RBF network.
+ The layout of each chromosome is presented in Figure .
+ Every center 
+\begin_inset Formula $\overrightarrow{c_{i}}$
+\end_inset
+
+ in the equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:firstrbf"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is a vector of dimension 
+\begin_inset Formula $d$
+\end_inset
+
+ and also an additional parameter is reserved for the parameter 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ of every 
+\begin_inset Formula $\phi(x)$
+\end_inset
+
+ function.
+ The centroids are estimated using the Kmeans algorithm that described in
+ algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:The-KMeans-algorithm."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The variance 
+\begin_inset Formula $\sigma_{i}$
+\end_inset
+
+
+\series bold
+.....
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The layout of the chromosomes in the proposed genetic algorithm.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:The-layout-of"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="16">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{11}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{12}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+...
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{1d}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sigma_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{21}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{22}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+...
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{2d}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sigma_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+...
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{k1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{k2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+...
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{kd}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sigma_{k}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float algorithm
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The KMeans algorithm.
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:The-KMeans-algorithm."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Repeat
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $S_{j}=\left\{ \right\} ,\ j=1..k$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ every sample 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ 
+\series bold
+Do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $j^{*}=\min_{i=1}^{k}\left\{ D\left(x_{i},c_{j}\right)\right\} $
+\end_inset
+
+, where 
+\begin_inset Formula $j^{*}$
+\end_inset
+
+ is the nearest center for sample 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $S_{j^{*}}=S_{j^{*}}\cup\left\{ x_{i}\right\} $
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ every center 
+\begin_inset Formula $c_{j}$
+\end_inset
+
+ 
+\series bold
+Do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $M_{j}$
+\end_inset
+
+=number of elements in 
+\begin_inset Formula $S_{j}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Update
+\series default
+ 
+\begin_inset Formula $c_{j}$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula 
+\[
+c_{j}=\frac{1}{M_{j}}\sum_{i=1}^{M_{j}}x_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\series default
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Calculate
+\series default
+ the corresponding variances 
+\begin_inset Formula 
+\[
+\sigma_{j}^{2}=\frac{\sum_{i=1}^{M_{j}}\left(x_{i}-c_{j}\right)^{2}}{M_{j}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Terminate
+\series default
+ when 
+\begin_inset Formula $c_{j}$
+\end_inset
+
+ no longer change.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Main algorithm 
 \end_layout
 
 \begin_layout Standard
@@ -448,31 +1015,6 @@ literal "true"
 
  accompanied with an additional local search operator is applied.
  The steps of the algorithm are given below:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float algorithm
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Main steps of the algorithm.
-\begin_inset CommandInset label
-LatexCommand label
-name "alg:Main-steps-of"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Enumerate
@@ -813,20 +1355,12 @@ terminate Else Goto
 \end_layout
 
 \end_deeper
-\end_inset
-
-
+\begin_layout Subsection
+Local optimization
 \end_layout
 
 \begin_layout Subsection
-Termination check
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:Termination-check"
-
-\end_inset
-
-
+Stopping rule
 \end_layout
 
 \begin_layout Standard
@@ -865,6 +1399,13 @@ where
 
 \begin_layout Section
 Experiments 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Experiments"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -872,7 +1413,8 @@ Experimental setup
 \end_layout
 
 \begin_layout Standard
-(nention the Optimus) pinakas me experimental parameters
+(nention the Optimus, mention to armadillo library ) pinakas me experimental
+ parameters
 \end_layout
 
 \begin_layout Subsection
@@ -880,9 +1422,59 @@ Experimental datasets
 \end_layout
 
 \begin_layout Standard
+In order to measure the efficiency of the proposed method a series of experiment
+s were conducted on some common classification problems found in two major
+ dataset databases:
+\end_layout
+
+\begin_layout Enumerate
+UCI dataset repository, 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://archive.ics.uci.edu/ml/index.php
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Keel repository, 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://sci2s.ugr.es/keel/datasets.php
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Keel"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
 All the experiments were conducted 30 times using different seed for the
  random generator each time and averages were taken.
- The following datasets were used 
+ Also, to validate the results 10 - fold cross validation was used in all
+ experiments.
+ 
+\end_layout
+
+\begin_layout Standard
+The following datasets were used 
 \end_layout
 
 \begin_layout Enumerate
@@ -1436,7 +2028,7 @@ Quake
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -2377,7 +2969,7 @@ ZOO
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -2760,6 +3352,17 @@ QUAKE
 
 
 \end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Conclusions
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Conclusions"
 
 \end_inset
 
@@ -3661,16 +4264,6 @@ literal "false"
 
 J.S.
  Simonoff, Smooting Methods in Statistics, Springer - Verlag, 1996.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "key-5"
-
-\end_inset
-
-
 \end_layout
 
 \end_body
