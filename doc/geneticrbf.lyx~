@@ -186,27 +186,6 @@ The value
 \end_inset
 
 , which typically is called centroid.
- A plot for this function is demonstrated in Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:A-typical-plot"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- for 
-\begin_inset Formula $c=0$
-\end_inset
-
- and 
-\begin_inset Formula $\sigma=1$
-\end_inset
-
-.
-
-\series bold
  
 \end_layout
 
@@ -412,50 +391,6 @@ noprefix "false"
 \end_inset
 
  some conclusions are derived.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:A-typical-plot"
-
-\end_inset
-
-A typical plot of Gaussian function for 
-\begin_inset Formula $c=0,\ \sigma=1$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename ../../../../GoogleDrive/ERGASIES/HUMORIST/GENRBF/gaussian.eps
-	scale 80
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Section
@@ -1195,25 +1130,16 @@ Initialization Step
 \series bold
 Read
 \series default
- the train set.
- 
-\series bold
-Set
-\series default
- 
-\begin_inset Formula $n$
-\end_inset
-
- the size of the patterns.
- 
-\series bold
-Set
-\series default
- 
+ the train set with 
 \begin_inset Formula $m$
 \end_inset
 
- the number of patterns.
+ of 
+\begin_inset Formula $d$
+\end_inset
+
+ dimension.
+ 
 \end_layout
 
 \begin_layout Enumerate
@@ -1229,7 +1155,11 @@ Set
 \end_layout
 
 \begin_layout Enumerate
-Estimated the vectors 
+
+\series bold
+Estimate
+\series default
+ the vectors 
 \begin_inset Formula $\overrightarrow{L},\ \overrightarrow{R}$
 \end_inset
 
@@ -1253,7 +1183,7 @@ noprefix "false"
 Initialize
 \series default
  a genetic population of 
-\begin_inset Formula $C$
+\begin_inset Formula $N_{C}$
 \end_inset
 
  random chromosomes inside 
@@ -1262,8 +1192,6 @@ Initialize
 
 .
  
-\series bold
-(stop here)
 \end_layout
 
 \begin_layout Enumerate
@@ -1271,25 +1199,15 @@ Initialize
 \series bold
 Set
 \series default
- 
+ the selection rate 
 \begin_inset Formula $P_{s}\in[0,1]$
 \end_inset
 
- as the selection rate, 
+, the mutation rate 
 \begin_inset Formula $P_{M}\in[0,1]$
 \end_inset
 
- as the mutation rate, 
-\begin_inset Formula $K_{ls}$
-\end_inset
-
- the number of generations that should pass before the local search procedure
- is applied, 
-\begin_inset Formula $N_{ls}$
-\end_inset
-
- the number of chromosomes that will be participated in the local search
- procedure, 
+ , 
 \begin_inset Formula $iter=0,$
 \end_inset
 
@@ -1297,7 +1215,7 @@ Set
 \begin_inset Formula $i_{max}$
 \end_inset
 
- the maximum number of iterations allowed.
+ the maximum number of generations.
 \end_layout
 
 \end_deeper
@@ -1321,24 +1239,24 @@ For
 \series bold
 calculate
 \series default
- the corresponding fitness value 
-\begin_inset Formula $f_{g}$
-\end_inset
-
-, as defined by the error function (equation 
+ using the prodedure defined in subsection 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "eq:eqrbf"
+reference "subsec:Fitness-evaluation"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-)
-\series bold
+ the fitness 
+\begin_inset Formula $f_{g}$
+\end_inset
+
 .
- //edo einai RBF training, diladi ta weights ektimontai me to inversion.
+ 
+\series bold
+(STOP HERE)
 \end_layout
 
 \end_deeper
@@ -1496,73 +1414,150 @@ name "subsec:Fitness-evaluation"
 \end_layout
 
 \begin_layout Standard
+In this step a valid RBF network 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
 
-\series bold
-(edo na grapsoume pos einai me kanoniki ekpaideysi RBF)
-\end_layout
-
-\begin_layout Subsection
-Local optimization
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:Local-optimization"
-
+\begin_inset Formula $y(x)=\sum_{i=1}^{k}w_{i}\phi\left(\left\Vert x-c_{i}\right\Vert \right)$
 \end_inset
 
+, is created using the chromosome 
+\begin_inset Formula $g$
+\end_inset
 
+ and subsequently is trained using the typical training procedure for RBF
+ networks.
+ T
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+he main steps to calculate the fitness 
+\begin_inset Formula $f_{g}$
+\end_inset
+
+ of a chromosome 
+\begin_inset Formula $g$
+\end_inset
+
+ are the following:
 \end_layout
 
 \begin_layout Enumerate
 
 \series bold
-If 
+Decode
 \series default
-
-\begin_inset Formula $\mbox{iter}\ \mod\ K_{ls}=0$
+ the chromosome 
+\begin_inset Formula $g$
 \end_inset
 
- 
+ to the parts (centers and variances) of the RBF network as defined by the
+ layout of Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:The-layout-of"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
 \series bold
-Then
+Calculate
 \series default
-
-\begin_inset Separator latexpar
+ the output vectors 
+\series bold
+In the second phase the output vectors 
+\begin_inset Formula $w_{1},w_{w},\ldots,w_{k}$
 \end_inset
 
-
+ are calculated by solving a linear system of equations as follows:
 \end_layout
 
 \begin_deeper
 \begin_layout Enumerate
 
 \series bold
-Select
-\series default
- randomly 
-\begin_inset Formula $N_{ls}$
+Define with 
+\begin_inset Formula $W=w_{kj}$
 \end_inset
 
- chromosomes from the genetic population and create the set 
-\begin_inset Formula $L_{S}$
+ the matrix of 
+\begin_inset Formula $k$
 \end_inset
 
- from these chromosomes,
+ weights, with 
+\begin_inset Formula $\Phi=\phi_{j}\left(x_{i}\right)$
+\end_inset
+
+ and with 
+\begin_inset Formula $T=\left\{ t_{i}\right\} $
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Enumerate
 
 \series bold
-For
-\series default
- every chromosome in 
-\begin_inset Formula $L_{S}$
+The following system should be solved: 
+\begin_inset Formula 
+\begin{equation}
+\Phi^{T}\left(T-\Phi W^{T}\right)=0
+\end{equation}
+
 \end_inset
 
- 
-\series bold
-apply
-\series default
- the local optimization procedure (BFGS procedure)
+and hence the following is valid:
+\begin_inset Formula 
+\begin{equation}
+W^{T}=\left(\Phi^{T}\Phi\right)^{-1}\Phi^{T}T=\Phi^{\dagger}T\label{eq:eqoutput}
+\end{equation}
+
+\end_inset
+
+where the matrix 
+\begin_inset Formula $\Phi^{\dagger}=\left(\Phi^{T}\Phi\right)^{-1}\Phi^{T}$
+\end_inset
+
+ is called pseudo-inverse of 
+\begin_inset Formula $\Phi$
+\end_inset
+
+, with the property
+\begin_inset Formula 
+\begin{equation}
+\Phi^{\dagger}\Phi=I
+\end{equation}
+
+\end_inset
+
+
 \end_layout
 
 \end_deeper
