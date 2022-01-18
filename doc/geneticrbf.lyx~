@@ -1226,7 +1226,7 @@ Evaluation Step
 \end_layout
 
 \begin_deeper
-\begin_layout Enumerate
+\begin_layout Standard
 
 \series bold
 For
@@ -1254,9 +1254,6 @@ noprefix "false"
 \end_inset
 
 .
- 
-\series bold
-(STOP HERE)
 \end_layout
 
 \end_deeper
@@ -1270,30 +1267,31 @@ Genetic step
 \begin_layout Enumerate
 
 \series bold
-Transfer
-\series default
- the best 
-\begin_inset Formula $(1-P_{s})\times N_{c}$
-\end_inset
-
- chromosomes in the next population
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
 Select
 \series default
  
 \begin_inset Formula $P_{s}\times N_{c}$
 \end_inset
 
- parents using tournament selection.
- For every pair 
+ parents from the population using tournament selection, i.e.
+ create subgroups of 
+\begin_inset Formula $T>2$
+\end_inset
+
+ chromosomes and select the one with the best fitness value as the parent.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Crossover
+\series default
+: For every pair 
 \begin_inset Formula $(x,y)$
 \end_inset
 
- of parents two offsprings 
+ of selected parents create two new offsprings 
 \begin_inset Formula $\tilde{x}$
 \end_inset
 
@@ -1301,7 +1299,7 @@ Select
 \begin_inset Formula $\tilde{y}$
 \end_inset
 
- are created using:
+:
 \begin_inset Formula 
 \begin{eqnarray}
 \tilde{x_{i}} & = & a_{i}x_{i}+\left(1-a_{i}\right)y_{i}\nonumber \\
@@ -1310,12 +1308,12 @@ Select
 
 \end_inset
 
-where 
+with 
 \begin_inset Formula $a_{i}$
 \end_inset
 
- are random numbers in 
-\begin_inset Formula $[-0.5,1.5]$
+ a random number and 
+\begin_inset Formula $a_{i}\in[-0.5,1.5]$
 \end_inset
 
  
@@ -1332,13 +1330,18 @@ literal "true"
 \begin_layout Enumerate
 
 \series bold
-Mutate
+Mutation
 \series default
- the produced offspring with probability 
-\begin_inset Formula $P_{m}.$
+: For every element of each chromosome create a random number 
+\begin_inset Formula $r\in\left[0,1\right]$
 \end_inset
 
+.
+ If 
+\begin_inset Formula $r\le P_{m}$
+\end_inset
 
+ then change randomly this element.
 \end_layout
 
 \begin_layout Enumerate
@@ -1350,16 +1353,11 @@ Replace
 \begin_inset Formula $P_{s}\times N_{c}$
 \end_inset
 
- worst chromosomes in the population with the produced offsprings.
+ worst chromosomes in the population with the generated offsprings.
+ 
 \end_layout
 
 \end_deeper
-\begin_layout Enumerate
-
-\series bold
-Local search step
-\end_layout
-
 \begin_layout Enumerate
 
 \series bold
@@ -1376,27 +1374,27 @@ Set
 \begin_inset Formula $iter=iter+1$
 \end_inset
 
-
+ 
 \end_layout
 
 \begin_layout Enumerate
 
 \series bold
-If
+Terminate
 \series default
- the termination criteria of subsection 
+ if the termination criteria of subsection 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "subsec:Termination-check"
+reference "subsec:Stopping-rule"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- are met, then 
+ are satisfied, 
 \series bold
-terminate Else Goto
+else Goto
 \series default
  Evaluation Step.
 \end_layout
@@ -1489,20 +1487,24 @@ noprefix "false"
 \series bold
 Calculate
 \series default
- the output vectors 
+ the output vectors
 \series bold
-In the second phase the output vectors 
+ 
 \begin_inset Formula $w_{1},w_{w},\ldots,w_{k}$
 \end_inset
 
- are calculated by solving a linear system of equations as follows:
+ 
+\series default
+by solving the an induced system of equations:
 \end_layout
 
 \begin_deeper
 \begin_layout Enumerate
 
 \series bold
-Define with 
+Set
+\series default
+ 
 \begin_inset Formula $W=w_{kj}$
 \end_inset
 
@@ -1510,11 +1512,11 @@ Define with
 \begin_inset Formula $k$
 \end_inset
 
- weights, with 
+ weights, 
 \begin_inset Formula $\Phi=\phi_{j}\left(x_{i}\right)$
 \end_inset
 
- and with 
+ and 
 \begin_inset Formula $T=\left\{ t_{i}\right\} $
 \end_inset
 
@@ -1525,7 +1527,7 @@ Define with
 \begin_layout Enumerate
 
 \series bold
-The following system should be solved: 
+Solve: 
 \begin_inset Formula 
 \begin{equation}
 \Phi^{T}\left(T-\Phi W^{T}\right)=0
@@ -1533,7 +1535,11 @@ The following system should be solved:
 
 \end_inset
 
-and hence the following is valid:
+
+\series default
+givivg
+\series bold
+:
 \begin_inset Formula 
 \begin{equation}
 W^{T}=\left(\Phi^{T}\Phi\right)^{-1}\Phi^{T}T=\Phi^{\dagger}T\label{eq:eqoutput}
@@ -1541,15 +1547,19 @@ W^{T}=\left(\Phi^{T}\Phi\right)^{-1}\Phi^{T}T=\Phi^{\dagger}T\label{eq:eqoutput}
 
 \end_inset
 
-where the matrix 
+
+\series default
+The matrix 
 \begin_inset Formula $\Phi^{\dagger}=\left(\Phi^{T}\Phi\right)^{-1}\Phi^{T}$
 \end_inset
 
- is called pseudo-inverse of 
+ is the pseudo-inverse of 
 \begin_inset Formula $\Phi$
 \end_inset
 
-, with the property
+, with
+\series bold
+
 \begin_inset Formula 
 \begin{equation}
 \Phi^{\dagger}\Phi=I
@@ -1561,6 +1571,35 @@ where the matrix
 \end_layout
 
 \end_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $f_{g}=$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\sum_{i=}^{m}\left(y\left(x_{i}\right)-t_{i}\right)^{2}$
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Stopping rule
 \begin_inset CommandInset label
@@ -1573,28 +1612,32 @@ name "subsec:Stopping-rule"
 \end_layout
 
 \begin_layout Standard
-At every iteration 
-\begin_inset Formula $k$
+Define as 
+\begin_inset Formula $g_{best}$
 \end_inset
 
- the variance 
-\begin_inset Formula $\sigma^{(k)}$
+ the best chromosome in the population and define as 
+\begin_inset Formula $\sigma^{(\mbox{iter})}$
 \end_inset
 
- of best fitness 
-\begin_inset Formula $f\left(x_{\mbox{best}}\right)$
+ the variance of best fitness 
+\begin_inset Formula $f\left(g_{\mbox{best}}\right)$
 \end_inset
 
- is calculated.
- If there is no improvement for a number of generations, then it is highly
- possible that the algorithm has found the global minimum and hence it terminate
-s when
+ at generation iter.
+ If fitness 
+\begin_inset Formula $f\left(g_{\mbox{best}}\right)$
+\end_inset
+
+ has not improved for a number of generations, then probably the algorithhm
+ should terminate.
+ Hence, the termination rule is defined as:
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\sigma^{(k)}\le\frac{\sigma^{(\mbox{klast})}}{2}\label{eq:termination_mine-1}
+\text{\mbox{iter}\ensuremath{\ge i_{\mbox{max}}}}\ \text{\mbox{OR}\ }\sigma^{(\mbox{iter})}\le\frac{\sigma^{(\mbox{klast})}}{2}\label{eq:termination_mine-1}
 \end{equation}
 
 \end_inset
@@ -1603,7 +1646,7 @@ where
 \begin_inset Formula $\mbox{klast}$
 \end_inset
 
- is the last iteration where a new minimum was found.
+ is the last generation where a new minimum was found.
 \end_layout
 
 \begin_layout Section
@@ -1617,13 +1660,280 @@ name "sec:Experiments"
 
 \end_layout
 
+\begin_layout Standard
+In order to evaluate the performance of the proposed method, comparative
+ experiments were performed on a series of well - known classification and
+ regresion datasets from the relevant literature.
+\end_layout
+
 \begin_layout Subsection
 Experimental setup
 \end_layout
 
 \begin_layout Standard
-(nention the Optimus, mention to armadillo library ) pinakas me experimental
- parameters
+The RBF network was coded in ANSI C++, using the Armadillo library 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Armadillo"
+literal "false"
+
+\end_inset
+
+ and the optimization was performed using the Genetic optimization method
+ of the optimization package OPTIMUS, that is freely available from 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://github.com/itsoulos/OPTIMUS/
+\end_layout
+
+\end_inset
+
+.
+ All the experiments were conducted 30 times using different seed for the
+ random generator each time and averages were taken.
+ Also, to validate the results 10 - fold cross validation was used in all
+ experiments.
+ All the experiments were conducted on an Intel Xeon E5-2630 multi core
+ machine using the OpenMP library 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "openmp"
+literal "false"
+
+\end_inset
+
+ for parallelization.
+ 
+\series bold
+(STOP HERE)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Experimental parameters.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Experimental-parameters."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="8" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PARAMETER
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+VALUE
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $k$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{c}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+200
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $P_{s}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.10
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $P_{m}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.05
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $K_{ls}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{ls}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $i_{max}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+200
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -1672,14 +1982,6 @@ literal "false"
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-All the experiments were conducted 30 times using different seed for the
- random generator each time and averages were taken.
- Also, to validate the results 10 - fold cross validation was used in all
- experiments.
- 
 \end_layout
 
 \begin_layout Standard
@@ -2231,6 +2533,10 @@ Quake
  The objective here is to approximate the strength of a earthquake.
  The dataset has 2178 instances of 3 features each.
  
+\end_layout
+
+\begin_layout Subsection
+Experimental results
 \end_layout
 
 \begin_layout Standard
@@ -3578,6 +3884,25 @@ name "sec:Conclusions"
 
 \end_layout
 
+\begin_layout Standard
+
+\series bold
+A hybrid method that trains RBF neural networks was introduced in the current
+ article.
+ The proposed algorithm incorporates a genetic algorithm, a modified stopping
+ rule and a local optimization procedure to locate the best values for the
+ centers and the variances of the RBF network.
+ The local optimization procedure is used to enhance the optimization capabiliti
+es of the genetic algorithm.
+ Also, the proposed stochastic rule is used to prevent the genetic algorithm
+ from spending unnecessary CPU time, when the global minimum of the train
+ error is located under some certainty.
+ The method was coded using the OpenMP library in order to take advantage
+ of multi - core modern computing systems.
+ The proposed method was tested o series of regression and classification
+ datasets with very promising results.
+\end_layout
+
 \begin_layout Subsection*
 Acknowledgments
 \end_layout
@@ -4243,6 +4568,26 @@ P.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "Armadillo"
+literal "false"
+
+\end_inset
+
+C.
+ Sanderson, R.
+ Curtin, Armadillo: a template-based C++ library for linear algebra, Journal
+ of Open Source Software 
+\series bold
+1
+\series default
+, pp.
+ 26, 2016.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "Keel"
 literal "false"
 
@@ -4260,6 +4605,24 @@ J.
  and Experimental Analysis Framework.
  Journal of Multiple-Valued Logic and Soft Computing 17, pp.
  255-287, 2011.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "openmp"
+literal "false"
+
+\end_inset
+
+R.
+ Chandra, L.
+ Dagum, D.
+ Kohr, D.
+ Maydan,J.
+ McDonald and R.
+ Menon, Parallel Programming in OpenMP, Morgan Kaufmann Publishers Inc.,
+ 2001.
 \end_layout
 
 \begin_layout Bibliography
