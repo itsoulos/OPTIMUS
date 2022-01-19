@@ -336,7 +336,8 @@ extern "C"
         stack.continue_recording();
         adept::aVector w(x.size());
         for (unsigned i = 0; i < x.size(); i++)
-            w << x[i];
+            //w << x[i];
+            w[i]= x[i];
         stack.new_recording();
         adept::adouble y;
         //vector<double> ww;//βοηθητικός
@@ -353,7 +354,7 @@ extern "C"
 	}
         stack.pause_recording();
 
-	/*
+	
 	double diff =0.0;
         for(int i=0;i<x.size();i++)
              {
@@ -363,10 +364,11 @@ extern "C"
                  x[i]-=2.0 *eps;
                  double v2=funmin(x);
                  double oldG=(v1-v2)/(2.0 * eps);
-		 diff+=(g[i]-oldG)*(g[i]-oldG);
+		 //diff+=(g[i]-oldG)*(g[i]-oldG);
+		 diff+=g[i]*g[i];
                  x[i]+=eps;
              }
-	printf("DIFF: %20.10lg \n",diff);*/
+	printf("DIFF: %20.10lg \n",diff);
         //for (int i = 0; i < trainx.size(); i++)
         //{
         //    getDeriv(x, trainx[i], gtemp);

@@ -76,7 +76,7 @@
 \begin_body
 
 \begin_layout Title
-A novell genetic algorithm method to train RBF networks
+A two phase evolutionary method to train RBF networks
 \end_layout
 
 \begin_layout Author
@@ -90,9 +90,14 @@ Department of Informatics and Telecommunications, University of Ioannina,
 \end_layout
 
 \begin_layout Abstract
-
-\series bold
-Write some abstract here
+This article proposes a two phase hybrid method to train RBF neural networks
+ for classification and regression problems.
+ During the first phase a range for the critical parameters of the RBF network
+ is estimated and in the second phase a genetic algorithm is incorporated
+ to locate the best RBF neural network for the underlying problem.
+ The method is compared against the traditional training method of RBF neural
+ networks on a wide series of classification and regression problems from
+ the relevant literature and the results are reported.
 \end_layout
 
 \begin_layout Section
@@ -102,7 +107,7 @@ Introduction
 \begin_layout Standard
 In machine learning appear many practical problems such as classification
  and regression problems.
- A good programmig tool that can be used to tackle this problem is Radial
+ A good programming tool that can be used to tackle this problem is Radial
  Basis Function (RBF) networks
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -112,7 +117,7 @@ literal "false"
 \end_inset
 
 .
- These networs typically are expressed as a function:
+ These networks typically are expressed as a function:
 \series bold
 
 \begin_inset Formula 
@@ -132,11 +137,11 @@ where
 \begin_inset Formula $\overrightarrow{w}$
 \end_inset
 
- is caled the weight vector and 
+ is called the weight vector and 
 \begin_inset Formula $y(x)$
 \end_inset
 
- is the predicted value of the netwrok.
+ is the predicted value of the network.
  RBF networks are feedforward neural networks
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -145,7 +150,7 @@ literal "false"
 
 \end_inset
 
- with three compuational layers: 
+ with three computational layers: 
 \end_layout
 
 \begin_layout Enumerate
@@ -265,7 +270,7 @@ literal "false"
 \series default
 etc.
  Because of the extensive use of RBF networks, many methods have been proposed
- in the recent literature to enchance them.
+ in the recent literature to enhance them.
  There are methods that parallelize the RBF networks 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1239,7 +1244,7 @@ For
 \series bold
 calculate
 \series default
- using the prodedure defined in subsection 
+ using the procedure defined in subsection 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "subsec:Fitness-evaluation"
@@ -1629,7 +1634,7 @@ Define as
 \begin_inset Formula $f\left(g_{\mbox{best}}\right)$
 \end_inset
 
- has not improved for a number of generations, then probably the algorithhm
+ has not improved for a number of generations, then probably the algorithm
  should terminate.
  Hence, the termination rule is defined as:
 \end_layout
@@ -1663,7 +1668,7 @@ name "sec:Experiments"
 \begin_layout Standard
 In order to evaluate the performance of the proposed method, comparative
  experiments were performed on a series of well - known classification and
- regresion datasets from the relevant literature.
+ regression datasets from the relevant literature.
 \end_layout
 
 \begin_layout Subsection
@@ -1692,16 +1697,22 @@ https://github.com/itsoulos/OPTIMUS/
 \end_inset
 
 .
- 
+ Also, to have more reliability in the results the common used method of
+ 10 - fold cross validation was used, which means that the the original
+ data was randomly partitioned into 10 equal sized subsamples.
+ Subsequently, 10 independent experiments were conducted: in each experiments
+ one subsample is used as the testing data and all the others as the training
+ data.
+ The average error on the test data is the total test error.
+ All the experiments were executed 30 times with different initialization
+ for the random generator each time.
+ The random generator used was the function drand48() of C programming language.
+
 \series bold
-(STOP HERE)
+ 
 \series default
- All the experiments were conducted 30 times using different seed for the
- random generator each time and averages were taken.
- Also, to validate the results 10 - fold cross validation was used in all
- experiments.
- All the experiments were conducted on an Intel Xeon E5-2630 multi core
- machine using the OpenMP library 
+The execution environment was an Intel Xeon E5-2630 multi core machine using
+ the OpenMP library 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "openmp"
@@ -1709,15 +1720,25 @@ literal "false"
 
 \end_inset
 
- for parallelization.
- 
+ for parallelization and the Ubuntu Linux operating system.
+ The parameters for the genetic algorithm are displayed in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Experimental-parameters."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1741,7 +1762,7 @@ name "tab:Experimental-parameters."
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="8" columns="2">
+<lyxtabular version="3" rows="7" columns="2">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -1862,7 +1883,7 @@ VALUE
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $K_{ls}$
+\begin_inset Formula $F$
 \end_inset
 
 
@@ -1874,30 +1895,7 @@ VALUE
 \begin_inset Text
 
 \begin_layout Plain Layout
-20
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $N_{ls}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-5
+3.0
 \end_layout
 
 \end_inset
@@ -1943,9 +1941,8 @@ Experimental datasets
 \end_layout
 
 \begin_layout Standard
-In order to measure the efficiency of the proposed method a series of experiment
-s were conducted on some common classification problems found in two major
- dataset databases:
+The classification problems used for the experiments were found in most
+ cased in two internet databases:
 \end_layout
 
 \begin_layout Enumerate
@@ -1987,7 +1984,7 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-The following datasets were used 
+The following classification datasets were used:
 \end_layout
 
 \begin_layout Enumerate
@@ -2020,6 +2017,7 @@ literal "false"
 \end_inset
 
 .
+ 
 \end_layout
 
 \begin_layout Enumerate
@@ -2027,7 +2025,7 @@ literal "false"
 \series bold
 Australian
 \series default
- dataset, the dataset concerns credit card applications.
+ dataset, the dataset is related to credit card applications.
 \end_layout
 
 \begin_layout Enumerate
@@ -2035,9 +2033,8 @@ Australian
 \series bold
 Balance
 \series default
- dataset.
- This data set was generated to model psychological experimental results.
- It contains 625 patterns of 4 features each.
+ dataset, which models psychological experimental results.
+ 
 \end_layout
 
 \begin_layout Enumerate
@@ -2046,10 +2043,9 @@ Balance
 Cleveland
 \series default
  dataset.
- A dataset obtainedfrom the V.A.
+ A dataset obtained from the V.A.
  Medical Center, Long Beach and Cleveland Clinic Foundation aimed to detect
  the presence of heart disease in patients.
- 
 \end_layout
 
 \begin_layout Enumerate
@@ -2057,9 +2053,8 @@ Cleveland
 \series bold
 Dermatology
 \series default
- dataset.
- Dataset used for differential diagnosis of erythemato-squamous diseases.
- The dataset has 366 instances of 34 features each.
+ dataset, which is used for differential diagnosis of erythemato-squamous
+ diseases.
  
 \end_layout
 
@@ -2071,7 +2066,7 @@ Glass
  dataset.
  The dataset contains glass component analysis for glass pieces that belong
  to 6 classes.
- The dataset contains 214 examples with 10 attributes each.
+ 
 \end_layout
 
 \begin_layout Enumerate
@@ -2101,9 +2096,8 @@ literal "false"
 \series bold
 Heart
 \series default
- dataset.
- The task is to detect the absence or presence of heart disease.
- It contains 270 patterns of 13 features each.
+ dataset, which is used to identify the absence or presence of heart disease.
+ 
 \end_layout
 
 \begin_layout Enumerate
@@ -2123,10 +2117,8 @@ HouseVotes
 Ionosphere
 \series default
  dataset.
- The ionosphere dataset (ION in the following tables) contains data from
- the Johns Hopkins Ionosphere database.
- The two-class dataset contains 351 examples of 34 features each.
- 
+ The ionosphere dataset contains data from the Johns Hopkins Ionosphere
+ database.
 \end_layout
 
 \begin_layout Enumerate
@@ -2134,9 +2126,8 @@ Ionosphere
 \series bold
 Liverdisorder
 \series default
-: This dataset, which will be denoted by LIVER in the following tables,
- contains blood analysis data from people with liver disorders.
- It consists of 345 examples of 6 features each.
+: This dataset contains blood analysis data from people with liver disorders.
+ 
 \end_layout
 
 \begin_layout Enumerate
@@ -2186,7 +2177,7 @@ Popfailures
  dataset.
  This dataset contains records of simulation crashes encountered during
  climate model uncertainty quantification (UQ) ensembles.
- It contains 540 patterns of 18 features each.
+ 
 \end_layout
 
 \begin_layout Enumerate
@@ -2291,7 +2282,7 @@ Tae
 \series bold
 Thyroid
 \series default
- dataset: Thyroid disease records
+ dataset, which concerns Thyroid disease records
 \begin_inset CommandInset citation
 LatexCommand cite
 key "thyroid"
@@ -2299,7 +2290,7 @@ literal "true"
 
 \end_inset
 
- with 7200 patterns of 21 features each.
+.
 \end_layout
 
 \begin_layout Enumerate
@@ -2308,9 +2299,9 @@ literal "true"
 Wdbc
 \series default
  dataset.
- The Wisconsin diagnostic breast cancer dataset (WDBC) contains data for
- breast tumors.
- It contains 569 patterns of 30 features each.
+ The Wisconsin diagnostic breast cancer dataset contains data for breast
+ tumors.
+ 
 \end_layout
 
 \begin_layout Enumerate
@@ -2320,9 +2311,6 @@ Wine
 \series default
  dataset.
  The wine recognition dataset contains data from wine chemical analysis.
- It contains 178 examples of 13 features each that are classified into three
- classes.
- 
 \end_layout
 
 \begin_layout Enumerate
@@ -2358,9 +2346,10 @@ Zoo
 \end_layout
 
 \begin_layout Standard
-The regression datasets are available from the Statlib URL 
+The regression datasets are in most cases available from the Statlib URL
+ 
 \begin_inset Flex URL
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -2388,8 +2377,7 @@ Abalone
 \series bold
 Airfoil 
 \series default
-dataset.
- This is a NASA data set, obtained from a series of aerodynamic and acoustic
+dataset, which is used by the NASA for a series of aerodynamic and acoustic
  tests 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -2399,7 +2387,7 @@ literal "false"
 \end_inset
 
 .
- The dataset has 1503 instances of 6 features each.
+ 
 \end_layout
 
 \begin_layout Enumerate
@@ -2409,7 +2397,6 @@ Anacalt
 \series default
  dataset.
  This contains information about the decisions taken by a supreme court.
- The dataset has 4052 instances of 7 features each.
  
 \end_layout
 
@@ -2428,7 +2415,6 @@ literal "false"
 \end_inset
 
  and is used to estimate the points scored per minute in a basketball game.
- The dataset has 96 patterns of 4 features each.
  
 \end_layout
 
@@ -2440,7 +2426,7 @@ BL
  dataset: This dataset can be downloaded from StatLib.
  It contains data from an experiment on the affects of machine adjustments
  on the time to count bolts.
- It contains 40 patters of 7 features each.
+ 
 \end_layout
 
 \begin_layout Enumerate
@@ -2458,7 +2444,7 @@ literal "false"
 \end_inset
 
 .
- The dataset has 1030 instances of 8 features each.
+ 
 \end_layout
 
 \begin_layout Enumerate
@@ -2486,7 +2472,7 @@ Laser
 \series default
  dataset.
  Dataset used in laser experiments.
- The dataset has 993 instances of 4 features each.
+ 
 \end_layout
 
 \begin_layout Enumerate
@@ -2504,7 +2490,7 @@ literal "true"
 \end_inset
 
  and it includes 61 patterns.
- The number of features is 2.
+ 
 \end_layout
 
 \begin_layout Enumerate
@@ -2522,7 +2508,6 @@ literal "false"
 \end_inset
 
  that examined whether the true mean body temperature is 98.6 F.
- The number of patterns is 131 and the number of features 2.
  
 \end_layout
 
@@ -2533,12 +2518,63 @@ Quake
 \series default
  dataset.
  The objective here is to approximate the strength of a earthquake.
- The dataset has 2178 instances of 3 features each.
  
 \end_layout
 
 \begin_layout Subsection
 Experimental results
+\end_layout
+
+\begin_layout Standard
+The results for the classification datasets are listed in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Experimental-results"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and for the regression datasets the results are reported in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:exp2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ For the first case the average classification error is reported and for
+ the case of regression datasets the total test error is reported.
+ The column KRBF denotes the classic RBF training method and the column
+ PROPOSED denotes the proposed method.
+ The KBF simply consists of two phases: in the first phase centers and variances
+ are estimated through the Kmeans algorithm and in the second phase a system
+ of equations is solved to obtain the weights 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+ of the RBF network.
+ 
+\end_layout
+
+\begin_layout Standard
+From the experimental results it is clear that the proposed method is significan
+tly superior to traditional technique in almost all datasets.
+ In the proposed method the appropriate initialization interval is found
+ for the parameters of RBF using Kmeans.
+ A parallel genetic algorithm was then applied to this previous value range
+ creating a variety of neural networks.
+ This combination of techniques obviously has very good results as it combines
+ a very efficient clustering method and an excellent optimization method
+ that is ideally parallelized.
+ Of course, the new method requires much more execution time, due to the
+ presence of the genetic algorithm but the parallel execution of the software
+ drastically reduces this time.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -3887,22 +3923,38 @@ name "sec:Conclusions"
 \end_layout
 
 \begin_layout Standard
+A two phase method was proposed in this article to train RBF neural networks
+ for classification and regression problems.
 
 \series bold
-A hybrid method that trains RBF neural networks was introduced in the current
- article.
- The proposed algorithm incorporates a genetic algorithm, a modified stopping
- rule and a local optimization procedure to locate the best values for the
- centers and the variances of the RBF network.
- The local optimization procedure is used to enhance the optimization capabiliti
-es of the genetic algorithm.
- Also, the proposed stochastic rule is used to prevent the genetic algorithm
- from spending unnecessary CPU time, when the global minimum of the train
- error is located under some certainty.
- The method was coded using the OpenMP library in order to take advantage
- of multi - core modern computing systems.
- The proposed method was tested o series of regression and classification
- datasets with very promising results.
+ 
+\series default
+Firstly, a common used clustering method was used to estimate an interval
+ for the critical parameters of the neural network.
+ Subsequently, a parallel genetic algorithm was incorporated to locate the
+ best RBF network with good generalization capabilities.
+ The used software was coded using ANSI C++ and open source libraries such
+ as the Armadillo library and the OpenMP library for parallelization.
+ Future research may include
+\end_layout
+
+\begin_layout Enumerate
+Use parallel methods for the Kmeans clustering phase of the method.
+\end_layout
+
+\begin_layout Enumerate
+Dynamic selection of K in Kmeans algorithm.
+ 
+\end_layout
+
+\begin_layout Enumerate
+More advanced stopping rules for the genetic algorithm.
+\end_layout
+
+\begin_layout Enumerate
+Replace the Genetic algorithm with other optimization methods such as Particle
+ Swarm Optimization, Ant Colony Optimization etc.
+ 
 \end_layout
 
 \begin_layout Subsection*
@@ -3911,8 +3963,8 @@ Acknowledgments
 
 \begin_layout Standard
 The experiments of this research work was performed at the high performance
- computing system established at Knowledge and Intelligent Computing Lab-oratory
-, Dept of Informatics and Telecommunications, University of Ioannina, acquired
+ computing system established at Knowledge and Intelligent Computing Laboratory,
+ Dept of Informatics and Telecommunications, University of Ioannina, acquired
  with the project "Educational Laboratory equipment of TEI of Epirus" with
  MIS 5007094 funded by the Operational Programme "Epirus" 2014-2020, by
  ERDF and national finds.
@@ -4630,6 +4682,27 @@ R.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "Alcohol"
+literal "false"
+
+\end_inset
+
+Tzimourta, Katerina D.
+ and Tsoulos, Ioannis and Bilero, Thanasis and Tzallas, Alexandros T.
+ and Tsipouras, Markos G.
+ and Giannakeas, Nikolaos, Direct Assessment of Alcohol Consumption in Mental
+ State Using Brain Computer Interfaces and Grammatical Evolution, Inventions
+ 
+\series bold
+3
+\series default
+, pp.
+ 1-12, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "appendicitis"
 literal "false"
 
@@ -4659,27 +4732,6 @@ B.
 \series default
 , pp.
  321-338, 1977.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "Alcohol"
-literal "false"
-
-\end_inset
-
-Tzimourta, Katerina D.
- and Tsoulos, Ioannis and Bilero, Thanasis and Tzallas, Alexandros T.
- and Tsipouras, Markos G.
- and Giannakeas, Nikolaos, Direct Assessment of Alcohol Consumption in Mental
- State Using Brain Computer Interfaces and Grammatical Evolution, Inventions
- 
-\series bold
-3
-\series default
-, pp.
- 1-12, 2018.
 \end_layout
 
 \begin_layout Bibliography
