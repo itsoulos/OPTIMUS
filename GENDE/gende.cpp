@@ -6,7 +6,7 @@ GENDE::GENDE(Problem *p)
 {
     prin = std::chrono::system_clock::now();
     addParameter("population_count", "100", "Number of population");
-    addParameter("max_generations", "100", "Maximum number of generations");
+    addParameter("max_generations", "1000", "Maximum number of generations");
     addParameter("crossoverProbability", "0.9", "Crossover Probability");
     addParameter("differentialWeight", "0.8", "Differential Weight");
     addParameter("dimension", "10000", "Dimension");
@@ -51,6 +51,9 @@ void GENDE::selectAndCrossover()
             a = rand() % population_count;
             b = rand() % population_count;
             c = rand() % population_count;
+	    if(a<0) a=it;
+	    if(b<0) b=it;
+	    if(c<0) c=it;
         }
 
         Data z;
@@ -58,19 +61,19 @@ void GENDE::selectAndCrossover()
 //#pragma omp parallel for num_threads(threads)
         for (int j = 0; j < population_size; j++)
             z[j] = population[a][j] + differentialWeight * (population[b][j] - population[c][j]);
-        int R = rand() % population_size;
+	//if(!myProblem->isPointIn(z)) z=population[a];
+	    int R = rand() % population_size;
 
         Data r;
         r.resize(population_size);
-        for (double &var : r)
-            var = randMToN(0, 1);
+	for(int i=0;i<population_size;i++) r[i]=drand48();
 
         newX.resize(population_size);
         bool flag = false;
 //#pragma omp parallel for num_threads(threads)
         for (int j = 0; j < population_size; j++)
         {
-            if (r[j] < crossoverProbability || j == R)
+            if (r[j] < crossoverProbability || j == R && (z[j]>=lmargin[j] && z[j]<=rmargin[j]))
             {
 
                 newX[j] = z[j];
@@ -91,17 +94,25 @@ void GENDE::selectAndCrossover()
         if (flag == true) {
             newMin = myProblem->funmin(newX);
 
+	   //Solv->Solve(newX,newMin);
         }
         else
+	{
             newMin = fitness_array[it];
+	}
 
 
-        Solv->Solve(newX, newMin);
 
         if (newMin < fitness_array[it])
         {
             population[it] = newX;
             fitness_array[it] = newMin;
+	}
+	if(newMin<bestMin)
+	{
+
+	   //Solv->Solve(newX,newMin);
+	   //population[it]=newX;
             bestMin = newMin;
             bestMinIndex =it;
             bestPoint = population[it];
@@ -138,7 +149,7 @@ void GENDE::init()
     assert(population_size > 1);
     if (population_size <= 0)
         population_size = dimension;
-    population_count = 10 * population_size;
+//  population_count = 20 * population_size;
     population.resize(population_count);
     for (int i = 0; i < population_count; i++)
         population[i].resize(population_size);
@@ -151,7 +162,7 @@ void GENDE::init()
         fitness_array[i] = myProblem->funmin(population[i]);
     Solv = new Grs(myProblem);
     Solv->setGenomeCount(20);
-    Solv->setGenomeLength(10 * population_size);
+    Solv->setGenomeLength( population_size);
 }
 void GENDE::done()
 {
