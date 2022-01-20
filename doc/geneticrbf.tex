@@ -1,0 +1,837 @@
+%% LyX 2.3.6 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{float}
+\usepackage{url}
+\usepackage{amstext}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+\floatstyle{ruled}
+\newfloat{algorithm}{tbp}{loa}
+\providecommand{\algorithmname}{Algorithm}
+\floatname{algorithm}{\protect\algorithmname}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+\title{A two phase evolutionary method to train RBF networks}
+\author{Ioannis G. Tsoulos, Alexandros Tzallas, Evangelos Karvounis}
+\date{Department of Informatics and Telecommunications, University of Ioannina,
+Greece}
+\maketitle
+\begin{abstract}
+This article proposes a two phase hybrid method to train RBF neural
+networks for classification and regression problems. During the first
+phase a range for the critical parameters of the RBF network is estimated
+and in the second phase a genetic algorithm is incorporated to locate
+the best RBF neural network for the underlying problem. The method
+is compared against the traditional training method of RBF neural
+networks on a wide series of classification and regression problems
+from the relevant literature and the results are reported.
+\end{abstract}
+
+\section{Introduction}
+
+In machine learning appear many practical problems such as classification
+and regression problems. A good programming tool that can be used
+to tackle this problem is Radial Basis Function (RBF) networks\cite{rbf1}.
+These networks typically are expressed as a function:\textbf{
+\begin{equation}
+y(x)=\sum_{i=1}^{k}w_{i}\phi\left(\left\Vert x-c_{i}\right\Vert \right)\label{eq:firstrbf}
+\end{equation}
+}where $x$ is the input pattern, the vector $\overrightarrow{w}$
+is called the weight vector and $y(x)$ is the predicted value of
+the network. RBF networks are feedforward neural networks\cite{ann-bishop}
+with three computational layers: 
+\begin{enumerate}
+\item The input layer, where the problem is presented in the form of patterns
+to the neural network
+\item The processing layer, where a computation is performed using the Gaussian
+processing units $\phi(x)$. These units can have many forms in the
+relevant literature but the most used form is the Gaussian function
+expressed as: \textbf{
+\begin{equation}
+\phi(x)=\exp\left(-\frac{\left(x-c\right)^{2}}{\sigma^{2}}\right)
+\end{equation}
+}The value $\phi(x)$ depends only on the distance of vector $x$
+from some other vector $c$, which typically is called centroid. 
+\item The output layer where the output of every function $\phi(x)$ is
+multiplied by a corresponding weight value $w_{i}$.
+\end{enumerate}
+RBF networks have been used in many classification and regression
+problems from the areas of physics \cite{rbfphysics1,rbfphysics2,rbfphysics3,rbfphysics4},
+medicine \cite{rbfmed1,rbfmed2,rbfmed3},\textbf{ }solution of differential
+equations\textbf{ }\cite{rbfde1,rbfde2}, chemistry \cite{rbfchemistry1,rbfchemistry2,rbfchemistry3},
+economics \cite{rbfecon1,rbfecon2,rbfecon3}, digital communications
+\cite{rbfnetwork1,rbfnetwork2}\textbf{ }etc. Because of the extensive
+use of RBF networks, many methods have been proposed in the recent
+literature to enhance them. There are methods that parallelize the
+RBF networks \cite{rbfparallel,rbfgpu}, methods that improve the
+initialization of the RBF parameters\textbf{ }\cite{rbfinit1,rbfinit2,rbfinit3},
+methods that alter the architecture of the network\textbf{ }\cite{rbfprun1,rbfprun2,rbfprun3},
+methods aimed to locate the best set of the RBF parameters with global
+optimization techniques\cite{rbfpso1,rbfpso2,rbfdiff1} etc. This
+article transforms the problem of RBF training into an optimization
+problem and applies a modified genetic algorithm technique to solve
+it. The global optimization problem is defined as :
+\begin{equation}
+\min\left(E\left(y\right)\right)=\sum_{i=}^{m}\left(y\left(x_{i}\right)-t_{i}\right)^{2}\label{eq:eqrbf}
+\end{equation}
+where $m$ is the total number of input patterns and $t_{i}$ is the
+output for pattern $x_{i}$. The suggested approach has two phases:
+firstly reasonable bounds for the RBF parameters are estimated using
+the Kmeans \cite{kmeans} algorithm and in the second phase the modified
+algorithm is used to solve the problem of equation \ref{eq:eqrbf}
+inside the bounds located in the first phase.\textbf{ }
+
+The rest of this paper is organized as follows: in section \ref{sec:Method-description}
+the proposed method is described, in section \ref{sec:Experiments}
+the conducted experiments are listed and the proposed method is compared
+against the traditional training of RBF networks and finally in section
+\ref{sec:Conclusions} some conclusions are derived.
+
+\section{Method description\label{sec:Method-description}}
+
+The proposed method can be divided into two main phases: during the
+first phase an approximation for the bound of RBF parameters is made
+using the K-Means algorithm in the second phase the optimization problem
+is solved using a modified genetic algorithm. These phases are outlined
+in detail in the following subsections.
+
+\subsection{Bound location phase \label{subsec:Bound-location-phase}}
+
+The proposed genetic algorithm has chromosomes with dimension $(d+1)\times k$,
+where $d$ is the dimension of the input problem, i.e. the dimension
+of the vector $\overrightarrow{x_{i}}$ in equation \ref{eq:eqrbf}
+and $k$ is the total number of processing units of the RBF network.
+The layout of each chromosome is presented in Figure \ref{fig:The-layout-of}.
+Every center $\overrightarrow{c_{i}}$ in the equation \ref{eq:firstrbf}
+is a vector of dimension $d$ and also an additional parameter is
+reserved for the parameter $\sigma$ of every $\phi(x)$ function.
+The centroids and the corresponding variances are estimated using
+the Kmeans algorithm that described in algorithm \ref{alg:The-KMeans-algorithm.}.
+The value $\sigma_{i}$ for every $\phi_{i}(x)$ is calculated as:
+\begin{equation}
+\sigma_{i}=\sum_{j=1}^{d}s_{ij}^{2}
+\end{equation}
+After the estimation of $c_{i}$ and $\sigma_{i}$ the vectors $\overrightarrow{L},\ \overrightarrow{R}$
+with dimension $(d+1)\times k$ are constructed. These vectors will
+serve as the bounds for the chromosomes of the genetic population.
+These vector are constructed using the following procedure:
+\begin{enumerate}
+\item \textbf{Set} m=0
+\item \textbf{Set} $F>1$ 
+\item \textbf{For} $i=1..k$ \textbf{do}
+\begin{enumerate}
+\item \textbf{For} $j=1..d$ \textbf{do}
+\begin{enumerate}
+\item \textbf{Set} $L_{m}$=$-F\times c_{ij}$, $R_{m}$=$F\times c_{ij}$
+\item \textbf{Set} $m=m+1$
+\end{enumerate}
+\item \textbf{EndFor}
+\item \textbf{Set} $L_{m}=-F\times\sigma_{i}$, $R_{m}=F\times\sigma_{i}$
+\item \textbf{Set} $m=m+1$
+\end{enumerate}
+\item \textbf{EndFor}
+\end{enumerate}
+\begin{figure}
+
+\caption{The layout of the chromosomes in the proposed genetic algorithm.\label{fig:The-layout-of}}
+
+\centering{}%
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline 
+$c_{11}$ & $c_{12}$ & ... & $c_{1d}$ & $\sigma_{1}$ & $c_{21}$ & $c_{22}$ & ... & $c_{2d}$ & $\sigma_{2}$ & ... & $c_{k1}$ & $c_{k2}$ & ... & $c_{kd}$ & $\sigma_{k}$\tabularnewline
+\hline 
+\end{tabular}
+\end{figure}
+\begin{algorithm}
+\caption{The KMeans algorithm.\label{alg:The-KMeans-algorithm.}}
+
+\begin{enumerate}
+\item \textbf{Repeat}
+\begin{enumerate}
+\item $S_{j}=\left\{ \right\} ,\ j=1..k$
+\item \textbf{For} every sample $x_{i}$ \textbf{Do}
+\begin{enumerate}
+\item \textbf{Set} $j^{*}=\min_{i=1}^{k}\left\{ D\left(x_{i},c_{j}\right)\right\} $,
+where $j^{*}$ is the nearest center for sample $x_{i}$. 
+\item \textbf{Set} $S_{j^{*}}=S_{j^{*}}\cup\left\{ x_{i}\right\} $.
+\end{enumerate}
+\item \textbf{EndFor}
+\item \textbf{For} every center $c_{j}$ \textbf{Do}
+\begin{enumerate}
+\item \textbf{Set} $M_{j}$=number of elements in $S_{j}$
+\item \textbf{Update} $c_{j}$
+\[
+c_{j}=\frac{1}{M_{j}}\sum_{i=1}^{M_{j}}x_{i}
+\]
+\end{enumerate}
+\item \textbf{EndFor} 
+\end{enumerate}
+\item \textbf{Calculate} the corresponding variances 
+\[
+s_{j}^{2}=\frac{\sum_{i=1}^{M_{j}}\left(x_{i}-c_{j}\right)^{2}}{M_{j}}
+\]
+\item \textbf{Terminate} when $c_{j}$ no longer change.
+\end{enumerate}
+\end{algorithm}
+
+
+\subsection{Main algorithm }
+
+The basic steps of the main algorithm are given below:
+\begin{enumerate}
+\item \textbf{Initialization Step}
+\begin{enumerate}
+\item \textbf{Read} the train set with $m$ of $d$ dimension. 
+\item \textbf{Set} $k$ the number of nodes for the RBF network.
+\item \textbf{Estimate} the vectors $\overrightarrow{L},\ \overrightarrow{R}$
+using the procedure of subsection \ref{subsec:Bound-location-phase}. 
+\item \textbf{Initialize} a genetic population of $N_{C}$ random chromosomes
+inside $[L,R]$. 
+\item \textbf{Set} the selection rate $P_{s}\in[0,1]$, the mutation rate
+$P_{M}\in[0,1]$ , $iter=0,$ and $i_{max}$ the maximum number of
+generations.
+\end{enumerate}
+\item \textbf{Evaluation Step}
+
+\textbf{For} every chromosome $g$ \textbf{calculate} using the procedure
+defined in subsection \ref{subsec:Fitness-evaluation} the fitness
+$f_{g}$.
+\item \textbf{Genetic step}
+\begin{enumerate}
+\item \textbf{Select} $P_{s}\times N_{c}$ parents from the population using
+tournament selection, i.e. create subgroups of $T>2$ chromosomes
+and select the one with the best fitness value as the parent. 
+\item \textbf{Crossover}: For every pair $(x,y)$ of selected parents create
+two new offsprings $\tilde{x}$ and $\tilde{y}$:
+\begin{eqnarray}
+\tilde{x_{i}} & = & a_{i}x_{i}+\left(1-a_{i}\right)y_{i}\nonumber \\
+\tilde{y_{i}} & = & a_{i}y_{i}+\left(1-a_{i}\right)x_{i}\label{eq:crossover_ali-1}
+\end{eqnarray}
+with $a_{i}$ a random number and $a_{i}\in[-0.5,1.5]$ \cite{kaeloali}.
+\item \textbf{Mutation}: For every element of each chromosome create a random
+number $r\in\left[0,1\right]$. If $r\le P_{m}$ then change randomly
+this element.
+\item \textbf{Replace} the $P_{s}\times N_{c}$ worst chromosomes in the
+population with the generated offsprings. 
+\end{enumerate}
+\item \textbf{Termination Check Step}
+\begin{enumerate}
+\item \textbf{Set} $iter=iter+1$ 
+\item \textbf{Terminate} if the termination criteria of subsection \ref{subsec:Stopping-rule}
+are satisfied, \textbf{else Goto} Evaluation Step.
+\end{enumerate}
+\end{enumerate}
+
+\subsection{Fitness evaluation\label{subsec:Fitness-evaluation}}
+
+In this step a valid RBF network $y(x)=\sum_{i=1}^{k}w_{i}\phi\left(\left\Vert x-c_{i}\right\Vert \right)$,
+is created using the chromosome $g$ and subsequently is trained using
+the typical training procedure for RBF networks. The main steps to
+calculate the fitness $f_{g}$ of a chromosome $g$ are the following:
+\begin{enumerate}
+\item \textbf{Decode} the chromosome $g$ to the parts (centers and variances)
+of the RBF network as defined by the layout of Figure \ref{fig:The-layout-of}.
+\item \textbf{Calculate} the output vectors\textbf{ $w_{1},w_{w},\ldots,w_{k}$
+}by solving the an induced system of equations:
+\begin{enumerate}
+\item \textbf{Set} $W=w_{kj}$ the matrix of $k$ weights, $\Phi=\phi_{j}\left(x_{i}\right)$
+and $T=\left\{ t_{i}\right\} $. 
+\item \textbf{Solve: 
+\begin{equation}
+\Phi^{T}\left(T-\Phi W^{T}\right)=0
+\end{equation}
+}givivg\textbf{:
+\begin{equation}
+W^{T}=\left(\Phi^{T}\Phi\right)^{-1}\Phi^{T}T=\Phi^{\dagger}T\label{eq:eqoutput}
+\end{equation}
+}The matrix $\Phi^{\dagger}=\left(\Phi^{T}\Phi\right)^{-1}\Phi^{T}$
+is the pseudo-inverse of $\Phi$, with\textbf{
+\begin{equation}
+\Phi^{\dagger}\Phi=I
+\end{equation}
+}
+\end{enumerate}
+\item \textbf{Set} $f_{g}=$$\sum_{i=}^{m}\left(y\left(x_{i}\right)-t_{i}\right)^{2}$
+\end{enumerate}
+
+\subsection{Stopping rule\label{subsec:Stopping-rule}}
+
+Define as $g_{best}$ the best chromosome in the population and define
+as $\sigma^{(\mbox{iter})}$ the variance of best fitness $f\left(g_{\mbox{best}}\right)$
+at generation iter. If fitness $f\left(g_{\mbox{best}}\right)$ has
+not improved for a number of generations, then probably the algorithm
+should terminate. Hence, the termination rule is defined as:
+
+\begin{equation}
+\text{\mbox{iter}\ensuremath{\ge i_{\mbox{max}}}}\ \text{\mbox{OR}\ }\sigma^{(\mbox{iter})}\le\frac{\sigma^{(\mbox{klast})}}{2}\label{eq:termination_mine-1}
+\end{equation}
+where $\mbox{klast}$ is the last generation where a new minimum was
+found.
+
+\section{Experiments \label{sec:Experiments}}
+
+In order to evaluate the performance of the proposed method, comparative
+experiments were performed on a series of well - known classification
+and regression datasets from the relevant literature.
+
+\subsection{Experimental setup}
+
+The RBF network was coded in ANSI C++, using the Armadillo library
+\cite{Armadillo} and the optimization was performed using the Genetic
+optimization method of the optimization package OPTIMUS, that is freely
+available from \url{https://github.com/itsoulos/OPTIMUS/}. Also,
+to have more reliability in the results the common used method of
+10 - fold cross validation was used, which means that the the original
+data was randomly partitioned into 10 equal sized subsamples. Subsequently,
+10 independent experiments were conducted: in each experiments one
+subsample is used as the testing data and all the others as the training
+data. The average error on the test data is the total test error.
+All the experiments were executed 30 times with different initialization
+for the random generator each time. The random generator used was
+the function drand48() of C programming language.\textbf{ }The execution
+environment was an Intel Xeon E5-2630 multi core machine using the
+OpenMP library \cite{openmp} for parallelization and the Ubuntu Linux
+operating system. The parameters for the genetic algorithm are displayed
+in Table \ref{tab:Experimental-parameters.}.
+
+\begin{table}
+\caption{Experimental parameters.\label{tab:Experimental-parameters.}}
+
+\centering{}%
+\begin{tabular}{|c|c|}
+\hline 
+PARAMETER & VALUE\tabularnewline
+\hline 
+\hline 
+$k$ & 10\tabularnewline
+\hline 
+$N_{c}$ & 200\tabularnewline
+\hline 
+$P_{s}$ & 0.10\tabularnewline
+\hline 
+$P_{m}$ & 0.05\tabularnewline
+\hline 
+$F$ & 3.0\tabularnewline
+\hline 
+$i_{max}$ & 200\tabularnewline
+\hline 
+\end{tabular}
+\end{table}
+
+
+\subsection{Experimental datasets }
+
+The classification problems used for the experiments were found in
+most cased in two internet databases:
+\begin{enumerate}
+\item UCI dataset repository, \url{https://archive.ics.uci.edu/ml/index.php}
+\item Keel repository, \url{https://sci2s.ugr.es/keel/datasets.php}\cite{Keel}.
+\end{enumerate}
+The following classification datasets were used:
+\begin{enumerate}
+\item \textbf{Alcohol} dataset, a dataset about Alcohol consumption \cite{Alcohol}.
+\item \textbf{Appendictis} dataset, proposed in \cite{appendicitis}. 
+\item \textbf{Australian} dataset, the dataset is related to credit card
+applications.
+\item \textbf{Balance} dataset, which models psychological experimental
+results. 
+\item \textbf{Cleveland} dataset. A dataset obtained from the V.A. Medical
+Center, Long Beach and Cleveland Clinic Foundation aimed to detect
+the presence of heart disease in patients.
+\item \textbf{Dermatology} dataset, which is used for differential diagnosis
+of erythemato-squamous diseases. 
+\item \textbf{Glass} dataset. The dataset contains glass component analysis
+for glass pieces that belong to 6 classes. 
+\item \textbf{Hayes roth} dataset. This dataset\cite{hayesroth} contains
+\textbf{5} numeric-valued attributes and 132 patterns. 
+\item \textbf{Heart} dataset, which is used to identify the absence or presence
+of heart disease. 
+\item \textbf{HouseVotes} dataset. This data set includes votes for each
+of the U.S. House of Representatives Congressmen on the 16 key votes. 
+\item \textbf{Ionosphere} dataset. The ionosphere dataset contains data
+from the Johns Hopkins Ionosphere database.
+\item \textbf{Liverdisorder}: This dataset contains blood analysis data
+from people with liver disorders. 
+\item \textbf{Mammographic} dataset. This dataset be used to identify the
+severity (benign or malignant) of a mammographic mass lesion from
+BI-RADS attributes and the patient's age. It contains 830 patterns
+of 5 features each.
+\item \textbf{Parkinsons} dataset. This dataset is composed of a range of
+biomedical voice measurements from 31 people, 23 with Parkinson's
+disease (PD)\cite{parkinsons}.
+\item \textbf{Pima} dataset. The Pima Indians Diabetes dataset contains
+768 examples of 8 attributes each that are classified into two categories:
+healthy and diabetic.
+\item \textbf{Popfailures} dataset. This dataset contains records of simulation
+crashes encountered during climate model uncertainty quantification
+(UQ) ensembles. 
+\item \textbf{Regions2} dataset. It is created from liver biopsy images
+of patients with hepatitis C \cite{regions}. From each region in
+the acquired images, 18 shape-based and color-based features were
+extracted, while it was also annotated form medical experts. The resulting
+dataset includes 600 samples belonging into 6 classes.
+\item \textbf{Ring} dataset. It is an 20 dimensional problem with two classes.
+Each class is drawn from a multivariate normal distribution.
+\item \textbf{Saheart} dataset. The dataset is about to categorize persons
+if have a coronary heart disease. The dataset contains 462 patterns
+with 9 features each.
+\item \textbf{Segment} dataset. This database contains patterns from a database
+of 7 outdoor images (classes). The dataset contains 2310 patterns
+with 19 features each.
+\item \textbf{Sonar} dataset. This data set contains signals obtained from
+a variety of different aspect angles, spanning 90 degrees for mines
+and 180 degrees for rocks. Each pattern is a set of 60 numbers in
+the range 0.0 to 1.0, where each number represents the energy within
+a particular frequency band, integrated over a certain period of time.
+The output attribute contains the letter R if the object is a rock
+and M if it is a mine (metal cylinder).
+\item \textbf{Spiral} dataset: The spiral artificial dataset contains 1000
+two-dimensional examples that belong to two classes (500 examples
+each). The number of the features is 2. The data in the first class
+are created using the following formula: $x_{1}=0.5t\cos\left(0.08t\right),\ x_{2}=0.5t\cos\left(0.08t+\frac{\pi}{2}\right)$
+and the second class data using\textbf{: $x_{1}=0.5t\cos\left(0.08t+\pi\right),\ x_{2}=0.5t\cos\left(0.08t+\frac{3\pi}{2}\right)$}
+\item \textbf{Tae} dataset. The data consist of evaluations of teaching
+performance over three regular semesters and two summer semesters
+of 151 teaching assistant (TA) assignments at the Statistics Department
+of the University of Wisconsin-Madison.
+\item \textbf{Thyroid} dataset, which concerns Thyroid disease records\cite{thyroid}.
+\item \textbf{Wdbc} dataset. The Wisconsin diagnostic breast cancer dataset
+contains data for breast tumors. 
+\item \textbf{Wine} dataset. The wine recognition dataset contains data
+from wine chemical analysis.
+\item \textbf{Eeg} datasets. As an real word example, consider an EEG dataset
+described in \cite{key-20} is used here. The dataset consists of
+five sets (denoted as Z, O, N, F and S) each containing 100 single-channel
+EEG segments each having 23.6 sec duration. With different combinations
+of these sets the produced datasets are Z\_F\_S, ZO\_NF\_S, ZONF\_S.
+\item \textbf{Zoo} dataset. A simple database where the task is to classify
+animals in seven predefined classes and most of the attributes are
+boolean-valued. 
+\end{enumerate}
+The regression datasets are in most cases available from the Statlib
+URL \url{ftp://lib.stat.cmu.edu/datasets/index.html }: 
+\begin{enumerate}
+\item \textbf{Abalone} dataset. This data set can be used to obtain a model
+to predict the age of abalone from physical measurements. 
+\item \textbf{Airfoil }dataset, which is used by the NASA for a series of
+aerodynamic and acoustic tests \cite{airfoil}. 
+\item \textbf{Anacalt} dataset. This contains information about the decisions
+taken by a supreme court. 
+\item \textbf{BK} dataset. This dataset comes from Smoothing Methods in
+Statistics \cite{Stat} and is used to estimate the points scored
+per minute in a basketball game. 
+\item \textbf{BL} dataset: This dataset can be downloaded from StatLib.
+It contains data from an experiment on the affects of machine adjustments
+on the time to count bolts. 
+\item \textbf{Concrete} dataset. This dataset is taken from civil engineering\cite{concrete}. 
+\item \textbf{Housing} dataset. This dataset was taken from the StatLib
+library which is maintained at Carnegie Mellon University and it is
+described in \cite{key23}.
+\item \textbf{Laser} dataset. Dataset used in laser experiments. 
+\item \textbf{MB} dataset. This dataset is available from Smoothing Methods
+in Statistics \cite{key21} and it includes 61 patterns. 
+\item \textbf{NT} dataset. This dataset contains data from \cite{ntdataset}
+that examined whether the true mean body temperature is 98.6 F. 
+\item \textbf{Quake} dataset. The objective here is to approximate the strength
+of a earthquake. 
+\end{enumerate}
+
+\subsection{Experimental results}
+
+The results for the classification datasets are listed in Table \ref{tab:Experimental-results}
+and for the regression datasets the results are reported in Table
+\ref{tab:exp2}. For the first case the average classification error
+is reported and for the case of regression datasets the total test
+error is reported. The column KRBF denotes the classic RBF training
+method and the column PROPOSED denotes the proposed method. The KBF
+simply consists of two phases: in the first phase centers and variances
+are estimated through the Kmeans algorithm and in the second phase
+a system of equations is solved to obtain the weights $w_{i}$ of
+the RBF network. 
+
+From the experimental results it is clear that the proposed method
+is significantly superior to traditional technique in almost all datasets.
+In the proposed method the appropriate initialization interval is
+found for the parameters of RBF using Kmeans. A parallel genetic algorithm
+was then applied to this previous value range creating a variety of
+neural networks. This combination of techniques obviously has very
+good results as it combines a very efficient clustering method and
+an excellent optimization method that is ideally parallelized. Of
+course, the new method requires much more execution time, due to the
+presence of the genetic algorithm but the parallel execution of the
+software drastically reduces this time. 
+
+\begin{table}
+\caption{Experimental results for classification problems.\label{tab:Experimental-results}}
+
+\centering{}%
+\begin{tabular}{|c|c|c|}
+\hline 
+DATASET & KRBF & PROPOSED\tabularnewline
+\hline 
+\hline 
+Alcohol & 46.63\% & 21.86\%\tabularnewline
+\hline 
+Appendicitis & 12.23\% & 16.03\%\tabularnewline
+\hline 
+Australian & 34.89\% & 22.97\%\tabularnewline
+\hline 
+Balance & 33.42\% & 12.88\%\tabularnewline
+\hline 
+Cleveland & 67.10\% & 51.75\%\tabularnewline
+\hline 
+Dermatology & 62.34\% & 37.37\%\tabularnewline
+\hline 
+Glass & 50.16\% & 49.16\%\tabularnewline
+\hline 
+Hayes Roth & 64.36\% & 35.26\%\tabularnewline
+\hline 
+Heart & 31.20\% & 17.80\%\tabularnewline
+\hline 
+HouseVotes & 6.13\% & 3.67\%\tabularnewline
+\hline 
+Ionosphere & 16.22\% & 10.33\%\tabularnewline
+\hline 
+Liverdisorder & 30.84\% & 28.73\%\tabularnewline
+\hline 
+Mammographic & 21.38\% & 17.25\%\tabularnewline
+\hline 
+Parkinsons & 17.42\% & 17.37\%\tabularnewline
+\hline 
+Pima & 25.78\% & 24.00\%\tabularnewline
+\hline 
+Popfailures & 7.04\% & 5.44\%\tabularnewline
+\hline 
+Regions2 & 38.29\% & 25.81\%\tabularnewline
+\hline 
+Ring & 21.65\% & 2.09\%\tabularnewline
+\hline 
+Saheart & 32.19\% & 29.38\%\tabularnewline
+\hline 
+Segment & 59.68\% & 39.44\%\tabularnewline
+\hline 
+Sonar & 27.85\% & 19.62\%\tabularnewline
+\hline 
+Spiral & 44.87\% & 18.98\%\tabularnewline
+\hline 
+Tae & 60.07\% & 52.44\%\tabularnewline
+\hline 
+Thyroid & 10.52\% & 7.12\%\tabularnewline
+\hline 
+Wdbc & 7.27\% & 5.29\%\tabularnewline
+\hline 
+Wine & 31.41\% & 8.67\%\tabularnewline
+\hline 
+Z\_F\_S & 13.16\% & 4.21\%\tabularnewline
+\hline 
+ZO\_NF\_S & 9.02\% & 4.17\%\tabularnewline
+\hline 
+ZONF\_S & 4.03\% & 2.18\%\tabularnewline
+\hline 
+ZOO & 21.93\% & 9.00\%\tabularnewline
+\hline 
+\end{tabular}
+\end{table}
+\begin{table}
+\caption{Experiments for regression datasets.\label{tab:exp2}}
+
+\centering{}%
+\begin{tabular}{|c|c|c|}
+\hline 
+DATASET & KMEANS RBF & PROPOSED\tabularnewline
+\hline 
+\hline 
+ABALONE & 2559.48 & 1960.22\tabularnewline
+\hline 
+AIRFOIL & 5.49 & 0.58\tabularnewline
+\hline 
+ANACALT & 11.628 & 0.003\tabularnewline
+\hline 
+BK & 0.17 & 0.23\tabularnewline
+\hline 
+BL & 0.05 & 0.0009\tabularnewline
+\hline 
+CONCRETE & 1.15 & 0.52\tabularnewline
+\hline 
+HOUSING & 2884.09 & 693.22\tabularnewline
+\hline 
+LASER & 2.35 & 1.04\tabularnewline
+\hline 
+MB & 11.33 & 0.63\tabularnewline
+\hline 
+NT & 72.14 & 0.09\tabularnewline
+\hline 
+QUAKE & 15.36 & 7.86\tabularnewline
+\hline 
+\end{tabular}
+\end{table}
+
+
+\section{Conclusions\label{sec:Conclusions}}
+
+A two phase method was proposed in this article to train RBF neural
+networks for classification and regression problems.\textbf{ }Firstly,
+a common used clustering method was used to estimate an interval for
+the critical parameters of the neural network. Subsequently, a parallel
+genetic algorithm was incorporated to locate the best RBF network
+with good generalization capabilities. The used software was coded
+using ANSI C++ and open source libraries such as the Armadillo library
+and the OpenMP library for parallelization. Future research may include
+\begin{enumerate}
+\item Use parallel methods for the Kmeans clustering phase of the method.
+\item Dynamic selection of K in Kmeans algorithm. 
+\item More advanced stopping rules for the genetic algorithm.
+\item Replace the Genetic algorithm with other optimization methods such
+as Particle Swarm Optimization, Ant Colony Optimization etc. 
+\end{enumerate}
+
+\subsection*{Acknowledgments}
+
+The experiments of this research work was performed at the high performance
+computing system established at Knowledge and Intelligent Computing
+Laboratory, Dept of Informatics and Telecommunications, University
+of Ioannina, acquired with the project \textquotedbl Educational
+Laboratory equipment of TEI of Epirus\textquotedbl{} with MIS 5007094
+funded by the Operational Programme \textquotedbl Epirus\textquotedbl{}
+2014-2020, by ERDF and national finds.
+
+\subsection*{Compliance with Ethical Standards }
+
+All authors declare that they have no conflict of interest. 
+\begin{thebibliography}{10}
+\bibitem{rbf1}J. Park and I. W. Sandberg, Universal Approximation
+Using Radial-Basis-Function Networks, Neural Computation 3, pp. 246-257,
+1991.
+
+\bibitem{ann-bishop}C.M. Bishop, Neural networks and their applications,
+Review of Scientific Instruments \textbf{65}, pp. 1803-1832,1994.
+
+\bibitem{rbfphysics1}P. Teng, Machine-learning quantum mechanics:
+Solving quantum mechanics problems using radial basis function networks,
+Phys. Rev. E \textbf{98}, 033305, 2018.
+
+\bibitem{rbfphysics2}R. Jovanovi\'{c}, A. Sretenovic, Ensemble of
+radial basis neural networks with K-means clustering for heating energy
+consumption prediction, FME Transactions \textbf{45}, pp. 51-57, 2017.
+
+\bibitem{rbfphysics3}A. Alexandridis, E. Chondrodima, E. Efthimiou,
+G. Papadakis, F. Vallianatos and D. Triantis, Large Earthquake Occurrence
+Estimation Based on Radial Basis Function Neural Networks,IEEE Transactions
+on Geoscience and Remote Sensing \textbf{52}, pp. 5443-5453, 2014.
+
+\bibitem{rbfphysics4}V.I. Gorbachenko, M.V. Zhukov, Solving boundary
+value problems of mathematical physics using radial basis function
+networks, Comput. Math. and Math. Phys. \textbf{57}, pp. 145--155,
+2017. 
+
+\bibitem{rbfmed1}Y.P. Wang, J.W. Dang, Q. Li and S. Li, Multimodal
+medical image fusion using fuzzy radial basis function neural networks,
+in 2007 International Conference on Wavelet Analysis and Pattern Recognition,
+pp. 778-782, 2017.
+
+\bibitem{rbfmed2}S, Mehrabi, M. Maghsoudloo, H. Arabalibeik, R. Noormand
+and Y. Nozari, Congestive heart failure, Chronic obstructive pulmonary
+disease, Clinical decision support system, Multilayer perceptron neural
+network and radial basis function neural network, Expert Systems with
+Applications \textbf{36}, pp. 6956-6959, 2009.
+
+\bibitem{rbfmed3}M. Veezhinathan, S. Ramakrishnan, Detection of Obstructive
+Respiratory Abnormality Using Flow--Volume Spirometry and Radial
+Basis Function Neural Networks, J Med Syst \textbf{31}, pp. 461, 2007.
+
+\bibitem{rbfde1}Nam Mai-Duy, Thanh Tran-Cong, Numerical solution
+of differential equations using multiquadric radial basis function
+networks, Neural Networks 14, pp. 185-199, 2001.
+
+\bibitem{rbfde2}N. Mai-Duy, Solving high order ordinary differential
+equations with radial basis function networks. Int. J. Numer. Meth.
+Engng. \textbf{62}, pp. 824-852, 2005.
+
+\bibitem{rbfchemistry1}Chuanhao Wan and Peter de B. Harrington, Self-Configuring
+Radial Basis Function Neural Networks for Chemical Pattern Recognition,
+J. Chem. Inf. Comput. Sci. \textbf{39}, 1049--1056, 1999.
+
+\bibitem{rbfchemistry2}Xiaojun Yao, Xiaoyun Zhang, Ruisheng Zhang,
+Mancang Liu, Zhide Hu, Botao Fan, Prediction of enthalpy of alkanes
+by the use of radial basis function neural networks, Computers \&
+Chemistry \textbf{25}, pp. 475-482, 2001.
+
+\bibitem{rbfchemistry3}A. Shahsavand, A. Ahmadpour, Application of
+optimal RBF neural networks for optimization and characterization
+of porous materials, Computers \& Chemical Engineering 29, pp. 2134-2143,
+2005.
+
+\bibitem{rbfecon1}J. A. Momoh and S. S. Reddy, Combined Economic
+and Emission Dispatch using Radial Basis Function, 2014 IEEE PES General
+Meeting | Conference \& Exposition, National Harbor, MD, 2014, pp.
+1-5, doi: 10.1109/PESGM.2014.6939506.
+
+\bibitem{rbfecon2}Jau-Jia Guo and P. B. Luh, Selecting input factors
+for clusters of Gaussian radial basis function networks to improve
+market clearing price prediction, IEEE Transactions on Power Systems
+\textbf{18}, pp. 665-672, 2003.
+
+\bibitem{rbfecon3}L. Falat, Z. Stanikova, M. Durisova, B. Holkova,
+T. Potkanova, Application of Neural Network Models in Modelling Economic
+Time Series with Non-constant Volatility, Procedia Economics and Finance
+\textbf{34}, pp. 600-607, 2015.
+
+\bibitem{rbfnetwork1}C. Laoudias, P. Kemppi and C. G. Panayiotou,
+Localization Using Radial Basis Function Networks and Signal Strength
+Fingerprints in WLAN, GLOBECOM 2009 - 2009 IEEE Global Telecommunications
+Conference, Honolulu, HI, 2009, pp. 1-6, 2009.
+
+\bibitem{rbfnetwork2}S. Chen, B. Mulgrew and P. M. Grant, A clustering
+technique for digital communications channel equalization using radial
+basis function networks, IEEE Transactions on Neural Networks \textbf{4},
+pp. 570-590, 1993.
+
+\bibitem{rbfparallel}M.G. Arenas, E. Parras-Gutiérrez, V.M. Rivas,
+P.A. Castillo, M.J. Del Jesus, J.J. Merelo. Parallelizing the Design
+of Radial Basis Function Neural Networks by Means of Evolutionary
+Meta-algorithms. In: Cabestany J., Sandoval F., Prieto A., Corchado
+J.M. (eds) Bio-Inspired Systems: Computational and Ambient Intelligence.
+IWANN 2009. Lecture Notes in Computer Science, vol 5517. Springer,
+Berlin, Heidelberg, 2009.
+
+\bibitem{rbfgpu}A. Brandstetter and A. Artusi, \textquotedbl Radial
+Basis Function Networks GPU-Based Implementation,\textquotedbl{} in
+IEEE Transactions on Neural Networks \textbf{19}, pp. 2150-2154, 2008.
+
+\bibitem{rbfinit1}L.I. Kuncheva, Initializing of an RBF network by
+a genetic algorithm, Neurocomputing \textbf{14}, pp. 273-288, 1997.
+
+\bibitem{rbfinit2}M. Kubat, Decision trees can initialize radial-basis
+function networks, IEEE Transactions on Neural Networks. \textbf{9},
+pp. 813-821, 1998.
+
+\bibitem{rbfinit3}D. G. B. Franco and M. T. A. Steiner, New Strategies
+for Initialization and Training of Radial Basis Function Neural Networks,
+IEEE Latin America Transactions.\textbf{ 15}, pp. 1182-1188, 2017.
+
+\bibitem{rbfprun1}E. Ricci, R. Perfetti, Improved pruning strategy
+for radial basis function networks with dynamic decay adjustment,
+Neurocomputing \textbf{69}, pp. 1728-1732, 2006.
+
+\bibitem{rbfprun2}M. Bortman and M. Aladjem, A Growing and Pruning
+Method for Radial Basis Function Networks, IEEE Transactions on Neural
+Networks \textbf{20}, pp. 1039-1045, 2009.
+
+\bibitem{rbfprun3}Guang-Bin Huang, P. Saratchandran and N. Sundararajan,
+A generalized growing and pruning RBF (GGAP-RBF) neural network for
+function approximation, IEEE Transactions on Neural Networks \textbf{16},
+pp. 57-67, 2005.
+
+\bibitem{rbfpso1}J. Y. Chen, Z. Qin and J. Jia, A PSO-Based Subtractive
+Clustering Technique for Designing RBF Neural Networks, 2008 IEEE
+Congress on Evolutionary Computation (IEEE World Congress on Computational
+Intelligence), Hong Kong, pp. 2047-2052, 2008.
+
+\bibitem{rbfpso2}A. Esmaeili and N. Mozayani, Adjusting the parameters
+of radial basis function networks using Particle Swarm Optimization,
+2009 IEEE International Conference on Computational Intelligence for
+Measurement Systems and Applications, Hong Kong, pp. 179-181, 2009.
+
+\bibitem{rbfdiff1}B. O'Hora, J. Perera and A. Brabazon, Designing
+Radial Basis Function Networks for Classification Using Differential
+Evolution, The 2006 IEEE International Joint Conference on Neural
+Network Proceedings, Vancouver, BC, pp. 2932-2937, 2006.
+
+\bibitem{Tsoulos1}I.G. Tsoulos, Modifications of real code genetic
+algorithm for global optimization, Applied Mathematics and Computation
+\textbf{203}, pp. 598-607, 2008.
+
+\bibitem{kmeans}MacQueen, J.: Some methods for classification and
+analysis of multivariate observations, in: Proceedings of the fifth
+Berkeley symposium on mathematical statistics and probability, Vol.
+1, No. 14, pp. 281-297, 1967. 
+
+\bibitem{kaeloali}P. Kaelo, M.M. Ali, Integrated crossover rules
+in real coded genetic algorithms, European Journal of Operational
+Research \textbf{176}, pp. 60-76, 2007.
+
+\bibitem{Armadillo}C. Sanderson, R. Curtin, Armadillo: a template-based
+C++ library for linear algebra, Journal of Open Source Software \textbf{1},
+pp. 26, 2016. 
+
+\bibitem{Keel}J. Alcalá-Fdez, A. Fernandez, J. Luengo, J. Derrac,
+S. García, L. Sánchez, F. Herrera. KEEL Data-Mining Software Tool:
+Data Set Repository, Integration of Algorithms and Experimental Analysis
+Framework. Journal of Multiple-Valued Logic and Soft Computing 17,
+pp. 255-287, 2011.
+
+\bibitem{openmp}R. Chandra, L. Dagum, D. Kohr, D. Maydan,J. McDonald
+and R. Menon, Parallel Programming in OpenMP, Morgan Kaufmann Publishers
+Inc., 2001.
+
+\bibitem{Alcohol}Tzimourta, Katerina D. and Tsoulos, Ioannis and
+Bilero, Thanasis and Tzallas, Alexandros T. and Tsipouras, Markos
+G. and Giannakeas, Nikolaos, Direct Assessment of Alcohol Consumption
+in Mental State Using Brain Computer Interfaces and Grammatical Evolution,
+Inventions \textbf{3}, pp. 1-12, 2018.
+
+\bibitem{appendicitis}Weiss, Sholom M. and Kulikowski, Casimir A.,
+Computer Systems That Learn: Classification and Prediction Methods
+from Statistics, Neural Nets, Machine Learning, and Expert Systems,
+Morgan Kaufmann Publishers Inc, 1991.
+
+\bibitem{hayesroth}B. Hayes-Roth, B., F. Hayes-Roth. Concept learning
+and the recognition and classification of exemplars. Journal of Verbal
+Learning and Verbal Behavior \textbf{16}, pp. 321-338, 1977.
+
+\bibitem{parkinsons}Little MA, McSharry PE, Hunter EJ, Spielman J,
+Ramig LO. Suitability of dysphonia measurements for telemonitoring
+of Parkinson's disease. IEEE Trans Biomed Eng. 2009;56(4):1015. doi:10.1109/TBME.2008.2005954
+
+\bibitem{regions}Giannakeas, N., Tsipouras, M.G., Tzallas, A.T.,
+Kyriakidi, K., Tsianou, Z.E., Manousou, P., Hall, A., Karvounis, E.C.,
+Tsianos, V., Tsianos, E. A clustering based method for collagen proportional
+area extraction in liver biopsy images (2015) Proceedings of the Annual
+International Conference of the IEEE Engineering in Medicine and Biology
+Society, EMBS, 2015-November, art. no. 7319047, pp. 3097-3100. 
+
+\bibitem{key-20}R.G. Andrzejak, K. Lehnertz, F. Mormann, C. Rieke,
+P. David, and C. E. Elger, Indications of nonlinear deterministic
+and finite-dimensional structures in time series of brain electrical
+activity: Dependence on recording region and brain state, Phys. Rev.
+E \textbf{64}, pp. 1-8, 2001.
+
+\bibitem{airfoil}T.F. Brooks, D.S. Pope, and A.M. Marcolini. Airfoil
+self-noise and prediction. Technical report, NASA RP-1218, July 1989. 
+
+\bibitem{concrete}I.Cheng Yeh, Modeling of strength of high performance
+concrete using artificial neural networks, Cement and Concrete Research.
+\textbf{28}, pp. 1797-1808, 1998. 
+
+\bibitem{key23}D. Harrison and D.L. Rubinfeld, Hedonic prices and
+the demand for clean ai, J. Environ. Economics \& Management \textbf{5},
+pp. 81-102, 1978.
+
+\bibitem{key21}J.S. Simonoff, Smooting Methods in Statistics, Springer
+- Verlag, 1996.
+
+\bibitem{thyroid}Quinlan,J.R., Compton,P.J., Horn,K.A., and Lazurus,L.
+(1986). Inductive knowledge acquisition: A case study. In Proceedings
+of the Second Australian Conference on Applications of Expert Systems.
+Sydney, Australia.
+
+\bibitem{ntdataset}Mackowiak, P.A., Wasserman, S.S., Levine, M.M.,
+1992. A critical appraisal of 98.6 degrees f, the upper limit of the
+normal body temperature, and other legacies of Carl Reinhold August
+Wunderlich. J. Amer. Med. Assoc. 268, 1578--1580
+
+\bibitem{Stat}J.S. Simonoff, Smooting Methods in Statistics, Springer
+- Verlag, 1996.
+\end{thebibliography}
+
+\end{document}
