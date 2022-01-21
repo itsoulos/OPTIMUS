@@ -60,7 +60,9 @@ void GENDE::selectAndCrossover()
         z.resize(population_size);
 //#pragma omp parallel for num_threads(threads)
         for (int j = 0; j < population_size; j++)
+	{
             z[j] = population[a][j] + differentialWeight * (population[b][j] - population[c][j]);
+	}
 	//if(!myProblem->isPointIn(z)) z=population[a];
 	    int R = rand() % population_size;
 
@@ -86,15 +88,15 @@ void GENDE::selectAndCrossover()
         for (int j = 0; j < population_size; j++)
         {
             if (newX[j] > rmargin[j])
-                newX[j] = rmargin[j];
+                newX[j] = population[it][j];// rmargin[j];
             if (newX[j] < lmargin[j])
-                newX[j] = lmargin[j];
+                newX[j] = population[it][j];//lmargin[j];
         }
 
         if (flag == true) {
             newMin = myProblem->funmin(newX);
-
-	   //Solv->Solve(newX,newMin);
+		if(rand()%100==0)
+	   Solv->Solve(newX,newMin);
         }
         else
 	{
@@ -111,8 +113,10 @@ void GENDE::selectAndCrossover()
 	if(newMin<bestMin)
 	{
 
-	   //Solv->Solve(newX,newMin);
-	   //population[it]=newX;
+//	   Solv->Solve(newX,newMin);
+//	   population[it]=newX;
+    	bestMin = localSearch(newX);
+	population[it]=newX;
             bestMin = newMin;
             bestMinIndex =it;
             bestPoint = population[it];
@@ -162,7 +166,7 @@ void GENDE::init()
         fitness_array[i] = myProblem->funmin(population[i]);
     Solv = new Grs(myProblem);
     Solv->setGenomeCount(20);
-    Solv->setGenomeLength( population_size);
+    Solv->setGenomeLength(10 * population_size);
 }
 void GENDE::done()
 {
