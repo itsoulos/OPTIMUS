@@ -1,6 +1,9 @@
 #include "gende.h"
 #include "gende.h"
 
+int total_points=0;
+int total_failpoints=0;
+
 GENDE::GENDE(Problem *p)
     : Optimizer(p)
 {
@@ -24,7 +27,7 @@ bool GENDE::terminated()
      if(charilogis)
      {
     double dd = fabs(newSum - sum);
-    printf("%4d] Generation  change: %10.6lf \n", generation, dd);
+    //printf("%4d] Generation  change: %10.6lf \n", generation, dd);
     sum = newSum;
     if (dd < 1e-8)
         n++;
@@ -88,7 +91,7 @@ void GENDE::selectAndCrossover()
     Data newX;
     double newMin;
 
-    bool grsflag=true;
+    bool grsflag=false;
     bool bfgsflag=false;
 
     for (it = 0; it < population_count; it++)
@@ -110,6 +113,14 @@ void GENDE::selectAndCrossover()
         Data z;
         z.resize(population_size);
 //#pragma omp parallel for num_threads(threads)
+
+	double wmin = 0.4;
+	double wmax = 0.9;  
+        int max_generations = params["max_generations"].toString().toInt();
+	double inertia= wmax-generation*1.0/max_generations*(wmax-wmin);
+	double alfa=-0.5+2.0*myProblem->randomDouble();
+	differentialWeight = alfa;
+
         for (int j = 0; j < population_size; j++)
 	{
             z[j] = population[a][j] + differentialWeight * (population[b][j] - population[c][j]);
@@ -138,10 +149,12 @@ void GENDE::selectAndCrossover()
 //#pragma omp parallel for num_threads(threads)
         for (int j = 0; j < population_size; j++)
         {
-            if (newX[j] > rmargin[j])
-                newX[j] = population[it][j];// rmargin[j];
-            if (newX[j] < lmargin[j])
-                newX[j] = population[it][j];//lmargin[j];
+		total_points++;
+            if (newX[j] > rmargin[j] || newX[j]<lmargin[j])
+	    {
+		    total_failpoints++;
+		    newX[j]=population[it][j];
+	    }
         }
 
         if (flag == true) {
@@ -249,6 +262,7 @@ void GENDE::done()
     auto ms = milliseconds.count();
 
     std::cout << "Douration: " << (double)ms / 1000.0 << " sec" << std::endl;
+    printf("FAILURE: %.2lf%%\n",total_failpoints*100.0/total_points);
 }
 GENDE::~GENDE()
 {
