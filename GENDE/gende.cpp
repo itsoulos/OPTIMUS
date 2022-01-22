@@ -17,28 +17,79 @@ double GENDE::randMToN(double M, double N)
 }
 bool GENDE::terminated()
 {
-    int max_generations = params["max_generations"].toString().toInt();
-    double fmin = fabs(1.0 + fabs(bestMin));
+	bool doubleboxflag=false;
+	bool charilogis=true;
+
+     int max_generations = params["max_generations"].toString().toInt();
+     if(charilogis)
+     {
+    double dd = fabs(newSum - sum);
+    printf("%4d] Generation  change: %10.6lf \n", generation, dd);
+    sum = newSum;
+    if (dd < 1e-8)
+        n++;
+    else
+        n=0;
+    if (n>10)
+        return true;
+
+    return generation >= max_generations;
+     }
+
+	if(doubleboxflag)
+	{
+    		double fmin = fabs(1.0 + fabs(bestMin));
+    		x1 = x1 + fmin;
+    		x2 = x2 + fmin * fmin;
+    		variance = (x2 / (generation + 1) - (x1 / (generation + 1)) * (x1 / (generation + 1)));
+    		variance = fabs(variance);
+    		if ( bestMin < oldMin)
+    		{
+        		stopat = variance / 2.0;
+        		oldMin = bestMin;
+    		}
+    		printf("DE. Gen: %4d Fitness: %10.5lf Variance: %10.5lf Stopat: %10.5lf \n", generation, bestMin, variance, stopat);
+    		if (stopat < 1e-8 && generation >= 10) return true;
+   		return generation >= max_generations || (variance <= stopat && generation >= 10);
+	}
+	else
+	{
+    double dd = fabs(newSum - sum);
+    printf("%4d] Generation  change: %10.6lf \n", generation, dd);
+    if (dd < 1e-8)
+        n++;
+    else
+        n=0;
+    //if (n>5)
+    //    return true;
+   // return generation >= max_generations;
+    double fmin =newSum;// fabs(1.0 + fabs(bestMin));
     x1 = x1 + fmin;
     x2 = x2 + fmin * fmin;
     variance = (x2 / (generation + 1) - (x1 / (generation + 1)) * (x1 / (generation + 1)));
     variance = fabs(variance);
 
-    if (bestMin < oldMin)
+    if (newSum<sum)// bestMin < oldMin)
     {
         stopat = variance / 2.0;
         oldMin = bestMin;
     }
+    sum = newSum;
     printf("DE. Gen: %4d Fitness: %10.5lf Variance: %10.5lf Stopat: %10.5lf \n", generation, bestMin, variance, stopat);
     if (stopat < 1e-8 && generation >= 10)
         return true;
-    //return generation >= max_generations || (variance <= stopat && generation >= 20);
-    return generation >= max_generations || (variance <= stopat);
+   return generation >= max_generations || (variance <= stopat && generation >= 10);
+	}
+
+
 }
 void GENDE::selectAndCrossover()
 {
     Data newX;
     double newMin;
+
+    bool grsflag=true;
+    bool bfgsflag=false;
 
     for (it = 0; it < population_count; it++)
     {
@@ -95,8 +146,11 @@ void GENDE::selectAndCrossover()
 
         if (flag == true) {
             newMin = myProblem->funmin(newX);
+	    if(grsflag)
+	    {
 		if(rand()%100==0)
 	   Solv->Solve(newX,newMin);
+	    }
         }
         else
 	{
@@ -113,9 +167,16 @@ void GENDE::selectAndCrossover()
 	if(newMin<bestMin)
 	{
 
-//	   Solv->Solve(newX,newMin);
-//	   population[it]=newX;
-    	bestMin = localSearch(newX);
+		bool grsflag=false;
+		if(grsflag)
+		{
+	   		Solv->Solve(newX,newMin);
+	  		 population[it]=newX;
+		}
+		if(bfgsflag)
+		{
+    			bestMin = localSearch(newX);
+		}
 	population[it]=newX;
             bestMin = newMin;
             bestMinIndex =it;
@@ -125,6 +186,8 @@ void GENDE::selectAndCrossover()
         //bestMin = *min_element(fitness_array.begin(), fitness_array.end());
         //bestMinIndex = std::min_element(fitness_array.begin(), fitness_array.end()) - fitness_array.begin();
         //bestPoint = population[bestMinIndex];
+         newSum = accumulate(fitness_array.begin(), fitness_array.end(), 0);
+        newSum = newSum / population_count;
     }
 }
 
@@ -153,7 +216,7 @@ void GENDE::init()
     assert(population_size > 1);
     if (population_size <= 0)
         population_size = dimension;
-//  population_count = 20 * population_size;
+  population_count = 10 * population_size;
     population.resize(population_count);
     for (int i = 0; i < population_count; i++)
         population[i].resize(population_size);
@@ -167,6 +230,14 @@ void GENDE::init()
     Solv = new Grs(myProblem);
     Solv->setGenomeCount(20);
     Solv->setGenomeLength(10 * population_size);
+     sum = accumulate(fitness_array.begin(), fitness_array.end(), 0);
+    if (sum==0)
+    {
+        //assert(sum > 0);
+    }
+    sum = sum / population_count;
+    printf("\n   0] Generation  start : %10.6lf \n", sum);
+    n=0;
 }
 void GENDE::done()
 {

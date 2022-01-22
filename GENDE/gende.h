@@ -22,6 +22,8 @@ public:
 class GENDE_EXPORT GENDE : public Optimizer, GENDEInterface
 {
 private:
+	double sum,newSum;
+	int n;
     virtual bool terminated();
     virtual void step();
     virtual void init();

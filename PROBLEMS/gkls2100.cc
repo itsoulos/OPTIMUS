@@ -1294,7 +1294,7 @@ return error_code;
 
 
 # define MY_GKLS_DIMENSION		2
-# define MY_GKLS_MINIMA			50
+# define MY_GKLS_MINIMA			100
 
 int	getdimension()
 {
