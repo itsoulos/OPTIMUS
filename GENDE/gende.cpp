@@ -1,8 +1,8 @@
 #include "gende.h"
 #include "gende.h"
 
-int total_points=0;
-int total_failpoints=0;
+int total_points = 0;
+int total_failpoints = 0;
 
 GENDE::GENDE(Problem *p)
     : Optimizer(p)
@@ -20,79 +20,93 @@ double GENDE::randMToN(double M, double N)
 }
 bool GENDE::terminated()
 {
-	bool doubleboxflag=false;
-	bool charilogis=true;
+    bool ali = false;
+    bool doubleboxflag = false;    
+    bool charilogis = true;
+    bool tsoulos = false;
 
-     int max_generations = params["max_generations"].toString().toInt();
-     if(charilogis)
-     {
-    double dd = fabs(newSum - sum);
-    //printf("%4d] Generation  change: %10.6lf \n", generation, dd);
-    sum = newSum;
-    if (dd < 1e-8)
-        n++;
-    else
-        n=0;
-    if (n>10)
-        return true;
+    int max_generations = params["max_generations"].toString().toInt();
 
-    return generation >= max_generations;
-     }
-
-	if(doubleboxflag)
-	{
-    		double fmin = fabs(1.0 + fabs(bestMin));
-    		x1 = x1 + fmin;
-    		x2 = x2 + fmin * fmin;
-    		variance = (x2 / (generation + 1) - (x1 / (generation + 1)) * (x1 / (generation + 1)));
-    		variance = fabs(variance);
-    		if ( bestMin < oldMin)
-    		{
-        		stopat = variance / 2.0;
-        		oldMin = bestMin;
-    		}
-    		printf("DE. Gen: %4d Fitness: %10.5lf Variance: %10.5lf Stopat: %10.5lf \n", generation, bestMin, variance, stopat);
-    		if (stopat < 1e-8 && generation >= 10) return true;
-   		return generation >= max_generations || (variance <= stopat && generation >= 10);
-	}
-	else
-	{
-    double dd = fabs(newSum - sum);
-    printf("%4d] Generation  change: %10.6lf \n", generation, dd);
-    if (dd < 1e-8)
-        n++;
-    else
-        n=0;
-    //if (n>5)
-    //    return true;
-   // return generation >= max_generations;
-    double fmin =newSum;// fabs(1.0 + fabs(bestMin));
-    x1 = x1 + fmin;
-    x2 = x2 + fmin * fmin;
-    variance = (x2 / (generation + 1) - (x1 / (generation + 1)) * (x1 / (generation + 1)));
-    variance = fabs(variance);
-
-    if (newSum<sum)// bestMin < oldMin)
+    if (ali)
     {
-        stopat = variance / 2.0;
-        oldMin = bestMin;
+        double dif = fabs(bestMin - bestMax);
+        // printf("%4d] Generation  change: %10.6lf \n", generation, dd);
+        if (dif < 1e-4)
+        //    n++;
+        //else
+        //    n = 0;
+        //if (n > 5)
+            return true;
+
+        return generation >= max_generations;
     }
-    sum = newSum;
-    printf("DE. Gen: %4d Fitness: %10.5lf Variance: %10.5lf Stopat: %10.5lf \n", generation, bestMin, variance, stopat);
-    if (stopat < 1e-8 && generation >= 10)
-        return true;
-   return generation >= max_generations || (variance <= stopat && generation >= 10);
-	}
+    if (charilogis)
+    {
+        double dd = fabs(newSum - sum);
+        // printf("%4d] Generation  change: %10.6lf \n", generation, dd);
+        sum = newSum;
+        if (dd < 1e-8)
+            n++;
+        else
+            n = 0;
+        if (n > 20)
+            return true;
 
+        return generation >= max_generations;
+    }
+    if (doubleboxflag)
+    {
+        double fmin = fabs(1.0 + fabs(bestMin));
+        x1 = x1 + fmin;
+        x2 = x2 + fmin * fmin;
+        variance = (x2 / (generation + 1) - (x1 / (generation + 1)) * (x1 / (generation + 1)));
+        variance = fabs(variance);
+        if (bestMin < oldMin)
+        {
+            stopat = variance / 2.0;
+            oldMin = bestMin;
+        }
+        printf("DE. Gen: %4d Fitness: %10.5lf Variance: %10.5lf Stopat: %10.5lf \n", generation, bestMin, variance, stopat);
+        if (stopat < 1e-8 && generation >= 10)
+            return true;
+        return generation >= max_generations || (variance <= stopat && generation >= 10);
+    }
+    if (tsoulos)
+    {
+        double dd = fabs(newSum - sum);
+        printf("%4d] Generation  change: %10.6lf \n", generation, dd);
+        if (dd < 1e-8)
+            n++;
+        else
+            n = 0;
+        // if (n>5)
+        //     return true;
+        // return generation >= max_generations;
+        double fmin = newSum; // fabs(1.0 + fabs(bestMin));
+        x1 = x1 + fmin;
+        x2 = x2 + fmin * fmin;
+        variance = (x2 / (generation + 1) - (x1 / (generation + 1)) * (x1 / (generation + 1)));
+        variance = fabs(variance);
 
+        if (newSum < sum) // bestMin < oldMin)
+        {
+            stopat = variance / 2.0;
+            oldMin = bestMin;
+        }
+        sum = newSum;
+        printf("DE. Gen: %4d Fitness: %10.5lf Variance: %10.5lf Stopat: %10.5lf \n", generation, bestMin, variance, stopat);
+        if (stopat < 1e-8 && generation >= 10)
+            return true;
+        return generation >= max_generations || (variance <= stopat && generation >= 10);
+    }
 }
 void GENDE::selectAndCrossover()
 {
     Data newX;
     double newMin;
 
-    bool grsflag=false;
-    bool bfgsflag=false;
+    bool grsflag = false;
+    bool bfgsflag = false;
 
     for (it = 0; it < population_count; it++)
     {
@@ -105,39 +119,64 @@ void GENDE::selectAndCrossover()
             a = rand() % population_count;
             b = rand() % population_count;
             c = rand() % population_count;
-	    if(a<0) a=it;
-	    if(b<0) b=it;
-	    if(c<0) c=it;
+            if (a < 0)
+                a = it;
+            if (b < 0)
+                b = it;
+            if (c < 0)
+                c = it;
         }
 
         Data z;
         z.resize(population_size);
-//#pragma omp parallel for num_threads(threads)
+        //#pragma omp parallel for num_threads(threads)
 
-	double wmin = 0.4;
-	double wmax = 0.9;  
+        double wmin = 0.4;
+        double wmax = 0.9;
         int max_generations = params["max_generations"].toString().toInt();
-	double inertia= wmax-generation*1.0/max_generations*(wmax-wmin);
-	double alfa=-0.5+2.0*myProblem->randomDouble();
-	differentialWeight = alfa;
+        double inertia = wmax - generation * 1.0 / max_generations * (wmax - wmin);
+
+        //////////////////////tsoulos/////////////////////////
+	bool tsoulos_flag=true;
+	bool ali_flag=false;
+
+	if(tsoulos_flag)
+	{
+       double alfa = -0.5 + 2.0 * myProblem->randomDouble();
+       differentialWeight = alfa;
+	}
+	else
+	if(ali_flag)
+    	{	
+
+        double f;
+            if (bestMax/bestMin <1)
+                f = 1.0 - (bestMax/bestMin);
+            else
+                f = 1.0 - (bestMin/bestMax);
+        differentialWeight = f;
+	}
+
+
 
         for (int j = 0; j < population_size; j++)
-	{
+        {
             z[j] = population[a][j] + differentialWeight * (population[b][j] - population[c][j]);
-	}
-	//if(!myProblem->isPointIn(z)) z=population[a];
-	    int R = rand() % population_size;
+        }
+        // if(!myProblem->isPointIn(z)) z=population[a];
+        int R = rand() % population_size;
 
         Data r;
         r.resize(population_size);
-	for(int i=0;i<population_size;i++) r[i]=drand48();
+        for (int i = 0; i < population_size; i++)
+            r[i] = drand48();
 
         newX.resize(population_size);
         bool flag = false;
-//#pragma omp parallel for num_threads(threads)
+        //#pragma omp parallel for num_threads(threads)
         for (int j = 0; j < population_size; j++)
         {
-            if (r[j] < crossoverProbability || j == R && (z[j]>=lmargin[j] && z[j]<=rmargin[j]))
+            if (r[j] < crossoverProbability || j == R && (z[j] >= lmargin[j] && z[j] <= rmargin[j]))
             {
 
                 newX[j] = z[j];
@@ -146,60 +185,60 @@ void GENDE::selectAndCrossover()
             else
                 newX[j] = population[it][j];
         }
-//#pragma omp parallel for num_threads(threads)
+        //#pragma omp parallel for num_threads(threads)
         for (int j = 0; j < population_size; j++)
         {
-		total_points++;
-            if (newX[j] > rmargin[j] || newX[j]<lmargin[j])
-	    {
-		    total_failpoints++;
-		    newX[j]=population[it][j];
-	    }
+            total_points++;
+            if (newX[j] > rmargin[j] || newX[j] < lmargin[j])
+            {
+                total_failpoints++;
+                newX[j] = population[it][j];
+            }
         }
 
-        if (flag == true) {
+        if (flag == true)
+        {
             newMin = myProblem->funmin(newX);
-	    if(grsflag)
-	    {
-		if(rand()%100==0)
-	   Solv->Solve(newX,newMin);
-	    }
+            if (grsflag)
+            {
+                if (rand() % 100 == 0)
+                    Solv->Solve(newX, newMin);
+            }
         }
         else
-	{
+        {
             newMin = fitness_array[it];
-	}
-
-
+        }
 
         if (newMin < fitness_array[it])
         {
             population[it] = newX;
             fitness_array[it] = newMin;
-	}
-	if(newMin<bestMin)
-	{
+        }
+        if (newMin < bestMin)
+        {
 
-		bool grsflag=false;
-		if(grsflag)
-		{
-	   		Solv->Solve(newX,newMin);
-	  		 population[it]=newX;
-		}
-		if(bfgsflag)
-		{
-    			bestMin = localSearch(newX);
-		}
-	population[it]=newX;
+            bool grsflag = false;
+            if (grsflag)
+            {
+                Solv->Solve(newX, newMin);
+                population[it] = newX;
+            }
+            if (bfgsflag)
+            {
+                bestMin = localSearch(newX);
+            }
+            population[it] = newX;
             bestMin = newMin;
-            bestMinIndex =it;
+            bestMinIndex = it;
             bestPoint = population[it];
+            bestMax = *max_element(fitness_array.begin(), fitness_array.end());
         }
 
-        //bestMin = *min_element(fitness_array.begin(), fitness_array.end());
-        //bestMinIndex = std::min_element(fitness_array.begin(), fitness_array.end()) - fitness_array.begin();
-        //bestPoint = population[bestMinIndex];
-         newSum = accumulate(fitness_array.begin(), fitness_array.end(), 0);
+        // bestMin = *min_element(fitness_array.begin(), fitness_array.end());
+        // bestMinIndex = std::min_element(fitness_array.begin(), fitness_array.end()) - fitness_array.begin();
+        // bestPoint = population[bestMinIndex];
+        newSum = accumulate(fitness_array.begin(), fitness_array.end(), 0);
         newSum = newSum / population_count;
     }
 }
@@ -214,7 +253,7 @@ void GENDE::init()
 {
     generation = 1;
     oldMin = 1e+100;
-    bestMin = 1e+100;;
+    bestMin = 1e+100;
     x1 = 0.0;
     x2 = 0.0;
     variance = 0.0;
@@ -229,7 +268,7 @@ void GENDE::init()
     assert(population_size > 1);
     if (population_size <= 0)
         population_size = dimension;
-  population_count = 10 * population_size;
+    population_count = 10 * population_size;
     population.resize(population_count);
     for (int i = 0; i < population_count; i++)
         population[i].resize(population_size);
@@ -243,18 +282,18 @@ void GENDE::init()
     Solv = new Grs(myProblem);
     Solv->setGenomeCount(20);
     Solv->setGenomeLength(10 * population_size);
-     sum = accumulate(fitness_array.begin(), fitness_array.end(), 0);
-    if (sum==0)
+    sum = accumulate(fitness_array.begin(), fitness_array.end(), 0);
+    if (sum == 0)
     {
-        //assert(sum > 0);
+        // assert(sum > 0);
     }
     sum = sum / population_count;
-    printf("\n   0] Generation  start : %10.6lf \n", sum);
-    n=0;
+    //printf("\n   0] Generation  start : %10.6lf \n", sum);
+    n = 0;
 }
 void GENDE::done()
 {
-    //bestMin =myProblem->funmin(bestPoint);
+    // bestMin =myProblem->funmin(bestPoint);
     bestMin = localSearch(bestPoint);
     meta = std::chrono::system_clock::now();
 
@@ -262,7 +301,7 @@ void GENDE::done()
     auto ms = milliseconds.count();
 
     std::cout << "Douration: " << (double)ms / 1000.0 << " sec" << std::endl;
-    printf("FAILURE: %.2lf%%\n",total_failpoints*100.0/total_points);
+    printf("FAILURE: %.2lf%%\n", total_failpoints * 100.0 / total_points);
 }
 GENDE::~GENDE()
 {

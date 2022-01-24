@@ -30,7 +30,7 @@ private:
     virtual void done();
     vector<Data> population;
     Data lmargin, rmargin, fitness_array, bestPoint;
-    double x1, x2, stopat, variance, oldMin, bestMin, indexMin, crossoverProbability, differentialWeight;
+    double x1, x2, stopat, variance, oldMin, bestMin, indexMin, crossoverProbability, differentialWeight, bestMax;
     int generation, population_count, population_size, bestMinIndex, dimension, it;
     void selectAndCrossover();
     double randMToN(double M, double N);
