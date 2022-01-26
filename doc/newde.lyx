@@ -76,7 +76,7 @@
 \begin_body
 
 \begin_layout Title
-Modifcations for the Differential Evolution algorithm
+Modifications for the Differential Evolution algorithm
 \end_layout
 
 \begin_layout Author
@@ -97,8 +97,286 @@ Write some abstract here
 Introduction 
 \end_layout
 
+\begin_layout Standard
+The location of the global minimum of a continuous and differentiable function
+ 
+\begin_inset Formula $f:S\rightarrow R,S\subset R^{n}$
+\end_inset
+
+
+\series bold
+ 
+\series default
+is formulated as
+\begin_inset Formula 
+\begin{equation}
+x^{*}=\mbox{arg}\min_{x\in S}f(x)\label{eq:eq1}
+\end{equation}
+
+\end_inset
+
+where the set
+\series bold
+ 
+\begin_inset Formula $S$
+\end_inset
+
+ 
+\series default
+is defined as
+\series bold
+ 
+\begin_inset Formula 
+\[
+S=\left[a_{1},b_{1}\right]\otimes\left[a_{2},b_{2}\right]\otimes\ldots\left[a_{n},b_{n}\right]
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+In the recent literature there are a plethora of real world problems that
+ can formulated as global optimization problems such as problems from the
+ physics area 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "go_physics1,go_physics2,go_physics3,go_physics4"
+literal "false"
+
+\end_inset
+
+, chemistry 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "go_chem1,go_chem2,go_chem3"
+literal "false"
+
+\end_inset
+
+, economics 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "go_econ1,go_econ2"
+literal "false"
+
+\end_inset
+
+ etc.
+ There are a variety of proposed methods to handle the global minimum problem
+ such as
+\series bold
+ 
+\series default
+Adaptive Random Search 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-16"
+literal "true"
+
+\end_inset
+
+, Completive Evolution 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-17"
+literal "true"
+
+\end_inset
+
+, Controlled Random Search 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-18"
+literal "true"
+
+\end_inset
+
+, Simulated Annealing 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-19,key-20,key-22"
+literal "true"
+
+\end_inset
+
+, Genetic Algorithms 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-23,key-6"
+literal "true"
+
+\end_inset
+
+, Differential Evolution 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "aco"
+literal "true"
+
+\end_inset
+
+, Particle Swarm Optimization 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-25"
+literal "true"
+
+\end_inset
+
+, Bee optimization 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "bee1,bee2"
+literal "false"
+
+\end_inset
+
+, Ant Colony Optimization 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "aco"
+literal "false"
+
+\end_inset
+
+ etc.
+ Recently many works have been appeared that take advantage of the GPU processin
+g units to implement parallel global optimization methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "gpu1,gpu2,gpu3"
+literal "false"
+
+\end_inset
+
+.
+
+\series bold
+ The method of Differential Evolution is modified here ....
+\end_layout
+
+\begin_layout Standard
+After a literature review it was found that differential evolution is used
+ in several areas and many modifications of the original algorithm have
+ been introduced in the recent literature.
+ More specifically, in the research of Zongjun et al 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_review1"
+literal "false"
+
+\end_inset
+
+, genetic and differential calculus algorithms were used to optimize the
+ parameters of two models aimed at estimating evapotranspiration in three
+ regions and it was found that the performance of evolution algorithms was
+ better than the genetic algorithm.
+ Another research focuses on a case study of a cellular neural network aimed
+ at generating fractional classes of neurons.
+ The best solutions provided by differential calculus and the use of accelerated
+ particle swarm optimization (APSO) are presented concretely in the work
+ of Tlelo-Cuautle et al 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_review2"
+literal "false"
+
+\end_inset
+
+.
+ Another article 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_review3"
+literal "false"
+
+\end_inset
+
+ proposes a regeneration framework based on space search adaptation (ARSA),
+ which can be integrated into different variants of different evolution
+ to address the problems of early convergence and population stability faced
+ by different calculus.
+ Also another interesting variation of the method is the Bernstain Search
+ Differential Evolution Algorithm 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_review4"
+literal "false"
+
+\end_inset
+
+ for optimizing numerical functions.
+ Another interesting algorithm is a new design of differential evolution
+ to solve the travel salesman problem 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_review5"
+literal "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The differential evolution method was applied also to energy science.
+ Specifically, the article of Liang et al 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_review6"
+literal "false"
+
+\end_inset
+
+ evaluates the parameters of solar photovoltaic models through a self-adjusting
+ differential evolution.
+ Similarly, in the study of Peng et al 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_review7"
+literal "false"
+
+\end_inset
+
+, differential evolution is used for the prediction of electricity prices.
+ Also, differential evolution was also incroporated in neural architecture
+ search 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_review8"
+literal "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+The rest of this article is organized as follows....
+\end_layout
+
 \begin_layout Section
 Modifications 
+\end_layout
+
+\begin_layout Subsection
+The base algorithm 
+\end_layout
+
+\begin_layout Subsection
+The new termination rule 
+\end_layout
+
+\begin_layout Subsection
+The new crossover scheme
 \end_layout
 
 \begin_layout Section
@@ -243,33 +521,6 @@ The global minimum has the value of
 \begin_layout Itemize
 
 \series bold
-DiffPower
-\series default
- function.
- The Sum of Different Powers function is defined 
-\begin_inset Formula 
-\[
-f(x)=\sum_{i=1}^{n}\left|x_{i}\right|^{i+1}
-\]
-
-\end_inset
-
-and the global minimum is is 
-\begin_inset Formula $f\left(x^{*}\right)=0$
-\end_inset
-
-.
- The value 
-\begin_inset Formula $n=10$
-\end_inset
-
- was used in the conducted experiments and the associated function is denoted
- as Diffpower10.
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
 Easom
 \series default
  function.
@@ -312,10 +563,42 @@ The global minimum is located at
 
 .
  In our experiments we used this function with 
-\begin_inset Formula $n=8,32$
+\begin_inset Formula $n=2,4,8,16,32$
 \end_inset
 
- and the corresponding functions are denoted by the labels EXP8,EXP32.
+.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Goldstein and Price function 
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+The function is given by the equation
+\begin_inset Formula 
+\begin{eqnarray*}
+f(x) & = & \left[1+\left(x_{1}+x_{2}+1\right)^{2}\right.\\
+ &  & \left(19-14x_{1}+3x_{1}^{2}-14x_{2}+6x_{1}x_{2}+3x_{2}^{2}\right)]\times\\
+ &  & [30+\left(2x_{1}-3x_{2}\right)^{2}\\
+ &  & \left(18-32x_{1}+12x_{1}^{2}+48x_{2}-36x_{1}x_{2}+27x_{2}^{2}\right)]
+\end{eqnarray*}
+
+\end_inset
+
+With 
+\begin_inset Formula $x\in[-2,2]^{2}$
+\end_inset
+
+.
+ The global minimum is located at 
+\begin_inset Formula $x^{*}=(0,-1)$
+\end_inset
+
+ with value 3.0
 \end_layout
 
 \begin_layout Itemize
@@ -337,28 +620,6 @@ The global minimum is located at the
 \end_inset
 
  with value 0.
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Griewank10
-\series default
- function.
- The function is given by the equation 
-\begin_inset Formula 
-\[
-f(x)=\sum_{i=1}^{n}\frac{x_{i}^{2}}{4000}-\prod_{i=1}^{n}\cos\left(\frac{x_{i}}{\sqrt{i}}\right)+1
-\]
-
-\end_inset
-
-In our experiments we have used 
-\begin_inset Formula $n=10$
-\end_inset
-
- and the global minimum is 0.0 The function has several local minima in the
- specified range.
 \end_layout
 
 \begin_layout Itemize
@@ -398,11 +659,10 @@ literal "true"
 \end_inset
 
  and 
-\begin_inset Formula $w=50$
+\begin_inset Formula $w=50,\ 100$
 \end_inset
 
 .
- The corresponding functions are denoted by the labels GKLS250 and GKLS350.
  
 \end_layout
 
@@ -544,7 +804,7 @@ V_{LJ}(r)=4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{
 \end_inset
 
 In the current experiments three different cases were studied: 
-\begin_inset Formula $N=5,\ 10,\ 20$
+\begin_inset Formula $N=3,\ 4,\ 5$
 \end_inset
 
 
@@ -601,7 +861,7 @@ The global minimum is located at the
 
 .
  In our experiments we used this function with 
-\begin_inset Formula $n=2$
+\begin_inset Formula $n=4,\ 8,\ 16$
 \end_inset
 
 .
@@ -777,15 +1037,15 @@ The global minimum is located at
 
 .
  In our experiments we used 
-\begin_inset Formula $n=8,32$
+\begin_inset Formula $n=4,8,16,32$
 \end_inset
 
  and 
 \begin_inset Formula $z=\frac{\pi}{6}$
 \end_inset
 
- and the corresponding functions are denoted by the labels SINU8 and SINU32
- respectively.
+ and the corresponding functions are denoted by the labels SINU4, SINU8,
+ SINU16 and SINU32 respectively.
 \end_layout
 
 \begin_layout Itemize
@@ -831,7 +1091,11 @@ The function has
 \end_layout
 
 \begin_layout Itemize
-Test30N function.
+
+\series bold
+Test30N
+\series default
+ function.
  This function is given by 
 \begin_inset Formula 
 \[
@@ -868,10 +1132,6 @@ sideways false
 status open
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -893,7 +1153,7 @@ name "tab:ExperimentsAli"
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="40" columns="4">
+<lyxtabular version="3" rows="42" columns="4">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -904,6 +1164,8 @@ name "tab:ExperimentsAli"
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 FUNCTION
 \end_layout
 
@@ -913,6 +1175,8 @@ FUNCTION
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 STATIC
 \end_layout
 
@@ -922,6 +1186,8 @@ STATIC
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 ALI
 \end_layout
 
@@ -931,6 +1197,8 @@ ALI
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 PROPOSED
 \end_layout
 
@@ -951,7 +1219,7 @@ BF1
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1142
 \end_layout
 
 \end_inset
@@ -960,7 +1228,7 @@ BF1
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1431
 \end_layout
 
 \end_inset
@@ -969,7 +1237,7 @@ BF1
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+847
 \end_layout
 
 \end_inset
@@ -989,7 +1257,7 @@ BF2
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1164
 \end_layout
 
 \end_inset
@@ -998,7 +1266,7 @@ BF2
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1379
 \end_layout
 
 \end_inset
@@ -1007,7 +1275,7 @@ BF2
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+896
 \end_layout
 
 \end_inset
@@ -1027,7 +1295,7 @@ BRANIN
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+984
 \end_layout
 
 \end_inset
@@ -1036,7 +1304,7 @@ BRANIN
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+816
 \end_layout
 
 \end_inset
@@ -1045,7 +1313,7 @@ BRANIN
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+707
 \end_layout
 
 \end_inset
@@ -1065,7 +1333,7 @@ CM4
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3590
 \end_layout
 
 \end_inset
@@ -1074,7 +1342,7 @@ CM4
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+7572
 \end_layout
 
 \end_inset
@@ -1083,7 +1351,7 @@ CM4
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2079
 \end_layout
 
 \end_inset
@@ -1103,7 +1371,7 @@ CAMEL
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1094
 \end_layout
 
 \end_inset
@@ -1112,7 +1380,7 @@ CAMEL
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+18849
 \end_layout
 
 \end_inset
@@ -1121,7 +1389,7 @@ CAMEL
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+685
 \end_layout
 
 \end_inset
@@ -1141,7 +1409,7 @@ EASOM
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1707
 \end_layout
 
 \end_inset
@@ -1150,7 +1418,7 @@ EASOM
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2014
 \end_layout
 
 \end_inset
@@ -1159,7 +1427,7 @@ EASOM
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1327
 \end_layout
 
 \end_inset
@@ -1179,7 +1447,7 @@ EXP2
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+532
 \end_layout
 
 \end_inset
@@ -1188,7 +1456,7 @@ EXP2
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+323
 \end_layout
 
 \end_inset
@@ -1197,7 +1465,7 @@ EXP2
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+449
 \end_layout
 
 \end_inset
@@ -1217,7 +1485,7 @@ EXP4
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2421
 \end_layout
 
 \end_inset
@@ -1226,7 +1494,7 @@ EXP4
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1019
 \end_layout
 
 \end_inset
@@ -1235,7 +1503,7 @@ EXP4
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1494
 \end_layout
 
 \end_inset
@@ -1255,7 +1523,7 @@ EXP8
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+15750
 \end_layout
 
 \end_inset
@@ -1264,7 +1532,7 @@ EXP8
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3670
 \end_layout
 
 \end_inset
@@ -1273,7 +1541,7 @@ EXP8
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5632
 \end_layout
 
 \end_inset
@@ -1293,7 +1561,7 @@ EXP16
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+160031
 \end_layout
 
 \end_inset
@@ -1302,7 +1570,7 @@ EXP16
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+15150
 \end_layout
 
 \end_inset
@@ -1311,7 +1579,7 @@ EXP16
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+21416
 \end_layout
 
 \end_inset
@@ -1331,7 +1599,7 @@ EXP32
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+320039
 \end_layout
 
 \end_inset
@@ -1340,7 +1608,7 @@ EXP32
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+152548
 \end_layout
 
 \end_inset
@@ -1349,7 +1617,7 @@ EXP32
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+77936
 \end_layout
 
 \end_inset
@@ -1369,7 +1637,7 @@ GKLS250
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+784
 \end_layout
 
 \end_inset
@@ -1378,7 +1646,7 @@ GKLS250
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+944
 \end_layout
 
 \end_inset
@@ -1387,7 +1655,7 @@ GKLS250
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+614
 \end_layout
 
 \end_inset
@@ -1407,7 +1675,7 @@ GKLS2100
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+772
 \end_layout
 
 \end_inset
@@ -1416,7 +1684,7 @@ GKLS2100
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1531
 \end_layout
 
 \end_inset
@@ -1425,7 +1693,7 @@ GKLS2100
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+599(0.97)
 \end_layout
 
 \end_inset
@@ -1445,7 +1713,7 @@ GKLS350
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1906(0.93)
 \end_layout
 
 \end_inset
@@ -1454,7 +1722,7 @@ GKLS350
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3263
 \end_layout
 
 \end_inset
@@ -1463,7 +1731,7 @@ GKLS350
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1275(0.93)
 \end_layout
 
 \end_inset
@@ -1483,7 +1751,7 @@ GKLS3100
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1883
 \end_layout
 
 \end_inset
@@ -1492,7 +1760,7 @@ GKLS3100
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3539
 \end_layout
 
 \end_inset
@@ -1501,7 +1769,7 @@ GKLS3100
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1373
 \end_layout
 
 \end_inset
@@ -1521,7 +1789,7 @@ GOLDSTEIN
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+988
 \end_layout
 
 \end_inset
@@ -1530,7 +1798,7 @@ GOLDSTEIN
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+818
 \end_layout
 
 \end_inset
@@ -1539,7 +1807,7 @@ GOLDSTEIN
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+769
 \end_layout
 
 \end_inset
@@ -1559,7 +1827,7 @@ GRIEWANK2
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1299(0.97)
 \end_layout
 
 \end_inset
@@ -1568,7 +1836,7 @@ GRIEWANK2
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1403
 \end_layout
 
 \end_inset
@@ -1577,7 +1845,7 @@ GRIEWANK2
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+883(0.93)
 \end_layout
 
 \end_inset
@@ -1597,7 +1865,7 @@ HANSEN
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2398
 \end_layout
 
 \end_inset
@@ -1606,7 +1874,7 @@ HANSEN
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2968
 \end_layout
 
 \end_inset
@@ -1615,7 +1883,83 @@ HANSEN
 \begin_inset Text
 
 \begin_layout Plain Layout
+1400
+\end_layout
 
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+HARTMAN3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1448
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+836
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1050
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+HARTMAN6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9489(0.97)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4015(0.97)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4667(0.80)
 \end_layout
 
 \end_inset
@@ -1635,7 +1979,7 @@ POTENTIAL3
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+90027
 \end_layout
 
 \end_inset
@@ -1644,7 +1988,7 @@ POTENTIAL3
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+89776
 \end_layout
 
 \end_inset
@@ -1653,7 +1997,7 @@ POTENTIAL3
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+21824
 \end_layout
 
 \end_inset
@@ -1673,7 +2017,7 @@ POTENTIAL4
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+120387(0.97)
 \end_layout
 
 \end_inset
@@ -1682,7 +2026,7 @@ POTENTIAL4
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+120405(0.33)
 \end_layout
 
 \end_inset
@@ -1691,7 +2035,7 @@ POTENTIAL4
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+45705(0.97)
 \end_layout
 
 \end_inset
@@ -1711,7 +2055,7 @@ POTENTIAL5
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+150073
 \end_layout
 
 \end_inset
@@ -1720,7 +2064,7 @@ POTENTIAL5
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+150104
 \end_layout
 
 \end_inset
@@ -1729,7 +2073,7 @@ POTENTIAL5
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+83342
 \end_layout
 
 \end_inset
@@ -1749,7 +2093,7 @@ RASTRIGIN
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1246
 \end_layout
 
 \end_inset
@@ -1758,7 +2102,7 @@ RASTRIGIN
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1098(0.93)
 \end_layout
 
 \end_inset
@@ -1767,7 +2111,7 @@ RASTRIGIN
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+871
 \end_layout
 
 \end_inset
@@ -1787,7 +2131,7 @@ ROSENBROCK4
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+6564
 \end_layout
 
 \end_inset
@@ -1796,7 +2140,7 @@ ROSENBROCK4
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+9695
 \end_layout
 
 \end_inset
@@ -1805,7 +2149,7 @@ ROSENBROCK4
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4499
 \end_layout
 
 \end_inset
@@ -1825,7 +2169,7 @@ ROSENBROCK8
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+44240
 \end_layout
 
 \end_inset
@@ -1834,7 +2178,7 @@ ROSENBROCK8
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+72228
 \end_layout
 
 \end_inset
@@ -1843,7 +2187,7 @@ ROSENBROCK8
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+13959
 \end_layout
 
 \end_inset
@@ -1863,7 +2207,7 @@ ROSENBCROK16
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+160349(0.90)
 \end_layout
 
 \end_inset
@@ -1872,7 +2216,7 @@ ROSENBCROK16
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+160538(0.60)
 \end_layout
 
 \end_inset
@@ -1881,7 +2225,7 @@ ROSENBCROK16
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+53594
 \end_layout
 
 \end_inset
@@ -1901,7 +2245,7 @@ SHEKEL5
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5524
 \end_layout
 
 \end_inset
@@ -1910,7 +2254,7 @@ SHEKEL5
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3810
 \end_layout
 
 \end_inset
@@ -1919,7 +2263,7 @@ SHEKEL5
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3057(0.83)
 \end_layout
 
 \end_inset
@@ -1939,7 +2283,7 @@ SHEKEL7
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5266
 \end_layout
 
 \end_inset
@@ -1948,7 +2292,7 @@ SHEKEL7
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3558
 \end_layout
 
 \end_inset
@@ -1957,7 +2301,7 @@ SHEKEL7
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2992(0.87)
 \end_layout
 
 \end_inset
@@ -1977,7 +2321,7 @@ SHEKEL10
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5319
 \end_layout
 
 \end_inset
@@ -1986,7 +2330,7 @@ SHEKEL10
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3379
 \end_layout
 
 \end_inset
@@ -1995,7 +2339,7 @@ SHEKEL10
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3076
 \end_layout
 
 \end_inset
@@ -2015,7 +2359,7 @@ TEST2N4
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4200
 \end_layout
 
 \end_inset
@@ -2024,7 +2368,7 @@ TEST2N4
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1980
 \end_layout
 
 \end_inset
@@ -2033,7 +2377,7 @@ TEST2N4
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2592
 \end_layout
 
 \end_inset
@@ -2053,7 +2397,7 @@ TEST2N5
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+7357
 \end_layout
 
 \end_inset
@@ -2062,7 +2406,7 @@ TEST2N5
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2957
 \end_layout
 
 \end_inset
@@ -2071,7 +2415,7 @@ TEST2N5
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4055
 \end_layout
 
 \end_inset
@@ -2091,7 +2435,7 @@ TEST2N6
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+12074
 \end_layout
 
 \end_inset
@@ -2100,7 +2444,7 @@ TEST2N6
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4159
 \end_layout
 
 \end_inset
@@ -2109,7 +2453,7 @@ TEST2N6
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5836
 \end_layout
 
 \end_inset
@@ -2129,7 +2473,7 @@ TEST2N7
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+18872
 \end_layout
 
 \end_inset
@@ -2138,7 +2482,7 @@ TEST2N7
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5490
 \end_layout
 
 \end_inset
@@ -2147,7 +2491,7 @@ TEST2N7
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+7904
 \end_layout
 
 \end_inset
@@ -2167,7 +2511,7 @@ SINU4
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3270
 \end_layout
 
 \end_inset
@@ -2176,7 +2520,7 @@ SINU4
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1855
 \end_layout
 
 \end_inset
@@ -2185,7 +2529,7 @@ SINU4
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2216
 \end_layout
 
 \end_inset
@@ -2205,7 +2549,7 @@ SINU8
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+23108
 \end_layout
 
 \end_inset
@@ -2214,7 +2558,7 @@ SINU8
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+6995
 \end_layout
 
 \end_inset
@@ -2223,7 +2567,7 @@ SINU8
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+8135
 \end_layout
 
 \end_inset
@@ -2243,7 +2587,7 @@ SINU16
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+160092
 \end_layout
 
 \end_inset
@@ -2252,7 +2596,7 @@ SINU16
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+36044
 \end_layout
 
 \end_inset
@@ -2261,7 +2605,7 @@ SINU16
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+30943
 \end_layout
 
 \end_inset
@@ -2281,7 +2625,7 @@ SINU32
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+213757(0.70)
 \end_layout
 
 \end_inset
@@ -2290,7 +2634,7 @@ SINU32
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+160536(0.53)
 \end_layout
 
 \end_inset
@@ -2299,7 +2643,7 @@ SINU32
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+83369(0.80)
 \end_layout
 
 \end_inset
@@ -2319,7 +2663,7 @@ TEST30N3
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1452
 \end_layout
 
 \end_inset
@@ -2328,7 +2672,7 @@ TEST30N3
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1732
 \end_layout
 
 \end_inset
@@ -2337,7 +2681,7 @@ TEST30N3
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+959
 \end_layout
 
 \end_inset
@@ -2357,7 +2701,7 @@ TEST30N4
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1917
 \end_layout
 
 \end_inset
@@ -2366,7 +2710,7 @@ TEST30N4
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2287
 \end_layout
 
 \end_inset
@@ -2375,7 +2719,7 @@ TEST30N4
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1378
 \end_layout
 
 \end_inset
@@ -2397,7 +2741,7 @@ TOTAL
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1564515(0.97)
 \end_layout
 
 \end_inset
@@ -2406,7 +2750,7 @@ TOTAL
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1062714(0.96)
 \end_layout
 
 \end_inset
@@ -2415,7 +2759,7 @@ TOTAL
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+506404(0.98)
 \end_layout
 
 \end_inset
@@ -2429,6 +2773,1655 @@ TOTAL
 \end_layout
 
 \begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Experiments with the proposed termination rule.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:ExperimentsAli-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="42" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+FUNCTION
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+STATIC
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+ALI
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+PROPOSED
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+BF1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+996
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1124
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+889
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+BF2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+926
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1026
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+816
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+BRANIN
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+878
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+900
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+730
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+CM4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1148(0.70)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1991
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1103
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+CAMEL
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1049
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+904(0.93)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+846
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+EASOM
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+447
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+448
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+446
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+EXP2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+470
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+461
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+467
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+EXP4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+915
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+903
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+892
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+EXP8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1797
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3558
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1796
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+EXP16
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3578
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7082
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3521
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+EXP32
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7082
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+14125
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7022
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+GKLS250
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+498
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+576
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+493
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+GKLS2100
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+533
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+884(0.97)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+515
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+GKLS350
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+823
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1130(0.93)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+814(0.97)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+GKLS3100
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+858
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1495(0.97)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+829(0.93)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+GOLDSTEIN
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+945
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+993
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+915
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+GRIEWANK2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+947
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+921
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+826
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+HANSEN
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2104
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1949
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1479
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+HARTMAN3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1017
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1005
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+952
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+HARTMAN6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4679(0.90)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3744(0.97)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3128(0.87)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+POTENTIAL3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+21473
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2284
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8197
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+POTENTIAL4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+44191(0.43)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3098(0.33)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+24659(0.97)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+POTENTIAL5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+75910
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3443
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+52664
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+RASTRIGIN
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+841
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+994
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+777
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ROSENBROCK4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4934
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7192
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3300
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ROSENBROCK8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+29583
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+49696
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10907
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ROSENBCROK16
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+160349
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+160538(0.60)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+38315
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SHEKEL5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4389(0.97)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4266
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2839(0.83)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SHEKEL7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3905
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3685
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2668
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SHEKEL10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4049
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3548
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2629
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+TEST2N4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2785
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2275
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2221
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+TEST2N5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4481
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3170
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3122
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+TEST2N6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6852
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4286
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4296
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+TEST2N7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11971
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5701
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6267
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SINU4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2322
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1987
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1755
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SINU8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9990
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6156
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5113
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SINU16
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6892
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3628(0.97)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+16905
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SINU32
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7235(0.80)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7438(0.83)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7218
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+TEST30N3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1033
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1098
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+951
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+TEST30N4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1355
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1444
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1285
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+TOTAL
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+432610(0.98)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+321166(0.96)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+224567(0.99)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
 
 \end_layout
 
@@ -2461,6 +4454,657 @@ The experiments of this research work was performed at the high performance
  with the project "Educational Laboratory equipment of TEI of Epirus" with
  MIS 5007094 funded by the Operational Programme "Epirus" 2014-2020, by
  ERDF and national finds.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_physics1"
+literal "false"
+
+\end_inset
+
+Z.A.
+ Kudyshev, A.V.
+ Kildishev, V.M.
+ Shalaev and A.
+ Boltasseva, Machine learning–assisted global optimization of photonic devices,
+ Nanophotonics 
+\series bold
+10
+\series default
+, pp.
+ 371-383, 2021.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_physics2"
+literal "false"
+
+\end_inset
+
+X.L.
+ Ding, Z.Y.
+ Li, J.H.
+ Meng, Y.X.
+ Zhao and G.H.
+ Sheng, Density-functional global optimization of 
+\begin_inset Formula $\left(\mbox{LA}_{2}\mbox{O}_{3}\right)_{n}$
+\end_inset
+
+ clusters , J.
+ Chem.
+ Phys.
+ 
+\series bold
+137
+\series default
+, 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_physics3"
+literal "false"
+
+\end_inset
+
+S.
+ Morita and N.
+ Naoki, Global optimization of tensor renormalization group using the corner
+ transfer matrix, Phys.
+ Rev.
+ B 
+\series bold
+103
+\series default
+, 2021.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_physics4"
+literal "false"
+
+\end_inset
+
+S.
+ Heiles and R.L.
+ Johnston, Global optimization of clusters using electronic structure methods,
+ Int.
+ J.
+ Quantum Chem.
+ 
+\series bold
+113
+\series default
+, pp.
+ 2091-2109, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_chem1"
+literal "false"
+
+\end_inset
+
+Y.
+ Yang, T.
+ Pan and J.
+ Zhang, Global Optimization of Norris Derivative Filtering with Application
+ for Near-Infrared Analysis of Serum Urea Nitrogen, American Journal of
+ Analytical Chemistry 
+\series bold
+10
+\series default
+, pp.
+ 143-152, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_chem2"
+literal "false"
+
+\end_inset
+
+C.
+ Grebner, J.
+ Becker, D.
+ Weber and B.
+ Engels, Tabu search based global optimization algorithms for problems in
+ computational chemistry, J Cheminform 
+\series bold
+4
+\series default
+, pp.
+ 10, 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_chem3"
+literal "false"
+
+\end_inset
+
+M.
+ Dittner, J.
+ Müller, H.M.
+ Aktulga and B.J.
+ Hartke, Efficient global optimization of reactive force-field parameters,
+ Comput.
+ Chem.
+ 
+\series bold
+36
+\series default
+, pp.
+ 1550–1561, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_econ1"
+literal "false"
+
+\end_inset
+
+W.
+ Zhao, L.
+ Wang and Z.
+ Zhang, Supply-Demand-Based Optimization: A Novel Economics-Inspired Algorithm
+ for Global Optimization, IEEE Access 
+\series bold
+7
+\series default
+, pp.
+ 73182-73206, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_econ2"
+literal "false"
+
+\end_inset
+
+S.K.
+ Mishra, Global Optimization of Some Difficult Benchmark Functions by Host-Paras
+ite Co-Evolutionary Algorithm, Economics Bulletin 
+\series bold
+33
+\series default
+, pp.
+ 1-18, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-16"
+literal "true"
+
+\end_inset
+
+H.A.
+ Bremermann, A method for unconstrained global optimization, Mathematical
+ Biosciences 
+\series bold
+9
+\series default
+, pp.
+ 1-15, 1970.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-17"
+literal "true"
+
+\end_inset
+
+R.A.
+ Jarvis, Adaptive global search by the process of competitive evolution,
+ IEEE Trans.
+ on Syst., Man and Cybergenetics 
+\series bold
+75
+\series default
+, pp.
+ 297-311, 1975.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-18"
+literal "true"
+
+\end_inset
+
+W.L.
+ Price, Global Optimization by Controlled Random Search, Computer Journal
+ 
+\series bold
+20
+\series default
+, pp.
+ 367-370, 1977.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-19"
+literal "true"
+
+\end_inset
+
+S.
+ Kirkpatrick, C.D.
+ Gelatt, M.P.
+ Vecchi, Optimization by simulated annealing, Science 
+\series bold
+220
+\series default
+, pp.
+ 671-680, 1983.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-20"
+literal "true"
+
+\end_inset
+
+P.
+ J.
+ M.
+ van Laarhoven, E.
+ H.
+ L.
+ Aarts, Simulated Annealing: Theory and Applications, 1987, D.
+ Riedel, Boston.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-21-1"
+literal "true"
+
+\end_inset
+
+A.
+ Corana, M.
+ Marchesi, C.
+ Martini, S.
+ Ridella, Minimizing Multimodal Functions of Continuous Variables with the
+ Simulated Annealing Algorithm, ACM Transactions on Mathematical Software
+ 
+\series bold
+13
+\series default
+, pp.
+ 262-280, 1987.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-22"
+literal "true"
+
+\end_inset
+
+W.L.
+ Goffe, G.D.
+ Ferrier, J.
+ Rogers, Global Optimization of Statistical Functions with Simulated Annealing,
+ J.
+ Econometrics 
+\series bold
+60
+\series default
+, pp.
+ 65-100, 1994.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-23"
+literal "true"
+
+\end_inset
+
+D.
+ Goldberg, Genetic Algorithms in Search, Optimization and Machine Learning,
+ Addison-Wesley Publishing Company, Reading, Massachussets, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-6"
+literal "true"
+
+\end_inset
+
+Z.
+ Michaelewicz, Genetic Algorithms + Data Structures = Evolution Programs.
+ Springer - Verlag, Berlin, 1996.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "bee1"
+literal "false"
+
+\end_inset
+
+B.
+ Akay and D.
+ Karaboga, A modified Artificial Bee Colony algorithm for real-parameter
+ optimization, Information Sciences 
+\series bold
+192
+\series default
+, pp.
+ 120-142, 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "bee2"
+literal "false"
+
+\end_inset
+
+G.
+ Zhu and S.
+ Kwong, Gbest-guided artificial bee colony algorithm for numerical function
+ optimization, Applied Mathematics and Computation 
+\series bold
+217
+\series default
+, pp.
+ 3166-3173, 2010.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "aco"
+literal "false"
+
+\end_inset
+
+M.
+ Dorigo, M.
+ Birattari and T.
+ Stutzle, Ant colony optimization, IEEE Computational Intelligence Magazine
+ 
+\series bold
+1
+\series default
+, pp.
+ 28-39, 2006.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-24"
+literal "true"
+
+\end_inset
+
+R.
+ Storn, K.
+ Price, Differential Evolution - A Simple and Efficient Heuristic for Global
+ Optimization over Continuous Spaces, Journal of Global Optimization 
+\series bold
+11
+\series default
+, pp.
+ 341-359, 1997.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-25"
+literal "true"
+
+\end_inset
+
+J.
+ Kennedy, R.C.
+ Everhart, Particle Swarm Optimization.
+ In Proceedings of the 1995 IEEE International Conference on Neural Networks,
+ Vol.
+ 4, pp.
+ 1942-1948, IEEE Press, 1995.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gpu1"
+literal "false"
+
+\end_inset
+
+Y.
+ Zhou and Y.
+ Tan, GPU-based parallel particle swarm optimization, In: 2009 IEEE Congress
+ on Evolutionary Computation, pp.
+ 1493-1500, 2009.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gpu2"
+literal "false"
+
+\end_inset
+
+L.
+ Dawson and I.
+ Stewart, Improving Ant Colony Optimization performance on the GPU using
+ CUDA, In: 2013 IEEE Congress on Evolutionary Computation, pp.
+ 1901-1908, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gpu3"
+literal "false"
+
+\end_inset
+
+Barkalov, K., Gergel, V.
+ Parallel global optimization on GPU, J Glob Optim 
+\series bold
+66
+\series default
+, pp.
+ 3–20, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_review1"
+literal "false"
+
+\end_inset
+
+Z.
+ Wu, N.
+ Cui, L.
+ Zhao, L.
+ Han, X.
+ Hu, H.
+ Cai, D.
+ Gong, L. Xing, X.
+ Chen, B. Zhu, M. lv, S. Zhu, Q. Liu, Estimation of maize evapotranspiration
+ in semi-humid regions of Northern China Using Penman-Monteith model and
+ segmentally optimized Jarvis model, Journal of Hydrology 
+\series bold
+22
+\series default
+, pp 127483, 2022.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_review2"
+literal "false"
+
+\end_inset
+
+E.
+ Tlelo-Cuautle,  A.M.
+ González-Zapata,  J.D.
+ Díaz-Muñoz,  L.G.
+ de la Fraga and I.
+ Cruz-Vega, Optimization of fractional-order chaotic cellular neural networks
+ by metaheuristics, The European Physical Journal Special Topics, 2022.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_review3"
+literal "false"
+
+\end_inset
+
+G.
+ Sun, C.
+ Li and L.
+ Deng, An adaptive regeneration framework based on search space adjustment
+ for differential evolution, Neural Computing and Applications 
+\series bold
+33
+\series default
+, pp.
+ 9503–9519, 2021
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_review4"
+literal "false"
+
+\end_inset
+
+P.
+ Civiciogluan and E.
+ Besdok, Bernstain-search differential evolution algorithm for numerical
+ function optimization, Expert Systems with Applications 
+\series bold
+138
+\series default
+, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_review5"
+literal "false"
+
+\end_inset
+
+I.M.Ali , D.
+ Essam and K.
+ Kasmarik, A novel design of differential evolution for solving discrete
+ traveling salesman problems, Swarm and Evolutionary Computation 
+\series bold
+52
+\series default
+, 2020.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_review6"
+literal "false"
+
+\end_inset
+
+J.
+ Liang, K.
+ Qiao, K.
+ Yu, S.Ge ,B.
+ Qu, R.
+ Xu and K.
+ Li, Parameters estimation of solar photovoltaic models via a self-adaptive
+ ensemble-based differential evolution, Solar Energy 
+\series bold
+207
+\series default
+, pp.
+ 336-346, 2020.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_review7"
+literal "false"
+
+\end_inset
+
+L.
+ Peng, S.
+ Liu, R.
+ Liu and Lin Wang, Effective long short-term memory with differential evolution
+ algorithm for electricity price prediction, Energy 
+\series bold
+162
+\series default
+, pp.
+ 1301-1314, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_review8"
+literal "false"
+
+\end_inset
+
+N.
+ Awad and N.
+ Mallik and F.
+ Hutter, Differential Evolution for Neural Architecture Search, In Proceedings
+ of the 1st workshop on neural architecture search, 2020.
 \end_layout
 
 \begin_layout Bibliography
