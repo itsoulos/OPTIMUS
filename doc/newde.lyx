@@ -90,7 +90,17 @@ Department of Informatics and Telecommunications, University of Ioannina,
 \end_layout
 
 \begin_layout Abstract
-Write some abstract here
+Differential Evolution (DE) is a global optimization method used in various
+ continuous problems but it can be applied also in problems that are not
+ even continuous, are noisy and changed over time.
+ The DE method maintains a set of candidate solutions that repeatedly replaced
+ by new solutions produced with combinations of the previous solutions.
+ This article proposes two major modifications for the DE method designed
+ to improve the speed of the algorithm without sacrificing the efficiency
+ of the method.
+ The proposed method is tested on a series of well known optimization problems
+ from the relevant literature and the results are compared against the original
+ method.
 \end_layout
 
 \begin_layout Section
@@ -179,7 +189,7 @@ literal "true"
 
 \end_inset
 
-, Completive Evolution 
+, Competitive Evolution 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "key-17"
@@ -254,9 +264,15 @@ literal "false"
 \end_inset
 
 .
-
-\series bold
- The method of Differential Evolution is modified here ....
+ This work introduces two major modifications for the Differential Evolution
+ (DE) method, that aim to speed up the algorithm and to reduce the total
+ number of function evaluations required by the method.
+ The DE method initially creates a population of candidate solutions and
+ through a series of iterations creates new solutions by combining the previous
+ ones.
+ The method does not require any prior knowledge of the derivative and is
+ therefore quite fast and has low memory requirements.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -344,7 +360,7 @@ literal "false"
 \end_inset
 
 , differential evolution is used for the prediction of electricity prices.
- Also, differential evolution was also incroporated in neural architecture
+ Also, differential evolution was also incorporated in neural architecture
  search 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -358,34 +374,446 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
+The rest of this article is organized as follows: in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Modifications"
+plural "false"
+caps "false"
+noprefix "false"
 
-\series bold
-The rest of this article is organized as follows....
+\end_inset
+
+ the base DE algorithm as well as the proposed modifications are presented
+ clearly, in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Experiments"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ the test functions used in the experiments are presented accompanied with
+ the experimental results and finally in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Conclusions"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ some conclusions are presented.
 \end_layout
 
 \begin_layout Section
 Modifications 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Modifications"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This section starts with the detailed description of the DE method and continues
+ with the modifications suggested in this article.
+ The first modification is a new stopping rule which measures the difference
+ of the mean of function values between the iterations of the algorithm
+ and the second modification suggests a new scheme for a critical parameter
+ of the DE algorithm called Differential Weight.
 \end_layout
 
 \begin_layout Subsection
 The base algorithm 
 \end_layout
 
+\begin_layout Standard
+The base DE algorithm has the steps described below
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ the population size 
+\begin_inset Formula $\mbox{NP}\ge$
+\end_inset
+
+4, usually 
+\begin_inset Formula $\mbox{NP}=10n$
+\end_inset
+
+, where 
+\begin_inset Formula $n$
+\end_inset
+
+ is the dimension of the input problem.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ the crossover probability 
+\begin_inset Formula $\mbox{CR}\in[0,1]$
+\end_inset
+
+.
+ A typical value for this parameter is 0.9
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ the differential weight 
+\begin_inset Formula $F\in[0,2].$
+\end_inset
+
+ A typical value for this parameter is 0.8
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initialize
+\series default
+ all members of the population in the search space.
+ The members of the population are called agents.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Until
+\series default
+ some stopping criterion is met repeat
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1\ldots\mbox{NP}\ $
+\end_inset
+
+
+\series bold
+do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $x$
+\end_inset
+
+ as the agent 
+\begin_inset Formula $i$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Pick
+\series default
+ randomly three agents 
+\begin_inset Formula $a,b,c$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Pick
+\series default
+ a random index 
+\begin_inset Formula $R\in\left\{ 1,\ldots,n\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Compute
+\series default
+ the trial vector 
+\begin_inset Formula $y=\left[y_{1,}y_{2},\ldots,y_{n}\right]$
+\end_inset
+
+ as follows
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $j=1,\ldots,n$
+\end_inset
+
+ 
+\series bold
+do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $r_{i}\in[0,1]$
+\end_inset
+
+ a random number.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+If
+\series default
+ 
+\begin_inset Formula $r_{j}<\text{\mbox{CR} }$
+\end_inset
+
+
+\series bold
+or
+\series default
+ 
+\begin_inset Formula $j=R$
+\end_inset
+
+ 
+\series bold
+then
+\series default
+ 
+\begin_inset Formula $y_{j}=a_{j}+F\times\left(b_{j}-c_{j}\right)$
+\end_inset
+
+ 
+\series bold
+else
+\series default
+ 
+\begin_inset Formula $y_{j}=x_{j}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+If 
+\begin_inset Formula $f\left(y\right)\le f\left(x\right)$
+\end_inset
+
+ then 
+\begin_inset Formula $x=y$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Return
+\series default
+ the agent 
+\begin_inset Formula $x_{\mbox{best}}$
+\end_inset
+
+ in the population with the lower function value 
+\begin_inset Formula $f\left(x_{\mbox{best}}\right)$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Subsection
 The new termination rule 
 \end_layout
 
+\begin_layout Standard
+Typically the DE method is terminated when a predefined number of iterations
+ is reached.
+ This can be extremely inefficient in some problems and in others it can
+ lead to premature termination, ie termination before the total minimum
+ is found.
+ In the work of Ali et al 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ali_de"
+literal "false"
+
+\end_inset
+
+ a different termination rule is proposed ie.
+ terminate when 
+\begin_inset Formula 
+\begin{equation}
+f_{\mbox{max}}-f_{\mbox{min}}\le\epsilon\label{eq:termination_ali}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $f_{\mbox{max}}$
+\end_inset
+
+ is the function value of the worst agent in the population, 
+\begin_inset Formula $f_{\mbox{min}}$
+\end_inset
+
+ is the function value of the best agent and 
+\begin_inset Formula $\epsilon $
+\end_inset
+
+is a small positive number.
+\end_layout
+
+\begin_layout Standard
+In the proposed termination rule, the average function value of the population
+ is calculated in each iteration.
+ If this value does not change significantly for a repetitive number of
+ iterations, then it is very likely that the method may not discover a new
+ global minimum and should therefore be terminated.
+ Hence in every generation 
+\begin_inset Formula $t$
+\end_inset
+
+ we measure the quantity: 
+\begin_inset Formula 
+\begin{equation}
+\text{\ensuremath{\delta^{(t)}=}}\left|\sum_{i=1}^{\mbox{NP}}\left|f_{i}^{(t)}\right|-\sum_{i=1}^{\mbox{NP}}\left|f_{i}^{(t-1)}\right|\right|
+\end{equation}
+
+\end_inset
+
+and the termination rule is defined as: 
+\series bold
+terminate
+\series default
+ if 
+\begin_inset Formula $\delta^{(t)}\le\epsilon$
+\end_inset
+
+ for a predefined number of 
+\begin_inset Formula $M$
+\end_inset
+
+ generations.
+ 
+\end_layout
+
 \begin_layout Subsection
-The new crossover scheme
+The new differential weight
+\end_layout
+
+\begin_layout Standard
+The differential weight initially proposed in the DE algorithm was a static
+ value, which means that some tuning is required in order to discover the
+ global minimum in every optimization function.
+ Ali et al 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ali_de"
+literal "false"
+
+\end_inset
+
+ proposed an adaptation mechanism for this parameter in order that the algorithm
+ should search in larger spaces at the the first generations and to become
+ more focused at latter generations.
+ The mechanism proposed is expressed as:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+F=\left\{ \begin{array}{ccccc}
+\max\left(l_{\mbox{min}},1-\left|\frac{f_{\mbox{max}}}{f_{\mbox{min}}}\right|\right) & , & \mbox{if} & \left|\frac{f_{\mbox{max}}}{f_{\mbox{min}}}\right|\le1\\
+\max\left(l_{\mbox{min}},1-\left|\frac{f_{\mbox{min}}}{f_{\mbox{max}}}\right|\right) & , & \mbox{otherwise}
+\end{array}\right.\label{eq:ali_weight}
+\end{equation}
+
+\end_inset
+
+The current work proposes a stochastic mechanism similar to the crossover
+ operation of the Genetic algorithms.
+ The proposed scheme is expressed as:
+\begin_inset Formula 
+\begin{equation}
+F=-\frac{1}{2}+2\times R\label{eq:proposedF}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $R\in[0,1]$
+\end_inset
+
+ is a random number.
 \end_layout
 
 \begin_layout Section
 Experiments 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Experiments"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-In order to measure the effectiveness of the proposed approach we utilize
- several benchmark functions from the relevant literature 
+In order to determine the effectiveness of the proposed modifications, a
+ series of experiments were performed on known functions from the relevant
+ literature 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Ali1,Floudas1"
@@ -394,10 +822,38 @@ literal "true"
 \end_inset
 
 .
+ The experiments were divided into two major categories.
+ In the first category all the schemes for the Differential Weight were
+ tested using the termination rule of Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:termination_ali"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and in the second category the same schemes were tested using the proposed
+ termination criterion.
+ Also, after every successful termination the local optimization method
+ BFGS 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Powell"
+literal "false"
+
+\end_inset
+
+ was applied in order to get even closer to the global minimum.
 \end_layout
 
 \begin_layout Subsection
 Test functions
+\end_layout
+
+\begin_layout Standard
+The description of the test functions used in the experiments has as follows:
 \end_layout
 
 \begin_layout Itemize
@@ -1126,10 +1582,308 @@ Experimental results
 \end_layout
 
 \begin_layout Standard
+All the experiments were conducted using different seed for the random generator
+ each time and averages were taken.
+ The code has been implemented in ANSI C++ and the random generator used
+ was the function drand48() of the C programming languages.
+ The execution environment was an Intel Xeon E5-2630 multi core machine.
+ The parameters used in the experiments are shown in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Experimental-parameters."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The experiments where the stopping rule of Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:termination_ali"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ was used are outlined in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:ExperimentsAli"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and the experiments with the proposed stopping rule are listed in Table
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:ExperimentsAli-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The numbers in cells represent average function calls.
+ The fraction in parentheses stands for the fraction of runs where the global
+ optimum was found.
+ If this number is missing then the global minimum was discovered in every
+ independent run (100% success).
+ The column STATIC represents the static value for the differential weight
+ 
+\begin_inset Formula $(F=0.8)$
+\end_inset
+
+, the column ALI stands for the mechanism given in the Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ali_weight"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and lastly the column PROPOSED stands for the proposed scheme given in
+ the Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:proposedF"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+From the experiments performed we observe that the two proposed variations
+ drastically reduce the required number of function calls.
+ Also, the proposed changes do not seem to affect the average performance
+ of the method, as it remains high in all cases.
+ The effect of the proposed scheme for the differential weight is presented
+ graphically in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:The-effect-of"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, where we plot the average function calls for the functions ROSENBROCK4,
+ ROSENBROCK8 and ROSENBROCK16 using the three schemes of the differential
+ weight.
+ Also, in the plot of Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Plot2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the average calls for the same functions are plotted using both the proposed
+ scheme for the differential weight and the proposed termination rule.
+ It is evident the the combination of both modifications reduced even more
+ the average number of function calls required to locate the global minimum
+ of the test functions.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float table
 wide false
 sideways false
 status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Experimental parameters.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Experimental-parameters."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PARAMETER
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+VALUE
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mbox{NP}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10n$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $F$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.8
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+CR
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.9
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $M$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\epsilon$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10^{-4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -4428,10 +5182,121 @@ TOTAL
 \end_inset
 
 
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The effect of the usage of the new scheme for the differential weight.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:The-effect-of"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename plot_weight_de.eps
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Plot of function calls using the two modifications.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Plot2"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename plot_de_termination.eps
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
 Conclusions
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Conclusions"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this text, two main additions to the DE method are presented.
+ In the first an asymptotic termination rule was introduced and used successfull
+y even in multidimensional problems.
+ This rule is based on the observation that from one point onwards the average
+ of the functional values of the agents does not change.
+ This means that either the algorithm has already found the global minimum
+ or its further continuation will have no meaning.
+ 
+\end_layout
+
+\begin_layout Standard
+In the second case, a stochastic scheme was used to produce the differential
+ weight.
+ This scheme helped the algorithm to better explore the search space of
+ the objective function without the need for more calls to the objective
+ function.
+ 
 \end_layout
 
 \begin_layout Subsection*
@@ -4439,7 +5304,7 @@ Compliance with Ethical Standards
 \end_layout
 
 \begin_layout Standard
-All authors declare that they have no has no conict of interest.
+All authors declare that they have no has no conflict of interest.
  
 \end_layout
 
@@ -4449,8 +5314,8 @@ Acknowledgments
 
 \begin_layout Standard
 The experiments of this research work was performed at the high performance
- computing system established at Knowledge and Intelligent Computing Lab-oratory
-, Dept of Informatics and Telecommunications, University of Ioannina, acquired
+ computing system established at Knowledge and Intelligent Computing Laboratory,
+ Dept of Informatics and Telecommunications, University of Ioannina, acquired
  with the project "Educational Laboratory equipment of TEI of Epirus" with
  MIS 5007094 funded by the Operational Programme "Epirus" 2014-2020, by
  ERDF and national finds.
@@ -5110,6 +5975,25 @@ N.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "ali_de"
+literal "false"
+
+\end_inset
+
+M.M.
+ Ali and A.
+ Törn, Population set-based global optimization algorithms: some modifications
+ and numerical studies, Computers & Operations Research 
+\series bold
+31
+\series default
+, pp.
+ 1703-1725, 2004.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "Ali1"
 literal "true"
 
@@ -5154,6 +6038,24 @@ s, S.
  Meyer, C.
  Schweiger, Handbook of Test Problems in Local and Global Optimization,
  Kluwer Academic Publishers, Dordrecht, 1999.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Powell"
+literal "true"
+
+\end_inset
+
+M.J.D Powell, A Tolerant Algorithm for Linearly Constrained Optimization Calculati
+ons, Mathematical Programming 
+\series bold
+45
+\series default
+, pp.
+ 547-566, 1989.
+ 
 \end_layout
 
 \begin_layout Bibliography
