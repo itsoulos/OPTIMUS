@@ -90,17 +90,21 @@ Department of Informatics and Telecommunications, University of Ioannina,
 \end_layout
 
 \begin_layout Abstract
-Differential Evolution (DE) is a global optimization method used in various
- continuous problems but it can be applied also in problems that are not
- even continuous, are noisy and changed over time.
- The DE method maintains a set of candidate solutions that repeatedly replaced
- by new solutions produced with combinations of the previous solutions.
- This article proposes two major modifications for the DE method designed
- to improve the speed of the algorithm without sacrificing the efficiency
- of the method.
- The proposed method is tested on a series of well known optimization problems
- from the relevant literature and the results are compared against the original
- method.
+The Differential Evolution (DE) method is a stochastic method of global
+ optimization that has been widely used in continuous optimization problems
+ from various areas and can be applied to problems that even contain noise.
+ The present work proposes two variations for this method.
+ The first significantly improves the termination of the method by proposing
+ an asymptotic termination rule, which is based on the differentiation of
+ the average of the function values in the population of DE.
+ The second modification proposes a new scheme for a critical parameter
+ of the method, which scheme improves the method's ability to better explore
+ the search space of the objective function.
+ The proposed variations have been tested on a number of problems from the
+ current literature and from the experimental results it appears that the
+ proposed modifications render the method quite robust and faster even in
+ large-scale problems.
+ 
 \end_layout
 
 \begin_layout Section
@@ -221,6 +225,14 @@ literal "true"
 
 \end_inset
 
+, Bee optimization 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "bee1,bee2"
+literal "false"
+
+\end_inset
+
 , Differential Evolution 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -237,15 +249,7 @@ literal "true"
 
 \end_inset
 
-, Bee optimization 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "bee1,bee2"
-literal "false"
-
-\end_inset
-
-, Ant Colony Optimization 
+, , Ant Colony Optimization 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "aco"
@@ -709,7 +713,7 @@ where
 \end_inset
 
  is the function value of the best agent and 
-\begin_inset Formula $\epsilon $
+\begin_inset Formula $\epsilon$
 \end_inset
 
 is a small positive number.
@@ -797,6 +801,11 @@ where
 \end_inset
 
  is a random number.
+ The proposed scheme, as with the randomness introduced by the method DE
+ will be able to better explore the search space of the objective function
+ and find with greater accuracy and speed the global minimum.
+ In addition, this scheme has been used successfully in Genetic Algorithms.
+ 
 \end_layout
 
 \begin_layout Section
@@ -822,7 +831,24 @@ literal "true"
 \end_inset
 
 .
- The experiments were divided into two major categories.
+ The choice of these functions was made as they are widely used in the literatur
+e by many researchers 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "testfunctions1,testfunctions2,testfunctions3,testfunctions4"
+literal "false"
+
+\end_inset
+
+, they have quite a complex structure and in many cases have a large number
+ of dimensions that make them ideal for study and testing.
+
+\series bold
+ 
+\end_layout
+
+\begin_layout Standard
+The experiments were divided into two major categories.
  In the first category all the schemes for the Differential Weight were
  tested using the termination rule of Equation 
 \begin_inset CommandInset ref
@@ -861,8 +887,7 @@ The description of the test functions used in the experiments has as follows:
 \series bold
 Bf1
 \series default
- function.
- The function Bohachevsky 1 is given by the equation
+ (Bohachevsky 1) function defined as:
 \end_layout
 
 \begin_layout Standard
@@ -886,8 +911,7 @@ with
 \series bold
 Bf2
 \series default
- function.
- The function Bohachevsky 2 is given by the equation 
+ (Bohachevsky 2) function defined as: 
 \begin_inset Formula 
 \[
 f(x)=x_{1}^{2}+2x_{2}^{2}-\frac{3}{10}\cos\left(3\pi x_{1}\right)\cos\left(4\pi x_{2}\right)+\frac{3}{10}
@@ -940,13 +964,12 @@ f(x)=\sum_{i=1}^{n}x_{i}^{2}-\frac{1}{10}\sum_{i=1}^{n}\cos\left(5\pi x_{i}\righ
 
 \end_inset
 
-with 
+where 
 \begin_inset Formula $x\in[-1,1]^{n}$
 \end_inset
 
 .
- The value of the global minimum is -0.4 and in our experiments we have used
- 
+ For our experiments we used 
 \begin_inset Formula $n=4$
 \end_inset
 
@@ -965,10 +988,6 @@ Camel
 f(x)=4x_{1}^{2}-2.1x_{1}^{4}+\frac{1}{3}x_{1}^{6}+x_{1}x_{2}-4x_{2}^{2}+4x_{2}^{4},\quad x\in[-5,5]^{2}
 \]
 
-\end_inset
-
-The global minimum has the value of 
-\begin_inset Formula $f\left(x^{*}\right)=-1.0316$
 \end_inset
 
 
@@ -992,7 +1011,7 @@ with
 \begin_inset Formula $x\in[-100,100]^{2}.$
 \end_inset
 
- The value of the global minimum is -1.0
+ 
 \end_layout
 
 \begin_layout Itemize
@@ -1000,8 +1019,7 @@ with
 \series bold
 Exponential
 \series default
- function.
- The function is given by 
+ function, defined as: 
 \begin_inset Formula 
 \[
 f(x)=-\exp\left(-0.5\sum_{i=1}^{n}x_{i}^{2}\right),\quad-1\le x_{i}\le1
@@ -1137,7 +1155,6 @@ Hansen
 \end_inset
 
  .
- The global minimum of the function is -176.541793.
 \end_layout
 
 \begin_layout Itemize
@@ -1185,7 +1202,7 @@ p=\left(\begin{array}{ccc}
 
 \end_inset
 
-The value of global minimum is -3.862782.
+
 \end_layout
 
 \begin_layout Itemize
@@ -1232,7 +1249,7 @@ p=\left(\begin{array}{cccccc}
 
 \end_inset
 
-the value of global minimum is -3.322368.
+
 \end_layout
 
 \begin_layout Itemize
@@ -1564,17 +1581,16 @@ with
 \begin_inset Formula $x\in[-10,10]$
 \end_inset
 
-.
- The function has 
+, with 
 \begin_inset Formula $30^{n}$
 \end_inset
 
- local minima in the specified range and we used 
+ local minima in the searc space.
+ For our experiments we used 
 \begin_inset Formula $n=3,4$
 \end_inset
 
- in our experiments.
- The value of global minimum for this function is 0.0
+.
 \end_layout
 
 \begin_layout Subsection
@@ -1883,7 +1899,7 @@ CR
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -5188,10 +5204,6 @@ sideways false
 status collapsed
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -5213,8 +5225,8 @@ name "fig:The-effect-of"
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename plot_weight_de.eps
-	scale 60
+	filename image1.eps
+	scale 75
 
 \end_inset
 
@@ -5228,10 +5240,6 @@ name "fig:The-effect-of"
 wide false
 sideways false
 status open
-
-\begin_layout Plain Layout
-
-\end_layout
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -5255,8 +5263,8 @@ name "fig:Plot2"
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename plot_de_termination.eps
-	scale 60
+	filename image2.eps
+	scale 75
 
 \end_inset
 
@@ -5297,6 +5305,23 @@ In the second case, a stochastic scheme was used to produce the differential
  the objective function without the need for more calls to the objective
  function.
  
+\end_layout
+
+\begin_layout Standard
+The proposed modifications significantly speed up the original method in
+ terms of function calls in most cases.
+ Each of the proposed modifications can be used separately or together in
+ the DE method.
+ If used together there is a large reduction in the number of required function
+ calls that reaches up to 80% without problems in the reliability of the
+ method and its ability to successfully find the total minimum.
+ 
+\end_layout
+
+\begin_layout Standard
+The DE method can also be used in cases of optimization problems with constraint
+s as long as there is a change in the original problem so that the constraints
+ are included in the function with the usage for example Langrage multipliers.
 \end_layout
 
 \begin_layout Subsection*
@@ -6038,6 +6063,80 @@ s, S.
  Meyer, C.
  Schweiger, Handbook of Test Problems in Local and Global Optimization,
  Kluwer Academic Publishers, Dordrecht, 1999.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "testfunctions1"
+literal "false"
+
+\end_inset
+
+M.M.
+ Ali and P.
+ Kaelo, Improved particle swarm algorithms for global optimization, Applied
+ Mathematics and Computation 
+\series bold
+196
+\series default
+, pp.
+ 578-593, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "testfunctions2"
+literal "false"
+
+\end_inset
+
+H.
+ Koyuncu, R.
+ Ceylan, A PSO based approach: Scout particle swarm algorithm for continuous
+ global optimization problems, Journal of Computational Design and Engineering
+ 
+\series bold
+6
+\series default
+, pp.
+ 129–142, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "testfunctions3"
+literal "false"
+
+\end_inset
+
+Patrick Siarry, Gérard Berthiau, François Durdin, Jacques Haussy, ACM Transactio
+ns on Mathematical Software 
+\series bold
+23
+\series default
+, pp 209–228, 1997.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "testfunctions4"
+literal "false"
+
+\end_inset
+
+I.G.
+ Tsoulos, I.E.
+ Lagaris, GenMin: An enhanced genetic algorithm for global optimization,
+ Computer Physics Communications
+\series bold
+ 178, 
+\series default
+pp.
+ 843-851, 2008.
 \end_layout
 
 \begin_layout Bibliography
