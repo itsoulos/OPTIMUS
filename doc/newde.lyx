@@ -330,16 +330,6 @@ literal "false"
 \end_inset
 
  for optimizing numerical functions.
- Another interesting algorithm is a new design of differential evolution
- to solve the travel salesman problem 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "de_review5"
-literal "false"
-
-\end_inset
-
-.
  
 \end_layout
 
@@ -374,6 +364,40 @@ literal "false"
 \end_inset
 
 .
+ Also, the DE method has been applied with success to neural network training
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_neural1,de_neural2,de_neural3"
+literal "false"
+
+\end_inset
+
+, to the Traveling Salesman Problem 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_tsp,de_review5"
+literal "false"
+
+\end_inset
+
+, training of RBF neural networks 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rbf_de1,rbf_de2,rbf_de3"
+literal "false"
+
+\end_inset
+
+, optimization of the Lennard Jones potential 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lennardjones_de1,lennardjones_de2"
+literal "false"
+
+\end_inset
+
+ etc.
  
 \end_layout
 
@@ -438,13 +462,54 @@ The base algorithm
 \end_layout
 
 \begin_layout Standard
+The DE algorithm has been by various researchers in the recent literature
+ such as the Compact Differential Evolution 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "compact_de"
+literal "false"
 
-\series bold
-(edo na mpei discussion gia tin DE kathos kai sxetikes ergasies)
-\end_layout
+\end_inset
 
-\begin_layout Standard
-The base DE algorithm has the steps described below
+, a self adaptive DE 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "self_de"
+literal "false"
+
+\end_inset
+
+ where the critical parameters of the method are adapted from previous generatio
+ns, a fuzzy adaptive DE method 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "fuzzy_de"
+literal "false"
+
+\end_inset
+
+ where fuzzy login is employed to adapt the parameters of the method, parallel
+ Differential Evolution 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "parellel_de"
+literal "false"
+
+\end_inset
+
+ with a self adaptation mechanism for the critical parameters of the DE
+ method etc.
+ A survey of the recent advances in differential evolution can be found
+ in the work of Das et al 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "survey_de"
+literal "false"
+
+\end_inset
+
+.
+ The base DE algorithm has the steps described below
 \end_layout
 
 \begin_layout Enumerate
@@ -1721,13 +1786,31 @@ noprefix "false"
  It is evident the the combination of both modifications reduced even more
  the average number of function calls required to locate the global minimum
  of the test functions.
+ To show the effectiveness of the modifications in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Time-comparisons-for"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ are presented the total times for 30 executions on an I7 computer with
+ LINUX DEBIAN and with 16GB of memory.
+ The comparison was made between the initial method with the ALI termination
+ criterion, the proposed termination criterion (first modification) and
+ the proposed termination criterion together with the proposed weight scheme.
+ Obviously, the proposed modifications significantly reduce not only the
+ number of calls but also the required execution time.
+ 
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1906,7 +1989,7 @@ CR
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -3559,7 +3642,7 @@ TOTAL
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -5246,7 +5329,7 @@ name "fig:The-effect-of"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -5271,6 +5354,48 @@ name "fig:Plot2"
 \align center
 \begin_inset Graphics
 	filename image2.eps
+	scale 75
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Time comparisons for a variety of test functions.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Time-comparisons-for"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename time_comparison_de.eps
 	scale 75
 
 \end_inset
@@ -5945,24 +6070,6 @@ P.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
-key "de_review5"
-literal "false"
-
-\end_inset
-
-I.M.Ali , D.
- Essam and K.
- Kasmarik, A novel design of differential evolution for solving discrete
- traveling salesman problems, Swarm and Evolutionary Computation 
-\series bold
-52
-\series default
-, 2020.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
 key "de_review6"
 literal "false"
 
@@ -6016,6 +6123,309 @@ N.
  Mallik and F.
  Hutter, Differential Evolution for Neural Architecture Search, In Proceedings
  of the 1st workshop on neural architecture search, 2020.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_neural1"
+literal "false"
+
+\end_inset
+
+J.
+ Ilonen, J.K.
+ Kamarainen and J.
+ Lampinen, Differential Evolution Training Algorithm for Feed-Forward Neural
+ Networks, Neural Processing Letters 
+\series bold
+17
+\series default
+, pp.
+ 93–105, 2003.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_neural2"
+literal "false"
+
+\end_inset
+
+A.
+ Slowik, Application of an Adaptive Differential Evolution Algorithm With
+ Multiple Trial Vectors to Artificial Neural Network Training, IEEE Transactions
+ on Industrial Electronics 
+\series bold
+58
+\series default
+, pp.
+ 3160-3167, 2011.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_neural3"
+literal "false"
+
+\end_inset
+
+L.
+ Wang, Y.
+ Zeng and T.
+ Chen, Back propagation neural network with adaptive differential evolution
+ algorithm for time series forecasting, Expert Systems with Applications
+ 
+\series bold
+42
+\series default
+, pp.
+ 855-863, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_tsp"
+literal "false"
+
+\end_inset
+
+X.
+ Wang, G.
+ Xu, Hybrid Differential Evolution Algorithm for Traveling Salesman Problem,
+ Procedia Engineering 
+\series bold
+15
+\series default
+, pp.
+ 2716-2720, 2011.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_review5"
+literal "false"
+
+\end_inset
+
+I.M.Ali , D.
+ Essam and K.
+ Kasmarik, A novel design of differential evolution for solving discrete
+ traveling salesman problems, Swarm and Evolutionary Computation 
+\series bold
+52
+\series default
+, 2020.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbf_de1"
+literal "false"
+
+\end_inset
+
+J.
+ Liu and J.
+ Lampinen, A differential evolution based incremental training method for
+ RBF networks, In Proceedings of the 7th annual conference on Genetic and
+ evolutionary computation (GECCO '05), pp.
+ 881–888, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbf_de2"
+literal "false"
+
+\end_inset
+
+B.
+ O'Hora, J.
+ Perera and A.
+ Brabazon, Designing Radial Basis Function Networks for Classification Using
+ Differential Evolution, In: The 2006 IEEE International Joint Conference
+ on Neural Network Proceedings, pp.
+ 2932-2937, 2006.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbf_de3"
+literal "false"
+
+\end_inset
+
+N.
+ Naveen , V.
+ Ravi , C.
+ Raghavendra Rao and N.
+ Chauhan, Differential evolution trained radial basis function network:
+ application to bankruptcy prediction in banks, International Journal of
+ Bio-Inspired Computation 
+\series bold
+2
+\series default
+, pp.
+ 222-232, 2010.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "lennardjones_de1"
+literal "false"
+
+\end_inset
+
+Z.
+ Chen, X.
+ Jiang, J.
+ Li, S.
+ Li and L.
+ Wang, PDECO: Parallel differential evolution for clusters optimization,
+ J.
+ Comput.
+ Chem.
+ 
+\series bold
+34
+\series default
+, pp.
+ 1046-1059.
+ 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "lennardjones_de2"
+literal "false"
+
+\end_inset
+
+A.
+ Ghosh, R.
+ Mallipeddi, S.
+ Das and A.
+ K.
+ Das, A Switched Parameter Differential Evolution with Multi-donor Mutation
+ and Annealing Based Local Search for Optimization of Lennard-Jones Atomic
+ Clusters, In: 2018 IEEE Congress on Evolutionary Computation (CEC), pp.
+ 1-8, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "compact_de"
+literal "false"
+
+\end_inset
+
+E.
+ Mininno, F.
+ Neri, F.
+ Cupertino and D.
+ Naso, Compact Differential Evolution, IEEE Transactions on Evolutionary
+ Computation 
+\series bold
+15
+\series default
+, pp.
+ 32-54, 2011.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "self_de"
+literal "false"
+
+\end_inset
+
+A.
+ K.
+ Qin, V.
+ L.
+ Huang and P.
+ N.
+ Suganthan, Differential Evolution Algorithm With Strategy Adaptation for
+ Global Numerical Optimization, IEEE Transactions on Evolutionary Computation
+ 
+\series bold
+13
+\series default
+, pp.
+ 398-417, 2009.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "fuzzy_de"
+literal "false"
+
+\end_inset
+
+J.
+ Liu, J.
+ Lampinen, A Fuzzy Adaptive Differential Evolution Algorithm, Soft Comput
+ 
+\series bold
+9
+\series default
+, pp.
+ 448–462, 2005.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "parellel_de"
+literal "false"
+
+\end_inset
+
+H.
+ Wang, S.
+ Rahnamayan and Z.
+ Wu, Parallel differential evolution with self-adapting control parameters
+ and generalized opposition-based learning for solving high-dimensional
+ optimization problems, Journal of Parallel and Distributed Computing 
+\series bold
+73
+\series default
+, pp.
+ 62-73, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "survey_de"
+literal "false"
+
+\end_inset
+
+S.
+ Das, S.S.
+ Mullick and P.N.
+ Suganthan, Recent advances in differential evolution – An updated survey,
+ Swarm and Evolutionary Computation 
+\series bold
+27
+\series default
+, pp.
+ 1-30, 2016.
 \end_layout
 
 \begin_layout Bibliography
