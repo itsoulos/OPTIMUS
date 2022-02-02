@@ -21,6 +21,7 @@ else
 		(cd Multistart; qmake; make clean; make install)
 		(cd Genetic; qmake; make clean; make install)
 		(cd Pso; qmake; make clean; make install)
+		(cd iPso; qmake; make clean; make install)
 		(cd Minfinder; qmake; make clean; make install)
 		(cd bin; qmake ; make clean; make)
 	else

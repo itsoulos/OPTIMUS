@@ -16,6 +16,7 @@ else
 		(cd IntervalMethod; qmake; make clean)
 		(cd Genetic; qmake; make clean)
 		(cd Pso; qmake; make clean)
+		(cd iPso; qmake; make clean)
 		(cd DE; qmake ; make clean )
 		(cd Minfinder; qmake; make clean)
 		(cd bin; qmake ; make clean)
