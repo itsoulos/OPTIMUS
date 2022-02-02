@@ -23,16 +23,19 @@ Karvounis}
 Greece}
 \maketitle
 \begin{abstract}
-Differential Evolution (DE) is a global optimization method used in
-various continuous problems but it can be applied also in problems
-that are not even continuous, are noisy and changed over time. The
-DE method maintains a set of candidate solutions that repeatedly replaced
-by new solutions produced with combinations of the previous solutions.
-This article proposes two major modifications for the DE method designed
-to improve the speed of the algorithm without sacrificing the efficiency
-of the method. The proposed method is tested on a series of well known
-optimization problems from the relevant literature and the results
-are compared against the original method.
+The Differential Evolution (DE) method is a stochastic method of global
+optimization that has been widely used in continuous optimization
+problems from various areas and can be applied to problems that even
+contain noise. The present work proposes two variations for this method.
+The first significantly improves the termination of the method by
+proposing an asymptotic termination rule, which is based on the differentiation
+of the average of the function values in the population of DE. The
+second modification proposes a new scheme for a critical parameter
+of the method, which scheme improves the method's ability to better
+explore the search space of the objective function. The proposed variations
+have been tested on a number of problems from the current literature
+and from the experimental results it appears that the proposed modifications
+render the method quite robust and faster even in large-scale problems. 
 \end{abstract}
 
 \section{Introduction }
@@ -56,18 +59,18 @@ etc. There are a variety of proposed methods to handle the global
 minimum problem such as\textbf{ }Adaptive Random Search \cite{key-16},
 Competitive Evolution \cite{key-17}, Controlled Random Search \cite{key-18},
 Simulated Annealing \cite{key-19,key-20,key-22}, Genetic Algorithms
-\cite{key-23,key-6}, Differential Evolution \cite{aco}, Particle
-Swarm Optimization \cite{key-25}, Bee optimization \cite{bee1,bee2},
-Ant Colony Optimization \cite{aco} etc. Recently many works have
-been appeared that take advantage of the GPU processing units to implement
-parallel global optimization methods \cite{gpu1,gpu2,gpu3}. This
-work introduces two major modifications for the Differential Evolution
-(DE) method, that aim to speed up the algorithm and to reduce the
-total number of function evaluations required by the method. The DE
-method initially creates a population of candidate solutions and through
-a series of iterations creates new solutions by combining the previous
-ones. The method does not require any prior knowledge of the derivative
-and is therefore quite fast and has low memory requirements. 
+\cite{key-23,key-6}, Bee optimization \cite{bee1,bee2}, Ant Colony
+Optimization \cite{aco}, Particle Swarm Optimization \cite{key-25},
+Differential Evolution \cite{de_main_paper} etc. Recently many works
+have been appeared that take advantage of the GPU processing units
+to implement parallel global optimization methods \cite{gpu1,gpu2,gpu3}.
+This work introduces two major modifications for the Differential
+Evolution (DE) method, that aim to speed up the algorithm and to reduce
+the total number of function evaluations required by the method. The
+DE method initially creates a population of candidate solutions and
+through a series of iterations creates new solutions by combining
+the previous ones. The method does not require any prior knowledge
+of the derivative and is therefore quite fast and has low memory requirements. 
 
 After a literature review it was found that differential evolution
 is used in several areas and many modifications of the original algorithm
@@ -87,8 +90,7 @@ different variants of different evolution to address the problems
 of early convergence and population stability faced by different calculus.
 Also another interesting variation of the method is the Bernstain
 Search Differential Evolution Algorithm \cite{de_review4} for optimizing
-numerical functions. Another interesting algorithm is a new design
-of differential evolution to solve the travel salesman problem \cite{de_review5}. 
+numerical functions. 
 
 The differential evolution method was applied also to energy science.
 Specifically, the article of Liang et al \cite{de_review6} evaluates
@@ -96,7 +98,12 @@ the parameters of solar photovoltaic models through a self-adjusting
 differential evolution. Similarly, in the study of Peng et al \cite{de_review7},
 differential evolution is used for the prediction of electricity prices.
 Also, differential evolution was also incorporated in neural architecture
-search \cite{de_review8}. 
+search \cite{de_review8}. Also, the DE method has been applied with
+success to neural network training \cite{de_neural1,de_neural2,de_neural3},
+to the Traveling Salesman Problem \cite{de_tsp,de_review5}, training
+of RBF neural networks \cite{rbf_de1,rbf_de2,rbf_de3}, optimization
+of the Lennard Jones potential \cite{lennardjones_de1,lennardjones_de2}
+etc. 
 
 The rest of this article is organized as follows: in section \ref{sec:Modifications}
 the base DE algorithm as well as the proposed modifications are presented
@@ -116,7 +123,16 @@ of the DE algorithm called Differential Weight.
 
 \subsection{The base algorithm }
 
-The base DE algorithm has the steps described below
+The DE algorithm has been by various researchers in the recent literature
+such as the Compact Differential Evolution \cite{compact_de}, a self
+adaptive DE \cite{self_de} where the critical parameters of the method
+are adapted from previous generations, a fuzzy adaptive DE method
+\cite{fuzzy_de} where fuzzy login is employed to adapt the parameters
+of the method, parallel Differential Evolution \cite{parellel_de}
+with a self adaptation mechanism for the critical parameters of the
+DE method etc. A survey of the recent advances in differential evolution
+can be found in the work of Das et al \cite{survey_de}. The base
+DE algorithm has the steps described below
 \begin{enumerate}
 \item \textbf{Set} the population size $\mbox{NP}\ge$4, usually $\mbox{NP}=10n$,
 where $n$ is the dimension of the input problem.
@@ -162,7 +178,7 @@ f_{\mbox{max}}-f_{\mbox{min}}\le\epsilon\label{eq:termination_ali}
 \end{equation}
 where $f_{\mbox{max}}$ is the function value of the worst agent in
 the population, $f_{\mbox{min}}$ is the function value of the best
-agent and $\epsilon $is a small positive number.
+agent and $\epsilon$is a small positive number.
 
 In the proposed termination rule, the average function value of the
 population is calculated in each iteration. If this value does not
@@ -198,36 +214,43 @@ as:
 \begin{equation}
 F=-\frac{1}{2}+2\times R\label{eq:proposedF}
 \end{equation}
-where $R\in[0,1]$ is a random number.
+where $R\in[0,1]$ is a random number. The proposed scheme, as with
+the randomness introduced by the method DE will be able to better
+explore the search space of the objective function and find with greater
+accuracy and speed the global minimum. In addition, this scheme has
+been used successfully in Genetic Algorithms. 
 
 \section{Experiments \label{sec:Experiments}}
 
 In order to determine the effectiveness of the proposed modifications,
 a series of experiments were performed on known functions from the
-relevant literature \cite{Ali1,Floudas1}. The experiments were divided
-into two major categories. In the first category all the schemes for
-the Differential Weight were tested using the termination rule of
-Equation \ref{eq:termination_ali} and in the second category the
-same schemes were tested using the proposed termination criterion.
-Also, after every successful termination the local optimization method
-BFGS \cite{Powell} was applied in order to get even closer to the
-global minimum.
+relevant literature \cite{Ali1,Floudas1}. The choice of these functions
+was made as they are widely used in the literature by many researchers
+\cite{testfunctions1,testfunctions2,testfunctions3,testfunctions4},
+they have quite a complex structure and in many cases have a large
+number of dimensions that make them ideal for study and testing.\textbf{ }
+
+The experiments were divided into two major categories. In the first
+category all the schemes for the Differential Weight were tested using
+the termination rule of Equation \ref{eq:termination_ali} and in
+the second category the same schemes were tested using the proposed
+termination criterion. Also, after every successful termination the
+local optimization method BFGS \cite{Powell} was applied in order
+to get even closer to the global minimum.
 
 \subsection{Test functions}
 
 The description of the test functions used in the experiments has
 as follows:
 \begin{itemize}
-\item \textbf{Bf1} function. The function Bohachevsky 1 is given by the
-equation
+\item \textbf{Bf1} (Bohachevsky 1) function defined as:
 \end{itemize}
 \[
 f(x)=x_{1}^{2}+2x_{2}^{2}-\frac{3}{10}\cos\left(3\pi x_{1}\right)-\frac{4}{10}\cos\left(4\pi x_{2}\right)+\frac{7}{10}
 \]
 with $x\in[-100,100]^{2}$. The value of global minimum is 0.0.
 \begin{itemize}
-\item \textbf{Bf2} function. The function Bohachevsky 2 is given by the
-equation 
+\item \textbf{Bf2} (Bohachevsky 2) function defined as: 
 \[
 f(x)=x_{1}^{2}+2x_{2}^{2}-\frac{3}{10}\cos\left(3\pi x_{1}\right)\cos\left(4\pi x_{2}\right)+\frac{3}{10}
 \]
@@ -241,19 +264,17 @@ equation
 \[
 f(x)=\sum_{i=1}^{n}x_{i}^{2}-\frac{1}{10}\sum_{i=1}^{n}\cos\left(5\pi x_{i}\right)
 \]
-with $x\in[-1,1]^{n}$. The value of the global minimum is -0.4 and
-in our experiments we have used $n=4$.
+where $x\in[-1,1]^{n}$. For our experiments we used $n=4$.
 \item \textbf{Camel} function. The function is given by 
 \[
 f(x)=4x_{1}^{2}-2.1x_{1}^{4}+\frac{1}{3}x_{1}^{6}+x_{1}x_{2}-4x_{2}^{2}+4x_{2}^{4},\quad x\in[-5,5]^{2}
 \]
-The global minimum has the value of $f\left(x^{*}\right)=-1.0316$
 \item \textbf{Easom} function. The function is given by the equation 
 \[
 f(x)=-\cos\left(x_{1}\right)\cos\left(x_{2}\right)\exp\left(\left(x_{2}-\pi\right)^{2}-\left(x_{1}-\pi\right)^{2}\right)
 \]
-with $x\in[-100,100]^{2}.$ The value of the global minimum is -1.0
-\item \textbf{Exponential} function. The function is given by 
+with $x\in[-100,100]^{2}.$ 
+\item \textbf{Exponential} function, defined as: 
 \[
 f(x)=-\exp\left(-0.5\sum_{i=1}^{n}x_{i}^{2}\right),\quad-1\le x_{i}\le1
 \]
@@ -280,7 +301,7 @@ with $w$ local minima, described in \cite{gkls} with $x\in[-1,1]^{n}$
 and $n$ a positive integer between 2 and 100. The value of the global
 minimum is -1 and in our experiments we have used $n=2,3$ and $w=50,\ 100$. 
 \item \textbf{Hansen} function. $f(x)=\sum_{i=1}^{5}i\cos\left[(i-1)x_{1}+i\right]\sum_{j=1}^{5}j\cos\left[(j+1)x_{2}+j\right]$,
-$x\in[-10,10]^{2}$ . The global minimum of the function is -176.541793.
+$x\in[-10,10]^{2}$ .
 \item \textbf{Hartman 3} function. The function is given by
 \[
 f(x)=-\sum_{i=1}^{4}c_{i}\exp\left(-\sum_{j=1}^{3}a_{ij}\left(x_{j}-p_{ij}\right)^{2}\right)
@@ -304,7 +325,6 @@ p=\left(\begin{array}{ccc}
 0.03815 & 0.5743 & 0.8828
 \end{array}\right)
 \]
-The value of global minimum is -3.862782.
 \item \textbf{Hartman 6} function.
 \[
 f(x)=-\sum_{i=1}^{4}c_{i}\exp\left(-\sum_{j=1}^{6}a_{ij}\left(x_{j}-p_{ij}\right)^{2}\right)
@@ -328,7 +348,6 @@ p=\left(\begin{array}{cccccc}
 0.4047 & 0.8828 & 0.8732 & 0.5743 & 0.1091 & 0.0381
 \end{array}\right)
 \]
-the value of global minimum is -3.322368.
 \item \textbf{Potential} function. The molecular conformation corresponding
 to the global minimum of the energy of N atoms interacting via the
 Lennard-Jones potential\cite{Jones} is used as a test case here.
@@ -445,15 +464,15 @@ and -274.163160 for $n=7$.
 \[
 f(x)=\frac{1}{10}\sin^{2}\left(3\pi x_{1}\right)\sum_{i=2}^{n-1}\left(\left(x_{i}-1\right)^{2}\left(1+\sin^{2}\left(3\pi x_{i+1}\right)\right)\right)+\left(x_{n}-1\right)^{2}\left(1+\sin^{2}\left(2\pi x_{n}\right)\right)
 \]
-with $x\in[-10,10]$. The function has $30^{n}$ local minima in the
-specified range and we used $n=3,4$ in our experiments. The value
-of global minimum for this function is 0.0
+with $x\in[-10,10]$, with $30^{n}$ local minima in the searc space.
+For our experiments we used $n=3,4$.
 \end{itemize}
 
 \subsection{Experimental results}
 
-All the experiments were conducted using different seed for the random
-generator each time and averages were taken. The code has been implemented
+The experiments have been performed 30 times with different seed for
+the random generator each time for every test function and the avarage
+function calls is measured and reported. The code has been implemented
 in ANSI C++ and the random generator used was the function drand48()
 of the C programming languages. The execution environment was an Intel
 Xeon E5-2630 multi core machine. The parameters used in the experiments
@@ -483,6 +502,17 @@ are plotted using both the proposed scheme for the differential weight
 and the proposed termination rule. It is evident the the combination
 of both modifications reduced even more the average number of function
 calls required to locate the global minimum of the test functions.
+To show the effectiveness of the modifications in Figure \ref{fig:Time-comparisons-for}
+are presented the total times for 30 executions on an I7 computer
+with LINUX DEBIAN and with 16GB of memory. The comparison was made
+between the initial method with the ALI termination criterion, the
+proposed termination criterion (first modification) and the proposed
+termination criterion together with the proposed weight scheme. Obviously,
+the proposed modifications significantly reduce not only the number
+of calls but also the required execution time. To compare the proposed
+scheme for the differential weight with the other two methods, the
+Wilcoxon signed-rank test was used. The results obtained with this
+statistical test are shown in Figure \ref{fig:stat1} 
 
 \begin{table}
 \caption{Experimental parameters.\label{tab:Experimental-parameters.}}
@@ -693,16 +723,30 @@ TEST30N4 & 1355 & 1444 & 1285\tabularnewline
 \end{tabular}
 \end{table}
 \begin{figure}
-
 \caption{The effect of the usage of the new scheme for the differential weight.\label{fig:The-effect-of}}
 
-\centering{}\includegraphics[scale=0.6]{plot_weight_de}
+\centering{}\includegraphics[scale=0.75]{image1}
+\end{figure}
+\begin{figure}
+\caption{Plot of function calls using the two modifications.\label{fig:Plot2}}
+
+\centering{}\includegraphics[scale=0.75]{image2}
 \end{figure}
 \begin{figure}
 
-\caption{Plot of function calls using the two modifications.\label{fig:Plot2}}
+\caption{Time comparisons for a variety of test functions.\label{fig:Time-comparisons-for}}
 
-\centering{}\includegraphics[scale=0.6]{plot_de_termination}
+\centering{}\includegraphics[scale=0.75]{time_comparison_de}
+\end{figure}
+\begin{figure}
+
+\caption{Box plot representation and Wilcoxon rank-sum test results of the
+comparison among the schemes for the differential weight. The stopping
+rule used is the proposed by Ali in equation \ref{eq:termination_ali}.
+A p-value of less than 0.05 (2-tailed) was used for statistical significance
+and has been marked with bold.\label{fig:stat1}}
+
+\centering{}\includegraphics[scale=0.45]{stat_de}
 \end{figure}
 
 
@@ -720,6 +764,18 @@ In the second case, a stochastic scheme was used to produce the differential
 weight. This scheme helped the algorithm to better explore the search
 space of the objective function without the need for more calls to
 the objective function. 
+
+The proposed modifications significantly speed up the original method
+in terms of function calls in most cases. Each of the proposed modifications
+can be used separately or together in the DE method. If used together
+there is a large reduction in the number of required function calls
+that reaches up to 80\% without problems in the reliability of the
+method and its ability to successfully find the total minimum. 
+
+The DE method can also be used in cases of optimization problems with
+constraints as long as there is a change in the original problem so
+that the constraints are included in the function with the usage for
+example Langrage multipliers.
 
 \subsection*{Compliance with Ethical Standards }
 
@@ -823,6 +879,10 @@ Journal of Global Optimization \textbf{11}, pp. 341-359, 1997.
 In Proceedings of the 1995 IEEE International Conference on Neural
 Networks, Vol. 4, pp. 1942-1948, IEEE Press, 1995.
 
+\bibitem{de_main_paper}R. Storn, On the usage of differential evolution
+for function optimization, In: Proceedings of North American Fuzzy
+Information Processing, pp. 519-523, 1996.
+
 \bibitem{gpu1}Y. Zhou and Y. Tan, GPU-based parallel particle swarm
 optimization, In: 2009 IEEE Congress on Evolutionary Computation,
 pp. 1493-1500, 2009.
@@ -853,10 +913,6 @@ Neural Computing and Applications \textbf{33}, pp. 9503--9519, 2021
 differential evolution algorithm for numerical function optimization,
 Expert Systems with Applications \textbf{138}, 2019.
 
-\bibitem{de_review5}I.M.Ali , D. Essam and K. Kasmarik, A novel design
-of differential evolution for solving discrete traveling salesman
-problems, Swarm and Evolutionary Computation \textbf{52}, 2020.
-
 \bibitem{de_review6}J. Liang, K. Qiao, K. Yu, S.Ge ,B. Qu, R. Xu
 and K. Li, Parameters estimation of solar photovoltaic models via
 a self-adaptive ensemble-based differential evolution, Solar Energy
@@ -869,6 +925,74 @@ price prediction, Energy \textbf{162}, pp. 1301-1314, 2018.
 \bibitem{de_review8}N. Awad and N. Mallik and F. Hutter, Differential
 Evolution for Neural Architecture Search, In Proceedings of the 1st
 workshop on neural architecture search, 2020.
+
+\bibitem{de_neural1}J. Ilonen, J.K. Kamarainen and J. Lampinen, Differential
+Evolution Training Algorithm for Feed-Forward Neural Networks, Neural
+Processing Letters \textbf{17}, pp. 93--105, 2003.
+
+\bibitem{de_neural2}A. Slowik, Application of an Adaptive Differential
+Evolution Algorithm With Multiple Trial Vectors to Artificial Neural
+Network Training, IEEE Transactions on Industrial Electronics \textbf{58},
+pp. 3160-3167, 2011.
+
+\bibitem{de_neural3}L. Wang, Y. Zeng and T. Chen, Back propagation
+neural network with adaptive differential evolution algorithm for
+time series forecasting, Expert Systems with Applications \textbf{42},
+pp. 855-863, 2015.
+
+\bibitem{de_tsp}X. Wang, G. Xu, Hybrid Differential Evolution Algorithm
+for Traveling Salesman Problem, Procedia Engineering \textbf{15},
+pp. 2716-2720, 2011.
+
+\bibitem{de_review5}I.M.Ali , D. Essam and K. Kasmarik, A novel design
+of differential evolution for solving discrete traveling salesman
+problems, Swarm and Evolutionary Computation \textbf{52}, 2020.
+
+\bibitem{rbf_de1}J. Liu and J. Lampinen, A differential evolution
+based incremental training method for RBF networks, In Proceedings
+of the 7th annual conference on Genetic and evolutionary computation
+(GECCO '05), pp. 881--888, 2005.
+
+\bibitem{rbf_de2}B. O'Hora, J. Perera and A. Brabazon, Designing
+Radial Basis Function Networks for Classification Using Differential
+Evolution, In: The 2006 IEEE International Joint Conference on Neural
+Network Proceedings, pp. 2932-2937, 2006.
+
+\bibitem{rbf_de3}N. Naveen , V. Ravi , C. Raghavendra Rao and N.
+Chauhan, Differential evolution trained radial basis function network:
+application to bankruptcy prediction in banks, International Journal
+of Bio-Inspired Computation \textbf{2}, pp. 222-232, 2010.
+
+\bibitem{lennardjones_de1}Z. Chen, X. Jiang, J. Li, S. Li and L.
+Wang, PDECO: Parallel differential evolution for clusters optimization,
+J. Comput. Chem. \textbf{34}, pp. 1046-1059. 2013.
+
+\bibitem{lennardjones_de2}A. Ghosh, R. Mallipeddi, S. Das and A.
+K. Das, A Switched Parameter Differential Evolution with Multi-donor
+Mutation and Annealing Based Local Search for Optimization of Lennard-Jones
+Atomic Clusters, In: 2018 IEEE Congress on Evolutionary Computation
+(CEC), pp. 1-8, 2018.
+
+\bibitem{compact_de}E. Mininno, F. Neri, F. Cupertino and D. Naso,
+Compact Differential Evolution, IEEE Transactions on Evolutionary
+Computation \textbf{15}, pp. 32-54, 2011.
+
+\bibitem{self_de}A. K. Qin, V. L. Huang and P. N. Suganthan, Differential
+Evolution Algorithm With Strategy Adaptation for Global Numerical
+Optimization, IEEE Transactions on Evolutionary Computation \textbf{13},
+pp. 398-417, 2009.
+
+\bibitem{fuzzy_de}J. Liu, J. Lampinen, A Fuzzy Adaptive Differential
+Evolution Algorithm, Soft Comput \textbf{9}, pp. 448--462, 2005. 
+
+\bibitem{parellel_de}H. Wang, S. Rahnamayan and Z. Wu, Parallel differential
+evolution with self-adapting control parameters and generalized opposition-based
+learning for solving high-dimensional optimization problems, Journal
+of Parallel and Distributed Computing \textbf{73}, pp. 62-73, 2013.
+
+\bibitem{survey_de}S. Das, S.S. Mullick and P.N. Suganthan, Recent
+advances in differential evolution -- An updated survey, Swarm and
+Evolutionary Computation \textbf{27}, pp. 1-30, 2016.
 
 \bibitem{ali_de}M.M. Ali and A. Törn, Population set-based global
 optimization algorithms: some modifications and numerical studies,
@@ -883,6 +1007,23 @@ of Global Optimization \textbf{31}, pp 635-672, 2005.
 Z. G$\ddot{\mbox{u}}$m$\ddot{\mbox{u}}$s, S. Harding, J. Klepeis,
 C. Meyer, C. Schweiger, Handbook of Test Problems in Local and Global
 Optimization, Kluwer Academic Publishers, Dordrecht, 1999.
+
+\bibitem{testfunctions1}M.M. Ali and P. Kaelo, Improved particle
+swarm algorithms for global optimization, Applied Mathematics and
+Computation \textbf{196}, pp. 578-593, 2008.
+
+\bibitem{testfunctions2}H. Koyuncu, R. Ceylan, A PSO based approach:
+Scout particle swarm algorithm for continuous global optimization
+problems, Journal of Computational Design and Engineering \textbf{6},
+pp. 129--142, 2019.
+
+\bibitem{testfunctions3}Patrick Siarry, Gérard Berthiau, François
+Durdin, Jacques Haussy, ACM Transactions on Mathematical Software
+\textbf{23}, pp 209--228, 1997.
+
+\bibitem{testfunctions4}I.G. Tsoulos, I.E. Lagaris, GenMin: An enhanced
+genetic algorithm for global optimization, Computer Physics Communications\textbf{
+178, }pp. 843-851, 2008.
 
 \bibitem{Powell}M.J.D Powell, A Tolerant Algorithm for Linearly Constrained
 Optimization Calculations, Mathematical Programming \textbf{45}, pp.
