@@ -9,7 +9,7 @@ iPso::iPso(Problem *p)
     addParameter("ipso_c2", "0.5", "Pso c2 parameter");
     addParameter("ipso_inertia_start", "0.4", "Start value for inertia");
     addParameter("ipso_inertia_end", "0.9", "End value for inertia");
-    addParameter("ipso_localsearch_rate", "0.1", "Local search rate for pso");
+    addParameter("ipso_localsearch_rate", "0.0", "Local search rate for pso");
 }
 
 bool iPso::checkGradientCriterion(Data &x)
@@ -40,26 +40,47 @@ bool iPso::checkGradientCriterion(Data &x)
 bool iPso::terminated()
 {
     int max_generations = params["ipso_generations"].toString().toInt();
-    double fmin = fabs(1.0 + fabs(besty));
-    if (generation <= 1)
+
+    bool charilogis = false;
+
+    if (charilogis)
     {
-        x1 = 0.0;
-        x2 = 0.0;
+        double dd = fabs(newSum - sum);
+        // printf("%4d] Generation  change: %10.6lf \n", generation, dd);
+        sum = newSum;
+        if (dd < 1e-8)
+            n++;
+        else
+            n = 0;
+        if (n > 15)
+            return true;
+
+        return generation >= max_generations;
     }
-    x1 += fmin;
-    x2 += fmin * fmin;
-    variance = x2 / (generation + 1) - (x1 / (generation + 1)) * (x1 / (generation + 1));
-    variance = fabs(variance);
-    if (besty < oldbesty)
+    else
     {
-        oldbesty = besty;
-        stopat = variance / 2.0;
+
+        double fmin = fabs(1.0 + fabs(besty));
+        if (generation <= 1)
+        {
+            x1 = 0.0;
+            x2 = 0.0;
+        }
+        x1 += fmin;
+        x2 += fmin * fmin;
+        variance = x2 / (generation + 1) - (x1 / (generation + 1)) * (x1 / (generation + 1));
+        variance = fabs(variance);
+        if (besty < oldbesty)
+        {
+            oldbesty = besty;
+            stopat = variance / 2.0;
+        }
+        if (stopat < 1e-8 && !isnan(variance))
+            stopat = variance / 2.0;
+        printf("Generations %d value: %lf variance: %lf stopat: %lf\n", generation, besty,
+               variance, stopat);
+        return generation >= max_generations || (variance <= stopat && generation >= 20);
     }
-    if (stopat < 1e-8 && !isnan(variance))
-        stopat = variance / 2.0;
-    printf("Generations %d value: %lf variance: %lf stopat: %lf\n", generation, besty,
-           variance, stopat);
-    return generation >= max_generations; // || (variance<=stopat && generation>=20);
 }
 
 void iPso::step()
@@ -110,7 +131,16 @@ void iPso::init()
             velocity[i][j] = left + myProblem->randomDouble() * (right - left);
         }
     }
+
     updateBest();
+    sum = accumulate(bestFitness_array.begin(), bestFitness_array.end(), 0);
+    if (sum == 0)
+    {
+        // assert(sum > 0);
+    }
+    sum = sum / ipso_particles;
+    // printf("\n   0] Generation  start : %10.6lf \n", sum);
+    n = 0;
 }
 
 void iPso::done()
@@ -124,43 +154,84 @@ void iPso::calcFitnessArray()
     double wmin = params["ipso_inertia_start"].toString().toDouble();
     double wmax = params["ipso_inertia_end"].toString().toDouble();
     int maxGenerations = params["ipso_generations"].toString().toInt();
-    Data distances;
-    int genome_size = myProblem->getDimension();
-    //inecria weight => εάν θα διατηρηθεί η ταχύτητα
-    //double inertia = wmax - generation * 1.0 / maxGenerations * (wmax - wmin);
-    double inertia = fabs((1.0/(2.0 - besty)));
     double c1 = params["ipso_c1"].toString().toDouble();
     double c2 = params["ipso_c2"].toString().toDouble();
+    int genome_size = myProblem->getDimension();
+    Data distances;
+
+    int inertiaType=6;
+    double inertia;
+    // inecria weight => εάν θα διατηρηθεί η ταχύτητα
+    switch (inertiaType  )//(από 1-17)
+    {
+    case 1:
+    {
+        inertia = wmax - generation * 1.0 / maxGenerations * (wmax - wmin);//tsoulos
+        break;
+    }
+    case 2:
+    {
+        inertia = fabs((1.0 / (2.0 - besty)));            //chariloggis
+        break;
+    }
+    case 3:                                                //3
+    {
+        int R = drand48();
+        inertia = 0.5 +(R/2.0);
+        break;
+    }
+    case 4:                                                //3
+    {
+        double g = (double)(maxGenerations - generation) / maxGenerations;
+        inertia = (g * (wmax - wmin)) + wmin;
+        break;
+    }
+    case 5:                                                //3
+    {
+        inertia = 2.0 / generation;
+        break;
+    }
+    case 6:                                                //3
+    {
+        double g = (double)(maxGenerations - generation) / maxGenerations;
+        inertia = (g * (wmin - wmax)) + wmax;
+        break;
+    }
+    default:
+    {
+        inertia = 0;
+    }
+    }
 
     double localsearch_rate = params["ipso_localsearch_rate"].toString().toDouble();
     for (int i = 0; i < genome_count; i++)
     {
-        Data oldg = particle[i];//αποθήκευση παλιάς θέσης
+        Data oldg = particle[i]; //αποθήκευση παλιάς θέσης
         for (int j = 0; j < genome_size; j++)
         {
             double r1 = myProblem->randomDouble();
             double r2 = myProblem->randomDouble();
 
-            double tj = velocity[i][j];//αποθήκευση παλιάς ταχύτητας
-            double part1 = inertia * velocity[i][j];//πολλαπλασιαστής ταχύτητας(inecria weight)
+            double tj = velocity[i][j];              //αποθήκευση παλιάς ταχύτητας
+            double part1 = inertia * velocity[i][j]; //πολλαπλασιαστής ταχύτητας(inecria weight)
             double part2 = c1 * r1 * (bestParticle[i][j] - particle[i][j]);
             double part3 = c2 * r2 * (bestx[j] - particle[i][j]);
-            velocity[i][j] = part1 + part2 + part3;// υπολογισμός ταχύτητας
-            double trialf = particle[i][j] + velocity[i][j];//υπολογισμός θέσης
-            if (trialf < lmargin[j] || trialf > rmargin[j])// εκτός ορίων
+            velocity[i][j] = part1 + part2 + part3;          // υπολογισμός ταχύτητας
+            double trialf = particle[i][j] + velocity[i][j]; //υπολογισμός θέσης
+            if (trialf < lmargin[j] || trialf > rmargin[j])  // εκτός ορίων
             {
-                velocity[i][j] = tj;// ξαναβάζει την παλιά ταχύτητα
+                velocity[i][j] = tj; // ξαναβάζει την παλιά ταχύτητα
                 continue;
             }
             else
             {
-                particle[i][j] = trialf;// καινούργια θέση
+                particle[i][j] = trialf; // καινούργια θέση
             }
         }
-        distances.push_back(getDistance(particle[i], oldg));// αποθήκευση της απόστασης => παλιά με καινούργια
+        distances.push_back(getDistance(particle[i], oldg)); // αποθήκευση της απόστασης => παλιά με καινούργια
     }
 
-//#pragma omp parallel for num_threads(threads)
+    //#pragma omp parallel for num_threads(threads)
     for (int i = 0; i < genome_count; i++)
     {
         if (distances[i] > 1e-6)
@@ -171,7 +242,7 @@ void iPso::calcFitnessArray()
                 fitness_array[i] = localSearch(particle[i]);
                 RC += getDistance(dg, particle[i]);
                 localSearchCount++;
-//#pragma omp critical
+                //#pragma omp critical
                 {
                     bool found = false;
                     for (int j = 0; j < minimax.size(); j++)
@@ -256,6 +327,8 @@ void iPso::updateBest()
             besty = bestFitness_array[i];
         }
     }
+    newSum = accumulate(bestFitness_array.begin(), bestFitness_array.end(), 0);
+    newSum = newSum / genome_count;
 }
 
 double iPso::fitness(Data &x)

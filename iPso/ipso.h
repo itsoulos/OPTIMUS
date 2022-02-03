@@ -27,7 +27,8 @@ private:
     double x1, x2, stopat, variance, besty, oldbesty;
     Data lmargin, rmargin;
     double RC;
-    int localSearchCount;
+    double newSum,sum;
+    int n,localSearchCount;
 
     double fitness(Data &x);
     bool checkGradientCriterion(Data &x);

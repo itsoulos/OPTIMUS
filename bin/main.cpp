@@ -158,7 +158,7 @@ void  loadOptimizers()
 
     QStringList optimizerFile;
 
-    optimizerFile<<"libGenetic.so"<<"libMultistart.so"<<"libPso.so"<<"libMinfinder.so"<<"libIpso.so"
+    optimizerFile<<"libGenetic.so"<<"libMultistart.so"<<"libPso.so"<<"libMinfinder.so"<<"libiPso.so"
                   <<"libGenmin.so"<<"libPrice.so"<<"libBfgs.so"<<"libMinCenter.so"<<"libTmlsl.so"<<"libde.so"<<"libgende.so";
     for(int i=0;i<optimizerFile.size();i++)
     {
