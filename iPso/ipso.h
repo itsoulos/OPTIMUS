@@ -27,7 +27,7 @@ private:
     double x1, x2, stopat, variance, besty, oldbesty;
     Data lmargin, rmargin;
     double RC;
-    double newSum,sum;
+    double newSum,sum,av;
     int n,localSearchCount;
 
     double fitness(Data &x);

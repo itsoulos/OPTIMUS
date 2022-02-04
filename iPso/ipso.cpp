@@ -4,12 +4,12 @@ iPso::iPso(Problem *p)
     : Optimizer(p)
 {
     addParameter("ipso_particles", "100", "Number of pso particles");
-    addParameter("ipso_generations", "100", "Maximum number of pso generations");
+    addParameter("ipso_generations", "200", "Maximum number of pso generations");
     addParameter("ipso_c1", "0.5", "Pso c1 parameter");
     addParameter("ipso_c2", "0.5", "Pso c2 parameter");
     addParameter("ipso_inertia_start", "0.4", "Start value for inertia");
     addParameter("ipso_inertia_end", "0.9", "End value for inertia");
-    addParameter("ipso_localsearch_rate", "0.0", "Local search rate for pso");
+    addParameter("ipso_localsearch_rate", "0.1", "Local search rate for pso");
 }
 
 bool iPso::checkGradientCriterion(Data &x)
@@ -141,6 +141,7 @@ void iPso::init()
     sum = sum / ipso_particles;
     // printf("\n   0] Generation  start : %10.6lf \n", sum);
     n = 0;
+    av = 0.0;
 }
 
 void iPso::done()
@@ -159,42 +160,69 @@ void iPso::calcFitnessArray()
     int genome_size = myProblem->getDimension();
     Data distances;
 
-    int inertiaType=6;
     double inertia;
+    int inertia_type=6;
     // inecria weight => εάν θα διατηρηθεί η ταχύτητα
-    switch (inertiaType  )//(από 1-17)
+    switch ( inertia_type )//
     {
+    case 0:
+    {
+        int R = drand48();
+        inertia = fabs((1.0 / (1.5 +(R/2.0))));             //charilogis
+        break;
+    }
     case 1:
     {
-        inertia = wmax - generation * 1.0 / maxGenerations * (wmax - wmin);//tsoulos
-        break;
+        inertia = wmax - generation * 1.0 / maxGenerations * (wmax - wmin);
+        break;                                             //tsoulos
     }
     case 2:
     {
-        inertia = fabs((1.0 / (2.0 - besty)));            //chariloggis
+        inertia = fabs((1.0 / (2.0 - besty)));             //charilogis
         break;
     }
-    case 3:                                                //3
+    case 3:                                                //3 (w2)
     {
         int R = drand48();
         inertia = 0.5 +(R/2.0);
         break;
     }
-    case 4:                                                //3
+    case 4:                                                //4 (w3)
     {
         double g = (double)(maxGenerations - generation) / maxGenerations;
         inertia = (g * (wmax - wmin)) + wmin;
         break;
     }
-    case 5:                                                //3
+    case 5:                                                //5 (w8)
     {
-        inertia = 2.0 / generation;
+        inertia = pow ((2.0 / generation), 0.3);
         break;
     }
-    case 6:                                                //3
+    case 6:                                                //6 (w9)
     {
         double g = (double)(maxGenerations - generation) / maxGenerations;
         inertia = (g * (wmin - wmax)) + wmax;
+        break;
+    }
+    case 7:                                                //7 (w7)
+    {
+        double b = (double)(generation) / maxGenerations;
+        double s = -0.5 ;  //(σταθερά > -1)
+        inertia = (1.0-b)/s*(1.0 - b);
+        break;
+    }
+    case 8:                                                //8 (w12)
+    {
+        /*
+        double sum=0.0;
+        for (int i = 0; i < genome_count; i++)
+        {
+            for (int j = 0; j < genome_size; j++)
+            {
+            }
+        }
+        */
+        //inertia =1.1 - (double)(bestg/av);
         break;
     }
     default:
@@ -324,9 +352,13 @@ void iPso::updateBest()
         {
             bestIndex = i;
             bestx = bestParticle[i];
+
             besty = bestFitness_array[i];
+
         }
+        //av += bestParticle[i];
     }
+    //av = (double) av /genome_count;
     newSum = accumulate(bestFitness_array.begin(), bestFitness_array.end(), 0);
     newSum = newSum / genome_count;
 }
