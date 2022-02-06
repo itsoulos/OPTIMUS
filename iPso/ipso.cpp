@@ -3,8 +3,9 @@
 iPso::iPso(Problem *p)
     : Optimizer(p)
 {
+    centerPso = false;
     addParameter("ipso_particles", "100", "Number of pso particles");
-    addParameter("ipso_generations", "200", "Maximum number of pso generations");
+    addParameter("ipso_generations", "100", "Maximum number of pso generations");
     addParameter("ipso_c1", "0.5", "Pso c1 parameter");
     addParameter("ipso_c2", "0.5", "Pso c2 parameter");
     addParameter("ipso_inertia_start", "0.4", "Start value for inertia");
@@ -42,11 +43,11 @@ bool iPso::terminated()
     int max_generations = params["ipso_generations"].toString().toInt();
 
     bool charilogis = false;
-
+    bool charilogis2 = true;
     if (charilogis)
     {
         double dd = fabs(newSum - sum);
-        // printf("%4d] Generation  change: %10.6lf \n", generation, dd);
+         printf("%4d] Generation  change: %10.6lf \n", generation, dd);
         sum = newSum;
         if (dd < 1e-8)
             n++;
@@ -57,7 +58,17 @@ bool iPso::terminated()
 
         return generation >= max_generations;
     }
-    else
+    else if (charilogis2){
+         printf("%4d] Generation  change: %10.6lf \n", generation, besty_tmp);
+        if (besty == besty_tmp){
+            n++;
+        }
+        else
+            n = 0;
+        if (n > 15)
+            return true;
+        return generation >= max_generations;
+    }else
     {
 
         double fmin = fabs(1.0 + fabs(besty));
@@ -87,6 +98,8 @@ void iPso::step()
 {
     ++generation;
     calcFitnessArray();
+    if(centerPso)
+        updateCenter();;
     updateBest();
 }
 
@@ -94,6 +107,7 @@ void iPso::init()
 {
 
     int ipso_particles = params["ipso_particles"].toString().toInt();
+    center.resize(myProblem->getDimension());
     particle.resize(ipso_particles);
     bestParticle.resize(ipso_particles);
     velocity.resize(ipso_particles);
@@ -131,8 +145,9 @@ void iPso::init()
             velocity[i][j] = left + myProblem->randomDouble() * (right - left);
         }
     }
-
     updateBest();
+    if(centerPso)
+        updateCenter();
     sum = accumulate(bestFitness_array.begin(), bestFitness_array.end(), 0);
     if (sum == 0)
     {
@@ -141,7 +156,7 @@ void iPso::init()
     sum = sum / ipso_particles;
     // printf("\n   0] Generation  start : %10.6lf \n", sum);
     n = 0;
-    av = 0.0;
+    besty_tmp = 1e+100;
 }
 
 void iPso::done()
@@ -161,7 +176,7 @@ void iPso::calcFitnessArray()
     Data distances;
 
     double inertia;
-    int inertia_type=6;
+    int inertia_type = 5;
     // inecria weight => εάν θα διατηρηθεί η ταχύτητα
     switch ( inertia_type )//
     {
@@ -213,16 +228,6 @@ void iPso::calcFitnessArray()
     }
     case 8:                                                //8 (w12)
     {
-        /*
-        double sum=0.0;
-        for (int i = 0; i < genome_count; i++)
-        {
-            for (int j = 0; j < genome_size; j++)
-            {
-            }
-        }
-        */
-        //inertia =1.1 - (double)(bestg/av);
         break;
     }
     default:
@@ -239,6 +244,8 @@ void iPso::calcFitnessArray()
         {
             double r1 = myProblem->randomDouble();
             double r2 = myProblem->randomDouble();
+            //double r1 = drand48();
+            //double r2 = drand48();
 
             double tj = velocity[i][j];              //αποθήκευση παλιάς ταχύτητας
             double part1 = inertia * velocity[i][j]; //πολλαπλασιαστής ταχύτητας(inecria weight)
@@ -291,6 +298,24 @@ void iPso::calcFitnessArray()
             else
                 fitness_array[i] = fitness(particle[i]);
         }
+    }
+}
+void	iPso::updateCenter()
+{
+    int ipso_particles = params["ipso_particles"].toString().toInt();
+    for(int j=0;j<myProblem->getDimension();j++) center[j]=0.0;
+    for(int i=0;i<ipso_particles;i++)
+    {
+        for(int j=0;j<myProblem->getDimension();j++)
+        {
+            center[j]+=particle[i][j];
+        }
+    }
+    for(int j=0;j<myProblem->getDimension();j++)
+    {
+        center[j]/=ipso_particles;
+        if(center[j]<lmargin[j]) center[j]=lmargin[j];
+        if(center[j]>rmargin[j]) center[j]=rmargin[j];
     }
 }
 //υπολογισμός όλων των καλύτερων θέσεων για όλα τα πουλάκια του σμήνους
@@ -348,6 +373,7 @@ void iPso::updateBest()
             bestFitness_array[i] = fitness_array[i];
             bestParticle[i] = particle[i];
         }
+        besty_tmp = besty;
         if (besty > bestFitness_array[i])
         {
             bestIndex = i;
@@ -356,9 +382,17 @@ void iPso::updateBest()
             besty = bestFitness_array[i];
 
         }
-        //av += bestParticle[i];
+
     }
-    //av = (double) av /genome_count;
+    if(centerPso)
+    {
+        double centerValue = myProblem->funmin(center);
+        if(centerValue<besty)
+        {
+            besty = centerValue;
+            bestx = center;
+        }
+    }
     newSum = accumulate(bestFitness_array.begin(), bestFitness_array.end(), 0);
     newSum = newSum / genome_count;
 }

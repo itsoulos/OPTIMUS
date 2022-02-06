@@ -16,6 +16,10 @@ public:
 class IPSO_EXPORT iPso : public Optimizer, iPsoInterface
 {
 private:
+    bool centerPso;
+    double sum,newSum, besty_tmp;
+    int n;
+    Data center;
     vector<Data> particle;
     vector<Data> bestParticle;
     vector<Data> velocity;
@@ -27,8 +31,7 @@ private:
     double x1, x2, stopat, variance, besty, oldbesty;
     Data lmargin, rmargin;
     double RC;
-    double newSum,sum,av;
-    int n,localSearchCount;
+    int localSearchCount;
 
     double fitness(Data &x);
     bool checkGradientCriterion(Data &x);
@@ -38,6 +41,7 @@ private:
     virtual void done();
     void calcFitnessArray();
     void updateBest();
+    void updateCenter();
 
 public:
     iPso(Problem *p);
