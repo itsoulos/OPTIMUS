@@ -1,4 +1,4 @@
-# include <grs/rlsprogram.h>
+# include <rlsprogram.h>
 # include <math.h>
 
 RlsProgram::RlsProgram(Problem *P)
@@ -222,15 +222,12 @@ double	RlsProgram::fitness(vector<int> &genome)
 	int ok_flag1=0;
 	int ok_flag2=0;
 	int redo=0;
-    string totalstr;
-//#pragma omp parallel
-    totalstr = printRandomProgram(genome,redo);
+	string totalstr=printRandomProgram(genome,redo);
 	if(redo>=REDO_MAX) return -1e+100;
 	int lastpos=0;
 	for(int i=0;i<dimension;i++)
 	{
 		string str="";
-
 		for(int j=lastpos;totalstr[j]!='#';j++)
 		{
 			str=str+totalstr[j];
@@ -278,7 +275,6 @@ double	RlsProgram::fitness(vector<int> &genome)
 		if(isnan(val1) || isinf(val1)) return -1e+100;
 		if(val1<bestValue)
 		{
-//#pragma omp parallel for
 			for(int i=0;i<dimension;i++) bestx0[i]=xx1[i];
 			bestValue=val1;
 		}
@@ -316,9 +312,7 @@ string	RlsProgram::printProgram(vector<int> &genome)
 		for(int j=0;j<genome.size()/dimension;j++)
 			subgenome[j]=genome[i*genome.size()/dimension+j];
 		int redo=0;
-        string str;
-//#pragma omp parallel
-        str=printRandomProgram(subgenome,redo);
+		string str=printRandomProgram(subgenome,redo);
 		if(redo>=REDO_MAX) 
 		{
 			return  "";
@@ -358,7 +352,6 @@ void	RlsProgram::clear()
 
 RlsProgram::~RlsProgram()
 {
-//#pragma omp parallel for
 	for(int i=0;i<rule.size();i++) delete rule[i];
 	delete start_symbol;
 	delete[] x0;

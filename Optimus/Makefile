@@ -37,7 +37,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = Optimus1.0.0
-DISTDIR = /home/sheridan/Επιφάνεια\ εργασίας/ERGASIES/OPTIMUS/Optimus/.tmp/Optimus1.0.0
+DISTDIR = /home/sheridan/Desktop/ERGASIES/OPTIMUS/Optimus/.tmp/Optimus1.0.0
 LINK          = g++
 LFLAGS        = -O3 -Wl,-O1 -shared -Wl,-soname,libOptimus.so.1
 LIBS          = $(SUBLIBS) -lm -fopenmp /usr/lib/x86_64-linux-gnu/libQt5Core.so -lpthread   
@@ -53,8 +53,12 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = adam.cpp \
+		collection.cc \
 		dllproblem.cpp \
+		doublestack.cc \
+		fparser.cc \
 		gradientdescent.cpp \
+		grs.cc \
 		interval.cpp \
 		intervalproblem.cpp \
 		kmeans.cpp \
@@ -62,12 +66,21 @@ SOURCES       = adam.cpp \
 		optimizer.cpp \
 		optimus.cpp \
 		point.cpp \
+		population.cc \
 		problem.cpp \
+		program.cc \
+		rlsprogram.cc \
+		rule.cc \
+		symbol.cc \
 		tolmin.cc \
 		cluster.cpp 
 OBJECTS       = adam.o \
+		collection.o \
 		dllproblem.o \
+		doublestack.o \
+		fparser.o \
 		gradientdescent.o \
+		grs.o \
 		interval.o \
 		intervalproblem.o \
 		kmeans.o \
@@ -75,7 +88,12 @@ OBJECTS       = adam.o \
 		optimizer.o \
 		optimus.o \
 		point.o \
+		population.o \
 		problem.o \
+		program.o \
+		rlsprogram.o \
+		rule.o \
+		symbol.o \
 		tolmin.o \
 		cluster.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -113,6 +131,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_linuxaccessibility_support_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network_private.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_openglextensions.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_openglextensions_private.pri \
@@ -156,8 +175,12 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		Optimus.pro Optimus_global.h \
 		adam.h \
+		collection.h \
 		dllproblem.h \
+		doublestack.h \
+		fparser.hh \
 		gradientdescent.h \
+		grs.h \
 		interval.h \
 		intervalproblem.h \
 		kmeans.h \
@@ -165,11 +188,20 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		optimizer.h \
 		optimus.h \
 		point.h \
+		population.h \
 		problem.h \
+		program.h \
+		rlsprogram.h \
+		rule.h \
+		symbol.h \
 		tolmin.h \
 		cluster.h adam.cpp \
+		collection.cc \
 		dllproblem.cpp \
+		doublestack.cc \
+		fparser.cc \
 		gradientdescent.cpp \
+		grs.cc \
 		interval.cpp \
 		intervalproblem.cpp \
 		kmeans.cpp \
@@ -177,7 +209,12 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		optimizer.cpp \
 		optimus.cpp \
 		point.cpp \
+		population.cc \
 		problem.cpp \
+		program.cc \
+		rlsprogram.cc \
+		rule.cc \
+		symbol.cc \
 		tolmin.cc \
 		cluster.cpp
 QMAKE_TARGET  = Optimus
@@ -243,6 +280,7 @@ Makefile: Optimus.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_linuxaccessibility_support_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network_private.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_openglextensions.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_openglextensions_private.pri \
@@ -321,6 +359,7 @@ Makefile: Optimus.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_linuxaccessibility_support_private.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network_private.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl_private.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_openglextensions.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_openglextensions_private.pri:
@@ -378,8 +417,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents Optimus_global.h adam.h dllproblem.h gradientdescent.h interval.h intervalproblem.h kmeans.h lbfgs.h optimizer.h optimus.h point.h problem.h tolmin.h cluster.h $(DISTDIR)/
-	$(COPY_FILE) --parents adam.cpp dllproblem.cpp gradientdescent.cpp interval.cpp intervalproblem.cpp kmeans.cpp lbfgs.cpp optimizer.cpp optimus.cpp point.cpp problem.cpp tolmin.cc cluster.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents Optimus_global.h adam.h collection.h dllproblem.h doublestack.h fparser.hh gradientdescent.h grs.h interval.h intervalproblem.h kmeans.h lbfgs.h optimizer.h optimus.h point.h population.h problem.h program.h rlsprogram.h rule.h symbol.h tolmin.h cluster.h $(DISTDIR)/
+	$(COPY_FILE) --parents adam.cpp collection.cc dllproblem.cpp doublestack.cc fparser.cc gradientdescent.cpp grs.cc interval.cpp intervalproblem.cpp kmeans.cpp lbfgs.cpp optimizer.cpp optimus.cpp point.cpp population.cc problem.cpp program.cc rlsprogram.cc rule.cc symbol.cc tolmin.cc cluster.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -434,16 +473,40 @@ adam.o: adam.cpp adam.h \
 		interval.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o adam.o adam.cpp
 
+collection.o: collection.cc collection.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o collection.o collection.cc
+
 dllproblem.o: dllproblem.cpp dllproblem.h \
 		intervalproblem.h \
 		interval.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dllproblem.o dllproblem.cpp
+
+doublestack.o: doublestack.cc doublestack.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o doublestack.o doublestack.cc
+
+fparser.o: fparser.cc fparser.hh \
+		doublestack.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o fparser.o fparser.cc
 
 gradientdescent.o: gradientdescent.cpp gradientdescent.h \
 		problem.h \
 		intervalproblem.h \
 		interval.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gradientdescent.o gradientdescent.cpp
+
+grs.o: grs.cc grs.h \
+		rlsprogram.h \
+		problem.h \
+		intervalproblem.h \
+		interval.h \
+		population.h \
+		program.h \
+		symbol.h \
+		rule.h \
+		doublestack.h \
+		fparser.hh \
+		collection.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o grs.o grs.cc
 
 interval.o: interval.cpp interval.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o interval.o interval.cpp
@@ -470,7 +533,16 @@ optimizer.o: optimizer.cpp optimizer.h \
 		tolmin.h \
 		gradientdescent.h \
 		adam.h \
-		lbfgs.h
+		lbfgs.h \
+		grs.h \
+		rlsprogram.h \
+		population.h \
+		program.h \
+		symbol.h \
+		rule.h \
+		doublestack.h \
+		fparser.hh \
+		collection.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o optimizer.o optimizer.cpp
 
 optimus.o: optimus.cpp optimus.h \
@@ -480,10 +552,43 @@ optimus.o: optimus.cpp optimus.h \
 point.o: point.cpp point.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o point.o point.cpp
 
+population.o: population.cc population.h \
+		program.h \
+		symbol.h \
+		rule.h \
+		doublestack.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o population.o population.cc
+
 problem.o: problem.cpp problem.h \
 		intervalproblem.h \
 		interval.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o problem.o problem.cpp
+
+program.o: program.cc program.h \
+		symbol.h \
+		rule.h \
+		doublestack.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o program.o program.cc
+
+rlsprogram.o: rlsprogram.cc rlsprogram.h \
+		problem.h \
+		intervalproblem.h \
+		interval.h \
+		population.h \
+		program.h \
+		symbol.h \
+		rule.h \
+		doublestack.h \
+		fparser.hh
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o rlsprogram.o rlsprogram.cc
+
+rule.o: rule.cc rule.h \
+		symbol.h \
+		doublestack.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o rule.o rule.cc
+
+symbol.o: symbol.cc symbol.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o symbol.o symbol.cc
 
 tolmin.o: tolmin.cc tolmin.h \
 		problem.h \

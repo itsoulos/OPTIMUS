@@ -1,4 +1,4 @@
-# include <grs/rule.h>
+# include <rule.h>
 # include <iostream>
 Rule::Rule()
 {
@@ -42,22 +42,20 @@ string	Rule::printRule(vector<int> genome,int &pos,int &redo)
 	string str2="";
 	Rule *r;
 	int old_pos;
-    for(int i=0;i<length;i++)
-    {
-        Symbol *s;
-        s = data[i];
+	for(int i=0;i<length;i++)
+	{
+		Symbol *s=data[i];
 		if(s->getTerminalStatus())
-        {
+		{
 			str=str+s->getName();	
 		}
 		else
 		{
 			if(pos>=genome.size()) {redo++;pos=0;}
-
 			r=s->getRule((genome[pos]%s->getCountRules()));
 			pos++;
 			if(pos>=genome.size()) {redo++;pos=0;}
-            if(redo>=REDO_MAX) return str;
+			if(redo>=REDO_MAX) return str;
 			str2=r->printRule(genome,pos,redo);
 			str=str+str2;
 		}
@@ -109,14 +107,10 @@ double	Rule::getValue(vector<int> genome,int &pos,int &redo,DoubleStack &stack,d
 		int k=genome[pos]%s->getCountRules();
 		Rule *r;
 		double rnd;
-
 		r=s->getRule(genome[pos]%s->getCountRules());
-        pos++;
-
+		pos++;
 		if(pos>=genome.size()) {redo++;pos=0;}
-
 		if(redo>=REDO_MAX) return 0;
-
 		return (r->getValue(genome,pos,redo,stack,X));
 		}
 	}

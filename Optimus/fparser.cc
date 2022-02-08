@@ -21,7 +21,7 @@
 #define SUPPORT_OPTIMIZER
 #include "fparser.hh"
 
-# include <grs/doublestack.h>
+# include <doublestack.h>
 #include <cstdlib>
 #include <cstring>
 #include <cctype>
@@ -181,7 +181,7 @@ namespace
 //---------------------------------------------------------------------------
 // Copy-on-write method
 //---------------------------------------------------------------------------
-inline void FunctionParser::copyOnWrite()
+inline void GrsFunctionParser::copyOnWrite()
 {
     if(data->referenceCounter > 1)
     {
@@ -197,14 +197,14 @@ inline void FunctionParser::copyOnWrite()
 // Constructors and destructors
 //---------------------------------------------------------------------------
 //===========================================================================
-FunctionParser::FunctionParser():
+GrsFunctionParser::GrsFunctionParser():
     parseErrorType(FP_NO_ERROR), evalErrorType(0),
     data(new Data)
 {
     data->referenceCounter = 1;
 }
 
-FunctionParser::~FunctionParser()
+GrsFunctionParser::~GrsFunctionParser()
 {
     if(--(data->referenceCounter) == 0)
     {
@@ -212,7 +212,7 @@ FunctionParser::~FunctionParser()
     }
 }
 
-FunctionParser::FunctionParser(const FunctionParser& cpy):
+GrsFunctionParser::GrsFunctionParser(const GrsFunctionParser& cpy):
     parseErrorType(cpy.parseErrorType),
     evalErrorType(cpy.evalErrorType),
     data(cpy.data)
@@ -220,7 +220,7 @@ FunctionParser::FunctionParser(const FunctionParser& cpy):
     ++(data->referenceCounter);
 }
 
-FunctionParser& FunctionParser::operator=(const FunctionParser& cpy)
+GrsFunctionParser& GrsFunctionParser::operator=(const GrsFunctionParser& cpy)
 {
     if(data != cpy.data)
     {
@@ -237,14 +237,14 @@ FunctionParser& FunctionParser::operator=(const FunctionParser& cpy)
 }
 
 
-FunctionParser::Data::Data():
+GrsFunctionParser::Data::Data():
     useDegreeConversion(false),
     ByteCode(0), ByteCodeSize(0),
     Immed(0), ImmedSize(0),
     Stack(0), StackSize(0)
 {}
 
-FunctionParser::Data::~Data()
+GrsFunctionParser::Data::~Data()
 {
     if(ByteCode) { delete[] ByteCode; ByteCode=0; }
     if(Immed) { delete[] Immed; Immed=0; }
@@ -252,7 +252,7 @@ FunctionParser::Data::~Data()
 }
 
 // Makes a deep-copy of Data:
-FunctionParser::Data::Data(const Data& cpy):
+GrsFunctionParser::Data::Data(const Data& cpy):
     varAmount(cpy.varAmount), useDegreeConversion(cpy.useDegreeConversion),
     Variables(cpy.Variables), Constants(cpy.Constants),
     FuncPtrNames(cpy.FuncPtrNames), FuncPtrs(cpy.FuncPtrs),
@@ -290,7 +290,7 @@ namespace
         "An unexpected error ocurred. Please make a full bug report "
         "to warp@iki.fi",                           // 6
         "Syntax error in parameter 'Vars' given to "
-        "FunctionParser::Parse()",                  // 7
+        "GrsFunctionParser::Parse()",                  // 7
         "Illegal number of parameters to function", // 8
         "Syntax error: Premature end of string",    // 9
         "Syntax error: Expecting ( after function", // 10
@@ -320,7 +320,7 @@ namespace
     }
 };
 
-bool FunctionParser::isValidName(const std::string& name) const
+bool GrsFunctionParser::isValidName(const std::string& name) const
 {
     if(name.empty() || (!isalpha(name[0]) && name[0] != '_')) return false;
     for(unsigned i=0; i<name.size(); ++i)
@@ -333,7 +333,7 @@ bool FunctionParser::isValidName(const std::string& name) const
 
 
 // Constants:
-bool FunctionParser::AddConstant(const string& name, double value)
+bool GrsFunctionParser::AddConstant(const string& name, double value)
 {
     if(isValidName(name))
     {
@@ -353,7 +353,7 @@ bool FunctionParser::AddConstant(const string& name, double value)
 }
 
 // Function pointers
-bool FunctionParser::AddFunction(const std::string& name,
+bool GrsFunctionParser::AddFunction(const std::string& name,
                                  FunctionPtr func, unsigned paramsAmount)
 {
     if(paramsAmount == 0) return false; // Currently must be at least one
@@ -375,7 +375,7 @@ bool FunctionParser::AddFunction(const std::string& name,
     return false;
 }
 
-bool FunctionParser::checkRecursiveLinking(const FunctionParser* fp) const
+bool GrsFunctionParser::checkRecursiveLinking(const GrsFunctionParser* fp) const
 {
     if(fp == this) return true;
     for(unsigned i=0; i<fp->data->FuncParsers.size(); ++i)
@@ -383,8 +383,8 @@ bool FunctionParser::checkRecursiveLinking(const FunctionParser* fp) const
     return false;
 }
 
-bool FunctionParser::AddFunction(const std::string& name,
-                                 FunctionParser& parser)
+bool GrsFunctionParser::AddFunction(const std::string& name,
+                                 GrsFunctionParser& parser)
 {
     if(parser.data->varAmount == 0) // Currently must be at least one
         return false;
@@ -411,7 +411,7 @@ bool FunctionParser::AddFunction(const std::string& name,
 
 // Main parsing function
 // ---------------------
-int FunctionParser::Parse(const std::string& Function,
+int GrsFunctionParser::Parse(const std::string& Function,
                           const std::string& Vars,
                           bool useDegrees)
 {
@@ -459,8 +459,8 @@ namespace
 
 // Returns an iterator to the variable with the same name as 'F', or to
 // Variables.end() if no such variable exists:
-inline FunctionParser::Data::VarMap_t::const_iterator
-FunctionParser::FindVariable(const char* F, const Data::VarMap_t& vars) const
+inline GrsFunctionParser::Data::VarMap_t::const_iterator
+GrsFunctionParser::FindVariable(const char* F, const Data::VarMap_t& vars) const
 {
     if(vars.size())
     {
@@ -475,8 +475,8 @@ FunctionParser::FindVariable(const char* F, const Data::VarMap_t& vars) const
     return vars.end();
 }
 
-inline FunctionParser::Data::ConstMap_t::const_iterator
-FunctionParser::FindConstant(const char* F) const
+inline GrsFunctionParser::Data::ConstMap_t::const_iterator
+GrsFunctionParser::FindConstant(const char* F) const
 {
     if(data->Constants.size())
     {
@@ -494,7 +494,7 @@ FunctionParser::FindConstant(const char* F) const
 //---------------------------------------------------------------------------
 // Check function string syntax
 // ----------------------------
-int FunctionParser::CheckSyntax(const char* Function)
+int GrsFunctionParser::CheckSyntax(const char* Function)
 {
     const Data::VarMap_t& Variables = data->Variables;
     const Data::ConstMap_t& Constants = data->Constants;
@@ -630,7 +630,7 @@ int FunctionParser::CheckSyntax(const char* Function)
 
 // Compile function string to bytecode
 // -----------------------------------
-bool FunctionParser::Compile(const char* Function)
+bool GrsFunctionParser::Compile(const char* Function)
 {
     if(data->ByteCode) { delete[] data->ByteCode; data->ByteCode=0; }
     if(data->Immed) { delete[] data->Immed; data->Immed=0; }
@@ -669,17 +669,17 @@ bool FunctionParser::Compile(const char* Function)
 }
 
 
-inline void FunctionParser::AddCompiledByte(unsigned c)
+inline void GrsFunctionParser::AddCompiledByte(unsigned c)
 {
     tempByteCode->push_back(c);
 }
 
-inline void FunctionParser::AddImmediate(double i)
+inline void GrsFunctionParser::AddImmediate(double i)
 {
     tempImmed->push_back(i);
 }
 
-inline void FunctionParser::AddFunctionOpcode(unsigned opcode)
+inline void GrsFunctionParser::AddFunctionOpcode(unsigned opcode)
 {
     if(data->useDegreeConversion)
         switch(opcode)
@@ -714,14 +714,14 @@ inline void FunctionParser::AddFunctionOpcode(unsigned opcode)
         }
 }
 
-inline void FunctionParser::incStackPtr()
+inline void GrsFunctionParser::incStackPtr()
 {
     if(++StackPtr > data->StackSize) ++(data->StackSize);
 }
 
 
 // Compile if()
-int FunctionParser::CompileIf(const char* F, int ind)
+int GrsFunctionParser::CompileIf(const char* F, int ind)
 {
     int ind2 = CompileExpression(F, ind, true); // condition
     sws(F, ind2);
@@ -757,7 +757,7 @@ int FunctionParser::CompileIf(const char* F, int ind)
     return ind2+1;
 }
 
-int FunctionParser::CompileFunctionParams(const char* F, int ind,
+int GrsFunctionParser::CompileFunctionParams(const char* F, int ind,
                                           unsigned requiredParams)
 {
     unsigned curStackPtr = StackPtr;
@@ -772,7 +772,7 @@ int FunctionParser::CompileFunctionParams(const char* F, int ind,
 }
 
 // Compiles element
-int FunctionParser::CompileElement(const char* F, int ind)
+int GrsFunctionParser::CompileElement(const char* F, int ind)
 {
     sws(F, ind);
     char c = F[ind];
@@ -877,7 +877,7 @@ int FunctionParser::CompileElement(const char* F, int ind)
 }
 
 // Compiles '^'
-int FunctionParser::CompilePow(const char* F, int ind)
+int GrsFunctionParser::CompilePow(const char* F, int ind)
 {
     int ind2 = CompileElement(F, ind);
     sws(F, ind2);
@@ -894,7 +894,7 @@ int FunctionParser::CompilePow(const char* F, int ind)
 }
 
 // Compiles unary '-'
-int FunctionParser::CompileUnaryMinus(const char* F, int ind)
+int GrsFunctionParser::CompileUnaryMinus(const char* F, int ind)
 {
     sws(F, ind);
     if(F[ind] == '-')
@@ -924,7 +924,7 @@ int FunctionParser::CompileUnaryMinus(const char* F, int ind)
 }
 
 // Compiles '*', '/' and '%'
-int FunctionParser::CompileMult(const char* F, int ind)
+int GrsFunctionParser::CompileMult(const char* F, int ind)
 {
     int ind2 = CompileUnaryMinus(F, ind);
     sws(F, ind2);
@@ -947,7 +947,7 @@ int FunctionParser::CompileMult(const char* F, int ind)
 }
 
 // Compiles '+' and '-'
-int FunctionParser::CompileAddition(const char* F, int ind)
+int GrsFunctionParser::CompileAddition(const char* F, int ind)
 {
     int ind2 = CompileMult(F, ind);
     sws(F, ind2);
@@ -965,7 +965,7 @@ int FunctionParser::CompileAddition(const char* F, int ind)
 }
 
 // Compiles '=', '<' and '>'
-int FunctionParser::CompileComparison(const char* F, int ind)
+int GrsFunctionParser::CompileComparison(const char* F, int ind)
 {
     int ind2 = CompileAddition(F, ind);
     sws(F, ind2);
@@ -988,7 +988,7 @@ int FunctionParser::CompileComparison(const char* F, int ind)
 }
 
 // Compiles '&'
-int FunctionParser::CompileAnd(const char* F, int ind)
+int GrsFunctionParser::CompileAnd(const char* F, int ind)
 {
     int ind2 = CompileComparison(F, ind);
     sws(F, ind2);
@@ -1005,7 +1005,7 @@ int FunctionParser::CompileAnd(const char* F, int ind)
 }
 
 // Compiles '|'
-int FunctionParser::CompileOr(const char* F, int ind)
+int GrsFunctionParser::CompileOr(const char* F, int ind)
 {
     int ind2 = CompileAnd(F, ind);
     sws(F, ind2);
@@ -1022,7 +1022,7 @@ int FunctionParser::CompileOr(const char* F, int ind)
 }
 
 // Compiles ','
-int FunctionParser::CompileExpression(const char* F, int ind, bool stopAtComma)
+int GrsFunctionParser::CompileExpression(const char* F, int ind, bool stopAtComma)
 {
     int ind2 = CompileOr(F, ind);
     sws(F, ind2);
@@ -1041,7 +1041,7 @@ int FunctionParser::CompileExpression(const char* F, int ind, bool stopAtComma)
 
 // Return parse error message
 // --------------------------
-const char* FunctionParser::ErrorMsg() const
+const char* GrsFunctionParser::ErrorMsg() const
 {
     if(parseErrorType != FP_NO_ERROR) return ParseErrorMessage[parseErrorType];
     return 0;
@@ -1078,7 +1078,7 @@ namespace
     }
 }
 //addition from Ioannis G. Tsoulos
-double FunctionParser::EvalDeriv(const double *Vars,int pos)
+double GrsFunctionParser::EvalDeriv(const double *Vars,int pos)
 {
     DoubleStack derivStack;
     const unsigned* const ByteCode = data->ByteCode;
@@ -1393,7 +1393,7 @@ DoubleStack derivStack2;
 
 //end of addition from Ioannis G. Tsoulos
 
-double FunctionParser::EvalDeriv2(const double *Vars,int pos)
+double GrsFunctionParser::EvalDeriv2(const double *Vars,int pos)
 {
 	evalStack.clear();derivStack.clear();derivStack2.clear();
 const unsigned* const ByteCode = data->ByteCode;
@@ -1761,7 +1761,7 @@ const unsigned* const ByteCode = data->ByteCode;
 
 //end of addition from Ioannis G. Tsoulos
 
-double FunctionParser::Eval(const double* Vars)
+double GrsFunctionParser::Eval(const double* Vars)
 {
     const unsigned* const ByteCode = data->ByteCode;
     const double* const Immed = data->Immed;
@@ -1946,12 +1946,12 @@ double FunctionParser::Eval(const double* Vars)
 }
 
 
-double	FunctionParser::lastEval()
+double	GrsFunctionParser::lastEval()
 {
 	return lastValue;
 }
 
-double	FunctionParser::lastEvalDeriv()
+double	GrsFunctionParser::lastEvalDeriv()
 {
 	return lastDeriv;
 }
@@ -1966,7 +1966,7 @@ namespace
     }
 }
 
-void FunctionParser::PrintByteCode(std::ostream& dest) const
+void GrsFunctionParser::PrintByteCode(std::ostream& dest) const
 {
     const unsigned* const ByteCode = data->ByteCode;
     const double* const Immed = data->Immed;
@@ -3236,8 +3236,8 @@ CodeTree::ConstList CodeTree::BuildConstList()
     if(GetOp() == cMul)
     {
         /*
-          Jos joku niistï¿½ arvoista on -1 eikï¿½ se ole ainoa arvo,
-          niin joku muu niistï¿½ arvoista negatoidaan.
+          Jos joku niistä arvoista on -1 eikä se ole ainoa arvo,
+          niin joku muu niistä arvoista negatoidaan.
         */
         for(bool done=false; cp.size() > 1 && !done; )
         {
@@ -3446,16 +3446,16 @@ void CodeTree::Optimize()
                conflict= * redundant
                addmulflat=
                constantmath1= addmulflat * conflict
-               linearcombine= conflict * addmulflatï¿½ redundantï¿½
+               linearcombine= conflict * addmulflat¹ redundant¹
                powmuladd=
-               exponents= linearcombine * powmuladd conflictï¿½
+               exponents= linearcombine * powmuladd conflict¹
                logarithm= exponents *
                functioncalls= IDLE
                linearexplode= IDLE
                pascal= IDLE
 
                * = actions here
-               ï¿½ = only if made changes
+               ¹ = only if made changes
             */
         }
     }
@@ -3606,7 +3606,7 @@ void SubTree::CheckConstInv()
 
 }//namespace
 
-void FunctionParser::MakeTree(void *r) const
+void GrsFunctionParser::MakeTree(void *r) const
 {
     // Dirty hack. Should be fixed.
     CodeTree* result = static_cast<CodeTree*>(r);
@@ -3814,7 +3814,7 @@ void FunctionParser::MakeTree(void *r) const
     *result = stack[0];
 }
 
-void FunctionParser::Optimize()
+void GrsFunctionParser::Optimize()
 {
     copyOnWrite();
 
@@ -3863,8 +3863,8 @@ void FunctionParser::Optimize()
 #else /* !SUPPORT_OPTIMIZER */
 
 /* keep the linker happy */
-void FunctionParser::MakeTree(CodeTree *) const {}
-void FunctionParser::Optimize()
+void GrsFunctionParser::MakeTree(CodeTree *) const {}
+void GrsFunctionParser::Optimize()
 {
     // Do nothing if no optimizations are supported.
 }

@@ -17,7 +17,7 @@
 #endif
 using namespace std;
 
-class FunctionParser
+class GrsFunctionParser
 {
 public:
     enum ParseErrorType
@@ -49,18 +49,18 @@ public:
 
     bool AddFunction(const std::string& name,
                      FunctionPtr, unsigned paramsAmount);
-    bool AddFunction(const std::string& name, FunctionParser&);
+    bool AddFunction(const std::string& name, GrsFunctionParser&);
 
     void Optimize();
 
 
-    FunctionParser();
-    ~FunctionParser();
+    GrsFunctionParser();
+    ~GrsFunctionParser();
 
     // Copy constructor and assignment operator (implemented using the
     // copy-on-write technique for efficiency):
-    FunctionParser(const FunctionParser&);
-    FunctionParser& operator=(const FunctionParser&);
+    GrsFunctionParser(const GrsFunctionParser&);
+    GrsFunctionParser& operator=(const GrsFunctionParser&);
 
 
 #ifdef FUNCTIONPARSER_SUPPORT_DEBUG_OUTPUT
@@ -103,7 +103,7 @@ private:
         std::vector<FuncPtrData> FuncPtrs;
 
         VarMap_t FuncParserNames;
-        std::vector<FunctionParser*> FuncParsers;
+        std::vector<GrsFunctionParser*> FuncParsers;
 
         unsigned* ByteCode;
         unsigned ByteCodeSize;
@@ -133,7 +133,7 @@ private:
     inline void copyOnWrite();
 
 
-    bool checkRecursiveLinking(const FunctionParser*) const;
+    bool checkRecursiveLinking(const GrsFunctionParser*) const;
 
     bool isValidName(const std::string&) const;
     Data::VarMap_t::const_iterator FindVariable(const char*,

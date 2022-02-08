@@ -1,15 +1,14 @@
 # ifndef __RLSPROGRAM__H
 # define __RLSPROGRAM__H
-# include <Optimus/optimizer.h>
-
-# include <grs/population.h>
-# include <grs/fparser.hh>
+# include <problem.h>
+# include <population.h>
+# include <fparser.hh>
 
 class RlsProgram :public Program
 {
 	private:
-		FunctionParser	parser;
-        Problem *problem;
+		GrsFunctionParser	parser;
+		Problem *problem;
 		double	bestValue;
 		double  fvalue;
 		int dimension;

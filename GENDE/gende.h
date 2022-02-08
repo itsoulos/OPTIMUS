@@ -6,9 +6,6 @@
 #include <Optimus/tolmin.h>
 
 
-#include <grs/grs.h>
-#include <grs/get_options_price.h>
-
 #include <chrono>
 
 class GENDEInterface
@@ -34,7 +31,6 @@ private:
     int generation, population_count, population_size, bestMinIndex, dimension, it;
     void selectAndCrossover();
     double randMToN(double M, double N);
-    Grs *Solv;
     std::chrono::time_point<std::chrono::system_clock> prin, meta;
 public:
     GENDE(Problem *p);

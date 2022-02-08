@@ -26,8 +26,12 @@ QMAKE_CFLAGS += -O3 -march=native -fopenmp -unroll-loops -omit-frame-pointer -Wi
 QMAKE_LFLAGS += -O3
 SOURCES += \
     adam.cpp \
+    collection.cc \
     dllproblem.cpp \
+    doublestack.cc \
+    fparser.cc \
     gradientdescent.cpp \
+    grs.cc \
     interval.cpp \
     intervalproblem.cpp \
     kmeans.cpp \
@@ -35,15 +39,24 @@ SOURCES += \
     optimizer.cpp \
     optimus.cpp \
     point.cpp \
+    population.cc \
     problem.cpp \
+    program.cc \
+    rlsprogram.cc \
+    rule.cc \
+    symbol.cc \
     tolmin.cc \
     cluster.cpp
 
 HEADERS += \
     Optimus_global.h \
     adam.h \
+    collection.h \
     dllproblem.h \
+    doublestack.h \
+    fparser.hh \
     gradientdescent.h \
+    grs.h \
     interval.h \
     intervalproblem.h \
     kmeans.h \
@@ -51,7 +64,12 @@ HEADERS += \
     optimizer.h \
     optimus.h \
     point.h \
+    population.h \
     problem.h \
+    program.h \
+    rlsprogram.h \
+    rule.h \
+    symbol.h \
     tolmin.h \
     cluster.h
 

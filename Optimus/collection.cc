@@ -1,4 +1,4 @@
-# include <grs/collection.h>
+# include <collection.h>
 # include <math.h>
 
 Collection::Collection(int d)

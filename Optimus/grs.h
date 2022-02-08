@@ -1,9 +1,9 @@
 # ifndef __GRS__H
 # define __GRS__H
 
-# include <grs/rlsprogram.h>
-# include <grs/population.h>
-# include <grs/collection.h>
+# include <rlsprogram.h>
+# include <population.h>
+# include <collection.h>
 
 
 class Grs
@@ -14,7 +14,7 @@ class Grs
 		RlsProgram *program;
 		Population *pop;
 	public:
-        Grs(Problem *p);
+		Grs(Problem *p);
 		int	getGenomeCount() const;
 		int	getGenomeLength() const;
 		int	getMaxGenerations() const;
@@ -31,5 +31,4 @@ class Grs
 		double	getMinimum() const;
 		~Grs();
 };
-
 # endif

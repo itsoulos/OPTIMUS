@@ -1,4 +1,4 @@
-# include <grs/symbol.h>
+# include <symbol.h>
 Symbol::Symbol()
 {
 	name = "";
@@ -41,7 +41,7 @@ void	Symbol::addRule(Rule *r)
 
 Rule	*Symbol::getRule(int pos) const
 {
-    if(pos<0 || pos>=count_rules) return NULL;
+	if(pos<0 || pos>=count_rules) return NULL;
 	return rule[pos];
 }
 

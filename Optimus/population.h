@@ -1,5 +1,5 @@
 # ifndef __POPULATION__H
-# include <grs/program.h>
+# include <program.h>
 class Population
 {
 	private:

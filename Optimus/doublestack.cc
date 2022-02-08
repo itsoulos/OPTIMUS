@@ -1,4 +1,4 @@
-# include <grs/doublestack.h>
+# include <doublestack.h>
 # include <iostream>
 # include <stdio.h>
 # include <stdlib.h>

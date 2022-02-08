@@ -201,8 +201,6 @@ void GENDE::selectAndCrossover()
             newMin = myProblem->funmin(newX);
             if (grsflag)
             {
-                if (rand() % 100 == 0)
-                    Solv->Solve(newX, newMin);
             }
         }
         else
@@ -221,8 +219,6 @@ void GENDE::selectAndCrossover()
             bool grsflag = false;
             if (grsflag)
             {
-                Solv->Solve(newX, newMin);
-                population[it] = newX;
             }
             if (bfgsflag)
             {
@@ -279,9 +275,6 @@ void GENDE::init()
     fitness_array.resize(population_count);
     for (int i = 0; i < population_count; i++)
         fitness_array[i] = myProblem->funmin(population[i]);
-    Solv = new Grs(myProblem);
-    Solv->setGenomeCount(20);
-    Solv->setGenomeLength(10 * population_size);
     sum = accumulate(fitness_array.begin(), fitness_array.end(), 0);
     if (sum == 0)
     {
@@ -305,7 +298,6 @@ void GENDE::done()
 }
 GENDE::~GENDE()
 {
-    delete Solv;
 }
 extern "C" GENDE_EXPORT Optimizer *createOptimizer(Problem *p)
 {

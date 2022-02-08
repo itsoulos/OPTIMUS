@@ -17,7 +17,7 @@ CXX           = g++
 DEFINES       = -DIPSO_LIBRARY -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_CORE_LIB
 CFLAGS        = -pipe -O3 -march=native -fopenmp -unroll-loops -omit-frame-pointer -Winline -unsafe-math-optimizations -mtune=native -mno-vzeroupper -pthread -fopt-info-optimized-vec-loop-omp -O2 -O3 -march=native -fopenmp -unroll-loops -omit-frame-pointer -Winline -unsafe-math-optimizations -mtune=native -mno-vzeroupper -pthread -fopt-info-optimized-vec-loop-omp -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -O3 -march=native -fopenmp -unroll-loops -omit-frame-pointer -Winline -unsafe-math-optimizations -mtune=native -mno-vzeroupper -pthread -fopt-info-optimized-vec-loop-omp -O2 -O3 -march=native -fopenmp -unroll-loops -omit-frame-pointer -Winline -unsafe-math-optimizations -mtune=native -mno-vzeroupper -pthread -fopt-info-optimized-vec-loop-omp -std=gnu++11 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -I../../../../Desktop/ERGASIES/OPTIMUS -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+INCPATH       = -I. -I../../OPTIMUS -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
 QMAKE         = /usr/lib/qt5/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -37,7 +37,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = iPso1.0.0
-DISTDIR = /home/sheridan/Επιφάνεια\ εργασίας/ERGASIES/OPTIMUS/iPso/.tmp/iPso1.0.0
+DISTDIR = /home/sheridan/Desktop/ERGASIES/OPTIMUS/iPso/.tmp/iPso1.0.0
 LINK          = g++
 LFLAGS        = -O3 -Wl,-O1 -shared -Wl,-soname,libiPso.so.1
 LIBS          = $(SUBLIBS) -lm -fopenmp -L$(OPTIMUSPATH)/lib -lOptimus /usr/lib/x86_64-linux-gnu/libQt5Core.so -lpthread   
@@ -89,6 +89,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_linuxaccessibility_support_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network_private.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_openglextensions.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_openglextensions_private.pri \
@@ -195,6 +196,7 @@ Makefile: iPso.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /u
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_linuxaccessibility_support_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network_private.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_openglextensions.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_openglextensions_private.pri \
@@ -273,6 +275,7 @@ Makefile: iPso.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /u
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_linuxaccessibility_support_private.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_network_private.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_opengl_private.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_openglextensions.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_openglextensions_private.pri:
@@ -382,14 +385,15 @@ compiler_clean: compiler_moc_predefs_clean
 
 ipso.o: ipso.cpp ipso.h \
 		iPso_global.h \
-		../../../../Desktop/ERGASIES/OPTIMUS/Optimus/optimizer.h \
-		../../../../Desktop/ERGASIES/OPTIMUS/Optimus/problem.h \
-		../../../../Desktop/ERGASIES/OPTIMUS/Optimus/intervalproblem.h \
-		../../../../Desktop/ERGASIES/OPTIMUS/Optimus/interval.h \
-		../../../../Desktop/ERGASIES/OPTIMUS/Optimus/tolmin.h \
-		../../../../Desktop/ERGASIES/OPTIMUS/Optimus/gradientdescent.h \
-		../../../../Desktop/ERGASIES/OPTIMUS/Optimus/adam.h \
-		../../../../Desktop/ERGASIES/OPTIMUS/Optimus/lbfgs.h
+		../../OPTIMUS/Optimus/optimizer.h \
+		../Optimus/problem.h \
+		../Optimus/intervalproblem.h \
+		../Optimus/interval.h \
+		../Optimus/tolmin.h \
+		../Optimus/gradientdescent.h \
+		../Optimus/adam.h \
+		../Optimus/lbfgs.h \
+		../../OPTIMUS/Optimus/tolmin.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ipso.o ipso.cpp
 
 ####### Install

@@ -1,4 +1,4 @@
-# include <grs/population.h>
+# include <population.h>	
 # include <iostream>
 # include <stdlib.h>
 # include <string.h>
@@ -84,7 +84,7 @@ void	Population::crossover()
 			int r;
                         for(int j=0;j<tournament_size;j++)
                         {
-                                r=rand() % (genome_count);
+				r=rand() % (genome_count);
                                 if(j==0 || fitness_array[r]>max_fitness)
                                 {
                                         max_index=r;

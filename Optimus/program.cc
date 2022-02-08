@@ -1,4 +1,4 @@
-# include <grs/program.h>
+# include <program.h>		
 
 Program::Program()
 {
@@ -19,22 +19,12 @@ Symbol	*Program::getStartSymbol() const
 string	Program::printRandomProgram(vector<int> &genome,int &redo)
 {
 	string str="";
-    int count=0;
-
-
-    Rule *r;
-    int pos;
-//#pragma omp single
-{
-    pos = genome[count]%start_symbol->getCountRules();
-
-    //while (start_symbol->getRule(pos)==NULL);
-    r = start_symbol->getRule(pos);
-
+	int count=0;
+	Rule *r;
+	int pos=genome[count]%start_symbol->getCountRules();
+	r=start_symbol->getRule(genome[count]%start_symbol->getCountRules());
 	redo = 0;
-//#pragma omp critical
 	str=r->printRule(genome,count,redo);
-}
 	return str;
 }
 

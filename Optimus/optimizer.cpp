@@ -1,6 +1,6 @@
 #include "optimizer.h"
 # include <QStringList>
-
+# include <grs.h>
 Optimizer::Optimizer(Problem *p)
 {
     myProblem=p;
@@ -52,6 +52,17 @@ double  Optimizer::localSearch(Data &x)
     {
         //GSlBfgs xx(myProblem);
         //return xx.Solve(x);
+    }
+    else
+    if(method=="grs")
+    {
+        Grs *solver=new Grs(myProblem);
+        solver->setGenomeCount(20);
+        solver->setGenomeLength(10 * myProblem->getDimension());
+       double y=myProblem->funmin(x);
+       solver->Solve(x,y);
+       delete solver;
+       return y;
     }
 }
 

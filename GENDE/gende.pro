@@ -20,34 +20,10 @@ QMAKE_CFLAGS += -O3 -march=native -fopenmp -unroll-loops -omit-frame-pointer -Wi
 QMAKE_LFLAGS += -O3
 SOURCES += \
     gende.cpp \
-    grs/grs.cpp \
-    grs/collection.cpp \
-    grs/doublestack.cpp \
-    grs/get_options_price.cpp \
-    grs/population.cpp \
- #   grs/problem.cpp \
-    grs/program.cpp \
-    grs/rlsprogram.cpp \
-    grs/rule.cpp \
-    grs/symbol.cpp \
- #  grs/tolmin.cpp \
-    grs/fparser.cpp
+
 HEADERS += \
     gende_global.h \
     gende.h \
-    grs/grs.h \
-    grs/collection.h \
-    grs/doublestack.h \
-    grs/f2c.h \
-    grs/get_options_price.h \
-    grs/population.h \
-#    grs/problem.h \
-    grs/program.h \
-    grs/rlsprogram.h \
-    grs/rule.h \
-    grs/symbol.h \
- #   grs/tolmin.h \
-    grs/fparser.hh
 
     LIBS += -L$(OPTIMUSPATH)/lib -lOptimus
 
