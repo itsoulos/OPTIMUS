@@ -1,0 +1,12 @@
+#ifndef NELDERMEAD_GLOBAL_H
+#define NELDERMEAD_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(NELDERMEAD_LIBRARY)
+#define NELDERMEAD_EXPORT Q_DECL_EXPORT
+#else
+#define NELDERMEAD_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // NELDERMEAD_GLOBAL_H

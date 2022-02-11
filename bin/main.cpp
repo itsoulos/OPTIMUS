@@ -160,7 +160,7 @@ void  loadOptimizers()
 
   //  optimizerFile<<"libGenetic.so"<<"libMultistart.so"<<"libPso.so"<<"libMinfinder.so"<<"libiPso.so"
 //                  <<"libGenmin.so"<<"libPrice.so"<<"libBfgs.so"<<"libMinCenter.so"<<"libTmlsl.so"<<"libde.so"<<"libgende.so";
-    optimizerFile<<"libGenetic.so"<<"libMultistart.so"<<"libiPso.so"<<"libMinfinder.so"<<"libPrice.so"<<"libgende.so";
+    optimizerFile<<"libGenetic.so"<<"libMultistart.so"<<"libiPso.so"<<"libMinfinder.so"<<"libPrice.so"<<"libgende.so"<<"libnelderMead.so";
     for(int i=0;i<optimizerFile.size();i++)
     {
         QString name=optimizerFile[i];

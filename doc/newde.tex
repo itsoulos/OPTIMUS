@@ -1,7 +1,7 @@
 %% LyX 2.3.6 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
 \documentclass[english]{article}
-\usepackage[T1]{fontenc}
+\usepackage[LGR,T1]{fontenc}
 \usepackage[latin9]{inputenc}
 \usepackage{amstext}
 \usepackage{graphicx}
@@ -9,6 +9,11 @@
 \makeatletter
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\DeclareRobustCommand{\greektext}{%
+  \fontencoding{LGR}\selectfont\def\encodingdefault{LGR}}
+\DeclareRobustCommand{\textgreek}[1]{\leavevmode{\greektext #1}}
+\ProvideTextCommand{\~}{LGR}[1]{\char126#1}
+
 %% Because html converters don't know tabularnewline
 \providecommand{\tabularnewline}{\\}
 
@@ -23,19 +28,22 @@ Karvounis}
 Greece}
 \maketitle
 \begin{abstract}
-The Differential Evolution (DE) method is a stochastic method of global
-optimization that has been widely used in continuous optimization
-problems from various areas and can be applied to problems that even
-contain noise. The present work proposes two variations for this method.
-The first significantly improves the termination of the method by
-proposing an asymptotic termination rule, which is based on the differentiation
-of the average of the function values in the population of DE. The
-second modification proposes a new scheme for a critical parameter
-of the method, which scheme improves the method's ability to better
-explore the search space of the objective function. The proposed variations
-have been tested on a number of problems from the current literature
-and from the experimental results it appears that the proposed modifications
-render the method quite robust and faster even in large-scale problems. 
+Differential Evolution (DE) is a method of optimization used in symmetrical
+optimization problems but also in problems that are not even continuous,
+are noisy and changed over time. D\textgreek{E} optimizes a problem
+with a population of candidate solutions and creating new candidate
+solutions per generation in combination with existing rules according
+to discriminatory rules. The present work proposes two variations
+for this method. The first significantly improves the termination
+of the method by proposing an asymptotic termination rule, which is
+based on the differentiation of the average of the function values
+in the population of DE. The second modification proposes a new scheme
+for a critical parameter of the method, which scheme improves the
+method's ability to better explore the search space of the objective
+function. The proposed variations have been tested on a number of
+problems from the current literature and from the experimental results
+it appears that the proposed modifications render the method quite
+robust and faster even in large-scale problems. 
 \end{abstract}
 
 \section{Introduction }
@@ -103,9 +111,10 @@ to neural network training \cite{de_neural1,de_neural2,de_neural3},
 to the Traveling Salesman Problem \cite{de_tsp,de_review5}, training
 of RBF neural networks \cite{rbf_de1,rbf_de2,rbf_de3}, optimization
 of the Lennard Jones potential \cite{lennardjones_de1,lennardjones_de2}.
-Also the DE method has been sucessfully combined with other techniques
+Also the DE method has been successfully combined with other techniques
 for machine learning applications such as classification \cite{de_classifier1,de_classifier2},
-feature selection \cite{de_feat1,de_feat2}, deep learning \cite{de_deep1,de_deep2}etc.
+feature selection \cite{de_feat1,de_feat2}, deep learning \cite{de_deep1,de_deep2}
+etc.
 
 The rest of this article is organized as follows: in section \ref{sec:Modifications}
 the base DE algorithm as well as the proposed modifications are presented
