@@ -18,7 +18,8 @@ class IPSO_EXPORT iPso : public Optimizer, iPsoInterface
 private:
     bool centerPso;
     double sum,newSum, besty_tmp;
-    int n;
+    int n,sumn;
+    int countn;
     Data center;
     vector<Data> particle;
     vector<Data> bestParticle;

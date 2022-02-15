@@ -57,10 +57,17 @@ bool iPso::terminated()
         double dd = fabs(newSum - sum);
          printf("%4d] Generation  change: %10.6lf \n", generation, dd);
         sum = newSum;
+
         if (dd < 1e-8)
+	{
             n++;
+		sumn+=1;
+	}
         else
+	{
             n = 0;
+		countn++;
+	}
         if (n > 15)
             return true;
 
@@ -70,9 +77,13 @@ bool iPso::terminated()
          printf("%4d] Generation  change: %10.6lf \n", generation, besty_tmp);
         if (besty == besty_tmp){
             n++;
+		sumn+=1;
         }
         else
+	{
             n = 0;
+		countn++;
+	}
         if (n > 15)
             return true;
         return generation >= max_generations;
@@ -125,6 +136,7 @@ void iPso::init()
     lmargin = myProblem->getLeftMargin();
     rmargin = myProblem->getRightMargin();
 
+    countn=0;
     generation = 0;
     besty = 1e+100;
     oldbesty = 1e+100;
@@ -135,6 +147,7 @@ void iPso::init()
     RC = 0.0;
     localSearchCount = 0;
     minimax.clear();
+    sumn=0;
 
     for (int i = 0; i < ipso_particles; i++)
     {
@@ -199,9 +212,14 @@ void iPso::calcFitnessArray()
     }
     case 1:
     {
-        inertia = wmax - generation * 1.0 / maxGenerations * (wmax - wmin);
+	    if(countn==0) countn=1;
+	    double average_n=countn==0?0:sumn*1.0/countn;
+		if(average_n<=0) average_n=15.0;
+	            inertia = wmax - generation * 1.0 / average_n * (wmax - wmin);
 
-        break;                                             //tsoulos
+        printf("inertia: %10.6lf \n", inertia);
+
+        break;
     }
     case 2:
     {
@@ -308,7 +326,24 @@ void iPso::calcFitnessArray()
                 }
             }
             else
+	    {
+		int imin=-1;
+		double dmin=1e+100;
+		for(int j=0;j<minimax.size();j++)
+		{
+			if(getDistance(minimax[j],particle[i])<dmin) 
+			{
+				dmin=getDistance(minimax[j],particle[i]);
+				imin = j;
+			}
+		}
+		if(imin!=-1)
+		{
+			RC+=getDistance(minimax[imin],particle[i]);
+			localSearchCount++;
+		}
                 fitness_array[i] = fitness(particle[i]);
+	    }
         }
     }
 }
