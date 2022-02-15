@@ -176,14 +176,14 @@ void iPso::calcFitnessArray()
     Data distances;
 
     double inertia;
-    int inertia_type = 5;
+    int inertia_type = 3;
     // inecria weight => εάν θα διατηρηθεί η ταχύτητα
     switch ( inertia_type )//
     {
     case 0:
     {
-        int R = drand48();
-        inertia = fabs((1.0 / (1.5 +(R/2.0))));             //charilogis
+        double R = drand48();
+        inertia = fabs((1.0 / (4.0 +(R/2.0))));             //charilogis
         break;
     }
     case 1:
@@ -198,7 +198,7 @@ void iPso::calcFitnessArray()
     }
     case 3:                                                //3 (w2)
     {
-        int R = drand48();
+        double R = drand48();
         inertia = 0.5 +(R/2.0);
         break;
     }

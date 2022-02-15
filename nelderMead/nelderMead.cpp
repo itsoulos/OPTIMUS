@@ -2,7 +2,7 @@
 nelderMead::nelderMead(Problem *p)
     : Optimizer(p)
 {
-    addParameter("population_count", "1000", "Number of population");
+    addParameter("population_count", "200", "Number of population");
     addParameter("max_generations", "100", "Maximum number of generations");
     addParameter("alpha", "1.0", "alpha");
     addParameter("gamma", "2.0", "gamma");
@@ -12,22 +12,23 @@ nelderMead::nelderMead(Problem *p)
 bool nelderMead::terminated()
 {
     int max_generations = params["max_generations"].toString().toInt();
-    /* double dd = fabs(newSum - sum);
-     printf("%4d] Generation  change: %10.6lf \n", generation, dd);
-     if (dd < 1e-8)
-         n++;
-     else
-         n=0;
-     if (n>5)
-         return true;
-     sum = newSum;
-     */
+
+    double dd = fabs(newSum - sum);
+    // printf("%4d] Generation  change: %10.6lf \n", generation, dd);
+    if (dd < 1e-8)
+        n++;
+    else
+        n = 0;
+    if (n > 15)
+        return true;
+    sum = newSum;
+
     return generation >= max_generations;
 }
 
 void nelderMead::order()
 {
-    sort(population.begin(), population.end());
+    sort(population.begin(), population.end()); //[](auto a,auto b){return a.first < b.first;}
 }
 void nelderMead::center()
 {
@@ -36,7 +37,7 @@ void nelderMead::center()
     {
         centerPoint[i] = 0.0;
     }
-    for (int i = 0; i < population_count - 1; i++)
+    for (int i = 0; i < population_count-1; i++)
     {
         for (int j = 0; j < population_size; j++)
         {
@@ -45,7 +46,7 @@ void nelderMead::center()
     }
     for (int i = 0; i < population_size; i++)
     {
-        centerPoint[i] /= population_count - 1;
+        centerPoint[i] /= population_count-1;
         if (centerPoint[i] < lmargin[i])
             centerPoint[i] = lmargin[i];
         if (centerPoint[i] > rmargin[i])
@@ -68,7 +69,7 @@ void nelderMead::expansion()
     }
     yexpandedPoint = myProblem->funmin(expandedPoint);
 }
-void nelderMead::contractionA()
+void nelderMead::contraction()
 {
     for (int j = 0; j < population_size; j++)
     {
@@ -94,56 +95,72 @@ void nelderMead::shrink()
             population[i].first = myProblem->funmin(population[i].second);
         }
     }
-
 }
 void nelderMead::step()
 {
-        order();
-        center();
-
-        ybestPoint = population.begin()->first;
-        worst = (population.end())->first;
-        secondWorst = population[population_count - 2].first;
-        reflection();
-        if (yreflectedPoint < secondWorst && yreflectedPoint >= ybestPoint)
+start:
+    order();
+    center();
+    ybestPoint = population.begin()->first;
+    worst = (population.end())->first;
+    secondWorst = population[population_count - 2].first;
+    reflection();
+    if (yreflectedPoint < secondWorst && yreflectedPoint > ybestPoint)
+    {
+        printf("reflection \n");
+        population[population_count - 1].second = reflectedPoint;
+        population[population_count - 1].first = yreflectedPoint;
+        goto start;
+    }
+    else if (yreflectedPoint < ybestPoint)
+    {
+        expansion();
+        printf("expansion \n");
+        if (yexpandedPoint < yreflectedPoint)
+        {
+            population[population_count - 1].second = expandedPoint;
+            population[population_count - 1].first = yexpandedPoint;
+            goto start;
+        }
+        else
         {
             population[population_count - 1].second = reflectedPoint;
             population[population_count - 1].first = yreflectedPoint;
-        }else if (yreflectedPoint < ybestPoint)
-        {
-            expansion();
-
-            if (yexpandedPoint < yreflectedPoint)
-            {
-                population[population_count - 1].second = expandedPoint;
-                population[population_count - 1].first = yexpandedPoint;
-            }else
-            {
-                population[population_count - 1].second = reflectedPoint;
-                population[population_count - 1].first = yreflectedPoint;
-            }
-
-        }else {
-            if (yreflectedPoint < worst)
-            {
-                contractionA();
-                if (ycontractedPoint < yreflectedPoint)
-                {
-                    population[population_count - 1].second = contractedPoint;
-                    population[population_count - 1].first = ycontractedPoint;
-                }
-            }else{
-                contractionB();
-                if (ycontractedPoint < worst)
-                {
-                    population[population_count - 1].second = contractedPoint;
-                    population[population_count - 1].first = ycontractedPoint;
-                }
-            }
+            goto start;
         }
-
-        shrink();
-	printf("n[%d]=%lf \n",generation,ybestPoint);
+        goto start;
+    }
+    else
+    {
+        if (yreflectedPoint < worst)
+        {
+            printf("contraction \n");
+            contraction();
+            if (ycontractedPoint < yreflectedPoint)
+            {
+                population[population_count - 1].second = contractedPoint;
+                population[population_count - 1].first = ycontractedPoint;
+                goto start;
+            }
+            else
+                shrink();
+        }
+        else
+        {
+            if (ycontractedPoint < worst)
+            {
+                printf("contractionB \n");
+                contractionB();
+                population[population_count - 1].second = contractedPoint;
+                population[population_count - 1].first = ycontractedPoint;
+                goto start;
+            }
+            else
+                shrink();
+        }
+    }
+    newSum = accumulate(&population.begin()->first, &population.end()->first, 0);
+    newSum = newSum / population_count;
     ++generation;
 }
 
@@ -173,22 +190,16 @@ void nelderMead::init()
         population[i].second = myProblem->getRandomPoint();
         population[i].first = myProblem->funmin(population[i].second);
     }
-    //sum = accumulate(&population.begin()->first, &population.end()->first, 0);
-    //if (sum == 0)
-    //    assert(sum > 0);
-    //sum = sum / population_count;
+    sum = accumulate(&population.begin()->first, &population.end()->first, 0);
+    // if (sum == 0)
+    //     assert(sum > 0);
+    sum = sum / population_count;
     n = 0;
 }
 
 void nelderMead::done()
 {
-    //for (int i = 0; i < population_count; i++)
-    //{
-        // printf("fitnees[%2d] = %10.6lf \n", i, population[i].first);
-    //}
-    ybestPoint =myProblem->funmin(population[0].second);
-    //ybestPoint =localSearch(population[0].second);
-
+    ybestPoint = myProblem->funmin(population[0].second);
 }
 nelderMead::~nelderMead()
 {

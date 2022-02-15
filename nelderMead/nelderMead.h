@@ -29,7 +29,7 @@ private:
     void center();
     void reflection();
     void expansion();
-    void contractionA();
+    void contraction();
     void contractionB();
     void shrink();
 
