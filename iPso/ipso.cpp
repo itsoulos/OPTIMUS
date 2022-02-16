@@ -258,6 +258,7 @@ void iPso::calcFitnessArray()
     }
     case 8:                                                //8 (w12)
     {
+	            inertia = wmax - generation * 1.0 / maxGenerations * (wmax - wmin);
         break;
     }
     default:
