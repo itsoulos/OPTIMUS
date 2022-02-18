@@ -95,9 +95,9 @@ This article proposes a two phase hybrid method to train RBF neural networks
  During the first phase a range for the critical parameters of the RBF network
  is estimated and in the second phase a genetic algorithm is incorporated
  to locate the best RBF neural network for the underlying problem.
- The method is compared against the traditional training method of RBF neural
- networks on a wide series of classification and regression problems from
- the relevant literature and the results are reported.
+ The method is compared against other training methods of RBF neural networks
+ on a wide series of classification and regression problems from the relevant
+ literature and the results are reported.
 \end_layout
 
 \begin_layout Description
@@ -1923,6 +1923,9 @@ noprefix "false"
 \end_inset
 
 .
+ The parameters of the method were chosen so that there is a balance between
+ speed and efficiency of the method.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -2865,8 +2868,16 @@ noprefix "false"
 .
  For the first case the average classification error is reported and for
  the case of regression datasets the total test error is reported.
- The column KRBF denotes the classic RBF training method and the column
- PROPOSED denotes the proposed method.
+ The column KRBF denotes the classic RBF training method, GRBF denotes the
+ method proposed in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rbf_gen1"
+literal "false"
+
+\end_inset
+
+ and the column PROPOSED denotes the proposed method.
  The KBF simply consists of two phases: in the first phase centers and variances
  are estimated through the k-means algorithm and in the second phase a system
  of equations is solved to obtain the weights 
@@ -2879,7 +2890,7 @@ noprefix "false"
 
 \begin_layout Standard
 From the experimental results it is clear that the proposed method is significan
-tly superior to traditional technique in almost all datasets.
+tly superior to other methods in almost all datasets.
  In the proposed method the appropriate initialization interval is found
  for the parameters of RBF using k-means.
  A parallel genetic algorithm was then applied to this previous value range
@@ -2930,13 +2941,48 @@ noprefix "false"
 \end_inset
 
 .
+ An additional experiment was performed to evaluate the effect of the parameter
+ change k on the results.
+ In Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:housing"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ the plot for different values of 
+\begin_inset Formula $k$
+\end_inset
+
+ for the Housing dataset is outlined and in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:zfs"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ the same experiment is shown for the Z_F_S classification dataset.
+ Of course from the value 
+\begin_inset Formula $k=4$
+\end_inset
+
+ onwards the error falls but not at the same rate.
+ The proposed value k = 10 was used in all data sets in order to have a
+ balance between the speed and the efficiency of the method.
+ 
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -2960,8 +3006,9 @@ name "tab:Experimental-results"
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="31" columns="3">
+<lyxtabular version="3" rows="31" columns="4">
 <features tabularvalignment="middle">
+<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -2980,6 +3027,15 @@ DATASET
 
 \begin_layout Plain Layout
 KRBF
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+GRBF
 \end_layout
 
 \end_inset
@@ -3013,6 +3069,15 @@ Alcohol
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+52.30%
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3038,6 +3103,15 @@ Appendicitis
 
 \begin_layout Plain Layout
 12.23%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+16.83%
 \end_layout
 
 \end_inset
@@ -3071,6 +3145,15 @@ Australian
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+41.79%
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3096,6 +3179,15 @@ Balance
 
 \begin_layout Plain Layout
 33.42%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+38.02%
 \end_layout
 
 \end_inset
@@ -3129,6 +3221,15 @@ Cleveland
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+67.47%
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3154,6 +3255,15 @@ Dermatology
 
 \begin_layout Plain Layout
 62.34%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+61.46%
 \end_layout
 
 \end_inset
@@ -3187,6 +3297,15 @@ Glass
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+61.30%
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3212,6 +3331,15 @@ Hayes Roth
 
 \begin_layout Plain Layout
 64.36%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+63.46%
 \end_layout
 
 \end_inset
@@ -3245,6 +3373,15 @@ Heart
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+28.44%
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3270,6 +3407,15 @@ HouseVotes
 
 \begin_layout Plain Layout
 6.13%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11.99%
 \end_layout
 
 \end_inset
@@ -3303,6 +3449,15 @@ Ionosphere
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+19.83%
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3328,6 +3483,15 @@ Liverdisorder
 
 \begin_layout Plain Layout
 30.84%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+36.97%
 \end_layout
 
 \end_inset
@@ -3361,6 +3525,15 @@ Mammographic
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+30.41%
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3386,6 +3559,15 @@ Parkinsons
 
 \begin_layout Plain Layout
 17.42%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+33.81%
 \end_layout
 
 \end_inset
@@ -3419,6 +3601,15 @@ Pima
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+27.83%
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3444,6 +3635,15 @@ Popfailures
 
 \begin_layout Plain Layout
 7.04%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7.08%
 \end_layout
 
 \end_inset
@@ -3477,6 +3677,15 @@ Regions2
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+39.98%
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3502,6 +3711,15 @@ Ring
 
 \begin_layout Plain Layout
 21.65%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+50.36%
 \end_layout
 
 \end_inset
@@ -3535,6 +3753,15 @@ Saheart
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+33.90%
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3560,6 +3787,15 @@ Segment
 
 \begin_layout Plain Layout
 59.68%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+54.25%
 \end_layout
 
 \end_inset
@@ -3593,6 +3829,15 @@ Sonar
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+34.20%
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3618,6 +3863,15 @@ Spiral
 
 \begin_layout Plain Layout
 44.87%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+50.02%
 \end_layout
 
 \end_inset
@@ -3651,6 +3905,15 @@ Tae
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+61.78%
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3676,6 +3939,15 @@ Thyroid
 
 \begin_layout Plain Layout
 10.52%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8.53%
 \end_layout
 
 \end_inset
@@ -3709,6 +3981,15 @@ Wdbc
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8.82%
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3734,6 +4015,15 @@ Wine
 
 \begin_layout Plain Layout
 31.41%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+31.47%
 \end_layout
 
 \end_inset
@@ -3767,6 +4057,15 @@ Z_F_S
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+23.37%
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3792,6 +4091,15 @@ ZO_NF_S
 
 \begin_layout Plain Layout
 9.02%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+22.18%
 \end_layout
 
 \end_inset
@@ -3825,6 +4133,15 @@ ZONF_S
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17.41%
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3854,6 +4171,15 @@ ZOO
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+33.50%
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3877,7 +4203,7 @@ ZOO
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -3901,8 +4227,9 @@ name "tab:exp2"
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="12" columns="3">
+<lyxtabular version="3" rows="12" columns="4">
 <features tabularvalignment="middle">
+<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -3921,6 +4248,15 @@ DATASET
 
 \begin_layout Plain Layout
 KRBF
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+GRBF
 \end_layout
 
 \end_inset
@@ -3954,6 +4290,15 @@ ABALONE
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4161.66
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3979,6 +4324,15 @@ AIRFOIL
 
 \begin_layout Plain Layout
 5.49
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18.15
 \end_layout
 
 \end_inset
@@ -4012,6 +4366,15 @@ ANACALT
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5.58
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -4037,6 +4400,15 @@ BK
 
 \begin_layout Plain Layout
 0.17
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.21
 \end_layout
 
 \end_inset
@@ -4070,6 +4442,15 @@ BL
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.019
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -4095,6 +4476,15 @@ CONCRETE
 
 \begin_layout Plain Layout
 1.15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.50
 \end_layout
 
 \end_inset
@@ -4128,6 +4518,15 @@ HOUSING
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4784.50
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -4153,6 +4552,15 @@ LASER
 
 \begin_layout Plain Layout
 2.35
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6.94
 \end_layout
 
 \end_inset
@@ -4186,6 +4594,15 @@ MB
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.44
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -4215,6 +4632,15 @@ NT
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.22
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -4240,6 +4666,15 @@ QUAKE
 
 \begin_layout Plain Layout
 15.36
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+171.43
 \end_layout
 
 \end_inset
@@ -4310,7 +4745,7 @@ name "fig:wine_best_plot"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -4343,6 +4778,94 @@ name "fig:wine2"
 \align center
 \begin_inset Graphics
 	filename wine_all_plot.eps
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Experiments with different values of 
+\begin_inset Formula $k$
+\end_inset
+
+ for the Housing dataset.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:housing"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename housing.eps
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Classification error of Z_F_S dataset for different values of 
+\begin_inset Formula $k$
+\end_inset
+
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:zfs"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename zfs.eps
 	scale 70
 
 \end_inset
@@ -5993,6 +6516,22 @@ literal "false"
 
 J.S.
  Simonoff, Smooting Methods in Statistics, Springer - Verlag, 1996.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbf_gen1"
+literal "false"
+
+\end_inset
+
+S.
+ Ding, L.
+ Xu, C.
+ Su et al, An optimizing method of RBF neural network based on genetic algorithm.
+ Neural Comput & Applic 21, pp.
+ 333–336, 2012.
 \end_layout
 
 \end_body
