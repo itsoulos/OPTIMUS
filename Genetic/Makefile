@@ -392,6 +392,8 @@ genetic.o: genetic.cpp genetic.h \
 		../Optimus/gradientdescent.h \
 		../Optimus/adam.h \
 		../Optimus/lbfgs.h \
+		../Optimus/nelderMead.h \
+		../Optimus/nelderMead_global.h \
 		../../OPTIMUS/Optimus/tolmin.h \
 		../../OPTIMUS/Optimus/gradientdescent.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o genetic.o genetic.cpp

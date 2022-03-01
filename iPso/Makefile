@@ -393,6 +393,8 @@ ipso.o: ipso.cpp ipso.h \
 		../Optimus/gradientdescent.h \
 		../Optimus/adam.h \
 		../Optimus/lbfgs.h \
+		../Optimus/nelderMead.h \
+		../Optimus/nelderMead_global.h \
 		../../OPTIMUS/Optimus/tolmin.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ipso.o ipso.cpp
 

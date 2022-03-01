@@ -64,6 +64,21 @@ double  Optimizer::localSearch(Data &x)
        delete solver;
        return y;
     }
+    else
+    if(method=="nelderMead")
+    {
+        double y = myProblem->funmin(x);
+        nelderMead n(myProblem,x,y);
+        n.init();
+        while(!n.terminated())
+        {
+            n.step();
+        }
+        n.done();
+        x = n.getBestX();
+        y = n.getBestY();
+
+    }
 }
 
 void Optimizer::setProblem(Problem *p)

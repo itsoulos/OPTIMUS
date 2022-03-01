@@ -1,20 +1,24 @@
 #include "nelderMead.h"
-nelderMead::nelderMead(Problem *p)
-    : Optimizer(p)
+nelderMead::nelderMead(Problem *p,Data &x,double y)
+
 {
-    addParameter("population_count", "200", "Number of population");
-    addParameter("max_generations", "100", "Maximum number of generations");
-    addParameter("alpha", "1.0", "alpha");
-    addParameter("gamma", "2.0", "gamma");
-    addParameter("ro", "0.5", "ro");
-    addParameter("sigma", "0.5", "sigma");
+    myProblem = p;
+    bestPoint.resize(x.size());
+    bestPoint = x;
+    ybestPoint=y;
+    population_count = 200;
+    alpha=1.0;
+    gamma=2.0;
+    ro = 0.5;
+    sigma = 0.5;
+    max_generations=100;
+
 }
 bool nelderMead::terminated()
 {
-    int max_generations = params["max_generations"].toString().toInt();
 
     double dd = fabs(newSum - sum);
-    // printf("%4d] Generation  change: %10.6lf \n", generation, dd);
+     printf("%4d] Generation  change: %10.6lf ybest:%10.6lf \n", generation, dd,ybestPoint);
     if (dd < 1e-8)
         n++;
     else
@@ -28,7 +32,7 @@ bool nelderMead::terminated()
 
 void nelderMead::order()
 {
-    sort(population.begin(), population.end()); //[](auto a,auto b){return a.first < b.first;}
+    sort(population.begin(), population.end());//[](auto a,auto b){return a.first < b.first;});
 }
 void nelderMead::center()
 {
@@ -100,14 +104,13 @@ void nelderMead::step()
 {
 start:
     order();
-    center();
+  center();
     ybestPoint = population.begin()->first;
     worst = (population.end())->first;
     secondWorst = population[population_count - 2].first;
     reflection();
     if (yreflectedPoint < secondWorst && yreflectedPoint > ybestPoint)
     {
-        printf("reflection \n");
         population[population_count - 1].second = reflectedPoint;
         population[population_count - 1].first = yreflectedPoint;
         goto start;
@@ -115,7 +118,6 @@ start:
     else if (yreflectedPoint < ybestPoint)
     {
         expansion();
-        printf("expansion \n");
         if (yexpandedPoint < yreflectedPoint)
         {
             population[population_count - 1].second = expandedPoint;
@@ -134,7 +136,6 @@ start:
     {
         if (yreflectedPoint < worst)
         {
-            printf("contraction \n");
             contraction();
             if (ycontractedPoint < yreflectedPoint)
             {
@@ -149,7 +150,6 @@ start:
         {
             if (ycontractedPoint < worst)
             {
-                printf("contractionB \n");
                 contractionB();
                 population[population_count - 1].second = contractedPoint;
                 population[population_count - 1].first = ycontractedPoint;
@@ -167,11 +167,6 @@ start:
 void nelderMead::init()
 {
     generation = 0;
-    alpha = params["alpha"].toString().toDouble();
-    gamma = params["gamma"].toString().toDouble();
-    ro = params["ro"].toString().toDouble();
-    sigma = params["sigma"].toString().toDouble();
-    population_count = params["population_count"].toString().toInt();
     assert(population_count >= 4);
     population_size = myProblem->getDimension();
     population.resize(population_count);
@@ -187,8 +182,16 @@ void nelderMead::init()
     contractedPoint.resize(population_size);
     for (int i = 0; i < population_count; i++)
     {
-        population[i].second = myProblem->getRandomPoint();
-        population[i].first = myProblem->funmin(population[i].second);
+        if(i==0)
+        {
+            population[i].second = bestPoint;
+            population[i].first = ybestPoint;
+        }
+        else
+        {
+            population[i].second = myProblem->getRandomPoint();
+            population[i].first = myProblem->funmin(population[i].second);
+        }
     }
     sum = accumulate(&population.begin()->first, &population.end()->first, 0);
     // if (sum == 0)
@@ -197,14 +200,20 @@ void nelderMead::init()
     n = 0;
 }
 
+Data nelderMead::getBestX() const
+{
+    return bestPoint;
+}
+
+double nelderMead::getBestY() const
+{
+    return ybestPoint;
+}
+
 void nelderMead::done()
 {
     ybestPoint = myProblem->funmin(population[0].second);
 }
 nelderMead::~nelderMead()
 {
-}
-extern "C" NELDERMEAD_EXPORT Optimizer *createOptimizer(Problem *p)
-{
-    return new nelderMead(p);
 }

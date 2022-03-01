@@ -36,6 +36,7 @@ SOURCES += \
     intervalproblem.cpp \
     kmeans.cpp \
     lbfgs.cpp \
+    nelderMead.cpp \
     optimizer.cpp \
     optimus.cpp \
     point.cpp \
@@ -61,6 +62,8 @@ HEADERS += \
     intervalproblem.h \
     kmeans.h \
     lbfgs.h \
+    nelderMead.h \
+    nelderMead_global.h \
     optimizer.h \
     optimus.h \
     point.h \

@@ -394,6 +394,8 @@ intervalmethod.o: intervalmethod.cpp intervalmethod.h \
 		../Optimus/gradientdescent.h \
 		../Optimus/adam.h \
 		../Optimus/lbfgs.h \
+		../Optimus/nelderMead.h \
+		../Optimus/nelderMead_global.h \
 		../../OPTIMUS/Optimus/tolmin.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o intervalmethod.o intervalmethod.cpp
 

@@ -1,6 +1,5 @@
 #!/bin/bash
 DATAPATH=/home/sheridan/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfolding/
-DATAPATH=/home/sheridan/Desktop/ERGASIES/NEWBETTER/
 NODES=10
 
 METHOD=Genetic
@@ -10,7 +9,7 @@ then
 	METHODPARAMS="--minfinder_samples=25 --minfinder_sampling=repulsion"
 elif [ $METHOD = "Genetic" ]
 then
-	METHODPARAMS="--localsearch_rate=0.01 --localsearch_method=bfgs"
+	METHODPARAMS="--localsearch_rate=0.001 --localsearch_method=lbfgs --max_generations=500"
 elif [ $METHOD = "Pso" ]
 then
 	METHODPARAMS="--pso_localsearch_rate=0.01"

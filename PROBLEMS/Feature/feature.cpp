@@ -322,7 +322,7 @@ extern "C"
         return -f;;
 
 }
-    void granal(Data &x, Data &g)
+    void granal1(Data &x, Data &g)
     {
 
         adept::Stack stack;
@@ -380,7 +380,7 @@ extern "C"
         //    g[j] *= 2.0;
 
     }
-/*
+
     void    granal(vector<double> &x,vector<double> &g)
     {
         for(int i=0;i<x.size();i++)
@@ -395,7 +395,7 @@ extern "C"
              }
 
     }
-*/
+
 
 
 

@@ -23,7 +23,6 @@ else
 		(cd Pso; qmake; make clean; make install)
 		(cd iPso; qmake; make clean; make install)
 		(cd Minfinder; qmake; make clean; make install)
-		(cd nelderMead; qmake ; make clean; make install )
 		(cd bin; qmake ; make clean; make)
 	else
 		echo "qmake is not present;"

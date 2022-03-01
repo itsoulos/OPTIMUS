@@ -5,6 +5,7 @@
 # include "gradientdescent.h"
 # include "adam.h"
 # include "lbfgs.h"
+#include "nelderMead.h"
 class Optimizer
 {
 protected:

@@ -19,7 +19,6 @@ else
 		(cd iPso; qmake; make clean)
 		(cd DE; qmake ; make clean )
 		(cd Minfinder; qmake; make clean)
-		(cd nelderMead; qmake; make clean)
 		(cd bin; qmake ; make clean)
 	else
 		echo "qmake is not present;"

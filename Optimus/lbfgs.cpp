@@ -40,20 +40,21 @@ double Lbfgs::Solve(Data &x)
     logical lsave[4];
     double *xx=new double[n];
     for(int i=0;i<x.size();i++) xx[i]=x[i];
-
+    int iters = 0;
 L111:
     setulb(&n, &m, xx, l, u, nbd, &f, g, &factr, &pgtol, wa, iwa, task, &
             iprint, csave, lsave, isave, dsave);
     if ( IS_FG(*task) ) {
         for(int i=0;i<x.size();i++) x[i]=xx[i];
         f=myProblem->funmin(x);
+        //printf("LBFGS: %10.5lf TASK: %d\n",f,*task);
         myProblem->granal(x,gg);
         for(int i=0;i<x.size();i++)
             g[i]=gg[i];
         goto L111;
     }
-
-    if ( *task==NEW_X ) {
+    iters++;
+    if ( *task==NEW_X || iters<50 ) {
         goto L111;
     }
     for(int i=0;i<x.size();i++) x[i]=xx[i];

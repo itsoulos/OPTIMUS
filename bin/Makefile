@@ -379,6 +379,8 @@ main.o: main.cpp ../../OPTIMUS/Optimus/dllproblem.h \
 		../Optimus/gradientdescent.h \
 		../Optimus/adam.h \
 		../Optimus/lbfgs.h \
+		../Optimus/nelderMead.h \
+		../Optimus/nelderMead_global.h \
 		getoptions.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 

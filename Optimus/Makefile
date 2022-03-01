@@ -63,6 +63,7 @@ SOURCES       = adam.cpp \
 		intervalproblem.cpp \
 		kmeans.cpp \
 		lbfgs.cpp \
+		nelderMead.cpp \
 		optimizer.cpp \
 		optimus.cpp \
 		point.cpp \
@@ -85,6 +86,7 @@ OBJECTS       = adam.o \
 		intervalproblem.o \
 		kmeans.o \
 		lbfgs.o \
+		nelderMead.o \
 		optimizer.o \
 		optimus.o \
 		point.o \
@@ -185,6 +187,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		intervalproblem.h \
 		kmeans.h \
 		lbfgs.h \
+		nelderMead.h \
+		nelderMead_global.h \
 		optimizer.h \
 		optimus.h \
 		point.h \
@@ -206,6 +210,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		intervalproblem.cpp \
 		kmeans.cpp \
 		lbfgs.cpp \
+		nelderMead.cpp \
 		optimizer.cpp \
 		optimus.cpp \
 		point.cpp \
@@ -417,8 +422,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents Optimus_global.h adam.h collection.h dllproblem.h doublestack.h fparser.hh gradientdescent.h grs.h interval.h intervalproblem.h kmeans.h lbfgs.h optimizer.h optimus.h point.h population.h problem.h program.h rlsprogram.h rule.h symbol.h tolmin.h cluster.h $(DISTDIR)/
-	$(COPY_FILE) --parents adam.cpp collection.cc dllproblem.cpp doublestack.cc fparser.cc gradientdescent.cpp grs.cc interval.cpp intervalproblem.cpp kmeans.cpp lbfgs.cpp optimizer.cpp optimus.cpp point.cpp population.cc problem.cpp program.cc rlsprogram.cc rule.cc symbol.cc tolmin.cc cluster.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents Optimus_global.h adam.h collection.h dllproblem.h doublestack.h fparser.hh gradientdescent.h grs.h interval.h intervalproblem.h kmeans.h lbfgs.h nelderMead.h nelderMead_global.h optimizer.h optimus.h point.h population.h problem.h program.h rlsprogram.h rule.h symbol.h tolmin.h cluster.h $(DISTDIR)/
+	$(COPY_FILE) --parents adam.cpp collection.cc dllproblem.cpp doublestack.cc fparser.cc gradientdescent.cpp grs.cc interval.cpp intervalproblem.cpp kmeans.cpp lbfgs.cpp nelderMead.cpp optimizer.cpp optimus.cpp point.cpp population.cc problem.cpp program.cc rlsprogram.cc rule.cc symbol.cc tolmin.cc cluster.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -526,6 +531,13 @@ lbfgs.o: lbfgs.cpp lbfgs.h \
 		interval.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o lbfgs.o lbfgs.cpp
 
+nelderMead.o: nelderMead.cpp nelderMead.h \
+		nelderMead_global.h \
+		problem.h \
+		intervalproblem.h \
+		interval.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nelderMead.o nelderMead.cpp
+
 optimizer.o: optimizer.cpp optimizer.h \
 		problem.h \
 		intervalproblem.h \
@@ -534,6 +546,8 @@ optimizer.o: optimizer.cpp optimizer.h \
 		gradientdescent.h \
 		adam.h \
 		lbfgs.h \
+		nelderMead.h \
+		nelderMead_global.h \
 		grs.h \
 		rlsprogram.h \
 		population.h \

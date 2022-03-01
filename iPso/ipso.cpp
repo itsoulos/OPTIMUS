@@ -10,7 +10,7 @@ iPso::iPso(Problem *p)
     addParameter("ipso_c2", "0.5", "Pso c2 parameter");
     addParameter("ipso_inertia_start", "0.4", "Start value for inertia");
     addParameter("ipso_inertia_end", "0.9", "End value for inertia");
-    addParameter("ipso_localsearch_rate", "0.1", "Local search rate for pso");
+    addParameter("ipso_localsearch_rate", "0.0", "Local search rate for pso");
     addParameter("ipso_stoppingrule","doublebox","Termination criterion (mean_fitness,best_fitness,doublebox)");
     addParameter("ipso_gradientcheck","true","Check for gradients near to local minimum");
     addParameter("ipso_inertiatype","0","The used inertia equation(0-7)");
