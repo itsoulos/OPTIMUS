@@ -133,7 +133,7 @@ literal "true"
 
 \end_inset
 
-, based on a series of parameters that commonly called weights or processeing
+, based on a series of parameters that commonly called weights or processing
  units.
  They have been used in a variety of problems from different scientific
  areas such as physics 
@@ -224,7 +224,7 @@ noprefix "false"
 \begin_inset Formula $N(\overrightarrow{x},\overrightarrow{w})$
 \end_inset
 
- can be modelled as a summation of processing unints as proposed in 
+ can be modeled as a summation of processing units as proposed in 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "nnc"
@@ -356,8 +356,8 @@ Excessive computational times, because they require processing time proportional
 \end_inset
 
 .
- An extensive discussion on the problems occured by the dimensionality on
- neural networks is presented in 
+ An extensive discussion on the problems occurred by the dimensionality
+ on neural networks is presented in 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "nndimension"
@@ -1609,8 +1609,9 @@ First a set of
 \begin_inset Formula $K>1$
 \end_inset
 
- randomly selected chromosomes is constructed and subsequentlythe chromosome
- with the best fitness value in the previous set is selected as mating chromsome.
+ randomly selected chromosomes is constructed and subsequently the chromosome
+ with the best fitness value in the previous set is selected as mating chromosom
+e.
  Having selected the two parents for the offrpsing, the offspring is formed
  using the one point crossover.
  In one - point crossover a random point is selected for the two parents
@@ -1662,11 +1663,11 @@ noprefix "false"
 \series bold
 Get 
 \series default
-the best chromsome in the population defined as 
+the best chromosome in the population defined as 
 \begin_inset Formula $Z_{l}$
 \end_inset
 
- with the correspoding fitness value 
+ with the corresponding fitness value 
 \begin_inset Formula $f_{l}$
 \end_inset
 
@@ -2276,9 +2277,9 @@ literal "false"
  language.
  The classification error is reported for classification datasets on the
  test set and the average mean squared error for regression datasets.
- Also, for morereliability in the results the common used method of 10 -
- fold cross validation was used.
- The values for the parametes of the used algorithms are reported in Table
+ Also, for more reliability in the results the common used method of 10
+ - fold cross validation was used.
+ The values for the parameters of the used algorithms are reported in Table
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2996,9 +2997,29 @@ noprefix "false"
 \begin_inset Formula $N_{g}$
 \end_inset
 
- chromosomes and the column FC MLP denotes the proposed method.
- Also, the column GAIN indicates the percentage gain in test error (classificati
-on or regression) obtained by the suggested method.
+ chromosomes and the column FC MLP denotes the proposed method, the column
+ MRMR stands for the Minimum Redundancy Maximum Relevance Feature Selection
+ method
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mrmr1,mrmr2"
+literal "true"
+
+\end_inset
+
+ with two selected features and the column PCA for the Principal Component
+ Analysis (PCA) method as implemented in Mlpack software
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mlpack"
+literal "true"
+
+\end_inset
+
+.
+ The PCA method was used with two features created from the original dataset.
+
+\series bold
  Judging by the results produced, it is obvious that the proposed technique
  is significantly superior to a neural network trained with a genetic algorithm.
  Also the percentage gain is extremely high in many of the cases.
@@ -3010,6 +3031,7 @@ on or regression) obtained by the suggested method.
 
 \begin_layout Standard
 \begin_inset Float table
+placement H
 wide false
 sideways false
 status open
@@ -3036,8 +3058,10 @@ name "tab:exp1"
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="16" columns="4">
+<lyxtabular version="3" rows="16" columns="6">
 <features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -3056,6 +3080,24 @@ DATASET
 \begin_inset Text
 
 \begin_layout Plain Layout
+MRMR
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PCA
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 MLP GEN
 \end_layout
 
@@ -3065,7 +3107,7 @@ MLP GEN
 \begin_inset Text
 
 \begin_layout Plain Layout
-FC MLP
+MLP PSO
 \end_layout
 
 \end_inset
@@ -3074,9 +3116,7 @@ FC MLP
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-GAIN
+FC MLP
 \end_layout
 
 \end_inset
@@ -3096,6 +3136,24 @@ BALANCE
 \begin_inset Text
 
 \begin_layout Plain Layout
+56.80%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+56.48%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 8.23%
 \end_layout
 
@@ -3105,7 +3163,7 @@ BALANCE
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.30%
+8.07%
 \end_layout
 
 \end_inset
@@ -3114,9 +3172,7 @@ BALANCE
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-96.35%
+0.30%
 \end_layout
 
 \end_inset
@@ -3136,6 +3192,24 @@ DERMATOLOGY
 \begin_inset Text
 
 \begin_layout Plain Layout
+68.54%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+62.11%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 10.01%
 \end_layout
 
@@ -3145,7 +3219,7 @@ DERMATOLOGY
 \begin_inset Text
 
 \begin_layout Plain Layout
-4.98%
+17.57%
 \end_layout
 
 \end_inset
@@ -3154,9 +3228,7 @@ DERMATOLOGY
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-50.25%
+4.98%
 \end_layout
 
 \end_inset
@@ -3176,6 +3248,24 @@ GLASS
 \begin_inset Text
 
 \begin_layout Plain Layout
+58.35%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+50.16%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 58.03%
 \end_layout
 
@@ -3185,7 +3275,7 @@ GLASS
 \begin_inset Text
 
 \begin_layout Plain Layout
-45.84%
+57.35%
 \end_layout
 
 \end_inset
@@ -3194,9 +3284,7 @@ GLASS
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-21.00%
+45.84%
 \end_layout
 
 \end_inset
@@ -3216,6 +3304,24 @@ HAYES ROTH
 \begin_inset Text
 
 \begin_layout Plain Layout
+61.21%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+61.13%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 35.26%
 \end_layout
 
@@ -3225,7 +3331,7 @@ HAYES ROTH
 \begin_inset Text
 
 \begin_layout Plain Layout
-23.26%
+36.69%
 \end_layout
 
 \end_inset
@@ -3234,9 +3340,7 @@ HAYES ROTH
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-34.03%
+23.26%
 \end_layout
 
 \end_inset
@@ -3256,6 +3360,24 @@ HEART
 \begin_inset Text
 
 \begin_layout Plain Layout
+38.04%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+35.84%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 25.46%
 \end_layout
 
@@ -3265,7 +3387,7 @@ HEART
 \begin_inset Text
 
 \begin_layout Plain Layout
-17.71%
+25.67%
 \end_layout
 
 \end_inset
@@ -3274,9 +3396,7 @@ HEART
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-30.44%
+17.71%
 \end_layout
 
 \end_inset
@@ -3296,6 +3416,24 @@ IONOSPHERE
 \begin_inset Text
 
 \begin_layout Plain Layout
+12.93%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+21.22%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 13.67%
 \end_layout
 
@@ -3305,7 +3443,7 @@ IONOSPHERE
 \begin_inset Text
 
 \begin_layout Plain Layout
-8.42%
+15.14%
 \end_layout
 
 \end_inset
@@ -3314,9 +3452,7 @@ IONOSPHERE
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-38.41%
+8.42%
 \end_layout
 
 \end_inset
@@ -3336,6 +3472,24 @@ PARKINSONS
 \begin_inset Text
 
 \begin_layout Plain Layout
+17.16%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+16.96%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 17.47%
 \end_layout
 
@@ -3345,7 +3499,7 @@ PARKINSONS
 \begin_inset Text
 
 \begin_layout Plain Layout
-10.10%
+18.35%
 \end_layout
 
 \end_inset
@@ -3354,9 +3508,7 @@ PARKINSONS
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-36.46%
+10.10%
 \end_layout
 
 \end_inset
@@ -3376,6 +3528,24 @@ PIMA
 \begin_inset Text
 
 \begin_layout Plain Layout
+26.29%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+39.43%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 32.98%
 \end_layout
 
@@ -3385,7 +3555,7 @@ PIMA
 \begin_inset Text
 
 \begin_layout Plain Layout
-23.76%
+30.45%
 \end_layout
 
 \end_inset
@@ -3394,9 +3564,7 @@ PIMA
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-27.96%
+23.76%
 \end_layout
 
 \end_inset
@@ -3416,6 +3584,24 @@ POPFAILURES
 \begin_inset Text
 
 \begin_layout Plain Layout
+7.04%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+31.42%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 7.66%
 \end_layout
 
@@ -3425,7 +3611,7 @@ POPFAILURES
 \begin_inset Text
 
 \begin_layout Plain Layout
-4.66%
+6.24%
 \end_layout
 
 \end_inset
@@ -3434,9 +3620,7 @@ POPFAILURES
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-39.16%
+4.66%
 \end_layout
 
 \end_inset
@@ -3456,6 +3640,24 @@ SPIRAL
 \begin_inset Text
 
 \begin_layout Plain Layout
+44.87%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+45.94%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 45.71%
 \end_layout
 
@@ -3465,7 +3667,7 @@ SPIRAL
 \begin_inset Text
 
 \begin_layout Plain Layout
-26.53%
+42.10%
 \end_layout
 
 \end_inset
@@ -3474,9 +3676,7 @@ SPIRAL
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-41.96%
+26.53%
 \end_layout
 
 \end_inset
@@ -3496,6 +3696,24 @@ WINE
 \begin_inset Text
 
 \begin_layout Plain Layout
+30.73%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+30.39%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 20.82%
 \end_layout
 
@@ -3505,7 +3723,7 @@ WINE
 \begin_inset Text
 
 \begin_layout Plain Layout
-7.31%
+19.31%
 \end_layout
 
 \end_inset
@@ -3514,9 +3732,7 @@ WINE
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-64.89%
+7.31%
 \end_layout
 
 \end_inset
@@ -3536,6 +3752,24 @@ WDBC
 \begin_inset Text
 
 \begin_layout Plain Layout
+12.91%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.28%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 6.32%
 \end_layout
 
@@ -3545,7 +3779,7 @@ WDBC
 \begin_inset Text
 
 \begin_layout Plain Layout
-3.47%
+6.95%
 \end_layout
 
 \end_inset
@@ -3554,9 +3788,7 @@ WDBC
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-45.09%
+3.47%
 \end_layout
 
 \end_inset
@@ -3576,6 +3808,24 @@ Z_F_S
 \begin_inset Text
 
 \begin_layout Plain Layout
+32.71%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+44.81%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 9.42%
 \end_layout
 
@@ -3585,7 +3835,7 @@ Z_F_S
 \begin_inset Text
 
 \begin_layout Plain Layout
-5.52%
+10.38%
 \end_layout
 
 \end_inset
@@ -3594,9 +3844,7 @@ Z_F_S
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-41.40%
+5.52%
 \end_layout
 
 \end_inset
@@ -3616,6 +3864,24 @@ Z_O_N_F_S
 \begin_inset Text
 
 \begin_layout Plain Layout
+43.04%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+56.45%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 60.38%
 \end_layout
 
@@ -3625,7 +3891,7 @@ Z_O_N_F_S
 \begin_inset Text
 
 \begin_layout Plain Layout
-31.20%
+63.56%
 \end_layout
 
 \end_inset
@@ -3634,9 +3900,7 @@ Z_O_N_F_S
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-48.33%
+31.20%
 \end_layout
 
 \end_inset
@@ -3656,6 +3920,24 @@ ZO_NF_S
 \begin_inset Text
 
 \begin_layout Plain Layout
+33.79%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+40.02%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 8.06%
 \end_layout
 
@@ -3665,7 +3947,7 @@ ZO_NF_S
 \begin_inset Text
 
 \begin_layout Plain Layout
-4.00%
+8.84%
 \end_layout
 
 \end_inset
@@ -3674,9 +3956,7 @@ ZO_NF_S
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-50.37%
+4.00%
 \end_layout
 
 \end_inset
@@ -3693,9 +3973,10 @@ ZO_NF_S
 
 
 \begin_inset Float table
+placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -3719,8 +4000,10 @@ name "tab:exp2"
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="9" columns="4">
+<lyxtabular version="3" rows="9" columns="6">
 <features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -3739,6 +4022,24 @@ DATASET
 \begin_inset Text
 
 \begin_layout Plain Layout
+MRMR
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PCA
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 MLP GEN
 \end_layout
 
@@ -3748,7 +4049,7 @@ MLP GEN
 \begin_inset Text
 
 \begin_layout Plain Layout
-FC MLP
+MLP PSO
 \end_layout
 
 \end_inset
@@ -3757,9 +4058,7 @@ FC MLP
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-GAIN
+FC MLP
 \end_layout
 
 \end_inset
@@ -3779,6 +4078,28 @@ BK
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
+0.195
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+1.505
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 0.21
 \end_layout
 
@@ -3788,7 +4109,9 @@ BK
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.03
+
+\series bold
+1.328
 \end_layout
 
 \end_inset
@@ -3797,9 +4120,7 @@ BK
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-85.71%
+0.03
 \end_layout
 
 \end_inset
@@ -3819,6 +4140,28 @@ BL
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
+0.602
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+0.762
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 0.84
 \end_layout
 
@@ -3828,7 +4171,9 @@ BL
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.005
+
+\series bold
+8.58
 \end_layout
 
 \end_inset
@@ -3837,9 +4182,7 @@ BL
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-99.40%
+0.005
 \end_layout
 
 \end_inset
@@ -3859,6 +4202,28 @@ Housing
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
+3398.46
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+15953.86
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 30.05
 \end_layout
 
@@ -3868,7 +4233,9 @@ Housing
 \begin_inset Text
 
 \begin_layout Plain Layout
-10.77
+
+\series bold
+1671.627
 \end_layout
 
 \end_inset
@@ -3877,9 +4244,7 @@ Housing
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-64.16%
+10.77
 \end_layout
 
 \end_inset
@@ -3899,6 +4264,28 @@ Laser
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
+3.071
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+14.37
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 0.003
 \end_layout
 
@@ -3908,7 +4295,9 @@ Laser
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.002
+
+\series bold
+3.777
 \end_layout
 
 \end_inset
@@ -3917,9 +4306,7 @@ Laser
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-33.33%
+0.002
 \end_layout
 
 \end_inset
@@ -3939,6 +4326,28 @@ NT
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
+23.24
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+8.93
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 1.11
 \end_layout
 
@@ -3948,7 +4357,9 @@ NT
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.01
+
+\series bold
+0.44
 \end_layout
 
 \end_inset
@@ -3957,9 +4368,7 @@ NT
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-99.10%
+0.01
 \end_layout
 
 \end_inset
@@ -3979,6 +4388,28 @@ Quake
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
+11.94
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+128.96
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 0.07
 \end_layout
 
@@ -3988,7 +4419,7 @@ Quake
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.03
+x
 \end_layout
 
 \end_inset
@@ -3997,9 +4428,7 @@ Quake
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-57.14%
+0.03
 \end_layout
 
 \end_inset
@@ -4019,6 +4448,28 @@ FA
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
+0.553
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+2.04
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 0.04
 \end_layout
 
@@ -4028,7 +4479,9 @@ FA
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.01
+
+\series bold
+2.047
 \end_layout
 
 \end_inset
@@ -4037,9 +4490,7 @@ FA
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-75.00%
+0.01
 \end_layout
 
 \end_inset
@@ -4059,6 +4510,28 @@ PY
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
+10.94
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+2.09
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 0.21
 \end_layout
 
@@ -4068,7 +4541,9 @@ PY
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.02
+
+\series bold
+0.487
 \end_layout
 
 \end_inset
@@ -4077,9 +4552,7 @@ PY
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-90.47%
+0.02
 \end_layout
 
 \end_inset
@@ -5340,6 +5813,75 @@ R.D.
 \series default
 , pp.
  11322–11326, 1992.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-1"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "mrmr1"
+literal "true"
+
+\end_inset
+
+Hanchuan Peng, Fuhui Long, and Chris Ding, Feature selection based on mutual
+ information: criteria of max-dependency, max-relevance, and min-redundancy,
+ IEEE Transactions on Pattern Analysis and Machine Intelligence 
+\series bold
+27
+\series default
+, pp.1226-1238, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "mrmr2"
+literal "true"
+
+\end_inset
+
+Chris Ding, and Hanchuan Peng, Minimum redundancy feature selection from
+ microarray gene expression data, Journal of Bioinformatics and Computational
+ Biology 
+\series bold
+3
+\series default
+, pp.185-205, 2005
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "mlpack"
+literal "true"
+
+\end_inset
+
+Ryan R.
+ Curtin, James R.
+ Cline, N.
+ P.
+ Slagle, William B.
+ March, Parikshit Ram, Nishant A.
+ Mehta, Alexander G.
+ Gray, MLPACK: A Scalable C++ Machine Learning Library, Journal of Machine
+ Learning Research 
+\series bold
+14
+\series default
+, pp.
+ 801−805, 2013.
  
 \end_layout
 
