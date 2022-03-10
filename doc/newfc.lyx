@@ -520,6 +520,51 @@ literal "true"
 \end_layout
 
 \begin_layout Standard
+The idea of feature construction has been examined by various researched
+ in the relevant literature such as the work of Smith and Bull 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "genfc1"
+literal "false"
+
+\end_inset
+
+, who used a tree genetic programming approach to construct features from
+ the original ones.
+ Another approach to construct features using genetic programming was proposed
+ by Neshatian et al 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "genfc2"
+literal "false"
+
+\end_inset
+
+, where the genetic programming utilized an entropy based fitness function
+ that maximizes the purity of class intervals.
+ Another evolutionary approach was proposed by Li and Yin for feature selection
+ using gene expression data 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "genfc3"
+literal "false"
+
+\end_inset
+
+.
+ Lastly, a recent work that utilizes a genetic programming approach and
+ the information gain ratio (IGR) was proposed by Ma and Teng
+\begin_inset CommandInset citation
+LatexCommand cite
+key "genfc4"
+literal "false"
+
+\end_inset
+
+ to construct features from the original ones.
+\end_layout
+
+\begin_layout Standard
 The rest of this paper is organized as follows: in section 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -604,8 +649,87 @@ name "subsec:Transformation-procedure"
 
 \begin_layout Standard
 Grammatical evolution is a evolutionary procedure, where the chromosomes
- are represent production rules from a BNF grammar.
- The production procedure initiates from the start symbol of the BNF grammar
+ are represent production rules from a BNF (Backus–Naur form) grammar
+\begin_inset CommandInset citation
+LatexCommand cite
+key "bnf1"
+literal "false"
+
+\end_inset
+
+, which is used very often to describe the syntax of programming languages,
+ documents formats etc.
+ These grammars are defined as the set 
+\series bold
+
+\begin_inset Formula $G=\left(N,T,S,P\right)$
+\end_inset
+
+
+\series default
+, where
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\begin_inset Formula $N$
+\end_inset
+
+ 
+\series default
+is the set of non terminal symbols, which produce through production rules
+ series of terminal symbols.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\begin_inset Formula $T$
+\end_inset
+
+ 
+\series default
+is the set of terminal symbols.
+
+\series bold
+ 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $S$
+\end_inset
+
+ is a non terminal symbol called also start symbol
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\begin_inset Formula $P$
+\end_inset
+
+ 
+\series default
+is a set of production rules in the form 
+\series bold
+
+\begin_inset Formula $A\rightarrow a$
+\end_inset
+
+ 
+\series default
+or
+\series bold
+ 
+\begin_inset Formula $A\rightarrow aB,\ A,B\in N,\ a\in T$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The production procedure initiates from the start symbol of the BNF grammar
  and iteratively produces programs by replacing non terminal symbols with
  the right hand of the production rules that will be selected according
  to the value of each element in the chromosome
@@ -622,11 +746,24 @@ reference "fig:BNF-grammar-of"
 
  was used to create a new feature from the initial features.
  The parameter N denotes the number of original features.
- 
-\begin_inset Formula $[0,255].$
+ Typically a chromosome 
+\begin_inset Formula $x$
 \end_inset
 
- Take for example the chromosome 
+ in the grammatical evolution is expressed as series of binary values 0
+ or 1.
+ In the current work in order to simplify the mapping procedure and to increase
+ the speed of the algorithm every element of each chromosome is considered
+ as an integer in a predefined range.
+ For our case the range 
+\begin_inset Formula $[0,255]$
+\end_inset
+
+ was used but of course this could be easily changed.
+\end_layout
+
+\begin_layout Standard
+Take for example the chromosome 
 \begin_inset Formula $x=\left[9,8,6,4,16,10,17,23,8,14\right]$
 \end_inset
 
@@ -693,7 +830,7 @@ For every part
 \begin_inset Formula $t_{i}$
 \end_inset
 
- using the grammar given in 
+ using the grammar given in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:BNF-grammar-of"
@@ -727,7 +864,7 @@ where
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1341,7 +1478,7 @@ Construct
 \begin_inset Formula $\mbox{TR}=\left\{ \left(\overrightarrow{x_{1}},y_{1}\right),\left(\overrightarrow{x_{2}},y_{2}\right),\ldots,\left(\overrightarrow{x_{M}},y_{M}\right)\right\} $
 \end_inset
 
- the original train set.
+, which is the original train set.
 \end_layout
 
 \begin_layout Enumerate
@@ -1362,6 +1499,8 @@ and
 \end_inset
 
  the number of desired constructed features.
+ These options are defined by the user.
+ 
 \end_layout
 
 \begin_layout Enumerate
@@ -2939,8 +3078,8 @@ Quake
 \series bold
 FA
 \series default
- dataset dataset, which contains percentage of body fat and ten body circumferen
-ce measurements.
+ dataset, which contains percentage of body fat and ten body circumference
+ measurements.
  The goal is to fit body fat to the other measurements.
  
 \end_layout
@@ -2960,6 +3099,766 @@ literal "false"
 
 , used to learn Quantitative Structure Activity Relationships (QSARs).
  
+\end_layout
+
+\begin_layout Standard
+The numbers of features and patterns for every dataset used in the experiments
+ are listed in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Features-and-patterns"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Features and patterns for every experimental dataset.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Features-and-patterns"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="24" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+DATASET
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FEATURES
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PATTERNS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+BALANCE
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+625
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+BK
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+96
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+BL
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+41
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+DERMATOLOGY
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+34
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+359
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+GLASS
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+214
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+HAYES ROTH
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+132
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+HEART
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+270
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+HOUSING
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+506
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+IONOSPHERE
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+34
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+351
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+LASER
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+993
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+NT
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+131
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PARKINSONS
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+22
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+195
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PIMA
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+768
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+POPFAILURES
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+540
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PY
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+27
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+74
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+QUAKE
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2178
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FA
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+252
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SPIRAL
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2000
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+WINE
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+179
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+WDBC
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+30
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+569
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Z_F_S
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+21
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+300
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Z_O_N_F_S
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+21
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+500
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZO_NF_S
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+21
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+500
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -2989,17 +3888,15 @@ noprefix "false"
 \end_inset
 
  shows the results for the regression problems.
- The column MLP GEN stands for the artificial neural network with 
-\begin_inset Formula $H$
-\end_inset
+ For the case of classification problems the average classification error
+ is reported, while for the regression problem the average per point error
+ is reported.
+ The proposed method is denoted with the FC MLP and it compared against
+ four other approached from the relevant literature:
+\end_layout
 
- hidden nodes that was trained by a genetic algorithm with 
-\begin_inset Formula $N_{g}$
-\end_inset
-
- chromosomes and the column FC MLP denotes the proposed method, the column
- MRMR stands for the Minimum Redundancy Maximum Relevance Feature Selection
- method
+\begin_layout Enumerate
+The Minimum Redundancy Maximum Relevance Feature Selection method
 \begin_inset CommandInset citation
 LatexCommand cite
 key "mrmr1,mrmr2"
@@ -3007,8 +3904,18 @@ literal "true"
 
 \end_inset
 
- with two selected features and the column PCA for the Principal Component
- Analysis (PCA) method as implemented in Mlpack software
+ with two selected features.
+ This approach is denoted as MRM in the experimental tables.
+ The features selected by MRMR are evaluated using an artificial neural
+ network trained by a genetic algorithm with 
+\begin_inset Formula $N_{c}$
+\end_inset
+
+ chromosomes.
+\end_layout
+
+\begin_layout Enumerate
+The Principal Component Analysis (PCA) method as implemented in Mlpack software
 \begin_inset CommandInset citation
 LatexCommand cite
 key "mlpack"
@@ -3017,11 +3924,86 @@ literal "true"
 \end_inset
 
 .
- The PCA method was used with two features created from the original dataset.
+ The PCA method used to construct two features from the original dataset.
+ Subsequently, these features are evaluated using an artificial neural network
+ trained by a genetic algorithm with 
+\begin_inset Formula $N_{c}$
+\end_inset
+
+ chromosomes.
+\end_layout
+
+\begin_layout Enumerate
+A genetic algorithm with 
+\begin_inset Formula $N_{c}$
+\end_inset
+
+ chromosomes and the parameters of Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Experimental-parameters."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ used to train a neural network with 
+\begin_inset Formula $H$
+\end_inset
+
+ hidden nodes.
+ This approach is denoted as MLP GEN in the experimental tables.
+ 
+\end_layout
+
+\begin_layout Enumerate
+A Particle Swarm Optimization (PSO) with 
+\begin_inset Formula $N_{c}$
+\end_inset
+
+ particles and 
+\begin_inset Formula $N_{g}$
+\end_inset
+
+ number of generations used to train a neural network with 
+\begin_inset Formula $H$
+\end_inset
+
+ hidden nodes.
+ This method is denoted as MLP PSO in the experimental tables.
+\end_layout
+
+\begin_layout Standard
+Also some the results for some of the classification datasets are illustrated
+ graphically in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Graphic-reresentantion-of"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
 
 \series bold
- Judging by the results produced, it is obvious that the proposed technique
- is significantly superior to a neural network trained with a genetic algorithm.
+column MLP GEN stands for the artificial neural network with 
+\begin_inset Formula $H$
+\end_inset
+
+ hidden nodes that was trained by a genetic algorithm with 
+\begin_inset Formula $N_{g}$
+\end_inset
+
+ chromosomes and the column FC MLP denotes the proposed method, the column
+ PCA for the Judging by the results produced, it is obvious that the proposed
+ technique is significantly superior to a neural network trained with a
+ genetic algorithm.
  Also the percentage gain is extremely high in many of the cases.
  On the other hand the proposed method is slower than a simple genetic algorithm
  because it relies on two steps and every step involves the usage of a genetic
@@ -3034,7 +4016,7 @@ literal "true"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -3976,7 +4958,7 @@ ZO_NF_S
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -4078,9 +5060,7 @@ BK
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-0.195
+0.03
 \end_layout
 
 \end_inset
@@ -4089,9 +5069,7 @@ BK
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-1.505
+0.17
 \end_layout
 
 \end_inset
@@ -4109,9 +5087,7 @@ BK
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-1.328
+0.15
 \end_layout
 
 \end_inset
@@ -4140,9 +5116,7 @@ BL
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-0.602
+0.15
 \end_layout
 
 \end_inset
@@ -4151,9 +5125,7 @@ BL
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-0.762
+0.19
 \end_layout
 
 \end_inset
@@ -4171,9 +5143,7 @@ BL
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-8.58
+2.15
 \end_layout
 
 \end_inset
@@ -4202,9 +5172,7 @@ Housing
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-3398.46
+67.97
 \end_layout
 
 \end_inset
@@ -4213,9 +5181,7 @@ Housing
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-15953.86
+319.08
 \end_layout
 
 \end_inset
@@ -4233,9 +5199,7 @@ Housing
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-1671.627
+33.43
 \end_layout
 
 \end_inset
@@ -4264,9 +5228,7 @@ Laser
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-3.071
+0.031
 \end_layout
 
 \end_inset
@@ -4275,9 +5237,7 @@ Laser
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-14.37
+0.145
 \end_layout
 
 \end_inset
@@ -4295,9 +5255,7 @@ Laser
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-3.777
+0.038
 \end_layout
 
 \end_inset
@@ -4326,9 +5284,7 @@ NT
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-23.24
+1.79
 \end_layout
 
 \end_inset
@@ -4337,9 +5293,7 @@ NT
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-8.93
+0.69
 \end_layout
 
 \end_inset
@@ -4357,9 +5311,7 @@ NT
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-0.44
+0.03
 \end_layout
 
 \end_inset
@@ -4388,9 +5340,7 @@ Quake
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-11.94
+0.06
 \end_layout
 
 \end_inset
@@ -4399,9 +5349,7 @@ Quake
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-128.96
+0.59
 \end_layout
 
 \end_inset
@@ -4419,9 +5367,7 @@ Quake
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-60.066
+0.28
 \end_layout
 
 \end_inset
@@ -4450,9 +5396,7 @@ FA
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-0.553
+0.02
 \end_layout
 
 \end_inset
@@ -4461,9 +5405,7 @@ FA
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-2.04
+0.08
 \end_layout
 
 \end_inset
@@ -4481,9 +5423,7 @@ FA
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-2.047
+0.08
 \end_layout
 
 \end_inset
@@ -4512,9 +5452,7 @@ PY
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-10.94
+1.56
 \end_layout
 
 \end_inset
@@ -4523,9 +5461,7 @@ PY
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-2.09
+0.30
 \end_layout
 
 \end_inset
@@ -4543,9 +5479,7 @@ PY
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-0.487
+0.07
 \end_layout
 
 \end_inset
@@ -4561,6 +5495,49 @@ PY
 </cell>
 </row>
 </lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Graphic reresentantion for some of the classification datasets.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Graphic-reresentantion-of"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename fc_graph_class.eps
+	scale 50
 
 \end_inset
 
@@ -5426,6 +6403,85 @@ ms, Expert Systems with Applications
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "genfc1"
+literal "false"
+
+\end_inset
+
+M.G.
+ Smith, L.
+ Bull, Genetic Programming with a Genetic Algorithm for Feature Construction
+ and Selection, Genet Program Evolvable Mach 
+\series bold
+6
+\series default
+, pp.
+ 265–281, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "genfc2"
+literal "false"
+
+\end_inset
+
+K.
+ Neshatian, M.
+ Zhang, P.
+ Andreae, A Filter Approach to Multiple Feature Construction for Symbolic
+ Learning Classifiers Using Genetic Programming, IEEE Transactions on Evolutiona
+ry Computation 
+\series bold
+16
+\series default
+, pp.
+ 645-661, 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "genfc3"
+literal "false"
+
+\end_inset
+
+X.
+ Li, M.
+ Yin, Multiobjective Binary Biogeography Based Optimization for Feature
+ Selection Using Gene Expression Data, IEEE Transactions on NanoBioscience
+ 
+\series bold
+12
+\series default
+, pp.
+ 343-353, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "genfc4"
+literal "false"
+
+\end_inset
+
+J.
+ Ma, G.
+ Teng, A hybrid multiple feature construction approach for classification
+ using Genetic Programming, Applied Soft Computing 
+\series bold
+80
+\series default
+, pp.
+ 687-699, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "rbf1"
 literal "false"
 
@@ -5437,6 +6493,23 @@ J.
  Sandberg, Universal Approximation Using Radial-Basis-Function Networks,
  Neural Computation 3, pp.
  246-257, 1991.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "bnf1"
+literal "false"
+
+\end_inset
+
+J.
+ W.
+ Backus.
+ The Syntax and Semantics of the Proposed International Algebraic Language
+ of the Zurich ACM-GAMM Conference.
+ Proceedings of the International Conference on Information Processing,
+ UNESCO, 1959, pp.125-132.
 \end_layout
 
 \begin_layout Bibliography
@@ -5816,16 +6889,6 @@ R.D.
 , pp.
  11322–11326, 1992.
  
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "key-1"
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Bibliography
