@@ -104,12 +104,17 @@ Department of Informatics and Telecommunications, University of Ioannina,
 A hybrid procedure that incorporates Grammatical Evolution and a weight
  decaying technique is proposed here for various problems, classification
  or regression.
- The procedure is divided into two phases: during the first phase new features
- are created from the original ones and in second phase a hybrid method
- based on a genetic algorithm is used to train neural networks on the previously
- created features.
- The proposed procedure is applied on a wide range of datasets from the
- relevant literature and the results are reported and discussed.
+ The proposed method has two main phases: the creation of features and the
+ evaluation of these features.
+ During the first phase, using Grammatical Evolution, new features are created
+ as non-linear combinations of the original features of the datasets.
+ In the second phase, based on the characteristics of the first phase, the
+ original data set is modified and a neural network trained with a genetic
+ algorithm is applied to this dataset.
+ The proposed method was applied to an extremely wide set of datasets from
+ the relevant literature and the experimental results were compared with
+ 4 other techniques.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -319,14 +324,6 @@ literal "false"
 
 \end_inset
 
-, Genetic Algorithms 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "geneticnn,geneticnn2"
-literal "false"
-
-\end_inset
-
 , Particle Swarm Optimization 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -463,7 +460,18 @@ literal "false"
 \end_inset
 
 .
- This procedure was introduced in the work of Gavrilis et al 
+ A feature is a measurement that defines a property of the objective problem
+ and the series of all measurements forms a pattern.
+ A feature can be integer, double or even string.
+ In our case we consider only numeric values for the features.
+ The number of features of each pattern is the dimensionality of the problem
+ defined as 
+\begin_inset Formula $d$
+\end_inset
+
+ in this work.
+ The procedure of Feature Construction with Grammatical Evolution was introduced
+ in the work of Gavrilis et al 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "fc1"
@@ -517,6 +525,81 @@ literal "true"
  During the second step, a genetic algorithm that incorporates a weight
  decaying procedure is used to train a neural network on the modified data
  of the first step.
+\end_layout
+
+\begin_layout Standard
+Genetic algorithms are methods based on biological observations such as
+ reproduction and mutation 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "genetic1,genetic2"
+literal "false"
+
+\end_inset
+
+.
+ The genetic algorithms work by creating and maintaining o population of
+ candidate solutions (chromosomes).
+ This population is altered iteratively though operations such as crossover
+ and mutation until some stopping criteria are met.
+ They have many advantages such as simplicity in the implementation, endurance
+ in noise, they can be easily palellelized etc.
+ Also, the have been applied in many problems such as aerodynamic optimization
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "par1"
+literal "true"
+
+\end_inset
+
+, steel structure optimization 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "par2"
+literal "true"
+
+\end_inset
+
+, brain images 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "par3"
+literal "true"
+
+\end_inset
+
+ etc.
+ They have been used to train neural networks in various research papers
+ such as the work of Leung et al 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "geneticnn1"
+literal "false"
+
+\end_inset
+
+ which estimates the structure and the weights of a neural network through
+ a genetic algorithm, the evolution of a neural networks for daily rainfall–runo
+ff forecasting 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "geneticnn2"
+literal "false"
+
+\end_inset
+
+, evolution of neural networks to predict the deformation modulus of rock
+ masses 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "geneticnn3"
+literal "false"
+
+\end_inset
+
+ etc.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -615,7 +698,7 @@ name "sec:Method-description"
 The proposed method has two major phases.
  In the a procedure that exploits the Grammatical Evolution technique is
  used, in order to create new features from the old ones.
- The new features are evaluated using an RBF 
+ The new features are evaluated using a Radial Basis Function (RBF) 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "rbf1"
@@ -745,6 +828,7 @@ reference "fig:BNF-grammar-of"
 \end_inset
 
  was used to create a new feature from the initial features.
+ The symbols that are in <> are considered as non terminal symbols.
  The parameter N denotes the number of original features.
  Typically a chromosome 
 \begin_inset Formula $x$
@@ -788,6 +872,7 @@ reference "tab:table_with_steps"
 \end_inset
 
 .
+ An expression is considered as valid if contains only terminal symbols.
 
 \series bold
  
@@ -864,7 +949,7 @@ where
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1734,8 +1819,8 @@ are substituted by offsprings created through the crossover and mutation
 \series bold
 Crossover procedure: 
 \series default
-For every produced offspring two mating chromosomes (parents) are selected
- from the previous population using tournament selection.
+In this process for every produced offspring two mating chromosomes (parents)
+ are selected from the previous population using tournament selection.
  The
 \series bold
  
@@ -2005,7 +2090,15 @@ Application of genetic algorithm
 \end_layout
 
 \begin_layout Standard
-The main steps of the hybrid genetic algorithm used in the second phase
+The following is a hybrid genetic algorithm used to train artificial neural
+ networks in the modified dataset.
+ The purpose of this algorithm is to train the artificial neural network
+ in such a way that it does not lose its generalizing abilities.
+ For this purpose it uses a fitness function that consists of the neural
+ network training error but also a punitive factor that is added.
+ This penalty factor aims to ensure that network weights do not get too
+ high values during training.
+ The main steps of the hybrid genetic algorithm used in the second phase
  are:
 \end_layout
 
@@ -2397,11 +2490,8 @@ name "sec:Experiments"
 \end_layout
 
 \begin_layout Standard
-The proposed method was tested against neural network trained by a genetic
- algorithm (denoted as MLP GEN) on some classification and regression datasets
- from the relevant literature.
- The software for the algorithm was coded using ANSI C++ and all the experiments
- were conducted using the OpenMP library 
+The software for the algorithm was coded using ANSI C++ and for all the
+ the OpenMP library 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "openmp"
@@ -2409,11 +2499,11 @@ literal "false"
 
 \end_inset
 
- for parallelization purposes.
- The experiments were conducted 30 times with different seed for the random
- generator each time and averages were taken.
- The random generator used was the function drand48() of the C programming
- language.
+ was utilized for parallelization and to speed up the genetic algorithm.
+ Every experiment was executed 30 times with different seed for the random
+ generator each time and averages were measured and reported.
+ The function used for random numbers was the drand48() function of the
+ C programming language.
  The classification error is reported for classification datasets on the
  test set and the average mean squared error for regression datasets.
  Also, for more reliability in the results the common used method of 10
@@ -2754,8 +2844,12 @@ Experimental datasets
 \end_layout
 
 \begin_layout Standard
-A series of well - known datasets were used in the experiments found in
- the Machine Learning Repository 
+The method was tested on a series of regression and classification datasets
+ obtained mostly from two repositories:
+\end_layout
+
+\begin_layout Enumerate
+the Machine Learning Repository 
 \begin_inset Flex URL
 status collapsed
 
@@ -2766,7 +2860,11 @@ http://www.ics.uci.edu/~mlearn/MLRepository.html
 
 \end_inset
 
- in Keel repository 
+ 
+\end_layout
+
+\begin_layout Enumerate
+The Keel repository 
 \begin_inset Flex URL
 status collapsed
 
@@ -2777,7 +2875,11 @@ https://sci2s.ugr.es/keel/
 
 \end_inset
 
-: 
+
+\end_layout
+
+\begin_layout Standard
+The description for these datasets has as follows:
 \end_layout
 
 \begin_layout Enumerate
@@ -3987,27 +4089,46 @@ noprefix "false"
 \end_inset
 
 .
+ Observing the experimental results, it is obvious that the proposed method
+ is significantly superior to the other techniques in all data sets.
+ In some cases, in fact, the percentage gain from the application of the
+ proposed technique is extremely large.
+ However, the proposed method, since it is a two-phase technique, is obviously
+ more demanding in computing resources than the other methodologies and
+ in addition requires longer execution times.
+ However, execution times can be drastically reduced by using parallel technique
+s, which is immediately applicable in the case of Genetic Algorithms.
+ 
 \end_layout
 
 \begin_layout Standard
+An additional experiment was performed, where the number of chromosomes
+ for the genetic algorithm of feature construction (subsection 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Feature-construction"
+plural "false"
+caps "false"
+noprefix "false"
 
-\series bold
-column MLP GEN stands for the artificial neural network with 
-\begin_inset Formula $H$
 \end_inset
 
- hidden nodes that was trained by a genetic algorithm with 
-\begin_inset Formula $N_{g}$
+) varied from 50 to 500.
+ This experiment was performed for 4 data sets and the results are presented
+ in the Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:experiments_with_chromosomes"
+plural "false"
+caps "false"
+noprefix "false"
+
 \end_inset
 
- chromosomes and the column FC MLP denotes the proposed method, the column
- PCA for the Judging by the results produced, it is obvious that the proposed
- technique is significantly superior to a neural network trained with a
- genetic algorithm.
- Also the percentage gain is extremely high in many of the cases.
- On the other hand the proposed method is slower than a simple genetic algorithm
- because it relies on two steps and every step involves the usage of a genetic
- algorithm.
+.
+ This table shows the reliability and durability of the proposed method,
+ as well as for a low number of chromosomes it achieves quite good generalizatio
+n results.
  
 \end_layout
 
@@ -5508,7 +5629,7 @@ PY
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -5547,6 +5668,309 @@ name "fig:Graphic-reresentantion-of"
 \end_inset
 
 
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Experiments with the number of chromosomes for the algorithm of subsection
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Feature-construction"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:experiments_with_chromosomes"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+DATASET
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{g}=50$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{g}=100$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{g}=200$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{g}=500$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+HEART
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+21.26%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+21.34%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18.73%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17.71%
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+BK
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.02
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.02
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.02
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.03
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+BL
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.02
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.02
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.01
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.005
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FA
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.01
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.01
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.01
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.01
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -5561,17 +5985,29 @@ name "sec:Conclusions"
 \end_layout
 
 \begin_layout Standard
-A hybrid method was proposed here for classification and regression problems.
- The method is composed by two steps: during the first step a recently introduce
-d method was used to produce artificial features from the initial features.
- The feature construction method has utilized the commonly used technique
- of Grammatical Evolution to produce artificial features.
- The outcome of the first step was the modified train and test sets of the
- objective problem.
- During the second step, a hybrid genetic algorithm which preserves the
- generalization abilities of the neural network was incorporated.
- The method suggested here was tested on a variety of classification and
- regression problems and the results were very promising.
+In the present work, a hybrid feature construction technique was presented
+ with two phases: a) feature construction and b) feature evaluation.
+ In the first phase new features were created as non-linear combinations
+ of old features using Grammatical Evolution and radial base networks.
+ In the second phase, the original data set was transformed based on the
+ new features and an artificial neural network with a genetic algorithm
+ was trained to learn the new data set.
+ The genetic algorithm used tried to train the artificial neural network
+ in such a way that it did not lose its generalizing abilities.
+ The proposed technique was applied to a number of data sets from the relevant
+ literature and the results were more than satisfactory.
+ Also with a series of additional experiments the stability of the proposed
+ methodology was shown, since even with a small number of chromosomes it
+ produces satisfactory results.
+ However, the proposed technique is much slower than other processes, as
+ it requires two computational phases to reach a conclusion.
+ However, with the use of parallel techniques acceleration can be achieved.
+ The method can be made more efficient in a number of ways, for example
+ by using parallel genetic algorithms, by using smarter evaluators to construct
+ features instead of radial base networks such as SVM, by using more sophisticat
+ed termination techniques for genetic algorithm to achieve acceleration
+ of export of results etc.
+ 
 \end_layout
 
 \begin_layout Bibliography
@@ -5974,47 +6410,6 @@ Q.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
-key "geneticnn"
-literal "false"
-
-\end_inset
-
-F.
- H.
- F.
- Leung, H.
- K.
- Lam, S.
- H.
- Ling and P.
- K.
- S.
- Tam, Tuning of the structure and parameters of a neural network using an
- improved genetic algorithm, IEEE Transactions on Neural Networks 
-\series bold
-14
-\series default
-, pp.
- 79-88, 2003
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "geneticnn2"
-literal "false"
-
-\end_inset
-
-X.
- Yao, Evolving artificial neural networks, Proceedings of the IEEE, 87(9),
- pp.
- 1423-1447, 1999.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
 key "psonn"
 literal "false"
 
@@ -6398,6 +6793,154 @@ ms, Expert Systems with Applications
 \series default
 , pp.
  9991-9999, 2011
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "genetic1"
+literal "true"
+
+\end_inset
+
+D.
+ Goldberg, Genetic Algorithms in Search, Optimization and Machine Learning,
+ Addison-Wesley Publishing Company, Reading, Massachussets, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "genetic2"
+literal "true"
+
+\end_inset
+
+Z.
+ Michaelewicz, Genetic Algorithms + Data Structures = Evolution Programs.
+ Springer - Verlag, Berlin, 1996.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "par1"
+literal "true"
+
+\end_inset
+
+D.
+ J.
+ Doorly , J.
+ Peiró, Supervised Parallel Genetic Algorithms in Aerodynamic Optimisation,
+ Artificial Neural Nets and Genetic Algorithms, pp.
+ 229-233, 1997.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "par2"
+literal "true"
+
+\end_inset
+
+Kamal C.
+ Sarma, Hojjat Adeli, Bilevel Parallel Genetic Algorithms for Optimization
+ of Large Steel Structures, Computer-Aided Civil and Infrastructure Engineering
+ 
+\series bold
+16
+\series default
+, pp.
+ 295-304, 2001.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "par3"
+literal "true"
+
+\end_inset
+
+Yong Fan, Tianzi Jiang, Evans, D.J., Volumetric segmentation of brain images
+ using parallel genetic algorithms, IEEE Transactions on Medical Imaging
+ 
+\series bold
+21
+\series default
+, pp.
+ 904-909, 2002.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "geneticnn1"
+literal "false"
+
+\end_inset
+
+F.
+ H.
+ F.
+ Leung, H.
+ K.
+ Lam, S.
+ H.
+ Ling and P.
+ K.
+ S.
+ Tam, Tuning of the structure and parameters of a neural network using an
+ improved genetic algorithm, IEEE Transactions on Neural Networks 
+\series bold
+14
+\series default
+, pp.
+ 79-88, 2003.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "geneticnn2"
+literal "false"
+
+\end_inset
+
+A.
+ Sedki, D.
+ Ouazar, E.
+ El Mazoudi, Evolving neural network using real coded genetic algorithm
+ for daily rainfall–runoff forecasting, Expert Systems with Applications
+ 
+\series bold
+36
+\series default
+, pp.
+ 4523-4527, 2009.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "geneticnn3"
+literal "false"
+
+\end_inset
+
+A.
+ Majdi, M.
+ Beiki, Evolving neural network using a genetic algorithm for predicting
+ the deformation modulus of rock masses, International Journal of Rock Mechanics
+ and Mining Sciences 
+\series bold
+47
+\series default
+, pp.
+ 246-253, 2010.
 \end_layout
 
 \begin_layout Bibliography
