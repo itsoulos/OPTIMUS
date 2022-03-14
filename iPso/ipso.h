@@ -24,12 +24,12 @@ private:
     vector<Data> particle;
     vector<Data> bestParticle;
     vector<Data> velocity;
-    Data bestx;
+    Data bestx, worstx;
     Data fitness_array;
     Data bestFitness_array;
     vector<Data> minimax;
     int generation, bestIndex;
-    double x1, x2, stopat, variance, besty, oldbesty;
+    double x1, x2, stopat, variance, besty, worsty, oldbesty, oldworsty;
     Data lmargin, rmargin;
     double RC;
     int localSearchCount;

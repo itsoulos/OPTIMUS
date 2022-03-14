@@ -10,7 +10,7 @@ iPso::iPso(Problem *p)
     addParameter("ipso_c2", "0.5", "Pso c2 parameter");
     addParameter("ipso_inertia_start", "0.4", "Start value for inertia");
     addParameter("ipso_inertia_end", "0.9", "End value for inertia");
-    addParameter("ipso_localsearch_rate", "0.0", "Local search rate for pso");
+    addParameter("ipso_localsearch_rate", "0.1", "Local search rate for pso");
     addParameter("ipso_stoppingrule","doublebox","Termination criterion (mean_fitness,best_fitness,doublebox)");
     addParameter("ipso_gradientcheck","true","Check for gradients near to local minimum");
     addParameter("ipso_inertiatype","0","The used inertia equation(0-7)");
@@ -51,11 +51,10 @@ bool iPso::terminated()
     if(t=="mean_fitness") charilogis=true;
     else if(t=="best_fitness") charilogis2=true;
 
-
     if (charilogis)
     {
         double dd = fabs(newSum - sum);
-         printf("%4d] Generation  change: %10.6lf \n", generation, dd);
+        //printf("%4d] Generation  change: %10.6lf \n", generation, dd);
         sum = newSum;
 
         if (dd < 1e-8)
@@ -74,16 +73,17 @@ bool iPso::terminated()
         return generation >= max_generations;
     }
     else if (charilogis2){
-         printf("%4d] Generation  change: %10.6lf \n", generation, besty_tmp);
-        if (besty == besty_tmp){
+        printf("%4d] Generation  change: %10.6lf \n", generation, besty_tmp);
+        if (besty == besty_tmp)
+        {
             n++;
-		sumn+=1;
+            sumn+=1;
         }
         else
-	{
+        {
             n = 0;
-		countn++;
-	}
+            countn++;
+        }
         if (n > 15)
             return true;
         return generation >= max_generations;
@@ -138,8 +138,8 @@ void iPso::init()
 
     countn=0;
     generation = 0;
-    besty = 1e+100;
-    oldbesty = 1e+100;
+    besty = worsty = oldbesty = oldworsty = 1e+100;
+
     x1 = 0.0;
     x2 = 0.0;
     stopat = 0.0;
@@ -164,6 +164,12 @@ void iPso::init()
             double left = -(rmargin[j] - lmargin[j]) / 20.0;
             double right = (rmargin[j] - lmargin[j]) / 20.0;
             velocity[i][j] = left + myProblem->randomDouble() * (right - left);
+            //velocity[i][j] = (left + myProblem->randomDouble() * (right - left))* myProblem->getDimension();
+            //velocity[i][j] = myProblem->getDimension()/(fabs(lmargin[j])+fabs(rmargin[j]));
+            //velocity[i][j] = myProblem->getDimension() * fabs(oldbesty - besty);
+            //velocity[i][j] = (fabs(lmargin[j])+fabs(rmargin[j])/myProblem->getDimension());
+            //velocity[i][j] = left + (myProblem->getDimension()/100.0) * (right - left);
+            //velocity[i][j] = 0;
         }
     }
     updateBest();
@@ -197,7 +203,7 @@ void iPso::calcFitnessArray()
     Data distances;
 
     double inertia;
-    int inertia_type = 0;
+    int inertia_type = 3;
     QString t = params["ipso_inertiatype"].toString();
     inertia_type=t.toInt();
     // inecria weight => εάν θα διατηρηθεί η ταχύτητα
@@ -207,69 +213,99 @@ void iPso::calcFitnessArray()
     {
         double R = drand48();
         inertia = fabs((1.0 / (4.0 +(R/2.0))));             //charilogis
-
+        //printf("inertia: %10.6lf \n", inertia);
         break;
     }
     case 1:
     {
-	    if(countn==0) countn=1;
-	    double average_n=countn==0?0:sumn*1.0/countn;
-		if(average_n<=0) average_n=15.0;
-	            inertia = wmax - generation * 1.0 / average_n * (wmax - wmin);
-
-        printf("inertia: %10.6lf \n", inertia);
-
+        inertia = wmax - generation * 1.0 / 15 * (wmax - wmin);
+        //printf("inertia: %10.6lf \n", inertia);
         break;
     }
     case 2:
     {
-        inertia = fabs((1.0 / (2.0 - besty)));             //charilogis
+        if(countn==0) countn=1;
+        double average_n=countn==0?0:sumn*1.0/countn;
+        if(average_n<=0) average_n=15.0;
+        inertia = wmax - generation * 1.0 / average_n * (wmax - wmin);
+        //printf("inertia: %10.6lf \n", inertia);
         break;
     }
-    case 3:                                                //3 (w2)
+    case 3:
+    {
+        inertia = fabs((1.0 / (2.0 - besty)));             //charilogis
+        //printf("inertia: %10.6lf \n", inertia);
+        break;
+    }
+    case 4:                                                //3 (w2)
     {
         double R = drand48();
         inertia = 0.5 +(R/2.0);
+        //printf("inertia: %10.6lf \n", inertia);
         break;
     }
-    case 4:                                                //4 (w3)
+    case 5:                                                //4 (w3)
     {
         double g = (double)(maxGenerations - generation) / maxGenerations;
         inertia = (g * (wmax - wmin)) + wmin;
+        //printf("inertia: %10.6lf \n", inertia);
         break;
     }
-    case 5:                                                //5 (w8)
+    case 6:                                                //5 (w8)
     {
         inertia = pow ((2.0 / generation), 0.3);
         break;
     }
-    case 6:                                                //6 (w9)
+    case 7:                                                //6 (w9)
+    {
+        double g = (double)(15 - generation) / 15;
+        inertia = (g * (wmin - wmax)) + wmax;
+        //printf("inertia: %10.6lf \n", inertia);
+        break;
+    }
+    case 8:
     {
         double g = (double)(maxGenerations - generation) / maxGenerations;
         inertia = (g * (wmin - wmax)) + wmax;
+        //printf("inertia: %10.6lf \n", inertia);
         break;
     }
-    case 7:                                                //7 (w7)
+    case 9:                                                //7 (w7)
     {
         double b = (double)(generation) / maxGenerations;
         double s = -0.5 ;  //(σταθερά > -1)
         inertia = (1.0-b)/s*(1.0 - b);
+        //printf("inertia: %10.6lf \n", inertia);
         break;
     }
-    case 8:                                                //8 (w12)
+    case 10:                                                //8 (w12)
     {
-	            inertia = wmax - generation * 1.0 / maxGenerations * (wmax - wmin);
+        inertia = wmax - generation * 1.0 / maxGenerations * (wmax - wmin);
+        //printf("inertia: %10.6lf \n", inertia);
         break;
     }
+    case 11:
+    {
+        inertia = 2.0 * fabs(besty_tmp - besty);
+        //printf("besty_tmp: %10.6lf besty %10.6lf inertia: %10.6lf \n", besty_tmp, besty,inertia);
+        break;
+    }
+
     default:
     {
-        inertia = 0;
+        //inertia = 0;
     }
     }
 
     double localsearch_rate = params["ipso_localsearch_rate"].toString().toDouble();
     for (int i = 0; i < genome_count; i++)
     {
+        double R = drand48();
+        if (inertia_type == 0)
+            inertia = (fabs(fitness_array[i]) - fabs(worsty))/(fabs(besty) - fabs(worsty));
+            //double m = fabs((fitness_array[i] - worsty)/(besty - worsty));
+
+        printf("worsty: %10.6lf besty %10.6lf inertia: %10.6lf \n", worsty, besty,inertia);
         Data oldg = particle[i]; //αποθήκευση παλιάς θέσης
         for (int j = 0; j < genome_size; j++)
         {
@@ -283,10 +319,17 @@ void iPso::calcFitnessArray()
             double part2 = c1 * r1 * (bestParticle[i][j] - particle[i][j]);
             double part3 = c2 * r2 * (bestx[j] - particle[i][j]);
             velocity[i][j] = part1 + part2 + part3;          // υπολογισμός ταχύτητας
+/*
+            const double gamma=0.5; //proposed by Ali
+            double umax=gamma * (rmargin[j]-lmargin[j]);
+            double umin=-umax;
+            if(velocity[i][j]<umin) velocity[i][j]=umin;
+            if(velocity[i][j]>umax) velocity[i][j]=umax;
+*/
             double trialf = particle[i][j] + velocity[i][j]; //υπολογισμός θέσης
-            if (trialf < lmargin[j] || trialf > rmargin[j])  // εκτός ορίων
+            if (trialf < lmargin[j] || trialf > rmargin[j])
             {
-                velocity[i][j] = tj; // ξαναβάζει την παλιά ταχύτητα
+                velocity[i][j] = tj;
                 continue;
             }
             else
@@ -426,10 +469,9 @@ void iPso::updateBest()
         {
             bestIndex = i;
             bestx = bestParticle[i];
-
             besty = bestFitness_array[i];
-
         }
+
 
     }
     if(centerPso)
@@ -441,6 +483,7 @@ void iPso::updateBest()
             bestx = center;
         }
     }
+    worsty = *max_element (bestFitness_array.begin(), bestFitness_array.end());
     newSum = accumulate(bestFitness_array.begin(), bestFitness_array.end(), 0);
     newSum = newSum / genome_count;
 }

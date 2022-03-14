@@ -123,19 +123,20 @@ using two major steps. During the first step a new set of features
 is created from the initial features using a procedure based on the
 Grammatical Evolution technique \cite{ge1}. A feature is a measurement
 that defines a property of the objective problem and the series of
-all measurements forms a pattern. A feature can be integer, double
-or even string. In our case we consider only numeric values for the
-features. The number of features of each pattern is the dimensionality
-of the problem defined as $d$ in this work. The procedure of Feature
-Construction with Grammatical Evolution was introduced in the work
-of Gavrilis et al \cite{fc1} and it has been used with success in
-Spam Identification\textbf{ }\cite{fc2}\textbf{, }Fetal heart classification\textbf{
-}\cite{fc3}\textbf{, }epileptic oscillations in clinical intracranial
-electroencephalograms \cite{fc4} etc. The outcomes of the first phase
-are the modified training and testing data according to the created
-features. During the second step, a genetic algorithm that incorporates
-a weight decaying procedure is used to train a neural network on the
-modified data of the first step.
+all measurements forms a pattern. A feature can be a integer value,
+a double precision value or even a string literature. In our case
+we consider only numeric values for the features. The number of features
+of each pattern is the dimensionality of the problem defined as $d$
+in this work. The procedure of Feature Construction with Grammatical
+Evolution was introduced in the work of Gavrilis et al \cite{fc1}
+and it has been used with success in Spam Identification\textbf{ }\cite{fc2}\textbf{,
+}Fetal heart classification\textbf{ }\cite{fc3}\textbf{, }epileptic
+oscillations in clinical intracranial electroencephalograms \cite{fc4}
+etc. The outcomes of the first phase are the modified training and
+testing data according to the created features. During the second
+step, a genetic algorithm that incorporates a weight decaying procedure
+is used to train a neural network on the modified data of the first
+step.
 
 Genetic algorithms are methods based on biological observations such
 as reproduction and mutation \cite{genetic1,genetic2}. The genetic
@@ -166,6 +167,42 @@ expression data \cite{genfc3}. Lastly, a recent work that utilizes
 a genetic programming approach and the information gain ratio (IGR)
 was proposed by Ma and Teng\cite{genfc4} to construct features from
 the original ones.
+
+In the problems of classification and regression, as the number of
+features increases additional examples are needed in order to achieve
+good results in training a model but also to maintain good generalization
+skills in unknown data. Of course, adding new examples to the training
+process is almost never possible and this results in poor performance
+in the control data. For this reason the original data set must be
+transformed into a new one, which gives better generalization skills
+to the learning models. According to the Cover's theorem\cite{cover},
+there is at least one non-linear extension of the original feature
+vector, so that with this extension a linear separation of the set
+of patterns can be made. Many techniques have been proposed in this
+direction that try to detect such nonlinear extensions. The proposed
+method uses a hybrid approach, in which first new features are constructed
+using Grammatical Evolution and then these features are evaluated
+by a neural network that appropriately trains a genetic algorithm.
+In the first phase the creation of new features is done in such a
+way as to achieve the best possible learning accuracy. The methods
+that can be used to convert attributes are grouped into three categories:
+feature selection, feature construction, and feature reduction. The
+second case is the most difficult, as it does not simply require reducing
+the size of the problem but also the non-linear creation of new features
+from the old ones. 
+
+The proposed technique can overcome other techniques from the modern
+literature, as it does not require prior knowledge of the objective
+problem, it can be applied with the exact same procedure to both categorization
+problems and function learning problems. In addition it can be used
+to discover hidden function dependencies between the original features
+of the problem and because it is based on Grammatical Evolution, the
+user can add and subtract functions or even allow the algorithm to
+construct new functions to better learn the data set. Still, the final
+characteristics of the method can be evaluated by any computational
+intelligence model without any additional processing. In the present
+method, these characteristics are evaluated by an artificial neural
+network, but something that could change. 
 
 The rest of this paper is organized as follows: in section \ref{sec:Method-description}
 the proposed method is described in detail, in section \ref{sec:Experiments}
@@ -699,25 +736,34 @@ experimental tables.
 number of generations used to train a neural network with $H$ hidden
 nodes. This method is denoted as MLP PSO in the experimental tables.
 \end{enumerate}
-Also some the results for some of the classification datasets are
-illustrated graphically in Figure \ref{fig:Graphic-reresentantion-of}.
-Observing the experimental results, it is obvious that the proposed
-method is significantly superior to the other techniques in all data
-sets. In some cases, in fact, the percentage gain from the application
-of the proposed technique is extremely large. However, the proposed
-method, since it is a two-phase technique, is obviously more demanding
-in computing resources than the other methodologies and in addition
-requires longer execution times. However, execution times can be drastically
-reduced by using parallel techniques, which is immediately applicable
-in the case of Genetic Algorithms. 
-
-An additional experiment was performed, where the number of chromosomes
-for the genetic algorithm of feature construction (subsection \ref{subsec:Feature-construction})
+Also the results for some of the classification datasets are illustrated
+graphically in Figure \ref{fig:Graphic-reresentantion-of}. An additional
+experiment was performed, where the number of chromosomes for the
+genetic algorithm of feature construction (subsection \ref{subsec:Feature-construction})
 varied from 50 to 500. This experiment was performed for 4 data sets
 and the results are presented in the Table \ref{tab:experiments_with_chromosomes}.
 This table shows the reliability and durability of the proposed method,
 as well as for a low number of chromosomes it achieves quite good
 generalization results. 
+
+As the experimental results clearly show, the proposed method is significantly
+superior to the other techniques and in many cases the percentage
+gain reaches 90\%. The proposed technique for each data set created
+two artificial features with non-linear combinations of the original
+features. This process is based on Grammatical Evolution. Because
+the previous procedure is extremely time consuming, it was chosen
+to evaluate the characteristics to train a radial base network, which
+has fast training time. Then another genetic algorithm is used to
+train an artificial neural network on the new features. The overall
+process is the same regardless of the type of data and this means
+that the method can be applied to a wide range of datasets. However,
+because the method requires the presence of two phases using genetic
+algorithms, it is considered a very slow method compared to other
+techniques in the literature. Execution times, however, could be drastically
+reduced by using parallel techniques such as the OpenMP technique
+used during the experiments. Also, as was clear from the additional
+experiments performed with the number of chromosomes, the method is
+quite robust even for a small number of chromosomes. 
 
 \begin{table}[H]
 \caption{Experimental results for classification datasets.\label{tab:exp1}}
@@ -1080,6 +1126,10 @@ IEEE Transactions on NanoBioscience \textbf{12}, pp. 343-353, 2013.
 \bibitem{genfc4}J. Ma, G. Teng, A hybrid multiple feature construction
 approach for classification using Genetic Programming, Applied Soft
 Computing \textbf{80}, pp. 687-699, 2019.
+
+\bibitem{cover}T.M. Cover, Geometrical and statistical properties
+of systems of linear inequalities with applications in pattern recognition,
+IEEE Trans. Electron. Comput. EC \textbf{14}, pp. 326--334, 1965.
 
 \bibitem{rbf1}J. Park and I. W. Sandberg, Universal Approximation
 Using Radial-Basis-Function Networks, Neural Computation 3, pp. 246-257,
