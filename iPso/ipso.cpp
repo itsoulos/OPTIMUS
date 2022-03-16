@@ -206,6 +206,7 @@ void iPso::calcFitnessArray()
     int inertia_type = 3;
     QString t = params["ipso_inertiatype"].toString();
     inertia_type=t.toInt();
+   
     // inecria weight => εάν θα διατηρηθεί η ταχύτητα
     switch ( inertia_type )//
     {

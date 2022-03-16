@@ -1,4 +1,4 @@
-METHOD=Genetic
+METHOD=iPso
 METHODPARAMS=""
 ### Available local search methods: bfgs, gradient, adam, lbfgs
 if [ $METHOD = "Minfinder" ]
@@ -15,7 +15,7 @@ then
 	METHODPARAMS="--pso_particles=100 --pso_localsearch_rate=0.00 --localsearch_method=bfgs"
 elif [ $METHOD = "iPso" ]
 then
-	METHODPARAMS="--ipso_particles=100 --ipso_localsearch_rate=0.05 --ipso_stoppingrule=best_fitness --ipso_gradientcheck=true --ipso_inertiatype=1 --localsearch_method=nelderMead"
+	METHODPARAMS="--ipso_particles=100 --ipso_maxgenerations=100 --ipso_localsearch_rate=0.05 --ipso_stoppingrule=best_fitness --ipso_gradientcheck=true --ipso_inertiatype=7"
 elif [ $METHOD = "Price" ]
 then
 	METHODPARAMS="--price_iterations=10000 --price_newpoint=PRICE --price_stopping=DOUBLEBOX"
@@ -33,4 +33,4 @@ fi
 PROBLEM=$1
 NATOMS=$2
 echo ./OptimusApp --filename=../PROBLEMS/lib$PROBLEM.so  --opt_method=$METHOD  --natoms=$NATOMS  $METHODPARAMS --threads=12 --iterations=30
-./OptimusApp --filename=../PROBLEMS/lib$PROBLEM.so  --opt_method=$METHOD  --natoms=$NATOMS  $METHODPARAMS --threads=1 --iterations=1
+./OptimusApp --filename=../PROBLEMS/lib$PROBLEM.so  --opt_method=$METHOD  --natoms=$NATOMS  $METHODPARAMS --threads=1 --iterations=30
