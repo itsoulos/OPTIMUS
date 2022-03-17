@@ -17,7 +17,7 @@ class IPSO_EXPORT iPso : public Optimizer, iPsoInterface
 {
 private:
     bool centerPso;
-    double sum,newSum, besty_tmp;
+    double sum,newSum, besty_tmp,zeta;
     int n,sumn;
     int countn;
     Data center;

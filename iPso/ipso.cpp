@@ -67,12 +67,13 @@ bool iPso::terminated()
             n = 0;
 		countn++;
 	}
-        if (n > 15)
+        if ( n > 15)
             return true;
 
         return generation >= max_generations;
     }
-    else if (charilogis2){
+    else 
+	    if (charilogis2){
         printf("%4d] Generation  change: %10.6lf \n", generation, besty_tmp);
         if (besty == besty_tmp)
         {
@@ -285,9 +286,13 @@ void iPso::calcFitnessArray()
         //printf("inertia: %10.6lf \n", inertia);
         break;
     }
-    case 11:
+    case 11:							//(w6)
     {
         inertia = 2.0 * fabs(besty_tmp - besty);
+
+	if(generation<=1) zeta = drand48();
+	else zeta = 4.0 *zeta*(1.0-zeta);	
+	inertia = (maxGenerations-generation)*1.0/maxGenerations*(wmax-wmin)+zeta*wmin;
         //printf("besty_tmp: %10.6lf besty %10.6lf inertia: %10.6lf \n", besty_tmp, besty,inertia);
         break;
     }

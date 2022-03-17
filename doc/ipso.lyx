@@ -364,44 +364,551 @@ literal "false"
 
 \end_inset
 
-
-\series bold
- methods to improve the calculation of the parameters of the method (such
- as inertia, velocity) 
+, methods aim to improve the velocity calculation 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "psovelocity1,psovelocity2,psovelocity3"
-literal "true"
+key "pso_velocity1,pso_velocity2,pso_velocity3"
+literal "false"
 
 \end_inset
 
  etc.
- This article proposes a new stopping rule specifically designed for PSO
- methods and a technique to bound the velocity avoiding calculation of the
- objective function outside of the domain definition 
-\begin_inset Formula $S$
-\end_inset
+ This text introduces three distinct modifications to the original method,
+ which drastically improve the time required to find the total minimum by
+ reducing the required number of function evalutions.
+ These modifications cover a large part of the method: the speed calculation,
+ a new method of avoiding running local search methods, and a new adaptive
+ termination rule.
+ The proposed modifications were applied to a number of problems from the
+ relevant literature and compared with similar techniques and the results
+ are presented below.
+ 
+\end_layout
 
- ( Equation 
+\begin_layout Standard
+The rest of this article is didived as follows: in section 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "eq:eq2"
+reference "sec:Method-description"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-).
- Various experiments were conducted on a series of well - known test functions
- from the relevant literature in order to demonstrated the efficiency of
- the proposed modifications and the results are listed.
+ the initial method and the proposed modifications are discussed, in section
  
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Experiments"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ the experiments are listed and finally in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Conclusions"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ some conclusions and guidelines for future improvements are presented.
 \end_layout
 
 \begin_layout Section
 Method description 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Method-description"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The base algorithm of PSO and the proposed modifications are outlinen in
+ detail in the following subsections.
+ The discussion starts with a new mechanism that calculates the velocity
+ of the populations, continoues with a discarding procedure used minimize
+ the number of local searches performed and ends with a discussion about
+ the new stopping rule proposed here.
 \end_layout
 
 \begin_layout Subsection
-Inertia calculation 
+The base algorithm
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:The-base-algorithm"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The base algorithm is listed below with the peridical application of local
+ search method in order to enchance the estimation of the global minimum,
+ ie.
+ at every iteration a decision with probability 
+\begin_inset Formula $p_{l}$
+\end_inset
+
+ is made in order to apply a local search procedure to some of the particles.
+ Usually, this probability is small for example 0.05 (5%).
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initialization
+\series default
+.
+ 
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $\text{\mbox{iter}}=0$
+\end_inset
+
+ (iteration counter).
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ the number of particles 
+\begin_inset Formula $m$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ the maximum number of iterations allowed 
+\begin_inset Formula $\mbox{iter}_{\mbox{max}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ the local search rate 
+\begin_inset Formula $p_{l}\in[0,1]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initalize
+\series default
+ randomly the positions of the 
+\begin_inset Formula $m$
+\end_inset
+
+ particles 
+\begin_inset Formula $x_{1},x_{2},...,x_{m}$
+\end_inset
+
+, with 
+\begin_inset Formula $x_{i}\in S\subset R^{n}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initialize
+\series default
+ randomly the velocities of the 
+\begin_inset Formula $m$
+\end_inset
+
+ particles 
+\begin_inset Formula $u_{1},u_{2},...,u_{m}$
+\end_inset
+
+, with 
+\begin_inset Formula $u_{i}\in S\subset R^{n}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1..m$
+\end_inset
+
+ do 
+\begin_inset Formula $p_{i}=x_{i}$
+\end_inset
+
+.
+ The 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ vector are the best located values for every particle 
+\begin_inset Formula $i$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $p_{\mbox{best}}=\arg\min_{i\in1..m}f\left(x_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Termination Check
+\series default
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:Check-Termination."
+
+\end_inset
+
+ Check for termination.
+ If termination criteria are met then stop.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1..m$
+\end_inset
+
+ 
+\series bold
+Do
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:For"
+
+\end_inset
+
+
+\series default
+
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Update
+\series default
+ the velocity 
+\begin_inset Formula $u_{i}$
+\end_inset
+
+ as a function of 
+\begin_inset Formula $u_{i},\ p_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $p_{\mbox{best}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Update
+\series default
+ the position 
+\begin_inset Formula $x_{i}=x_{i}+u_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $r\in[0,1]$
+\end_inset
+
+ a random number.
+ If 
+\begin_inset Formula $r\le p_{m}$
+\end_inset
+
+ then 
+\begin_inset Formula $x_{i}=\mbox{LS}\left(x_{i}\right)$
+\end_inset
+
+, where 
+\begin_inset Formula $\mbox{LS}(x)$
+\end_inset
+
+ is a local search procedure.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Evaluate
+\series default
+ the fitness of the particle 
+\begin_inset Formula $i$
+\end_inset
+
+, 
+\begin_inset Formula $f\left(x_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+If
+\series default
+ 
+\begin_inset Formula $f\left(x_{i}\right)\le f\left(p_{i}\right)$
+\end_inset
+
+ then 
+\begin_inset Formula $p_{i}=x_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+End
+\series default
+ 
+\series bold
+For
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $p_{\mbox{best}}=\arg\min_{i\in1..m}f\left(x_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $\mbox{iter}=\mbox{iter}+1$
+\end_inset
+
+.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:update_k"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Goto
+\series default
+ Step 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:Check-Termination."
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Velocity calculation 
+\end_layout
+
+\begin_layout Standard
+The algorithm of subsection 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:The-base-algorithm"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ calculates at every iteration the new position 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ is calculated using the old position 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ and the associated velocity 
+\begin_inset Formula $u_{i}$
+\end_inset
+
+ according to the scheme:
+\begin_inset Formula 
+\begin{equation}
+x_{i}=x_{i}+u_{i}\label{eq:eq3}
+\end{equation}
+
+\end_inset
+
+Typically the velocity is calcualted as a combination of the old velocity
+ and the best located values 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $p_{\mbox{best}}$
+\end_inset
+
+ and may be defined as:
+\begin_inset Formula 
+\begin{equation}
+u_{i}=\omega u_{i}+r_{1}c_{1}\left(p_{i}-x_{i}\right)+r_{2}c_{2}\left(p_{\mbox{best}}-x_{i}\right)\label{eq:eq4-1}
+\end{equation}
+
+\end_inset
+
+where 
+\end_layout
+
+\begin_layout Enumerate
+The parameters 
+\begin_inset Formula $r_{1},\ r_{2}$
+\end_inset
+
+ are random numbers with 
+\begin_inset Formula $r_{1}\in[0,1]$
+\end_inset
+
+ and 
+\begin_inset Formula $r_{2}\in[0,1]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+The constant number 
+\begin_inset Formula $c_{1},\ c_{2}$
+\end_inset
+
+ are in the range 
+\begin_inset Formula $[1,2]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+The variable 
+\begin_inset Formula $\omega$
+\end_inset
+
+ is called inertia, with 
+\begin_inset Formula $\omega\in[0,1]$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The inertia was proposed by Shi and Eberhart 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pso_major"
+literal "false"
+
+\end_inset
+
+.
+ They argued that high values of the inertia coefficient cause better exploratio
+n of the search area while small values of this variable are used when we
+ want to achieve better local research around promising areas for the global
+ minimum.
+ The value of the inertia factor generally starts with large values and
+ decreases with the repetition.
+ This article proposes a new adaptive technique for the inertia parameter
+ and it this mechanism is compared against three others from the relevant
+ literature.
 \end_layout
 
 \begin_layout Subsubsection
@@ -409,7 +916,7 @@ Random inertia
 \end_layout
 
 \begin_layout Standard
-The inertia calcuation is proposed in 
+The inertia calculation is proposed in 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "random_inertia"
@@ -420,7 +927,7 @@ literal "false"
  and it is defined as
 \begin_inset Formula 
 \begin{equation}
-w_{\mbox{iter}}=\frac{r+1}{2},
+\omega_{\mbox{iter}}=0.5+\frac{r}{2}
 \end{equation}
 
 \end_inset
@@ -434,14 +941,16 @@ where
 \end_inset
 
 .
+ This inertia calculation will be called I1 in the tables with the experimental
+ results.
 \end_layout
 
 \begin_layout Subsubsection
-Linear time varying inertia with min
+Linear time varying inertia ( min version)
 \end_layout
 
 \begin_layout Standard
-This inertia schem has been proposed in used in various studies 
+This inertia schema has been proposed in used in various studies 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "random_inertia,inertia1,inertia2"
@@ -452,16 +961,26 @@ literal "false"
  and it is defined as:
 \begin_inset Formula 
 \begin{equation}
-w_{\mbox{iter}}=\frac{\mbox{iter}_{\mbox{max}}-\mbox{iter}}{\mbox{iter}_{\mbox{max}}}\left(w_{\mbox{max}}-w_{\mbox{min}}\right)+w_{\mbox{min}}
+\omega_{\mbox{iter}}=\frac{\mbox{iter}_{\mbox{max}}-\mbox{iter}}{\mbox{iter}_{\mbox{max}}}\left(\omega_{\mbox{max}}-\omega_{\mbox{min}}\right)+\omega_{\mbox{min}}
 \end{equation}
 
 \end_inset
 
+where 
+\begin_inset Formula $\omega_{min}$
+\end_inset
 
+ is the minimum value of inertia and 
+\begin_inset Formula $\omega_{\mbox{max}}$
+\end_inset
+
+ the maximum value for inertia.
+ This inertia calculation will be called I2 in the tables with the experimental
+ results.
 \end_layout
 
 \begin_layout Subsubsection
-Linear time varying inertia with max
+Linear time varying inertia ( max version )
 \end_layout
 
 \begin_layout Standard
@@ -476,24 +995,86 @@ literal "false"
  and it is defined as:
 \begin_inset Formula 
 \begin{equation}
-w_{\mbox{iter}}=\frac{\mbox{iter}_{\mbox{max}}-\mbox{iter}}{\mbox{iter}_{\mbox{max}}}\left(w_{\mbox{min}}-w_{\mbox{max}}\right)+w_{\mbox{max}}
+\omega_{\mbox{iter}}=\frac{\mbox{iter}_{\mbox{max}}-\mbox{iter}}{\mbox{iter}_{\mbox{max}}}\left(\omega_{\mbox{min}}-\omega_{\mbox{max}}\right)+\omega_{\mbox{max}}
 \end{equation}
 
 \end_inset
 
-
+This inertia calculation will be called I3 in the tables with the experimental
+ results.
 \end_layout
 
 \begin_layout Subsubsection
 Proposed technique
 \end_layout
 
-\begin_layout Subsection
-Gradient criterion 
+\begin_layout Standard
+The proposed mechanism is a stochastic one as I1 and it is defined as:
 \end_layout
 
 \begin_layout Standard
-The discarding procedure has two major elements:
+\begin_inset Formula 
+\begin{equation}
+\omega_{iter}=\frac{1}{4+\frac{r}{2}}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $r$
+\end_inset
+
+ being a random number in 
+\begin_inset Formula $[0,1]$
+\end_inset
+
+.
+ This mechanism will be called IP in the experiemental results.
+\end_layout
+
+\begin_layout Subsection
+The discarding procedure
+\end_layout
+
+\begin_layout Standard
+The method in each iteration performs under conditional a series of local
+ searches.
+ However, these searches will often either lead to local minima already
+ found or locate values far below the global minimum.
+ This means that much of the computing time will be wasted on actions that
+ could have been avoided.
+ In order to be able to group points that would lead by local search to
+ the same local minimum, we introduce the concept of cluster, which refers
+ to a set of points that are believed, under some asymptotic considerations,
+ to belong to the same region of attraction of the function.
+ The region of attraction for a local minimum 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ is defined as:
+\begin_inset Formula 
+\begin{equation}
+A\left(x^{*}\right)=\left\{ x:\ x\in S\subset R^{n},\ \mbox{LS}(x)=x^{*}\right\} 
+\end{equation}
+
+\end_inset
+
+ where 
+\begin_inset Formula $\mbox{LS}(x)$
+\end_inset
+
+ is a local search procedure that starts from a given point 
+\begin_inset Formula $x$
+\end_inset
+
+ and terminates when a local minimum is discovered.
+ The discarding procedure suggested here prevents the method from starting
+ a local search from a point 
+\begin_inset Formula $x$
+\end_inset
+
+ if that point belongs to the same region of attraction with other points.
+ This procedure is composed by two two major parts:
 \end_layout
 
 \begin_layout Itemize
@@ -507,7 +1088,7 @@ r_{C}=\frac{1}{M}\sum_{i=1}^{M}\left\Vert x_{i}-x_{iL}\right\Vert \label{eq:eq2}
 \end_inset
 
 where the local search procedure 
-\begin_inset Formula $L(x)$
+\begin_inset Formula $\mbox{LS}(x)$
 \end_inset
 
  initiates from 
@@ -519,7 +1100,7 @@ where the local search procedure
 \end_inset
 
  is the outcome of 
-\begin_inset Formula $L\left(x_{i}\right)$
+\begin_inset Formula $\mbox{LS}\left(x_{i}\right)$
 \end_inset
 
 .
@@ -529,20 +1110,12 @@ where the local search procedure
 
  is close enough to an already discovered local minima then it is highly
  possible that the point belongs to the so called region of attraction of
- the minima.
- The region of attraction of a local minimum 
-\begin_inset Formula $z$
-\end_inset
-
- is defined as:
-\begin_inset Formula 
-\begin{equation}
-A\left(z\right)=\left\{ x:x\in S,\ L(x)=z\right\} 
-\end{equation}
-
-\end_inset
-
-
+ the minima
+\series bold
+.
+ ....
+ edo na poume pos akoma kai an den kanei local search to kanoume update
+ se periptosi pou exei kopsei polla elaxista idi
 \end_layout
 
 \begin_layout Itemize
@@ -1490,11 +2063,7 @@ Experimental results
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
-
-\begin_layout Plain Layout
-
-\end_layout
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1569,7 +2138,7 @@ I3
 \begin_layout Plain Layout
 
 \series bold
-PROPOSED
+IP
 \end_layout
 
 \end_inset
@@ -3525,7 +4094,7 @@ TOTAL
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -3600,7 +4169,7 @@ I3
 \begin_layout Plain Layout
 
 \series bold
-PROPOSED
+IP
 \end_layout
 
 \end_inset
@@ -5556,7 +6125,7 @@ TOTAL
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -5631,7 +6200,7 @@ I3
 \begin_layout Plain Layout
 
 \series bold
-PROPOSED
+IP
 \end_layout
 
 \end_inset
@@ -7663,7 +8232,7 @@ I3
 \begin_layout Plain Layout
 
 \series bold
-PROPOSED
+IP
 \end_layout
 
 \end_inset
@@ -9620,6 +10189,13 @@ TOTAL
 
 \begin_layout Section
 Conclusions
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Conclusions"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Bibliography
@@ -10536,6 +11112,64 @@ G.
 \series default
 , pp.
  123-137, 2006.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso_velocity1"
+literal "true"
+
+\end_inset
+
+Z.L.
+ Gaing, Particle swarm optimization to solving the economic dispatch considering
+ the generator constraints, IEEE Transactions on Power Systems 
+\series bold
+18
+\series default
+, pp.
+ 1187-1195, 2003.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso_velocity2"
+literal "true"
+
+\end_inset
+
+X.
+ Yang, Jinsha Yuan, Jiangy Yuan, H.
+ Mao, A modified particle swarm optimizer with dynamic adaptation, Applied
+ Mathematics and Computation 
+\series bold
+189
+\series default
+, pp.
+ 1205-1213, 2007.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso_velocity3"
+literal "true"
+
+\end_inset
+
+Y.
+ Jiang, T.
+ Hu, C.
+ Huang, X.
+ Wu, An improved particle swarm optimization algorithm, Applied Mathematics
+ and Computation 
+\series bold
+193
+\series default
+, pp.
+ 231-239, 2007.
 \end_layout
 
 \begin_layout Bibliography

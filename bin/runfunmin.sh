@@ -15,7 +15,7 @@ then
 	METHODPARAMS="--pso_particles=100 --pso_localsearch_rate=0.00 --localsearch_method=bfgs"
 elif [ $METHOD = "iPso" ]
 then
-	METHODPARAMS="--ipso_particles=100 --ipso_maxgenerations=100 --ipso_localsearch_rate=0.05 --ipso_stoppingrule=best_fitness --ipso_gradientcheck=true --ipso_inertiatype=7"
+	METHODPARAMS="--ipso_particles=100 --ipso_maxgenerations=100 --ipso_localsearch_rate=0.05 --ipso_stoppingrule=best_fitness --ipso_gradientcheck=true --ipso_inertiatype=0"
 elif [ $METHOD = "Price" ]
 then
 	METHODPARAMS="--price_iterations=10000 --price_newpoint=PRICE --price_stopping=DOUBLEBOX"
