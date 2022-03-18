@@ -11,7 +11,7 @@ iPso::iPso(Problem *p)
     addParameter("ipso_inertia_start", "0.4", "Start value for inertia");
     addParameter("ipso_inertia_end", "0.9", "End value for inertia");
     addParameter("ipso_localsearch_rate", "0.1", "Local search rate for pso");
-    addParameter("ipso_stoppingrule","doublebox","Termination criterion (mean_fitness,best_fitness,doublebox)");
+    addParameter("ipso_stoppingrule","doublebox","Termination criterion (mean_fitness,best_fitness,doublebox,ali)");
     addParameter("ipso_gradientcheck","true","Check for gradients near to local minimum");
     addParameter("ipso_inertiatype","0","The used inertia equation(0-7)");
 }
@@ -47,9 +47,11 @@ bool iPso::terminated()
     int max_generations = params["ipso_generations"].toString().toInt();
     bool charilogis = false;
     bool charilogis2 = false;
+    bool aliflag=false;
     QString t = params["ipso_stoppingrule"].toString();
     if(t=="mean_fitness") charilogis=true;
     else if(t=="best_fitness") charilogis2=true;
+    else if(t=="ali") aliflag=true;
 
     if (charilogis)
     {
@@ -89,6 +91,17 @@ bool iPso::terminated()
             return true;
         return generation >= max_generations;
     }else
+	if(aliflag)
+	{
+		double fmin,fmax;
+		for(int i=0;i<fitness_array.size();i++)
+		{
+			if(i==0 || fitness_array[i]<fmin) fmin=fitness_array[i];
+			if(i==0 || fitness_array[i]>fmax) fmax=fitness_array[i];
+		}
+		return fabs(fmax-fmin)<1e-3  || generation>=max_generations;
+	}	
+	    else
     {
 
         double fmin = fabs(1.0 + fabs(besty));

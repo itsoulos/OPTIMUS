@@ -1032,6 +1032,12 @@ where
  This mechanism will be called IP in the experiemental results.
 \end_layout
 
+\begin_layout Standard
+
+\series bold
+(change to the correct one).
+\end_layout
+
 \begin_layout Subsection
 The discarding procedure
 \end_layout
@@ -1077,9 +1083,9 @@ A\left(x^{*}\right)=\left\{ x:\ x\in S\subset R^{n},\ \mbox{LS}(x)=x^{*}\right\}
  This procedure is composed by two two major parts:
 \end_layout
 
-\begin_layout Itemize
-The first is the typical distance that is calculated after every local search
- and it is given by 
+\begin_layout Enumerate
+The first part is the so called typical distance, which is a measure calculated
+ after every local search and it is given by 
 \begin_inset Formula 
 \begin{equation}
 r_{C}=\frac{1}{M}\sum_{i=1}^{M}\left\Vert x_{i}-x_{iL}\right\Vert \label{eq:eq2}
@@ -1104,6 +1110,15 @@ where the local search procedure
 \end_inset
 
 .
+ This measure has been used also in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "minfinder"
+literal "false"
+
+\end_inset
+
+.
  If a point 
 \begin_inset Formula $x$
 \end_inset
@@ -1111,17 +1126,20 @@ where the local search procedure
  is close enough to an already discovered local minima then it is highly
  possible that the point belongs to the so called region of attraction of
  the minima.
- 
 \end_layout
 
-\begin_layout Itemize
-The second element is a gradient check performed between a candidate starting
- point and an already discovered local minimum.
- The value of the objective function 
+\begin_layout Enumerate
+The second part is a check using the gradient values between a candidate
+ starting point and an already discovered local minimum.
+ The function value 
 \begin_inset Formula $f(x)$
 \end_inset
 
- near to an already discovered local minimum can be calculated using:
+ near to some local minimum 
+\begin_inset Formula $z$
+\end_inset
+
+ can be calculated using:
 \begin_inset Formula 
 \begin{equation}
 f(x)\simeq f(z)+\frac{1}{2}\left(x-z\right)^{T}B\left(x-z\right)\label{eq:eq4}
@@ -1211,51 +1229,194 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-The distance 
-\begin_inset Formula $r_{C}$
+Hence, a candidate start point 
+\begin_inset Formula $x$
 \end_inset
 
- is used with conjunction with equation 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:eq7"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- to reject a point.
- The method rejects points from being start points if they are close enough
- to some other located local minima and in the same time equation 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:eq7"
-plural "false"
-caps "false"
-noprefix "false"
+ can be rejected if 
+\begin_inset Formula 
+\begin{equation}
+\left\Vert x-z\right\Vert \le r_{C}\ \mbox{AND\ }\left(x-y\right)^{T}\left(\nabla f(x)-\nabla f(z)\right)
+\end{equation}
 
 \end_inset
 
- holds.
- A measure to identify if a point is close enough to some other located
- local minima is the distance 
-\begin_inset Formula $r_{C}$
+ for any already discovered local minimum 
+\begin_inset Formula $z$
 \end_inset
 
- calculated after every local minimization.
+.
 \end_layout
 
 \begin_layout Subsection
 Stopping rule
 \end_layout
 
+\begin_layout Standard
+A common used way to terminate a global optimization method is to utilize
+ a maximum number of allowed iterations 
+\begin_inset Formula $\mbox{iter}_{\mbox{max}}$
+\end_inset
+
+, i.e.
+ stop when 
+\begin_inset Formula $\mbox{iter}\ge\mbox{iter}_{\mbox{max}}$
+\end_inset
+
+.
+ Although, it is a simple criterion but is not an efficient one since, if
+ 
+\begin_inset Formula $\mbox{iter}_{\mbox{max}}$
+\end_inset
+
+ is tool small, then the algorithm will terminate without locating the global
+ optimum.
+ Also, when 
+\begin_inset Formula $\mbox{iter}_{\mbox{max}}$
+\end_inset
+
+ is too high, the optimization algorithm will spend computation time in
+ unnecessary function calls.
+ In this paper a new termination rule is proposed to terminate the PSO process
+ and it is compared against two other methods used in various optimization
+ methods.
+\end_layout
+
 \begin_layout Subsubsection
 Doublebox method 
 \end_layout
 
+\begin_layout Standard
+
+\series bold
+The termination rule used here is derived from 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "psotsoulos"
+literal "true"
+
+\end_inset
+
+: denote with 
+\begin_inset Formula $\sigma^{(k)}$
+\end_inset
+
+ the variance of 
+\begin_inset Formula $f\left(x^{*}\right)$
+\end_inset
+
+, where 
+\begin_inset Formula $k$
+\end_inset
+
+ is the current iteration and 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ is the so far located global minimum.
+ If the algorithm did not manage to locate new minimum for a number of generatio
+ns, then probably the algorithm has located the global minimum and it should
+ terminate.
+ The termination rule stops the algorithm when 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\begin_inset Formula 
+\begin{equation}
+k\ge k_{\mbox{min}}\ \mbox{AND\ }\sigma^{(k)}\le\frac{\sigma^{\left(k_{\mbox{last}}\right)}}{2}\label{eq:termination_mine}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $k_{\mbox{last}}$
+\end_inset
+
+ stands for iteration where a new minimum was found.
+ The value 
+\begin_inset Formula $k_{\mbox{min}}$
+\end_inset
+
+ is a predefined minimum number of iterations, in order to prevent the algorithm
+ from premature termination.
+\end_layout
+
 \begin_layout Subsubsection
 Proposed technique
+\end_layout
+
+\begin_layout Standard
+Typically the DE method is terminated when a predefined number of iterations
+ is reached.
+ This can be extremely inefficient in some problems and in others it can
+ lead to premature termination, ie termination before the total minimum
+ is found.
+ In the work of Ali et al 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ali_de"
+literal "false"
+
+\end_inset
+
+ a different termination rule is proposed ie.
+ terminate when 
+\begin_inset Formula 
+\begin{equation}
+f_{\mbox{max}}-f_{\mbox{min}}\le\epsilon\label{eq:termination_ali}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $f_{\mbox{max}}$
+\end_inset
+
+ is the function value of the worst agent in the population, 
+\begin_inset Formula $f_{\mbox{min}}$
+\end_inset
+
+ is the function value of the best agent and 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+is a small positive number.
+\end_layout
+
+\begin_layout Standard
+In the proposed termination rule, the average function value of the population
+ is calculated in each iteration.
+ If this value does not change significantly for a repetitive number of
+ iterations, then it is very likely that the method may not discover a new
+ global minimum and should therefore be terminated.
+ Hence in every generation 
+\begin_inset Formula $t$
+\end_inset
+
+ we measure the quantity: 
+\begin_inset Formula 
+\begin{equation}
+\text{\ensuremath{\delta^{(t)}=}}\left|\sum_{i=1}^{\mbox{NP}}\left|f_{i}^{(t)}\right|-\sum_{i=1}^{\mbox{NP}}\left|f_{i}^{(t-1)}\right|\right|
+\end{equation}
+
+\end_inset
+
+and the termination rule is defined as: 
+\series bold
+terminate
+\series default
+ if 
+\begin_inset Formula $\delta^{(t)}\le\epsilon$
+\end_inset
+
+ for a predefined number of 
+\begin_inset Formula $M$
+\end_inset
+
+ generations.
+ 
 \end_layout
 
 \begin_layout Section
@@ -11242,6 +11403,25 @@ Y.
  Qian, On the convergence analysis and param- eter selection in particle
  swarm optimization, in: Proceedings of the Second International Conference
  on Machine Learning and Cybernetics, 2003.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "minfinder"
+literal "false"
+
+\end_inset
+
+Ioannis G.
+ Tsoulos, Isaac E.
+ Lagaris, MinFinder: Locating all the local minima of a function, Computer
+ Physics Communications 
+\series bold
+174
+\series default
+, pp.
+ 166-179, 2006.
 \end_layout
 
 \begin_layout Bibliography
