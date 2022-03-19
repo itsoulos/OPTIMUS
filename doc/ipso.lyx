@@ -252,7 +252,7 @@ literal "true"
 \end_inset
 
  etc.
- Also, many works have been apperead utilizing the modern GPU processing
+ Also, many works have been appeared utilizing the modern GPU processing
  units 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -289,7 +289,7 @@ The method of Particle Swarm Optimization is method based on a population
  next position is calculated as a function not only of their position but
  also of the best position they had in the past as well as the best position
  of the population.
- The method was sucessfully used in a variety of scientific and practical
+ The method was successfully used in a variety of scientific and practical
  problems from areas such as physics
 \series bold
  
@@ -375,7 +375,7 @@ literal "false"
  etc.
  This text introduces three distinct modifications to the original method,
  which drastically improve the time required to find the total minimum by
- reducing the required number of function evalutions.
+ reducing the required number of function evaluations.
  These modifications cover a large part of the method: the speed calculation,
  a new method of avoiding running local search methods, and a new adaptive
  termination rule.
@@ -386,7 +386,7 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-The rest of this article is didived as follows: in section 
+The rest of this article is divided as follows: in section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Method-description"
@@ -432,10 +432,10 @@ name "sec:Method-description"
 \end_layout
 
 \begin_layout Standard
-The base algorithm of PSO and the proposed modifications are outlinen in
+The base algorithm of PSO and the proposed modifications are outlined in
  detail in the following subsections.
  The discussion starts with a new mechanism that calculates the velocity
- of the populations, continoues with a discarding procedure used minimize
+ of the populations, continuous with a discarding procedure used minimize
  the number of local searches performed and ends with a discussion about
  the new stopping rule proposed here.
 \end_layout
@@ -452,7 +452,7 @@ name "subsec:The-base-algorithm"
 \end_layout
 
 \begin_layout Standard
-The base algorithm is listed below with the peridical application of local
+The base algorithm is listed below with the periodical application of local
  search method in order to enchance the estimation of the global minimum,
  ie.
  at every iteration a decision with probability 
@@ -528,7 +528,7 @@ Set
 \begin_layout Enumerate
 
 \series bold
-Initalize
+Initialize
 \series default
  randomly the positions of the 
 \begin_inset Formula $m$
@@ -829,7 +829,7 @@ x_{i}=x_{i}+u_{i}\label{eq:eq3}
 
 \end_inset
 
-Typically the velocity is calcualted as a combination of the old velocity
+Typically the velocity is calculated as a combination of the old velocity
  and the best located values 
 \begin_inset Formula $p_{i}$
 \end_inset
@@ -1009,33 +1009,84 @@ Proposed technique
 \end_layout
 
 \begin_layout Standard
-The proposed mechanism is a stochastic one as I1 and it is defined as:
-\end_layout
+This calculation of inertia involves the number of iterations where the
+ method manages to find a new minimum.
+ In the first iterations and when the method has to do more exploration
+ of the research area the inertia will be great.
+ When the method should focus on a minimum, then the inertia will decrease.
+ For this reason at every iteration 
+\begin_inset Formula $\mbox{iter}$
+\end_inset
 
-\begin_layout Standard
+ the quantity 
 \begin_inset Formula 
 \begin{equation}
-\omega_{iter}=\frac{1}{4+\frac{r}{2}}
+\text{\ensuremath{\delta^{(\mbox{iter})}=}}\left|\sum_{i=1}^{m}\left|f_{i}^{(\mbox{iter})}\right|-\sum_{i=1}^{m}\left|f_{i}^{(\mbox{iter}-1)}\right|\right|
 \end{equation}
 
 \end_inset
 
-where 
-\begin_inset Formula $r$
+is measured.
+ In the first steps of the algorithm this quantity will change from repetition
+ to repetition at a fast pace and at some point and then it will no longer
+ change at the same rate or will be zero.
+ Hence, we define a metric to model the changes in 
+\begin_inset Formula $\delta^{(\mbox{iter})}\ $
 \end_inset
 
- being a random number in 
-\begin_inset Formula $[0,1]$
+as 
+\begin_inset Formula 
+\begin{equation}
+\zeta^{(\mbox{iter})}=\begin{cases}
+1, & \delta^{(i)}=0\\
+0, & \mbox{otherwise}
+\end{cases}
+\end{equation}
+
+\end_inset
+
+ Using this observation two additional metrics are created, 
+\begin_inset Formula $S_{\delta}^{(\mbox{iter})}$
+\end_inset
+
+ and 
+\begin_inset Formula $C_{\delta}^{(\mbox{iter})}$
 \end_inset
 
 .
- This mechanism will be called IP in the experiemental results.
-\end_layout
+ The metric 
+\begin_inset Formula $S_{\delta}^{(\mbox{iter})}$
+\end_inset
 
-\begin_layout Standard
+ is given by
+\begin_inset Formula 
+\begin{equation}
+S_{\delta}^{(\mbox{iter})}=\sum_{i=1}^{\mbox{iter}}\zeta^{(i)}
+\end{equation}
 
-\series bold
-(change to the correct one).
+\end_inset
+
+and the metric 
+\begin_inset Formula $C_{\delta}$
+\end_inset
+
+ is given by:
+\begin_inset Formula 
+\begin{equation}
+C_{\delta}^{(\mbox{iter})}=\frac{S_{\delta}^{(\mbox{iter)}}}{\mbox{iter}}
+\end{equation}
+
+\end_inset
+
+The following definition for the inertia calculation is proposed:
+\begin_inset Formula 
+\begin{equation}
+\omega_{\mbox{iter}}=\omega_{max}-\frac{\mbox{iter}}{C_{\delta}^{(\mbox{iter})}}\left(\omega_{\mbox{max}}-\omega_{\mbox{min}}\right)
+\end{equation}
+
+\end_inset
+
+This mechanism will be called IP in the tables with the experimental results.
 \end_layout
 
 \begin_layout Subsection
@@ -1283,7 +1334,53 @@ A common used way to terminate a global optimization method is to utilize
 \end_layout
 
 \begin_layout Subsubsection
-The minmax method
+Ali's stopping method
+\end_layout
+
+\begin_layout Standard
+A method proposed in the work of Ali and Kaelo
+\begin_inset CommandInset citation
+LatexCommand cite
+key "AliKaelo"
+literal "false"
+
+\end_inset
+
+, where at every generation the measure 
+\begin_inset Formula 
+\begin{equation}
+\alpha=\left|f_{\mbox{max}}-f_{\mbox{min}}\right|
+\end{equation}
+
+\end_inset
+
+ is calculated.
+ The 
+\begin_inset Formula $f_{\mbox{max}}$
+\end_inset
+
+ stands for the maximum function value of the population and 
+\begin_inset Formula $f_{\mbox{min}}$
+\end_inset
+
+ represents the lowest function value of the population.
+ The method will terminate when
+\begin_inset Formula 
+\begin{equation}
+\alpha\le\epsilon\label{eq:termination_ali}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ is a predefined small positive value, for example 
+\begin_inset Formula $\epsilon=10^{-3}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1291,60 +1388,64 @@ Doublebox method
 \end_layout
 
 \begin_layout Standard
-
-\series bold
-The termination rule used here is derived from 
+The second method utilized is a method initially proposed 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "psotsoulos"
-literal "true"
+key "doublepop_tsoulos"
+literal "false"
 
 \end_inset
 
-: denote with 
-\begin_inset Formula $\sigma^{(k)}$
+.
+ In this method we denote with
+\series bold
+ 
+\begin_inset Formula $\sigma^{(iter)}$
 \end_inset
 
- the variance of 
-\begin_inset Formula $f\left(x^{*}\right)$
+ 
+\series default
+the variance of 
+\begin_inset Formula $f_{\mbox{min}}$
 \end_inset
 
-, where 
-\begin_inset Formula $k$
+ calculated at iteration 
+\begin_inset Formula $\mbox{iter}$
 \end_inset
 
- is the current iteration and 
-\begin_inset Formula $x^{*}$
+.
+ If the algorithm can not locate a new lower value for 
+\begin_inset Formula $f_{\mbox{min}}$
 \end_inset
 
- is the so far located global minimum.
- If the algorithm did not manage to locate new minimum for a number of generatio
-ns, then probably the algorithm has located the global minimum and it should
- terminate.
- The termination rule stops the algorithm when 
+
+\series bold
+ 
+\series default
+for a number of iterations, then the global minimum has already located
+ and the algorithm should terminate, i.e.
+ terminate when
+\series bold
+ 
 \end_layout
 
 \begin_layout Standard
-
-\series bold
 \begin_inset Formula 
 \begin{equation}
-k\ge k_{\mbox{min}}\ \mbox{AND\ }\sigma^{(k)}\le\frac{\sigma^{\left(k_{\mbox{last}}\right)}}{2}\label{eq:termination_mine}
+\sigma^{(\mbox{iter})}\le\frac{\sigma^{\left(\mbox{iter}_{\mbox{last}}\right)}}{2}\label{eq:termination_doublebox}
 \end{equation}
 
 \end_inset
 
 where 
-\begin_inset Formula $k_{\mbox{last}}$
+\begin_inset Formula $\mbox{iter}_{\mbox{last}}$
 \end_inset
 
- stands for iteration where a new minimum was found.
- The value 
-\begin_inset Formula $k_{\mbox{min}}$
+ stands for the last iteration where a new lower value for 
+\begin_inset Formula $f_{\mbox{min}}$
 \end_inset
 
- is a predefined minimum number of iterations, in order to prevent the algorithm
- from premature termination.
+was discovered.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1352,74 +1453,21 @@ Proposed technique
 \end_layout
 
 \begin_layout Standard
-Typically the DE method is terminated when a predefined number of iterations
- is reached.
- This can be extremely inefficient in some problems and in others it can
- lead to premature termination, ie termination before the total minimum
- is found.
- In the work of Ali et al 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "ali_de"
-literal "false"
-
+In the proposed termination technique in each iteration 
+\begin_inset Formula $\mbox{k}$
 \end_inset
 
- a different termination rule is proposed ie.
- terminate when 
-\begin_inset Formula 
-\begin{equation}
-f_{\mbox{max}}-f_{\mbox{min}}\le\epsilon\label{eq:termination_ali}
-\end{equation}
-
+ the difference between the current best value and the previous best value
+ is measured, ie the difference 
+\begin_inset Formula $\left|f_{\mbox{min}}^{(k)}-f_{\mbox{min}}^{(k-1)}\right|.$
 \end_inset
 
-where 
-\begin_inset Formula $f_{\mbox{max}}$
+ If this difference is zero for a series of predefined number of iterations
+ 
+\begin_inset Formula $k_{\mbox{max}}$
 \end_inset
 
- is the function value of the worst agent in the population, 
-\begin_inset Formula $f_{\mbox{min}}$
-\end_inset
-
- is the function value of the best agent and 
-\begin_inset Formula $\epsilon$
-\end_inset
-
-is a small positive number.
-\end_layout
-
-\begin_layout Standard
-In the proposed termination rule, the average function value of the population
- is calculated in each iteration.
- If this value does not change significantly for a repetitive number of
- iterations, then it is very likely that the method may not discover a new
- global minimum and should therefore be terminated.
- Hence in every generation 
-\begin_inset Formula $t$
-\end_inset
-
- we measure the quantity: 
-\begin_inset Formula 
-\begin{equation}
-\text{\ensuremath{\delta^{(t)}=}}\left|\sum_{i=1}^{\mbox{NP}}\left|f_{i}^{(t)}\right|-\sum_{i=1}^{\mbox{NP}}\left|f_{i}^{(t-1)}\right|\right|
-\end{equation}
-
-\end_inset
-
-and the termination rule is defined as: 
-\series bold
-terminate
-\series default
- if 
-\begin_inset Formula $\delta^{(t)}\le\epsilon$
-\end_inset
-
- for a predefined number of 
-\begin_inset Formula $M$
-\end_inset
-
- generations.
+, then the method terminates.
  
 \end_layout
 
@@ -1435,9 +1483,10 @@ name "sec:Experiments"
 \end_layout
 
 \begin_layout Standard
-In order to determine the effectiveness of the proposed modifications, a
- series of experiments were performed on known functions from the relevant
- literature 
+To measure the effect of the proposed modifications on the original method,
+ a series of experiments were performed on test functions from the relevant
+ literature.
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Ali1,Floudas1"
@@ -1445,9 +1494,7 @@ literal "true"
 
 \end_inset
 
-.
- The choice of these functions was made as they are widely used in the literatur
-e by many researchers 
+ and they have been used widely by various researchers 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "testfunctions1,testfunctions2,testfunctions3,testfunctions4"
@@ -1455,38 +1502,13 @@ literal "false"
 
 \end_inset
 
-, they have quite a complex structure and in many cases have a large number
- of dimensions that make them ideal for study and testing.
-
-\series bold
+.
+ The experiments evaluated both the effect of the new method of calculating
+ inertia, as well as the criterion for avoiding local minima as well as
+ the new termination rule.
+ The experiments were recorded in separate tables, so that it is more possible
+ to understand the effect of each modification separately.
  
-\end_layout
-
-\begin_layout Standard
-The experiments were divided into two major categories.
- In the first category all the schemes for the Differential Weight were
- tested using the termination rule of Equation 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:termination_ali"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- and in the second category the same schemes were tested using the proposed
- termination criterion.
- Also, after every successful termination the local optimization method
- BFGS 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Powell"
-literal "false"
-
-\end_inset
-
- was applied in order to get even closer to the global minimum.
 \end_layout
 
 \begin_layout Subsection
@@ -1494,7 +1516,7 @@ Test functions
 \end_layout
 
 \begin_layout Standard
-The description of the test functions used in the experiments has as follows:
+The definition of the test functions used are given below
 \end_layout
 
 \begin_layout Itemize
@@ -1502,7 +1524,7 @@ The description of the test functions used in the experiments has as follows:
 \series bold
 Bf1
 \series default
- (Bohachevsky 1) function defined as:
+ (Bohachevsky 1) function:
 \end_layout
 
 \begin_layout Standard
@@ -1518,7 +1540,7 @@ with
 \end_inset
 
 .
- The value of global minimum is 0.0.
+ 
 \end_layout
 
 \begin_layout Itemize
@@ -1526,7 +1548,7 @@ with
 \series bold
 Bf2
 \series default
- (Bohachevsky 2) function defined as: 
+ (Bohachevsky 2) function: 
 \begin_inset Formula 
 \[
 f(x)=x_{1}^{2}+2x_{2}^{2}-\frac{3}{10}\cos\left(3\pi x_{1}\right)\cos\left(4\pi x_{2}\right)+\frac{3}{10}
@@ -1539,7 +1561,7 @@ with
 \end_inset
 
 .
- The value of the global minimum is 0.0.
+ 
 \end_layout
 
 \begin_layout Itemize
@@ -1547,8 +1569,7 @@ with
 \series bold
 Branin
 \series default
- function.
- The function is defined by 
+ function: 
 \begin_inset Formula $f(x)=\left(x_{2}-\frac{5.1}{4\pi^{2}}x_{1}^{2}+\frac{5}{\pi}x_{1}-6\right)^{2}+10\left(1-\frac{1}{8\pi}\right)\cos(x_{1})+10$
 \end_inset
 
@@ -1557,12 +1578,12 @@ Branin
 \end_inset
 
 .
- The value of global minimum is 0.397887.with 
+ with 
 \begin_inset Formula $x\in[-10,10]^{2}$
 \end_inset
 
 .
- The value of global minimum is -0.352386.
+ 
 \end_layout
 
 \begin_layout Itemize
@@ -1570,8 +1591,7 @@ Branin
 \series bold
 CM
 \series default
- function.
- The Cosine Mixture function is given by the equation 
+ function: 
 \begin_inset Formula 
 \[
 f(x)=\sum_{i=1}^{n}x_{i}^{2}-\frac{1}{10}\sum_{i=1}^{n}\cos\left(5\pi x_{i}\right)
@@ -1584,7 +1604,7 @@ where
 \end_inset
 
 .
- For our experiments we used 
+ In the current experiments we used 
 \begin_inset Formula $n=4$
 \end_inset
 
@@ -1596,8 +1616,7 @@ where
 \series bold
 Camel
 \series default
- function.
- The function is given by 
+ function:
 \begin_inset Formula 
 \[
 f(x)=4x_{1}^{2}-2.1x_{1}^{4}+\frac{1}{3}x_{1}^{6}+x_{1}x_{2}-4x_{2}^{2}+4x_{2}^{4},\quad x\in[-5,5]^{2}
@@ -1613,8 +1632,7 @@ f(x)=4x_{1}^{2}-2.1x_{1}^{4}+\frac{1}{3}x_{1}^{6}+x_{1}x_{2}-4x_{2}^{2}+4x_{2}^{
 \series bold
 Easom
 \series default
- function.
- The function is given by the equation 
+ function: 
 \begin_inset Formula 
 \[
 f(x)=-\cos\left(x_{1}\right)\cos\left(x_{2}\right)\exp\left(\left(x_{2}-\pi\right)^{2}-\left(x_{1}-\pi\right)^{2}\right)
@@ -1642,16 +1660,7 @@ f(x)=-\exp\left(-0.5\sum_{i=1}^{n}x_{i}^{2}\right),\quad-1\le x_{i}\le1
 
 \end_inset
 
-The global minimum is located at 
-\begin_inset Formula $x^{*}=(0,0,...,0)$
-\end_inset
-
- with value 
-\begin_inset Formula $-1$
-\end_inset
-
-.
- In our experiments we used this function with 
+ In the current experiments we used this function with 
 \begin_inset Formula $n=2,4,8,16,32$
 \end_inset
 
@@ -1667,7 +1676,7 @@ Goldstein and Price function
 
 
 \series default
-The function is given by the equation
+
 \begin_inset Formula 
 \begin{eqnarray*}
 f(x) & = & \left[1+\left(x_{1}+x_{2}+1\right)^{2}\right.\\
@@ -1683,11 +1692,7 @@ With
 \end_inset
 
 .
- The global minimum is located at 
-\begin_inset Formula $x^{*}=(0,-1)$
-\end_inset
-
- with value 3.0
+ 
 \end_layout
 
 \begin_layout Itemize
@@ -1695,8 +1700,7 @@ With
 \series bold
 Griewank2
 \series default
- function.
- The function is given by
+ function:
 \begin_inset Formula 
 \[
 f(x)=1+\frac{1}{200}\sum_{i=1}^{2}x_{i}^{2}-\prod_{i=1}^{2}\frac{\cos(x_{i})}{\sqrt{(i)}},\quad x\in[-100,100]^{2}
@@ -1704,11 +1708,7 @@ f(x)=1+\frac{1}{200}\sum_{i=1}^{2}x_{i}^{2}-\prod_{i=1}^{2}\frac{\cos(x_{i})}{\s
 
 \end_inset
 
-The global minimum is located at the 
-\begin_inset Formula $x^{*}=(0,0,...,0)$
-\end_inset
 
- with value 0.
 \end_layout
 
 \begin_layout Itemize
@@ -1760,8 +1760,7 @@ literal "true"
 \series bold
 Hansen
 \series default
- function.
- 
+ function: 
 \begin_inset Formula $f(x)=\sum_{i=1}^{5}i\cos\left[(i-1)x_{1}+i\right]\sum_{j=1}^{5}j\cos\left[(j+1)x_{2}+j\right]$
 \end_inset
 
@@ -1777,8 +1776,7 @@ Hansen
 \series bold
 Hartman 3
 \series default
- function.
- The function is given by
+ function:
 \begin_inset Formula 
 \[
 f(x)=-\sum_{i=1}^{4}c_{i}\exp\left(-\sum_{j=1}^{3}a_{ij}\left(x_{j}-p_{ij}\right)^{2}\right)
@@ -1825,7 +1823,7 @@ p=\left(\begin{array}{ccc}
 \series bold
 Hartman 6
 \series default
- function.
+ function:
 \begin_inset Formula 
 \[
 f(x)=-\sum_{i=1}^{4}c_{i}\exp\left(-\sum_{j=1}^{6}a_{ij}\left(x_{j}-p_{ij}\right)^{2}\right)
@@ -1882,8 +1880,7 @@ literal "true"
 
 \end_inset
 
- is used as a test case here.
- The function to be minimized is given by:
+ is used a test function here and it is defined by:
 \begin_inset Formula 
 \begin{equation}
 V_{LJ}(r)=4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^{6}\right]\label{eq:potential}
@@ -1891,7 +1888,7 @@ V_{LJ}(r)=4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{
 
 \end_inset
 
-In the current experiments three different cases were studied: 
+For our experiments we used: 
 \begin_inset Formula $N=3,\ 4,\ 5$
 \end_inset
 
@@ -1904,7 +1901,7 @@ In the current experiments three different cases were studied:
 Rastrigin
 \series default
  function.
- The function is given by 
+ 
 \begin_inset Formula 
 \[
 f(x)=x_{1}^{2}+x_{2}^{2}-\cos(18x_{1})-\cos(18x_{2}),\quad x\in[-1,1]^{2}
@@ -1912,11 +1909,7 @@ f(x)=x_{1}^{2}+x_{2}^{2}-\cos(18x_{1})-\cos(18x_{2}),\quad x\in[-1,1]^{2}
 
 \end_inset
 
-The global minimum is located at 
-\begin_inset Formula $x^{*}=(0,0)$
-\end_inset
 
- with value -2.0.
 \end_layout
 
 \begin_layout Itemize
@@ -1931,7 +1924,7 @@ Rosenbrock
 \begin_inset Newline newline
 \end_inset
 
-This function is given by 
+
 \begin_inset Formula 
 \[
 f(x)=\sum_{i=1}^{n-1}\left(100\left(x_{i+1}-x_{i}^{2}\right)^{2}+\left(x_{i}-1\right)^{2}\right),\quad-30\le x_{i}\le30.
@@ -1939,16 +1932,7 @@ f(x)=\sum_{i=1}^{n-1}\left(100\left(x_{i+1}-x_{i}^{2}\right)^{2}+\left(x_{i}-1\r
 
 \end_inset
 
-The global minimum is located at the 
-\begin_inset Formula $x^{*}=(0,0,...,0)$
-\end_inset
-
- with 
-\begin_inset Formula $f\left(x^{*}\right)=0$
-\end_inset
-
-.
- In our experiments we used this function with 
+In our experiments we used the values 
 \begin_inset Formula $n=4,\ 8,\ 16$
 \end_inset
 
@@ -2000,7 +1984,7 @@ with
 \end_inset
 
 .
- The value of global minimum is -10.342378.
+ 
 \end_layout
 
 \begin_layout Itemize
@@ -2044,7 +2028,7 @@ with
 \end_inset
 
 .
- The value of global minimum is -10.107749.
+ 
 \end_layout
 
 \begin_layout Itemize
@@ -2098,7 +2082,7 @@ with
 \end_inset
 
 .
- The value of global minimum is -10.536410.
+ 
 \end_layout
 
 \begin_layout Itemize
@@ -2106,8 +2090,7 @@ with
 \series bold
 Sinusoidal
 \series default
- function.
- The function is given by 
+ function: 
 \begin_inset Formula 
 \[
 f(x)=-\left(2.5\prod_{i=1}^{n}\sin\left(x_{i}-z\right)+\prod_{i=1}^{n}\sin\left(5\left(x_{i}-z\right)\right)\right),\quad0\le x_{i}\le\pi.
@@ -2115,16 +2098,7 @@ f(x)=-\left(2.5\prod_{i=1}^{n}\sin\left(x_{i}-z\right)+\prod_{i=1}^{n}\sin\left(
 
 \end_inset
 
-The global minimum is located at 
-\begin_inset Formula $x^{*}=(2.09435,2.09435,...,2.09435)$
-\end_inset
-
- with 
-\begin_inset Formula $f\left(x^{*}\right)=-3.5$
-\end_inset
-
-.
- In our experiments we used 
+The case of 
 \begin_inset Formula $n=4,8,16,32$
 \end_inset
 
@@ -2132,8 +2106,7 @@ The global minimum is located at
 \begin_inset Formula $z=\frac{\pi}{6}$
 \end_inset
 
- and the corresponding functions are denoted by the labels SINU4, SINU8,
- SINU16 and SINU32 respectively.
+ was used in the experimental results.
 \end_layout
 
 \begin_layout Itemize
@@ -2141,8 +2114,7 @@ The global minimum is located at
 \series bold
 Test2N
 \series default
- function.
- This function is given by the equation 
+ function:
 \begin_inset Formula 
 \[
 f(x)=\frac{1}{2}\sum_{i=1}^{n}x_{i}^{4}-16x_{i}^{2}+5x_{i},\quad x_{i}\in[-5,5].
@@ -2159,23 +2131,6 @@ The function has
 \end_inset
 
 .
- The corresponding values of global minimum is -156.664663 for 
-\begin_inset Formula $n=4$
-\end_inset
-
-, -195.830829 for 
-\begin_inset Formula $n=5$
-\end_inset
-
-, -234.996994 for 
-\begin_inset Formula $n=6$
-\end_inset
-
- and -274.163160 for 
-\begin_inset Formula $n=7$
-\end_inset
-
-.
 \end_layout
 
 \begin_layout Itemize
@@ -2183,8 +2138,7 @@ The function has
 \series bold
 Test30N
 \series default
- function.
- This function is given by 
+ function:
 \begin_inset Formula 
 \[
 f(x)=\frac{1}{10}\sin^{2}\left(3\pi x_{1}\right)\sum_{i=2}^{n-1}\left(\left(x_{i}-1\right)^{2}\left(1+\sin^{2}\left(3\pi x_{i+1}\right)\right)\right)+\left(x_{n}-1\right)^{2}\left(1+\sin^{2}\left(2\pi x_{n}\right)\right)
@@ -2200,7 +2154,7 @@ with
 \begin_inset Formula $30^{n}$
 \end_inset
 
- local minima in the searc space.
+ local minima in the search space.
  For our experiments we used 
 \begin_inset Formula $n=3,4$
 \end_inset
@@ -2213,6 +2167,23 @@ Experimental setup
 \end_layout
 
 \begin_layout Standard
+
+\series bold
+Also, after every successful termination the local optimization method BFGS
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Powell"
+literal "false"
+
+\end_inset
+
+ was applied in order to get even closer to the global minimum.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
 particles=100, generations=100, local search rate=5%
 \end_layout
 
@@ -11426,6 +11397,43 @@ Ioannis G.
 \series default
 , pp.
  166-179, 2006.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "AliKaelo"
+literal "false"
+
+\end_inset
+
+M.M.
+ Ali, P.
+ Kaelo, Improved particle swarm algorithms for global optimization, Applied
+ Mathematics and Computation 
+\series bold
+196
+\series default
+, pp.
+ 578–593, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "doublepop_tsoulos"
+literal "false"
+
+\end_inset
+
+I.G.
+ Tsoulos, Modifications of real code genetic algorithm for global optimization,
+ Applied Mathematics and Computation 
+\series bold
+203
+\series default
+, pp.
+ 598-607, 2008.
 \end_layout
 
 \begin_layout Bibliography
