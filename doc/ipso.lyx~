@@ -90,7 +90,22 @@ Department of Informatics and Telecommunications, University of Ioannina,
 \end_layout
 
 \begin_layout Abstract
-Write some abstract here
+The Particle Swarm Optimization (PSO) method is a global optimization technique
+ based on the gradual evolution of a population of solutions called particles.
+ The method evolves the particles based on both the best position of each
+ of them in the past and the best position of the whole.
+ Due to its simplicity, the method has found application in many scientific
+ areas and for this reason during the last years many modifications have
+ been presented.
+ This paper introduces three modifications of the method that aim to reduce
+ the required number of function calls while maintaining the accuracy of
+ the method in locating the global minimum.
+ These modifications affect important components of the method such as how
+ fast the particles change or even how the method is terminated.
+ The above modifications were tested on a number of known universal optimization
+ problems from the relevant literature and the results were compared with
+ similar techniques.
+ 
 \end_layout
 
 \begin_layout Paragraph*
@@ -2625,14 +2640,32 @@ The proposed termination criterion is significantly superior to the other
 \end_layout
 
 \begin_layout Standard
-In order to ...
+To show the effect of the proposed termination method, an additional experiment
+ was performed in which the dimension of the sinus problem increases from
+ 2 to 32 and in each case all three termination techniques were tested.
+ The result of this experiment is graphically represented in the Figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:sinu"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ This graph shows that the doublebox method is significantly superior to
+ the ali method but of course the new proposed method further reduces the
+ required number of function calls.
+ 
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -4665,7 +4698,7 @@ TOTAL
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -6698,7 +6731,7 @@ TOTAL
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -10774,7 +10807,7 @@ TOTAL
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -12813,7 +12846,7 @@ TOTAL
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -14849,6 +14882,57 @@ TOTAL
 \end_inset
 
 
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Experiments with the SINU function for a series of problem dimension from
+ 
+\begin_inset Formula $n=2$
+\end_inset
+
+ to 
+\begin_inset Formula $n=32$
+\end_inset
+
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:sinu"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename sinu_plot_ipso.eps
+	scale 75
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -14860,6 +14944,30 @@ name "sec:Conclusions"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+In the current work, three new modifications of the PSO method for locating
+ the global minimum of continuous and differentiable functions were presented.
+ The first modification alters the population velocity calculation in an
+ attempt to cause large changes in velocity when the method is in its infancy
+ and constantly finds new local minima and small velocity changes when the
+ method is to be centered around a promising area of a global minimum.
+ The second modification limits the number of local searches performed by
+ the method through an asymptotic criterion based on derivative computation.
+ The third modification introduces a new termination criterion based on
+ the observation that the method from some iteration onwards will not be
+ able to detect a new minimum and therefore its termination should be considered.
+ All of these modifications have low computational requirements.
+\end_layout
+
+\begin_layout Standard
+The experimental results showed that the second and third modifications
+ drastically reduce the required number of function calls without affecting
+ the performance of the method.
+ In addition, the first modification reduces the number of required calls,
+ but only when the criterion for avoiding local minimization is not present.
+ 
 \end_layout
 
 \begin_layout Bibliography
