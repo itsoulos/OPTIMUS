@@ -377,11 +377,11 @@ literal "false"
  which drastically improve the time required to find the total minimum by
  reducing the required number of function evaluations.
  These modifications cover a large part of the method: the speed calculation,
- a new method of avoiding running local search methods, and a new adaptive
+ a new method of avoiding running local search methods and a new adaptive
  termination rule.
  The proposed modifications were applied to a number of problems from the
  relevant literature and compared with similar techniques and the results
- are presented below.
+ are presented in a separate section.
  
 \end_layout
 
@@ -1081,7 +1081,7 @@ C_{\delta}^{(\mbox{iter})}=\frac{S_{\delta}^{(\mbox{iter)}}}{\mbox{iter}}
 The following definition for the inertia calculation is proposed:
 \begin_inset Formula 
 \begin{equation}
-\omega_{\mbox{iter}}=\omega_{max}-\frac{\mbox{iter}}{C_{\delta}^{(\mbox{iter})}}\left(\omega_{\mbox{max}}-\omega_{\mbox{min}}\right)
+\omega_{\mbox{iter}}=\omega_{max}-\frac{\mbox{iter}}{C_{\delta}^{(\mbox{iter})}}\left(\omega_{\mbox{max}}-\omega_{\mbox{min}}\right)\label{eq:proposedInertia}
 \end{equation}
 
 \end_inset
@@ -1287,7 +1287,7 @@ Hence, a candidate start point
  can be rejected if 
 \begin_inset Formula 
 \begin{equation}
-\left\Vert x-z\right\Vert \le r_{C}\ \mbox{AND\ }\left(x-y\right)^{T}\left(\nabla f(x)-\nabla f(z)\right)
+\left\Vert x-z\right\Vert \le r_{C}\ \mbox{AND\ }\left(x-y\right)^{T}\left(\nabla f(x)-\nabla f(z)\right)\label{eq:gradientCheck}
 \end{equation}
 
 \end_inset
@@ -2571,38 +2571,70 @@ noprefix "false"
 \end_inset
 
 .
+ The above results lead to a number of observations:
 \end_layout
 
-\begin_layout Standard
-
-\series bold
-1) i pso einai mia apodotiki methodos
+\begin_layout Enumerate
+The pso method is a robust method and this is evident by the high success
+ rate in finding the global minimum, although the number of particles used
+ was relative low (100).
 \end_layout
 
-\begin_layout Standard
+\begin_layout Enumerate
+The proposed inertia calculation method as defined in Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:proposedInertia"
+plural "false"
+caps "false"
+noprefix "false"
 
-\series bold
-2) to inertia einai kalo otan den yparxei to gradient mazi.
+\end_inset
+
+ achieves a significant reduction in the number of calls between 11 and
+ 25% depending on the termination criterion used.
+ However, the presence of the gradient check mechanism of the Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:gradientCheck"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ nullifies any gain of the method, as the rejection criterion significantly
+ reduces the number of calls regardless of the inertia calculation mechanism
+ used.
+ 
+\end_layout
+
+\begin_layout Enumerate
+The local optimization avoidance mechanism of the gradient check drastically
+ reduces the required number of calls for each termination criterion while
+ maintaining the success rate of the method at extremely high levels.
+ 
+\end_layout
+
+\begin_layout Enumerate
+The proposed termination criterion is significantly superior to the other
+ two with which the comparison was made.
+ Also, if the termination criterion is combined with the mechanism for avoiding
+ local optimizations, then the gain in number of calls grows even more.
  
 \end_layout
 
 \begin_layout Standard
-
+In order to 
 \series bold
-3) to gradient meionei sto miso kai ligotero ton apaitoumeno xrono
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-4) i proteinomeni methodos termatismou einai poly apodotiki
+...
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -4635,7 +4667,7 @@ TOTAL
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -6668,7 +6700,7 @@ TOTAL
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -10744,7 +10776,7 @@ TOTAL
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -12783,7 +12815,7 @@ TOTAL
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
