@@ -138,10 +138,10 @@ literal "true"
 
 \end_inset
 
-, based on a series of parameters that commonly called weights or processing
+, based on a series of parameters that are commonly called weights or processing
  units.
  They have been used in a variety of problems from different scientific
- areas such as physics 
+ areas, such as physics 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "nnphysics1,nnphysics2,nnphysics3"
@@ -192,9 +192,9 @@ literal "false"
 \begin_inset Formula $\overrightarrow{w}$
 \end_inset
 
- for the certain problem.
- The training procedure can be formulated also an optimization problem,
- where the target is to minimize the so called error function:
+ for a certain problem.
+ The training procedure can be formulated also as an optimization problem,
+ where the target is to minimize the so-called error function:
 \begin_inset Formula 
 \begin{equation}
 E\left(N\left(\overrightarrow{x},\overrightarrow{w}\right)\right)=\sum_{i=1}^{M}\left(N\left(\overrightarrow{x}_{i},\overrightarrow{w}\right)-y_{i}\right)^{2}\label{eq:eq1}
@@ -225,11 +225,7 @@ noprefix "false"
 \end_inset
 
  .
- The neural network 
-\begin_inset Formula $N(\overrightarrow{x},\overrightarrow{w})$
-\end_inset
-
- can be modeled as a summation of processing units as proposed in 
+ The neural network form used here is considered also in 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "nnc"
@@ -237,7 +233,87 @@ literal "false"
 
 \end_inset
 
-:
+.
+ Suppose we have a neural network with a processing level that uses the
+ sigmoid function as an output function.
+ Every output of the network is defined as:
+\begin_inset Formula 
+\begin{equation}
+o_{i}(x)=\sigma\left(p_{i}^{T}x+\theta_{i}\right),\label{eq:eq1-1}
+\end{equation}
+
+\end_inset
+
+with 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ the weight vector and 
+\begin_inset Formula $\theta_{i}$
+\end_inset
+
+ the bias for the output 
+\begin_inset Formula $i.$
+\end_inset
+
+ For a neural network with 
+\begin_inset Formula $H$
+\end_inset
+
+ hidden nodes the final output function can be written:
+\begin_inset Formula 
+\begin{equation}
+N(x)=\sum_{i=1}^{H}v_{i}o_{i}(x),\label{eq:eq1-2}
+\end{equation}
+
+\end_inset
+
+with 
+\begin_inset Formula $v_{i}$
+\end_inset
+
+ the output weight for processing unit 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ Hence, by using one vector for all the parameters (weights and biases)
+ the neural network can be written in fthe following form:
+\series bold
+ We can rewrite equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eq1-2"
+
+\end_inset
+
+ by using just one vector for all parameters (weights and biases) in the
+ following form:
+\begin_inset Formula 
+\begin{equation}
+N\left(\overrightarrow{x},\overrightarrow{w}\right)=\sum_{i=1}^{H}w_{(d+2)i-(d+1)}\sigma\left(\sum_{j=1}^{d}x_{j}w_{(d+2)i-(d+1)+j}+w_{(d+2)i}\right)
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\overrightarrow{w}$
+\end_inset
+
+ is the vector of parameters for the neural network 
+\begin_inset Formula $N$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The neural network 
+\begin_inset Formula $N(\overrightarrow{x},\overrightarrow{w})$
+\end_inset
+
+ can be modeled as a summation of processing units as proposed in :
 \begin_inset Formula 
 \begin{equation}
 N\left(\overrightarrow{x},\overrightarrow{w}\right)=\sum_{i=1}^{H}w_{(d+2)i-(d+1)}\sigma\left(\sum_{j=1}^{d}x_{j}w_{(d+2)i-(d+1)+j}+w_{(d+2)i}\right)\label{eq:nn}
@@ -280,7 +356,7 @@ noprefix "false"
 
 \end_inset
 
- one can obtain that the dimension of weight vector 
+ one can obtain that the dimension of the weight vector 
 \begin_inset Formula $w$
 \end_inset
 
@@ -300,7 +376,7 @@ noprefix "false"
 \end_inset
 
  has been minimized with a variety of optimization methods during the past
- years such as: the Back Propagation method 
+ years, such as: the Back Propagation method 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "bpnn,bpnn2"
@@ -353,8 +429,11 @@ Excessive computational times, because they require processing time proportional
 \end_inset
 
 .
- An extensive discussion on the problems occurred by the dimensionality
- on neural networks is presented in 
+ This means that the total number of network parameters is growing extremely
+ fast, which results in a longer computation time than the corresponding
+ universal optimization method.
+ An extensive discussion on the problems caused by the dimensionality of
+ neural networks is presented in 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "nndimension"
@@ -381,10 +460,10 @@ literal "false"
 \end_layout
 
 \begin_layout Itemize
-The ovetfitting problem.
- It is quite common for these methods to produce poor results, when they
+The overfitting problem.
+ It is quite common for these methods to produce poor results when they
  are applied to data (test data) not previously used in the training procedure.
- This problem is discussed in detail in the article of Geman et all 
+ This problem is discussed in detail in the article by Geman et all 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "nngeman"
@@ -401,8 +480,8 @@ literal "false"
 \end_inset
 
 .
- A variety of methods have been proposed to overcome this problem such as
- are weight sharing 
+ A variety of methods have been proposed to overcome this problem, such
+ as weight sharing 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "nnsharing1"
@@ -539,13 +618,13 @@ literal "false"
 \end_inset
 
 .
- The genetic algorithms work by creating and maintaining o population of
+ The genetic algorithms work by creating and maintaining a population of
  candidate solutions (chromosomes).
  This population is altered iteratively though operations such as crossover
  and mutation until some stopping criteria are met.
- They have many advantages such as simplicity in the implementation, endurance
+ They have many advantages, such as simplicity in the implementation, endurance
  in noise, they can be easily parallelized etc.
- Also, the have been applied in many problems such as aerodynamic optimization
+ Also, they have been applied to many problems, such as aerodynamic optimization
  
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -571,7 +650,7 @@ literal "true"
 \end_inset
 
  etc.
- They have been used to train neural networks in various research papers
+ They have been used to train neural networks in various research papers,
  such as the work of Leung et al 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -590,8 +669,8 @@ literal "false"
 
 \end_inset
 
-, evolution of neural networks to predict the deformation modulus of rock
- masses 
+, the evolution of neural networks to predict the deformation modulus of
+ rock masses 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "geneticnn3"
@@ -604,8 +683,8 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-The idea of feature construction has been examined by various researched
- in the relevant literature such as the work of Smith and Bull 
+The idea of feature construction has been examined by various researchers
+ in the relevant literature, such as the work of Smith and Bull 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "genfc1"
@@ -613,10 +692,10 @@ literal "false"
 
 \end_inset
 
-, who used a tree genetic programming approach to construct features from
+, who used tree genetic programming approach to construct features from
  the original ones.
- Another approach to construct features using genetic programming was proposed
- by Neshatian et al 
+ Another approach to constructing features using genetic programming was
+ proposed by Neshatian et al 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "genfc2"
@@ -624,7 +703,7 @@ literal "false"
 
 \end_inset
 
-, where the genetic programming utilized an entropy based fitness function
+, where the genetic programming utilizes an entropy based fitness function
  that maximizes the purity of class intervals.
  Another evolutionary approach was proposed by Li and Yin for feature selection
  using gene expression data 
@@ -650,12 +729,12 @@ literal "false"
 
 \begin_layout Standard
 In the problems of classification and regression, as the number of features
- increases additional examples are needed in order to achieve good results
+ increases, additional examples are needed in order to achieve good results
  in training a model but also to maintain good generalization skills in
  unknown data.
  Of course, adding new examples to the training process is almost never
  possible and this results in poor performance in the control data.
- For this reason the original data set must be transformed into a new one,
+ For this reason, the original data set must be transformed into a new one,
  which gives better generalization skills to the learning models.
  According to the Cover's theorem
 \begin_inset CommandInset citation
@@ -673,13 +752,13 @@ literal "false"
  The proposed method uses a hybrid approach, in which first new features
  are constructed using Grammatical Evolution and then these features are
  evaluated by a neural network that appropriately trains a genetic algorithm.
- In the first phase the creation of new features is done in such a way as
- to achieve the best possible learning accuracy.
+ In the first phase, the creation of new features is done in such a way
+ as to achieve the best possible learning accuracy.
  The methods that can be used to convert attributes are grouped into three
  categories: feature selection, feature construction, and feature reduction.
  The second case is the most difficult, as it does not simply require reducing
- the size of the problem but also the non-linear creation of new features
- from the old ones.
+ the size of the problem, but also the non-linear creation of new features
+ from old ones.
  
 \end_layout
 
@@ -688,8 +767,8 @@ The proposed technique can overcome other techniques from the modern literature,
  as it does not require prior knowledge of the objective problem, it can
  be applied with the exact same procedure to both categorization problems
  and function learning problems.
- In addition it can be used to discover hidden function dependencies between
- the original features of the problem and because it is based on Grammatical
+ In addition, it can be used to discover hidden function dependencies between
+ the original features of the problem and, because it is based on Grammatical
  Evolution, the user can add and subtract functions or even allow the algorithm
  to construct new functions to better learn the data set.
  Still, the final characteristics of the method can be evaluated by any
@@ -720,7 +799,7 @@ noprefix "false"
 
 \end_inset
 
- the proposed method is tested on a series of well know datasets from the
+ the proposed method is tested on a series of well known datasets from the
  relevant literature and the results are compared to those of a simple genetic
  algorithm and finally in section 
 \begin_inset CommandInset ref
@@ -748,8 +827,8 @@ name "sec:Method-description"
 
 \begin_layout Standard
 The proposed method has two major phases.
- In the a procedure that exploits the Grammatical Evolution technique is
- used, in order to create new features from the old ones.
+ In the first phase, a procedure that exploits the Grammatical Evolution
+ technique is used, in order to create new features from the old ones.
  The new features are evaluated using a Radial Basis Function (RBF) 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -764,7 +843,7 @@ literal "false"
 
  hidden nodes.
  The RBF network is used during this phase instead of a neural network because
- the training procedure for RBF networks are must faster than these of neural
+ the training procedure for RBF networks are must faster than those of neural
  networks.
  In the second phase, a hybrid genetic algorithm trains a neural network
  using the constructed features of the first phase.
@@ -783,8 +862,8 @@ name "subsec:Transformation-procedure"
 \end_layout
 
 \begin_layout Standard
-Grammatical evolution is a evolutionary procedure, where the chromosomes
- are represent production rules from a BNF (Backus–Naur form) grammar
+Grammatical evolution is an evolutionary procedure where the chromosomes
+ represent production rules from a BNF (Backus–Naur form) grammar
 \begin_inset CommandInset citation
 LatexCommand cite
 key "bnf1"
@@ -793,7 +872,7 @@ literal "false"
 \end_inset
 
 , which is used very often to describe the syntax of programming languages,
- documents formats etc.
+ document formats etc.
  These grammars are defined as the set 
 \series bold
 
@@ -813,7 +892,7 @@ literal "false"
 
  
 \series default
-is the set of non terminal symbols, which produce through production rules
+is the set of non-terminal symbols, which produce through production rules
  series of terminal symbols.
 \end_layout
 
@@ -835,7 +914,7 @@ is the set of terminal symbols.
 \begin_inset Formula $S$
 \end_inset
 
- is a non terminal symbol called also start symbol
+ is a non-terminal symbol also called the start symbol
 \end_layout
 
 \begin_layout Itemize
@@ -865,14 +944,14 @@ or
 
 \begin_layout Standard
 The production procedure initiates from the start symbol of the BNF grammar
- and iteratively produces programs by replacing non terminal symbols with
+ and iteratively produces programs by replacing non-terminal symbols with
  the right hand of the production rules that will be selected according
  to the value of each element in the chromosome
 \series bold
 .
 
 \series default
- In the proposed method the BNF grammar of the Figure 
+ In the proposed method, the BNF grammar of Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:BNF-grammar-of"
@@ -880,26 +959,26 @@ reference "fig:BNF-grammar-of"
 \end_inset
 
  was used to create a new feature from the initial features.
- The symbols that are in <> are considered as non terminal symbols.
+ The symbols that are in <> are considered as non-terminal symbols.
  The parameter N denotes the number of original features.
- Typically a chromosome 
+ Typically, a chromosome 
 \begin_inset Formula $x$
 \end_inset
 
- in the grammatical evolution is expressed as series of binary values 0
- or 1.
- In the current work in order to simplify the mapping procedure and to increase
- the speed of the algorithm every element of each chromosome is considered
- as an integer in a predefined range.
- For our case the range 
+ in grammatical evolution is expressed as a series of binary values 0 or
+ 1.
+ In the current work, in order to simplify the mapping procedure and to
+ increase the speed of the algorithm, every element of each chromosome is
+ considered as an integer in a predefined range.
+ In our case, the range 
 \begin_inset Formula $[0,255]$
 \end_inset
 
- was used but of course this could be easily changed.
+ was used but of course, this could be easily changed.
 \end_layout
 
 \begin_layout Standard
-Take for example the chromosome 
+Take, for example, the chromosome 
 \begin_inset Formula $x=\left[9,8,6,4,16,10,17,23,8,14\right]$
 \end_inset
 
@@ -924,7 +1003,7 @@ reference "tab:table_with_steps"
 \end_inset
 
 .
- An expression is considered as valid if contains only terminal symbols.
+ An expression is considered as valid if it contains only terminal symbols.
 
 \series bold
  
@@ -938,7 +1017,7 @@ the parentheses stands for the sequence number of the production rule.
 \begin_inset Formula $N_{f}$
 \end_inset
 
- features from the original  have as follows:
+ features from the original is as follows:
 \end_layout
 
 \begin_layout Enumerate
@@ -1582,7 +1661,21 @@ name "subsec:Feature-construction"
 \end_layout
 
 \begin_layout Standard
-The steps of the algorithm for the first phase are:
+The first phase of feature construction presented below, has also been used
+ as a feature construction mechanism in the initial work of Gavrilis et
+ al
+\begin_inset CommandInset citation
+LatexCommand cite
+key "fc1"
+literal "false"
+
+\end_inset
+
+.
+ In this phase a genetic algorithm constructs new features from the original
+ and as a fitness functionthe training error of an RBF network on the data
+ set created with the new features is used.
+ The steps of the algorithm for the first phase are:
 \end_layout
 
 \begin_layout Enumerate
@@ -1834,7 +1927,7 @@ Genetic Operators
 \series bold
 Selection procedure: 
 \series default
-Initially the  chromosomes
+Initially, the  chromosomes
 \series bold
  
 \series default
@@ -1858,7 +1951,7 @@ The best
 \series bold
  
 \series default
-The remain chromosomes
+The remaining chromosomes
 \series bold
  
 \series default
@@ -1871,7 +1964,7 @@ are substituted by offsprings created through the crossover and mutation
 \series bold
 Crossover procedure: 
 \series default
-In this process for every produced offspring two mating chromosomes (parents)
+In this process, for every produced offspring, two mating chromosomes (parents)
  are selected from the previous population using tournament selection.
  The
 \series bold
@@ -1886,8 +1979,8 @@ First a set of
 \end_inset
 
  randomly selected chromosomes is constructed and subsequently the chromosome
- with the best fitness value in the previous set is selected as mating chromosom
-e.
+ with the best fitness value in the previous set is selected as the mating
+ chromosome.
  Having selected the two parents for the offrpsing, the offspring is formed
  using the one point crossover.
  In one - point crossover a random point is selected for the two parents
@@ -1989,7 +2082,7 @@ noprefix "false"
  of the sigmoid function is calculated through many calculations involving
  the input patterns as well as the weight vector.
  If the value within the function is too large, then the sigmoid function
- tends to 0 and this will result in the neural network losing what generalizatio
+ tends to 1 and this will result in the neural network losing what generalizatio
 n possibilities it has.
  In order to estimate the effect of this issue, the quantity
 \series bold
@@ -2013,8 +2106,6 @@ noprefix "false"
 
 \end_inset
 
-
-\series bold
 .
  
 \end_layout
@@ -2025,7 +2116,7 @@ noprefix "false"
 \begin_inset Float algorithm
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -2146,10 +2237,12 @@ The following is a hybrid genetic algorithm used to train artificial neural
  networks in the modified dataset.
  The purpose of this algorithm is to train the artificial neural network
  in such a way that it does not lose its generalizing abilities.
- For this purpose it uses a fitness function that consists of the neural
- network training error but also a punitive factor that is added.
+ For this purpose, it uses a fitness function that consists of the neural
+ network training error, but also a punitive factor is added.
  This penalty factor aims to ensure that network weights do not get too
  high values during training.
+ This technique can be applied directly to a neural network without having
+ previously performed the first phase of feature construction.
  The main steps of the hybrid genetic algorithm used in the second phase
  are:
 \end_layout
@@ -2542,8 +2635,8 @@ name "sec:Experiments"
 \end_layout
 
 \begin_layout Standard
-The software for the algorithm was coded using ANSI C++ and for all the
- the OpenMP library 
+The software for the algorithm was coded using ANSI C++ and, for all the
+ OpenMP library 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "openmp"
@@ -2552,13 +2645,13 @@ literal "false"
 \end_inset
 
  was utilized for parallelization and to speed up the genetic algorithm.
- Every experiment was executed 30 times with different seed for the random
+ Every experiment was executed 30 times with a different seed for the random
  generator each time and averages were measured and reported.
  The function used for random numbers was the drand48() function of the
  C programming language.
  The classification error is reported for classification datasets on the
  test set and the average mean squared error for regression datasets.
- Also, for more reliability in the results the common used method of 10
+ Also, for more reliability in the results, the common used method of 10
  - fold cross validation was used.
  The values for the parameters of the used algorithms are reported in Table
  
@@ -4042,11 +4135,11 @@ noprefix "false"
 \end_inset
 
  shows the results for the regression problems.
- For the case of classification problems the average classification error
+ For the case of classification problems, the average classification error
  is reported, while for the regression problem the average per point error
  is reported.
- The proposed method is denoted with the FC MLP and it compared against
- four other approached from the relevant literature:
+ The proposed method is denoted as FC MLP and it compared against four other
+ approaches from the relevant literature:
 \end_layout
 
 \begin_layout Enumerate
@@ -4078,7 +4171,7 @@ literal "true"
 \end_inset
 
 .
- The PCA method used to construct two features from the original dataset.
+ The PCA method is used to construct two features from the original dataset.
  Subsequently, these features are evaluated using an artificial neural network
  trained by a genetic algorithm with 
 \begin_inset Formula $N_{c}$
@@ -4129,7 +4222,7 @@ A Particle Swarm Optimization (PSO) with
 \end_layout
 
 \begin_layout Standard
-Also the average classification error for some of the classification datasets
+Also, the average classification errors for some of the classification datasets
  are illustrated graphically in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -4153,8 +4246,8 @@ noprefix "false"
 \end_inset
 
 ) varied from 50 to 500.
- This experiment was performed for 4 data sets and the results are presented
- in the Table 
+ This experiment was performed on 4 data sets and the results are presented
+ in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:experiments_with_chromosomes"
@@ -4166,8 +4259,8 @@ noprefix "false"
 
 .
  This table shows the reliability and durability of the proposed method,
- as well as for a low number of chromosomes it achieves quite good generalizatio
-n results.
+ as well as because of a low number of chromosomes, it achieves quite good
+ generalization results.
  
 \end_layout
 
@@ -5699,7 +5792,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Graphic reresentantion for some of the classification datasets.
+Graphic representation for some of the classification datasets.
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Graphic-reresentantion-of"
@@ -6047,7 +6140,7 @@ name "sec:Conclusions"
 \begin_layout Standard
 In the present work, a hybrid feature construction technique was presented
  with two phases: a) feature construction and b) feature evaluation.
- In the first phase new features were created as non-linear combinations
+ In the first phase, new features were created as non-linear combinations
  of old features using Grammatical Evolution and radial base networks.
  In the second phase, the original data set was transformed based on the
  new features and an artificial neural network with a genetic algorithm
@@ -6056,17 +6149,17 @@ In the present work, a hybrid feature construction technique was presented
  in such a way that it did not lose its generalizing abilities.
  The proposed technique was applied to a number of data sets from the relevant
  literature and the results were more than satisfactory.
- Also with a series of additional experiments the stability of the proposed
+ Also, with a series of additional experiments, the stability of the proposed
  methodology was shown, since even with a small number of chromosomes it
  produces satisfactory results.
  However, the proposed technique is much slower than other processes, as
  it requires two computational phases to reach a conclusion.
- However, with the use of parallel techniques acceleration can be achieved.
- The method can be made more efficient in a number of ways, for example
- by using parallel genetic algorithms, by using smarter evaluators to construct
- features instead of radial base networks such as SVM, by using more sophisticat
-ed termination techniques for genetic algorithm to achieve acceleration
- of export of results etc.
+ However, with the use of parallel techniques, acceleration can be achieved.
+ The method can be made more efficient in a number of ways.
+ For example, by using parallel genetic algorithms, by using smarter evaluators
+ to construct features instead of radial base networks such as SVM, by using
+ more sophisticated termination techniques for genetic algorithms to achieve
+ acceleration of the export of the results etc.
  
 \end_layout
 
