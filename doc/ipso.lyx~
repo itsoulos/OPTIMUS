@@ -95,13 +95,13 @@ The Particle Swarm Optimization (PSO) method is a global optimization technique
  The method evolves the particles based on both the best position of each
  of them in the past and the best position of the whole.
  Due to its simplicity, the method has found application in many scientific
- areas and for this reason during the last years many modifications have
+ areas and for this reason, during the last years, many modifications have
  been presented.
- This paper introduces three modifications of the method that aim to reduce
+ This paper introduces three modifications to the method that aim to reduce
  the required number of function calls while maintaining the accuracy of
  the method in locating the global minimum.
- These modifications affect important components of the method such as how
- fast the particles change or even how the method is terminated.
+ These modifications affect important components of the method, such as
+ how fast the particles change or even how the method is terminated.
  The above modifications were tested on a number of known universal optimization
  problems from the relevant literature and the results were compared with
  similar techniques.
@@ -145,13 +145,13 @@ The function
 \begin_inset Formula $f$
 \end_inset
 
- is considered continuous and differentiable function formulated as 
+ is considered a continuous and differentiable function, formulated as 
 \begin_inset Formula $f:S\rightarrow R,S\subset R^{n}$
 \end_inset
 
 .
- This problem finds application in a variety of objective problems from
- the real world such as problems of physics 
+ This problem finds application in a variety of objective problems in the
+ real world, such as problems of physics 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "go_physics1,go_physics2,go_physics3"
@@ -202,8 +202,8 @@ literal "true"
 \begin_inset Formula $S$
 \end_inset
 
- is divided iteratively in subregions and some subregions that not contain
- the global solution are discarded using some pre defined criteria.
+ is divided iteratively into subregions and some subregions that not contain
+ the global solution are discarded using some pre-defined criteria.
  In stochastic methods, the finding of the global minimum is guided by randomnes
 s.
  In these methods there is no guarantee to find the global minimum but they
@@ -267,8 +267,8 @@ literal "true"
 \end_inset
 
  etc.
- Also, many works have been appeared utilizing the modern GPU processing
- units 
+ Also, many works have appeared utilizing the modern GPU processing units
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "gpu1,gpu2,gpu3"
@@ -280,8 +280,8 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-The method of Particle Swarm Optimization is method based on a population
- of candidate solutions that called also particles.
+The method of Particle Swarm Optimization is a method based on a population
+ of candidate solutions that also called particles.
  These particles have two basic characteristics: their position at any given
  time
 \series bold
@@ -302,10 +302,10 @@ The method of Particle Swarm Optimization is method based on a population
  at which they move.
  The purpose of the method is to move the particles repetitively and their
  next position is calculated as a function not only of their position but
- also of the best position they had in the past as well as the best position
+ also of the best position they had in the past, as well as the best position
  of the population.
  The method was successfully used in a variety of scientific and practical
- problems from areas such as physics
+ problems in areas such as physics
 \series bold
  
 \series default
@@ -422,7 +422,7 @@ noprefix "false"
 
 \end_inset
 
- the experiments are listed and finally in section 
+ the experiments are listed and finally, in section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Conclusions"
@@ -450,8 +450,8 @@ name "sec:Method-description"
 The base algorithm of PSO and the proposed modifications are outlined in
  detail in the following subsections.
  The discussion starts with a new mechanism that calculates the velocity
- of the populations, continuous with a discarding procedure used minimize
- the number of local searches performed and ends with a discussion about
+ of the populations, continuous with a discarding procedure used to minimize
+ the number of local searches performed, and ends with a discussion about
  the new stopping rule proposed here.
 \end_layout
 
@@ -467,15 +467,15 @@ name "subsec:The-base-algorithm"
 \end_layout
 
 \begin_layout Standard
-The base algorithm is listed below with the periodical application of local
- search method in order to enchance the estimation of the global minimum,
+The base algorithm is listed below with the periodical application of the
+ local search method in order to enhance the estimation of the global minimum,
  ie.
  at every iteration a decision with probability 
 \begin_inset Formula $p_{l}$
 \end_inset
 
  is made in order to apply a local search procedure to some of the particles.
- Usually, this probability is small for example 0.05 (5%).
+ Usually, this probability is small, for example 0.05 (5%).
 \end_layout
 
 \begin_layout Enumerate
@@ -916,14 +916,14 @@ literal "false"
 
 .
  They argued that high values of the inertia coefficient cause better exploratio
-n of the search area while small values of this variable are used when we
- want to achieve better local research around promising areas for the global
- minimum.
+n of the search area, while small values of this variable are used when
+ we want to achieve better local research around promising areas for the
+ global minimum.
  The value of the inertia factor generally starts with large values and
- decreases with the repetition.
+ decreases with repetition.
  This article proposes a new adaptive technique for the inertia parameter
- and it this mechanism is compared against three others from the relevant
- literature.
+ and this mechanism is compared against three others from the relevant literatur
+e.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1027,9 +1027,9 @@ Proposed technique
 This calculation of inertia involves the number of iterations where the
  method manages to find a new minimum.
  In the first iterations and when the method has to do more exploration
- of the research area the inertia will be great.
+ of the research area, the inertia will be great.
  When the method should focus on a minimum, then the inertia will decrease.
- For this reason at every iteration 
+ For this reason, at every iteration 
 \begin_inset Formula $\mbox{iter}$
 \end_inset
 
@@ -1109,7 +1109,7 @@ The discarding procedure
 \end_layout
 
 \begin_layout Standard
-The method in each iteration performs under conditional a series of local
+The method in each iteration performs under condition of a series of local
  searches.
  However, these searches will often either lead to local minima already
  found or locate values far below the global minimum.
@@ -1330,7 +1330,7 @@ A common used way to terminate a global optimization method is to utilize
 \end_inset
 
 .
- Although, it is a simple criterion but is not an efficient one since, if
+ Although it is a simple criterion but is not an efficient one since, if
  
 \begin_inset Formula $\mbox{iter}_{\mbox{max}}$
 \end_inset
@@ -1343,9 +1343,9 @@ A common used way to terminate a global optimization method is to utilize
 
  is too high, the optimization algorithm will spend computation time in
  unnecessary function calls.
- In this paper a new termination rule is proposed to terminate the PSO process
- and it is compared against two other methods used in various optimization
- methods.
+ In this paper, a new termination rule is proposed to terminate the PSO
+ process and it is compared against two other methods used in various optimizati
+on methods.
 \end_layout
 
 \begin_layout Subsubsection
@@ -2493,14 +2493,14 @@ Experimental results
 \end_layout
 
 \begin_layout Standard
-For every stopping rule two tables are listed: the first one contains experiment
-s with the relevant stopping rule without the gradient discarding procedure
+For every stopping rule, two tables are listed: the first one contains experimen
+ts with the relevant stopping rule without the gradient discarding procedure
  and the second table contains experiments with the gradient discarding
  procedure enabled.
  The numbers in table cells stand for average function calls.
  The fraction in parentheses denotes the fraction of runs where the global
  optimum was found.
- Absence of this fractions means that the global minimum was discovered
+ The absence of these fractions means that the global minimum was discovered
  in every run (100% success).
  The experimental results using the stopping rule of Equation 
 \begin_inset CommandInset ref
@@ -2564,8 +2564,8 @@ noprefix "false"
 \end_inset
 
 .
- Finally, for the proposed stopping rule the results are listed in Tables
- 
+ Finally, for the proposed stopping rule, the results are listed in the
+ Tables 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:ProposedNoGradient"
@@ -2590,9 +2590,9 @@ noprefix "false"
 \end_layout
 
 \begin_layout Enumerate
-The pso method is a robust method and this is evident by the high success
+The PSO method is a robust method and this is evident by the high success
  rate in finding the global minimum, although the number of particles used
- was relative low (100).
+ was relatively low (100).
 \end_layout
 
 \begin_layout Enumerate
@@ -2641,10 +2641,9 @@ The proposed termination criterion is significantly superior to the other
 
 \begin_layout Standard
 To show the effect of the proposed termination method, an additional experiment
- was performed in which the dimension of the sinus problem increases from
+ was performed in which the dimension of the sinus problem increased from
  2 to 32 and in each case all three termination techniques were tested.
- The result of this experiment is graphically represented in the Figure
- 
+ The result of this experiment is graphically represented in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:sinu"
@@ -2656,8 +2655,8 @@ noprefix "false"
 
 .
  This graph shows that the doublebox method is significantly superior to
- the ali method but of course the new proposed method further reduces the
- required number of function calls.
+ the ali method but, of course, the new proposed method further reduces
+ the required number of function calls.
  
 \end_layout
 
@@ -14963,7 +14962,7 @@ In the current work, three new modifications of the PSO method for locating
 
 \begin_layout Standard
 The experimental results showed that the second and third modifications
- drastically reduce the required number of function calls without affecting
+ drastically reduced the required number of function calls without affecting
  the performance of the method.
  In addition, the first modification reduces the number of required calls,
  but only when the criterion for avoiding local minimization is not present.

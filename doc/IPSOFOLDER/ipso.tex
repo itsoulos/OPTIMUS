@@ -27,12 +27,12 @@ technique based on the gradual evolution of a population of solutions
 called particles. The method evolves the particles based on both the
 best position of each of them in the past and the best position of
 the whole. Due to its simplicity, the method has found application
-in many scientific areas and for this reason during the last years
+in many scientific areas and for this reason, during the last years,
 many modifications have been presented. This paper introduces three
-modifications of the method that aim to reduce the required number
+modifications to the method that aim to reduce the required number
 of function calls while maintaining the accuracy of the method in
 locating the global minimum. These modifications affect important
-components of the method such as how fast the particles change or
+components of the method, such as how fast the particles change or
 even how the method is terminated. The above modifications were tested
 on a number of known universal optimization problems from the relevant
 literature and the results were compared with similar techniques. 
@@ -53,48 +53,48 @@ with $S$:
 \[
 S=\left[a_{1},b_{1}\right]\otimes\left[a_{2},b_{2}\right]\otimes\ldots\left[a_{n},b_{n}\right]
 \]
-The function $f$ is considered continuous and differentiable function
+The function $f$ is considered a continuous and differentiable function,
 formulated as $f:S\rightarrow R,S\subset R^{n}$. This problem finds
-application in a variety of objective problems from the real world
+application in a variety of objective problems in the real world,
 such as problems of physics \cite{go_physics1,go_physics2,go_physics3},
 chemistry \cite{go_chem1,go_chem2,go_chem3}, economics \cite{go_econ1,go_econ2},
 medicine \cite{go_med1,go_med2} etc. Global optimization methods
 are grouped into two broad categories:\textbf{ }deterministic and
 stochastic methods. The most common methods of the first category
 are the so called Interval methods \cite{interval1,interval2}, where
-the set $S$ is divided iteratively in subregions and some subregions
-that not contain the global solution are discarded using some pre
-defined criteria. In stochastic methods, the finding of the global
-minimum is guided by randomness. In these methods there is no guarantee
-to find the global minimum but they constitute the vast majority of
-global optimization methods, mainly due to the simplicity in their
-implementation. There have been proposed many stochastic methods by
-various researchers such as\textbf{ }Controlled Random Search methods
-\cite{crs1,crs2,crs3}, Simulated Annealing methods \cite{simann_major,simann1,simann2},\textbf{
+the set $S$ is divided iteratively into subregions and some subregions
+that not contain the global solution are discarded using some pre-defined
+criteria. In stochastic methods, the finding of the global minimum
+is guided by randomness. In these methods there is no guarantee to
+find the global minimum but they constitute the vast majority of global
+optimization methods, mainly due to the simplicity in their implementation.
+There have been proposed many stochastic methods by various researchers
+such as\textbf{ }Controlled Random Search methods \cite{crs1,crs2,crs3},
+Simulated Annealing methods \cite{simann_major,simann1,simann2},\textbf{
 }Differential Evolution methods \cite{diffe1,diffe2}, Particle Swarm
 Optimization methods \cite{pso_major,pso1,pso2}, Ant Colony Optimization
 \cite{aco1,aco2}, Genetic algorithms \cite{ga1,ga2,ga3} etc. Also,
-many works have been appeared utilizing the modern GPU processing
-units \cite{gpu1,gpu2,gpu3}.
+many works have appeared utilizing the modern GPU processing units
+\cite{gpu1,gpu2,gpu3}.
 
-The method of Particle Swarm Optimization is method based on a population
-of candidate solutions that called also particles. These particles
+The method of Particle Swarm Optimization is a method based on a population
+of candidate solutions that also called particles. These particles
 have two basic characteristics: their position at any given time\textbf{
 $\overrightarrow{x}$} and the speed \textbf{$\overrightarrow{u}$}
 at which they move. The purpose of the method is to move the particles
 repetitively and their next position is calculated as a function not
 only of their position but also of the best position they had in the
-past as well as the best position of the population. The method was
+past, as well as the best position of the population. The method was
 successfully used in a variety of scientific and practical problems
-from areas such as physics\textbf{ }\cite{psophysics1,psophysics2},
+in areas such as physics\textbf{ }\cite{psophysics1,psophysics2},
 chemistry \cite{psochem1,psochem2}, medicine \cite{psomed1,psomed2},
 economics \cite{psoecon} etc. Due to its high popularity, the method
 has received a number of interventions in recent years, such as combination
 with the mutation mechanism \cite{pso_mutation1,pso_mutation2,pso_mutation3},
 improved initialization of the velocity vector \cite{pso_initvelocity},\textbf{
-}hybrid techniques \cite{psohybrid1,psohybrid2}, parallel techniques
-\cite{pso_parallel1,pso_parallel2,pso_parallel3}, methods aim to
-improve the velocity calculation \cite{pso_velocity1,pso_velocity2,pso_velocity3}
+}hybrid techniques \cite{psohybrid1,psohybrid2,psohybrid3}, parallel
+techniques \cite{pso_parallel1,pso_parallel2,pso_parallel3}, methods
+aim to improve the velocity calculation \cite{pso_velocity1,pso_velocity2,pso_velocity3}
 etc. This text introduces three distinct modifications to the original
 method, which drastically improve the time required to find the total
 minimum by reducing the required number of function evaluations. These
@@ -106,7 +106,7 @@ techniques and the results are presented in a separate section.
 
 The rest of this article is divided as follows: in section \ref{sec:Method-description}
 the initial method and the proposed modifications are discussed, in
-section \ref{sec:Experiments} the experiments are listed and finally
+section \ref{sec:Experiments} the experiments are listed and finally,
 in section \ref{sec:Conclusions} some conclusions and guidelines
 for future improvements are presented.
 
@@ -115,17 +115,18 @@ for future improvements are presented.
 The base algorithm of PSO and the proposed modifications are outlined
 in detail in the following subsections. The discussion starts with
 a new mechanism that calculates the velocity of the populations, continuous
-with a discarding procedure used minimize the number of local searches
-performed and ends with a discussion about the new stopping rule proposed
-here.
+with a discarding procedure used to minimize the number of local searches
+performed, and ends with a discussion about the new stopping rule
+proposed here.
 
 \subsection{The base algorithm\label{subsec:The-base-algorithm}}
 
 The base algorithm is listed below with the periodical application
-of local search method in order to enhance the estimation of the global
-minimum, ie. at every iteration a decision with probability $p_{l}$
-is made in order to apply a local search procedure to some of the
-particles. Usually, this probability is small for example 0.05 (5\%).
+of the local search method in order to enhance the estimation of the
+global minimum, ie. at every iteration a decision with probability
+$p_{l}$ is made in order to apply a local search procedure to some
+of the particles. Usually, this probability is small, for example
+0.05 (5\%).
 \begin{enumerate}
 \item \textbf{Initialization}. 
 
@@ -185,13 +186,12 @@ and $r_{2}\in[0,1]$.
 \end{enumerate}
 The inertia was proposed by Shi and Eberhart \cite{pso_major}. They
 argued that high values of the inertia coefficient cause better exploration
-of the search area while small values of this variable are used when
+of the search area, while small values of this variable are used when
 we want to achieve better local research around promising areas for
 the global minimum. The value of the inertia factor generally starts
-with large values and decreases with the repetition. This article
-proposes a new adaptive technique for the inertia parameter and it
-this mechanism is compared against three others from the relevant
-literature.
+with large values and decreases with repetition. This article proposes
+a new adaptive technique for the inertia parameter and this mechanism
+is compared against three others from the relevant literature.
 
 \subsubsection{Random inertia}
 
@@ -228,9 +228,9 @@ experimental results.
 
 This calculation of inertia involves the number of iterations where
 the method manages to find a new minimum. In the first iterations
-and when the method has to do more exploration of the research area
+and when the method has to do more exploration of the research area,
 the inertia will be great. When the method should focus on a minimum,
-then the inertia will decrease. For this reason at every iteration
+then the inertia will decrease. For this reason, at every iteration
 $\mbox{iter}$ the quantity 
 \begin{equation}
 \text{\ensuremath{\delta^{(\mbox{iter})}=}}\left|\sum_{i=1}^{m}\left|f_{i}^{(\mbox{iter})}\right|-\sum_{i=1}^{m}\left|f_{i}^{(\mbox{iter}-1)}\right|\right|
@@ -264,16 +264,16 @@ results.
 
 \subsection{The discarding procedure}
 
-The method in each iteration performs under conditional a series of
-local searches. However, these searches will often either lead to
-local minima already found or locate values far below the global minimum.
-This means that much of the computing time will be wasted on actions
-that could have been avoided. In order to be able to group points
-that would lead by local search to the same local minimum, we introduce
-the concept of cluster, which refers to a set of points that are believed,
-under some asymptotic considerations, to belong to the same region
-of attraction of the function. The region of attraction for a local
-minimum $x^{*}$ is defined as:
+The method in each iteration performs under condition of a series
+of local searches. However, these searches will often either lead
+to local minima already found or locate values far below the global
+minimum. This means that much of the computing time will be wasted
+on actions that could have been avoided. In order to be able to group
+points that would lead by local search to the same local minimum,
+we introduce the concept of cluster, which refers to a set of points
+that are believed, under some asymptotic considerations, to belong
+to the same region of attraction of the function. The region of attraction
+for a local minimum $x^{*}$ is defined as:
 \begin{equation}
 A\left(x^{*}\right)=\left\{ x:\ x\in S\subset R^{n},\ \mbox{LS}(x)=x^{*}\right\} 
 \end{equation}
@@ -328,14 +328,14 @@ Hence, a candidate start point $x$ can be rejected if
 
 A common used way to terminate a global optimization method is to
 utilize a maximum number of allowed iterations $\mbox{iter}_{\mbox{max}}$,
-i.e. stop when $\mbox{iter}\ge\mbox{iter}_{\mbox{max}}$. Although,
+i.e. stop when $\mbox{iter}\ge\mbox{iter}_{\mbox{max}}$. Although
 it is a simple criterion but is not an efficient one since, if $\mbox{iter}_{\mbox{max}}$
 is tool small, then the algorithm will terminate without locating
 the global optimum. Also, when $\mbox{iter}_{\mbox{max}}$ is too
 high, the optimization algorithm will spend computation time in unnecessary
-function calls. In this paper a new termination rule is proposed to
-terminate the PSO process and it is compared against two other methods
-used in various optimization methods.
+function calls. In this paper, a new termination rule is proposed
+to terminate the PSO process and it is compared against two other
+methods used in various optimization methods.
 
 \subsubsection{Ali's stopping method}
 
@@ -644,25 +644,25 @@ $k_{\mbox{max}}$ & 15\tabularnewline
 
 \subsection{Experimental results }
 
-For every stopping rule two tables are listed: the first one contains
+For every stopping rule, two tables are listed: the first one contains
 experiments with the relevant stopping rule without the gradient discarding
 procedure and the second table contains experiments with the gradient
 discarding procedure enabled. The numbers in table cells stand for
 average function calls. The fraction in parentheses denotes the fraction
-of runs where the global optimum was found. Absence of this fractions
+of runs where the global optimum was found. The absence of these fractions
 means that the global minimum was discovered in every run (100\% success).
 The experimental results using the stopping rule of Equation \ref{eq:termination_ali}
 are listed in Tables \ref{tab:AliNoGradient} and \ref{tab:AliGradient}.
 The experimental results for the Double Box stopping rule of Equation
 \ref{eq:termination_doublebox} are listed in Tables \ref{tab:DoubleBoxNoGradient}
 and \ref{tab:DoubleBoxWithGradient}. Finally, for the proposed stopping
-rule the results are listed in Tables \ref{tab:ProposedNoGradient}
+rule, the results are listed in the Tables \ref{tab:ProposedNoGradient}
 and \ref{tab:ProposedWithGradient}. The above results lead to a number
 of observations:
 \begin{enumerate}
 \item The PSO method is a robust method and this is evident by the high
 success rate in finding the global minimum, although the number of
-particles used was relative low (100).
+particles used was relatively low (100).
 \item The proposed inertia calculation method as defined in Equation \ref{eq:proposedInertia}
 achieves a significant reduction in the number of calls between 11
 and 25\% depending on the termination criterion used. However, the
@@ -681,12 +681,11 @@ then the gain in number of calls grows even more.
 \end{enumerate}
 To show the effect of the proposed termination method, an additional
 experiment was performed in which the dimension of the sinus problem
-increases from 2 to 32 and in each case all three termination techniques
+increased from 2 to 32 and in each case all three termination techniques
 were tested. The result of this experiment is graphically represented
-in the Figure \ref{fig:sinu}. This graph shows that the doublebox
-method is significantly superior to the ali method but of course the
-new proposed method further reduces the required number of function
-calls. 
+in Figure \ref{fig:sinu}. This graph shows that the doublebox method
+is significantly superior to the ali method but, of course, the new
+proposed method further reduces the required number of function calls. 
 
 \begin{table}
 \caption{Experiments with the Ali stopping rule, without gradient check.\label{tab:AliNoGradient}}
@@ -1252,7 +1251,6 @@ TEST30N4 & 3747 & 3797 & 3250 & 3237\tabularnewline
 \end{tabular}
 \end{table}
 \begin{figure}
-
 \caption{Experiments with the SINU function for a series of problem dimension
 from $n=2$ to $n=32$.\label{fig:sinu}}
 
@@ -1277,8 +1275,8 @@ a new minimum and therefore its termination should be considered.
 All of these modifications have low computational requirements.
 
 The experimental results showed that the second and third modifications
-drastically reduce the required number of function calls without affecting
-the performance of the method. In addition, the first modification
+drastically reduced the required number of function calls without
+affecting the performance of the method. In addition, the first modification
 reduces the number of required calls, but only when the criterion
 for avoiding local minimization is not present. 
 \begin{thebibliography}{10}
