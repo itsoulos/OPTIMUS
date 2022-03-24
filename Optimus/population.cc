@@ -150,7 +150,7 @@ void	Population::calcFitnessArray()
 	{
 		for(int j=0;j<genome_size;j++) g[j]=genome[i][j];	
 		double f=fitness(g);
-		fitness_array[i]=f;
+        fitness_array[i]=f;
 	}
 }
 

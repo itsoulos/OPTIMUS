@@ -1,4 +1,4 @@
-METHOD=iPso
+METHOD=Genetic
 METHODPARAMS=""
 ### Available local search methods: bfgs, gradient, adam, lbfgs
 if [ $METHOD = "Minfinder" ]
@@ -9,7 +9,7 @@ then
 	METHODPARAMS="--gcrs_samples=25 --gcrs_maxiterations=100000"	
 elif [ $METHOD = "Genetic" ]
 then
-	METHODPARAMS="--localsearch_rate=0.00  --genetic_crossover_type=double --chromosomes=25 --localsearch_method=nelderMead"
+	METHODPARAMS="--localsearch_rate=0.01  --genetic_crossover_type=double --chromosomes=25 --localsearch_method=grs"
 elif [ $METHOD = "Pso" ]
 then
 	METHODPARAMS="--pso_particles=100 --pso_localsearch_rate=0.00 --localsearch_method=bfgs"

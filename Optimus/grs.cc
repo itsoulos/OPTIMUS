@@ -5,7 +5,7 @@ Grs::Grs(Problem *p)
 	problem = p;
 	program = new RlsProgram(problem);
 	const int def_popcount=10;
-	const int def_popsize= 200;
+    const int def_popsize= 40 * problem->getDimension();
 	const double def_srate=0.1;
 	const double def_mrate=0.05;
 	const int    def_maxgenerations=10;
@@ -112,7 +112,7 @@ void	Grs::Solve(Data &x,double &y)
 			x[i]=xx1[i];
 			xx[i]=x[i];	
 		}
-		if(diff<1e-5)
+        if(diff<1e-5 && iters>=5)
 		{
 			break;
 		}

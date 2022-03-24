@@ -152,7 +152,7 @@ void	RlsProgram::makeRules()
 
 	r=newRule();
 	rule[r]->addSymbol(&Log);
-	Function.addRule(rule[r]);
+    //Function.addRule(rule[r]);
 	
 	r=newRule();
 	rule[r]->addSymbol(&Digit0);
@@ -223,7 +223,10 @@ double	RlsProgram::fitness(vector<int> &genome)
 	int ok_flag2=0;
 	int redo=0;
 	string totalstr=printRandomProgram(genome,redo);
-	if(redo>=REDO_MAX) return -1e+100;
+    if(redo>=REDO_MAX){
+      //  printf("Fail redo %s \n",totalstr.c_str());
+        return -1e+100;
+    }
 	int lastpos=0;
 	for(int i=0;i<dimension;i++)
 	{
@@ -238,6 +241,7 @@ double	RlsProgram::fitness(vector<int> &genome)
 		dx[i]=parser.Eval(&x0[i]);
 		if(isnan(dx[i]) || isinf(dx[i])|| parser.EvalError())
 		{
+          //  printf("Isnan parser EvalError is %d\n",parser.EvalError());
 			return -1e+100;
 			dx[i]=0.0;
 			ok_flag++;
