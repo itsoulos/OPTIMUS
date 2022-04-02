@@ -277,6 +277,16 @@ literal "false"
 \end_inset
 
 .
+ The reader can find some complete surveys about metaheuristic algorithms
+ in some recent works 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "meta1,meta2,meta3"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -366,7 +376,7 @@ literal "false"
 hybrid techniques 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "psohybrid1,psohybrid2"
+key "psohybrid1,psohybrid2,psohybrid3"
 literal "true"
 
 \end_inset
@@ -398,6 +408,12 @@ literal "false"
  relevant literature and compared with similar techniques and the results
  are presented in a separate section.
  
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+//add some text here regarding the reasoning behind the modifications...
 \end_layout
 
 \begin_layout Standard
@@ -692,6 +708,13 @@ Update
 \end_inset
 
 
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:Update-the-position"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Enumerate
@@ -717,6 +740,13 @@ Set
 \end_inset
 
  is a local search procedure.
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:Set--a"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Enumerate
@@ -807,6 +837,56 @@ reference "enu:Check-Termination."
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+The current work modifies the above algorithm in three key points:
+\end_layout
+
+\begin_layout Enumerate
+In step 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:Check-Termination."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, where a new termination rule based on asymptotic considerations is introduced.
+\end_layout
+
+\begin_layout Enumerate
+In step 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:Update-the-position"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, where the the algorithm calculates the new position of the particles.
+ The proposed methodology modifies the position of the particles based on
+ the average speed of the algorithm to discover new minimums.
+ 
+\end_layout
+
+\begin_layout Enumerate
+In step 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:Set--a"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, where a method based on gradient calculations will be used to prevent
+ the PSO method from executing unnecessary local searches.
 \end_layout
 
 \begin_layout Subsection
@@ -2586,6 +2666,18 @@ noprefix "false"
 \end_inset
 
 .
+ Also, the boxplots for the proposed stopping rules without and with the
+ gradient check of equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:gradientCheck"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ are illustrated in Figures and respectively.
  The above results lead to a number of observations:
 \end_layout
 
@@ -2657,7 +2749,107 @@ noprefix "false"
  This graph shows that the doublebox method is significantly superior to
  the ali method but, of course, the new proposed method further reduces
  the required number of function calls.
- 
+ Also, the effect of the application of the rejection mechanism based on
+ gradients of the equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:gradientCheck"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is illustrated graphically in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ExperimentsStopping"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, where the proposed termination rule is applied on a series of test functions
+ with the gradient check and without the gradient check.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Standard deviation of function calls for the termination rules without the
+ gradient check.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:StandarddeviationWithout"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ipso_sd_without.eps
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Standard deviation of function calls for the termination rules with the
+ gradient check.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ipso_sd_with.eps
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -14887,10 +15079,6 @@ sideways false
 status collapsed
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -14927,6 +15115,62 @@ name "fig:sinu"
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Experiments with the proposed stopping rule with the gradient check and
+ without the gradient check.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ExperimentsStopping"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename gradientCheckPart.eps
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+clearpage
 \end_layout
 
 \end_inset
@@ -15495,6 +15739,67 @@ S.A.
 \series default
 , pp.
  259-270, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "meta1"
+literal "false"
+
+\end_inset
+
+I.
+ BoussaïD, J.
+ Lepagnot, P.
+ Siarry, P., A survey on optimization metaheuristics.
+ Information sciences 
+\series bold
+237
+\series default
+, pp.
+ 82-117, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "meta2"
+literal "false"
+
+\end_inset
+
+T.
+ Dokeroglu, E.
+ Sevinc, T.
+ Kucukyilmaz, A.
+ Cosar, A survey on new generation metaheuristic algorithms.
+ Computers & Industrial Engineering 
+\series bold
+137
+\series default
+, 106040, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "meta3"
+literal "false"
+
+\end_inset
+
+K.
+ Hussain, M.N.M.
+ Salleh, S.
+ Cheng, Y.
+ Shi, Metaheuristic research: a comprehensive survey.Artificial Intelligence
+ Review 
+\series bold
+52
+\series default
+, pp.
+ 2191-2233, 2019.
 \end_layout
 
 \begin_layout Bibliography

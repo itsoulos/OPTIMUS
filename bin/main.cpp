@@ -245,8 +245,17 @@ void printStatistics()
                 minimumTimesFound++;
         }
         averageFunctionCalls/=statisticsMinimum.size();
+	//compute std
+	double std = 0.0;
+	for(int i=0;i<statisticsMinimum.size();i++)
+	{
+		std+=pow((statisticsFunctionCalls[i]-averageFunctionCalls),2.0);
+	}
+	std = 1.0/statisticsMinimum.size() * std;
+	std = sqrt(std);
         printf("Global minimum: %20.10lf\n",minimumValue);
         printf("Average Calls : %20.2lf\n",averageFunctionCalls);
+	printf("Std     Calls : %20.4lf\n",std);
         printf("Global found  : %20.2lf%%\n",minimumTimesFound*100.0/statisticsMinimum.size());
     }
 }
