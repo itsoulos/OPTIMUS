@@ -398,7 +398,69 @@ literal "false"
 \end_inset
 
  etc.
- This text introduces three distinct modifications to the original method,
+ The method of PSO has been integrated into other optimization techniques
+ like the work of Bogdanova et al 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ge_pso1"
+literal "false"
+
+\end_inset
+
+ who combined Grammatical Evolution with swarm techniques like PSO 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ge_mainpaper"
+literal "false"
+
+\end_inset
+
+, the work of Pan et al 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "siman_pso"
+literal "false"
+
+\end_inset
+
+ to create a hybrid PSO method with simulated annealing.
+ Also, Mughal et al 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "simman_pso_energy"
+literal "false"
+
+\end_inset
+
+ used a hybrid technique of PSO and Simulated Annealing for photovoltaic
+ cell parameter estimation.
+ Similarly, the work of Lin et al 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pso_de"
+literal "false"
+
+\end_inset
+
+ utilized a hybrid method of PSO and Differential Evolution for numerical
+ optimization problems.
+\end_layout
+
+\begin_layout Standard
+The PSO method is an iterative process, during which a series of particles
+ evolve through a process that involves updating the position of the particles
+ and fitness computation, i.e.
+ evaluation of the objective function.
+ Variations of PSO that aim at the global minimum in a shorter time may
+ include the use of a local optimization method in each iteration of the
+ algorithm.
+ Of course, the above process can be extremely time consuming and depending
+ on the termination method used and the number of local searches performed
+ may require a long execution time.
+\end_layout
+
+\begin_layout Standard
+This text introduces three distinct modifications to the original method,
  which drastically improve the time required to find the total minimum by
  reducing the required number of function evaluations.
  These modifications cover a large part of the method: the speed calculation,
@@ -411,15 +473,14 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-
-\series bold
-//add some text here regarding the reasoning behind the modifications...
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-//add some text here to show how the proposed method is better 
+From the experiments performed, it was shown that the proposed modifications
+ significantly reduce the required execution time of the method by drastically
+ reducing the number of function calls required to find the total minimum.
+ Also, these modifications can be applied either alone or in combination
+ with the same positive results.
+ This means that they are quite general and can be included in other techniques
+ based on PSO.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -2784,7 +2845,7 @@ noprefix "false"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -2823,7 +2884,7 @@ name "fig:StandarddeviationWithout"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -2862,7 +2923,7 @@ Standard deviation of function calls for the termination rules with the
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -13043,7 +13104,7 @@ TOTAL
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -15129,11 +15190,7 @@ name "fig:sinu"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
-
-\begin_layout Plain Layout
-
-\end_layout
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -15211,10 +15268,18 @@ In the current work, three new modifications of the PSO method for locating
 \end_layout
 
 \begin_layout Standard
-The experimental results showed that the second and third modifications
- drastically reduced the required number of function calls without affecting
- the performance of the method.
- In addition, the first modification reduces the number of required calls,
+The proposed modifications were applied to the pso method either one by
+ one or all together in combination.
+ The purpose of the method is to find the total minimum of continuous functions
+ using the smallest possible number of function calls.
+ The experimental results showed that the modifications significantly reduce
+ the number of function calls even when not used in combination.
+ This means that they can be used individually and in other variations of
+ pso.
+ The reduction in the number of function calls reaches up to 80%.
+ In addition, the amendments did not reduce the ability of the PSO to find
+ the total minimum of the objective function.
+  In addition, the first modification reduces the number of required calls,
  but only when the criterion for avoiding local minimization is not present.
  
 \end_layout
@@ -16252,6 +16317,106 @@ Y.
 \series default
 , pp.
  231-239, 2007.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ge_pso1"
+literal "false"
+
+\end_inset
+
+A.
+ Bogdanova, J.P.
+ Junior, C.
+ Aranha, Franken-Swarm: Grammatical Evolution for the Automatic Generation
+ of Swarm-like Meta-Heuristics, In: Proceedings of the Genetic and Evolutionary
+ Computation Conference Companion, pp.
+ 411-412, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ge_mainpaper"
+literal "false"
+
+\end_inset
+
+M.
+ O'Neill, C.
+ Ryan, Grammatical evolution,IEEE Transactions on Evolutionary Computation
+ 
+\series bold
+5
+\series default
+, pp.
+ 349-358, 2001.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "siman_pso"
+literal "false"
+
+\end_inset
+
+X.
+ Pan, L.
+ Xue, Y.
+ Lu et al, Hybrid particle swarm optimization with simulated annealing,
+ Multimed Tools Appl 
+\series bold
+78
+\series default
+, pp.
+ 29921–29936, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "simman_pso_energy"
+literal "false"
+
+\end_inset
+
+M.A.
+ Mughal, Q.
+ Ma, C.
+ Xiao, Photovoltaic Cell Parameter Estimation Using Hybrid Particle Swarm
+ Optimization and Simulated Annealing, Energies 
+\series bold
+10
+\series default
+, 2017.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso_de"
+literal "false"
+
+\end_inset
+
+G.H.
+ Lin, J.
+ Zhang, Z.H.
+ Liu, Hybrid particle swarm optimization with differential evolution for
+ numerical and engineering optimization.
+ Int.
+ J.
+ Autom.
+ Comput.
+ 
+\series bold
+15
+\series default
+, pp.
+ 103–114, 2018.
 \end_layout
 
 \begin_layout Bibliography
