@@ -10,7 +10,7 @@ then
 	METHODPARAMS="--minfinder_samples=25 --minfinder_sampling=repulsion"
 elif [ $METHOD = "Genetic" ]
 then
-	METHODPARAMS="--chromosome_count=500 --max_generations=200 --localsearch_method=hill --localsearch_rate=0.01 --genetic_crossover_type=uniform"
+	METHODPARAMS="--chromosome_count=500 --max_generations=200 --localsearch_method=grs --localsearch_rate=0.01"
 
 elif [ $METHOD = "Pso" ]
 then

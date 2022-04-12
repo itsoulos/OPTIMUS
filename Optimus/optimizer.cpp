@@ -82,10 +82,17 @@ double  Optimizer::localSearch(Data &x)
     else
     if(method=="hill")
     {
-       Data currentPoint=x;    // the zero-magnitude vector is common
+       Data currentPoint;
+       currentPoint.resize(x.size());    // the zero-magnitude vector is common
        Data stepSize;
        stepSize.resize(x.size());
-        for(int i=0;i<x.size();i++) stepSize[i]=1.0;
+       {
+        for(int i=0;i<x.size();i++) {
+		stepSize[i]=1.0;
+		currentPoint[i]=x[i];
+	}
+
+       }
        double acceleration=1.2;// // a value such as 1.2 is common
        Data candidate;
        candidate.resize(4);
@@ -94,6 +101,7 @@ double  Optimizer::localSearch(Data &x)
     candidate[2] = 1 / acceleration;
     candidate[3] = acceleration;
     double bestScore = myProblem->funmin(currentPoint);
+    double oldmin= bestScore;
     const int itermax=100;
     int iter=1;
     while(true)
@@ -118,6 +126,7 @@ double  Optimizer::localSearch(Data &x)
             }
             if(fabs(bestStep)<1e-5){
                 currentPoint[i] = beforePoint;
+		
                 stepSize[i] = stepSize[i] / acceleration;
             }
             else
@@ -125,15 +134,19 @@ double  Optimizer::localSearch(Data &x)
                 currentPoint[i] = beforePoint + bestStep;
                 stepSize[i] = bestStep; // acceleration
             }
-          //  printf("Best score = %lf oldScore  = %lf iter =%d \n",bestScore,beforeScore);
+        //    printf("Best score = %lf oldScore  = %lf iter =%d \n",bestScore,beforeScore,iter);
+	}
         if (fabs(bestScore-beforeScore) < 1e-5 || iter>itermax)
-        {termflag=true;
-            break;}
+        {
+		termflag=true;
+		break;
+	}
             iter++;
-        }
         if(termflag) break;
     }
-    x=currentPoint;
+//    printf("Hill %lf -> %lf \n",oldmin,bestScore);
+   for(int i=0;i<x.size();i++)
+    x[i]=currentPoint[i];
     return myProblem->funmin(x);
     }
 }

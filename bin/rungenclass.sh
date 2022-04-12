@@ -3,17 +3,17 @@ DATAPATH=/home/sheridan/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfoldin
 #DATAPATH=/home/sheridan/Desktop/ERGASIES/SECDATA/
 NODES=10
 
-METHOD=Genetic
+METHOD=Pso
 METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then
 	METHODPARAMS="--minfinder_samples=25 --minfinder_sampling=repulsion"
 elif [ $METHOD = "Genetic" ]
 then
-	METHODPARAMS="--chromosome_count=500 --max_generations=500 --localsearch_method=grs --localsearch_rate=0.01 --localsearch_method=hill"
+	METHODPARAMS="--chromosome_count=500 --max_generations=500 --localsearch_rate=0.01 --localsearch_method=grs"
 elif [ $METHOD = "Pso" ]
 then
-	METHODPARAMS="--pso_localsearch_rate=0.05"
+	METHODPARAMS="--pso_localsearch_rate=0.05 --localsearch_method=hill"
 elif [ $METHOD = "Multistart" ]
 then
 	METHODPARAMS=="--multistart_samples=25"

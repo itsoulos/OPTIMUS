@@ -101,10 +101,10 @@ void    Genetic::calcFitnessArray()
             }
             Data dg=chromosome[i];
             fitness_array[i]=localSearch(chromosome[i]);
-            RC+=getDistance(chromosome[i],dg);
-            localSearchCount++;
 #pragma omp critical
 {
+            RC+=getDistance(chromosome[i],dg);
+            localSearchCount++;
             bool found=false;
             for(int j=0;j<minimax.size();j++)
             {

@@ -8,7 +8,7 @@ Grs::Grs(Problem *p)
     const int def_popsize= 40 * problem->getDimension();
 	const double def_srate=0.1;
 	const double def_mrate=0.05;
-	const int    def_maxgenerations=10;
+	const int    def_maxgenerations=50;
 	pop=new Population(def_popcount,def_popsize,program);
 	pop->setSelectionRate(def_srate);
 	pop->setMutationRate(def_mrate);
@@ -103,6 +103,7 @@ void	Grs::Solve(Data &x,double &y)
 		pop->nextGeneration();
 		
 		double f=pop->getBestFitness();
+		//printf("grs[%d]=%lf \n",iters,f);
 		y=program->getBestValue();
 		program->getBestX0(xx1);	
 		double diff=0.0;
@@ -112,7 +113,7 @@ void	Grs::Solve(Data &x,double &y)
 			x[i]=xx1[i];
 			xx[i]=x[i];	
 		}
-        if(diff<1e-5 && iters>=5)
+        if(diff<1e-5 && iters>=20)
 		{
 			break;
 		}
