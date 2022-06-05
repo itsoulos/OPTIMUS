@@ -47,6 +47,7 @@ SOURCES += \
     rule.cc \
     symbol.cc \
     tolmin.cc \
+    brent.cpp \
     cluster.cpp
 
 HEADERS += \
@@ -74,6 +75,7 @@ HEADERS += \
     rule.h \
     symbol.h \
     tolmin.h \
+    brent.h \
     cluster.h
 
 # Default rules for deployment.

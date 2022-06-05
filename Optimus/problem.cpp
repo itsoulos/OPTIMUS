@@ -145,6 +145,7 @@ Data    Problem::getRandomPoint()
 
     Data x;
     x.resize(dimension);
+
     problem->getSample(x);
     /*
     for(int i=0;i<dimension;i++)
