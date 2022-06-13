@@ -2,7 +2,7 @@
 Adam::Adam(Problem *p)
 {
     myProblem=p;
-    learningRate = 0.25;
+    learningRate = 0.01;
     iterations = 100000;
 
     b1=0.9;
@@ -11,6 +11,7 @@ Adam::Adam(Problem *p)
 
 double  Adam::Solve(Data &x)
 {
+	/*
     double f=0.0;
     Data gradient=x;
 
@@ -32,6 +33,44 @@ double  Adam::Solve(Data &x)
         if(i % (iterations/10) == 0)std::cout << "ADAM ITER: " << i << " ERROR: " <<f << std::endl;
     }
     return f;
+    */
+
+	Data g_t = x;
+	Data m_t = x;
+	Data v_t = x;
+	Data m_cap = x;
+	Data v_cap = x;
+	int t = 0;
+	Data xprev = x;
+	double epsilon = 1e-6;
+	double f = 0.0;
+	for(int i=0;i<m_t.size();i++)
+	{
+		m_t[i]  = 0.0;
+		v_t[i]  = 0.0;
+	}
+	while(true)
+	{
+		t++;
+		myProblem->granal(x,g_t);
+		double diff = 0.0;
+		for(int i=0;i<x.size();i++)
+		{
+			m_t[i]=b1 * m_t[i]+(1-b1)*g_t[i];
+			v_t[i]=b2 * v_t[i]+(1-b2)*g_t[i]*g_t[i];
+			m_cap[i]=m_t[i]/(1-pow(b1,t));
+			v_cap[i]=v_t[i]/(1-pow(b2,t));
+			xprev[i] = x[i];
+			x[i]=x[i]-(learningRate*m_cap[i])/(sqrt(v_cap[i])+epsilon); 
+			diff+=pow(x[i]-xprev[i],2.0);
+		}	
+		diff/=x.size();
+		if(diff<1e-7) break;
+		f=myProblem->funmin(x);
+		if(t>=iterations) break;
+	}
+
+	return f;
 }
 
 void    Adam::setB1(double b)

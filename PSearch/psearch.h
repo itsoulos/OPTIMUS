@@ -3,7 +3,7 @@
 
 #include "PSearch_global.h"
 #include <Optimus/optimizer.h>
-
+#include <chrono>
 
 
 class PSearchInterface
@@ -22,11 +22,11 @@ private:
     virtual void step();
     virtual void init();
     virtual void done();
-    int  nsamples;
+    int  nsamples, method;
     vector<Data> points;
     Data bestPerDim;
     Data bestPoint;
-
+    std::chrono::time_point<std::chrono::system_clock> prin, meta;
 public:
     PSearch(Problem *p);
     virtual void Solve();

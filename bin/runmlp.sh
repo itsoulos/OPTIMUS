@@ -2,7 +2,7 @@
 DATAPATH=/home/sheridan/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfolding/
 NODES=10
 
-METHOD=Genetic
+METHOD=Bfgs
 METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then
@@ -16,6 +16,9 @@ then
 elif [ $METHOD = "Multistart" ]
 then
 	METHODPARAMS=="--multistart_samples=25"
+elif [ $METHOD = "Bfgs" ]
+then
+	METHODPARAMS="--localsearch_method=adam"
 fi
 
 PROBLEM=nntest
