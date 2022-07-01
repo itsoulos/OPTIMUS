@@ -20,6 +20,7 @@ else
 		(cd DE; qmake ; make clean )
 		(cd PSearch; qmake; make clean)
 		(cd Minfinder; qmake; make clean)
+		(cd DAdam; qmake; make clean)
 		(cd bin; qmake ; make clean)
 	else
 		echo "qmake is not present;"

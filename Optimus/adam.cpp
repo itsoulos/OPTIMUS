@@ -54,6 +54,8 @@ double  Adam::Solve(Data &x)
 		t++;
 		myProblem->granal(x,g_t);
 		double diff = 0.0;
+		const int threads=1;
+#pragma omp parallel for num_threads(threads)
 		for(int i=0;i<x.size();i++)
 		{
 			m_t[i]=b1 * m_t[i]+(1-b1)*g_t[i];
@@ -62,8 +64,10 @@ double  Adam::Solve(Data &x)
 			v_cap[i]=v_t[i]/(1-pow(b2,t));
 			xprev[i] = x[i];
 			x[i]=x[i]-(learningRate*m_cap[i])/(sqrt(v_cap[i])+epsilon); 
-			diff+=pow(x[i]-xprev[i],2.0);
+
 		}	
+		for(int i=0;i<x.size();i++)
+			diff+=pow(x[i]-xprev[i],2.0);
 		diff/=x.size();
 		if(diff<1e-7) break;
 		f=myProblem->funmin(x);
