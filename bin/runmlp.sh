@@ -2,7 +2,7 @@
 DATAPATH=/home/sheridan/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfolding/
 NODES=10
 
-METHOD=DAdam
+METHOD=Search
 METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then
@@ -16,6 +16,9 @@ then
 elif [ $METHOD = "Multistart" ]
 then
 	METHODPARAMS=="--multistart_samples=25"
+elif [ $METHOD = "Search" ]
+then
+	METHODPARAMS=="--Search_method=3"
 elif [ $METHOD = "Bfgs" ]
 then
 	METHODPARAMS="--localsearch_method=adam"
@@ -25,5 +28,5 @@ PROBLEM=nntest
 NODES=$2
 
 MLPARAMS="--trainName=$DATAPATH/$1.train --testName=$DATAPATH/$1.test --nodes=$NODES"
-./OptimusApp --filename=../PROBLEMS/lib$PROBLEM.so  --opt_method=$METHOD   $METHODPARAMS  $MLPARAMS --interval_generations=50 --threads=8  --iterations=1
+./OptimusApp --filename=../PROBLEMS/lib$PROBLEM.so  --opt_method=$METHOD   $METHODPARAMS  $MLPARAMS --interval_generations=50 --threads=8  --iterations=30
 

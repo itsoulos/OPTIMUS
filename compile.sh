@@ -26,6 +26,7 @@ else
 		(cd PSearch; qmake; make clean; make install)
 		(cd Minfinder; qmake; make clean; make install)
 		(cd DAdam; qmake; make clean; make install)
+		(cd Search; qmake; make clean; make install)
 		(cd bin; qmake ; make clean; make)
 	else
 		echo "qmake is not present;"
