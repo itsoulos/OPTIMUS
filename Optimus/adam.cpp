@@ -11,7 +11,7 @@ Adam::Adam(Problem *p)
 
 double  Adam::Solve(Data &x)
 {
-	/*
+	
     double f=0.0;
     Data gradient=x;
 
@@ -33,7 +33,7 @@ double  Adam::Solve(Data &x)
         if(i % (iterations/10) == 0)std::cout << "ADAM ITER: " << i << " ERROR: " <<f << std::endl;
     }
     return f;
-    */
+    
 
 	Data g_t = x;
 	Data m_t = x;
@@ -43,7 +43,7 @@ double  Adam::Solve(Data &x)
 	int t = 0;
 	Data xprev = x;
 	double epsilon = 1e-6;
-	double f = 0.0;
+	f = 0.0;
 	for(int i=0;i<m_t.size();i++)
 	{
 		m_t[i]  = 0.0;

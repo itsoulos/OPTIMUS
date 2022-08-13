@@ -22,8 +22,8 @@ bool GENDE::terminated()
 {
     bool ali = false;
     bool doubleboxflag = false;    
-    bool charilogis = true;
-    bool tsoulos = false;
+    bool charilogis = false;
+    bool tsoulos =true; 
 
     int max_generations = params["max_generations"].toString().toInt();
 
@@ -43,7 +43,7 @@ bool GENDE::terminated()
     if (charilogis)
     {
         double dd = fabs(newSum - sum);
-        // printf("%4d] Generation  change: %10.6lf \n", generation, dd);
+         printf("%4d] Generation  change: %10.6lf \n", generation, dd);
         sum = newSum;
         if (dd < 1e-8)
             n++;

@@ -22,6 +22,7 @@ class GenSolver
 		int	elitism;
 		NeuralProgram	*problem;
 		int	small_tolmin_flag;
+		Data lmargin,rmargin;
 	public:
 		GenSolver(int gcount,NeuralProgram *p,double mx,int f);
 		GenSolver(int gcount,NeuralProgram *p,vector<double> &xx);

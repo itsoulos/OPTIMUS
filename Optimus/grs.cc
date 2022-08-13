@@ -4,7 +4,7 @@ Grs::Grs(Problem *p)
 {
 	problem = p;
 	program = new RlsProgram(problem);
-	const int def_popcount=10;
+	const int def_popcount=50;
     const int def_popsize= 40 * problem->getDimension();
 	const double def_srate=0.1;
 	const double def_mrate=0.05;
@@ -103,7 +103,6 @@ void	Grs::Solve(Data &x,double &y)
 		pop->nextGeneration();
 		
 		double f=pop->getBestFitness();
-		//printf("grs[%d]=%lf \n",iters,f);
 		y=program->getBestValue();
 		program->getBestX0(xx1);	
 		double diff=0.0;
@@ -113,12 +112,14 @@ void	Grs::Solve(Data &x,double &y)
 			x[i]=xx1[i];
 			xx[i]=x[i];	
 		}
-        if(diff<1e-5 && iters>=20)
+        if(diff<1e-5 && iters>=50)
 		{
 			break;
 		}
 
 	}
+		double f=pop->getBestFitness();
+		printf("grs %lf \n",f);
 	delete[] xx;
 	delete[] xx1;
 }

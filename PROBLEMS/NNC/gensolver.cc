@@ -19,6 +19,8 @@ GenSolver::GenSolver(int gcount,NeuralProgram *p,vector<double> &xx)
 	genome_count   = gcount;
 	generation     = 0;
 
+	lmargin = p->neuralparser->getleftmargin();
+	rmargin = p->neuralparser->getrightmargin();
 	double f;
 	genome=new double*[genome_count];
 	children=new double*[genome_count];
@@ -28,13 +30,11 @@ GenSolver::GenSolver(int gcount,NeuralProgram *p,vector<double> &xx)
 		children[i]=new double[genome_size];
 		for(int j=0;j<genome_size;j++)
 		{
-			if(fabs(xx[j])<1e-5) genome[i][j]=0.0;
-			else
-			{
-			//if(i==0) genome[i][j]=xx[j];
-			//else
-			genome[i][j]=2.0*drand48()-1.0;	
-			}
+			double a = lmargin[j];
+			double b = rmargin[j];
+			if(a<-1) a= -1;
+			if(b>1) b = 1;
+			genome[i][j] = a + drand48()*(b-a);
 		}
 				
 	}
@@ -61,7 +61,7 @@ GenSolver::GenSolver(int gcount,NeuralProgram *p,double mx,int ff)
 		genome[i]=new double[genome_size];
 		children[i]=new double[genome_size];
 		for(int j=0;j<genome_size;j++)
-			genome[i][j]=2.0*drand48()-1.0;
+			genome[i][j]=0.1 *(2.0*drand48()-1.0);
 				
 	}
 	fitness_array=new double[genome_count];
@@ -184,9 +184,12 @@ void	GenSolver::mutate()
 			{
 			//double percent=exp(-generation * 1.0/2.0);
 			double	percent = 0.25;
-				genome[i][j]*=(1.0+2.0*drand48()*percent-percent);
-	
-				
+			double delta = (2.0*drand48()-1.0)*0.05 * genome[i][j];
+			
+			genome[i][j]+=delta;
+			if(genome[i][j]>=rmargin[j]) genome[i][j]=rmargin[j];
+			if(genome[i][j]<=lmargin[j]) genome[i][j]=lmargin[j];	
+
 			}
 		}
 	}
@@ -377,8 +380,9 @@ void	GenSolve(NeuralProgram *p,Matrix &x,double &y,double mx,int flag)
 		x1+=fabs(pop.getBestFitness()-oldBest);
 		x2+=fabs(pop.getBestFitness()-oldBest)*fabs(pop.getBestFitness()-oldBest);
 		double variance=x2/(i+1)-x1/(i+1)*x1/(i+1);
-		if(i>=10 && variance<=stopat) break;
+		//if(i>=10 && variance<=stopat) break;
 
+		printf("f[%d]=%lf \n",i,pop.getBestFitness());
 		if(pop.getBestFitness()>oldBest)
 		{
 			stopat=variance/2.0;

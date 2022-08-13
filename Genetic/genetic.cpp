@@ -93,7 +93,7 @@ void    Genetic::calcFitnessArray()
     for(int i=0;i<chromosome_count;i++)
     {
 
-        if(localsearch_rate>0 && randomNums[i]<=localsearch_rate)
+        if(localsearch_rate>0 && ( randomNums[i]<=localsearch_rate))
         {
             if(checkForGradientCriterion(chromosome[i]))
             {
@@ -385,12 +385,12 @@ void       Genetic::step()
     crossover();
     ++generation;
 
-	if(generation %10==0)
+/*	if(generation %10==0)
 	{
 		for(int i=0;i<20;i++)
 			randomSearch(rand() % chromosome.size());
 		select();
-	}
+	}*/
 }
 
 void       Genetic::init()

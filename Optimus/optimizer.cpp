@@ -65,6 +65,23 @@ double  Optimizer::localSearch(Data &x)
        return y;
     }
     else
+	if(method=="random")
+	{
+        double y = myProblem->funmin(x);
+		for(int i=0;i<500;i++)
+		{
+			Data z = myProblem->getRandomPoint();
+			double zy = myProblem->funmin(z);
+			if(zy<y)
+			{
+			printf("random[%d]=%lf \n",i,zy);
+				y = zy;
+				x = z;
+			}
+		}
+		return y;
+	}	
+    else
     if(method=="nelderMead")
     {
         double y = myProblem->funmin(x);

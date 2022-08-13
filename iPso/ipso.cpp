@@ -76,7 +76,6 @@ bool iPso::terminated()
     }
     else 
 	    if (charilogis2){
-        printf("%4d] Generation  change: %10.6lf \n", generation, besty_tmp);
         if (besty == besty_tmp)
         {
             n++;
@@ -324,7 +323,6 @@ void iPso::calcFitnessArray()
             inertia = (fabs(fitness_array[i]) - fabs(worsty))/(fabs(besty) - fabs(worsty));
             //double m = fabs((fitness_array[i] - worsty)/(besty - worsty));
 
-        printf("worsty: %10.6lf besty %10.6lf inertia: %10.6lf \n", worsty, besty,inertia);
         Data oldg = particle[i]; //αποθήκευση παλιάς θέσης
         for (int j = 0; j < genome_size; j++)
         {
