@@ -10,6 +10,9 @@ NeuralProgram::NeuralProgram()
 
 }
 
+
+
+
 void    NeuralProgram::setDimension(int Dimension)
 {
     dimension=Dimension;

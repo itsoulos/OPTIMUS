@@ -3,7 +3,7 @@ DATAPATH=/home/sheridan/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfoldin
 #DATAPATH=/home/sheridan/Desktop/ERGASIES/SECDATA/
 NODES=10
 
-METHOD=Genetic
+METHOD=iPso
 METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then
@@ -16,7 +16,7 @@ then
 	METHODPARAMS="--pso_localsearch_rate=0.01 --pso_particles=500 --pso_generations=2000"
 elif [ $METHOD = "iPso" ]
 then
-	METHODPARAMS="--ipso_particles=500 --ipso_maxgenerations=2000 --ipso_localsearch_rate=0.001 --ipso_stoppingrule=best_fitness -ipso_gradientcheck=true --ipso_inertiatype=2"
+	METHODPARAMS="--ipso_particles=500 --ipso_maxgenerations=2000 --ipso_localsearch_rate=0.001 --ipso_stoppingrule=best_fitness -ipso_gradientcheck=true --ipso_inertiatype=0"
 elif [ $METHOD = "Multistart" ]
 then
 	METHODPARAMS=="--multistart_samples=50"
