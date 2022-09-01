@@ -51,7 +51,7 @@ bool Pso::terminated()
         stopat=variance/2.0;
     }
     if(stopat<1e-8 && !isnan(variance)) stopat=variance/2.0;
-    printf("Generation %d value: %lf variance: %lf stopat: %lf\n",generation,besty,
+    printf("Generation %5d value: %12.8lg variance: %lf stopat: %lf\n",generation,besty,
             variance,stopat);
     return generation>=max_generations;// || (variance<=stopat && generation>=20);
 }

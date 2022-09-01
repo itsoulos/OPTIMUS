@@ -13,7 +13,7 @@ class NeuralProgram :
 {
 	protected:
 		int 		dimension;
-		SigProgram	*program;
+        SigProgram	*program;
 		int		multiple;
 	public:
 		NeuralParser		*neuralparser;
