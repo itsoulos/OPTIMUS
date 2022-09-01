@@ -19,7 +19,7 @@ public:
     virtual double eval(Data &x);
     virtual double evalDeriv(Data &x,int pos);
     virtual double evalSecondDeriv(Data &x,int pos);
-    ~MlpModel();
+    virtual ~MlpModel();
 };
 
 #endif // MLPMODEL_H

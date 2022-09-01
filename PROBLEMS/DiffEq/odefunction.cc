@@ -8,6 +8,8 @@
 # include <QJsonObject>
 # include <demodel.h>
 # include <mlpmodel.h>
+# include <rbfmodel.h>
+# include <nncmodel.h>
 using namespace std;
 
 #pragma gcc optimize("Ofast")
@@ -58,17 +60,36 @@ void    init(QJsonObject data)
 
     if (model == "mlp")
         demodel = new MlpModel(odedimension,weights);
+    else
+    if(model == "rbf")
+        demodel = new RbfModel(odedimension,weights);
+    else
+    if(model == "nnc")
+        demodel  = new NncModel(odedimension);
 }
 
 int	getdimension()
 {
     if(model == "mlp")
         return  (odedimension+2)*weights;
+    else
+    if(model == "rbf")
+        return ((RbfModel *)demodel)->getVariablesSize();
+    else
+    if(model == "nnc")
+        return 10 * weights;
     return 1;
 }
 
 void    getmargins(vector<Interval> &x)
 {
+    if(model=="nnc")
+    {
+        for(int i=0;i<(int)x.size();i++)
+            x[i]=Interval(0.0,255.0);
+        return;
+    }
+
         for(int i=0;i<(int)x.size();i++)
                 x[i]=Interval(-100,100);
 }
@@ -89,6 +110,21 @@ double	funmin(vector<double> &a)
     if(model == "mlp")
     {
         ((MlpModel *)demodel)->setWeights(a);
+    }
+    else
+    if(model == "rbf")
+    {
+        ((RbfModel *)demodel)->setVariables(a);
+    }
+    else
+    if(model == "nnc")
+    {
+        vector<int> ia;
+        ia.resize(a.size());
+        for(int i=0;i<(int)a.size();i++)
+            ia[i]=(int)a[i];
+
+        ((NncModel *)demodel)->setChromosome(ia);
     }
     Data xx;
     xx.resize(odedimension);
@@ -117,15 +153,15 @@ double	funmin(vector<double> &a)
     if(kind==3)
         p1=px;
     if(kind==1)
-        return sum+lambda * pow(p0-getf0(),2.0);
+        return sum*(1.0+lambda * pow(p0-getf0(),2.0));
     else
     if(kind==2)
-        return sum+lambda * pow(p0-getf0(),2.0)+
-                lambda * pow(pp0-getff0(),2.0);
+        return sum*(1.0+lambda * pow(p0-getf0(),2.0)+
+                lambda * pow(pp0-getff0(),2.0));
     else
     if(kind==3)
-        return sum+lambda*pow(p0-getf0(),2.0)+
-                lambda * pow(p1-getf1(),2.0);
+        return sum*(1.0+lambda*pow(p0-getf0(),2.0)+
+                lambda * pow(p1-getf1(),2.0));
 }
 
 QJsonObject    done(vector<double> &x)

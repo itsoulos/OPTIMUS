@@ -16,7 +16,7 @@ public:
     virtual double eval(Data &x)=0;
     virtual double evalDeriv(Data &x,int pos)=0;
     virtual double evalSecondDeriv(Data &x,int pos)=0;
-    ~DeModel();
+    virtual ~DeModel();
 };
 
 #endif // DEMODEL_H
