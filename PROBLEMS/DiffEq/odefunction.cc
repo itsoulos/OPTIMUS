@@ -181,6 +181,7 @@ double	funmin(vector<double> &a)
         if(fabs(px)>=1e+8 || fabs(dpx)>=1e+8)
             return 1e+100;
 
+
       if(first) {p0=px;first=0;if(kind==2) pp0=dpx;}
         else
       {

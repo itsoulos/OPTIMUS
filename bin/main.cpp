@@ -291,7 +291,8 @@ int main(int argc, char *argv[])
 //#pragma omp parallel for num_threads(threads)
     for(int i=1;i<=iterations;i++)
     {
-      mainProblem->resetFunctionCalls();
+
+      mainProblem->resetFunctionCalls(problemParams);
       optimizerList[optMethod]->Solve();
 
       Data bestx=mainProblem->getBestx();

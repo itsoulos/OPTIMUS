@@ -9,6 +9,8 @@ SOURCES+=ode3.cc \
     converter.cc \
     cprogram.cc \
     demodel.cpp \
+    deprogram.cc \
+    derule.cc \
     doublestack.cc \
     fparser.cc \
     gdfmodel.cpp \
@@ -18,9 +20,9 @@ SOURCES+=ode3.cc \
     neuralprogram.cc \
     nncmodel.cpp \
     odefunction.cc \
-    program.cc \
     rbfmodel.cpp \
-    rule.cc \
+    rulercprogram.cpp \
+    rulermodel.cpp \
     sigprogram.cc \
     symbol.cc
 
@@ -28,6 +30,8 @@ HEADERS += \
     converter.h \
     cprogram.h \
     demodel.h \
+    deprogram.h \
+    derule.h \
     doublestack.h \
     fparser.hh \
     gdfmodel.h \
@@ -36,8 +40,8 @@ HEADERS += \
     neuralparser.h \
     neuralprogram.h \
     nncmodel.h \
-    program.h \
     rbfmodel.h \
-    rule.h \
+    rulercprogram.h \
+    rulermodel.h \
     sigprogram.h \
     symbol.h

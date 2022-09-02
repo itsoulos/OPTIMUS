@@ -44,7 +44,14 @@ double getDistance(Data &x1,Data &x2)
 void	Problem::resetFunctionCalls()
 {
 	functionCalls=0;
+
     besty=1e+100;
+}
+
+void    Problem::resetFunctionCalls(QJsonObject &settings)
+{
+    resetFunctionCalls();
+    problem->init(settings);
 }
 
 Data       Problem::getUniformRandomPoint()

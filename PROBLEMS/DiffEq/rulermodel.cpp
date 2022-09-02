@@ -106,10 +106,6 @@ void    RulerModel::setChromosome(vector<int> &g)
 {
     int redo = 0;
 
-    printf("g=[");
-    for(int i=0;i<g.size();i++)
-        printf("%d ",g[i]);
-    printf("\n");
     string str = printRandomProgram(g,redo);
     if(redo>=REDO_MAX){ lastExpr="";return ;}
     clist = split(str,"#");

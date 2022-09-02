@@ -35,6 +35,7 @@ bool     getGradientCriterion(Data &x1,Data &x2);
     bool        isPointIn(Data &x);
     int		getFunctionCalls();
     void	resetFunctionCalls();
+    void    resetFunctionCalls(QJsonObject &settings);
     Data    getBestx();
     double  getBesty();
 };
