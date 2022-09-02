@@ -310,7 +310,7 @@ int main(int argc, char *argv[])
            avgClassError+=result["classError"].toDouble();
 
           printf("GENETIC STEP[%4d]=%20.10lg %20.10lg%% ",i,besty,result["classError"].toDouble());
-          cout<<result["string"].toString().toStdString()<<endl;
+          cout<<"Expr: "<<result["string"].toString().toStdString()<<endl;
        if(i==1 || besty<minTrainError)
        {
            minTrainError=besty;

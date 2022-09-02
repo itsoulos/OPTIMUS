@@ -128,6 +128,7 @@ void	Population::mutate()
 {
 	int start = elitism * (int)(genome_count*selection_rate);
 	start = elitism;
+	start = 1;
 	for(int i=start;i<genome_count;i++)
 	{
 		for(int j=0;j<genome_size;j++)

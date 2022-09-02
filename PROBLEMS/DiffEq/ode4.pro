@@ -5,12 +5,13 @@ QMAKE_CFLAGS_RELEASE += -O4 -march=native -unroll-loops -omit-frame-pointer -Win
 QMAKE_CXXFLAGS += -O4 -march=native -unroll-loops -omit-frame-pointer -Winline -unsafe-math-optimizations -mtune=native -mno-vzeroupper 
 QMAKE_CFLAGS += -O4 -march=native -unroll-loops -omit-frame-pointer -Winline -unsafe-math-optimizations -mtune=native -mno-vzeroupper
 
-SOURCES+=ode4.cc\ 
+SOURCES+=ode4.cc \
     converter.cc \
     cprogram.cc \
     demodel.cpp \
     doublestack.cc \
     fparser.cc \
+    gdfmodel.cpp \
     interval.cpp \
     mlpmodel.cpp \
     neuralparser.cc \
@@ -29,6 +30,7 @@ HEADERS += \
     demodel.h \
     doublestack.h \
     fparser.hh \
+    gdfmodel.h \
     interval.h \
     mlpmodel.h \
     neuralparser.h \

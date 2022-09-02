@@ -10,6 +10,8 @@
 # include <mlpmodel.h>
 # include <rbfmodel.h>
 # include <nncmodel.h>
+# include <gdfmodel.h>
+# include <rulermodel.h>
 using namespace std;
 
 #pragma gcc optimize("Ofast")
@@ -66,6 +68,12 @@ void    init(QJsonObject data)
     else
     if(model == "nnc")
         demodel  = new NncModel(odedimension);
+    else
+    if(model == "gdf")
+        demodel = new GdfModel(odedimension);
+    else
+    if(model == "ruler")
+        demodel = new RulerModel(odedimension);
 }
 
 int	getdimension()
@@ -78,12 +86,18 @@ int	getdimension()
     else
     if(model == "nnc")
         return 10 * weights;
+    else
+    if(model == "gdf")
+        return 10 * weights;
+    else
+    if(model == "ruler")
+        return 10 * weights;
     return 1;
 }
 
 void    getmargins(vector<Interval> &x)
 {
-    if(model=="nnc")
+    if(model=="nnc" || model == "gdf" || model == "ruler")
     {
         for(int i=0;i<(int)x.size();i++)
             x[i]=Interval(0.0,255.0);
@@ -126,6 +140,24 @@ double	funmin(vector<double> &a)
 
         ((NncModel *)demodel)->setChromosome(ia);
     }
+    else
+    if(model=="gdf")
+    {
+        vector<int> ia;
+        ia.resize(a.size());
+        for(int i=0;i<(int)a.size();i++)
+            ia[i]=(int)a[i];
+        ((GdfModel *)demodel)->setChromosome(ia);
+    }
+    else
+    if(model == "ruler")
+    {
+        vector<int> ia;
+        ia.resize(a.size());
+        for(int i=0;i<(int)a.size();i++)
+            ia[i]=(int)a[i];
+        ((RulerModel *)demodel)->setChromosome(ia);
+    }
     Data xx;
     xx.resize(odedimension);
     int kind = getkind();
@@ -138,29 +170,43 @@ double	funmin(vector<double> &a)
          dpx = demodel->evalDeriv(xx,0);
          dpx2 = 0.0;
         if(kind==2 || kind==3)
+        {
             dpx2 = demodel->evalSecondDeriv(xx,0);
+            if(isinf(dpx2) || isnan(dpx2) || fabs(dpx2)>=1e+8)
+                return 1e+100;
+        }
+
+        if(isnan(px) || isinf(px) || isnan(dpx) || isinf(dpx))
+            return 1e+100;
+        if(fabs(px)>=1e+8 || fabs(dpx)>=1e+8)
+            return 1e+100;
 
       if(first) {p0=px;first=0;if(kind==2) pp0=dpx;}
         else
       {
+          double dv;
+
           if(kind==1)
-        sum = sum + pow(ode1ff(x,px,dpx),2.0);
+                dv = ode1ff(x,px,dpx);
           else
-              sum=sum+pow(ode2ff(x,px,dpx,dpx2),2.0);
+              dv = ode2ff(x,px,dpx,dpx2);
+          if(isinf(dv) || isnan(dv) || fabs(dv)>=1e+8) return 1e+100;
+        sum = sum + dv * dv;
       }
+      if(isnan(sum) || isinf(sum) || fabs(sum)>=1e+8) return 1e+100;
 
     }
     if(kind==3)
         p1=px;
     if(kind==1)
-        return sum*(1.0+lambda * pow(p0-getf0(),2.0));
+        return sum+(lambda * pow(p0-getf0(),2.0));
     else
     if(kind==2)
-        return sum*(1.0+lambda * pow(p0-getf0(),2.0)+
+        return sum+(lambda * pow(p0-getf0(),2.0)+
                 lambda * pow(pp0-getff0(),2.0));
     else
     if(kind==3)
-        return sum*(1.0+lambda*pow(p0-getf0(),2.0)+
+        return sum+(lambda*pow(p0-getf0(),2.0)+
                 lambda * pow(p1-getf1(),2.0));
 }
 
@@ -169,6 +215,8 @@ QJsonObject    done(vector<double> &x)
     funmin(x);
     double testError = 0.0;
     double classError = 0.0;
+     QJsonObject jxx;
+
     if(demodel!=NULL)
     {
         Data xx;
@@ -189,13 +237,38 @@ QJsonObject    done(vector<double> &x)
            testError = testError + pow(ode1ff(ax,px,dpx),2.0);
            else
                 testError=testError+pow(ode2ff(ax,px,dpx,dpx2),2.0);
+      //     printf("values: %lf %lf %lf %lf \n",ax,px,dpx,dpx2);
+        }
+        if(model == "gdf")
+        {
+
+                    QString st1=QString::fromStdString(
+
+                        ((GdfModel *)demodel)->getLastExpr());
+                    st1=st1.replace("x1","x");
+                    st1=st1.replace("x2","y");
+                    jxx["string"]=st1;
+        }
+        else
+        if(model == "ruler")
+        {
+            vector<int> ia;
+            ia.resize(x.size());
+            for(int i=0;i<(int)x.size();i++)
+                ia[i]=(int)x[i];
+            QString st1=QString::fromStdString(
+
+                ((RulerModel *)demodel)->printF(ia));
+            st1=st1.replace("x1","x");
+            st1=st1.replace("x2","y");
+            jxx["string"]=st1;
         }
         delete demodel;
     }
-    QJsonObject xx;
-    xx["testError"]=testError;
-    xx["classError"]=classError;
-    return xx;
+
+    jxx["testError"]=testError;
+    jxx["classError"]=classError;
+    return jxx;
 }
 
 static double dmax(double a,double b){return a>b?a:b;}

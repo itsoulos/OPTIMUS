@@ -8,10 +8,10 @@ then
 	METHODPARAMS="--gcrs_samples=25 --gcrs_maxiterations=100000"	
 elif [ $METHOD = "Genetic" ]
 then
-	METHODPARAMS="--localsearch_rate=0.001  --genetic_crossover_type=double --chromosomes=500 --localsearch_method=bfgs --max_generations=2000"
+	METHODPARAMS="--localsearch_rate=0.01  --genetic_crossover_type=double --chromosomes=500 --localsearch_method=bfgs --max_generations=2000"
 elif [ $METHOD = "Pso" ]
 then
-	METHODPARAMS="--pso_particles=500 --pso_localsearch_rate=0.01 --localsearch_method=bfgs --pso_generations=200"
+	METHODPARAMS="--pso_particles=500 --pso_localsearch_rate=0.01 --localsearch_method=bfgs --pso_generations=2000"
 elif [ $METHOD = "iPso" ]
 then
 	METHODPARAMS="--ipso_particles=100 --ipso_maxgenerations=100 --ipso_localsearch_rate=0.05 --ipso_stoppingrule=best_fitness -ipso_gradientcheck=true --ipso_inertiatype=2"
@@ -30,6 +30,6 @@ then
 fi
 
 PROBLEM=$1
-MPARAMS="--model=nnc --weights=10 --lambda=100 --npoints=100"
+MPARAMS="--model=gdf --weights=10 --lambda=10 --npoints=100"
 
-./OptimusApp --filename=../PROBLEMS/DiffEq/lib$PROBLEM.so $MPARAMS  --opt_method=$METHOD  $METHODPARAMS --threads=1 --iterations=1
+./OptimusApp --filename=../PROBLEMS/DiffEq/lib$PROBLEM.so $MPARAMS  --opt_method=$METHOD  $METHODPARAMS --threads=1 --iterations=10

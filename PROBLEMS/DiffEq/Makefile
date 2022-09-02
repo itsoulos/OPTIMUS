@@ -56,6 +56,8 @@ SOURCES       = ode1.cc \
 		converter.cc \
 		cprogram.cc \
 		demodel.cpp \
+		deprogram.cc \
+		derule.cc \
 		doublestack.cc \
 		fparser.cc \
 		gdfmodel.cpp \
@@ -65,15 +67,17 @@ SOURCES       = ode1.cc \
 		neuralprogram.cc \
 		nncmodel.cpp \
 		odefunction.cc \
-		program.cc \
 		rbfmodel.cpp \
-		rule.cc \
+		rulercprogram.cpp \
+		rulermodel.cpp \
 		sigprogram.cc \
 		symbol.cc 
 OBJECTS       = ode1.o \
 		converter.o \
 		cprogram.o \
 		demodel.o \
+		deprogram.o \
+		derule.o \
 		doublestack.o \
 		fparser.o \
 		gdfmodel.o \
@@ -83,9 +87,9 @@ OBJECTS       = ode1.o \
 		neuralprogram.o \
 		nncmodel.o \
 		odefunction.o \
-		program.o \
 		rbfmodel.o \
-		rule.o \
+		rulercprogram.o \
+		rulermodel.o \
 		sigprogram.o \
 		symbol.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -97,7 +101,37 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/g++-base.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/g++-unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/qconfig.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_Attica.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_Baloo.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KArchive.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KAuth.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KAuthCore.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KBookmarks.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KCodecs.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KCompletion.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KConfigCore.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KConfigGui.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KConfigWidgets.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KCoreAddons.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KDBusAddons.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KGlobalAccel.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KGuiAddons.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KI18n.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KIconThemes.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KIOCore.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KIOFileWidgets.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KIOGui.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KIOWidgets.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_Kirigami2.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KItemViews.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KJobWidgets.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KNewStuff.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KNewStuffCore.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KNTLM.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KService.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KWidgetsAddons.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KWindowSystem.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KXmlGui.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_accessibility_support_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_bluetooth.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_bootstrap_private.pri \
@@ -138,6 +172,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_qmlworkerscript.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_quick.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_quickwidgets.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_script.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_scripttools.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_service_support_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_sql.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_sql_private.pri \
@@ -151,6 +187,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xkbcommon_support_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xml.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xml_private.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_Solid.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_functions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf \
@@ -177,6 +214,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		ode1.pro converter.h \
 		cprogram.h \
 		demodel.h \
+		deprogram.h \
+		derule.h \
 		doublestack.h \
 		fparser.hh \
 		gdfmodel.h \
@@ -185,14 +224,16 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		neuralparser.h \
 		neuralprogram.h \
 		nncmodel.h \
-		program.h \
 		rbfmodel.h \
-		rule.h \
+		rulercprogram.h \
+		rulermodel.h \
 		sigprogram.h \
 		symbol.h ode1.cc \
 		converter.cc \
 		cprogram.cc \
 		demodel.cpp \
+		deprogram.cc \
+		derule.cc \
 		doublestack.cc \
 		fparser.cc \
 		gdfmodel.cpp \
@@ -202,9 +243,9 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		neuralprogram.cc \
 		nncmodel.cpp \
 		odefunction.cc \
-		program.cc \
 		rbfmodel.cpp \
-		rule.cc \
+		rulercprogram.cpp \
+		rulermodel.cpp \
 		sigprogram.cc \
 		symbol.cc
 QMAKE_TARGET  = ode1
@@ -244,7 +285,37 @@ Makefile: ode1.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /u
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/g++-base.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/g++-unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/qconfig.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_Attica.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_Baloo.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KArchive.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KAuth.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KAuthCore.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KBookmarks.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KCodecs.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KCompletion.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KConfigCore.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KConfigGui.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KConfigWidgets.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KCoreAddons.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KDBusAddons.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KGlobalAccel.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KGuiAddons.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KI18n.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KIconThemes.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KIOCore.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KIOFileWidgets.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KIOGui.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KIOWidgets.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_Kirigami2.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KItemViews.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KJobWidgets.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KNewStuff.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KNewStuffCore.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KNTLM.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KService.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KWidgetsAddons.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KWindowSystem.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KXmlGui.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_accessibility_support_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_bluetooth.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_bootstrap_private.pri \
@@ -285,6 +356,8 @@ Makefile: ode1.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /u
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_qmlworkerscript.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_quick.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_quickwidgets.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_script.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_scripttools.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_service_support_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_sql.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_sql_private.pri \
@@ -298,6 +371,7 @@ Makefile: ode1.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /u
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xkbcommon_support_private.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xml.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xml_private.pri \
+		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_Solid.pri \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_functions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf \
@@ -332,7 +406,37 @@ Makefile: ode1.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /u
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/g++-base.conf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/g++-unix.conf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/qconfig.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_Attica.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_Baloo.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KArchive.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KAuth.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KAuthCore.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KBookmarks.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KCodecs.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KCompletion.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KConfigCore.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KConfigGui.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KConfigWidgets.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KCoreAddons.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KDBusAddons.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KGlobalAccel.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KGuiAddons.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KI18n.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KIconThemes.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KIOCore.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KIOFileWidgets.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KIOGui.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KIOWidgets.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_Kirigami2.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KItemViews.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KJobWidgets.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KNewStuff.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KNewStuffCore.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KNTLM.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KService.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KWidgetsAddons.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KWindowSystem.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_KXmlGui.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_accessibility_support_private.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_bluetooth.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_bootstrap_private.pri:
@@ -373,6 +477,8 @@ Makefile: ode1.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /u
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_qmlworkerscript.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_quick.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_quickwidgets.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_script.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_scripttools.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_service_support_private.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_sql.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_sql_private.pri:
@@ -386,6 +492,7 @@ Makefile: ode1.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /u
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xkbcommon_support_private.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xml.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_lib_xml_private.pri:
+/usr/lib/x86_64-linux-gnu/qt5/mkspecs/modules/qt_Solid.pri:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_functions.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf:
@@ -425,8 +532,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents converter.h cprogram.h demodel.h doublestack.h fparser.hh gdfmodel.h interval.h mlpmodel.h neuralparser.h neuralprogram.h nncmodel.h program.h rbfmodel.h rule.h sigprogram.h symbol.h $(DISTDIR)/
-	$(COPY_FILE) --parents ode1.cc converter.cc cprogram.cc demodel.cpp doublestack.cc fparser.cc gdfmodel.cpp interval.cpp mlpmodel.cpp neuralparser.cc neuralprogram.cc nncmodel.cpp odefunction.cc program.cc rbfmodel.cpp rule.cc sigprogram.cc symbol.cc $(DISTDIR)/
+	$(COPY_FILE) --parents converter.h cprogram.h demodel.h deprogram.h derule.h doublestack.h fparser.hh gdfmodel.h interval.h mlpmodel.h neuralparser.h neuralprogram.h nncmodel.h rbfmodel.h rulercprogram.h rulermodel.h sigprogram.h symbol.h $(DISTDIR)/
+	$(COPY_FILE) --parents ode1.cc converter.cc cprogram.cc demodel.cpp deprogram.cc derule.cc doublestack.cc fparser.cc gdfmodel.cpp interval.cpp mlpmodel.cpp neuralparser.cc neuralprogram.cc nncmodel.cpp odefunction.cc rbfmodel.cpp rulercprogram.cpp rulermodel.cpp sigprogram.cc symbol.cc $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -482,12 +589,22 @@ converter.o: converter.cc converter.h
 
 cprogram.o: cprogram.cc cprogram.h \
 		symbol.h \
-		rule.h \
+		derule.h \
 		fparser.hh
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cprogram.o cprogram.cc
 
 demodel.o: demodel.cpp demodel.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o demodel.o demodel.cpp
+
+deprogram.o: deprogram.cc deprogram.h \
+		symbol.h \
+		derule.h \
+		doublestack.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o deprogram.o deprogram.cc
+
+derule.o: derule.cc derule.h \
+		symbol.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o derule.o derule.cc
 
 doublestack.o: doublestack.cc doublestack.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o doublestack.o doublestack.cc
@@ -500,8 +617,10 @@ gdfmodel.o: gdfmodel.cpp gdfmodel.h \
 		demodel.h \
 		cprogram.h \
 		symbol.h \
-		rule.h \
-		fparser.hh
+		derule.h \
+		fparser.hh \
+		deprogram.h \
+		doublestack.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gdfmodel.o gdfmodel.cpp
 
 interval.o: interval.cpp interval.h
@@ -515,9 +634,9 @@ neuralparser.o: neuralparser.cc neuralparser.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o neuralparser.o neuralparser.cc
 
 neuralprogram.o: neuralprogram.cc neuralprogram.h \
-		program.h \
+		deprogram.h \
 		symbol.h \
-		rule.h \
+		derule.h \
 		doublestack.h \
 		sigprogram.h \
 		cprogram.h \
@@ -528,9 +647,9 @@ neuralprogram.o: neuralprogram.cc neuralprogram.h \
 nncmodel.o: nncmodel.cpp nncmodel.h \
 		demodel.h \
 		neuralprogram.h \
-		program.h \
+		deprogram.h \
 		symbol.h \
-		rule.h \
+		derule.h \
 		doublestack.h \
 		sigprogram.h \
 		cprogram.h \
@@ -542,36 +661,49 @@ odefunction.o: odefunction.cc interval.h \
 		demodel.h \
 		mlpmodel.h \
 		rbfmodel.h \
+		deprogram.h \
+		symbol.h \
+		derule.h \
+		doublestack.h \
 		nncmodel.h \
 		neuralprogram.h \
-		program.h \
-		symbol.h \
-		rule.h \
-		doublestack.h \
 		sigprogram.h \
 		cprogram.h \
 		fparser.hh \
-		neuralparser.h
+		neuralparser.h \
+		gdfmodel.h \
+		rulermodel.h \
+		rulercprogram.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o odefunction.o odefunction.cc
 
-program.o: program.cc program.h \
-		symbol.h \
-		rule.h \
-		doublestack.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o program.o program.cc
-
 rbfmodel.o: rbfmodel.cpp rbfmodel.h \
-		demodel.h
+		demodel.h \
+		deprogram.h \
+		symbol.h \
+		derule.h \
+		doublestack.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o rbfmodel.o rbfmodel.cpp
 
-rule.o: rule.cc rule.h \
-		symbol.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o rule.o rule.cc
+rulercprogram.o: rulercprogram.cpp rulercprogram.h \
+		symbol.h \
+		derule.h \
+		fparser.hh
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o rulercprogram.o rulercprogram.cpp
+
+rulermodel.o: rulermodel.cpp rulermodel.h \
+		demodel.h \
+		rulercprogram.h \
+		symbol.h \
+		derule.h \
+		fparser.hh \
+		deprogram.h \
+		doublestack.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o rulermodel.o rulermodel.cpp
 
 sigprogram.o: sigprogram.cc sigprogram.h \
 		cprogram.h \
 		symbol.h \
-		rule.h \
+		derule.h \
 		fparser.hh
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sigprogram.o sigprogram.cc
 

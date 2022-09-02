@@ -33,13 +33,13 @@ int	Symbol::getTerminalStatus() const
 	return is_terminal;
 }
 
-void	Symbol::addRule(Rule *r)
+void	Symbol::addRule(DeRule *r)
 {
 	rule.push_back(r);
 	count_rules++;
 }
 
-Rule	*Symbol::getRule(int pos) const
+DeRule	*Symbol::getRule(int pos) const
 {
 	if(pos<0 || pos>=count_rules) return NULL;
 	return rule[pos];

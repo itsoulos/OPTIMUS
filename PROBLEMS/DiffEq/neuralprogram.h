@@ -1,6 +1,6 @@
 # ifndef __NEURALPROGRAM__H
 # define __NEURALPROGRAM__H
-# include <program.h>
+# include <deprogram.h>
 # include <sigprogram.h>
 # include <neuralparser.h>
 # include <QString>
@@ -9,7 +9,7 @@
 # include <QIODevice>
 typedef vector<double> Data;
 class NeuralProgram :
-	public Program
+    public DeProgram
 {
 	protected:
 		int 		dimension;

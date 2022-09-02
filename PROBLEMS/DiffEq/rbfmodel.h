@@ -2,6 +2,7 @@
 #define RBFMODEL_H
 
 #include "demodel.h"
+# include <deprogram.h>
 
 class RbfModel : public DeModel
 {

@@ -11,6 +11,7 @@ SOURCES+=ode2.cc \
     demodel.cpp \
     doublestack.cc \
     fparser.cc \
+    gdfmodel.cpp \
     interval.cpp \
     mlpmodel.cpp \
     neuralparser.cc \
@@ -29,6 +30,7 @@ HEADERS += \
     demodel.h \
     doublestack.h \
     fparser.hh \
+    gdfmodel.h \
     interval.h \
     mlpmodel.h \
     neuralparser.h \

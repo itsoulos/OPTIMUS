@@ -18,7 +18,7 @@ int	Cprogram::newRule()
 	int r;
 	r=rule.size();
 	rule.resize(r+1);
-	rule[r]=new Rule();
+    rule[r]=new DeRule();
 	return r;
 }
 
@@ -198,7 +198,9 @@ void	Cprogram::makeRules()
 
 	r=newRule();
 	rule[r]->addSymbol(&Digit0);
-	rule[r]->addSymbol(&DigitList);
+    rule[r]->addSymbol(&Digit0);
+
+//	rule[r]->addSymbol(&DigitList);
 	DigitList.addRule(rule[r]);
 
 	r=newRule();
@@ -243,6 +245,16 @@ double	Cprogram::Eval( const double *X)
 		return parser.Eval(X);
 }
 
+double  Cprogram::EvalDeriv(const double *X,int pos)
+{
+    return parser.EvalDeriv(X,pos);
+}
+
+double  Cprogram::EvalDeriv2(const double *X,int pos)
+{
+    return parser.EvalDeriv2(X,pos);
+}
+
 Symbol	*Cprogram::getStartSymbol()
 {
 	return &Start;
@@ -250,6 +262,6 @@ Symbol	*Cprogram::getStartSymbol()
 
 Cprogram::~Cprogram()
 {
-	for(int i=0;i<rule.size();i++)
+    for(int i=0;i<(int)rule.size();i++)
 		delete rule[i];
 }

@@ -3,13 +3,13 @@
 # include <vector>
 using namespace std;
 
-class Rule;
+class DeRule;
 
 class Symbol
 {
 	private:
 		string name;
-		vector<Rule*> rule;
+        vector<DeRule*> rule;
 		int	count_rules;
 		int	is_terminal;
 	public:
@@ -22,9 +22,9 @@ class Symbol
 		void	setTerminalStatus(int status);
 		int	getTerminalStatus() const;
 
-		void	addRule(Rule *r);
+        void	addRule(DeRule *r);
 		void	cut(int N);
-		Rule	*getRule(int pos) const;
+        DeRule	*getRule(int pos) const;
 		int	getCountRules() const;
 		~Symbol();
 		
