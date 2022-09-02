@@ -5,7 +5,7 @@ QMAKE_CFLAGS_RELEASE += -O4 -march=native -unroll-loops -omit-frame-pointer -Win
 QMAKE_CXXFLAGS += -O4 -march=native -unroll-loops -omit-frame-pointer -Winline -unsafe-math-optimizations -mtune=native -mno-vzeroupper 
 QMAKE_CFLAGS += -O4 -march=native -unroll-loops -omit-frame-pointer -Winline -unsafe-math-optimizations -mtune=native -mno-vzeroupper
 
-SOURCES+=ode9.cc \
+SOURCES+=ode8.cc \
     converter.cc \
     cprogram.cc \
     demodel.cpp \
@@ -20,6 +20,7 @@ SOURCES+=ode9.cc \
     neuralprogram.cc \
     nncmodel.cpp \
     odefunction.cc \
+    polymodel.cpp \
     rbfmodel.cpp \
     rulercprogram.cpp \
     rulermodel.cpp \
@@ -40,6 +41,7 @@ HEADERS += \
     neuralparser.h \
     neuralprogram.h \
     nncmodel.h \
+    polymodel.h \
     rbfmodel.h \
     rulercprogram.h \
     rulermodel.h \

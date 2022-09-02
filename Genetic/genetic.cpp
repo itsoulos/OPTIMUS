@@ -12,6 +12,7 @@ Genetic::Genetic(Problem *p)
     addParameter("maxiters","1","Number of iterations of the algorithm"); 
     addParameter("genetic_crossover_type","double","The value used for crossover(double,uniform,laplace,onepoint");
     addParameter("genetic_mutation_type","double","The value  used for mutation (double,random,pso)");
+    addParameter("genetic_stoprule","doublebox","Stopping rules (doublebox,generations,stoponzero)");
 }
 
 Genetic::~Genetic()
@@ -55,9 +56,18 @@ bool       Genetic::terminated()
     }
 
     if(stopat<1e-8 && generation>=10) return true;
-	printf("Genetic. Generation: %4d Fitness: %10.5lf Variance: %10.5lf Stopat: %10.5lf \n",generation,fitness_array[0],variance,stopat);
+    printf("Genetic. Generation: %4d Fitness: %20.8lg Variance: %10.5lf Stopat: %10.5lf \n",generation,fitness_array[0],variance,stopat);
 	
+    QString rule = params["genetic_stoprule"].toString();
+    if(rule == "doublebox")
     return generation>=max_generations|| (variance<=stopat && generation>=50);
+    else
+    if(rule=="generations")
+        return generation>=max_generations;
+    else
+    if(rule=="stoponzero")
+        return generation>=max_generations || fabs(fitness_array[0])<1e-8;
+    return false;
 }
 
 
@@ -103,13 +113,18 @@ void    Genetic::calcFitnessArray()
 
         if(localsearch_rate>0 && ( randomNums[i]<=localsearch_rate))
         {
-            /*if(checkForGradientCriterion(chromosome[i]))
+            if(checkForGradientCriterion(chromosome[i]))
             {
                 fitness_array[i]=fitness(chromosome[i]);
                 continue;
-            }*/
+            }
             Data dg=chromosome[i];
-            fitness_array[i]=localSearch(chromosome[i]);
+            double df = localSearch(dg);
+            if(fabs(df) < fabs(fitness_array[i]) )
+            {
+                chromosome[i]=dg;
+                fitness_array[i]=localSearch(chromosome[i]);
+            }
 #pragma omp critical
 {
             RC+=getDistance(chromosome[i],dg);
@@ -392,13 +407,13 @@ void       Genetic::step()
     select();
     crossover();
     ++generation;
-/*
+
 	if(generation %10==0)
 	{
 		for(int i=0;i<20;i++)
 			randomSearch(rand() % chromosome.size());
 		select();
-	}*/
+    }
 }
 
 void       Genetic::init()

@@ -12,6 +12,7 @@
 # include <nncmodel.h>
 # include <gdfmodel.h>
 # include <rulermodel.h>
+# include <polymodel.h>
 using namespace std;
 
 #pragma gcc optimize("Ofast")
@@ -32,7 +33,6 @@ int     weights  = 10;
 int     npoints = 100;
 DeModel *demodel = NULL;
 const int odedimension = 1;
-
 
 /**
  * @brief init
@@ -72,6 +72,9 @@ void    init(QJsonObject data)
     else
     if(model == "ruler")
         demodel = new RulerModel(odedimension);
+    else
+    if(model == "poly")
+        demodel = new PolyModel(odedimension,weights);
 }
 
 int	getdimension()
@@ -90,6 +93,9 @@ int	getdimension()
     else
     if(model == "ruler")
         return 10 * weights;
+    else
+    if(model == "poly")
+        return odedimension * weights;
     return 1;
 }
 
@@ -155,6 +161,11 @@ double	funmin(vector<double> &a)
         for(int i=0;i<(int)a.size();i++)
             ia[i]=(int)a[i];
         ((RulerModel *)demodel)->setChromosome(ia);
+    }
+    else
+    if(model == "poly")
+    {
+        ((PolyModel *) demodel)->setWeights(a);
     }
     Data xx;
     xx.resize(odedimension);

@@ -12,6 +12,7 @@ else
 		(cd PROBLEMS/RbfTest; for file in *.pro; do  qmake $file; make clean; make; done)
 		(cd Optimus; qmake; make clean; make install)
 		(cd Bfgs; qmake; make clean; make install )
+		(cd IntegerGenetic; qmake; make clean; make install )
 		(cd MinCenter; qmake; make clean; make install )
 		(cd Tmlsl; qmake; make clean; make install )
 		(cd GENDE; qmake; make clean; make install )

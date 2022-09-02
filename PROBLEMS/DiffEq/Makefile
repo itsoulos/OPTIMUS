@@ -67,6 +67,7 @@ SOURCES       = unsolode2.cc \
 		neuralprogram.cc \
 		nncmodel.cpp \
 		odefunction.cc \
+		polymodel.cpp \
 		rbfmodel.cpp \
 		rulercprogram.cpp \
 		rulermodel.cpp \
@@ -87,6 +88,7 @@ OBJECTS       = unsolode2.o \
 		neuralprogram.o \
 		nncmodel.o \
 		odefunction.o \
+		polymodel.o \
 		rbfmodel.o \
 		rulercprogram.o \
 		rulermodel.o \
@@ -191,6 +193,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		neuralparser.h \
 		neuralprogram.h \
 		nncmodel.h \
+		polymodel.h \
 		rbfmodel.h \
 		rulercprogram.h \
 		rulermodel.h \
@@ -210,6 +213,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		neuralprogram.cc \
 		nncmodel.cpp \
 		odefunction.cc \
+		polymodel.cpp \
 		rbfmodel.cpp \
 		rulercprogram.cpp \
 		rulermodel.cpp \
@@ -433,8 +437,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents converter.h cprogram.h demodel.h deprogram.h derule.h doublestack.h fparser.hh gdfmodel.h interval.h mlpmodel.h neuralparser.h neuralprogram.h nncmodel.h rbfmodel.h rulercprogram.h rulermodel.h sigprogram.h symbol.h $(DISTDIR)/
-	$(COPY_FILE) --parents unsolode2.cc converter.cc cprogram.cc demodel.cpp deprogram.cc derule.cc doublestack.cc fparser.cc gdfmodel.cpp interval.cpp mlpmodel.cpp neuralparser.cc neuralprogram.cc nncmodel.cpp odefunction.cc rbfmodel.cpp rulercprogram.cpp rulermodel.cpp sigprogram.cc symbol.cc $(DISTDIR)/
+	$(COPY_FILE) --parents converter.h cprogram.h demodel.h deprogram.h derule.h doublestack.h fparser.hh gdfmodel.h interval.h mlpmodel.h neuralparser.h neuralprogram.h nncmodel.h polymodel.h rbfmodel.h rulercprogram.h rulermodel.h sigprogram.h symbol.h $(DISTDIR)/
+	$(COPY_FILE) --parents unsolode2.cc converter.cc cprogram.cc demodel.cpp deprogram.cc derule.cc doublestack.cc fparser.cc gdfmodel.cpp interval.cpp mlpmodel.cpp neuralparser.cc neuralprogram.cc nncmodel.cpp odefunction.cc polymodel.cpp rbfmodel.cpp rulercprogram.cpp rulermodel.cpp sigprogram.cc symbol.cc $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -574,8 +578,13 @@ odefunction.o: odefunction.cc interval.h \
 		neuralparser.h \
 		gdfmodel.h \
 		rulermodel.h \
-		rulercprogram.h
+		rulercprogram.h \
+		polymodel.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o odefunction.o odefunction.cc
+
+polymodel.o: polymodel.cpp polymodel.h \
+		demodel.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o polymodel.o polymodel.cpp
 
 rbfmodel.o: rbfmodel.cpp rbfmodel.h \
 		demodel.h \

@@ -20,6 +20,7 @@ SOURCES+=nlode3.cc \
     neuralprogram.cc \
     nncmodel.cpp \
     odefunction.cc \
+    polymodel.cpp \
     rbfmodel.cpp \
     rulercprogram.cpp \
     rulermodel.cpp \
@@ -40,6 +41,7 @@ HEADERS += \
     neuralparser.h \
     neuralprogram.h \
     nncmodel.h \
+    polymodel.h \
     rbfmodel.h \
     rulercprogram.h \
     rulermodel.h \
