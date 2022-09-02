@@ -2,7 +2,7 @@
 # define __GRS__H
 
 # include <rlsprogram.h>
-# include <population.h>
+# include <grspopulation.h>
 # include <collection.h>
 
 
@@ -12,7 +12,7 @@ class Grs
 		int maxGenerations;
 		Problem *problem;
 		RlsProgram *program;
-		Population *pop;
+		GrsPopulation *pop;
 	public:
 		Grs(Problem *p);
 		int	getGenomeCount() const;

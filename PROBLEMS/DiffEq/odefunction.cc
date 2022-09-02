@@ -17,9 +17,7 @@ using namespace std;
 #pragma gcc optimize("Ofast")
 extern "C"
 {
-extern double	dode2ff(double x,double y,double yy,double yyy,double dy,double dyy,double dyyy);
 extern double	ode2ff(double x,double y,double yy,double yyy);
-extern double	dode1ff(double x,double y,double yy,double dy,double dyy);
 extern double	ode1ff(double x,double y,double yy);
 extern double	getf1();
 extern double	getf0();

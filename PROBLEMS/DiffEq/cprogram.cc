@@ -145,11 +145,11 @@ void	Cprogram::makeRules()
 
 	r=newRule();
 	rule[r]->addSymbol(&Abs);
-//	function.addRule(rule[r]);
+    //function.addRule(rule[r]);
 
 	r=newRule();
 	rule[r]->addSymbol(&Sqrt);
-//	function.addRule(rule[r]);
+    //function.addRule(rule[r]);
 
 	r=newRule();
 	rule[r]->addSymbol(&Tan);
@@ -198,9 +198,9 @@ void	Cprogram::makeRules()
 
 	r=newRule();
 	rule[r]->addSymbol(&Digit0);
-    rule[r]->addSymbol(&Digit0);
+    //rule[r]->addSymbol(&Digit0);
 
-//	rule[r]->addSymbol(&DigitList);
+    rule[r]->addSymbol(&DigitList);
 	DigitList.addRule(rule[r]);
 
 	r=newRule();

@@ -61,6 +61,7 @@ double  Optimizer::localSearch(Data &x)
         solver->setGenomeLength(10 * myProblem->getDimension());
        double y=myProblem->funmin(x);
        solver->Solve(x,y);
+       y=myProblem->funmin(x);
        delete solver;
        return y;
     }

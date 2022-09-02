@@ -40,7 +40,7 @@ SOURCES += \
     optimizer.cpp \
     optimus.cpp \
     point.cpp \
-    population.cc \
+    grspopulation.cc \
     problem.cpp \
     program.cc \
     rlsprogram.cc \
@@ -68,7 +68,7 @@ HEADERS += \
     optimizer.h \
     optimus.h \
     point.h \
-    population.h \
+    grspopulation.h \
     problem.h \
     program.h \
     rlsprogram.h \

@@ -43,7 +43,7 @@ double	getf0()
 
 double	getff0()
 {
-	return 2.0;
+	return 10.0;
 }
 
 double	getf1()
@@ -63,7 +63,7 @@ double	dode1ff(double x,double y,double yy,double dy,double dyy)
 
 double	ode2ff(double x,double y,double yy,double yyy)
 {
-	return yyy-6*yy+9*y;
+	return yyy+100.0 *y;
 }
 
 double	dode2ff(double x,double y,double yy,double yyy,double dy,double dyy,double dyyy)

@@ -55,6 +55,7 @@ private:
     double RC;
     int localSearchCount;
     int   generation;
+    int		randomChromosome();
     virtual bool terminated();
     virtual void step();
     virtual void init();

@@ -67,7 +67,7 @@ SOURCES       = adam.cpp \
 		optimizer.cpp \
 		optimus.cpp \
 		point.cpp \
-		population.cc \
+		grspopulation.cc \
 		problem.cpp \
 		program.cc \
 		rlsprogram.cc \
@@ -91,7 +91,7 @@ OBJECTS       = adam.o \
 		optimizer.o \
 		optimus.o \
 		point.o \
-		population.o \
+		grspopulation.o \
 		problem.o \
 		program.o \
 		rlsprogram.o \
@@ -202,7 +202,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		optimizer.h \
 		optimus.h \
 		point.h \
-		population.h \
+		grspopulation.h \
 		problem.h \
 		program.h \
 		rlsprogram.h \
@@ -225,7 +225,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		optimizer.cpp \
 		optimus.cpp \
 		point.cpp \
-		population.cc \
+		grspopulation.cc \
 		problem.cpp \
 		program.cc \
 		rlsprogram.cc \
@@ -450,8 +450,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents Optimus_global.h adam.h collection.h dllproblem.h doublestack.h fparser.hh gradientdescent.h grs.h interval.h intervalproblem.h kmeans.h lbfgs.h nelderMead.h nelderMead_global.h optimizer.h optimus.h point.h population.h problem.h program.h rlsprogram.h rule.h symbol.h tolmin.h brent.h cluster.h $(DISTDIR)/
-	$(COPY_FILE) --parents adam.cpp collection.cc dllproblem.cpp doublestack.cc fparser.cc gradientdescent.cpp grs.cc interval.cpp intervalproblem.cpp kmeans.cpp lbfgs.cpp nelderMead.cpp optimizer.cpp optimus.cpp point.cpp population.cc problem.cpp program.cc rlsprogram.cc rule.cc symbol.cc tolmin.cc brent.cpp cluster.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents Optimus_global.h adam.h collection.h dllproblem.h doublestack.h fparser.hh gradientdescent.h grs.h interval.h intervalproblem.h kmeans.h lbfgs.h nelderMead.h nelderMead_global.h optimizer.h optimus.h point.h grspopulation.h problem.h program.h rlsprogram.h rule.h symbol.h tolmin.h brent.h cluster.h $(DISTDIR)/
+	$(COPY_FILE) --parents adam.cpp collection.cc dllproblem.cpp doublestack.cc fparser.cc gradientdescent.cpp grs.cc interval.cpp intervalproblem.cpp kmeans.cpp lbfgs.cpp nelderMead.cpp optimizer.cpp optimus.cpp point.cpp grspopulation.cc problem.cpp program.cc rlsprogram.cc rule.cc symbol.cc tolmin.cc brent.cpp cluster.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -538,6 +538,7 @@ grs.o: grs.cc grs.h \
 		rule.h \
 		doublestack.h \
 		fparser.hh \
+		grspopulation.h \
 		collection.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o grs.o grs.cc
 
@@ -584,6 +585,7 @@ optimizer.o: optimizer.cpp optimizer.h \
 		rule.h \
 		doublestack.h \
 		fparser.hh \
+		grspopulation.h \
 		collection.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o optimizer.o optimizer.cpp
 
@@ -594,12 +596,12 @@ optimus.o: optimus.cpp optimus.h \
 point.o: point.cpp point.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o point.o point.cpp
 
-population.o: population.cc population.h \
+grspopulation.o: grspopulation.cc grspopulation.h \
 		program.h \
 		symbol.h \
 		rule.h \
 		doublestack.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o population.o population.cc
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o grspopulation.o grspopulation.cc
 
 problem.o: problem.cpp problem.h \
 		intervalproblem.h \

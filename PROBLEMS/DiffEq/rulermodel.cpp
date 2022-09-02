@@ -90,12 +90,14 @@ double  RulerModel::evalSecondDeriv(Data &x,int pos)
     if(lastExpr.size()==0) return 1e+10;
     for(int i=0;i<dimension;i++)
     {
+        double v0 = eval(x);
+
         double eps=pow(1e-18,1.0/3.0)*rmax(1.0,fabs(x[i]));
         x[i]+=eps;
-        double v1=evalDeriv(x,pos);
+        double v1=eval(x);
         x[i]-=2.0 *eps;
-        double v2=evalDeriv(x,pos);
-        double g=(v1-v2)/(2.0 * eps);
+        double v2=eval(x);
+        double g=(v1-2*v0+v2)/(eps * eps);
         x[i]+=eps;
         if(i==pos) return g;
     }

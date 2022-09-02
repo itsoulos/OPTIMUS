@@ -145,6 +145,14 @@ Introduction
 Method description 
 \end_layout
 
+\begin_layout Subsection
+Modified genetic algorithm 
+\end_layout
+
+\begin_layout Subsection
+Modified PSO method
+\end_layout
+
 \begin_layout Section
 Experiments 
 \end_layout
@@ -371,8 +379,64 @@ with
 
 \end_layout
 
+\begin_layout Subsection
+Odes without analytic solution
+\end_layout
+
 \begin_layout Subsubsection*
-Odes without solution
+UNSOLODE1
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+y''+\frac{1}{x}y'-\frac{1}{x}\cos(x)=0
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $y(0)=0,\ y'(0)=1,\ x\in[0,1]$
+\end_inset
+
+.
+ The exact solution is given by
+\begin_inset Formula 
+\[
+y(x)=\int_{0}^{x}\frac{\sin(t)}{t}dt
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+UNSOLODE2
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+y''+2xy=0
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $y(0)=0,\ y'(0)=1,\ x\in[0,1]$
+\end_inset
+
+.
+ The exact solution is given by
+\begin_inset Formula 
+\[
+y(x)=\int_{0}^{x}\exp\left(-t^{2}\right)dt
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -481,6 +545,118 @@ with
 
 \begin_layout Subsection
 Pde cases
+\end_layout
+
+\begin_layout Subsubsection*
+PDE1 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\nabla^{2}\Psi(x,y)=\exp(-x)\left(x-2+y^{3}+6y\right)
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[0,1],\ y\in[0,1]$
+\end_inset
+
+ and boundary conditions: 
+\begin_inset Formula $\Psi(0,y)=y^{3},\ \Psi(1,y)=\left(1+y^{3}\right)\exp(-1),\ \Psi(x,0)=x\exp(-x),\ \Psi(x,1)=(x+1)\exp(-x)$
+\end_inset
+
+ The solution is given by: 
+\begin_inset Formula $\Psi(x,y)=\left(x+y^{3}\right)\exp(-x)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+PDE2 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\nabla^{2}\Psi(x,y)=-2\Psi(x,y)
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[0,1],\ y\in[0,1]$
+\end_inset
+
+ and boundary conditions: 
+\begin_inset Formula $\Psi(0,y)=0,\ \Psi(1,y)=\sin(1)\cos(y),\ \Psi(x,0)=\sin(x),\ \Psi(x,1)=\sin(x)\cos(1)$
+\end_inset
+
+.
+ The analytical solution is 
+\begin_inset Formula $\Psi(x,y)=\sin(x)\cos(y)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsubsection*
+PDE3 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\nabla^{2}\Psi(x,y)=4
+\]
+
+\end_inset
+
+ with 
+\begin_inset Formula $x\in[0,1],\ y\in[0,1]$
+\end_inset
+
+ and boundary conditions: 
+\begin_inset Formula $\Psi(0,y)=y^{2}+y+1,\ \Psi(1,y)=y^{2}+y+3,\ \Psi(x,0)=x^{2}+x+1,\ \Psi(x,1)=x^{2}+x+3$
+\end_inset
+
+.
+ The solution is: 
+\begin_inset Formula $\Psi(x,y)=x^{2}+y^{2}+x+y+1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection*
+PDE4
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\nabla^{2}\Psi(x,y)=\left(x-2\right)\exp(-x)+x\exp(-y)
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[0,1],\ y\in[0,1]$
+\end_inset
+
+ and boundary conditions: 
+\begin_inset Formula $\Psi(0,y)=0,\ \Psi(1,y)=\sin(y),\ \Psi(x,0)=0,\ \Psi(x,1)=\sin(x)$
+\end_inset
+
+.
+ The solution is: 
+\begin_inset Formula $\Psi(x,y)=\sin(xy)$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Section

@@ -19,6 +19,16 @@ Genetic::~Genetic()
 
 
 }
+
+
+int		Genetic::randomChromosome()
+{
+	double r = myProblem->randomDouble();
+	int pos = r * chromosome_count;
+	if(pos == chromosome_count) pos --;
+	return pos;
+}
+
 double     Genetic::fitness(Data &x)
 {
     if(!myProblem->isPointIn(x)) return 1e+100;
@@ -87,18 +97,17 @@ void    Genetic::calcFitnessArray()
     for(int i=0;i<chromosome_count;i++)
         randomNums<<myProblem->randomDouble();
 
-//#pragma omp parallel for reduction(+:RC)
 #pragma omp parallel for num_threads(threads)
     for(int i=0;i<chromosome_count;i++)
     {
 
         if(localsearch_rate>0 && ( randomNums[i]<=localsearch_rate))
         {
-            if(checkForGradientCriterion(chromosome[i]))
+            /*if(checkForGradientCriterion(chromosome[i]))
             {
                 fitness_array[i]=fitness(chromosome[i]);
                 continue;
-            }
+            }*/
             Data dg=chromosome[i];
             fitness_array[i]=localSearch(chromosome[i]);
 #pragma omp critical
@@ -158,7 +167,7 @@ void	Genetic::getTournamentElement(Data &x)
     int    max_index=-1;
         for(int j=0;j<tournament_size;j++)
         {
-        int r=rand() % (chromosome_count);
+        int r= randomChromosome();
                 if(j==0 || fitness_array[r]<max_fitness)
                 {
                         max_index=r;
@@ -383,13 +392,13 @@ void       Genetic::step()
     select();
     crossover();
     ++generation;
-
+/*
 	if(generation %10==0)
 	{
 		for(int i=0;i<20;i++)
 			randomSearch(rand() % chromosome.size());
 		select();
-	}
+	}*/
 }
 
 void       Genetic::init()

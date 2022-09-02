@@ -8,6 +8,7 @@ class NncModel : public DeModel
 private:
     NeuralProgram *program;
     int dimension;
+    bool lastError = false;
 public:
     NncModel(int d);
     virtual double eval(Data &x);

@@ -28,7 +28,7 @@ double	getx1()
 
 int	getkind()
 {
-	return 2;
+	return 3;
 }
 
 int	getnpoints()
@@ -48,7 +48,7 @@ double	getff0()
 
 double	getf1()
 {
-	return sin(10.0);
+	return sin(0.1)/exp(0.2);
 }
 
 double	ode1ff(double x,double y,double yy)
@@ -62,7 +62,7 @@ double	dode1ff(double x,double y,double yy,double dy,double dyy)
 
 double	ode2ff(double x,double y,double yy,double yyy)
 {
-	return yyy+100.0*y;
+	return yyy+yy/5.0+y+exp(-x/5)*cos(x)/5.0;
 }
 
 double	dode2ff(double x,double y,double yy,double yyy,double dy,double dyy,double dyyy)
