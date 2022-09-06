@@ -1,6 +1,7 @@
 #include "optimizer.h"
 # include <QStringList>
 # include <grs.h>
+# include <psolocal.h>
 Optimizer::Optimizer(Problem *p)
 {
     myProblem=p;
@@ -12,12 +13,35 @@ Optimizer::Optimizer(Problem *p)
     addParameter("adam_b2","0.999","The parameter b2 of Adam algorithm");
     addParameter("adam_rate","0.01","The learning rate for Adam algorithm");
     addParameter("adam_iterations","10000","The maximum number of iterations for Adam algorithm");
+    addParameter("psoLocal_particles","100","Number of particles for pso local");
+    addParameter("psoLocal_generations","50","Maximum number of iterations for pso local");
+    addParameter("psoLocal_r1","1.0","R1 param for pso local");
+    addParameter("psoLocal_r2","1.0","R2 parameter for pso local");
+    addParameter("psoLocal_theta","0.1","Theta percentage for pso local");
 }
 
 
 double  Optimizer::localSearch(Data &x)
 {
     QString method=params["localsearch_method"].toString();
+
+    if(method=="psoLocal")
+    {
+        int particles = params["psoLocal_particles"].toString().toInt();
+        double theta = params["psoLocal_theta"].toString().toDouble();
+        double r1 = params["psoLocal_r1"].toString().toDouble();
+        double r2 = params["psoLocal_r2"].toString().toDouble();
+        int generations = params["psoLocal_generations"].toString().toInt();
+        PsoLocal pso(myProblem,x,particles,theta);
+        pso.setR1(r1);
+        pso.setR2(r2);
+        pso.Solve(generations);
+        x=pso.gestBestParticle();
+        double y = myProblem->funmin(x);
+        return y;
+
+    }
+    else
     if(method=="bfgs")
     {
         Tolmin mt(myProblem);
@@ -162,9 +186,8 @@ double  Optimizer::localSearch(Data &x)
             iter++;
         if(termflag) break;
     }
-//    printf("Hill %lf -> %lf \n",oldmin,bestScore);
-   for(int i=0;i<x.size();i++)
-    x[i]=currentPoint[i];
+    //printf("Hill %lf -> %lf \n",oldmin,bestScore);
+   for(int i=0;i<x.size();i++) x[i]=currentPoint[i];
     return myProblem->funmin(x);
     }
 }

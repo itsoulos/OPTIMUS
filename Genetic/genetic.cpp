@@ -113,11 +113,12 @@ void    Genetic::calcFitnessArray()
 
         if(localsearch_rate>0 && ( randomNums[i]<=localsearch_rate))
         {
-            if(checkForGradientCriterion(chromosome[i]))
+            /*if(checkForGradientCriterion(chromosome[i]))
             {
                 fitness_array[i]=fitness(chromosome[i]);
+		if(i==0 || fitness_array[i]<dmin) dmin=fitness_array[i];
                 continue;
-            }
+            }*/
             Data dg=chromosome[i];
             double df = localSearch(dg);
             if(fabs(df) < fabs(fitness_array[i]) )
@@ -127,6 +128,7 @@ void    Genetic::calcFitnessArray()
             }
 #pragma omp critical
 {
+		if(i==0 || fitness_array[i]<dmin) dmin=fitness_array[i];
             RC+=getDistance(chromosome[i],dg);
             localSearchCount++;
             bool found=false;
@@ -147,6 +149,7 @@ void    Genetic::calcFitnessArray()
         else
         {
         fitness_array[i]=fitness(chromosome[i]);
+	if(fitness_array[i]<dmin) dmin=fitness_array[i];
         }
     }
 }

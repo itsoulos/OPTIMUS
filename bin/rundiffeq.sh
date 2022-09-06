@@ -1,20 +1,23 @@
-METHOD=Genetic
+METHOD=iPso
 METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then
 	METHODPARAMS="--minfinder_samples=50"
 elif [ $METHOD = "IntegerGenetic" ]
 then
-	METHODPARAMS="--integer_stoprule=stoponzero"	
+	METHODPARAMS="--integer_stoprule=stoponzero --integer_localsearchrate=0.01 --localsearch_method=nelderMead"	
 elif [ $METHOD = "gcrs" ]
 then
 	METHODPARAMS="--gcrs_samples=25 --gcrs_maxiterations=100000"	
+elif [ $METHOD = "DoubleGenetic" ]
+then
+	METHODPARAMS="--double_stoprule=stoponzero --double_localsearchrate=0.05 --localsearch_method=hill"	
 elif [ $METHOD = "Genetic" ]
 then
-	METHODPARAMS="--localsearch_rate=0.05  --genetic_crossover_type=double --chromosomes=500 --localsearch_method=bfgs --max_generations=2000 --genetic_stoprule=stoponzero"
+	METHODPARAMS="--localsearch_rate=0.01  --genetic_crossover_type=double --chromosome_count=500 --localsearch_method=bfgs --max_generations=2000 --genetic_stoprule=stoponzero "
 elif [ $METHOD = "Pso" ]
 then
-	METHODPARAMS="--pso_particles=500 --pso_localsearch_rate=0.005 --localsearch_method=bfgs --pso_generations=2000"
+	METHODPARAMS="--pso_particles=500 --pso_localsearch_rate=0.01 --localsearch_method=bfgs --pso_generations=2000 --localsearch_method=psoLocal"
 elif [ $METHOD = "iPso" ]
 then
 	METHODPARAMS="--ipso_particles=100 --ipso_maxgenerations=100 --ipso_localsearch_rate=0.05 --ipso_stoppingrule=best_fitness -ipso_gradientcheck=true --ipso_inertiatype=2"
@@ -29,10 +32,10 @@ then
 	METHODPARAMS="--mincenter_samples=600 --mincenter_centers=100 --mincenter_iterations=100"
 elif [ $METHOD = "gende" ]
 then
-	METHODPARAMS="--population_count=30 --max_generations=100"
+	METHODPARAMS="--population_count=200 --max_generations=200"
 fi
 
 PROBLEM=$1
-MPARAMS="--model=rbf --weights=10 --lambda=10 --npoints=50"
+MPARAMS="--model=mlp --weights=10 --lambda=100 --npoints=20"
 
-./OptimusApp --filename=../PROBLEMS/DiffEq/lib$PROBLEM.so $MPARAMS  --opt_method=$METHOD  $METHODPARAMS --threads=1 --iterations=10
+ ./OptimusApp --filename=../PROBLEMS/DiffEq/lib$PROBLEM.so $MPARAMS  --opt_method=$METHOD  $METHODPARAMS --threads=1 --iterations=10

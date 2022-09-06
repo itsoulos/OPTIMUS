@@ -22,8 +22,8 @@ bool GENDE::terminated()
 {
     bool ali = false;
     bool doubleboxflag = false;    
-    bool charilogis = false;
-    bool tsoulos =true; 
+    bool charilogis = true;
+    bool tsoulos =false; 
 
     int max_generations = params["max_generations"].toString().toInt();
 

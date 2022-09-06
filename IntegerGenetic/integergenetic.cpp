@@ -55,12 +55,12 @@ void    IntegerGenetic::step()
     calcFitnessArray();
     select();
     crossover();
-   if(generation %10==0)
+  /* if(generation %10==0)
     {
         for(int i=0;i<50;i++)
             randomSearch(rand() % chromosome.size());
         select();
-    }
+    }*/
     ++generation;
 }
 

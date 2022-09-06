@@ -4,30 +4,16 @@ then
 else
 	if qmake -v > /dev/null
 	then
+		methods=("Optimus" "Bfgs" "IntegerGenetic" "Genetic" "DoubleGenetic" "MinCenter" "Tmlsl" "GENDE" "GCRS" "DE" "Genmin" "Price" "Multistart" "Pso" "iPso" "PSearch" "Minfinder" "DAdam" "Search" )
 		(cd PROBLEMS; for file in *.pro; do  qmake $file; make clean; make; done)
 		(cd PROBLEMS/Feature; for file in *.pro; do  qmake $file; make clean; make; done)
 		(cd PROBLEMS/GenClass; for file in *.pro; do  qmake $file; make clean; make; done)
 		(cd PROBLEMS/DGenclass; for file in *.pro; do  qmake $file; make clean; make; done)
 		(cd PROBLEMS/NNC; for file in *.pro; do  qmake $file; make clean; make; done)
 		(cd PROBLEMS/RbfTest; for file in *.pro; do  qmake $file; make clean; make; done)
-		(cd Optimus; qmake; make clean; make install)
-		(cd Bfgs; qmake; make clean; make install )
-		(cd IntegerGenetic; qmake; make clean; make install )
-		(cd MinCenter; qmake; make clean; make install )
-		(cd Tmlsl; qmake; make clean; make install )
-		(cd GENDE; qmake; make clean; make install )
-		(cd GCRS; make ; make clean; make install )
-		(cd DE; make ; make clean; make install )
-		(cd Genmin; qmake; make clean; make install )
-		(cd Price; qmake; make clean; make install )
-		(cd Multistart; qmake; make clean; make install)
-		(cd Genetic; qmake; make clean; make install)
-		(cd Pso; qmake; make clean; make install)
-		(cd iPso; qmake; make clean; make install)
-		(cd PSearch; qmake; make clean; make install)
-		(cd Minfinder; qmake; make clean; make install)
-		(cd DAdam; qmake; make clean; make install)
-		(cd Search; qmake; make clean; make install)
+		for str in ${methods[@]}; do
+			(cd $str; qmake; make clean; make install )
+		done
 		(cd bin; qmake ; make clean; make)
 	else
 		echo "qmake is not present;"

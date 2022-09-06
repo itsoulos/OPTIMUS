@@ -43,6 +43,7 @@ SOURCES += \
     grspopulation.cc \
     problem.cpp \
     program.cc \
+    psolocal.cpp \
     rlsprogram.cc \
     rule.cc \
     symbol.cc \
@@ -71,6 +72,7 @@ HEADERS += \
     grspopulation.h \
     problem.h \
     program.h \
+    psolocal.h \
     rlsprogram.h \
     rule.h \
     symbol.h \
