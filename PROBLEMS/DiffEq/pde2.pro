@@ -23,7 +23,8 @@ SOURCES =pde2.cc \
     rbfmodel.cpp \
     rulercprogram.cpp \
     rulermodel.cpp \
-    sigprogram.cc
+    sigprogram.cc \
+    symbol.cc
 
 HEADERS += \
     converter.h \
@@ -43,4 +44,5 @@ HEADERS += \
     rbfmodel.h \
     rulercprogram.h \
     rulermodel.h \
-    sigprogram.h
+    sigprogram.h \
+    symbol.h

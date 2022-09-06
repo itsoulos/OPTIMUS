@@ -35,7 +35,7 @@ bool    IntegerGenetic::terminated()
 
      QString rule = params["integer_stoprule"].toString();
 
-     if(stopat<1e-8 && generation>=10) return true;
+     if(rule=="doublebox" && stopat<1e-8 && generation>=10) return true;
      printf("Genetic. Generation: %4d Fitness: %10.5lf Variance: %10.5lf Stopat: %10.5lf \n",
             generation,fitness_array[0],variance,stopat);
     if(rule == "doublebox")
@@ -55,7 +55,7 @@ void    IntegerGenetic::step()
     calcFitnessArray();
     select();
     crossover();
-  /* if(generation %10==0)
+ /*  if(generation %10==0)
     {
         for(int i=0;i<50;i++)
             randomSearch(rand() % chromosome.size());
@@ -78,7 +78,10 @@ IDATA   IntegerGenetic::toIDATA(Data x)
     IDATA tx;
     tx.resize(x.size());
     for(int i=0;i<(int)x.size();i++)
+    {
+
         tx[i]=(int)x[i];
+    }
     return tx;
 }
 
@@ -124,6 +127,7 @@ void    IntegerGenetic::calcFitnessArray()
         fitness_array[i]=myProblem->funmin(tx);
         if(rate>0 && myProblem->randomDouble()<rate)
         {
+
             double df=localSearch(tx);
             if(df<=fitness_array[i])
             {

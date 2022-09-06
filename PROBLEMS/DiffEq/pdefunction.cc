@@ -120,8 +120,10 @@ double	funmin(vector<double> &a)
         vector<int> ia;
         ia.resize(a.size());
         for(int i=0;i<(int)a.size();i++)
+        {
             ia[i]=(int)a[i];
-
+            if(ia[i]<0 || ia[i]>255) return 1e+100;
+        }
         ((NncModel *)demodel)->setChromosome(ia);
     }
     else
@@ -130,7 +132,10 @@ double	funmin(vector<double> &a)
         vector<int> ia;
         ia.resize(a.size());
         for(int i=0;i<(int)a.size();i++)
+        {
             ia[i]=(int)a[i];
+            if(ia[i]<0 || ia[i]>255) return 1e+100;
+        }
         ((GdfModel *)demodel)->setChromosome(ia);
     }
     else
@@ -139,7 +144,10 @@ double	funmin(vector<double> &a)
         vector<int> ia;
         ia.resize(a.size());
         for(int i=0;i<(int)a.size();i++)
+        {
             ia[i]=(int)a[i];
+            if(ia[i]<0 || ia[i]>255) return 1e+100;
+        }
         ((RulerModel *)demodel)->setChromosome(ia);
     }
     else
@@ -231,9 +239,13 @@ void	granal(vector<double> &x,vector<double> &g)
     {
         double eps=pow(1e-18,1.0/3.0)*pdemax(1.0,fabs(x[i]));
         x[i]+=eps;
-        double v1=funmin(x);
+        double v1=0;
+
+        v1=funmin(x);
         x[i]-=2.0 *eps;
-        double v2=funmin(x);
+        double v2=0;
+
+        v2=funmin(x);
         g[i]=(v1-v2)/(2.0 * eps);
         x[i]+=eps;
     }

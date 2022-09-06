@@ -159,7 +159,11 @@ double	funmin(vector<double> &a)
             vector<int> ia;
             ia.resize(suba.size());
             for(int k=0;k<(int)suba.size();k++)
+            {
                 ia[k]=(int)suba[k];
+                if(ia[k]<0 || ia[k]>255)
+                    return 1e+100;
+            }
             ((NncModel *)demodel[i])->setChromosome(ia);
         }
     }
@@ -176,7 +180,11 @@ double	funmin(vector<double> &a)
             vector<int> ia;
             ia.resize(suba.size());
             for(int k=0;k<(int)suba.size();k++)
+            {
                 ia[k]=(int)suba[k];
+                if(ia[k]<0 || ia[k]>255)
+                    return 1e+100;
+            }
             ((GdfModel *)demodel[i])->setChromosome(ia);
         }
     }
@@ -195,8 +203,8 @@ double	funmin(vector<double> &a)
             for(int k=0;k<(int)suba.size();k++)
             {
                 ia[k]=(int)suba[k];
-                if(ia[k]<0)
-                    printf("PROBLEM %d %lf \n",ia[k],suba[k]);
+                if(ia[k]<0 || ia[k]>255)
+                    return 1e+100;
             }
             ((RulerModel *)demodel[i])->setChromosome(ia);
         }

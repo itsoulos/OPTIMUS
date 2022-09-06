@@ -140,8 +140,10 @@ double	funmin(vector<double> &a)
         vector<int> ia;
         ia.resize(a.size());
         for(int i=0;i<(int)a.size();i++)
+        {
             ia[i]=(int)a[i];
-
+            if(ia[i]<0 || ia[i]>255) return 1e+100;
+        }
         ((NncModel *)demodel)->setChromosome(ia);
     }
     else
@@ -150,7 +152,10 @@ double	funmin(vector<double> &a)
         vector<int> ia;
         ia.resize(a.size());
         for(int i=0;i<(int)a.size();i++)
+        {
             ia[i]=(int)a[i];
+            if(ia[i]<0 || ia[i]>255) return 1e+100;
+        }
         ((GdfModel *)demodel)->setChromosome(ia);
     }
     else
@@ -159,7 +164,10 @@ double	funmin(vector<double> &a)
         vector<int> ia;
         ia.resize(a.size());
         for(int i=0;i<(int)a.size();i++)
+        {
             ia[i]=(int)a[i];
+            if(ia[i]<0 || ia[i]>255) return 1e+100;
+        }
         ((RulerModel *)demodel)->setChromosome(ia);
     }
     else

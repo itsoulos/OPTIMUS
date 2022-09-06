@@ -1,17 +1,17 @@
-METHOD=iPso
+METHOD=DoubleGenetic
 METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then
 	METHODPARAMS="--minfinder_samples=50"
 elif [ $METHOD = "IntegerGenetic" ]
 then
-	METHODPARAMS="--integer_stoprule=stoponzero --integer_localsearchrate=0.01 --localsearch_method=nelderMead"	
+	METHODPARAMS="--integer_stoprule=stoponzero --integer_localsearchrate=0.01 --localsearch_method=bfgs"	
 elif [ $METHOD = "gcrs" ]
 then
 	METHODPARAMS="--gcrs_samples=25 --gcrs_maxiterations=100000"	
 elif [ $METHOD = "DoubleGenetic" ]
 then
-	METHODPARAMS="--double_stoprule=stoponzero --double_localsearchrate=0.05 --localsearch_method=hill"	
+	METHODPARAMS="--double_stoprule=stoponzero --double_localsearchrate=0.05 --localsearch_method=bfgs"	
 elif [ $METHOD = "Genetic" ]
 then
 	METHODPARAMS="--localsearch_rate=0.01  --genetic_crossover_type=double --chromosome_count=500 --localsearch_method=bfgs --max_generations=2000 --genetic_stoprule=stoponzero "
@@ -38,4 +38,4 @@ fi
 PROBLEM=$1
 MPARAMS="--model=mlp --weights=10 --lambda=100 --npoints=20"
 
- ./OptimusApp --filename=../PROBLEMS/DiffEq/lib$PROBLEM.so $MPARAMS  --opt_method=$METHOD  $METHODPARAMS --threads=1 --iterations=10
+./OptimusApp --filename=../PROBLEMS/DiffEq/lib$PROBLEM.so $MPARAMS  --opt_method=$METHOD  $METHODPARAMS --threads=1 --iterations=10
