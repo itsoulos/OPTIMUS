@@ -189,18 +189,11 @@ double	funmin(vector<double> &a)
         if(kind==2 || kind==3)
         {
             dpx2 = demodel->evalSecondDeriv(xx,0);
-            if(isinf(dpx2) || isnan(dpx2) || fabs(dpx2)>=1e+8)
-                return 1e+100;
         }
 
-        if(isnan(px) || isinf(px) || isnan(dpx) || isinf(dpx))
-            return 1e+100;
-        if(fabs(px)>=1e+8 || fabs(dpx)>=1e+8)
-            return 1e+100;
 
 
       if(first) {p0=px;first=0;if(kind==2) pp0=dpx;}
-        else
       {
           double dv;
 
@@ -208,7 +201,6 @@ double	funmin(vector<double> &a)
                 dv = ode1ff(x,px,dpx);
           else
               dv = ode2ff(x,px,dpx,dpx2);
-          if(isinf(dv) || isnan(dv) || fabs(dv)>=1e+8) return 1e+100;
         sum = sum + dv * dv;
       }
       if(isnan(sum) || isinf(sum) || fabs(sum)>=1e+8) return 1e+100;
@@ -230,7 +222,7 @@ double	funmin(vector<double> &a)
 
 QJsonObject    done(vector<double> &x)
 {
-    funmin(x);
+    double dv = funmin(x);
     double testError = 0.0;
     double classError = 0.0;
      QJsonObject jxx;
@@ -242,9 +234,9 @@ QJsonObject    done(vector<double> &x)
         double px,dpx,dpx2;
         int kind = getkind();
 
-        for(double ax=getx0();ax<=getx1();ax+=(getx1()-getx0())/(2*npoints))
+        for(int ix=0;ix<=2*npoints;ix++)
         {
-            xx[0]=ax;
+            xx[0]=getx0()+ix*(getx1()-getx0())/(2*npoints);
             px = demodel->eval(xx);
             dpx = demodel->evalDeriv(xx,0);
             dpx2 = 0.0;
@@ -252,10 +244,9 @@ QJsonObject    done(vector<double> &x)
                dpx2 = demodel->evalSecondDeriv(xx,0);
 
            if(kind==1)
-           testError = testError + pow(ode1ff(ax,px,dpx),2.0);
+           testError = testError + pow(ode1ff(xx[0],px,dpx),2.0);
            else
-                testError=testError+pow(ode2ff(ax,px,dpx,dpx2),2.0);
-      //     printf("values: %lf %lf %lf %lf \n",ax,px,dpx,dpx2);
+                testError=testError+pow(ode2ff(xx[0],px,dpx,dpx2),2.0);
         }
         if(model == "gdf")
         {

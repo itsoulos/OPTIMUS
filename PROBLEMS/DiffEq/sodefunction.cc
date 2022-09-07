@@ -246,7 +246,7 @@ double	funmin(vector<double> &a)
             }
              if(first) res0[i]=px[i];
         }
-        systemfun(getnode(),x,px,dpx,res);
+        systemfun(getnode(),xx[0],px,dpx,res);
         for(int i=0;i<getnode();i++)
         {
             if(isnan(res[i]) || isinf(res[i]))

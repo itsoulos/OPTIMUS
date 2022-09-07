@@ -18,12 +18,12 @@ extern "C"
 
 double	getx0()
 {
-	return 1;
+	return 1.0;
 }
 
 double	getx1()
 {
-	return 2;
+	return 2.0;
 }
 
 int	getkind()
@@ -33,12 +33,12 @@ int	getkind()
 
 int	getnpoints()
 {
-	return 100;
+	return 50;
 }
 
 double	getf0()
 {
-	return 3;
+	return 3.0;
 }
 
 double	getff0()
@@ -53,20 +53,12 @@ double	getf1()
 
 double	ode1ff(double x,double y,double yy)
 {
-	return yy -(2*x-y)/x;
-}
-
-double	dode1ff(double x,double y,double yy,double dy,double dyy)
-{
-	return dyy+dy/x;
+	return yy-(2*x-y)/x;
 }
 
 double	ode2ff(double x,double y,double yy,double yyy)
 {
-}
-
-double	dode2ff(double x,double y,double yy,double yyy,double dy,double dyy,double dyyy)
-{
+	return yyy+100.0 * y;
 }
 
 }

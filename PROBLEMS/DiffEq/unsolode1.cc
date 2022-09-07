@@ -63,7 +63,7 @@ double	dode1ff(double x,double y,double yy,double dy,double dyy)
 
 double	ode2ff(double x,double y,double yy,double yyy)
 {
-	return yyy +yy/x-cos(x)/x;
+	return x*yyy +yy-cos(x);
 }
 
 double	dode2ff(double x,double y,double yy,double yyy,double dy,double dyy,double dyyy)
