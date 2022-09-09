@@ -125,7 +125,15 @@ University of Western Macedonia, Department of Engineering Informatics and
 \end_layout
 
 \begin_layout Abstract
-Write some abstract here
+The solution of differential equations finds many applications in a huge
+ range of problems, and many techniques have been developed to approximate
+ their solutions.
+ This manuscript presents a number of global optimization techniques that
+ have been successfully applied to train machine learning models to approximate
+ differential equation solutions.
+ These methods have been successfully applied to solving both ordinary different
+ial equations and systems of differential equations as well as partial different
+ial equations.
 \end_layout
 
 \begin_layout Standard
@@ -145,12 +153,990 @@ Introduction
 Method description 
 \end_layout
 
-\begin_layout Subsection
-Modified genetic algorithm 
+\begin_layout Standard
+In the current work two global optimization methods was incorporated to
+ handle differential equations and they are thouroughly presented in the
+ following subsections.
 \end_layout
 
 \begin_layout Subsection
-Modified PSO method
+Calculation of error
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Calculation-of-error"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Calculation for ODEs 
+\end_layout
+
+\begin_layout Standard
+The ODEs are defined as: 
+\begin_inset Formula 
+\begin{equation}
+\psi\left(x,y,y^{(1)},\ldots,y^{(n)}\right)=0,\ x\in[a,b]
+\end{equation}
+
+\end_inset
+
+with 
+\begin_inset Formula $y^{(i)}$
+\end_inset
+
+ the ith-order derivative of 
+\begin_inset Formula $y(x).$
+\end_inset
+
+ The corresponding conditions are: 
+\begin_inset Formula 
+\begin{equation}
+h_{i}\left(x,y,y^{(1)},\ldots,y^{(n)}\right)_{|x=t_{i}},i=1,\ldots,n
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $t_{i}$
+\end_inset
+
+ is either 
+\begin_inset Formula $a$
+\end_inset
+
+ or 
+\begin_inset Formula $b$
+\end_inset
+
+.
+ The calculation of the model error 
+\begin_inset Formula $f(r)$
+\end_inset
+
+ of a model 
+\begin_inset Formula $r$
+\end_inset
+
+ are the following:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Create
+\series default
+ 
+\begin_inset Formula $T=\left\{ x_{1}=a,x_{2},x_{3},\ldots,x_{N}=b\right\} $
+\end_inset
+
+ a set of equidistant points.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Calculate
+\series default
+ the error value 
+\begin_inset Formula $E_{r}=\sum_{i=1}^{N}\psi\left(x_{i},r\left(x_{i}\right),r^{(1)}\left(x_{i}\right),\ldots,r^{(n)}\left(x_{i}\right)\right)^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Calculate
+\series default
+ the penalty factor for the initial conditions: 
+\begin_inset Formula 
+\begin{equation}
+P_{r}=\lambda\sum_{k=1}^{n}h_{k}^{2}\left(x,r(x),r^{(1)}(x),\ldots,r^{(n)}(x)\right)_{|x=t_{k}}
+\end{equation}
+
+\end_inset
+
+, where 
+\begin_inset Formula $\lambda>0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Return
+\series default
+ 
+\begin_inset Formula $f(r)=E_{r}+P_{r}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Calculation for SODEs 
+\end_layout
+
+\begin_layout Standard
+The system of odes used in the current work is in in the form:
+\begin_inset Formula 
+\begin{equation}
+\left(\begin{array}{ccc}
+\psi_{1}\left(x,y_{1},y_{1}^{(1)},y_{2},y_{2}^{(1)},\ldots,y_{k},y_{k}^{(1)}\right) & = & 0\\
+\psi_{2}\left(x,y_{1},y_{1}^{(1)},y_{2},y_{2}^{(1)},\ldots,y_{k},y_{k}^{(1)}\right) & = & 0\\
+\vdots & \vdots & \vdots\\
+\psi_{k}\left(x,y_{1},y_{1}^{(1)},y_{2},y_{2}^{(1)},\ldots,y_{k},y_{k}^{(1)}\right) & = & 0
+\end{array}\right)
+\end{equation}
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[a,b]$
+\end_inset
+
+.
+ The initial conditions of the system are defined as the following vector:
+ 
+\begin_inset Formula 
+\begin{equation}
+\left(\begin{array}{ccc}
+y_{1}(a) & = & y_{1a}\\
+y_{2}(a) & = & y_{2a}\\
+\vdots & \vdots & \vdots\\
+y_{k}(a) & = & y_{ka}
+\end{array}\right)\label{eq:eqinit}
+\end{equation}
+
+\end_inset
+
+The fitness calculation 
+\begin_inset Formula $f(g)$
+\end_inset
+
+ for a given chromosome 
+\begin_inset Formula $g$
+\end_inset
+
+ has as follows:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Create
+\series default
+ 
+\begin_inset Formula $T=\left\{ x_{1}=a,x_{2},x_{3},\ldots,x_{N}=b\right\} $
+\end_inset
+
+ a set of equidistant points.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Split
+\series default
+ the chromosome 
+\begin_inset Formula $g$
+\end_inset
+
+ into 
+\begin_inset Formula $k$
+\end_inset
+
+ parts and create the corresponding RBF networks 
+\begin_inset Formula $r_{i}=r\left(g_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Calculate
+\series default
+ the errors: 
+\begin_inset Formula $E_{r_{i}}=\sum_{j=1}^{N}\left(\psi_{i}\left(x_{j},r_{1},r_{1}^{(1)},r_{2},r_{2}^{(1)},\ldots,r_{k},r_{k}^{(1)}\right)\right)^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Calculate
+\series default
+ the penalty values: 
+\begin_inset Formula $P_{r_{i}}=\lambda\left(r_{i}\left(a\right)-y_{ia}\right)^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Calculate
+\series default
+ the total fitness value: 
+\begin_inset Formula $f(g)=\sum_{i=1}^{k}\left(E_{r_{i}}+P_{r_{i}}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Calculation for PDEs
+\end_layout
+
+\begin_layout Subsection
+The used genetic algorithm 
+\end_layout
+
+\begin_layout Standard
+The main steps of the used genetic algorithm has as follows:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initialization
+\series default
+ step.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ as 
+\begin_inset Formula $N_{c}$
+\end_inset
+
+ the number of chromosomes that will participate.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ as 
+\begin_inset Formula $N_{g},$
+\end_inset
+
+the maximum number of allowed generations.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ as 
+\begin_inset Formula $p_{m}$
+\end_inset
+
+, the mutation rate.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ as 
+\begin_inset Formula $p_{s},$
+\end_inset
+
+ the selection rate.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ as 
+\begin_inset Formula $p_{l},$
+\end_inset
+
+ the local search rate.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ a small positive number, i.e 
+\begin_inset Formula $\epsilon=10^{-8}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Initialize randomly the chromosomes 
+\begin_inset Formula $x_{i},\ i=1,...,N_{c}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ iter=0
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Check
+\series default
+ for termination
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:Check-for-termination."
+
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Obtain
+\series default
+ the best fitness 
+\begin_inset Formula 
+\[
+f^{*}=\min_{i\in\left[0\ldots N_{c}\right]}f_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Terminate
+\series default
+ if 
+\begin_inset Formula $\mbox{iter}\ge N_{g}$
+\end_inset
+
+ OR 
+\begin_inset Formula $f^{*}\le\epsilon$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Calculate 
+\series default
+the fitness.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1,\ldots,N_{c}$
+\end_inset
+
+ 
+\series bold
+do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Create a neural network or a RBF network using as parameters the chromosome
+ 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ and denote this model as 
+\begin_inset Formula $m_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Calculate the fitness value 
+\begin_inset Formula $f_{i}=f\left(m_{i}\right)$
+\end_inset
+
+ using the error equations of subsection 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Calculation-of-error"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $r\le p_{l}$
+\end_inset
+
+, where 
+\begin_inset Formula $r\in[0,1]$
+\end_inset
+
+  local search rate apply local search
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Application
+\series default
+ of genetic operators.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Selection
+\series default
+ operation.
+ During selection, the chromosomes are classified according to their fitness.
+ The first
+\series bold
+ 
+\begin_inset Formula $\left(1-p_{s}\right)\times N_{c}$
+\end_inset
+
+
+\series default
+ are copied without changes to the next generation of the population.
+ The rest will be replaced by chromosomes that will be produced at the crossover.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Crossover
+\series default
+ operation.
+ In the crossover operation 
+\begin_inset Formula $p_{s}\times N_{c}$
+\end_inset
+
+ chromosomes are produced.
+ For every couple of produced offsrpings two parents 
+\begin_inset Formula $(z,w)$
+\end_inset
+
+ are selected using the well - known procedure of tournament selection.
+
+\series bold
+ 
+\series default
+For every pair 
+\begin_inset Formula $(z,w)$
+\end_inset
+
+ of parents, two offsprings 
+\begin_inset Formula $\tilde{z}$
+\end_inset
+
+ and 
+\begin_inset Formula $\tilde{w}$
+\end_inset
+
+ are produced according to the following equations:
+\series bold
+
+\begin_inset Formula 
+\begin{eqnarray}
+\tilde{z_{i}} & = & a_{i}z_{i}+\left(1-a_{i}\right)w_{i}\nonumber \\
+\tilde{w_{i}} & = & a_{i}w_{i}+\left(1-a_{i}\right)z_{i}\label{eq:crossover_ali-1}
+\end{eqnarray}
+
+\end_inset
+
+
+\series default
+where 
+\begin_inset Formula $a_{i}$
+\end_inset
+
+ is a random number with the property 
+\begin_inset Formula $a_{i}\in[-0.5,1.5]$
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kaeloali"
+literal "true"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Mutation
+\series default
+ operation.
+ For each element of every chromosome a random number 
+\begin_inset Formula $r\in\left[0,1\right]$
+\end_inset
+
+ is produced.
+ Subsequently we change randomly the corresponding element if 
+\begin_inset Formula $r\le p_{m}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ iter=iter+1
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Goto
+\series default
+ step 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:Check-for-termination."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+The used PSO method 
+\end_layout
+
+\begin_layout Standard
+The steps of the modified PSO method are the following:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initialization
+\series default
+.
+ 
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $\mbox{iter}=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ as 
+\begin_inset Formula $N_{c}$
+\end_inset
+
+ the number of particles.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ as 
+\begin_inset Formula $N_{g}$
+\end_inset
+
+ the maximum number of generations.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $p_{l}$
+\end_inset
+
+ the local search rate.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ a small positive number, i.e 
+\begin_inset Formula $\epsilon=10^{-8}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Randomly
+\series default
+ initialize the positions of the particles 
+\begin_inset Formula $x_{1},x_{2},...,x_{N_{c}}$
+\end_inset
+
+.
+ The size of each particle is defined as 
+\begin_inset Formula $n$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Randomly
+\series default
+ initialize the velocities of the particles 
+\begin_inset Formula $u_{1},u_{2},...,u_{N_{c}}$
+\end_inset
+
+ using the scheme
+\begin_inset Formula 
+\[
+u_{ij}=L_{j}+r\times\frac{R_{j}-L_{j}}{20},\ i=1,...,N_{c},\ j=1,..,n
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $r$
+\end_inset
+
+ is a random number with 
+\begin_inset Formula $r\in[0,1]$
+\end_inset
+
+, 
+\begin_inset Formula $R_{j}$
+\end_inset
+
+ is the lower bound for parameter 
+\begin_inset Formula $j$
+\end_inset
+
+ and 
+\begin_inset Formula $R_{j}$
+\end_inset
+
+ is the upper bound for parameter 
+\begin_inset Formula $j$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1..N_{c}$
+\end_inset
+
+ do 
+\begin_inset Formula $p_{i}=x_{i}$
+\end_inset
+
+, where 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ is the best located position for particle 
+\begin_inset Formula $i$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $p_{\mbox{best}}=\arg\min_{i\in1..N_{c}}f\left(x_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Termination Check
+\series default
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:Check-Termination."
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Obtain
+\series default
+ the best fitness 
+\begin_inset Formula 
+\[
+f^{*}=\min_{i\in\left[0\ldots N_{c}\right]}f_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Terminate
+\series default
+ if 
+\begin_inset Formula $\mbox{iter}\ge N_{g}$
+\end_inset
+
+ OR 
+\begin_inset Formula $f^{*}\le\epsilon$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1..N_{c}$
+\end_inset
+
+ 
+\series bold
+Do
+\series default
+
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Update the velocity 
+\begin_inset Formula $u_{i}$
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+u_{ij}=u_{ij}+r_{1}\times\left(p_{ij}-x_{ij}\right)+r_{2}\times\left(p_{\mbox{best},j}-x_{ij}\right),\ j=1,..,n
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Update the position 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ as 
+\begin_inset Formula $x_{i}=x_{i}+u_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Evaluate the fitness of the particle 
+\begin_inset Formula $i$
+\end_inset
+
+, 
+\begin_inset Formula $f\left(x_{i}\right)$
+\end_inset
+
+ ...
+ 
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $r\le p_{l}$
+\end_inset
+
+ apply local search ....
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $f\left(x_{i}\right)\le f\left(p_{i}\right)$
+\end_inset
+
+ then 
+\begin_inset Formula $p_{i}=x_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+End
+\series default
+ 
+\series bold
+For
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $p_{\mbox{best}}=\arg\min_{i\in1..m}f\left(x_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $\mbox{iter}=\mbox{iter}+1$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Goto
+\series default
+ Step 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:Check-Termination."
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -677,7 +1663,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Parameter settings.
+Parameter settings for the genetic algorithm.
 \begin_inset CommandInset label
 LatexCommand label
 name "tab:Parameter-settings."
@@ -695,7 +1681,7 @@ name "tab:Parameter-settings."
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="6" columns="2">
+<lyxtabular version="3" rows="8" columns="2">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -812,7 +1798,7 @@ VALUE
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -824,11 +1810,57 @@ VALUE
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 0.05
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\lambda$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+100.0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20
 \end_layout
 
 \end_inset
@@ -860,7 +1892,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Experimental results using the hybrid genetic algorithm and MLP.
+Experimental results using the hybrid genetic algorithm.
 \begin_inset CommandInset label
 LatexCommand label
 name "tab:genetic_results"
@@ -899,7 +1931,7 @@ EQUATION
 \begin_inset Text
 
 \begin_layout Plain Layout
-HILL
+MLP-GEN
 \end_layout
 
 \end_inset
@@ -908,7 +1940,7 @@ HILL
 \begin_inset Text
 
 \begin_layout Plain Layout
-PSOLOCAL
+RBF-GEN
 \end_layout
 
 \end_inset
@@ -917,7 +1949,7 @@ PSOLOCAL
 \begin_inset Text
 
 \begin_layout Plain Layout
-LBFGS
+MLP-PSO
 \end_layout
 
 \end_inset
@@ -926,7 +1958,7 @@ LBFGS
 \begin_inset Text
 
 \begin_layout Plain Layout
-BFGS
+RBF-PSO
 \end_layout
 
 \end_inset
@@ -937,8 +1969,6 @@ BFGS
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
 ODE1
 \end_layout
 
@@ -948,6 +1978,9 @@ ODE1
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $1.6\times10^{-3}$
+\end_inset
+
 
 \end_layout
 
@@ -957,6 +1990,9 @@ ODE1
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $1.7\times10^{-8}$
+\end_inset
+
 
 \end_layout
 
@@ -966,7 +2002,10 @@ ODE1
 \begin_inset Text
 
 \begin_layout Plain Layout
-1.72
+\begin_inset Formula $1.6\times10^{-3}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -975,7 +2014,10 @@ ODE1
 \begin_inset Text
 
 \begin_layout Plain Layout
-1.71
+\begin_inset Formula $2.1\times10^{-8}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -986,8 +2028,6 @@ ODE1
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
 ODE2
 \end_layout
 
@@ -997,6 +2037,9 @@ ODE2
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $1.3\times10^{-3}$
+\end_inset
+
 
 \end_layout
 
@@ -1006,6 +2049,9 @@ ODE2
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $1.3\times10^{-7}$
+\end_inset
+
 
 \end_layout
 
@@ -1015,7 +2061,10 @@ ODE2
 \begin_inset Text
 
 \begin_layout Plain Layout
-2.36
+\begin_inset Formula $2.2\times10^{-3}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1024,7 +2073,10 @@ ODE2
 \begin_inset Text
 
 \begin_layout Plain Layout
-2.25
+\begin_inset Formula $2.0\times10^{-8}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1044,6 +2096,9 @@ ODE3
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $1.6\times10^{-15}$
+\end_inset
+
 
 \end_layout
 
@@ -1053,6 +2108,9 @@ ODE3
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $1.3\times10^{-15}$
+\end_inset
+
 
 \end_layout
 
@@ -1062,7 +2120,7 @@ ODE3
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $7.9\times10^{-10}$
+\begin_inset Formula $6.5\times10^{-12}$
 \end_inset
 
 
@@ -1074,7 +2132,7 @@ ODE3
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $2.1\times10^{-10}$
+\begin_inset Formula $2.9\times10^{-10}$
 \end_inset
 
 
@@ -1097,6 +2155,9 @@ ODE4
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $1.8\times10^{-9}$
+\end_inset
+
 
 \end_layout
 
@@ -1106,6 +2167,9 @@ ODE4
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $1.7\times10^{-10}$
+\end_inset
+
 
 \end_layout
 
@@ -1115,7 +2179,10 @@ ODE4
 \begin_inset Text
 
 \begin_layout Plain Layout
-x
+\begin_inset Formula $4.4\times10^{-10}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1124,7 +2191,7 @@ x
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $9.0\times10^{-7}$
+\begin_inset Formula $5.7\times10^{-9}$
 \end_inset
 
 
@@ -1147,6 +2214,9 @@ ODE5
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $3.9\times10^{-5}$
+\end_inset
+
 
 \end_layout
 
@@ -1156,6 +2226,9 @@ ODE5
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $7.8\times10^{-2}$
+\end_inset
+
 
 \end_layout
 
@@ -1165,7 +2238,7 @@ ODE5
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $1.6\times10^{-7}$
+\begin_inset Formula $3.8\times10^{-10}$
 \end_inset
 
 
@@ -1177,7 +2250,7 @@ ODE5
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $4.1\times10^{-3}$
+\begin_inset Formula $5.4\times10^{-2}$
 \end_inset
 
 
@@ -1200,6 +2273,9 @@ NLODE1
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $1.3\times10^{-15}$
+\end_inset
+
 
 \end_layout
 
@@ -1209,6 +2285,9 @@ NLODE1
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $7.3\times10^{-10}$
+\end_inset
+
 
 \end_layout
 
@@ -1218,7 +2297,7 @@ NLODE1
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $2.3\times10^{-10}$
+\begin_inset Formula $1.9\times10^{-9}$
 \end_inset
 
 
@@ -1230,7 +2309,7 @@ NLODE1
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $1.3\times10^{-4}$
+\begin_inset Formula $7.7\times10^{-9}$
 \end_inset
 
 
@@ -1253,6 +2332,9 @@ NLODE2
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $2.7\times10^{-8}$
+\end_inset
+
 
 \end_layout
 
@@ -1262,6 +2344,9 @@ NLODE2
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $1.9\times10^{-10}$
+\end_inset
+
 
 \end_layout
 
@@ -1271,7 +2356,7 @@ NLODE2
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $5.5\times10^{-6}$
+\begin_inset Formula $7.8\times10^{-12}$
 \end_inset
 
 
@@ -1283,7 +2368,7 @@ NLODE2
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $7.6\times10^{-7}$
+\begin_inset Formula $2.5\times10^{-9}$
 \end_inset
 
 
@@ -1306,6 +2391,9 @@ NLODE3
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $3.5\times10^{-6}$
+\end_inset
+
 
 \end_layout
 
@@ -1315,6 +2403,9 @@ NLODE3
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $1.7\times10^{-8}$
+\end_inset
+
 
 \end_layout
 
@@ -1324,7 +2415,10 @@ NLODE3
 \begin_inset Text
 
 \begin_layout Plain Layout
-x
+\begin_inset Formula $1.7\times10^{-8}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1333,7 +2427,7 @@ x
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $3.9\times10^{-7}$
+\begin_inset Formula $3.4\times10^{-8}$
 \end_inset
 
 
@@ -1356,6 +2450,9 @@ NLODE4
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $4.5\times10^{-8}$
+\end_inset
+
 
 \end_layout
 
@@ -1365,6 +2462,9 @@ NLODE4
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $4.6\times10^{-9}$
+\end_inset
+
 
 \end_layout
 
@@ -1374,7 +2474,10 @@ NLODE4
 \begin_inset Text
 
 \begin_layout Plain Layout
-x
+\begin_inset Formula $3.4\times10^{-8}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1383,7 +2486,7 @@ x
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $2.4\times10^{-8}$
+\begin_inset Formula $4.7\times10^{-8}$
 \end_inset
 
 
@@ -1406,6 +2509,9 @@ UNSOLODE1
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $2.1\times10^{-10}$
+\end_inset
+
 
 \end_layout
 
@@ -1415,6 +2521,9 @@ UNSOLODE1
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $5.8\times10^{-11}$
+\end_inset
+
 
 \end_layout
 
@@ -1424,7 +2533,10 @@ UNSOLODE1
 \begin_inset Text
 
 \begin_layout Plain Layout
-x
+\begin_inset Formula $3.4\times10^{-12}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1433,7 +2545,7 @@ x
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $6.1\times10^{-10}$
+\begin_inset Formula $1.7\times10^{-8}$
 \end_inset
 
 
@@ -1456,6 +2568,9 @@ UNSOLODE2
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $1.2\times10^{-15}$
+\end_inset
+
 
 \end_layout
 
@@ -1465,6 +2580,9 @@ UNSOLODE2
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $1.8\times10^{-8}$
+\end_inset
+
 
 \end_layout
 
@@ -1474,7 +2592,7 @@ UNSOLODE2
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $3.3\times10^{-7}$
+\begin_inset Formula $1.3\times10^{-12}$
 \end_inset
 
 
@@ -1486,7 +2604,7 @@ UNSOLODE2
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $3.2\times10^{-2}$
+\begin_inset Formula $5.9\times10^{-8}$
 \end_inset
 
 
@@ -1509,6 +2627,9 @@ SODE1
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $1.6\times10^{-8}$
+\end_inset
+
 
 \end_layout
 
@@ -1518,6 +2639,9 @@ SODE1
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $1.6\times10^{-8}$
+\end_inset
+
 
 \end_layout
 
@@ -1527,7 +2651,10 @@ SODE1
 \begin_inset Text
 
 \begin_layout Plain Layout
-x
+\begin_inset Formula $1.1\times10^{-3}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1536,7 +2663,10 @@ x
 \begin_inset Text
 
 \begin_layout Plain Layout
-x
+\begin_inset Formula $1.4\times10^{-8}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1556,6 +2686,9 @@ SODE2
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $1.3\times10^{-9}$
+\end_inset
+
 
 \end_layout
 
@@ -1565,6 +2698,9 @@ SODE2
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $1.8\times10^{-8}$
+\end_inset
+
 
 \end_layout
 
@@ -1574,7 +2710,10 @@ SODE2
 \begin_inset Text
 
 \begin_layout Plain Layout
-x
+\begin_inset Formula $4.1\times10^{-7}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1583,7 +2722,7 @@ x
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $4.9\times10^{-8}$
+\begin_inset Formula $5.3\times10^{-9}$
 \end_inset
 
 
@@ -1606,6 +2745,9 @@ SODE3
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $1.4\times10^{-9}$
+\end_inset
+
 
 \end_layout
 
@@ -1615,6 +2757,9 @@ SODE3
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $6.7\times10^{-9}$
+\end_inset
+
 
 \end_layout
 
@@ -1624,7 +2769,10 @@ SODE3
 \begin_inset Text
 
 \begin_layout Plain Layout
-x
+\begin_inset Formula $1.63\times10^{-9}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1633,7 +2781,7 @@ x
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $4.1\times10^{-9}$
+\begin_inset Formula $7.7\times10^{-9}$
 \end_inset
 
 
@@ -1656,6 +2804,9 @@ SODE4
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $3.1\times10^{-3}$
+\end_inset
+
 
 \end_layout
 
@@ -1665,6 +2816,9 @@ SODE4
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $5.9\times10^{-9}$
+\end_inset
+
 
 \end_layout
 
@@ -1674,7 +2828,10 @@ SODE4
 \begin_inset Text
 
 \begin_layout Plain Layout
-x
+\begin_inset Formula $1.5\times10^{-4}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1683,7 +2840,10 @@ x
 \begin_inset Text
 
 \begin_layout Plain Layout
-x
+\begin_inset Formula $1.1\times10^{-8}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1703,25 +2863,28 @@ PDE1
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $6.7\times10^{-4}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1750,7 +2913,7 @@ PDE2
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+x
 \end_layout
 
 \end_inset
@@ -1768,6 +2931,9 @@ PDE2
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $3.5\times10^{-6}$
+\end_inset
+
 
 \end_layout
 
@@ -1777,7 +2943,10 @@ PDE2
 \begin_inset Text
 
 \begin_layout Plain Layout
-x
+\begin_inset Formula $4.1\times10^{-4}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1797,6 +2966,18 @@ PDE3
 \begin_inset Text
 
 \begin_layout Plain Layout
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2.1\times10^{-10}$
+\end_inset
+
 
 \end_layout
 
@@ -1806,15 +2987,9 @@ PDE3
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
+\begin_inset Formula $2.1\times10^{-4}$
 \end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
 
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -1824,7 +2999,10 @@ PDE3
 \begin_inset Text
 
 \begin_layout Plain Layout
-x
+\begin_inset Formula $1.8\times10^{-8}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1844,7 +3022,7 @@ PDE4
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+x
 \end_layout
 
 \end_inset
@@ -1862,6 +3040,9 @@ PDE4
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $1.7\times10^{-4}$
+\end_inset
+
 
 \end_layout
 
@@ -1891,6 +3072,25 @@ x
 
 \begin_layout Section
 Conclusions
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "kaeloali"
+literal "false"
+
+\end_inset
+
+P.
+ Kaelo, M.M.
+ Ali, Integrated crossover rules in real coded genetic algorithms, European
+ Journal of Operational Research 
+\series bold
+176
+\series default
+, pp.
+ 60-76, 2007.
 \end_layout
 
 \end_body

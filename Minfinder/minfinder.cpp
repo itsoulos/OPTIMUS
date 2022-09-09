@@ -7,6 +7,7 @@ Minfinder::Minfinder(Problem *p)
     addParameter("minfinder_iterations","200","Number of maximum iterations");
     addParameter("minfinder_epsilon","0.000001","Epsilon for comparisons");
     addParameter("minfinder_sampling","uniform","Sampling method: uniform,repulsion");
+    addParameter("minfinder_stoprule","doublebox","Available values doublebox,stoponzero");
 }
 
 
@@ -59,6 +60,8 @@ bool Minfinder::terminated()
         stopat=variance/2.0;
     }
 
+    QString stop = params["minfinder_stoprule"].toString();
+    if(stop == "stoponzero" && fabs(mbesty)<1e-8) return true;
     if(stopat<eps && iteration>=20) return true;
     printf("Iteration %d  Best value: %lf variance: %lf stopat: %lf starting: %.2lf%%\n",
            iteration,mbesty,variance,stopat,localSearchCount*100.0/sumOfSamples);
@@ -135,6 +138,7 @@ void Minfinder::step()
         Data tx=getSample();
         samplex.push_back(tx);
     }
+    QString stop = params["minfinder_stoprule"].toString();
 #pragma omp parallel for num_threads(threads)
     for(int i=0;i<samples;i++)
     {
@@ -145,6 +149,14 @@ void Minfinder::step()
 	    double y=localSearch(tx);
             RC+=getDistance(txold,tx);
             localSearchCount++;
+	if(stop == "stoponzero" && fabs(y)<1e-8){
+                minimax.push_back(tx);
+                minimay.push_back(y);
+		mbesty = y;
+                    bestIndex=minimax.size()-1;
+		   i=samples;
+		  continue; 
+	}
 #pragma omp critical
 {
             bool found=false;
