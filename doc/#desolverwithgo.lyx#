@@ -149,6 +149,44 @@ Keywords
 Introduction
 \end_layout
 
+\begin_layout Standard
+The solution ordinary differential equations (ODEs), systems of differential
+ equations (SODEs) and partial differential equations (PDEs) is commonly
+ used in many scientific fields such as physics 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_physics1,de_physics2"
+literal "false"
+
+\end_inset
+
+, chemistry 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_chem1,de_chem2,de_chem3"
+literal "false"
+
+\end_inset
+
+, economics 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_econ1,de_econ2"
+literal "false"
+
+\end_inset
+
+, biology 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_bio1,de_bio2"
+literal "false"
+
+\end_inset
+
+ etc.
+\end_layout
+
 \begin_layout Section
 Method description 
 \end_layout
@@ -316,15 +354,11 @@ y_{k}(a) & = & y_{ka}
 
 \end_inset
 
-The fitness calculation 
-\begin_inset Formula $f(g)$
+The error value for a set of models 
+\begin_inset Formula $r_{1},r_{2},...,r_{k}$
 \end_inset
 
- for a given chromosome 
-\begin_inset Formula $g$
-\end_inset
-
- has as follows:
+ is calulated using the following:
 \end_layout
 
 \begin_layout Enumerate
@@ -342,29 +376,20 @@ Create
 \begin_layout Enumerate
 
 \series bold
-Split
-\series default
- the chromosome 
-\begin_inset Formula $g$
+For every model 
+\begin_inset Formula $r_{i},\ i=1,..k$
 \end_inset
 
- into 
-\begin_inset Formula $k$
-\end_inset
-
- parts and create the corresponding RBF networks 
-\begin_inset Formula $r_{i}=r\left(g_{i}\right)$
-\end_inset
-
-
+ do
 \end_layout
 
+\begin_deeper
 \begin_layout Enumerate
 
 \series bold
 Calculate
 \series default
- the errors: 
+ the error value: 
 \begin_inset Formula $E_{r_{i}}=\sum_{j=1}^{N}\left(\psi_{i}\left(x_{j},r_{1},r_{1}^{(1)},r_{2},r_{2}^{(1)},\ldots,r_{k},r_{k}^{(1)}\right)\right)^{2}$
 \end_inset
 
@@ -376,8 +401,158 @@ Calculate
 \series bold
 Calculate
 \series default
- the penalty values: 
+ the corresponding penalty value: 
 \begin_inset Formula $P_{r_{i}}=\lambda\left(r_{i}\left(a\right)-y_{ia}\right)^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Calculate
+\series default
+ the total error value: 
+\begin_inset Formula $f(r)=\sum_{i=1}^{k}\left(E_{r_{i}}+P_{r_{i}}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Calculation for PDEs
+\end_layout
+
+\begin_layout Standard
+The partial differential equations solved and test in the curren work have
+ the following form:
+\begin_inset Formula 
+\begin{equation}
+h\left(x,y,\Psi(x,y),\frac{\partial}{\partial x}\Psi(x,y),\frac{\partial}{\partial y}\Psi(x,y),\frac{\partial^{2}}{\partial x^{2}}\Psi(x,y),\frac{\partial^{2}}{\partial y^{2}}\Psi(x,y)\right)=0
+\end{equation}
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[a,b],\ y\in[c,d]$
+\end_inset
+
+.
+ The boundary conditions considere in this manuscript are the Dirichlet
+ boundary conditions with the following form:
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\Psi(a,y)=f_{0}(y)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\Psi(b,y)=f_{1}(y)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\Psi(x,c)=g_{0}(x)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\Psi(x,d)=g_{1}(x)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The steps to calculate the fitness 
+\begin_inset Formula $f(g)$
+\end_inset
+
+ for any given chromosome are the following:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Define
+\series default
+ the set 
+\begin_inset Formula $T=\left\{ \left(x_{1},y_{1}\right),\left(x_{1},y_{2}\right),\ldots,\left(x_{N},y_{N}\right)\right\} $
+\end_inset
+
+ of 
+\begin_inset Formula $N\times N$
+\end_inset
+
+ points in 
+\begin_inset Formula $[a,b]\times[c,d]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Define
+\series default
+ the set 
+\begin_inset Formula $x_{B}=\left\{ x_{b1},x_{b2},\ldots,x_{bN}\right\} $
+\end_inset
+
+ equidistant points in 
+\begin_inset Formula $[a,b]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Define
+\series default
+ the set 
+\begin_inset Formula $y_{B}=\left\{ y_{b1},y_{b2},\ldots,y_{bN}\right\} $
+\end_inset
+
+equidistant points in 
+\begin_inset Formula $[c,d]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Calculate
+\series default
+ the error value 
+\begin_inset Formula $E_{r}$
+\end_inset
+
+ as 
+\begin_inset Formula 
+\[
+E_{r}=\sum_{i=1}^{N}h\left(x_{i},y_{i},r\left(x_{i},y_{i}\right),\frac{\partial}{\partial x}r\left(x_{i},y_{i}\right),\frac{\partial}{\partial y}r\left(x_{i},y_{i}\right)\right)^{2}
+\]
+
 \end_inset
 
 
@@ -388,15 +563,32 @@ Calculate
 \series bold
 Calculate
 \series default
- the total fitness value: 
-\begin_inset Formula $f(g)=\sum_{i=1}^{k}\left(E_{r_{i}}+P_{r_{i}}\right)$
+ the associated penalty values:
+\begin_inset Formula 
+\[
+\begin{array}{ccc}
+P_{1r} & = & \lambda\sum_{i=1}^{M}\left(r\left(a,y_{bi}\right)-f_{0}\left(y_{bi}\right)\right)^{2}\\
+P_{2r} & = & \lambda\sum_{i=1}^{M}\left(r\left(b,y_{bi}\right)-f_{1}\left(y_{bi}\right)\right)^{2}\\
+P_{3r} & = & \lambda\sum_{i=1}^{M}\left(r\left(x_{bi},c\right)-g_{0}\left(x_{bi}\right)\right)^{2}\\
+P_{4r} & = & \lambda\sum_{i=1}^{M}\left(r\left(x_{bi},d\right)-g_{1}\left(x_{bi}\right)\right)^{2}
+\end{array}
+\]
+
 \end_inset
 
 
 \end_layout
 
-\begin_layout Subsubsection
-Calculation for PDEs
+\begin_layout Enumerate
+
+\series bold
+Calculate
+\series default
+ the total fitness as 
+\begin_inset Formula $f(r)=E_{r}+P_{1r}+P_{2r}+P_{3r}+P_{4r}$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -584,8 +776,11 @@ do
 
 \begin_deeper
 \begin_layout Enumerate
-Create a neural network or a RBF network using as parameters the chromosome
- 
+
+\series bold
+Create
+\series default
+ a neural network or a RBF network using as parameters the chromosome 
 \begin_inset Formula $x_{i}$
 \end_inset
 
@@ -593,11 +788,24 @@ Create a neural network or a RBF network using as parameters the chromosome
 \begin_inset Formula $m_{i}$
 \end_inset
 
+.
+ For the case of SODEs the chromosome is divided into 
+\begin_inset Formula $k$
+\end_inset
 
+ parts (the number of ODEs in the system) and a model 
+\begin_inset Formula $m_{ij},\ j=1,..,k$
+\end_inset
+
+ is constructed for every equation.
 \end_layout
 
 \begin_layout Enumerate
-Calculate the fitness value 
+
+\series bold
+Calculate
+\series default
+ the fitness value 
 \begin_inset Formula $f_{i}=f\left(m_{i}\right)$
 \end_inset
 
@@ -615,7 +823,11 @@ noprefix "false"
 \end_layout
 
 \begin_layout Enumerate
-If 
+
+\series bold
+If
+\series default
+ 
 \begin_inset Formula $r\le p_{l}$
 \end_inset
 
@@ -623,7 +835,24 @@ If
 \begin_inset Formula $r\in[0,1]$
 \end_inset
 
-  local search rate apply local search
+ a random number, apply a local search procedure to the model 
+\begin_inset Formula $m_{i}$
+\end_inset
+
+ and locate a better value 
+\begin_inset Formula $f_{i}$
+\end_inset
+
+ for the fitness.
+ The used local search procedure is a BFGS method 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "powell"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \end_deeper
@@ -718,7 +947,7 @@ where
  
 \begin_inset CommandInset citation
 LatexCommand cite
-key "kaeloali"
+key "kaeloAli"
 literal "true"
 
 \end_inset
@@ -1057,23 +1286,39 @@ Update the position
 
 \begin_layout Enumerate
 Evaluate the fitness of the particle 
-\begin_inset Formula $i$
+\begin_inset Formula $x_{i}$
 \end_inset
 
-, 
-\begin_inset Formula $f\left(x_{i}\right)$
-\end_inset
-
- ...
+ using the same scheme as for the genetic algorithm.
  
 \end_layout
 
 \begin_layout Enumerate
-If 
+
+\series bold
+If
+\series default
+ 
 \begin_inset Formula $r\le p_{l}$
 \end_inset
 
- apply local search ....
+, where 
+\begin_inset Formula $r\in[0,1]$
+\end_inset
+
+ a random number, apply a local search procedure to the model 
+\begin_inset Formula $m_{i}$
+\end_inset
+
+ and locate a better value 
+\begin_inset Formula $f_{i}$
+\end_inset
+
+ for the fitness of particle 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Enumerate
@@ -1141,6 +1386,20 @@ reference "enu:Check-Termination."
 
 \begin_layout Section
 Experiments 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+A series of test functions used in various research papers 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_nn1,de_tsoulos"
+literal "false"
+
+\end_inset
+
+ have been used here for testing purposes.
 \end_layout
 
 \begin_layout Subsection
@@ -2863,7 +3122,10 @@ PDE1
 \begin_inset Text
 
 \begin_layout Plain Layout
-x
+\begin_inset Formula $8.1\times10^{-3}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2872,6 +3134,9 @@ x
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $5.5\times10^{-2}$
+\end_inset
+
 
 \end_layout
 
@@ -2893,7 +3158,10 @@ x
 \begin_inset Text
 
 \begin_layout Plain Layout
-x
+\begin_inset Formula $5.9\times10^{-3}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2913,7 +3181,10 @@ PDE2
 \begin_inset Text
 
 \begin_layout Plain Layout
-x
+\begin_inset Formula $7.6\times10^{-5}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2922,6 +3193,9 @@ x
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $9.7\times10^{-3}$
+\end_inset
+
 
 \end_layout
 
@@ -2966,7 +3240,10 @@ PDE3
 \begin_inset Text
 
 \begin_layout Plain Layout
-x
+\begin_inset Formula $2.1\times10^{-4}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -3022,7 +3299,10 @@ PDE4
 \begin_inset Text
 
 \begin_layout Plain Layout
-x
+\begin_inset Formula $5.6\times10^{-4}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -3031,6 +3311,9 @@ x
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $3.6\times10^{-3}$
+\end_inset
+
 
 \end_layout
 
@@ -3052,7 +3335,10 @@ x
 \begin_inset Text
 
 \begin_layout Plain Layout
-x
+\begin_inset Formula $1.9\times10^{-4}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -3077,7 +3363,116 @@ Conclusions
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
-key "kaeloali"
+key "de_physics1"
+literal "false"
+
+\end_inset
+
+M.
+ Raissi, G.E.
+ Karniadakis, Hidden physics models: Machine learning of nonlinear partial
+ differential equations, Journal of Computational Physics 
+\series bold
+357
+\series default
+, pp.
+ 125-141, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_physics2"
+literal "false"
+
+\end_inset
+
+T.
+ Lelièvre, G.
+ Stoltz, Partial differential equations and stochastic methods in molecular
+ dynamics.
+ Acta Numerica 
+\series bold
+25
+\series default
+, pp.
+ 681-880, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_physics3"
+literal "false"
+
+\end_inset
+
+xx
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_nn1"
+literal "false"
+
+\end_inset
+
+I.
+ E.
+ Lagaris, A.
+ Likas, D.
+ I.
+ Fotiadis, Artificial neural networks for solving ordinary and partial different
+ial equations, IEEE Transactions on Neural Networks 
+\series bold
+9
+\series default
+, pp.
+ 987-1000, 1998.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_tsoulos"
+literal "true"
+
+\end_inset
+
+I.G.
+ Tsoulos, I.E.
+ Lagaris, Solving differential equations with genetic programming.
+ Genet Program Evolvable Mach 
+\series bold
+7
+\series default
+, pp.
+ 33–54, 2006.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "powell"
+literal "false"
+
+\end_inset
+
+M.J.D Powell, A Tolerant Algorithm for Linearly Constrained Optimization Calculati
+ons, Mathematical Programming 
+\series bold
+45
+\series default
+, pp.
+ 547-566, 1989.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "kaeloAli"
 literal "false"
 
 \end_inset

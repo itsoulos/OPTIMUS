@@ -1,18 +1,18 @@
 #!/bin/bash
-DATAPATH=/home/sheridan/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfolding/
+DATAPATH=/home/sheridan/Desktop/ERGASIES/WEKA/CON/
 NODES=10
 
-METHOD=Pso
+METHOD=Genetic
 METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then
 	METHODPARAMS="--minfinder_samples=25 --minfinder_sampling=repulsion"
 elif [ $METHOD = "Genetic" ]
 then
-	METHODPARAMS="--localsearch_rate=0.5 --localsearch_method=bfgs --max_generations=200 --chromosome_count=500"
+	METHODPARAMS="--localsearch_rate=0.001 --localsearch_method=bfgs --max_generations=200 --chromosome_count=500"
 elif [ $METHOD = "Pso" ]
 then
-	METHODPARAMS="--pso_localsearch_rate=0.00"
+	METHODPARAMS="--pso_localsearch_rate=0.01"
 elif [ $METHOD = "Multistart" ]
 then
 	METHODPARAMS=="--multistart_samples=25"

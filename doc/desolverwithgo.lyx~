@@ -101,7 +101,7 @@ Corresponding author.
 \end_inset
 
 , Dimitrios Tsalikakis
-\begin_inset Formula $^{(1)}$
+\begin_inset Formula $^{(2)}$
 \end_inset
 
 
@@ -131,9 +131,9 @@ The solution of differential equations finds many applications in a huge
  This manuscript presents a number of global optimization techniques that
  have been successfully applied to train machine learning models to approximate
  differential equation solutions.
- These methods have been successfully applied to solving both ordinary different
-ial equations and systems of differential equations as well as partial different
-ial equations.
+ These methods have been successfully applied to solving ordinary differential
+ equations and systems of differential equations as well as partial differential
+ equations with Dirichlet boundary conditions.
 \end_layout
 
 \begin_layout Standard
@@ -149,14 +149,500 @@ Keywords
 Introduction
 \end_layout
 
-\begin_layout Section
-Method description 
+\begin_layout Standard
+The solution ordinary differential equations (ODEs), systems of differential
+ equations (SODEs) and partial differential equations (PDEs) is commonly
+ used in many scientific fields such as physics 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_physics1,de_physics2"
+literal "false"
+
+\end_inset
+
+, chemistry 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_chem1,de_chem2,de_chem3"
+literal "false"
+
+\end_inset
+
+, economics 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_econ1,de_econ2"
+literal "false"
+
+\end_inset
+
+, biology 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_bio1,de_bio2"
+literal "false"
+
+\end_inset
+
+ etc.
+ It is obvious that the numerical solution of differential equations has
+ positive effects in many scientific areas and for this reason many techniques
+ have been proposed in the modern literature.
+ These methods can inclue the well - known Runge Kutta methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_rk1,de_rk2,de_rk3"
+literal "false"
+
+\end_inset
+
+, wavelet transformations 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_wave1,de_wave2,de_wave3"
+literal "false"
+
+\end_inset
+
+, predictor - corrector variations 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_pred1,de_pred2"
+literal "false"
+
+\end_inset
+
+, methods that incorporate artificial neural networks 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "neural1,neural2"
+literal "false"
+
+\end_inset
+
+ to solve differential equations 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_nn1,de_nn2,de_nn3"
+literal "false"
+
+\end_inset
+
+, finite element methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_finite1,de_finite2"
+literal "false"
+
+\end_inset
+
+ etc.
+ Also, recently a novell method based on Grammatical Evolution 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ge_main"
+literal "false"
+
+\end_inset
+
+ has been proposed to tackle differential equations in closed analytical
+ form by Tsoulos and Lagaris 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_tsoulos"
+literal "true"
+
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Standard
-In the current work two global optimization methods was incorporated to
- handle differential equations and they are thouroughly presented in the
- following subsections.
+In this work, the differential equations to be solved are presented as machine
+ learning models and the solution of the corresponding equation is reduced
+ to a global optimization problem, where the task is to locate the global
+ minimum of a multidimensional function 
+\begin_inset Formula $f(x):\ S\subset R^{n}\rightarrow R$
+\end_inset
+
+ with 
+\begin_inset Formula $x_{i}\ \in\left[L_{i},R_{i}\right],\ i=1..n$
+\end_inset
+
+.
+ The value of 
+\begin_inset Formula $n$
+\end_inset
+
+ is the amount of parameters in the corresponding machine learning model,
+ for example the number of weights and biases in some artificial neural
+ network.
+ The vector 
+\begin_inset Formula $L$
+\end_inset
+
+ is considered as the lower bound of the parameter 
+\begin_inset Formula $x$
+\end_inset
+
+ and and the vector 
+\begin_inset Formula $R$
+\end_inset
+
+ as the upper bound.
+ Machine learning models have been used a lot in solving differential equations,
+ for example the use of SVM techniques 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_svm1,de_svm2"
+literal "false"
+
+\end_inset
+
+, the incorporation of deep learning methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_deep1,de_deep2"
+literal "false"
+
+\end_inset
+
+, constructed neural networks 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_nnc"
+literal "false"
+
+\end_inset
+
+ etc.
+ In the current work two machine learning models was tested: artificial
+ neural networks and Radial Basis Function networks (RBF) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "RbfMain"
+literal "false"
+
+\end_inset
+
+.
+ The parameters in these machine learning models were trained using modified
+ versions of two well-known global optimization techniques: Genetic Algorithms
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ga1,ga2,ga3"
+literal "false"
+
+\end_inset
+
+ and the PSO method 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pso1,pso2"
+literal "false"
+
+\end_inset
+
+.
+ These models have been successfully used to solve ordinary differential
+ equation, systems of differential equations as well as partial differential
+ equations with Dirichlet boundary conditions.
+\end_layout
+
+\begin_layout Standard
+The rest of this article is organized as follows: in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Method-description"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ the used models and the proposed modified global optimization techniques
+ are outlined in detail, in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Experiments"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ the differential equations used in the experiments are listed as well as
+ the experimental results and finally in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Conclusions"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ some conclusions about the used methods are presented.
+\end_layout
+
+\begin_layout Section
+Method description 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Method-description"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+The neural network model 
+\end_layout
+
+\begin_layout Standard
+Artificial neural networks are parametric mathematical models used in many
+ scientfic areas with great importance such as physics 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nnphysics1,nnphysics2,nnphysics3"
+literal "false"
+
+\end_inset
+
+, chemistry 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nnchem1,nnchem2,nnchem3"
+literal "false"
+
+\end_inset
+
+, medicine 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nnmed1,nnmed2"
+literal "false"
+
+\end_inset
+
+ etc.
+ A neural network can be modelled as a function 
+\begin_inset Formula $N(\overrightarrow{x},\overrightarrow{w})$
+\end_inset
+
+, where the vector 
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+ is called the the input vector or pattern and 
+\begin_inset Formula $\overrightarrow{w}$
+\end_inset
+
+ is called the weight vector.
+ A method that trains a neural network should be used to estimate the vector
+ 
+\begin_inset Formula $\overrightarrow{w}$
+\end_inset
+
+ for a certain problem.
+ The optimization technique minimizes the following quantity:
+\begin_inset Formula 
+\begin{equation}
+E\left(N\left(\overrightarrow{x},\overrightarrow{w}\right)\right)=\sum_{i=1}^{M}\left(N\left(\overrightarrow{x}_{i},\overrightarrow{w}\right)-y_{i}\right)^{2}\label{eq:eq1}
+\end{equation}
+
+\end_inset
+
+In equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eq1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ (commonly addressed also as error function), the value 
+\begin_inset Formula $y_{i}$
+\end_inset
+
+ denotes actual output for the point 
+\begin_inset Formula $\overrightarrow{x_{i}}$
+\end_inset
+
+ .
+ The form for the neural network is the same as in the case of 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nnc"
+literal "false"
+
+\end_inset
+
+.
+ Let us have a neural network with one processing layer and the output of
+ each processing unit is given by:
+\begin_inset Formula 
+\begin{equation}
+o_{i}(x)=\sigma\left(p_{i}^{T}x+\theta_{i}\right),\label{eq:eq1-1}
+\end{equation}
+
+\end_inset
+
+with 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ the weight vector and 
+\begin_inset Formula $\theta_{i}$
+\end_inset
+
+ is the bias for the processeing unit 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ The function 
+\begin_inset Formula $\sigma(x)$
+\end_inset
+
+ is well - known sigmoid function and it is given by: 
+\begin_inset Formula 
+\begin{equation}
+\sigma(x)=\frac{1}{1+\exp(-x)}\label{eq:sig}
+\end{equation}
+
+\end_inset
+
+If the neural network has 
+\begin_inset Formula $H$
+\end_inset
+
+ hidden nodes, then the output of the entire network is given by:
+\begin_inset Formula 
+\begin{equation}
+N(x)=\sum_{i=1}^{H}v_{i}o_{i}(x),\label{eq:eq1-2}
+\end{equation}
+
+\end_inset
+
+with 
+\begin_inset Formula $v_{i}$
+\end_inset
+
+ being the output weight for the processing node 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ Therefore, if a single vector is used for both weights and biases we will
+ have the following form for the artificial neural network:
+\begin_inset Formula 
+\begin{equation}
+N\left(\overrightarrow{x},\overrightarrow{w}\right)=\sum_{i=1}^{H}w_{(d+2)i-(d+1)}\sigma\left(\sum_{j=1}^{d}x_{j}w_{(d+2)i-(d+1)+j}+w_{(d+2)i}\right)\label{eq:nn}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $d$
+\end_inset
+
+ is the dimension of vector 
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsection
+The RBF model
+\end_layout
+
+\begin_layout Standard
+An RBF network has also a lot of applications 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rbfphysics1,rbfchemistry1,rbfmed1"
+literal "false"
+
+\end_inset
+
+ and it is denoted as a function 
+\begin_inset Formula $r(x)$
+\end_inset
+
+:
+\series bold
+
+\begin_inset Formula 
+\begin{equation}
+r(x)=\sum_{i=1}^{k}w_{i}\phi\left(\left\Vert x-c_{i}\right\Vert \right)\label{eq:firstrbf}
+\end{equation}
+
+\end_inset
+
+
+\series default
+with 
+\series bold
+
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+ 
+\series default
+being the input vector and the vector
+\series bold
+ 
+\begin_inset Formula $\overrightarrow{w}$
+\end_inset
+
+ 
+\series default
+is considered as the weight vector.
+ The function 
+\begin_inset Formula $\phi(x)$
+\end_inset
+
+ used here is the following Gaussian function:
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\begin_inset Formula 
+\begin{equation}
+\phi(x)=\exp\left(-\frac{\left(x-c\right)^{2}}{\sigma^{2}}\right)
+\end{equation}
+
+\end_inset
+
+
+\series default
+The function 
+\begin_inset Formula $\phi(x)$
+\end_inset
+
+ has the property that its valued depends on the distance between the vectors
+\series bold
+ 
+\begin_inset Formula $\overrightarrow{x},\ $
+\end_inset
+
+
+\begin_inset Formula $\overrightarrow{c}$
+\end_inset
+
+
+\series default
+.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -168,6 +654,13 @@ name "subsec:Calculation-of-error"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+This subsection details the calculation of the error of the machine learning
+ models for each differential equation case.
+ In each equation case the initial or boundary conditions are imposed using
+ penalty factors.
 \end_layout
 
 \begin_layout Subsubsection
@@ -555,6 +1048,49 @@ Calculate
 
 \begin_layout Subsection
 The used genetic algorithm 
+\end_layout
+
+\begin_layout Standard
+The Genetic Algorithm is an global optimization technique inspired by biology
+ and it includes a series of genetic operations such as selection, crossover
+ and mutation.
+ This method initiates by creating a population of candidate solutions,
+ called also chromosomes and subsquently these solutions are evolved through
+ the application of the genetic opeations.
+ The method has been applied with success in a variety of research problems
+ such as electromangnetics 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "gen_app1"
+literal "false"
+
+\end_inset
+
+, combinatorial problems 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "gen_app2"
+literal "false"
+
+\end_inset
+
+,
+\series bold
+ 
+\series default
+design of water distribution networks 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "gen_app3"
+literal "false"
+
+\end_inset
+
+ etc In this work, a hybrid form of genetic algorithm is presented, where
+ a local minimization method is periodically applied to a subset of the
+ genetic algorithm's chromosomes.
+ Furthermore, the termination rule has taken into account the nature of
+ the problem.
 \end_layout
 
 \begin_layout Standard
@@ -968,6 +1504,25 @@ The used PSO method
 \end_layout
 
 \begin_layout Standard
+The method PSO is a stochastic global optimization method and is based on
+ a population of candidate solutions (particles) that move to search for
+ the global minimum at some speed that is constantly changing.
+ The speed of each solution is affected by the best position in which the
+ specific particle has been found so far, but also by the overall best position
+ of the swarm of particles.The PSO method has been applied on a wide range
+ of applications 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pso_app1,pso_app2,pso_app3,pso_app4"
+literal "true"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
 The steps of the modified PSO method are the following:
 \end_layout
 
@@ -1348,9 +1903,18 @@ reference "enu:Check-Termination."
 
 \begin_layout Section
 Experiments 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Experiments"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
+
+\series bold
 A series of test functions used in various research papers 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1866,6 +2430,10 @@ with
 
 \begin_layout Subsection
 Experimental results
+\end_layout
+
+\begin_layout Standard
+Anafora sto OPTIMUS edo
 \end_layout
 
 \begin_layout Standard
@@ -3082,7 +3650,10 @@ PDE1
 \begin_inset Text
 
 \begin_layout Plain Layout
-x
+\begin_inset Formula $8.1\times10^{-3}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -3091,6 +3662,9 @@ x
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $5.5\times10^{-2}$
+\end_inset
+
 
 \end_layout
 
@@ -3112,7 +3686,10 @@ x
 \begin_inset Text
 
 \begin_layout Plain Layout
-x
+\begin_inset Formula $5.9\times10^{-3}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -3132,7 +3709,10 @@ PDE2
 \begin_inset Text
 
 \begin_layout Plain Layout
-x
+\begin_inset Formula $7.6\times10^{-5}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -3141,6 +3721,9 @@ x
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $9.7\times10^{-3}$
+\end_inset
+
 
 \end_layout
 
@@ -3185,7 +3768,10 @@ PDE3
 \begin_inset Text
 
 \begin_layout Plain Layout
-x
+\begin_inset Formula $2.1\times10^{-4}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -3241,7 +3827,10 @@ PDE4
 \begin_inset Text
 
 \begin_layout Plain Layout
-x
+\begin_inset Formula $5.6\times10^{-4}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -3250,6 +3839,9 @@ x
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $3.6\times10^{-3}$
+\end_inset
+
 
 \end_layout
 
@@ -3271,7 +3863,10 @@ x
 \begin_inset Text
 
 \begin_layout Plain Layout
-x
+\begin_inset Formula $1.9\times10^{-4}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -3290,7 +3885,368 @@ x
 \end_layout
 
 \begin_layout Section
-Conclusions
+Conclusions 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Conclusions"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_physics1"
+literal "false"
+
+\end_inset
+
+M.
+ Raissi, G.E.
+ Karniadakis, Hidden physics models: Machine learning of nonlinear partial
+ differential equations, Journal of Computational Physics 
+\series bold
+357
+\series default
+, pp.
+ 125-141, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_physics2"
+literal "false"
+
+\end_inset
+
+T.
+ Lelièvre, G.
+ Stoltz, Partial differential equations and stochastic methods in molecular
+ dynamics.
+ Acta Numerica 
+\series bold
+25
+\series default
+, pp.
+ 681-880, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_chem1"
+literal "false"
+
+\end_inset
+
+G.
+ Scholz, F.
+ Scholz, First-order differential equations in chemistry, ChemTexts 
+\series bold
+1
+\series default
+, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_chem2"
+literal "false"
+
+\end_inset
+
+J.L.
+ Padgett, Y.
+ Geldiyev, S.
+ Gautam, W.
+ Peng, Y.
+ Mechref, A.
+ Ibraguimov, Object classification in analytical chemistry via data-driven
+ discovery of partial differential equations.
+ Comp and Math Methods, 2021.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_chem3"
+literal "false"
+
+\end_inset
+
+O.
+ Owoyele, P.
+ Pal, ChemNODE: A neural ordinary differential equations framework for efficient
+ chemical kinetic solvers, Energy and AI 
+\series bold
+7
+\series default
+, 2022.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_econ1"
+literal "false"
+
+\end_inset
+
+Z.
+ Wang, X.
+ Huang, H.
+ Shen, Control of an uncertain fractional order economic system via adaptive
+ sliding mode, Neurocomputing 
+\series bold
+83
+\series default
+, pp.
+ 83-88, 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_econ2"
+literal "false"
+
+\end_inset
+
+Y.
+ Achdou, F.J.
+ Buera, J.M.
+ Lasry, P.L.
+ Lions, B.
+ Moll, Partial differential equation models in macroeconomicsPhil.
+ Trans.
+ R.
+ Soc.
+ A.
+ 
+\series bold
+372
+\series default
+, 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_bio1"
+literal "false"
+
+\end_inset
+
+K.
+ Hattaf, N.
+ Yousfi, Global stability for reaction–diffusion equations in biology, Computers
+ & Mathematics with Applications 
+\series bold
+66
+\series default
+, pp.
+ 1488-1497, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_bio2"
+literal "false"
+
+\end_inset
+
+P.
+ Getto, M.
+ Waurick, A differential equation with state-dependent delay from cell populatio
+n biology, Journal of Differential Equations 
+\series bold
+260
+\series default
+, pp.
+ 6176-6200, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_rk1"
+literal "false"
+
+\end_inset
+
+C.A.
+ Kennedy, M.H.
+ Carpenter, Higher-order additive Runge–Kutta schemes for ordinary differential
+ equations, Applied Numerical Mathematics 
+\series bold
+136
+\series default
+, pp.
+ 183-205, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_rk2"
+literal "false"
+
+\end_inset
+
+H.
+ Ranocha, D.I.
+ Ketcheson, Relaxation Runge–Kutta Methods for Hamiltonian Problems, J Sci
+ Comput 
+\series bold
+84
+\series default
+, 17 2020.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_rk3"
+literal "false"
+
+\end_inset
+
+J.
+ Niegemann, R.
+ Diehl, K.
+ Busch, Efficient low-storage Runge–Kutta schemes with optimized stability
+ regions, Journal of Computational Physics 231, pp.
+ 364-372, 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_wave1"
+literal "false"
+
+\end_inset
+
+Y.
+ Wang.
+ Q.
+ Fan, The second kind Chebyshev wavelet method for solving fractional differenti
+al equations, Applied Mathematics and Computation 
+\series bold
+218
+\series default
+, pp.
+ 8592-8601, 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_wave2"
+literal "false"
+
+\end_inset
+
+M.H.Heydari, M.R.Hooshmandasl, F.Mohammadi, Legendre wavelets method for solving
+ fractional partial differential equations with Dirichlet boundary conditions,
+ Applied Mathematics and Computation 
+\series bold
+234
+\series default
+, pp.
+ 267-276, 2014.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_wave3"
+literal "false"
+
+\end_inset
+
+B.
+ Yuttanan, M.
+ Razzaghi, Legendre wavelets approach for numerical solutions of distributed
+ order fractional differential equations, Applied Mathematical Modelling
+ 
+\series bold
+70
+\series default
+, pp.
+ 350-364, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_pred1"
+literal "false"
+
+\end_inset
+
+H.
+ Kim, R.
+ Sakthivel, Numerical solution of hybrid fuzzy differential equations using
+ improved predictor–corrector method, Communications in Nonlinear Science
+ and Numerical Simulation 
+\series bold
+17
+\series default
+, pp.
+ 3788-3794, 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_pred2"
+literal "false"
+
+\end_inset
+
+V.
+ Daftardar-Gejji, Y.
+ Sukale, S.
+ Bhalekar, A new predictor–corrector method for fractional differential
+ equations, Applied Mathematics and Computation 
+\series bold
+244
+\series default
+, pp.
+ 158-182, 2014.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "neural1"
+literal "true"
+
+\end_inset
+
+C.
+ Bishop, Neural Networks for Pattern Recognition, Oxford University Press,
+ 1995.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "neural2"
+literal "true"
+
+\end_inset
+
+G.
+ Cybenko, Approximation by superpositions of a sigmoidal function, Mathematics
+ of Control Signals and Systems 2, pp.
+ 303-314, 1989.
 \end_layout
 
 \begin_layout Bibliography
@@ -3318,7 +4274,682 @@ ial equations, IEEE Transactions on Neural Networks
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
-key "key-3"
+key "de_nn2"
+literal "false"
+
+\end_inset
+
+A.
+ Malek, R.Shekari Beidokhti, Numerical solution for high order differential
+ equations using a hybrid neural network—Optimization method, Applied Mathematic
+s and Computation 
+\series bold
+183
+\series default
+, pp.
+ 260-271, 2006.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_nn3"
+literal "false"
+
+\end_inset
+
+W.
+ Zhang, W.
+ Cai, FBSDE based neural network algorithms for high-dimensional quasilinear
+ parabolic PDEs, Journal of Computational Physics 
+\series bold
+470
+\series default
+, 2022.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_finite1"
+literal "false"
+
+\end_inset
+
+P.
+ Frauenfelder, C.
+ Schwab, R.A.
+ Todor, Finite elements for elliptic problems with stochastic coefficients,
+ Computer Methods in Applied Mechanics and Engineering 
+\series bold
+194
+\series default
+, pp.
+ 205-228, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_finite2"
+literal "false"
+
+\end_inset
+
+P.
+ Houston, E.
+ Süli, A note on the design of hp-adaptive finite element methods for elliptic
+ partial differential equations, Computer Methods in Applied Mechanics and
+ Engineering 
+\series bold
+194
+\series default
+, pp.
+ 229-243, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ge_main"
+literal "false"
+
+\end_inset
+
+M.
+ O'Neill, C.
+ Ryan, Grammatical evolution, IEEE Transactions on Evolutionary Computation
+ 
+\series bold
+5
+\series default
+, pp.
+ 349-358, 2001.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_tsoulos"
+literal "true"
+
+\end_inset
+
+I.G.
+ Tsoulos, I.E.
+ Lagaris, Solving differential equations with genetic programming.
+ Genet Program Evolvable Mach 
+\series bold
+7
+\series default
+, pp.
+ 33–54, 2006.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_svm1"
+literal "false"
+
+\end_inset
+
+S.
+ Mehrkanoon, T.
+ Falck and J.
+ A.
+ K.
+ Suykens, Approximate Solutions to Ordinary Differential Equations Using
+ Least Squares Support Vector Machines, IEEE Transactions on Neural Networks
+ and Learning Systems 
+\series bold
+23
+\series default
+, pp.
+ 1356-1367, 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_svm2"
+literal "false"
+
+\end_inset
+
+S.
+ Mehrkanoon, J.A.K.Suykens, Learning solutions to partial differential equations
+ using LS-SVM, Neurocomputing 
+\series bold
+159
+\series default
+, pp.
+ 105-116, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_deep1"
+literal "false"
+
+\end_inset
+
+J.
+ Sirignano, K.
+ Spiliopoulos, DGM: A deep learning algorithm for solving partial differential
+ equations, Journal of Computational Physics 
+\series bold
+375
+\series default
+, pp.
+ 1339-1364, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_deep2"
+literal "false"
+
+\end_inset
+
+M.Raissi, P.Perdikaris, G.E.Karniadakis, Physics-informed neural networks: A
+ deep learning framework for solving forward and inverse problems involving
+ nonlinear partial differential equations, Journal of Computational Physics
+ 
+\series bold
+378
+\series default
+, pp.
+ 686-707, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_nnc"
+literal "false"
+
+\end_inset
+
+I.G.
+ Tsoulos, D.
+ Gavrilis, E.
+ Glavas, Solving differential equations with constructed neural networks
+ 
+\series bold
+72
+\series default
+, pp.
+ 2385-2391, 2009.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "RbfMain"
+literal "false"
+
+\end_inset
+
+J.
+ Park and I.
+ W.
+ Sandberg, Universal Approximation Using Radial-Basis-Function Networks,
+ Neural Computation 3, pp.
+ 246-257, 1991.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ga1"
+literal "true"
+
+\end_inset
+
+D.
+ Goldberg, Genetic Algorithms in Search, Optimization and Machine Learning,
+ Addison-Wesley Publishing Company, Reading, Massachussets, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ga2"
+literal "true"
+
+\end_inset
+
+Z.
+ Michaelewicz, Genetic Algorithms + Data Structures = Evolution Programs.
+ Springer - Verlag, Berlin, 1996.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ga3"
+literal "true"
+
+\end_inset
+
+S.A.
+ Grady, M.Y.
+ Hussaini, M.M.
+ Abdullah, Placement of wind turbines using genetic algorithms, Renewable
+ Energy 
+\series bold
+30
+\series default
+, pp.
+ 259-270, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso1"
+literal "false"
+
+\end_inset
+
+J.
+ Kennedy, R.C.
+ Eberhart, The particle swarm: social adaptation in information processing
+ systems, in: D.
+ Corne, M.
+ Dorigo and F.
+ Glover (eds.), New ideas in Optimization, McGraw-Hill, Cambridge, UK, pp.
+ 11-32, 1999.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso2"
+literal "false"
+
+\end_inset
+
+F.
+ Marini, B.
+ Walczak, Particle swarm optimization (PSO).
+ A tutorial, Chemometrics and Intelligent Laboratory Systems 
+\series bold
+149
+\series default
+, pp.
+ 153-165, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnphysics1"
+literal "false"
+
+\end_inset
+
+P.
+ Baldi, K.
+ Cranmer, T.
+ Faucett et al, Parameterized neural networks for high-energy physics, Eur.
+ Phys.
+ J.
+ C 
+\series bold
+76
+\series default
+, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnphysics2"
+literal "true"
+
+\end_inset
+
+J.
+ J.
+ Valdas and G.
+ Bonham-Carter, Time dependent neural network models for detecting changes
+ of state in complex processes: Applications in earth sciences and astronomy,
+ Neural Networks 
+\series bold
+19
+\series default
+, pp.
+ 196-207, 2006
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnphysics3"
+literal "false"
+
+\end_inset
+
+G.
+ Carleo,M.
+ Troyer, Solving the quantum many-body problem with artificial neural networks,
+ Science 
+\series bold
+355
+\series default
+, pp.
+ 602-606, 2017.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnchem1"
+literal "false"
+
+\end_inset
+
+Lin Shen, Jingheng Wu, and Weitao Yang, Multiscale Quantum Mechanics/Molecular
+ Mechanics Simulations with Neural Networks, Journal of Chemical Theory
+ and Computation 
+\series bold
+12
+\series default
+, pp.
+ 4934-4946, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnchem2"
+literal "false"
+
+\end_inset
+
+Sergei Manzhos, Richard Dawes, Tucker Carrington, Neural network‐based approache
+s for building high dimensional and quantum dynamics‐friendly potential
+ energy surfaces, Int.
+ J.
+ Quantum Chem.
+ 
+\series bold
+115
+\series default
+, pp.
+ 1012-1020, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnchem3"
+literal "false"
+
+\end_inset
+
+Jennifer N.
+ Wei, David Duvenaud, and Alán Aspuru-Guzik, Neural Networks for the Prediction
+ of Organic Chemistry Reactions, ACS Central Science 
+\series bold
+2
+\series default
+, pp.
+ 725-732, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnmed1"
+literal "false"
+
+\end_inset
+
+Igor I.
+ Baskin, David Winkler and Igor V.
+ Tetko, A renaissance of neural networks in drug discovery, Expert Opinion
+ on Drug Discovery 
+\series bold
+11
+\series default
+, pp.
+ 785-795, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnmed2"
+literal "false"
+
+\end_inset
+
+Ronadl Bartzatt, Prediction of Novel Anti-Ebola Virus Compounds Utilizing
+ Artificial Neural Network (ANN), Chemistry Faculty Publications 
+\series bold
+49
+\series default
+, pp.
+ 16-34, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnc"
+literal "false"
+
+\end_inset
+
+I.G.
+ Tsoulos, D.
+ Gavrilis, E.
+ Glavas, Neural network construction and training using grammatical evolution,
+ Neurocomputing 
+\series bold
+72
+\series default
+, pp.
+ 269-277, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfphysics1"
+literal "false"
+
+\end_inset
+
+P.
+ Teng, Machine-learning quantum mechanics: Solving quantum mechanics problems
+ using radial basis function networks, Phys.
+ Rev.
+ E 
+\series bold
+98
+\series default
+, 033305, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfchemistry1"
+literal "false"
+
+\end_inset
+
+Chuanhao Wan and Peter de B.
+ Harrington, Self-Configuring Radial Basis Function Neural Networks for
+ Chemical Pattern Recognition, J.
+ Chem.
+ Inf.
+ Comput.
+ Sci.
+ 
+\series bold
+39
+\series default
+, 1049–1056, 1999.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfmed1"
+literal "false"
+
+\end_inset
+
+Y.P.
+ Wang, J.W.
+ Dang, Q.
+ Li and S.
+ Li, Multimodal medical image fusion using fuzzy radial basis function neural
+ networks, in 2007 International Conference on Wavelet Analysis and Pattern
+ Recognition, pp.
+ 778-782, 2017.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gen_app1"
+literal "false"
+
+\end_inset
+
+R.L.
+ Haupt, An introduction to genetic algorithms for electromagnetics, Antennas
+ and Propagation Magazine 37, pp.
+ 7-15, 1995.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gen_app2"
+literal "false"
+
+\end_inset
+
+J.J.
+ Grefenstette, R.
+ Gopal, B.
+ J.
+ Rosmaita, D.
+ Van Gucht, Genetic Algorithms for the Traveling Salesman Problem, In: Proceedin
+gs of the 1st International Conference on Genetic Algorithms, pp.
+ 160 - 168, Lawrence Erlbaum Associates, 1985.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gen_app3"
+literal "false"
+
+\end_inset
+
+D.
+ A.
+ Savic, G.
+ A.
+ Walters, Genetic Algorithms for Least-Cost Design of Water Distribution
+ Networks, Journal of Water Resources Planning and Management 123, pp.
+ 67-77, 1997.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso_app1"
+literal "true"
+
+\end_inset
+
+H.
+ Yoshida, K.
+ Kawata, Y.
+ Fukuyama, S.
+ Takayama, Y.
+ Nakanishi, A particle swarm optimization for reactive power and voltagecontrol
+ considering voltage security assessment, IEEE Transactions on Power Systems
+ 
+\series bold
+15
+\series default
+, pp.
+ 1232-1239, 2000.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso_app2"
+literal "true"
+
+\end_inset
+
+J.
+ Robinson, Y.
+ Rahmat-Samii, Particle swarm optimization in electromagnetics, IEEE Transaction
+s on Antennas and Propagation 
+\series bold
+52
+\series default
+, pp.
+ 397- 407, 2004.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso_app3"
+literal "true"
+
+\end_inset
+
+M.
+ A.
+ Abido, Optimal power flow using particle swarm optimization, International
+ Journal of Electrical Power & Energy Systems 
+\series bold
+24
+\series default
+, pp.
+ 563-571, 2002.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso_app4"
+literal "true"
+
+\end_inset
+
+Z.L.
+ Gaing, Particle swarm optimization to solving the economic dispatch considering
+ the generator constraints, IEEE Transactions on Power Systems 
+\series bold
+18
+\series default
+, pp.
+ 1187-1195, 2003.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "powell"
+literal "false"
 
 \end_inset
 
