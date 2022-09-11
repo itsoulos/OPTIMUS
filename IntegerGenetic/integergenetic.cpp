@@ -39,7 +39,7 @@ bool    IntegerGenetic::terminated()
      printf("Genetic. Generation: %4d Fitness: %10.5lf Variance: %10.5lf Stopat: %10.5lf \n",
             generation,fitness_array[0],variance,stopat);
     if(rule == "doublebox")
-     return generation>=max_generations|| (variance<=stopat && generation>=50);
+     return generation>=max_generations|| (variance<=stopat && generation>=20);
     else
     if(rule == "generations")
         return generation >= max_generations;

@@ -176,7 +176,7 @@ bool    DoubleGenetic::terminated()
 
        QString rule = params["double_stoprule"].toString();
        if(rule == "doublebox")
-       return generation>=max_generations|| (variance<=stopat && generation>=50);
+       return generation>=max_generations|| (variance<=stopat && generation>=20);
        else
        if(rule=="generations")
            return generation>=max_generations;

@@ -12,6 +12,7 @@ else
 		(cd PROBLEMS/DGenclass; for file in *.pro; do  qmake $file; make clean; make; done)
 		(cd PROBLEMS/NNC; for file in *.pro; do  qmake $file; make clean; make; done)
 		(cd PROBLEMS/RbfTest; for file in *.pro; do  qmake $file; make clean; make; done)
+		(cd PROBLEMS/DataFitting; for file in *.pro; do  qmake $file; make clean; make; done)
 		for str in ${methods[@]}; do
 			(cd $str; qmake; make clean; make install )
 		done

@@ -12,6 +12,7 @@ else
 		(cd PROBLEMS/GenClass; qmake; make clean)
 		(cd PROBLEMS/NNC; qmake; make clean)
 		(cd PROBLEMS/RbfTest; qmake; make clean)
+		(cd PROBLEMS/DataFitting; qmake; make clean)
 		(cd Optimus; qmake; make clean;)
 		(cd GCRS; qmake ; make clean )
 		(cd Genmin; qmake ; make clean )
