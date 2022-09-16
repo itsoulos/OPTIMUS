@@ -2,7 +2,7 @@
 DATAPATH=/home/sheridan/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfolding/
 NODES=10
 
-METHOD=DoubleGenetic
+METHOD=IntegerGenetic
 METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then
@@ -32,6 +32,6 @@ fi
 
 PROBLEM=DataFitting
 
-MLPARAMS="--model=gdf --trainName=$DATAPATH/$1.train --testName=$DATAPATH/$1.test --weights=10"
+MLPARAMS="--model=nnc --trainName=$DATAPATH/$1.train --testName=$DATAPATH/$1.test --weights=10"
 ./OptimusApp --filename=../PROBLEMS/DataFitting/lib$PROBLEM.so  --opt_method=$METHOD   $METHODPARAMS  $MLPARAMS --threads=1  --iterations=1
 

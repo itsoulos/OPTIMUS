@@ -13,6 +13,7 @@ double  DataModel::getTrainError()
     {
         Data xp = trainSet->getpoint(i);
         double val = eval(xp);
+	if(isnan(val) || isinf(val) || fabs(val)>=1e+8) return 1e+100;
         double v = trainSet->gety(i);
         sum+= (val -v)*(val -v);
     }
