@@ -34,6 +34,7 @@ double  MlpModel::eval(Data &x)
             }
             arg+=weight[(dimension+2)*i-1];
             per+=weight[(dimension+2)*i-(dimension+1)-1]*sig(arg);
+
         }
         return per;
 }
@@ -53,7 +54,9 @@ double  MlpModel::evalDeriv(Data &x,int pos)
             }
             arg+=weight[(dimension+2)*i-1];
             double s=sig(arg);
-            per+=weight[(dimension+2)*i-(dimension+1)-1]*s*(1.0-s)*weight[(dimension+2)*i-(dimension+1)+pos-1];
+//            per+=weight[(dimension+2)*i-(dimension+1)-1]*s*(1.0-s)*weight[(dimension+2)*i-(dimension+1)+pos-1];
+            per+=weight[(dimension+2)*i-(dimension+1)-1]*s*(1.0-s)*weight[(dimension+2)*i-(dimension+1)+pos];
+
         }
         return per;
 }
@@ -73,7 +76,9 @@ double  MlpModel::evalSecondDeriv(Data &x,int pos)
             arg+=weight[(dimension+2)*i-1];
             double s=sig(arg);
             double w1=weight[(dimension+2)*i-(dimension+1)-1];
-            double w2=weight[(dimension+2)*i-(dimension+1)+pos-1];
+//            double w2=weight[(dimension+2)*i-(dimension+1)+pos-1];
+            double w2=weight[(dimension+2)*i-(dimension+1)+pos];
+
             per+=w1*w2*w2*s*(1.0-s)*(1.0-2*s);
         }
         return per;

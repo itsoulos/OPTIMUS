@@ -108,7 +108,9 @@ void    getmargins(vector<Interval> &x)
     else
     {
         for(int i=0;i<(int)x.size();i++)
-                x[i]=Interval(-20,20);
+                x[i]=Interval(-10,10);
+       // for(int i=x.size()-1;i>=x.size()-1-weights;i--)
+       //     x[i]=Interval(0.01,10);
     }
 
 }
@@ -275,7 +277,7 @@ double	funmin(vector<double> &a)
     for(int i=0;i<getnode();i++)
         penalty+=lambda * pow(res0[i]-px[i],2.0);
 
-   sum=sum+penalty;
+   sum=sum + penalty;
     delete[] px;
     delete[] dpx;
     delete[] res;
@@ -293,22 +295,31 @@ QJsonObject    done(vector<double> &x)
     double *px=new double[getnode()],*dpx=new double[getnode()],
             *res=new double[getnode()];
 
-    for(double ax=getx0();ax<=getx1();ax+=(getx1()-getx0())/(2*npoints))
+    FILE *fp=fopen("sode.plot","w");
+    for(int ik=0;ik<=2*npoints;ik++)
     {
-        xx[0]=ax;
+        xx[0]=getx0()+ik*(getx1()-getx0())/(2.0*npoints);
+    fprintf(fp,"%lf ",xx[0]);
         for(int i=0;i<getnode();i++)
         {
             px[i]=demodel[i]->eval(xx);
+
             dpx[i]=demodel[i]->evalDeriv(xx,0);
         }
 
 
 
-       systemfun(getnode(),ax,px,dpx,res);
+
+       systemfun(getnode(),xx[0],px,dpx,res);
        for(int i=0;i<getnode();i++)
+       {
+           fprintf(fp,"%lf ",px[i]);
            testError = testError+res[i]*res[i];
+       }
+         fprintf(fp,"\n");
 
     }
+    fclose(fp);
     delete[] px;
     delete[] dpx;
     delete[] res;

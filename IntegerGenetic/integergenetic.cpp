@@ -121,6 +121,7 @@ void    IntegerGenetic::calcFitnessArray()
     int count = params["integer_chromosomes"].toString().toInt();
 
     double rate = params["integer_localsearchrate"].toString().toDouble();
+    double dmin = 1e+100;
     for(int i=0;i<count;i++)
     {
         Data tx = fromIDATA(chromosome[i]);
@@ -134,8 +135,12 @@ void    IntegerGenetic::calcFitnessArray()
                 fitness_array[i]=myProblem->funmin(tx);
                 chromosome[i]=toIDATA(tx);
             }
+		
         }
+	if(fabs(fitness_array[i])<dmin) dmin = fabs(fitness_array[i]);
+	if(i%20==0) printf("%d:%lf ",i,dmin);
     }
+    printf("\n");
 }
 
 void    IntegerGenetic::select()

@@ -28,7 +28,7 @@ void    DoubleGenetic::calcFitnessArray()
         if(fitnessArray[i]<dmin) dmin=fitnessArray[i];
         if(debug=="yes" && i%10==0)
         {
-            printf("%d:%lf ",i,dmin);
+            printf("%d:%20.12lg ",i,dmin);
             fflush(stdout);
         }
     }
@@ -171,10 +171,10 @@ bool    DoubleGenetic::terminated()
            stopat=variance/2.0;
        }
 
-       if(stopat<1e-8 && generation>=10) return true;
-       printf("Genetic. Generation: %4d Fitness: %20.8lg Variance: %10.5lf Stopat: %10.5lf \n",generation,fitnessArray[0],variance,stopat);
-
        QString rule = params["double_stoprule"].toString();
+       if(rule=="doublebox" && stopat<1e-8 && generation>=10) return true;
+       printf("Genetic. Generation: %4d Fitness: %20.12lf Variance: %10.5lf Stopat: %10.5lf \n",generation,fitnessArray[0],variance,stopat);
+
        if(rule == "doublebox")
        return generation>=max_generations|| (variance<=stopat && generation>=20);
        else

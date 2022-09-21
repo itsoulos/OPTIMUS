@@ -135,10 +135,11 @@ private:
 double *a,*xl,*xu,*xp,*b;
 long *iact;
 double *par,*w;
+bool hasDebug = false;
 public:
     Tolmin(Problem *p,Data &left,Data &right);
     Tolmin(Problem *p);
-    double Solve(Data &x,int iters=2001);
+    double Solve(Data &x,bool debug,int iters=2001);
     ~Tolmin();
 };
 

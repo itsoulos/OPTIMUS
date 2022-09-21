@@ -7,6 +7,7 @@ Optimizer::Optimizer(Problem *p)
     myProblem=p;
     addParameter("localsearch_method","bfgs","The desired local search method(bfgs,gradient,adam,lbfgs,grs,hill)");
     addParameter("bfgs_iterations","2001","The maximum number of iterations for BFGS");
+    addParameter("bfgs_debug","no","If it is yes, then full debug info wil be displayed from BFGS");
     addParameter("gradient_rate","0.01","The learning rate for gradient descent");
     addParameter("gradient_iterations","10000","The maximum number of iterations for gradient descent");
     addParameter("adam_b1","0.9","The parameter b1 of Adam algorithm");
@@ -45,7 +46,9 @@ double  Optimizer::localSearch(Data &x)
     if(method=="bfgs")
     {
         Tolmin mt(myProblem);
-        return mt.Solve(x,params["bfgs_iterations"].toString().toInt());
+	bool debug = false;
+	if(params["bfgs_debug"].toString()=="yes") debug =true;
+        return mt.Solve(x,debug,params["bfgs_iterations"].toString().toInt());
     }
     else
     if(method=="gradient")
