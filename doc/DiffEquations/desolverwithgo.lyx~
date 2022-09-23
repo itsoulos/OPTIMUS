@@ -237,7 +237,40 @@ literal "false"
 \end_inset
 
  etc.
- Also, another technique based on Grammatical Evolution 
+ Similar, semi - implicit composition methods have been proposed to solve
+ differential equations like the work of Chen and Shen, used to solve the
+ Ginzburg—Landau equation and the Cahn—Hilliard equation 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_semimplicit1"
+literal "false"
+
+\end_inset
+
+.
+ Likewise, Fedoseev et al proposed a novel algorithm for Semi-Implicit Compositi
+on ODE Solvers 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_semiimplicit2"
+literal "false"
+
+\end_inset
+
+.
+ Also, semi-explicit composition methods have been proposed for the solution
+ of differential equations 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_semiexplicit"
+literal "false"
+
+\end_inset
+
+.
+ Similar, semi-implicit predictor–corrector methods have been used for practical
+ problems modelled as differential equations.
+ Recently, another technique based on Grammatical Evolution 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "ge_main"
@@ -4148,12 +4181,6 @@ name "fig:Average-execution-times"
 Declare the test error.
 \end_layout
 
-\begin_layout Enumerate
-
-\series bold
-Add more difficult practical problems that RK can not solve
-\end_layout
-
 \begin_layout Subsection
 Comparison with other methods
 \end_layout
@@ -4282,8 +4309,7 @@ literal "false"
 
 \end_inset
 
- is a system of 3 non - linear ordinary differential equations and refers
- to the Oregonator model.
+ describes the Oregonator model.
  The problem is defined as 
 \begin_inset Formula 
 \[
@@ -4300,7 +4326,7 @@ with
 \begin_inset Formula $f(y)$
 \end_inset
 
- is given by:
+ is :
 \begin_inset Formula 
 \begin{eqnarray*}
 f(y) & = & \left(\begin{array}{c}
@@ -4321,18 +4347,32 @@ with
 \end_inset
 
 .
+ 
 \end_layout
 
-\begin_layout Enumerate
+\begin_layout Standard
+The proposed method with the artificial neural network as model was applied
+ on the above practical problems.
+ The experimental results are compared against MEBDF 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "de_memb"
+literal "false"
 
-\series bold
-define MEMDB
-\end_layout
+\end_inset
 
-\begin_layout Enumerate
+ and are listed in the Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Comparison-with-MEMDB"
+plural "false"
+caps "false"
+noprefix "false"
 
-\series bold
-define RK
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -4346,6 +4386,13 @@ status open
 
 \begin_layout Plain Layout
 Comparison with MEMDB method on some real world problems.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Comparison-with-MEMDB"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -4356,9 +4403,8 @@ Comparison with MEMDB method on some real world problems.
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="4" columns="5">
+<lyxtabular version="3" rows="4" columns="4">
 <features tabularvalignment="middle">
-<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -4378,15 +4424,6 @@ PROBLEM
 
 \begin_layout Plain Layout
 MEBDF
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-RK
 \end_layout
 
 \end_inset
@@ -4425,18 +4462,6 @@ HIRES
 
 \begin_layout Plain Layout
 \begin_inset Formula $6.1\times10^{-1}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $2.3\times10^{-2}$
 \end_inset
 
 
@@ -4495,15 +4520,6 @@ OREGO
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 \begin_inset Formula $5.0\times10^{-11}$
 \end_inset
 
@@ -4551,15 +4567,6 @@ ROBER
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 \begin_inset Formula $2.66\times10^{-7}$
 \end_inset
 
@@ -4585,10 +4592,6 @@ ROBER
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -5108,6 +5111,94 @@ P.
 \series default
 , pp.
  229-243, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_semimplicit1"
+literal "false"
+
+\end_inset
+
+L.Q.Chen, J.
+ Shen, Applications of semi-implicit Fourier-spectral method to phase field
+ equations, Computer Physics Communications 108, pp.
+ 147-158, 1998.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_semiimplicit2"
+literal "false"
+
+\end_inset
+
+P.
+ Fedoseev, D.
+ Pesterev, A.
+ Karimov, D.
+ Butusov, New Step Size Control Algorithm for Semi-Implicit Composition
+ ODE Solvers, Algorithms 
+\series bold
+15
+\series default
+, article number 275, 2022.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_semiexplicit"
+literal "false"
+
+\end_inset
+
+A.
+ Tutueva, T.
+ Karimov, D.
+ Butusov, Semi-Implicit and Semi-Explicit Adams-Bashforth-Moulton Methods,
+ Mathematics 8, Article number 780, 2020.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_semipred1"
+literal "false"
+
+\end_inset
+
+C.
+ Clancy, J.A.
+ Pudykiewicz, A class of semi-implicit predictor–corrector schemes for the
+ time integration of atmospheric models, Journal of Computational Physics
+ 
+\series bold
+250
+\series default
+, pp.
+ 665-684, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_semipred2"
+literal "false"
+
+\end_inset
+
+A.
+ Tutueva, D.
+ Butusov, Stability Analysis and Optimization of Semi-Explicit Predictor–Correct
+or Methods, Mathematics 
+\series bold
+9
+\series default
+, Article number 2463, 2021.
 \end_layout
 
 \begin_layout Bibliography
@@ -5794,6 +5885,26 @@ E.
  Wanner, Solving Ordinary Di erential Equations II: Sti and Di erential-
  algebraic Problems.
  Springer-Verlag, second revised edition, 1996.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_memb"
+literal "false"
+
+\end_inset
+
+.R.
+ Cash, S.
+ Considine, An MEBDF code for stiff initial value problems, ACM Trans.
+ Math.
+ Software 
+\series bold
+18
+\series default
+, pp.
+ 142-158, 1992.
 \end_layout
 
 \begin_layout Bibliography
