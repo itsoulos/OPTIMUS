@@ -23,7 +23,7 @@ double	getx0()
 
 double	getx1()
 {
-	return 321.8122;
+	return 5.0;//321.8122;
 }
 
 int	getnode()

@@ -30,6 +30,7 @@ extern double	getx1();
 extern void     systemfun(int node, double x, double *y, double *yy,double *res);
 extern void     systemf0(int node,double *f0);
 extern int      getnode();
+extern void	systemder(int node, double x, double *y, double *yy,double dy,double dyy,double *res);
 
 void    init(QJsonObject data)
 {
@@ -298,7 +299,7 @@ QJsonObject    done(vector<double> &x)
     FILE *fp=fopen("sode.plot","w");
     for(int ik=0;ik<=2*npoints;ik++)
     {
-        xx[0]=getx0()+ik*(getx1()-getx0())/(2.0*npoints);
+        xx[0]=getx0()+ik*(getx1()-getx0())/(npoints);
     fprintf(fp,"%lf ",xx[0]);
         for(int i=0;i<getnode();i++)
         {
@@ -334,6 +335,107 @@ QJsonObject    done(vector<double> &x)
 static double sodemax(double a,double b){return a>b?a:b;}
 void	granal(vector<double> &x,vector<double> &g)
 {
+
+    if(model == "mlp2")
+    {
+        for(int i=0;i<getnode();i++)
+        {
+            vector<double> suba;
+            suba.resize(x.size()/getnode());
+
+            for(unsigned int j=0;j<suba.size();j++)
+                suba[j]=x[i*suba.size()+j];
+            ((MlpModel *)demodel[i])->setWeights(suba);
+        }
+
+        for(int i=0;i<g.size();i++) g[i]=0.0;
+        Data tempg;
+        Data tempg2;
+        tempg.resize(g.size());
+        tempg2.resize(g.size());
+
+        Data xx;
+        xx.resize(1);
+
+        double *y=new double[getnode()];
+        double *yy=new double[getnode()];
+        double *res=new double[getnode()];
+        double *res2=new double[getnode()];
+        double *f0=new double[getnode()];
+
+        for(int ik=0;ik<=npoints;ik++)
+        {
+            xx[0]=getx0()+ik*(getx1()-getx0())/npoints;
+            int gcount = 0;
+            for(int j=0;j<getnode();j++)
+            {
+                Data g1,g2;
+                g1.resize(x.size()/getnode());
+                g2.resize(x.size()/getnode());
+                double g1val[g1.size()];
+                double g2val[g2.size()];
+                y[j]=demodel[j]->eval(xx);
+                yy[j]=demodel[j]->evalDeriv(xx,0);
+                demodel[j]->getModelDeriv(xx,g1);
+                demodel[j]->getXDeriv(xx,0,g2);
+                for(int k=0;k<g1.size();k++)
+                {
+                    g1val[k]=g1[k];
+                    g2val[k]=g2[k];
+                }
+                systemder(j,xx[0],y,yy,g1val[j],g2val[j],res2);
+            }
+            systemfun(getnode(),xx[0],y,yy,res);
+            for(unsigned int j=0;j<g.size();j++)
+            {
+
+                for(int k=0;k<getnode();k++)
+                {
+
+                    g[j]+=2.0*res[k]*res2[k];
+                }
+            }
+        }
+
+        systemf0(getnode(),f0);
+        int gcount = 0;
+        for(int i=0;i<getnode();i++)
+        {
+            xx[0]=getx0();
+            double v=demodel[i]->eval(xx)-f0[i];
+            Data g1;
+            g1.resize(x.size()/getnode());
+            demodel[i]->getModelDeriv(xx,g1);
+            for(unsigned int j=0;j<g1.size();j++)
+            {
+                g[gcount++]+=2.0 * lambda * v * g1[j];
+            }
+            /*
+            for(int j=0;j<g.size();j++)
+            {
+                double out=tempg[j];
+                g[j]+=2.0*LAMBDA*v*out;
+            }*/
+        }
+        delete[] y;
+        delete[] yy;
+        delete[] res;
+        delete[] res2;
+        delete[] f0;
+        for(int i=0;i<getdimension();i++)
+        {
+            double eps=pow(1e-18,1.0/3.0)*sodemax(1.0,fabs(x[i]));
+            x[i]+=eps;
+            double v1=funmin(x);
+            x[i]-=2.0 *eps;
+            double v2=funmin(x);
+            double gg=(v1-v2)/(2.0 * eps);
+            printf("Difference in gradient[%d]=%lf \n",i,fabs(gg-g[i]));
+            x[i]+=eps;
+        }
+    return;
+    }
+
     for(int i=0;i<getdimension();i++)
     {
         double eps=pow(1e-18,1.0/3.0)*sodemax(1.0,fabs(x[i]));
@@ -344,5 +446,7 @@ void	granal(vector<double> &x,vector<double> &g)
         g[i]=(v1-v2)/(2.0 * eps);
         x[i]+=eps;
     }
+
+
 }
 }

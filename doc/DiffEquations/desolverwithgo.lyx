@@ -1,0 +1,5606 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Solving differential equations with global optimization techniques
+\end_layout
+
+\begin_layout Author
+Ioannis G.
+ Tsoulos
+\begin_inset Formula $^{(1)}$
+\end_inset
+
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Corresponding author.
+ Email: itsoulos@uoi.gr
+\end_layout
+
+\end_inset
+
+, Alexandros Tzallas
+\begin_inset Formula $^{(1)}$
+\end_inset
+
+, Dimitrios Tsalikakis
+\begin_inset Formula $^{(2)}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Date
+\begin_inset Formula $^{(1)}$
+\end_inset
+
+Department of Informatics and Telecommunications, University of Ioannina,
+ 47100 Arta, Greece 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $^{(2)}$
+\end_inset
+
+University of Western Macedonia, Department of Engineering Informatics and
+ Telecommunications, Greece
+\end_layout
+
+\begin_layout Abstract
+The solution of differential equations finds many applications in a huge
+ range of problems, and many techniques have been developed to approximate
+ their solutions.
+ This manuscript presents a number of global optimization techniques that
+ have been successfully applied to train machine learning models to approximate
+ differential equation solutions.
+ These methods have been successfully applied to solving ordinary differential
+ equations and systems of differential equations as well as partial differential
+ equations with Dirichlet boundary conditions.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Keywords
+\series default
+: Differential equations; global optimization; stochastic methods; machine
+ learning
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+The solution ordinary differential equations (ODEs), systems of differential
+ equations (SODEs) and partial differential equations (PDEs) is commonly
+ used in many scientific fields, like physics 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_physics1,de_physics2"
+literal "false"
+
+\end_inset
+
+, chemistry 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_chem1,de_chem2,de_chem3"
+literal "false"
+
+\end_inset
+
+, economics 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_econ1,de_econ2"
+literal "false"
+
+\end_inset
+
+, biology 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_bio1,de_bio2"
+literal "false"
+
+\end_inset
+
+ etc.
+ It is obvious that the numerical solution of differential equations has
+ positive effects in many scientific areas and, as a result, many techniques
+ have been published in the modern literature.
+ These methods can include the well - known Runge Kutta methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_rk1,de_rk2,de_rk3"
+literal "false"
+
+\end_inset
+
+, wavelet transformations 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_wave1,de_wave2,de_wave3"
+literal "false"
+
+\end_inset
+
+, predictor - corrector variations 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_pred1,de_pred2"
+literal "false"
+
+\end_inset
+
+, methods that incorporate artificial neural networks 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "neural1,neural2"
+literal "false"
+
+\end_inset
+
+ to solve differential equations 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_nn1,de_nn2,de_nn3"
+literal "false"
+
+\end_inset
+
+, finite element methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_finite1,de_finite2"
+literal "false"
+
+\end_inset
+
+ etc.
+ Also, another technique based on Grammatical Evolution 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ge_main"
+literal "false"
+
+\end_inset
+
+ has been proposed to tackle differential equations in closed analytical
+ form by Tsoulos and Lagaris 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_tsoulos"
+literal "true"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+In this work, the differential equations to be solved are presented as machine
+ learning models and the solution of the corresponding equation is reduced
+ to a global optimization problem, where the task is to locate the global
+ minimum of a any function 
+\begin_inset Formula $f(x):\ S\subset R^{n}\rightarrow R$
+\end_inset
+
+ with 
+\begin_inset Formula $x_{i}\ \in\left[L_{i},R_{i}\right],\ i=1..n$
+\end_inset
+
+.
+ The value of 
+\begin_inset Formula $n$
+\end_inset
+
+ is the number of parameters in the corresponding machine learning model.
+ For example, the number of weights and biases in some artificial neural
+ network.
+ The vector 
+\begin_inset Formula $L$
+\end_inset
+
+ is considered as the left margin of the parameter 
+\begin_inset Formula $x$
+\end_inset
+
+, and and the vector 
+\begin_inset Formula $R$
+\end_inset
+
+ as the right margin.
+ Machine learning models have been used a lot in solving differential equations,
+ for example the use of SVM techniques 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_svm1,de_svm2"
+literal "false"
+
+\end_inset
+
+, the incorporation of deep learning methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_deep1,de_deep2"
+literal "false"
+
+\end_inset
+
+, constructed neural networks 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_nnc"
+literal "false"
+
+\end_inset
+
+ etc.
+ In current work, two machine learning models were tested: artificial neural
+ networks and Radial Basis Function networks (RBF) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "RbfMain"
+literal "false"
+
+\end_inset
+
+.
+ The parameters in these machine learning models were trained using modified
+ versions of two well-known global optimization techniques: Genetic Algorithms
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ga1,ga2,ga3"
+literal "false"
+
+\end_inset
+
+ and the PSO method 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pso1,pso2"
+literal "false"
+
+\end_inset
+
+.
+ These models have been successfully used to solve ordinary differential
+ equations, systems of differential equations as well as partial differential
+ equations with Dirichlet boundary conditions.
+\end_layout
+
+\begin_layout Standard
+The rest of this article is organized as follows: in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Method-description"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ the used models and the proposed modified global optimization techniques
+ are outlined in detail, in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Experiments"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ the differential equations used in the experiments are listed as well as
+ the experimental results and finally in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Conclusions"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ some conclusions about the used methods are presented.
+\end_layout
+
+\begin_layout Section
+Method description 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Method-description"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+The neural network model 
+\end_layout
+
+\begin_layout Standard
+Artificial neural networks are parametric mathematical models used in many
+ scientific areas with great importance, such as physics 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nnphysics1,nnphysics2,nnphysics3"
+literal "false"
+
+\end_inset
+
+, chemistry 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nnchem1,nnchem2,nnchem3"
+literal "false"
+
+\end_inset
+
+, medicine 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nnmed1,nnmed2"
+literal "false"
+
+\end_inset
+
+ etc.
+ A neural network can be modeled as a function 
+\begin_inset Formula $N(\overrightarrow{x},\overrightarrow{w})$
+\end_inset
+
+, where the vector 
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+ is consider the input pattern and 
+\begin_inset Formula $\overrightarrow{w}$
+\end_inset
+
+ is considered as the weight vector.
+ The methos used to train neural networs are commonly estimate the weight
+ vector 
+\begin_inset Formula $\overrightarrow{w}$
+\end_inset
+
+ for a given dataset.
+ The optimization technique minimizes the following quantity:
+\begin_inset Formula 
+\begin{equation}
+E\left(N\left(\overrightarrow{x},\overrightarrow{w}\right)\right)=\sum_{i=1}^{M}\left(N\left(\overrightarrow{x}_{i},\overrightarrow{w}\right)-y_{i}\right)^{2}\label{eq:eq1}
+\end{equation}
+
+\end_inset
+
+In the equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eq1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ (commonly addressed also as error function), the value 
+\begin_inset Formula $y_{i}$
+\end_inset
+
+ denotes the actual output for the point 
+\begin_inset Formula $\overrightarrow{x_{i}}$
+\end_inset
+
+ .
+ The form for the neural network is the same as in the case of 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nnc"
+literal "false"
+
+\end_inset
+
+.
+ Considere a neural network with one processing layer and the output of
+ each processing unit is given by:
+\begin_inset Formula 
+\begin{equation}
+o_{i}(x)=\sigma\left(p_{i}^{T}x+\theta_{i}\right),\label{eq:eq1-1}
+\end{equation}
+
+\end_inset
+
+with 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ denoting the weight vector and 
+\begin_inset Formula $\theta_{i}$
+\end_inset
+
+ is the bias for the processing unit 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ The function 
+\begin_inset Formula $\sigma(x)$
+\end_inset
+
+ is the well - known sigmoid function and it is given by: 
+\begin_inset Formula 
+\begin{equation}
+\sigma(x)=\frac{1}{1+\exp(-x)}\label{eq:sig}
+\end{equation}
+
+\end_inset
+
+If the neural network has 
+\begin_inset Formula $H$
+\end_inset
+
+ hidden nodes, then the output of the entire network is given by:
+\begin_inset Formula 
+\begin{equation}
+N(x)=\sum_{i=1}^{H}v_{i}o_{i}(x),\label{eq:eq1-2}
+\end{equation}
+
+\end_inset
+
+with 
+\begin_inset Formula $v_{i}$
+\end_inset
+
+ being the output weight for the processing node 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ Therefore, if a single vector is used for both weights and biases, we will
+ have the following form for the artificial neural network:
+\begin_inset Formula 
+\begin{equation}
+N\left(\overrightarrow{x},\overrightarrow{w}\right)=\sum_{i=1}^{H}w_{(d+2)i-(d+1)}\sigma\left(\sum_{j=1}^{d}x_{j}w_{(d+2)i-(d+1)+j}+w_{(d+2)i}\right)\label{eq:nn}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $d$
+\end_inset
+
+ is the dimension of vector 
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsection
+The RBF model
+\end_layout
+
+\begin_layout Standard
+An RBF network has also a lot of applications 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rbfphysics1,rbfchemistry1,rbfmed1"
+literal "false"
+
+\end_inset
+
+ and it is denoted as a function 
+\begin_inset Formula $r(x)$
+\end_inset
+
+:
+\series bold
+
+\begin_inset Formula 
+\begin{equation}
+r(x)=\sum_{i=1}^{H}w_{i}\phi\left(\left\Vert x-c_{i}\right\Vert \right)\label{eq:firstrbf}
+\end{equation}
+
+\end_inset
+
+
+\series default
+with 
+\series bold
+
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+ 
+\series default
+denoting the input pattern and the vector
+\series bold
+ 
+\begin_inset Formula $\overrightarrow{w}$
+\end_inset
+
+ 
+\series default
+stands for the weight vector.
+ The function 
+\begin_inset Formula $\phi(x)$
+\end_inset
+
+ used here is the following Gaussian function:
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\begin_inset Formula 
+\begin{equation}
+\phi(x)=\exp\left(-\frac{\left(x-c\right)^{2}}{\sigma^{2}}\right)
+\end{equation}
+
+\end_inset
+
+
+\series default
+The function 
+\begin_inset Formula $\phi(x)$
+\end_inset
+
+ has the property that its value is calculated with based on the distance
+ between the vectors
+\series bold
+ 
+\begin_inset Formula $\overrightarrow{x},\ $
+\end_inset
+
+
+\begin_inset Formula $\overrightarrow{c}$
+\end_inset
+
+
+\series default
+.
+ The vector 
+\begin_inset Formula $\overrightarrow{c}$
+\end_inset
+
+ is called also the centroid vector.
+\end_layout
+
+\begin_layout Subsection
+Calculation of error
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Calculation-of-error"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This subsection details the calculation of the error of the machine learning
+ models for each differential equation.
+ In each equation case the initial or boundary conditions are imposed using
+ penalty factors.
+\end_layout
+
+\begin_layout Subsubsection
+Calculation for ODEs 
+\end_layout
+
+\begin_layout Standard
+The ODEs are defined as: 
+\begin_inset Formula 
+\begin{equation}
+\psi\left(x,y,y^{(1)},\ldots,y^{(n)}\right)=0,\ x\in[a,b]
+\end{equation}
+
+\end_inset
+
+where the quantity 
+\begin_inset Formula $y^{(i)}$
+\end_inset
+
+ stands for the ith-order derivative of 
+\begin_inset Formula $y(x).$
+\end_inset
+
+ Also, the initial conditions for the equation are given by: 
+\begin_inset Formula 
+\begin{equation}
+h_{i}\left(x,y,y^{(1)},\ldots,y^{(n)}\right)_{|x=t_{i}},i=1,\ldots,n
+\end{equation}
+
+\end_inset
+
+with 
+\begin_inset Formula $t_{i}$
+\end_inset
+
+ is to be 
+\begin_inset Formula $a$
+\end_inset
+
+ or 
+\begin_inset Formula $b$
+\end_inset
+
+.
+ The calculation of the model error 
+\begin_inset Formula $f(r)$
+\end_inset
+
+ of a model 
+\begin_inset Formula $r$
+\end_inset
+
+ are the following:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Construct 
+\series default
+
+\begin_inset Formula $T=\left\{ x_{1}=a,x_{2},x_{3},\ldots,x_{N}=b\right\} $
+\end_inset
+
+.
+ This is a set of equally spaced points.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Compute
+\series default
+ the quantity for the error 
+\begin_inset Formula $E_{r}=\sum_{i=1}^{N}\psi\left(x_{i},r\left(x_{i}\right),r^{(1)}\left(x_{i}\right),\ldots,r^{(n)}\left(x_{i}\right)\right)^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Compute
+\series default
+ the associated penalty value, based on the initial conditions: 
+\begin_inset Formula 
+\begin{equation}
+P_{r}=\lambda\sum_{k=1}^{n}h_{k}^{2}\left(x,r(x),r^{(1)}(x),\ldots,r^{(n)}(x)\right)_{|x=t_{k}}
+\end{equation}
+
+\end_inset
+
+, where 
+\begin_inset Formula $\lambda>0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Return
+\series default
+ 
+\begin_inset Formula $f(r)=E_{r}+P_{r}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Calculation for SODEs 
+\end_layout
+
+\begin_layout Standard
+The system of odes used in the current work is in in the form:
+\begin_inset Formula 
+\begin{equation}
+\left(\begin{array}{ccc}
+\psi_{1}\left(x,y_{1},y_{1}^{(1)},y_{2},y_{2}^{(1)},\ldots,y_{k},y_{k}^{(1)}\right) & = & 0\\
+\psi_{2}\left(x,y_{1},y_{1}^{(1)},y_{2},y_{2}^{(1)},\ldots,y_{k},y_{k}^{(1)}\right) & = & 0\\
+\vdots & \vdots & \vdots\\
+\psi_{k}\left(x,y_{1},y_{1}^{(1)},y_{2},y_{2}^{(1)},\ldots,y_{k},y_{k}^{(1)}\right) & = & 0
+\end{array}\right)
+\end{equation}
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[a,b]$
+\end_inset
+
+.
+ The initial conditions of the system are given as: 
+\begin_inset Formula 
+\begin{equation}
+\left(\begin{array}{ccc}
+y_{1}(a) & = & y_{1a}\\
+y_{2}(a) & = & y_{2a}\\
+\vdots & \vdots & \vdots\\
+y_{k}(a) & = & y_{ka}
+\end{array}\right)\label{eq:eqinit}
+\end{equation}
+
+\end_inset
+
+The error value for a set of models 
+\begin_inset Formula $r_{1},r_{2},...,r_{k}$
+\end_inset
+
+ is calculated using the following:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Construct 
+\series default
+a set 
+\begin_inset Formula $T=\left\{ x_{1}=a,x_{2},x_{3},\ldots,x_{N}=b\right\} $
+\end_inset
+
+ of equally spaced points.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For every model 
+\begin_inset Formula $r_{i},\ i=1,..k$
+\end_inset
+
+ do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Calculate
+\series default
+ the error value: 
+\begin_inset Formula $E_{r_{i}}=\sum_{j=1}^{N}\left(\psi_{i}\left(x_{j},r_{1},r_{1}^{(1)},r_{2},r_{2}^{(1)},\ldots,r_{k},r_{k}^{(1)}\right)\right)^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Calculate
+\series default
+ the corresponding penalty value: 
+\begin_inset Formula $P_{r_{i}}=\lambda\left(r_{i}\left(a\right)-y_{ia}\right)^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Compute
+\series default
+ the total error value: 
+\begin_inset Formula $f(r)=\sum_{i=1}^{k}\left(E_{r_{i}}+P_{r_{i}}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Calculation for PDEs
+\end_layout
+
+\begin_layout Standard
+The partial differential equations solved and test in the current work have
+ the following form:
+\begin_inset Formula 
+\begin{equation}
+h\left(x,y,\Psi(x,y),\frac{\partial}{\partial x}\Psi(x,y),\frac{\partial}{\partial y}\Psi(x,y),\frac{\partial^{2}}{\partial x^{2}}\Psi(x,y),\frac{\partial^{2}}{\partial y^{2}}\Psi(x,y)\right)=0
+\end{equation}
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[a,b],\ y\in[c,d]$
+\end_inset
+
+.
+ The boundary conditions consider in this manuscript are the Dirichlet boundary
+ conditions provided by:
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\Psi(a,y)=f_{0}(y)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\Psi(b,y)=f_{1}(y)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\Psi(x,c)=g_{0}(x)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\Psi(x,d)=g_{1}(x)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The error value of any chromosome 
+\begin_inset Formula $g$
+\end_inset
+
+ is calculated as follows:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Define
+\series default
+ the set 
+\begin_inset Formula $T=\left\{ \left(x_{1},y_{1}\right),\left(x_{1},y_{2}\right),\ldots,\left(x_{N},y_{N}\right)\right\} $
+\end_inset
+
+.
+ This is a grid of 
+\begin_inset Formula $N\times N$
+\end_inset
+
+ points in 
+\begin_inset Formula $[a,b]\times[c,d]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Define
+\series default
+ the set 
+\begin_inset Formula $x_{B}=\left\{ x_{b1},x_{b2},\ldots,x_{bN}\right\} $
+\end_inset
+
+, equally spaced points in 
+\begin_inset Formula $[a,b]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Define
+\series default
+ the set 
+\begin_inset Formula $y_{B}=\left\{ y_{b1},y_{b2},\ldots,y_{bN}\right\} $
+\end_inset
+
+, equally spaced points in 
+\begin_inset Formula $[c,d]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Calculate
+\series default
+ the error value 
+\begin_inset Formula $E_{r}$
+\end_inset
+
+ as 
+\begin_inset Formula 
+\[
+E_{r}=\sum_{i=1}^{N}h\left(x_{i},y_{i},r\left(x_{i},y_{i}\right),\frac{\partial}{\partial x}r\left(x_{i},y_{i}\right),\frac{\partial}{\partial y}r\left(x_{i},y_{i}\right)\right)^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Calculate
+\series default
+ the associated penalty values:
+\begin_inset Formula 
+\[
+\begin{array}{ccc}
+P_{1r} & = & \lambda\sum_{i=1}^{M}\left(r\left(a,y_{bi}\right)-f_{0}\left(y_{bi}\right)\right)^{2}\\
+P_{2r} & = & \lambda\sum_{i=1}^{M}\left(r\left(b,y_{bi}\right)-f_{1}\left(y_{bi}\right)\right)^{2}\\
+P_{3r} & = & \lambda\sum_{i=1}^{M}\left(r\left(x_{bi},c\right)-g_{0}\left(x_{bi}\right)\right)^{2}\\
+P_{4r} & = & \lambda\sum_{i=1}^{M}\left(r\left(x_{bi},d\right)-g_{1}\left(x_{bi}\right)\right)^{2}
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Compute
+\series default
+ the total error: 
+\begin_inset Formula $f(r)=E_{r}+P_{1r}+P_{2r}+P_{3r}+P_{4r}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+The used genetic algorithm 
+\end_layout
+
+\begin_layout Standard
+The Genetic Algorithm is well - knownglobal optimization technique based
+ on biology observations and it incorporates a series of operations such
+ as selection, crossover and mutation.
+ The Genetic algorithm initiates by creating a population of candidate solutions
+, called also chromosomes, and subsequently these solutions are evolved
+ through the application of genetic operations.
+ The method has been used on a variety of research problems such as electromagne
+tic 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "gen_app1"
+literal "false"
+
+\end_inset
+
+, combinatorial problems 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "gen_app2"
+literal "false"
+
+\end_inset
+
+,
+\series bold
+ 
+\series default
+design of water distribution networks 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "gen_app3"
+literal "false"
+
+\end_inset
+
+ etc.
+ In this work, a hybrid form of genetic algorithm is presented, where a
+ local minimization method is periodically applied to a subset of the genetic
+ algorithm's chromosomes.
+ Furthermore, the termination rule has taken into account the nature of
+ the problem.
+\end_layout
+
+\begin_layout Standard
+The used genetic algorithm is composed by the following steps:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initialization
+\series default
+ step.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ as 
+\begin_inset Formula $N_{c}$
+\end_inset
+
+ the number of chromosomes that will participate.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ as 
+\begin_inset Formula $N_{g},$
+\end_inset
+
+the maximum number of allowed generations.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ as 
+\begin_inset Formula $p_{m}$
+\end_inset
+
+, the mutation rate.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ as 
+\begin_inset Formula $p_{s},$
+\end_inset
+
+ the selection rate.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ as 
+\begin_inset Formula $p_{l},$
+\end_inset
+
+ the local search rate.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ a small positive number, i.e 
+\begin_inset Formula $\epsilon=10^{-8}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initialize
+\series default
+ the chromosomes 
+\begin_inset Formula $x_{i},\ i=1,...,N_{c}$
+\end_inset
+
+ using random numbers.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ iter=0
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Check
+\series default
+ for termination
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:Check-for-termination."
+
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Obtain
+\series default
+ the best fitness 
+\begin_inset Formula 
+\[
+f^{*}=\min_{i\in\left[0\ldots N_{c}\right]}f_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Terminate
+\series default
+ if 
+\begin_inset Formula $\mbox{iter}\ge N_{g}$
+\end_inset
+
+ OR 
+\begin_inset Formula $f^{*}\le\epsilon$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Calculate
+\series default
+ fitness.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1,\ldots,N_{c}$
+\end_inset
+
+ 
+\series bold
+do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Construct
+\series default
+ a neural network or an RBF network using as parameters the chromosome 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ and denote this model as 
+\begin_inset Formula $m_{i}$
+\end_inset
+
+.
+ For the case of SODEs, the chromosome is divided into 
+\begin_inset Formula $k$
+\end_inset
+
+ parts (the number of ODEs in the system) and a model 
+\begin_inset Formula $m_{ij},\ j=1,..,k$
+\end_inset
+
+ is constructed for every equation.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Calculate
+\series default
+ the fitness value 
+\begin_inset Formula $f_{i}=f\left(m_{i}\right)$
+\end_inset
+
+ using the error equations of subsection 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Calculation-of-error"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Draw 
+\series default
+a random number 
+\begin_inset Formula $r\in[0,1].$
+\end_inset
+
+ 
+\series bold
+If
+\series default
+ 
+\begin_inset Formula $r\le p_{l}$
+\end_inset
+
+, apply a local search procedure to the model 
+\begin_inset Formula $m_{i}$
+\end_inset
+
+ and locate a better value 
+\begin_inset Formula $f_{i}$
+\end_inset
+
+ for fitness.
+ The used local search procedure is a BFGS method 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "powell"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Application
+\series default
+ of genetic operators.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Selection
+\series default
+ operation.
+ The procedure starts by sorting the chromosomes according to their fitness.
+ The first
+\series bold
+ 
+\begin_inset Formula $\left(1-p_{s}\right)\times N_{c}$
+\end_inset
+
+
+\series default
+ are copied intact to the next generation of the population.
+ The remaining chromosomes will be substitued by chromosomes that will be
+ computed by crossover and mutation.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Crossover
+\series default
+ operation.
+ In the crossover operation, 
+\begin_inset Formula $p_{s}\times N_{c}$
+\end_inset
+
+ chromosomes are produced.
+ For every couple of produced offsrpings, two parents 
+\begin_inset Formula $(z,w)$
+\end_inset
+
+ are selected using the well - known procedure of tournament selection.
+
+\series bold
+ 
+\series default
+For every set 
+\begin_inset Formula $(z,w)$
+\end_inset
+
+ of parents, two offsprings 
+\begin_inset Formula $\tilde{z}$
+\end_inset
+
+ and 
+\begin_inset Formula $\tilde{w}$
+\end_inset
+
+ are produced according to the following equations:
+\series bold
+
+\begin_inset Formula 
+\begin{eqnarray}
+\tilde{z_{i}} & = & a_{i}z_{i}+\left(1-a_{i}\right)w_{i}\nonumber \\
+\tilde{w_{i}} & = & a_{i}w_{i}+\left(1-a_{i}\right)z_{i}\label{eq:crossover_ali-1}
+\end{eqnarray}
+
+\end_inset
+
+
+\series default
+with 
+\begin_inset Formula $a_{i}$
+\end_inset
+
+ a random number and 
+\begin_inset Formula $a_{i}\in[-0.5,1.5]$
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kaeloAli"
+literal "true"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Mutation
+\series default
+ operation.
+ Alter every element of each chromosome randomly with probability 
+\begin_inset Formula $p_{m}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ iter=iter+1
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Goto
+\series default
+ step 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:Check-for-termination."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+The used PSO method 
+\end_layout
+
+\begin_layout Standard
+The method PSO is a stochastic global optimization method and it constructs
+ a swarm of candidate solutions (particles) that are moving towards to the
+ global minimum at some speed that is constantly changing.
+ The speed of each solution is affected by the best position in which the
+ specific particle has been found so far, but also by the overall best position
+ of the swarm of particles.The PSO method has been used in a many applications
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pso_app1,pso_app2,pso_app3,pso_app4"
+literal "true"
+
+\end_inset
+
+.
+ This manuscript proposes a hybrid PSO method with a periodical application
+ of a local search procedure.
+ The steps of the modified PSO method are the following:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initialization
+\series default
+.
+ 
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $\mbox{iter}=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ as 
+\begin_inset Formula $N_{c}$
+\end_inset
+
+ the number of particles.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ as 
+\begin_inset Formula $N_{g}$
+\end_inset
+
+ the maximum number of generations.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $p_{l}$
+\end_inset
+
+ the local search rate.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ a small positive number, i.e 
+\begin_inset Formula $\epsilon=10^{-8}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initalize
+\series default
+ the positions of the particles 
+\begin_inset Formula $x_{1},x_{2},...,x_{N_{c}}$
+\end_inset
+
+ randomly.
+ The size of each particle is defined as 
+\begin_inset Formula $n$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initalize
+\series default
+ the velocities of the particles 
+\begin_inset Formula $u_{1},u_{2},...,u_{N_{c}}$
+\end_inset
+
+ using the scheme
+\begin_inset Formula 
+\[
+u_{ij}=L_{j}+r\times\frac{R_{j}-L_{j}}{20},\ i=1,...,N_{c},\ j=1,..,n
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $r$
+\end_inset
+
+ is a random number with 
+\begin_inset Formula $r\in[0,1]$
+\end_inset
+
+, 
+\begin_inset Formula $R_{j}$
+\end_inset
+
+ is the lower bound for parameter 
+\begin_inset Formula $j$
+\end_inset
+
+ and 
+\begin_inset Formula $R_{j}$
+\end_inset
+
+ is the upper bound for parameter 
+\begin_inset Formula $j$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1..N_{c}$
+\end_inset
+
+ do 
+\begin_inset Formula $p_{i}=x_{i}$
+\end_inset
+
+, where 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ is the best located position for particle 
+\begin_inset Formula $i$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $p_{\mbox{best}}=\arg\min_{i\in1..N_{c}}f\left(x_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Check 
+\series default
+for termination.
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:Check-Termination."
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Obtain
+\series default
+ the best fitness 
+\begin_inset Formula 
+\[
+f^{*}=\min_{i\in\left[0\ldots N_{c}\right]}f_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Terminate
+\series default
+ if 
+\begin_inset Formula $\mbox{iter}\ge N_{g}$
+\end_inset
+
+ OR 
+\begin_inset Formula $f^{*}\le\epsilon$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1..N_{c}$
+\end_inset
+
+ 
+\series bold
+Do
+\series default
+
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Calculate
+\series default
+ the velocity 
+\begin_inset Formula $u_{i}$
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+u_{ij}=u_{ij}+r_{1}\times\left(p_{ij}-x_{ij}\right)+r_{2}\times\left(p_{\mbox{best},j}-x_{ij}\right),\ j=1,..,n
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $x_{i}=x_{i}+u_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Evaluate
+\series default
+ the fitness 
+\begin_inset Formula $f_{i}$
+\end_inset
+
+ of the particle 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ using the same scheme as for the genetic algorithm.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+If
+\series default
+ 
+\begin_inset Formula $r\le p_{l}$
+\end_inset
+
+, where 
+\begin_inset Formula $r\in[0,1]$
+\end_inset
+
+ a random number, apply a local search procedure to the model 
+\begin_inset Formula $m_{i}$
+\end_inset
+
+ and locate a better value 
+\begin_inset Formula $f_{i}$
+\end_inset
+
+ for the fitness of particle 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $f\left(x_{i}\right)\le f\left(p_{i}\right)$
+\end_inset
+
+ then 
+\begin_inset Formula $p_{i}=x_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+End
+\series default
+ 
+\series bold
+For
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $p_{\mbox{best}}=\arg\min_{i\in1..m}f\left(x_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $\mbox{iter}=\mbox{iter}+1$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Goto
+\series default
+ Step 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:Check-Termination."
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Experiments 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Experiments"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The differential equations used in the experiments are presented below.
+ These equations have been used in experiments and other related publications
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_nn1,de_tsoulos"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Linear ode equations
+\end_layout
+
+\begin_layout Subsubsection*
+ODE1
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+y'=\frac{2x-y}{x}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[1,2].$
+\end_inset
+
+ The initial condition is 
+\begin_inset Formula $y(1)=3$
+\end_inset
+
+.
+ The solution is 
+\begin_inset Formula $y(x)=x+\frac{2}{x}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+ODE2
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+y'=\frac{1-y\cos(x)}{\sin(x)}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[1,2].$
+\end_inset
+
+ The initial condition is 
+\begin_inset Formula $y(1)=\frac{3}{\sin(1)}$
+\end_inset
+
+.
+ The solution is 
+\begin_inset Formula $y(x)=\frac{x+2}{\sin(x)}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+ODE3
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+y''=6y'-9y
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[0,1]$
+\end_inset
+
+.
+ The initial conditions are 
+\begin_inset Formula $y(0)=0,\ y'(0)=2$
+\end_inset
+
+.
+ The solution is 
+\begin_inset Formula $y(x)=2x\exp(3x)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+ODE4
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+y''=-\frac{1}{5}y'-y-\frac{1}{5}\exp\left(-\frac{x}{5}\right)\cos(x)
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[0,1]$
+\end_inset
+
+.
+ The initial conditions are 
+\begin_inset Formula $y(0)=0,\ y(1)=\frac{\sin(0.1)}{\exp(0.2)}.$
+\end_inset
+
+ The solution is 
+\begin_inset Formula $y(x)=\exp\left(-\frac{x}{5}\right)\sin(x)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+ODE5
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+y''=-100y
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[0,1]$
+\end_inset
+
+.
+ The initial conditions are 
+\begin_inset Formula $y(0)=0,\ y'(0)=10$
+\end_inset
+
+.
+ The solution is given by
+\begin_inset Formula 
+\[
+y(x)=\sin(10x)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Non-linear ODEs
+\end_layout
+
+\begin_layout Subsubsection*
+NLODE1 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+y'=\frac{1}{2y}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[1,4]$
+\end_inset
+
+ and the initial condition 
+\begin_inset Formula $y(1)=1$
+\end_inset
+
+.
+ The solution is given by 
+\begin_inset Formula $y(x)=\sqrt{x}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+NLODE2 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+(y')^{2}+\log(y)-\cos^{2}(x)-2\cos(x)-1-\log(x+\sin(x))=0
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[1,2]$
+\end_inset
+
+ and the initial condition 
+\begin_inset Formula $y(1)=1+\sin(1)$
+\end_inset
+
+.
+ The solution is given by 
+\begin_inset Formula $y(x)=x+\sin(x)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+NLODE3 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+y''y'=-\frac{4}{x^{3}}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[1,2]$
+\end_inset
+
+ and the initial conditions are 
+\begin_inset Formula $y(1)=0,\ y(2)=\log(4)$
+\end_inset
+
+.
+ The solution is 
+\begin_inset Formula $y(x)=\log\left(x^{2}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+NLODE4 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+x^{2}y''+\left(xy'\right)^{2}+\frac{1}{\log(x)}=0
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[e,2e]$
+\end_inset
+
+ and the initial conditions are 
+\begin_inset Formula $y(e)=0,\ y'(e)=\frac{1}{e}$
+\end_inset
+
+.
+ The solution is 
+\begin_inset Formula $y(x)=\log(\log(x))$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Odes without analytic solution
+\end_layout
+
+\begin_layout Subsubsection*
+UNSOLODE1
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+xy''+y'-\cos(x)=0
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[0,1]$
+\end_inset
+
+ and the initial conditions are 
+\begin_inset Formula $y(0)=0,\ y'(0)=1$
+\end_inset
+
+.
+ The solution is given by
+\begin_inset Formula 
+\[
+y(x)=\int_{0}^{x}\frac{\sin(t)}{t}dt
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+UNSOLODE2
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+y''+2xy=0
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[0,1]$
+\end_inset
+
+ and the initial conditions are 
+\begin_inset Formula $y(0)=0,\ y'(0)=1$
+\end_inset
+
+.
+ The exact solution is given by
+\begin_inset Formula 
+\[
+y(x)=\int_{0}^{x}\exp\left(-t^{2}\right)dt
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Systems of ode cases 
+\end_layout
+
+\begin_layout Subsubsection*
+SODE1 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+y'_{1} & = & \cos(x)+y_{1}^{2}+y_{2}-\left(x^{2}+\sin^{2}(x)\right)\\
+y'_{2} & = & 2x-x^{2}\sin(x)+y_{1}y_{2}
+\end{eqnarray*}
+
+\end_inset
+
+with 
+\begin_inset Formula $y_{1}(0)=0,\ y_{2}(0)=0,\ x\in[0,1]$
+\end_inset
+
+.
+ The analytical solutions are given by 
+\begin_inset Formula $y_{1}(x)=\sin(x),\ y_{2}(x)=x^{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection*
+SODE2 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+y'_{1} & = & \frac{\cos(x)-\sin(x)}{y_{2}}\\
+y'_{2} & = & y_{1}y_{2}+\exp(x)-\sin(x)
+\end{eqnarray*}
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[0,1]$
+\end_inset
+
+ and the initial conditions are 
+\begin_inset Formula $y_{1}(0)=0,\ y_{2}(0)=1$
+\end_inset
+
+.
+ The exact solutions are: 
+\begin_inset Formula $y_{1}(x)=\frac{\sin(x)}{\exp(x)},\ y_{2}=\exp(x)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+SODE3 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+y'_{1} & = & \cos(x)\\
+y'_{2} & = & -y_{1}\\
+y'_{3} & = & y_{2}\\
+y'_{4} & = & -y_{3}\\
+y'_{5} & = & y_{4}
+\end{eqnarray*}
+
+\end_inset
+
+with 
+\begin_inset Formula $y_{1}(0)=0,\ y_{2}(0)=1,\ y_{3}(0)=0,\ y_{4}(0)=1,\ y_{5}(0)=0,\ x\in[0,1]$
+\end_inset
+
+ and the solutions 
+\begin_inset Formula $y_{1}(x)=\sin(x),\ y_{2}(x)=\cos(x),\ y_{3}(x)=\sin(x),\ y_{4}(x)=\cos(x),\ y_{5}(x)=\sin(x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection*
+SODE4
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray*}
+y'_{1} & = & -\frac{1}{y_{2}}\sin\left(\exp(x)\right)\\
+y'_{2} & = & -y_{2}
+\end{eqnarray*}
+
+\end_inset
+
+with 
+\begin_inset Formula $y_{1}(0)=\cos(1.0),\ y_{2}(0)=1.0,\ x\in[0,1]$
+\end_inset
+
+ and solutions 
+\begin_inset Formula $y_{1}(x)=\cos\left(\exp(x)\right),\ y_{2}(x)=\exp(-x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Pde cases
+\end_layout
+
+\begin_layout Subsubsection*
+PDE1 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\nabla^{2}\Psi(x,y)=\exp(-x)\left(x-2+y^{3}+6y\right)
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[0,1],\ y\in[0,1]$
+\end_inset
+
+.
+ The boundary conditions are given by: 
+\begin_inset Formula $\Psi(0,y)=y^{3},\ \Psi(1,y)=\left(1+y^{3}\right)\exp(-1),\ \Psi(x,0)=x\exp(-x),\ \Psi(x,1)=(x+1)\exp(-x)$
+\end_inset
+
+ The solution is given by: 
+\begin_inset Formula $\Psi(x,y)=\left(x+y^{3}\right)\exp(-x)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+PDE2 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\nabla^{2}\Psi(x,y)=-2\Psi(x,y)
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[0,1],\ y\in[0,1]$
+\end_inset
+
+.
+ The associated boundary conditions are: 
+\begin_inset Formula $\Psi(0,y)=0,\ \Psi(1,y)=\sin(1)\cos(y),\ \Psi(x,0)=\sin(x),\ \Psi(x,1)=\sin(x)\cos(1)$
+\end_inset
+
+.
+ The solution is given by: 
+\begin_inset Formula $\Psi(x,y)=\sin(x)\cos(y)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsubsection*
+PDE3 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\nabla^{2}\Psi(x,y)=4
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[0,1],\ y\in[0,1]$
+\end_inset
+
+.
+ The boundary conditions are: 
+\begin_inset Formula $\Psi(0,y)=y^{2}+y+1,\ \Psi(1,y)=y^{2}+y+3,\ \Psi(x,0)=x^{2}+x+1,\ \Psi(x,1)=x^{2}+x+3$
+\end_inset
+
+.
+ The solution is given by: 
+\begin_inset Formula $\Psi(x,y)=x^{2}+y^{2}+x+y+1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection*
+PDE4
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\nabla^{2}\Psi(x,y)=\left(x-2\right)\exp(-x)+x\exp(-y)
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[0,1],\ y\in[0,1].$
+\end_inset
+
+The boundary conditions are given by: 
+\begin_inset Formula $\Psi(0,y)=0,\ \Psi(1,y)=\sin(y),\ \Psi(x,0)=0,\ \Psi(x,1)=\sin(x)$
+\end_inset
+
+.
+ The solution is: 
+\begin_inset Formula $\Psi(x,y)=\sin(xy)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Experimental results
+\end_layout
+
+\begin_layout Standard
+A set of experiments were conducted to determine the efficiency and the
+ validity of the proposed methods.
+ The equations as well as the proposed methods were coded in ANSI C++ using
+ the OPTIMUS optimization library, freely available from 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://github.com/itsoulos/OPTIMUS/
+\end_layout
+
+\end_inset
+
+.
+ The parameters of the methods are shown in the table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Parameter-settings."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The weights for the neural network as well as for the RBF case were set
+ to 10 and all the experiments were conducted 30 times and averages were
+ reported.
+ The experiments were conducted using the drand48() function of the C language
+ as the random number generator.
+ The solution produced by the neural network was applied to random points
+ within the equation domain, and the error at those points was recorded.
+ We denote this error as generalization error.
+ The results are listed in the table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:genetic_results"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The meaning of the columns are:
+\end_layout
+
+\begin_layout Enumerate
+The column EQUATION denotes the title of the equation to be solved.
+\end_layout
+
+\begin_layout Enumerate
+The column MLP-GEN shows the results of a neural network, trained using
+ the proposed genetic algorithm.
+\end_layout
+
+\begin_layout Enumerate
+The column RBF-GEN shows the results of an RBF model.
+ The weights as well as the centroids of the RBF network were trained using
+ the proposed genetic algorithm.
+\end_layout
+
+\begin_layout Enumerate
+The column MLP-PSO stands for the application of a neural network with 10
+ hidden nodes that was adapted to the given equation using the proposed
+ PSO algorithm.
+\end_layout
+
+\begin_layout Enumerate
+The column MLP-RBF denotes the application of an RBF to the equation and
+ the network was trained using the proposed PSO variant.
+\end_layout
+
+\begin_layout Standard
+As it can be deduced from the conducted experiments, both the artificial
+ neural network and the RBF network achieve very low errors in almost all
+ equations.
+ In a small portion of them, the RBF network appears to have a lower generalizat
+ion error.
+\end_layout
+
+\begin_layout Standard
+Of course, the proposed method may be slower than other Numerical Analysis
+ techniques, especially in simple differential equation problems.
+ However, this issue can be partially addressed by using parallel Genetic
+ Algorithms for example.
+ In figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Average-execution-times"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ the average execution time of the proposed method for the test cases of
+ ODEs and SODEs is plotted.
+ In this series of experiments an increasing number of threads is used at
+ every experiment.
+ The number of threads varies from 1 to 8.
+ The execution was performed on a Intel i7-10700T running at 2.00GHz with
+ 16GB of ram and the operating system was Debian Linux.
+ As can be seen the average execution time drops significantly when using
+ 2 or 4 threads.
+ This reduction will obviously be even greater when the method is applied
+ to even more difficult differential equation solving problems.
+\series bold
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Parameter settings for the genetic algorithm.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Parameter-settings."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="9" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PARAMETER
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+VALUE
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{c}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+500
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{g}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2000
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p_{s}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.10
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p_{m}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.05
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p_{l}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.05
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\lambda$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+100.0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $H$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Experimental results using the hybrid genetic algorithm.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:genetic_results"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="20" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+EQUATION
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MLP-GEN
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+RBF-GEN
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MLP-PSO
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+RBF-PSO
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ODE1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.6\times10^{-3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.7\times10^{-8}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.6\times10^{-3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2.1\times10^{-8}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ODE2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.3\times10^{-3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.3\times10^{-7}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2.2\times10^{-3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2.0\times10^{-8}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ODE3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.6\times10^{-15}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.3\times10^{-15}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $6.5\times10^{-12}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2.9\times10^{-10}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ODE4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.8\times10^{-9}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.7\times10^{-10}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4.4\times10^{-10}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5.7\times10^{-9}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ODE5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3.9\times10^{-5}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $7.8\times10^{-2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3.8\times10^{-10}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5.4\times10^{-2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+NLODE1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.3\times10^{-15}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $7.3\times10^{-10}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.9\times10^{-9}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $7.7\times10^{-9}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+NLODE2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2.7\times10^{-8}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.9\times10^{-10}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $7.8\times10^{-12}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2.5\times10^{-9}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+NLODE3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3.5\times10^{-6}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.7\times10^{-8}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.7\times10^{-8}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3.4\times10^{-8}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+NLODE4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4.5\times10^{-8}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4.6\times10^{-9}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3.4\times10^{-8}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4.7\times10^{-8}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+UNSOLODE1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2.1\times10^{-10}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5.8\times10^{-11}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3.4\times10^{-12}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.7\times10^{-8}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+UNSOLODE2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.2\times10^{-15}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.8\times10^{-8}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.3\times10^{-12}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5.9\times10^{-8}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SODE1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.6\times10^{-8}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.6\times10^{-8}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.1\times10^{-3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.4\times10^{-8}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SODE2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.3\times10^{-9}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.8\times10^{-8}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4.1\times10^{-7}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5.3\times10^{-9}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SODE3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.4\times10^{-9}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $6.7\times10^{-9}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.63\times10^{-9}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $7.7\times10^{-9}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SODE4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3.1\times10^{-3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5.9\times10^{-9}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.5\times10^{-4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.1\times10^{-8}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PDE1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $8.1\times10^{-3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5.5\times10^{-2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $6.7\times10^{-4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5.9\times10^{-3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PDE2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $7.6\times10^{-5}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $9.7\times10^{-3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3.5\times10^{-6}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4.1\times10^{-4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PDE3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2.1\times10^{-4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2.1\times10^{-10}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2.1\times10^{-4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.8\times10^{-8}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PDE4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5.6\times10^{-4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3.6\times10^{-3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.7\times10^{-4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.9\times10^{-4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Average execution times for the proposed technique using the Genetic algorithm
+ and an increasing number of OpenMP threads.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Average-execution-times"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename timecomparison.eps
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Declare the test error.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Add more difficult practical problems that RK can not solve
+\end_layout
+
+\begin_layout Subsection
+Comparison with other methods
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparison with MEMDB method on some real world problems.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PROBLEM
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MEBDF
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+RK
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MLP GEN
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MLP PSO
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+HIRES
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $6.1\times10^{-1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $7.6\times10^{-6}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $8.7\times10^{-6}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+OREGO
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.2\times10^{-3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5.0\times10^{-11}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1.5\times10^{-10}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ROBER
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2.5\times10^{-2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2.66\times10^{-7}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2.9\times10^{-7}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Conclusions 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Conclusions"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this text, the numerical solution of differential equations using machine
+ learning models was presented.
+ These models were artificial neural networks and RBF neural networks.
+ The adjustment of the parameters of these models to the initial conditions
+ of the equations was done using penalty factors.
+ Finding the optimal parameters for these models was performed using two
+ modified versions of well - known global optimization techniques.
+ One global optimization method used was the genetic algorithm and the other
+ modification was the particle swarm optimization.
+ In all experimental cases, the generalization error was extremely low and,
+ indeed in some cases, the RBF network was shown to outperform the artificial
+ neural network.
+\end_layout
+
+\begin_layout Standard
+Future extensions of the proposed methodology may include:
+\end_layout
+
+\begin_layout Enumerate
+Incorporation of additional machine learning models, such as SVM models.
+\end_layout
+
+\begin_layout Enumerate
+Usage of more efficient stopping rules.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Parallelization of the whole process using modern programming techniques
+ such as MPI 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "openmpi"
+literal "false"
+
+\end_inset
+
+ or OpenMP 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "openmp"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_physics1"
+literal "false"
+
+\end_inset
+
+M.
+ Raissi, G.E.
+ Karniadakis, Hidden physics models: Machine learning of nonlinear partial
+ differential equations, Journal of Computational Physics 
+\series bold
+357
+\series default
+, pp.
+ 125-141, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_physics2"
+literal "false"
+
+\end_inset
+
+T.
+ Lelièvre, G.
+ Stoltz, Partial differential equations and stochastic methods in molecular
+ dynamics.
+ Acta Numerica 
+\series bold
+25
+\series default
+, pp.
+ 681-880, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_chem1"
+literal "false"
+
+\end_inset
+
+G.
+ Scholz, F.
+ Scholz, First-order differential equations in chemistry, ChemTexts 
+\series bold
+1
+\series default
+, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_chem2"
+literal "false"
+
+\end_inset
+
+J.L.
+ Padgett, Y.
+ Geldiyev, S.
+ Gautam, W.
+ Peng, Y.
+ Mechref, A.
+ Ibraguimov, Object classification in analytical chemistry via data-driven
+ discovery of partial differential equations.
+ Comp and Math Methods, 2021.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_chem3"
+literal "false"
+
+\end_inset
+
+O.
+ Owoyele, P.
+ Pal, ChemNODE: A neural ordinary differential equations framework for efficient
+ chemical kinetic solvers, Energy and AI 
+\series bold
+7
+\series default
+, 2022.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_econ1"
+literal "false"
+
+\end_inset
+
+Z.
+ Wang, X.
+ Huang, H.
+ Shen, Control of an uncertain fractional order economic system via adaptive
+ sliding mode, Neurocomputing 
+\series bold
+83
+\series default
+, pp.
+ 83-88, 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_econ2"
+literal "false"
+
+\end_inset
+
+Y.
+ Achdou, F.J.
+ Buera, J.M.
+ Lasry, P.L.
+ Lions, B.
+ Moll, Partial differential equation models in macroeconomicsPhil.
+ Trans.
+ R.
+ Soc.
+ A.
+ 
+\series bold
+372
+\series default
+, 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_bio1"
+literal "false"
+
+\end_inset
+
+K.
+ Hattaf, N.
+ Yousfi, Global stability for reaction–diffusion equations in biology, Computers
+ & Mathematics with Applications 
+\series bold
+66
+\series default
+, pp.
+ 1488-1497, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_bio2"
+literal "false"
+
+\end_inset
+
+P.
+ Getto, M.
+ Waurick, A differential equation with state-dependent delay from cell populatio
+n biology, Journal of Differential Equations 
+\series bold
+260
+\series default
+, pp.
+ 6176-6200, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_rk1"
+literal "false"
+
+\end_inset
+
+C.A.
+ Kennedy, M.H.
+ Carpenter, Higher-order additive Runge–Kutta schemes for ordinary differential
+ equations, Applied Numerical Mathematics 
+\series bold
+136
+\series default
+, pp.
+ 183-205, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_rk2"
+literal "false"
+
+\end_inset
+
+H.
+ Ranocha, D.I.
+ Ketcheson, Relaxation Runge–Kutta Methods for Hamiltonian Problems, J Sci
+ Comput 
+\series bold
+84
+\series default
+, 17 2020.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_rk3"
+literal "false"
+
+\end_inset
+
+J.
+ Niegemann, R.
+ Diehl, K.
+ Busch, Efficient low-storage Runge–Kutta schemes with optimized stability
+ regions, Journal of Computational Physics 231, pp.
+ 364-372, 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_wave1"
+literal "false"
+
+\end_inset
+
+Y.
+ Wang.
+ Q.
+ Fan, The second kind Chebyshev wavelet method for solving fractional differenti
+al equations, Applied Mathematics and Computation 
+\series bold
+218
+\series default
+, pp.
+ 8592-8601, 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_wave2"
+literal "false"
+
+\end_inset
+
+M.H.Heydari, M.R.Hooshmandasl, F.Mohammadi, Legendre wavelets method for solving
+ fractional partial differential equations with Dirichlet boundary conditions,
+ Applied Mathematics and Computation 
+\series bold
+234
+\series default
+, pp.
+ 267-276, 2014.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_wave3"
+literal "false"
+
+\end_inset
+
+B.
+ Yuttanan, M.
+ Razzaghi, Legendre wavelets approach for numerical solutions of distributed
+ order fractional differential equations, Applied Mathematical Modelling
+ 
+\series bold
+70
+\series default
+, pp.
+ 350-364, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_pred1"
+literal "false"
+
+\end_inset
+
+H.
+ Kim, R.
+ Sakthivel, Numerical solution of hybrid fuzzy differential equations using
+ improved predictor–corrector method, Communications in Nonlinear Science
+ and Numerical Simulation 
+\series bold
+17
+\series default
+, pp.
+ 3788-3794, 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_pred2"
+literal "false"
+
+\end_inset
+
+V.
+ Daftardar-Gejji, Y.
+ Sukale, S.
+ Bhalekar, A new predictor–corrector method for fractional differential
+ equations, Applied Mathematics and Computation 
+\series bold
+244
+\series default
+, pp.
+ 158-182, 2014.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "neural1"
+literal "true"
+
+\end_inset
+
+C.
+ Bishop, Neural Networks for Pattern Recognition, Oxford University Press,
+ 1995.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "neural2"
+literal "true"
+
+\end_inset
+
+G.
+ Cybenko, Approximation by superpositions of a sigmoidal function, Mathematics
+ of Control Signals and Systems 2, pp.
+ 303-314, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_nn1"
+literal "false"
+
+\end_inset
+
+I.
+ E.
+ Lagaris, A.
+ Likas, D.
+ I.
+ Fotiadis, Artificial neural networks for solving ordinary and partial different
+ial equations, IEEE Transactions on Neural Networks 
+\series bold
+9
+\series default
+, pp.
+ 987-1000, 1998.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_nn2"
+literal "false"
+
+\end_inset
+
+A.
+ Malek, R.Shekari Beidokhti, Numerical solution for high order differential
+ equations using a hybrid neural network—Optimization method, Applied Mathematic
+s and Computation 
+\series bold
+183
+\series default
+, pp.
+ 260-271, 2006.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_nn3"
+literal "false"
+
+\end_inset
+
+W.
+ Zhang, W.
+ Cai, FBSDE based neural network algorithms for high-dimensional quasilinear
+ parabolic PDEs, Journal of Computational Physics 
+\series bold
+470
+\series default
+, 2022.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_finite1"
+literal "false"
+
+\end_inset
+
+P.
+ Frauenfelder, C.
+ Schwab, R.A.
+ Todor, Finite elements for elliptic problems with stochastic coefficients,
+ Computer Methods in Applied Mechanics and Engineering 
+\series bold
+194
+\series default
+, pp.
+ 205-228, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_finite2"
+literal "false"
+
+\end_inset
+
+P.
+ Houston, E.
+ Süli, A note on the design of hp-adaptive finite element methods for elliptic
+ partial differential equations, Computer Methods in Applied Mechanics and
+ Engineering 
+\series bold
+194
+\series default
+, pp.
+ 229-243, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ge_main"
+literal "false"
+
+\end_inset
+
+M.
+ O'Neill, C.
+ Ryan, Grammatical evolution, IEEE Transactions on Evolutionary Computation
+ 
+\series bold
+5
+\series default
+, pp.
+ 349-358, 2001.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_tsoulos"
+literal "true"
+
+\end_inset
+
+I.G.
+ Tsoulos, I.E.
+ Lagaris, Solving differential equations with genetic programming.
+ Genet Program Evolvable Mach 
+\series bold
+7
+\series default
+, pp.
+ 33–54, 2006.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_svm1"
+literal "false"
+
+\end_inset
+
+S.
+ Mehrkanoon, T.
+ Falck and J.
+ A.
+ K.
+ Suykens, Approximate Solutions to Ordinary Differential Equations Using
+ Least Squares Support Vector Machines, IEEE Transactions on Neural Networks
+ and Learning Systems 
+\series bold
+23
+\series default
+, pp.
+ 1356-1367, 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_svm2"
+literal "false"
+
+\end_inset
+
+S.
+ Mehrkanoon, J.A.K.Suykens, Learning solutions to partial differential equations
+ using LS-SVM, Neurocomputing 
+\series bold
+159
+\series default
+, pp.
+ 105-116, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_deep1"
+literal "false"
+
+\end_inset
+
+J.
+ Sirignano, K.
+ Spiliopoulos, DGM: A deep learning algorithm for solving partial differential
+ equations, Journal of Computational Physics 
+\series bold
+375
+\series default
+, pp.
+ 1339-1364, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_deep2"
+literal "false"
+
+\end_inset
+
+M.Raissi, P.Perdikaris, G.E.Karniadakis, Physics-informed neural networks: A
+ deep learning framework for solving forward and inverse problems involving
+ nonlinear partial differential equations, Journal of Computational Physics
+ 
+\series bold
+378
+\series default
+, pp.
+ 686-707, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_nnc"
+literal "false"
+
+\end_inset
+
+I.G.
+ Tsoulos, D.
+ Gavrilis, E.
+ Glavas, Solving differential equations with constructed neural networks
+ 
+\series bold
+72
+\series default
+, pp.
+ 2385-2391, 2009.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "RbfMain"
+literal "false"
+
+\end_inset
+
+J.
+ Park and I.
+ W.
+ Sandberg, Universal Approximation Using Radial-Basis-Function Networks,
+ Neural Computation 3, pp.
+ 246-257, 1991.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ga1"
+literal "true"
+
+\end_inset
+
+D.
+ Goldberg, Genetic Algorithms in Search, Optimization and Machine Learning,
+ Addison-Wesley Publishing Company, Reading, Massachussets, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ga2"
+literal "true"
+
+\end_inset
+
+Z.
+ Michaelewicz, Genetic Algorithms + Data Structures = Evolution Programs.
+ Springer - Verlag, Berlin, 1996.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ga3"
+literal "true"
+
+\end_inset
+
+S.A.
+ Grady, M.Y.
+ Hussaini, M.M.
+ Abdullah, Placement of wind turbines using genetic algorithms, Renewable
+ Energy 
+\series bold
+30
+\series default
+, pp.
+ 259-270, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso1"
+literal "false"
+
+\end_inset
+
+J.
+ Kennedy, R.C.
+ Eberhart, The particle swarm: social adaptation in information processing
+ systems, in: D.
+ Corne, M.
+ Dorigo and F.
+ Glover (eds.), New ideas in Optimization, McGraw-Hill, Cambridge, UK, pp.
+ 11-32, 1999.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso2"
+literal "false"
+
+\end_inset
+
+F.
+ Marini, B.
+ Walczak, Particle swarm optimization (PSO).
+ A tutorial, Chemometrics and Intelligent Laboratory Systems 
+\series bold
+149
+\series default
+, pp.
+ 153-165, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnphysics1"
+literal "false"
+
+\end_inset
+
+P.
+ Baldi, K.
+ Cranmer, T.
+ Faucett et al, Parameterized neural networks for high-energy physics, Eur.
+ Phys.
+ J.
+ C 
+\series bold
+76
+\series default
+, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnphysics2"
+literal "true"
+
+\end_inset
+
+J.
+ J.
+ Valdas and G.
+ Bonham-Carter, Time dependent neural network models for detecting changes
+ of state in complex processes: Applications in earth sciences and astronomy,
+ Neural Networks 
+\series bold
+19
+\series default
+, pp.
+ 196-207, 2006
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnphysics3"
+literal "false"
+
+\end_inset
+
+G.
+ Carleo,M.
+ Troyer, Solving the quantum many-body problem with artificial neural networks,
+ Science 
+\series bold
+355
+\series default
+, pp.
+ 602-606, 2017.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnchem1"
+literal "false"
+
+\end_inset
+
+Lin Shen, Jingheng Wu, and Weitao Yang, Multiscale Quantum Mechanics/Molecular
+ Mechanics Simulations with Neural Networks, Journal of Chemical Theory
+ and Computation 
+\series bold
+12
+\series default
+, pp.
+ 4934-4946, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnchem2"
+literal "false"
+
+\end_inset
+
+Sergei Manzhos, Richard Dawes, Tucker Carrington, Neural network‐based approache
+s for building high dimensional and quantum dynamics‐friendly potential
+ energy surfaces, Int.
+ J.
+ Quantum Chem.
+ 
+\series bold
+115
+\series default
+, pp.
+ 1012-1020, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnchem3"
+literal "false"
+
+\end_inset
+
+Jennifer N.
+ Wei, David Duvenaud, and Alán Aspuru-Guzik, Neural Networks for the Prediction
+ of Organic Chemistry Reactions, ACS Central Science 
+\series bold
+2
+\series default
+, pp.
+ 725-732, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnmed1"
+literal "false"
+
+\end_inset
+
+Igor I.
+ Baskin, David Winkler and Igor V.
+ Tetko, A renaissance of neural networks in drug discovery, Expert Opinion
+ on Drug Discovery 
+\series bold
+11
+\series default
+, pp.
+ 785-795, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnmed2"
+literal "false"
+
+\end_inset
+
+Ronadl Bartzatt, Prediction of Novel Anti-Ebola Virus Compounds Utilizing
+ Artificial Neural Network (ANN), Chemistry Faculty Publications 
+\series bold
+49
+\series default
+, pp.
+ 16-34, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnc"
+literal "false"
+
+\end_inset
+
+I.G.
+ Tsoulos, D.
+ Gavrilis, E.
+ Glavas, Neural network construction and training using grammatical evolution,
+ Neurocomputing 
+\series bold
+72
+\series default
+, pp.
+ 269-277, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfphysics1"
+literal "false"
+
+\end_inset
+
+P.
+ Teng, Machine-learning quantum mechanics: Solving quantum mechanics problems
+ using radial basis function networks, Phys.
+ Rev.
+ E 
+\series bold
+98
+\series default
+, 033305, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfchemistry1"
+literal "false"
+
+\end_inset
+
+Chuanhao Wan and Peter de B.
+ Harrington, Self-Configuring Radial Basis Function Neural Networks for
+ Chemical Pattern Recognition, J.
+ Chem.
+ Inf.
+ Comput.
+ Sci.
+ 
+\series bold
+39
+\series default
+, 1049–1056, 1999.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfmed1"
+literal "false"
+
+\end_inset
+
+Y.P.
+ Wang, J.W.
+ Dang, Q.
+ Li and S.
+ Li, Multimodal medical image fusion using fuzzy radial basis function neural
+ networks, in 2007 International Conference on Wavelet Analysis and Pattern
+ Recognition, pp.
+ 778-782, 2017.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gen_app1"
+literal "false"
+
+\end_inset
+
+R.L.
+ Haupt, An introduction to genetic algorithms for electromagnetics, Antennas
+ and Propagation Magazine 37, pp.
+ 7-15, 1995.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gen_app2"
+literal "false"
+
+\end_inset
+
+J.J.
+ Grefenstette, R.
+ Gopal, B.
+ J.
+ Rosmaita, D.
+ Van Gucht, Genetic Algorithms for the Traveling Salesman Problem, In: Proceedin
+gs of the 1st International Conference on Genetic Algorithms, pp.
+ 160 - 168, Lawrence Erlbaum Associates, 1985.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gen_app3"
+literal "false"
+
+\end_inset
+
+D.
+ A.
+ Savic, G.
+ A.
+ Walters, Genetic Algorithms for Least-Cost Design of Water Distribution
+ Networks, Journal of Water Resources Planning and Management 123, pp.
+ 67-77, 1997.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso_app1"
+literal "true"
+
+\end_inset
+
+H.
+ Yoshida, K.
+ Kawata, Y.
+ Fukuyama, S.
+ Takayama, Y.
+ Nakanishi, A particle swarm optimization for reactive power and voltagecontrol
+ considering voltage security assessment, IEEE Transactions on Power Systems
+ 
+\series bold
+15
+\series default
+, pp.
+ 1232-1239, 2000.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso_app2"
+literal "true"
+
+\end_inset
+
+J.
+ Robinson, Y.
+ Rahmat-Samii, Particle swarm optimization in electromagnetics, IEEE Transaction
+s on Antennas and Propagation 
+\series bold
+52
+\series default
+, pp.
+ 397- 407, 2004.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso_app3"
+literal "true"
+
+\end_inset
+
+M.
+ A.
+ Abido, Optimal power flow using particle swarm optimization, International
+ Journal of Electrical Power & Energy Systems 
+\series bold
+24
+\series default
+, pp.
+ 563-571, 2002.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso_app4"
+literal "true"
+
+\end_inset
+
+Z.L.
+ Gaing, Particle swarm optimization to solving the economic dispatch considering
+ the generator constraints, IEEE Transactions on Power Systems 
+\series bold
+18
+\series default
+, pp.
+ 1187-1195, 2003.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "powell"
+literal "false"
+
+\end_inset
+
+M.J.D Powell, A Tolerant Algorithm for Linearly Constrained Optimization Calculati
+ons, Mathematical Programming 
+\series bold
+45
+\series default
+, pp.
+ 547-566, 1989.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "kaeloAli"
+literal "false"
+
+\end_inset
+
+P.
+ Kaelo, M.M.
+ Ali, Integrated crossover rules in real coded genetic algorithms, European
+ Journal of Operational Research 
+\series bold
+176
+\series default
+, pp.
+ 60-76, 2007.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "openmpi"
+literal "false"
+
+\end_inset
+
+R.
+ L.
+ Graham, G.
+ M.
+ Shipman, B.
+ W.
+ Barrett, R.
+ H.
+ Castain, G.
+ Bosilca and A.
+ Lumsdaine, "Open MPI: A High-Performance, Heterogeneous MPI," 2006 IEEE
+ International Conference on Cluster Computing, 2006, pp.
+ 1-9.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "openmp"
+literal "false"
+
+\end_inset
+
+L.
+ Dagum, R.
+ Menon, OpenMP: an industry standard API for shared-memory programming,
+ IEEE Computational Science and Engineering 
+\series bold
+5
+\series default
+, pp.
+ 46-55, 1998.
+\end_layout
+
+\end_body
+\end_document

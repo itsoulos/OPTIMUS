@@ -84,6 +84,70 @@ double  MlpModel::evalSecondDeriv(Data &x,int pos)
         return per;
 }
 
+void   MlpModel::getModelDeriv(Data &xpoint,Data &g)
+{
+
+    for(int i=0;i<g.size();i++) g[i]=0.0;
+    Data tempg;
+    Data tempg2;
+    tempg.resize(g.size());
+    tempg2.resize(g.size());
+
+    int nodes=weight.size()/ (dimension + 2);
+    for(int i=1;i<=nodes;i++)
+    {
+        double arg=0.0;
+        for(int j=1;j<=dimension;j++)
+        {
+            int pos=(dimension+2)*i-(dimension+1)+j;
+            arg+=xpoint[j-1]*weight[pos-1];
+        }
+        arg+=weight[(dimension+2)*i-1];
+        double s=sig(arg);
+        double s2=sigder(arg);
+        g[(dimension+2)*i-(dimension+1)-1]=s;
+        g[(dimension+2)*i-1]=weight[(dimension+2)*i-(dimension+1)-1]*s2;
+        for(int j=1;j<=dimension;j++)
+        {
+            int pos=(dimension+2)*i-(dimension+1)+j;
+            g[pos-1]=weight[(dimension+2)*i-(dimension+1)-1]*xpoint[j-1]*s2;
+        }
+    }
+
+}
+
+void	MlpModel::getXDeriv(vector<double> xpoint,int pos,vector<double> &g)
+{
+    pos = pos +1;
+    int nodes=weight.size()/ (dimension + 2);
+    for(int i=1;i<=nodes;i++)
+    {
+        double arg=0.0;
+        for(int j=1;j<=dimension;j++)
+        {
+            int mypos=(dimension+2)*i-(dimension+1)+j;
+            arg+=xpoint[j-1]*weight[mypos-1];
+        }
+        arg+=weight[(dimension+2)*i-1];
+        double s=sig(arg);
+        double w1=weight[(dimension+2)*i-(dimension+1)-1];
+        double w2=weight[(dimension+2)*i-(dimension+1)+pos-1];
+        double sigder=s*(1-s);
+        double sigder2=s*(1-s)*(1-2.0*s);
+        double sigder3=sigder*(6*s*s-6*s+1);
+        g[(dimension+2)*i-1]=w1*w2*sigder2;
+        g[(dimension+2)*i-(dimension+1)-1]=w2*sigder;
+        for(int j=1;j<=dimension;j++)
+        {
+            int mypos=(dimension+2)*i-(dimension+1)+j;
+            if(j!=pos)
+            g[mypos-1]=w1*w2*xpoint[j-1]*sigder2;
+            else
+            g[mypos-1]=w1*sigder+w1*w2*xpoint[j-1]*sigder2;
+        }
+    }
+}
+
 MlpModel::~MlpModel()
 {
 

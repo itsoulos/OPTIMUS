@@ -19,6 +19,8 @@ public:
     virtual double eval(Data &x);
     virtual double evalDeriv(Data &x,int pos);
     virtual double evalSecondDeriv(Data &x,int pos);
+    virtual void   getModelDeriv(Data &x,Data &g);
+    virtual void	getXDeriv(vector<double> xpoint,int pos,vector<double> &g);
     virtual ~MlpModel();
 };
 

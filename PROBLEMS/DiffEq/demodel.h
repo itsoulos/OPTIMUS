@@ -16,6 +16,8 @@ public:
     virtual double eval(Data &x)=0;
     virtual double evalDeriv(Data &x,int pos)=0;
     virtual double evalSecondDeriv(Data &x,int pos)=0;
+    virtual void   getModelDeriv(Data &x,Data &g);
+    virtual void	getXDeriv(vector<double> xpoint,int pos,vector<double> &g);
     virtual ~DeModel();
 };
 
