@@ -2615,14 +2615,22 @@ noprefix "false"
  In this series of experiments an increasing number of threads is used at
  every experiment.
  The number of threads varies from 1 to 8.
+ The programming library used for the threads execution was the OpenMP library
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "openmp"
+literal "false"
+
+\end_inset
+
+.
  The execution was performed on a Intel i7-10700T running at 2.00GHz with
  16GB of ram and the operating system was Debian Linux.
  As can be seen the average execution time drops significantly when using
  2 or 4 threads.
  This reduction will obviously be even greater when the method is applied
  to even more difficult differential equation solving problems.
-\series bold
-.
 \end_layout
 
 \begin_layout Standard
@@ -4137,13 +4145,6 @@ name "fig:Average-execution-times"
 \begin_layout Enumerate
 
 \series bold
-Time comparison and talk about threads and Genetic algorithm.
- Mention the characteristics of machine where the tests were executed.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
 Declare the test error.
 \end_layout
 
@@ -4158,14 +4159,187 @@ Comparison with other methods
 \end_layout
 
 \begin_layout Standard
-\begin_inset Float table
-wide false
-sideways false
+In order to be able to understand the dynamics of the proposed methodology,
+ it was applied to a series of practical problems which are available from
+ the relevant website 
+\begin_inset Flex URL
 status open
 
 \begin_layout Plain Layout
 
+ https://archimede.uniba.it/~testset/ 
 \end_layout
+
+\end_inset
+
+.
+ The obtained problems are the Hires problem, the Rober problem and the
+ Orego problem.
+\end_layout
+
+\begin_layout Subsubsection*
+Hires problem 
+\end_layout
+
+\begin_layout Standard
+The Hires problem was suggested by Schäfer in 1975 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "de_hires"
+literal "false"
+
+\end_inset
+
+ and it describes how light is involved in morphogenesis.
+ The problem is defined as 
+\begin_inset Formula 
+\[
+\frac{dy}{dt}=f(y),\ y(0)=y_{0}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $t\in[0,321.8122]$
+\end_inset
+
+ and the function 
+\begin_inset Formula $f(y)$
+\end_inset
+
+ is the following array of equations: 
+\begin_inset Formula 
+\begin{eqnarray*}
+f(y) & = & \left(\begin{array}{c}
+-1.71y_{1}+0.43y_{2}+8.32y_{3}+0.0007\\
+1.71y_{1}-8.75y_{2}\\
+-10.03y_{3}+0.43y_{4}+0.035y_{5}\\
+8.32y_{2}+1.71y_{3}-1.12y_{4}\\
+-1.745y_{5}+0.43y_{6}+0.43y_{7}\\
+-280y_{6}y_{8}+0.69y_{4}+1.71y_{5}-0.43y_{6}+0.69y_{7}\\
+280y_{6}y_{8}-1.81y_{7}\\
+-280y_{6}y_{8}+1.81y_{7}
+\end{array}\right)
+\end{eqnarray*}
+
+\end_inset
+
+The initial conditions of the system are: 
+\begin_inset Formula $y_{0}=\left(1,0,0,0,0,0,0,0.0057\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Rober problem
+\end_layout
+
+\begin_layout Standard
+The Rober problem 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "de_rober"
+literal "false"
+
+\end_inset
+
+ describes the kinetics of an autocatalytic reaction and the system of equations
+ is: 
+\begin_inset Formula 
+\begin{eqnarray*}
+f(y) & = & \left(\begin{array}{c}
+-0.04y_{1}+10^{4}y_{2}y_{3}\\
+0.04y_{1}-10^{4}y_{2}y_{3}-3\times10^{7}y_{2}^{2}\\
+3\times10^{7}y_{2}^{2}
+\end{array}\right)
+\end{eqnarray*}
+
+\end_inset
+
+with 
+\begin_inset Formula $t\in[0,10]$
+\end_inset
+
+.
+ The initial conditions are 
+\begin_inset Formula $y_{0}=\left(1,0,0\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection*
+Orego problem
+\end_layout
+
+\begin_layout Standard
+The Orego problem 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "de_orego"
+literal "false"
+
+\end_inset
+
+ is a system of 3 non - linear ordinary differential equations and refers
+ to the Oregonator model.
+ The problem is defined as 
+\begin_inset Formula 
+\[
+\frac{dy}{dt}=f(y),\ y(0)=y_{0}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $t\in[0,360]$
+\end_inset
+
+ The function 
+\begin_inset Formula $f(y)$
+\end_inset
+
+ is given by:
+\begin_inset Formula 
+\begin{eqnarray*}
+f(y) & = & \left(\begin{array}{c}
+s\left(y_{2}-y_{1}y_{2}+y_{1}-qy_{1}^{2}\right)\\
+\frac{1}{s}\left(-y_{2}-y_{1}y_{2}+y_{3}\right)\\
+w\left(y_{1}-y_{3}\right)
+\end{array}\right)
+\end{eqnarray*}
+
+\end_inset
+
+with 
+\begin_inset Formula $y_{0}=\left(1,2,3\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $s=77.27,\ w=0.161,\ q=8.375\times10^{-6}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+define MEMDB
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+define RK
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -4262,6 +4436,9 @@ HIRES
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $2.3\times10^{-2}$
+\end_inset
+
 
 \end_layout
 
@@ -5565,6 +5742,58 @@ P.
 \series default
 , pp.
  60-76, 2007.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_hires"
+literal "false"
+
+\end_inset
+
+E.
+ Schäfer, A new approach to explain the “high irradiance responses” of photomorp
+hogenesis on the basis of phytochrome.
+ J.
+ Math.
+ Biology 
+\series bold
+2
+\series default
+, pp.
+ 41–56, 1975.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_rober"
+literal "false"
+
+\end_inset
+
+H.H.
+ Robertson, H.H.
+ The Solution of a Set of Reaction Rate Equations.
+ In: Walsh, J., Ed., Numerical Analysis: An introduction, Academic Press,
+ Cambridge, Massachusetts, pp.
+ 178-182, 1967.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_orego"
+literal "false"
+
+\end_inset
+
+E.
+ Hairer, G.
+ Wanner, Solving Ordinary Di erential Equations II: Sti and Di erential-
+ algebraic Problems.
+ Springer-Verlag, second revised edition, 1996.
 \end_layout
 
 \begin_layout Bibliography
