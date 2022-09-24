@@ -303,16 +303,31 @@ literal "true"
 In this work, the differential equations to be solved are presented as machine
  learning models and the solution of the corresponding equation is reduced
  to a global optimization problem, where the task is to locate the global
- minimum of a any function 
-\begin_inset Formula $f(x):\ S\subset R^{n}\rightarrow R$
+ minimum of a continuous and differentiable function 
+\begin_inset Formula $f:S\rightarrow R,S\subset R^{n}$
 \end_inset
 
- with 
-\begin_inset Formula $x_{i}\ \in\left[L_{i},R_{i}\right],\ i=1..n$
+ and it is defined as: 
+\begin_inset Formula 
+\begin{equation}
+x^{*}=\mbox{arg}\min_{x\in S}f(x)\label{eq:eqOptimization}
+\end{equation}
+
 \end_inset
 
-.
- The value of 
+with 
+\begin_inset Formula $S$
+\end_inset
+
+: 
+\begin_inset Formula 
+\[
+S=\left[L_{1},R_{1}\right]\otimes\left[L_{2},R_{2}\right]\otimes\ldots\left[L_{n},R_{n}\right]
+\]
+
+\end_inset
+
+The value of 
 \begin_inset Formula $n$
 \end_inset
 
@@ -387,7 +402,24 @@ literal "false"
 \end_inset
 
 .
- These models have been successfully used to solve ordinary differential
+ In the present work, these two global optimization techniques were chosen
+ as they have been used in dozens of practical problems and are easily adaptable
+ to the problem.
+ Furthermore, both methods can be easily parallelized 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "gen_par1,gen_par2,gen_par3"
+literal "false"
+
+\end_inset
+
+
+\series bold
+ 
+\series default
+to take advantage of modern parallel architectures and are tolerant of numerical
+ errors and noise that may be present in the data.
+ The proposed method has been successfully used to solve ordinary differential
  equations, systems of differential equations as well as partial differential
  equations with Dirichlet boundary conditions.
 \end_layout
@@ -717,7 +749,7 @@ Calculation for ODEs
 The ODEs are defined as: 
 \begin_inset Formula 
 \begin{equation}
-\psi\left(x,y,y^{(1)},\ldots,y^{(n)}\right)=0,\ x\in[a,b]
+\psi\left(t,y,y^{(1)},\ldots,y^{(n)}\right)=0,\ t\in[a,b]
 \end{equation}
 
 \end_inset
@@ -733,7 +765,7 @@ where the quantity
  Also, the initial conditions for the equation are given by: 
 \begin_inset Formula 
 \begin{equation}
-h_{i}\left(x,y,y^{(1)},\ldots,y^{(n)}\right)_{|x=t_{i}},i=1,\ldots,n
+h_{i}\left(t,y,y^{(1)},\ldots,y^{(n)}\right)_{|x=t_{i}},i=1,\ldots,n
 \end{equation}
 
 \end_inset
@@ -768,7 +800,7 @@ with
 Construct 
 \series default
 
-\begin_inset Formula $T=\left\{ x_{1}=a,x_{2},x_{3},\ldots,x_{N}=b\right\} $
+\begin_inset Formula $T=\left\{ t_{1}=a,t_{2},t_{3},\ldots,t_{N}=b\right\} $
 \end_inset
 
 .
@@ -781,7 +813,7 @@ Construct
 Compute
 \series default
  the quantity for the error 
-\begin_inset Formula $E_{r}=\sum_{i=1}^{N}\psi\left(x_{i},r\left(x_{i}\right),r^{(1)}\left(x_{i}\right),\ldots,r^{(n)}\left(x_{i}\right)\right)^{2}$
+\begin_inset Formula $E_{r}=\sum_{i=1}^{N}\psi\left(t_{i},r\left(t_{i}\right),r^{(1)}\left(t_{i}\right),\ldots,r^{(n)}\left(t_{i}\right)\right)^{2}$
 \end_inset
 
 
@@ -795,7 +827,7 @@ Compute
  the associated penalty value, based on the initial conditions: 
 \begin_inset Formula 
 \begin{equation}
-P_{r}=\lambda\sum_{k=1}^{n}h_{k}^{2}\left(x,r(x),r^{(1)}(x),\ldots,r^{(n)}(x)\right)_{|x=t_{k}}
+P_{r}=\lambda\sum_{k=1}^{n}h_{k}^{2}\left(t,r(t),r^{(1)}(t),\ldots,r^{(n)}(t)\right)_{|t=t_{k}}
 \end{equation}
 
 \end_inset
@@ -828,10 +860,10 @@ The system of odes used in the current work is in in the form:
 \begin_inset Formula 
 \begin{equation}
 \left(\begin{array}{ccc}
-\psi_{1}\left(x,y_{1},y_{1}^{(1)},y_{2},y_{2}^{(1)},\ldots,y_{k},y_{k}^{(1)}\right) & = & 0\\
-\psi_{2}\left(x,y_{1},y_{1}^{(1)},y_{2},y_{2}^{(1)},\ldots,y_{k},y_{k}^{(1)}\right) & = & 0\\
+\psi_{1}\left(t,y_{1},y_{1}^{(1)},y_{2},y_{2}^{(1)},\ldots,y_{k},y_{k}^{(1)}\right) & = & 0\\
+\psi_{2}\left(t,y_{1},y_{1}^{(1)},y_{2},y_{2}^{(1)},\ldots,y_{k},y_{k}^{(1)}\right) & = & 0\\
 \vdots & \vdots & \vdots\\
-\psi_{k}\left(x,y_{1},y_{1}^{(1)},y_{2},y_{2}^{(1)},\ldots,y_{k},y_{k}^{(1)}\right) & = & 0
+\psi_{k}\left(t,y_{1},y_{1}^{(1)},y_{2},y_{2}^{(1)},\ldots,y_{k},y_{k}^{(1)}\right) & = & 0
 \end{array}\right)
 \end{equation}
 
@@ -868,7 +900,7 @@ The error value for a set of models
 Construct 
 \series default
 a set 
-\begin_inset Formula $T=\left\{ x_{1}=a,x_{2},x_{3},\ldots,x_{N}=b\right\} $
+\begin_inset Formula $T=\left\{ t_{1}=a,t_{2},t_{3},\ldots,t_{N}=b\right\} $
 \end_inset
 
  of equally spaced points.
@@ -891,7 +923,7 @@ For every model
 Calculate
 \series default
  the error value: 
-\begin_inset Formula $E_{r_{i}}=\sum_{j=1}^{N}\left(\psi_{i}\left(x_{j},r_{1},r_{1}^{(1)},r_{2},r_{2}^{(1)},\ldots,r_{k},r_{k}^{(1)}\right)\right)^{2}$
+\begin_inset Formula $E_{r_{i}}=\sum_{j=1}^{N}\left(\psi_{i}\left(t_{j},r_{1},r_{1}^{(1)},r_{2},r_{2}^{(1)},\ldots,r_{k},r_{k}^{(1)}\right)\right)^{2}$
 \end_inset
 
 
@@ -937,13 +969,13 @@ The partial differential equations solved and test in the current work have
  the following form:
 \begin_inset Formula 
 \begin{equation}
-h\left(x,y,\Psi(x,y),\frac{\partial}{\partial x}\Psi(x,y),\frac{\partial}{\partial y}\Psi(x,y),\frac{\partial^{2}}{\partial x^{2}}\Psi(x,y),\frac{\partial^{2}}{\partial y^{2}}\Psi(x,y)\right)=0
+h\left(t,y,\Psi(t,y),\frac{\partial}{\partial t}\Psi(t,y),\frac{\partial}{\partial y}\Psi(t,y),\frac{\partial^{2}}{\partial t^{2}}\Psi(t,y),\frac{\partial^{2}}{\partial y^{2}}\Psi(t,y)\right)=0
 \end{equation}
 
 \end_inset
 
 with 
-\begin_inset Formula $x\in[a,b],\ y\in[c,d]$
+\begin_inset Formula $t\in[a,b],\ y\in[c,d]$
 \end_inset
 
 .
@@ -966,14 +998,14 @@ with
 \end_layout
 
 \begin_layout Enumerate
-\begin_inset Formula $\Psi(x,c)=g_{0}(x)$
+\begin_inset Formula $\Psi(t,c)=g_{0}(t)$
 \end_inset
 
 
 \end_layout
 
 \begin_layout Enumerate
-\begin_inset Formula $\Psi(x,d)=g_{1}(x)$
+\begin_inset Formula $\Psi(t,d)=g_{1}(t)$
 \end_inset
 
 
@@ -993,7 +1025,7 @@ The error value of any chromosome
 Define
 \series default
  the set 
-\begin_inset Formula $T=\left\{ \left(x_{1},y_{1}\right),\left(x_{1},y_{2}\right),\ldots,\left(x_{N},y_{N}\right)\right\} $
+\begin_inset Formula $T=\left\{ \left(t_{1},y_{1}\right),\left(t_{1},y_{2}\right),\ldots,\left(t_{N},y_{N}\right)\right\} $
 \end_inset
 
 .
@@ -1014,7 +1046,7 @@ Define
 Define
 \series default
  the set 
-\begin_inset Formula $x_{B}=\left\{ x_{b1},x_{b2},\ldots,x_{bN}\right\} $
+\begin_inset Formula $t_{B}=\left\{ t_{b1},t_{b2},\ldots,t_{bN}\right\} $
 \end_inset
 
 , equally spaced points in 
@@ -1052,7 +1084,7 @@ Calculate
  as 
 \begin_inset Formula 
 \[
-E_{r}=\sum_{i=1}^{N}h\left(x_{i},y_{i},r\left(x_{i},y_{i}\right),\frac{\partial}{\partial x}r\left(x_{i},y_{i}\right),\frac{\partial}{\partial y}r\left(x_{i},y_{i}\right)\right)^{2}
+E_{r}=\sum_{i=1}^{N}h\left(t_{i},y_{i},r\left(t_{i},y_{i}\right),\frac{\partial}{\partial x}r\left(t_{i},y_{i}\right),\frac{\partial}{\partial y}r\left(t_{i},y_{i}\right)\right)^{2}
 \]
 
 \end_inset
@@ -1069,10 +1101,10 @@ Calculate
 \begin_inset Formula 
 \[
 \begin{array}{ccc}
-P_{1r} & = & \lambda\sum_{i=1}^{M}\left(r\left(a,y_{bi}\right)-f_{0}\left(y_{bi}\right)\right)^{2}\\
-P_{2r} & = & \lambda\sum_{i=1}^{M}\left(r\left(b,y_{bi}\right)-f_{1}\left(y_{bi}\right)\right)^{2}\\
-P_{3r} & = & \lambda\sum_{i=1}^{M}\left(r\left(x_{bi},c\right)-g_{0}\left(x_{bi}\right)\right)^{2}\\
-P_{4r} & = & \lambda\sum_{i=1}^{M}\left(r\left(x_{bi},d\right)-g_{1}\left(x_{bi}\right)\right)^{2}
+P_{1r} & = & \lambda\sum_{i=1}^{N}\left(r\left(a,y_{bi}\right)-f_{0}\left(y_{bi}\right)\right)^{2}\\
+P_{2r} & = & \lambda\sum_{i=1}^{N}\left(r\left(b,y_{bi}\right)-f_{1}\left(y_{bi}\right)\right)^{2}\\
+P_{3r} & = & \lambda\sum_{i=1}^{N}\left(r\left(t_{bi},c\right)-g_{0}\left(t_{bi}\right)\right)^{2}\\
+P_{4r} & = & \lambda\sum_{i=1}^{N}\left(r\left(t_{bi},d\right)-g_{1}\left(t_{bi}\right)\right)^{2}
 \end{array}
 \]
 
@@ -1661,7 +1693,7 @@ Set
 Initalize
 \series default
  the positions of the particles 
-\begin_inset Formula $x_{1},x_{2},...,x_{N_{c}}$
+\begin_inset Formula $p_{1},p_{2},...,p_{N_{c}}$
 \end_inset
 
  randomly.
@@ -1726,11 +1758,11 @@ For
 \end_inset
 
  do 
-\begin_inset Formula $p_{i}=x_{i}$
+\begin_inset Formula $b_{i}=x_{i}$
 \end_inset
 
 , where 
-\begin_inset Formula $p_{i}$
+\begin_inset Formula $b_{i}$
 \end_inset
 
  is the best located position for particle 
@@ -1746,7 +1778,7 @@ For
 Set
 \series default
  
-\begin_inset Formula $p_{\mbox{best}}=\arg\min_{i\in1..N_{c}}f\left(x_{i}\right)$
+\begin_inset Formula $p_{\mbox{best}}=\arg\min_{i\in1..N_{c}}f\left(p_{i}\right)$
 \end_inset
 
 
@@ -1835,7 +1867,7 @@ Calculate
  
 \begin_inset Formula 
 \[
-u_{ij}=u_{ij}+r_{1}\times\left(p_{ij}-x_{ij}\right)+r_{2}\times\left(p_{\mbox{best},j}-x_{ij}\right),\ j=1,..,n
+u_{ij}=u_{ij}+r_{1}\times\left(b_{ij}-p_{ij}\right)+r_{2}\times\left(p_{\mbox{best},j}-p_{ij}\right),\ j=1,..,n
 \]
 
 \end_inset
@@ -1849,7 +1881,7 @@ u_{ij}=u_{ij}+r_{1}\times\left(p_{ij}-x_{ij}\right)+r_{2}\times\left(p_{\mbox{be
 Set
 \series default
  
-\begin_inset Formula $x_{i}=x_{i}+u_{i}$
+\begin_inset Formula $p_{i}=p_{i}+u_{i}$
 \end_inset
 
 
@@ -1865,7 +1897,7 @@ Evaluate
 \end_inset
 
  of the particle 
-\begin_inset Formula $x_{i}$
+\begin_inset Formula $p_{i}$
 \end_inset
 
  using the same scheme as for the genetic algorithm.
@@ -1894,7 +1926,7 @@ If
 \end_inset
 
  for the fitness of particle 
-\begin_inset Formula $x_{i}$
+\begin_inset Formula $p_{i}$
 \end_inset
 
 .
@@ -1906,7 +1938,7 @@ If
 \end_inset
 
  then 
-\begin_inset Formula $p_{i}=x_{i}$
+\begin_inset Formula $b_{i}=p_{i}$
 \end_inset
 
 
@@ -1929,7 +1961,7 @@ For
 Set
 \series default
  
-\begin_inset Formula $p_{\mbox{best}}=\arg\min_{i\in1..m}f\left(x_{i}\right)$
+\begin_inset Formula $p_{\mbox{best}}=\arg\min_{i\in1..m}f\left(p_{i}\right)$
 \end_inset
 
 
@@ -1998,13 +2030,13 @@ ODE1
 \begin_layout Standard
 \begin_inset Formula 
 \[
-y'=\frac{2x-y}{x}
+y'=\frac{2t-y}{t}
 \]
 
 \end_inset
 
 with 
-\begin_inset Formula $x\in[1,2].$
+\begin_inset Formula $t\in[1,2].$
 \end_inset
 
  The initial condition is 
@@ -2013,7 +2045,7 @@ with
 
 .
  The solution is 
-\begin_inset Formula $y(x)=x+\frac{2}{x}$
+\begin_inset Formula $y(t)=t+\frac{2}{t}$
 \end_inset
 
 
@@ -2026,13 +2058,13 @@ ODE2
 \begin_layout Standard
 \begin_inset Formula 
 \[
-y'=\frac{1-y\cos(x)}{\sin(x)}
+y'=\frac{1-y\cos(t)}{\sin(t)}
 \]
 
 \end_inset
 
 with 
-\begin_inset Formula $x\in[1,2].$
+\begin_inset Formula $t\in[1,2].$
 \end_inset
 
  The initial condition is 
@@ -2041,7 +2073,7 @@ with
 
 .
  The solution is 
-\begin_inset Formula $y(x)=\frac{x+2}{\sin(x)}$
+\begin_inset Formula $y(t)=\frac{t+2}{\sin(t)}$
 \end_inset
 
 
@@ -2060,7 +2092,7 @@ y''=6y'-9y
 \end_inset
 
 with 
-\begin_inset Formula $x\in[0,1]$
+\begin_inset Formula $t\in[0,1]$
 \end_inset
 
 .
@@ -2070,7 +2102,7 @@ with
 
 .
  The solution is 
-\begin_inset Formula $y(x)=2x\exp(3x)$
+\begin_inset Formula $y(t)=2t\exp(3t)$
 \end_inset
 
 
@@ -2083,13 +2115,13 @@ ODE4
 \begin_layout Standard
 \begin_inset Formula 
 \[
-y''=-\frac{1}{5}y'-y-\frac{1}{5}\exp\left(-\frac{x}{5}\right)\cos(x)
+y''=-\frac{1}{5}y'-y-\frac{1}{5}\exp\left(-\frac{t}{5}\right)\cos(t)
 \]
 
 \end_inset
 
 with 
-\begin_inset Formula $x\in[0,1]$
+\begin_inset Formula $t\in[0,1]$
 \end_inset
 
 .
@@ -2098,7 +2130,7 @@ with
 \end_inset
 
  The solution is 
-\begin_inset Formula $y(x)=\exp\left(-\frac{x}{5}\right)\sin(x)$
+\begin_inset Formula $y(t)=\exp\left(-\frac{t}{5}\right)\sin(t)$
 \end_inset
 
 
@@ -2117,7 +2149,7 @@ y''=-100y
 \end_inset
 
 with 
-\begin_inset Formula $x\in[0,1]$
+\begin_inset Formula $t\in[0,1]$
 \end_inset
 
 .
@@ -2129,7 +2161,7 @@ with
  The solution is given by
 \begin_inset Formula 
 \[
-y(x)=\sin(10x)
+y(t)=\sin(10t)
 \]
 
 \end_inset
@@ -2154,7 +2186,7 @@ y'=\frac{1}{2y}
 \end_inset
 
 with 
-\begin_inset Formula $x\in[1,4]$
+\begin_inset Formula $t\in[1,4]$
 \end_inset
 
  and the initial condition 
@@ -2163,7 +2195,7 @@ with
 
 .
  The solution is given by 
-\begin_inset Formula $y(x)=\sqrt{x}$
+\begin_inset Formula $y(t)=\sqrt{t}$
 \end_inset
 
 
@@ -2176,13 +2208,13 @@ NLODE2
 \begin_layout Standard
 \begin_inset Formula 
 \[
-(y')^{2}+\log(y)-\cos^{2}(x)-2\cos(x)-1-\log(x+\sin(x))=0
+(y')^{2}+\log(y)-\cos^{2}(t)-2\cos(t)-1-\log(t+\sin(t))=0
 \]
 
 \end_inset
 
 with 
-\begin_inset Formula $x\in[1,2]$
+\begin_inset Formula $t\in[1,2]$
 \end_inset
 
  and the initial condition 
@@ -2191,7 +2223,7 @@ with
 
 .
  The solution is given by 
-\begin_inset Formula $y(x)=x+\sin(x)$
+\begin_inset Formula $y(t)=t+\sin(t)$
 \end_inset
 
 
@@ -2204,13 +2236,13 @@ NLODE3
 \begin_layout Standard
 \begin_inset Formula 
 \[
-y''y'=-\frac{4}{x^{3}}
+y''y'=-\frac{4}{t^{3}}
 \]
 
 \end_inset
 
 with 
-\begin_inset Formula $x\in[1,2]$
+\begin_inset Formula $t\in[1,2]$
 \end_inset
 
  and the initial conditions are 
@@ -2219,7 +2251,7 @@ with
 
 .
  The solution is 
-\begin_inset Formula $y(x)=\log\left(x^{2}\right)$
+\begin_inset Formula $y(t)=\log\left(t^{2}\right)$
 \end_inset
 
 
@@ -2232,13 +2264,13 @@ NLODE4
 \begin_layout Standard
 \begin_inset Formula 
 \[
-x^{2}y''+\left(xy'\right)^{2}+\frac{1}{\log(x)}=0
+t^{2}y''+\left(ty'\right)^{2}+\frac{1}{\log(t)}=0
 \]
 
 \end_inset
 
 with 
-\begin_inset Formula $x\in[e,2e]$
+\begin_inset Formula $t\in[e,2e]$
 \end_inset
 
  and the initial conditions are 
@@ -2247,7 +2279,7 @@ with
 
 .
  The solution is 
-\begin_inset Formula $y(x)=\log(\log(x))$
+\begin_inset Formula $y(t)=\log(\log(t))$
 \end_inset
 
 
@@ -2332,19 +2364,19 @@ SODE1
 \begin_layout Standard
 \begin_inset Formula 
 \begin{eqnarray*}
-y'_{1} & = & \cos(x)+y_{1}^{2}+y_{2}-\left(x^{2}+\sin^{2}(x)\right)\\
-y'_{2} & = & 2x-x^{2}\sin(x)+y_{1}y_{2}
+y'_{1} & = & \cos(t)+y_{1}^{2}+y_{2}-\left(t^{2}+\sin^{2}(t)\right)\\
+y'_{2} & = & 2t-t^{2}\sin(t)+y_{1}y_{2}
 \end{eqnarray*}
 
 \end_inset
 
 with 
-\begin_inset Formula $y_{1}(0)=0,\ y_{2}(0)=0,\ x\in[0,1]$
+\begin_inset Formula $y_{1}(0)=0,\ y_{2}(0)=0,\ t\in[0,1]$
 \end_inset
 
 .
  The analytical solutions are given by 
-\begin_inset Formula $y_{1}(x)=\sin(x),\ y_{2}(x)=x^{2}$
+\begin_inset Formula $y_{1}(t)=\sin(t),\ y_{2}(t)=t^{2}$
 \end_inset
 
 .
@@ -2357,14 +2389,14 @@ SODE2
 \begin_layout Standard
 \begin_inset Formula 
 \begin{eqnarray*}
-y'_{1} & = & \frac{\cos(x)-\sin(x)}{y_{2}}\\
-y'_{2} & = & y_{1}y_{2}+\exp(x)-\sin(x)
+y'_{1} & = & \frac{\cos(t)-\sin(t)}{y_{2}}\\
+y'_{2} & = & y_{1}y_{2}+\exp(t)-\sin(t)
 \end{eqnarray*}
 
 \end_inset
 
 with 
-\begin_inset Formula $x\in[0,1]$
+\begin_inset Formula $t\in[0,1]$
 \end_inset
 
  and the initial conditions are 
@@ -2373,7 +2405,7 @@ with
 
 .
  The exact solutions are: 
-\begin_inset Formula $y_{1}(x)=\frac{\sin(x)}{\exp(x)},\ y_{2}=\exp(x)$
+\begin_inset Formula $y_{1}(x)=\frac{\sin(t)}{\exp(t)},\ y_{2}=\exp(t)$
 \end_inset
 
 
@@ -2386,7 +2418,7 @@ SODE3
 \begin_layout Standard
 \begin_inset Formula 
 \begin{eqnarray*}
-y'_{1} & = & \cos(x)\\
+y'_{1} & = & \cos(t)\\
 y'_{2} & = & -y_{1}\\
 y'_{3} & = & y_{2}\\
 y'_{4} & = & -y_{3}\\
@@ -2396,11 +2428,11 @@ y'_{5} & = & y_{4}
 \end_inset
 
 with 
-\begin_inset Formula $y_{1}(0)=0,\ y_{2}(0)=1,\ y_{3}(0)=0,\ y_{4}(0)=1,\ y_{5}(0)=0,\ x\in[0,1]$
+\begin_inset Formula $y_{1}(0)=0,\ y_{2}(0)=1,\ y_{3}(0)=0,\ y_{4}(0)=1,\ y_{5}(0)=0,\ t\in[0,1]$
 \end_inset
 
  and the solutions 
-\begin_inset Formula $y_{1}(x)=\sin(x),\ y_{2}(x)=\cos(x),\ y_{3}(x)=\sin(x),\ y_{4}(x)=\cos(x),\ y_{5}(x)=\sin(x)$
+\begin_inset Formula $y_{1}(t)=\sin(t),\ y_{2}(t)=\cos(t),\ y_{3}(t)=\sin(t),\ y_{4}(t)=\cos(t),\ y_{5}(t)=\sin(t)$
 \end_inset
 
 .
@@ -2413,18 +2445,18 @@ SODE4
 \begin_layout Standard
 \begin_inset Formula 
 \begin{eqnarray*}
-y'_{1} & = & -\frac{1}{y_{2}}\sin\left(\exp(x)\right)\\
+y'_{1} & = & -\frac{1}{y_{2}}\sin\left(\exp(t)\right)\\
 y'_{2} & = & -y_{2}
 \end{eqnarray*}
 
 \end_inset
 
 with 
-\begin_inset Formula $y_{1}(0)=\cos(1.0),\ y_{2}(0)=1.0,\ x\in[0,1]$
+\begin_inset Formula $y_{1}(0)=\cos(1.0),\ y_{2}(0)=1.0,\ t\in[0,1]$
 \end_inset
 
  and solutions 
-\begin_inset Formula $y_{1}(x)=\cos\left(\exp(x)\right),\ y_{2}(x)=\exp(-x)$
+\begin_inset Formula $y_{1}(t)=\cos\left(\exp(t)\right),\ y_{2}(t)=\exp(-t)$
 \end_inset
 
 .
@@ -2441,22 +2473,22 @@ PDE1
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\nabla^{2}\Psi(x,y)=\exp(-x)\left(x-2+y^{3}+6y\right)
+\nabla^{2}\Psi(t,y)=\exp(-t)\left(t-2+y^{3}+6y\right)
 \]
 
 \end_inset
 
 with 
-\begin_inset Formula $x\in[0,1],\ y\in[0,1]$
+\begin_inset Formula $t\in[0,1],\ y\in[0,1]$
 \end_inset
 
 .
  The boundary conditions are given by: 
-\begin_inset Formula $\Psi(0,y)=y^{3},\ \Psi(1,y)=\left(1+y^{3}\right)\exp(-1),\ \Psi(x,0)=x\exp(-x),\ \Psi(x,1)=(x+1)\exp(-x)$
+\begin_inset Formula $\Psi(0,y)=y^{3},\ \Psi(1,y)=\left(1+y^{3}\right)\exp(-1),\ \Psi(x,0)=t\exp(-t),\ \Psi(t,1)=(t+1)\exp(-t)$
 \end_inset
 
  The solution is given by: 
-\begin_inset Formula $\Psi(x,y)=\left(x+y^{3}\right)\exp(-x)$
+\begin_inset Formula $\Psi(t,y)=\left(t+y^{3}\right)\exp(-t)$
 \end_inset
 
 
@@ -2469,23 +2501,23 @@ PDE2
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\nabla^{2}\Psi(x,y)=-2\Psi(x,y)
+\nabla^{2}\Psi(t,y)=-2\Psi(t,y)
 \]
 
 \end_inset
 
 with 
-\begin_inset Formula $x\in[0,1],\ y\in[0,1]$
+\begin_inset Formula $t\in[0,1],\ y\in[0,1]$
 \end_inset
 
 .
  The associated boundary conditions are: 
-\begin_inset Formula $\Psi(0,y)=0,\ \Psi(1,y)=\sin(1)\cos(y),\ \Psi(x,0)=\sin(x),\ \Psi(x,1)=\sin(x)\cos(1)$
+\begin_inset Formula $\Psi(0,y)=0,\ \Psi(1,y)=\sin(1)\cos(y),\ \Psi(t,0)=\sin(t),\ \Psi(t,1)=\sin(t)\cos(1)$
 \end_inset
 
 .
  The solution is given by: 
-\begin_inset Formula $\Psi(x,y)=\sin(x)\cos(y)$
+\begin_inset Formula $\Psi(t,y)=\sin(t)\cos(y)$
 \end_inset
 
 .
@@ -2499,23 +2531,23 @@ PDE3
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\nabla^{2}\Psi(x,y)=4
+\nabla^{2}\Psi(t,y)=4
 \]
 
 \end_inset
 
 with 
-\begin_inset Formula $x\in[0,1],\ y\in[0,1]$
+\begin_inset Formula $t\in[0,1],\ y\in[0,1]$
 \end_inset
 
 .
  The boundary conditions are: 
-\begin_inset Formula $\Psi(0,y)=y^{2}+y+1,\ \Psi(1,y)=y^{2}+y+3,\ \Psi(x,0)=x^{2}+x+1,\ \Psi(x,1)=x^{2}+x+3$
+\begin_inset Formula $\Psi(0,y)=y^{2}+y+1,\ \Psi(1,y)=y^{2}+y+3,\ \Psi(t,0)=t^{2}+t+1,\ \Psi(t,1)=t^{2}+t+3$
 \end_inset
 
 .
  The solution is given by: 
-\begin_inset Formula $\Psi(x,y)=x^{2}+y^{2}+x+y+1$
+\begin_inset Formula $\Psi(t,y)=t^{2}+y^{2}+t+y+1$
 \end_inset
 
 .
@@ -2528,22 +2560,22 @@ PDE4
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\nabla^{2}\Psi(x,y)=\left(x-2\right)\exp(-x)+x\exp(-y)
+\nabla^{2}\Psi(t,y)=\left(t-2\right)\exp(-t)+x\exp(-y)
 \]
 
 \end_inset
 
 with 
-\begin_inset Formula $x\in[0,1],\ y\in[0,1].$
+\begin_inset Formula $t\in[0,1],\ y\in[0,1].$
 \end_inset
 
 The boundary conditions are given by: 
-\begin_inset Formula $\Psi(0,y)=0,\ \Psi(1,y)=\sin(y),\ \Psi(x,0)=0,\ \Psi(x,1)=\sin(x)$
+\begin_inset Formula $\Psi(0,y)=0,\ \Psi(1,y)=\sin(y),\ \Psi(t,0)=0,\ \Psi(t,1)=\sin(t)$
 \end_inset
 
 .
  The solution is: 
-\begin_inset Formula $\Psi(x,y)=\sin(xy)$
+\begin_inset Formula $\Psi(t,y)=\sin(ty)$
 \end_inset
 
 .
@@ -2585,9 +2617,10 @@ noprefix "false"
  reported.
  The experiments were conducted using the drand48() function of the C language
  as the random number generator.
- The solution produced by the neural network was applied to random points
- within the equation domain, and the error at those points was recorded.
- We denote this error as generalization error.
+ In order to check the reliability of the generated solutions, they were
+ applied to randomly selected points in the definition fields of the differentia
+l equations which were twice as many as the points used to train the models.
+ The model's error at these points was called the generalization error.
  The results are listed in the table 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2607,12 +2640,12 @@ The column EQUATION denotes the title of the equation to be solved.
 \end_layout
 
 \begin_layout Enumerate
-The column MLP-GEN shows the results of a neural network, trained using
- the proposed genetic algorithm.
+The column MLP-GEN shows the generalization error of a neural network, trained
+ using the proposed genetic algorithm.
 \end_layout
 
 \begin_layout Enumerate
-The column RBF-GEN shows the results of an RBF model.
+The column RBF-GEN shows the generalization error of an RBF model.
  The weights as well as the centroids of the RBF network were trained using
  the proposed genetic algorithm.
 \end_layout
@@ -2672,6 +2705,37 @@ literal "false"
  2 or 4 threads.
  This reduction will obviously be even greater when the method is applied
  to even more difficult differential equation solving problems.
+\end_layout
+
+\begin_layout Standard
+Furthermore, the quality of the generated solutions is shown in the two
+ additional figures 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:nlode4_error"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:error_sode2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The first one shows the absolute error for the nlode4 function and the
+ second the absolute errors for the second system of differential equations
+ (sode2).
+ In both cases an artificial neural network trained with the proposed genetic
+ algorithm was used.
+ In both cases the error is extremely low.
 \end_layout
 
 \begin_layout Standard
@@ -4141,7 +4205,7 @@ PDE4
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -4183,10 +4247,99 @@ name "fig:Average-execution-times"
 
 \end_layout
 
-\begin_layout Enumerate
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
 
-\series bold
-Declare the test error.
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Absolute error for the NLODE4 case.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:nlode4_error"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename nlode4_error.eps
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Absolute error for the SODE2 test case.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:error_sode2"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename sode2_error.eps
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -5443,6 +5596,63 @@ F.
 \series default
 , pp.
  153-165, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gen_par1"
+literal "false"
+
+\end_inset
+
+E.Cantú-Paz, D.E.Goldberg, Efficient parallel genetic algorithms: theory and
+ practice, Computer Methods in Applied Mechanics and Engineering 
+\series bold
+186
+\series default
+, pp.
+ 221-238, 2000.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gen_par2"
+literal "false"
+
+\end_inset
+
+K.
+ Wang,Z.
+ Shen, A GPU-Based Parallel Genetic Algorithm for Generating Daily Activity
+ Plans, IEEE Transactions on Intelligent Transportation Systems 
+\series bold
+13
+\series default
+, pp.
+ 1474-1480, Sept.
+ 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gen_par3"
+literal "false"
+
+\end_inset
+
+D.
+ Kečo, A.
+ Subasi, J.
+ Kevric, Cloud computing-based parallel genetic algorithm for gene selection
+ in cancer classification, Neural Comput & Applic 
+\series bold
+30
+\series default
+, pp.
+ 1601–1610, 2018.
 \end_layout
 
 \begin_layout Bibliography

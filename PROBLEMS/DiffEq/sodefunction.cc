@@ -299,7 +299,7 @@ QJsonObject    done(vector<double> &x)
     FILE *fp=fopen("sode.plot","w");
     for(int ik=0;ik<=2*npoints;ik++)
     {
-        xx[0]=getx0()+ik*(getx1()-getx0())/(npoints);
+        xx[0]=getx0()+ik*(getx1()-getx0())/(2*npoints);
     fprintf(fp,"%lf ",xx[0]);
         for(int i=0;i<getnode();i++)
         {

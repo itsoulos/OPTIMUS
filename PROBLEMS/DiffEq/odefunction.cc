@@ -179,9 +179,10 @@ double	funmin(vector<double> &a)
     xx.resize(odedimension);
     int kind = getkind();
     double px,dpx,dpx2;
-    for(x=getx0();x<=getx1();x+=(getx1()-getx0())/npoints)
+    for(int ix=0;ix<=npoints;ix++)
     {
         //compute p(x), dpx
+        double x=getx0()+ix*(getx1()-getx0())/(npoints);
         xx[0]=x;
          px = demodel->eval(xx);
          dpx = demodel->evalDeriv(xx,0);
@@ -234,11 +235,13 @@ QJsonObject    done(vector<double> &x)
         double px,dpx,dpx2;
         int kind = getkind();
 
+        FILE *fp=fopen("ode.plot","w");
         for(int ix=0;ix<=2*npoints;ix++)
         {
             xx[0]=getx0()+ix*(getx1()-getx0())/(2*npoints);
             px = demodel->eval(xx);
             dpx = demodel->evalDeriv(xx,0);
+            fprintf(fp,"%lf %lf\n",xx[0],px);
             dpx2 = 0.0;
            if(kind==2 || kind==3)
                dpx2 = demodel->evalSecondDeriv(xx,0);
@@ -248,6 +251,7 @@ QJsonObject    done(vector<double> &x)
            else
                 testError=testError+pow(ode2ff(xx[0],px,dpx,dpx2),2.0);
         }
+        fclose(fp);
         if(model == "gdf")
         {
 
