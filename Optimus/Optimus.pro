@@ -44,6 +44,7 @@ SOURCES += \
     problem.cpp \
     program.cc \
     psolocal.cpp \
+    rbfsampler.cpp \
     rlsprogram.cc \
     rule.cc \
     symbol.cc \
@@ -73,6 +74,7 @@ HEADERS += \
     problem.h \
     program.h \
     psolocal.h \
+    rbfsampler.h \
     rlsprogram.h \
     rule.h \
     symbol.h \
