@@ -4,6 +4,7 @@
 #include "Pso_global.h"
 # include <Optimus/optimizer.h>
 # include <Optimus/tolmin.h>
+# include <Optimus/rbfsampler.h>
 class PsoInterface
 {
 public:

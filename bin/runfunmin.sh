@@ -1,4 +1,4 @@
-METHOD=Genetic
+METHOD=Pso
 METHODPARAMS=""
 ### Available local search methods: bfgs, gradient, adam, lbfgs
 if [ $METHOD = "Minfinder" ]
@@ -12,7 +12,7 @@ then
 	METHODPARAMS="--localsearch_rate=0.01  --genetic_crossover_type=double --chromosomes=500 --localsearch_method=bfgs --generations=2000"
 elif [ $METHOD = "Pso" ]
 then
-	METHODPARAMS="--pso_particles=500 --pso_localsearch_rate=0.00 --localsearch_method=bfgs"
+	METHODPARAMS="--pso_particles=100 --pso_localsearch_rate=0.01 --localsearch_method=bfgs"
 elif [ $METHOD = "iPso" ]
 then
 	METHODPARAMS="--ipso_particles=100 --ipso_maxgenerations=100 --ipso_localsearch_rate=0.05 --ipso_stoppingrule=best_fitness -ipso_gradientcheck=true --ipso_inertiatype=2"
@@ -33,4 +33,4 @@ fi
 PROBLEM=$1
 NATOMS=$2
 echo ./OptimusApp --filename=../PROBLEMS/lib$PROBLEM.so  --opt_method=$METHOD  --natoms=$NATOMS  $METHODPARAMS --threads=12 --iterations=30
-./OptimusApp --filename=../PROBLEMS/lib$PROBLEM.so  --opt_method=$METHOD  --natoms=$NATOMS  $METHODPARAMS --threads=1 --iterations=1
+./OptimusApp --filename=../PROBLEMS/lib$PROBLEM.so  --opt_method=$METHOD  --natoms=$NATOMS  $METHODPARAMS --threads=1 --iterations=30

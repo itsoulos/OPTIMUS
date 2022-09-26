@@ -2,8 +2,9 @@
 #define MULTISTART_H
 
 #include "Multistart_global.h"
-# include <Optimus/optimizer.h>
 # include <Optimus/tolmin.h>
+# include <Optimus/optimizer.h>
+
 
 class MultistartInterface
 {

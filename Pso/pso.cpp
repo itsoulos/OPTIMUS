@@ -53,7 +53,7 @@ bool Pso::terminated()
     if(stopat<1e-8 && !isnan(variance)) stopat=variance/2.0;
     printf("Generation %5d value: %12.8lg variance: %lf stopat: %lf\n",generation,besty,
             variance,stopat);
-    return generation>=max_generations;// || (variance<=stopat && generation>=50);
+    return generation>=max_generations|| (variance<=stopat && generation>=10);
 }
 
 void Pso::step()
@@ -66,8 +66,25 @@ void Pso::step()
 void Pso::init()
 {
 
+# define RBF_SAMPLER
     int pso_particles=params["pso_particles"].toString().toInt();
     particle.resize(pso_particles);
+
+#ifdef RBF_SAMPLER
+    RbfSampler *sampler = new RbfSampler(myProblem,20);
+    sampler->sampleFromProblem(pso_particles/10);
+    sampler->trainModel();
+    vector<Data> xsample;
+    Data ysample;
+    sampler->sampleFromModel(pso_particles,xsample,ysample);
+    for(int i=0;i<ysample.size();i++)
+    {
+        particle[i].resize(myProblem->getDimension());
+        particle[i]=xsample[i];
+        printf("YSample[%d]=%lf \n",i,ysample[i]);
+    }
+#endif
+
     bestParticle.resize(pso_particles);
     velocity.resize(pso_particles);
     fitness_array.resize(pso_particles);
@@ -88,12 +105,16 @@ void Pso::init()
     localSearchCount=0;
     minimax.clear();
 
+
+
     for(int i=0;i<pso_particles;i++)
     {
+#ifndef RBF_SAMPLER
         particle[i].resize(myProblem->getDimension());
+        particle[i]=myProblem->getRandomPoint();
+#endif
         bestParticle[i].resize(myProblem->getDimension());
         velocity[i].resize(myProblem->getDimension());
-        particle[i]=myProblem->getRandomPoint();
         bestParticle[i]=particle[i];
         fitness_array[i]=fitness(particle[i]);
         bestFitness_array[i]=fitness_array[i];

@@ -39,6 +39,7 @@ void    Multistart::step()
     int Multistart_samples=params["multistart_samples"].toString().toInt();
     ++iteration;
 	QString sampling="repulsion";
+    sampling = "uniform";
 #pragma omp parallel for num_threads(threads)
     for(int i=0;i<Multistart_samples;i++)
     {

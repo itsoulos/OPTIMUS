@@ -4,6 +4,7 @@
 #include <vector>
 #include <cassert>
 #include <cmath>
+# include <string>
 class Point
 {
 private:
