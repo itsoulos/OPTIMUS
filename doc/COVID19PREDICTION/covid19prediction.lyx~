@@ -423,8 +423,15 @@ literal "false"
 
 \end_inset
 
- or the work of Huzaifa et al, that was used for another virus, the Ebola
- virus.
+ or the work of Huzaifa et al 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ebola_fractional"
+literal "false"
+
+\end_inset
+
+, that was used for another virus, the Ebola virus.
 \end_layout
 
 \begin_layout Standard
@@ -2639,6 +2646,54 @@ From the execution of the above experiments, it is clear in principle that
 \end_layout
 
 \begin_layout Standard
+Additional experiments were performed to evaluate the parameters used in
+ the proposed method.
+ The figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Average_chromosomes"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows the average error of the proposed method with 2 constructed features
+ for all experiment countries.
+ In these experiments, a varying number of chromosomes was used from 100
+ to 1000.
+ As expected, the proposed method reduces the average error as the number
+ of chromosomes increases.
+ This means, however, that the execution time of the method increases as
+ well as the memory that will be needed to store the computational structures.
+ Therefore, the value of 500 used in the proposed method for the number
+ of chromosomes is a good compromise between speed and efficiency of the
+ proposed technique.
+ 
+\end_layout
+
+\begin_layout Standard
+Regarding the number of generations of the genetic algorithm, similar experiment
+s were done with this number between 50 and 400.
+ The results of these experiments are shown in graph 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Average_generations"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Again, increasing the number of generations seems to reduce the error,
+ although the reduction is not as drastic as it was with the increase in
+ chromosomes.
+ Again the choice of 200 made for the number of generations in the experiments
+ appears to be a fair compromise.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float table
 wide false
 sideways false
@@ -2844,7 +2899,7 @@ VALUE
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -3684,7 +3739,7 @@ AVERAGE
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -4528,7 +4583,7 @@ AVERAGE
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -4566,7 +4621,7 @@ name "fig:graph_cases"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -4599,6 +4654,88 @@ name "fig:graph_deaths"
 \end_layout
 
 \begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Average test error for COVID-19 cases and deaths for different number of
+ chromosomes and two constructed features.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Average_chromosomes"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename average_chromosomes.eps
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Average test error for COVID-19 cases and deaths for different number of
+ generations and two constructed features.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Average_generations"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename average_generations.eps
+	scale 70
+
+\end_inset
+
 
 \end_layout
 
