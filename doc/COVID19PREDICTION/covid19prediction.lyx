@@ -504,6 +504,62 @@ literal "false"
  Subsequently, in the second phase, the original dataset is transformed
  using the best located features and a Genetic Algorithm is used to train
  a neural network on the modified dataset.
+ A schematic representation of the whole process is shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Flowchart"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Flowchart of the proposed algorithm.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Flowchart"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename flowchart.eps
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -2636,18 +2692,40 @@ From the execution of the above experiments, it is clear in principle that
  In some countries the test error is high and in others quite low.
  This is probably due to the different course of the number of cases and
  the mortality rate in each country separately.
- 
+ For example, if one looks at the experimental results for Brazil, one will
+ find that all the methods present a relatively high error.
+ This may be due to the large and abrupt changes that the disease has had
+ in this country, as shown in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:BrazilJohnHopkins"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, which shows the course of deaths in this country and is available from
+ Johns Hopkins University.
+ However, even in this country using the proposed methodology there was
+ a large reduction in approximation error of 90%.
+
 \series bold
-For example, for the Brazil country .....
  
-\series default
-Also, the proposed method has higher accuracy than the other techniques
+\end_layout
+
+\begin_layout Standard
+Moreover, the proposed method has higher accuracy than the other techniques
  even if only one artificial feature is created.
  In fact, in some cases of countries, the test error of the proposed technique
  is so low that it is almost zero.
  Using more than one feature appears to drastically reduce the error, although
  the reduction appears to be more significant between one and two features
  and less when a third constructed feature is added.
+ Also, the Adam method appears to achieve worse results than the PSO and
+ the Genetic algorithm methods and this is expected, since this method is
+ a local optimization technique while the PSO and the Genetic algorithms
+ are global optimization methods.
 \end_layout
 
 \begin_layout Standard
@@ -2904,7 +2982,7 @@ VALUE
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -4665,6 +4743,54 @@ name "fig:graph_deaths"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The daily confirmed deaths for Brazil, available from John Hopkins University.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:BrazilJohnHopkins"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename brazil_total_deaths.eps
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
