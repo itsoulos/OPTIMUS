@@ -1,8 +1,8 @@
 #include "rbfsampler.h"
 
 RbfSampler::RbfSampler(Problem *p,int w)
+    :ProblemSampler("rbfsampler",p)
 {
-    myProblem = p;
     nweights = w;
     weight.resize(nweights);
     variance.resize(nweights);
@@ -53,7 +53,7 @@ double  RbfSampler::eval(Data &x)
     return sum;
 }
 
-void    RbfSampler::sampleFromProblem(int N)
+void    RbfSampler::sampleFromProblem(int N,Matrix &xsample,Data &ysample)
 {
     xpoint.resize(N);
     ypoint.resize(N);
@@ -65,6 +65,8 @@ void    RbfSampler::sampleFromProblem(int N)
     member.resize(N);
     for(int i=0;i<N;i++)
         member[i]=-1;
+    xsample = xpoint;
+    ysample = ypoint;
 }
 
 void    RbfSampler::initCenters()

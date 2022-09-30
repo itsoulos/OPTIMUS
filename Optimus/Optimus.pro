@@ -42,6 +42,7 @@ SOURCES += \
     point.cpp \
     grspopulation.cc \
     problem.cpp \
+    problemsampler.cpp \
     program.cc \
     psolocal.cpp \
     rbfsampler.cpp \
@@ -50,7 +51,8 @@ SOURCES += \
     symbol.cc \
     tolmin.cc \
     brent.cpp \
-    cluster.cpp
+    cluster.cpp \
+    uniformsampler.cpp
 
 HEADERS += \
     Optimus_global.h \
@@ -72,6 +74,7 @@ HEADERS += \
     point.h \
     grspopulation.h \
     problem.h \
+    problemsampler.h \
     program.h \
     psolocal.h \
     rbfsampler.h \
@@ -80,7 +83,8 @@ HEADERS += \
     symbol.h \
     tolmin.h \
     brent.h \
-    cluster.h
+    cluster.h \
+    uniformsampler.h
 
 # Default rules for deployment.
 unix {

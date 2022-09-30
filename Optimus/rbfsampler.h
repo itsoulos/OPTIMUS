@@ -1,13 +1,11 @@
 #ifndef RBFSAMPLER_H
 #define RBFSAMPLER_H
 # include "problem.h"
+# include <problemsampler.h>
 
-typedef vector<Data> Matrix;
-
-class RbfSampler
+class RbfSampler :public ProblemSampler
 {
 private:
-    Problem *myProblem;
     int     nweights;
     Data    weight;
     int     dimension;
@@ -34,9 +32,9 @@ public:
     Data    getWeights();
     void    setWeights(Data &w);
     double  eval(Data &x);
-    void    sampleFromProblem(int N);
+    void    sampleFromProblem(int N,Matrix &xsample,Data &ysample);
     void    trainModel();
-    void    sampleFromModel(int N,vector<Data> &xsample,Data &ysample);
+    void    sampleFromModel(int N,Matrix &xsample,Data &ysample);
     ~RbfSampler();
 };
 

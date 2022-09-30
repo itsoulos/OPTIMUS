@@ -6,11 +6,14 @@
 # include "adam.h"
 # include "lbfgs.h"
 #include "nelderMead.h"
+# include "uniformsampler.h"
+# include "rbfsampler.h"
 class Optimizer
 {
 protected:
     Problem     *myProblem;
     QJsonObject params;
+
     int     threads;
     virtual bool terminated();
     virtual void step();
