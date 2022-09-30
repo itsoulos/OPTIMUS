@@ -1,7 +1,7 @@
 #ifndef RBFSAMPLER_H
 #define RBFSAMPLER_H
 # include "problem.h"
-# include <problemsampler.h>
+# include "problemsampler.h"
 
 class RbfSampler :public ProblemSampler
 {

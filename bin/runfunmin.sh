@@ -1,4 +1,4 @@
-METHOD=DoubleGenetic
+METHOD=Multistart
 METHODPARAMS=""
 ### Available local search methods: bfgs, gradient, adam, lbfgs
 if [ $METHOD = "Minfinder" ]
@@ -7,12 +7,15 @@ then
 elif [ $METHOD = "gcrs" ]
 then
 	METHODPARAMS="--gcrs_samples=25 --gcrs_maxiterations=100000"	
+elif [ $METHOD = "DoubleGenetic" ]
+then
+	METHODPARAMS="--double_chromosomes=100 --sample_method=uniform --localsearch_method=bfgs"	
 elif [ $METHOD = "Genetic" ]
 then
 	METHODPARAMS="--localsearch_rate=0.01  --genetic_crossover_type=double --chromosomes=500 --localsearch_method=bfgs --generations=2000"
 elif [ $METHOD = "Pso" ]
 then
-	METHODPARAMS="--pso_particles=100 --pso_localsearch_rate=0.01 --localsearch_method=bfgs"
+	METHODPARAMS="--pso_particles=100 --pso_localsearch_rate=0.00 --localsearch_method=bfgs --sample_method=rbf"
 elif [ $METHOD = "iPso" ]
 then
 	METHODPARAMS="--ipso_particles=100 --ipso_maxgenerations=100 --ipso_localsearch_rate=0.05 --ipso_stoppingrule=best_fitness -ipso_gradientcheck=true --ipso_inertiatype=2"
@@ -21,7 +24,7 @@ then
 	METHODPARAMS="--price_iterations=10000 --price_newpoint=PRICE --price_stopping=DOUBLEBOX"
 elif [ $METHOD = "Multistart" ]
 then
-	METHODPARAMS="--multistart_samples=25"
+	METHODPARAMS="--multistart_samples=200 --rfb_samples=20 --sample_method=rbf --multistart_maxiterations=1"
 elif [ $METHOD = "MinCenter" ]
 then
 	METHODPARAMS="--mincenter_samples=600 --mincenter_centers=100 --mincenter_iterations=100"
@@ -32,5 +35,5 @@ fi
 
 PROBLEM=$1
 NATOMS=$2
-echo ./OptimusApp --filename=../PROBLEMS/lib$PROBLEM.so  --opt_method=$METHOD  --natoms=$NATOMS  $METHODPARAMS --threads=12 --iterations=30
+echo ./OptimusApp --filename=../PROBLEMS/lib$PROBLEM.so  --opt_method=$METHOD  --natoms=$NATOMS  $METHODPARAMS --threads=1 --iterations=30
 ./OptimusApp --filename=../PROBLEMS/lib$PROBLEM.so  --opt_method=$METHOD  --natoms=$NATOMS  $METHODPARAMS --threads=1 --iterations=30

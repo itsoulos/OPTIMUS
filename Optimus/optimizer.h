@@ -13,14 +13,16 @@ class Optimizer
 protected:
     Problem     *myProblem;
     QJsonObject params;
-
+    ProblemSampler *defaultSampler;
     int     threads;
     virtual bool terminated();
     virtual void step();
     virtual void init();
     virtual void done();
+    void    prepareSampler();
 public:
     Optimizer(Problem *p);
+    void        sampleFromProblem(int N,Matrix &xsample,Data &ysample);
     void            setProblem(Problem *p);
     virtual void    setSettings(QJsonObject settings);
     void            setThreads(int t);
@@ -31,6 +33,7 @@ public:
     QString         getParameter(QString name);
     QString         getParameterDescription(QString name);
     QJsonObject     getParameters();
+    ~Optimizer();
 };
 
 #endif // OPTIMIZER_H

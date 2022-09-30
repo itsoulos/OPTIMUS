@@ -32,12 +32,21 @@ double mdelta(double a,double r0,double r)
         return 0.0;
 }
 
-vector<Data> samplex;
 
 void    Multistart::step()
 {
     int Multistart_samples=params["multistart_samples"].toString().toInt();
     ++iteration;
+    Matrix xsample;
+    Data ysample;
+    sampleFromProblem(Multistart_samples,xsample,ysample);
+    for(int i=0;i<Multistart_samples;i++)
+    {
+        ysample[i]=localSearch(xsample[i]);
+        if(ysample[i]<mbesty)
+            mbesty=ysample[i];
+    }
+    /*
 	QString sampling="repulsion";
     sampling = "uniform";
 #pragma omp parallel for num_threads(threads)
@@ -74,6 +83,7 @@ void    Multistart::step()
             mbesty=y;
 }
  }
+ */
     printf("Multistart. Iteration:%5d Global minimum: %20.10lg variance: %lf stopat: %lf\n",
            iteration,myProblem->getBesty(),variance,stopat);
 }
@@ -88,7 +98,7 @@ void Multistart::init()
     oldBesty=1e+100;
     mbesty=1e+100;
     trialx.resize(myProblem->getDimension());
-	samplex.clear();
+    //samplex.clear();
 }
 
 void Multistart::done()

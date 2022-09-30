@@ -51,26 +51,25 @@ void loadProblem()
         QFile fp(filename);
         if(fp.exists())
         {
-          qDebug()<<"PROBLEM: "<<filename<<" loaded.";
-          dllProblem=new DllProblem(filename,problemParams);
-         dllProblem->setRandomSeed(randomSeed);
+          	dllProblem=new DllProblem(filename,problemParams);
+         	dllProblem->setRandomSeed(randomSeed);
+          	QStringList keys=optimizerList.keys();
+          	mainProblem=new Problem(dllProblem);
+          	for(int i=0;i<optimizerList.size();i++)
+          	{
 
-          QStringList keys=optimizerList.keys();
-          mainProblem=new Problem(dllProblem);
 
-          for(int i=0;i<optimizerList.size();i++)
-          {
-              optimizerList[keys[i]]->setProblem(mainProblem);
                 //collect params values from the list
-              QJsonObject optimizeParams=optimizerList[keys[i]]->getParameters();
-              QStringList optKeys=optimizeParams.keys();
-              for(int j=0;j<optKeys.size();j++)
-              {
-                  optimizeParams[optKeys[j]]=availableParams[optKeys[j]];
-              }
-              optimizerList[keys[i]]->setSettings(optimizeParams);
-              optimizerList[keys[i]]->setThreads(threads);
-          }
+              	QJsonObject optimizeParams=optimizerList[keys[i]]->getParameters();
+              	QStringList optKeys=optimizeParams.keys();
+              	for(int j=0;j<optKeys.size();j++)
+              	{
+                  	optimizeParams[optKeys[j]]=availableParams[optKeys[j]];
+              	}
+              	optimizerList[keys[i]]->setSettings(optimizeParams);
+                optimizerList[keys[i]]->setProblem(mainProblem);
+              	optimizerList[keys[i]]->setThreads(threads);
+          	}
         }
         else filename="";
     }
@@ -142,6 +141,8 @@ void parseCmdLine(QStringList args)
             if(keys.contains(param))
             {
                 availableParams[param]=value;
+                printf("USER PARAM[%s]=%s\n",param.toStdString().c_str(),
+                       value.toStdString().c_str());
             }
             else
                {
@@ -185,7 +186,10 @@ void  loadOptimizers()
                          QStringList keys=optimizerParams.keys();
                          for(int j=0;j<keys.size();j++)
                          {
-                            availableParams[keys[j]]=optimizerParams[keys[j]].toString();
+
+                                availableParams[keys[j]]=optimizerParams[keys[j]].toString();
+
+
                          }
                       }
                   }
@@ -273,7 +277,6 @@ int main(int argc, char *argv[])
       exit(EXIT_FAILURE);
   }
 
-  qDebug()<<"OPTIMUS PATH: "<<OptimusPath;
   loadOptimizers();
   parseCmdLine(app.arguments());
   loadProblem();

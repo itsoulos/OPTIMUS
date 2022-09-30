@@ -12,6 +12,7 @@ void    UniformSampler::sampleFromProblem(int N,Matrix &xsample,Data &ysample)
    ypoint.resize(N);
    for(i=0;i<N;i++)
    {
+       xpoint[i].resize(myProblem->getDimension());
        xpoint[i]=myProblem->getRandomPoint();
        ypoint[i]=myProblem->funmin(xpoint[i]);
    }

@@ -1,6 +1,7 @@
 #include "optimizer.h"
 # include <QStringList>
 # include <grs.h>
+
 # include <psolocal.h>
 Optimizer::Optimizer(Problem *p)
 {
@@ -19,8 +20,24 @@ Optimizer::Optimizer(Problem *p)
     addParameter("psoLocal_r1","1.0","R1 param for pso local");
     addParameter("psoLocal_r2","1.0","R2 parameter for pso local");
     addParameter("psoLocal_theta","0.1","Theta percentage for pso local");
+    addParameter("sample_method","uniform","The sampling method. Options: uniform, rbf, neural,..");
+    addParameter("rbf_samples","5","Amount of samples to be taken by rbf sampler");
+    addParameter("rbf_sampler_weights","10","Amount of weights for rbf sampling");
 }
 
+
+void    Optimizer::sampleFromProblem(int N,Matrix &xsample,Data &ysample)
+{
+    if(params["sample_method"].toString()=="rbf")
+    {
+        int M = params["rbf_samples"].toString().toInt();
+        defaultSampler->sampleFromProblem(M,xsample,ysample);
+    }
+    else
+        defaultSampler->sampleFromProblem(N,xsample,ysample);
+    defaultSampler->trainModel();
+    defaultSampler->sampleFromProblem(N,xsample,ysample);
+}
 
 double  Optimizer::localSearch(Data &x)
 {
@@ -179,7 +196,6 @@ double  Optimizer::localSearch(Data &x)
                 currentPoint[i] = beforePoint + bestStep;
                 stepSize[i] = bestStep; // acceleration
             }
-        //    printf("Best score = %lf oldScore  = %lf iter =%d \n",bestScore,beforeScore,iter);
 	}
         if (fabs(bestScore-beforeScore) < 1e-5 || iter>itermax)
         {
@@ -189,15 +205,31 @@ double  Optimizer::localSearch(Data &x)
             iter++;
         if(termflag) break;
     }
-    //printf("Hill %lf -> %lf \n",oldmin,bestScore);
    for(int i=0;i<x.size();i++) x[i]=currentPoint[i];
     return myProblem->funmin(x);
     }
 }
 
+void    Optimizer::prepareSampler()
+{
+    if(myProblem!=NULL)
+    {
+
+        QString method = params["sample_method"].toString();
+        if(method == "uniform")
+        defaultSampler = new UniformSampler(myProblem);
+        else
+        if(method=="rbf")
+        {
+            int M = params["rbf_sampler_weights"].toString().toInt();
+            defaultSampler = new RbfSampler(myProblem,M);
+        }
+    }
+}
 void Optimizer::setProblem(Problem *p)
 {
     myProblem=p;
+    prepareSampler();
 }
 
 void Optimizer::setSettings(QJsonObject settings)
@@ -268,4 +300,10 @@ void  Optimizer::init()
 void Optimizer::done()
 {
 
+}
+
+Optimizer::~Optimizer()
+{
+    if(defaultSampler!=NULL)
+        delete defaultSampler;
 }

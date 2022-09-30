@@ -8,9 +8,9 @@ DoubleGenetic::DoubleGenetic(Problem *p)
     addParameter("double_generations","500","Number of generations");
     addParameter("double_selectionrate","0.10","Selection rate");
     addParameter("double_mutationrate","0.05","Mutation rate");
-    addParameter("double_localsearchrate","0.01","Local search rate");
+    addParameter("double_localsearchrate","0.00","Local search rate");
     addParameter("double_stoprule","doublebox","Stopping rule (doublebox,generations,stoponzero)");
-    addParameter("double_debug","yes","If it yes the full debug will be printed");
+    addParameter("double_debug","no","If it yes the full debug will be printed");
 }
 
 void    DoubleGenetic::calcFitnessArray()
@@ -201,15 +201,11 @@ void    DoubleGenetic::init()
     lmargin = myProblem->getLeftMargin();
     rmargin = myProblem->getRightMargin();
 
-    chromosome.resize(count);
+    sampleFromProblem(count,chromosome,fitnessArray);
     children.resize(count);
-    fitnessArray.resize(count);
     for(int i=0;i<count;i++)
     {
-        chromosome[i].resize(myProblem->getDimension());
         children[i].resize(myProblem->getDimension());
-        chromosome[i]=myProblem->getRandomPoint();
-        fitnessArray[i] = myProblem->funmin(chromosome[i]);
     }
     x1=0.0;
     x2=0.0;
