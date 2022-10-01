@@ -189,7 +189,16 @@ bool     Problem::getGradientCriterion(Data &x1,Data &x2)
         return s>=0;
 }
 
-
+double  Problem::getVolume()
+{
+    double s= 0.0;
+    for(int i=0;i<lmargin.size();i++)
+    {
+        //if(fabs(rmargin[i]-lmargin[i])>s)
+            s += (rmargin[i]-lmargin[i])*(rmargin[i]-lmargin[i]);
+    }
+    return sqrt(s);
+}
 QJsonObject    Problem::done(Data &x)
 {
     return problem->done(x);

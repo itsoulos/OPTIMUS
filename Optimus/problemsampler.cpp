@@ -21,7 +21,7 @@ void    ProblemSampler::trainModel()
     //nothing to be done. It is a virtual class.
 }
 
-void    ProblemSampler::sampleFromModel(int N,Matrix &xsample,Data &ysample)
+void    ProblemSampler::sampleFromModel(int &N,Matrix &xsample,Data &ysample)
 {
     //nothing to be done. It is a virtual class.
 }

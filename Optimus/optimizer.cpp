@@ -26,7 +26,7 @@ Optimizer::Optimizer(Problem *p)
 }
 
 
-void    Optimizer::sampleFromProblem(int N,Matrix &xsample,Data &ysample)
+void    Optimizer::sampleFromProblem(int &N,Matrix &xsample,Data &ysample)
 {
     if(params["sample_method"].toString()=="rbf")
     {
@@ -36,7 +36,7 @@ void    Optimizer::sampleFromProblem(int N,Matrix &xsample,Data &ysample)
     else
         defaultSampler->sampleFromProblem(N,xsample,ysample);
     defaultSampler->trainModel();
-    defaultSampler->sampleFromProblem(N,xsample,ysample);
+    defaultSampler->sampleFromModel(N,xsample,ysample);
 }
 
 double  Optimizer::localSearch(Data &x)

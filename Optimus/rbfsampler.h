@@ -18,6 +18,7 @@ private:
     vector<int>     teamMembers;
     double      getDistance(Data &x,Data &y);
     double      gaussian(Data &x,Data &m,double v);
+    double      gaussianDerivative(Data &x,Data &m,double v,int pos);
     void        initCenters();
     void        kmeans();
     int         nearestTeam(Data &x);
@@ -32,9 +33,10 @@ public:
     Data    getWeights();
     void    setWeights(Data &w);
     double  eval(Data &x);
+    Data    evalDeriv(Data &x);
     void    sampleFromProblem(int N,Matrix &xsample,Data &ysample);
     void    trainModel();
-    void    sampleFromModel(int N,Matrix &xsample,Data &ysample);
+    void    sampleFromModel(int &N,Matrix &xsample,Data &ysample);
     ~RbfSampler();
 };
 

@@ -38,6 +38,7 @@ bool     getGradientCriterion(Data &x1,Data &x2);
     void    resetFunctionCalls(QJsonObject &settings);
     Data    getBestx();
     double  getBesty();
+    double  getVolume();
 };
 
 extern double getDistance(Data &x1,Data &x2);

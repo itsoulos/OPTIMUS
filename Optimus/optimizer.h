@@ -22,7 +22,7 @@ protected:
     void    prepareSampler();
 public:
     Optimizer(Problem *p);
-    void        sampleFromProblem(int N,Matrix &xsample,Data &ysample);
+    void        sampleFromProblem(int &N,Matrix &xsample,Data &ysample);
     void            setProblem(Problem *p);
     virtual void    setSettings(QJsonObject settings);
     void            setThreads(int t);

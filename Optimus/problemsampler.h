@@ -43,7 +43,7 @@ public:
      * @param xsample
      * @param ysample
      */
-    virtual void    sampleFromModel(int N,Matrix &xsample,Data &ysample);
+    virtual void    sampleFromModel(int &N,Matrix &xsample,Data &ysample);
 
     /**
      * @brief getName

@@ -19,7 +19,7 @@ void    UniformSampler::sampleFromProblem(int N,Matrix &xsample,Data &ysample)
    xsample = xpoint;
    ysample = ypoint;
 }
-void    UniformSampler::sampleFromModel(int N,Matrix &xsample,Data &ysample)
+void    UniformSampler::sampleFromModel(int &N,Matrix &xsample,Data &ysample)
 {
     xsample = xpoint;
     ysample = ypoint;

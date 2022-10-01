@@ -40,6 +40,7 @@ void    Multistart::step()
     Matrix xsample;
     Data ysample;
     sampleFromProblem(Multistart_samples,xsample,ysample);
+    printf("Final Samples are: %d \n",Multistart_samples);
     for(int i=0;i<Multistart_samples;i++)
     {
         ysample[i]=localSearch(xsample[i]);

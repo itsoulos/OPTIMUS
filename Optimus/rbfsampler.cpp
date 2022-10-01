@@ -345,7 +345,7 @@ void    RbfSampler::trainModel()
     //then train
 }
 
-void    RbfSampler::sampleFromModel(int N,vector<Data> &xsample,Data &ysample)
+void    RbfSampler::sampleFromModel(int &N,vector<Data> &xsample,Data &ysample)
 {
     //sample many points and take the N lowest values
     const int NMany = 10 * N;
@@ -372,10 +372,87 @@ void    RbfSampler::sampleFromModel(int N,vector<Data> &xsample,Data &ysample)
             }
         }
     }
+
     xsample.resize(N);
     ysample.resize(N);
+
+    Matrix finalXsample;
+    Data finalYSample;
+    for(int i=0;i<N;i++)
+    {
+        double minDist =1e+100;
+        int iminDist =-1;
+        for(int j=0;j<i;j++)
+        {
+            if(i==j) continue;
+            Data gi,gj;
+            gi=evalDeriv(xsample[i]);
+            gj=evalDeriv(xsample[j]);
+            double sum = 0.0;
+            for(int k=0;k<gi.size();k++)
+            {
+                sum+=(xsample[i][k]-xsample[j][k])*(gi[k]-gj[k]);
+            }
+             if(fabs(ysample[i]-ysample[j])<1e-7) {
+                 iminDist = j;
+                 continue;
+             }
+            double d= getDistance(xsample[i],xsample[j])/myProblem->getVolume();
+            if(sum<0)
+            {
+                if(d<minDist || iminDist==-1)
+                {
+                    minDist = d;
+                    iminDist =j;
+                }
+            }
+
+        }
+        if(iminDist>=0)
+        {
+
+            if(fabs(ysample[i]-ysample[iminDist])<1e-5) continue;
+            if(minDist>0.10)
+            {
+                finalXsample.push_back(xsample[i]);
+                finalYSample.push_back(ysample[i]);
+            }
+        }
+        else
+        {
+            finalXsample.push_back(xsample[i]);
+            finalYSample.push_back(ysample[i]);
+        }
+
+    }
+    N = finalXsample.size();
+    xsample = finalXsample;
+    ysample = finalYSample;
 }
 
+double  RbfSampler::gaussianDerivative(Data &x,Data &m,double v,int pos)
+{
+    double hx = gaussian(x,m,v);
+    return hx * (-2.0/v)*(x[pos]-m[pos]);
+}
+
+Data  RbfSampler::evalDeriv(Data &x)
+{
+    Data g;
+    g.resize(x.size());
+    for(int pos=0;pos<x.size();pos++)
+    {
+
+        double sum = 0.0;
+        for(int i=0;i<(int)weight.size();i++)
+        {
+            double px = gaussianDerivative(x,center[i],variance[i],pos);
+            sum = sum + weight[i]*px;
+        }
+        g[pos]=sum;
+    }
+    return g;
+}
 RbfSampler::~RbfSampler()
 {
     //nothing for now
