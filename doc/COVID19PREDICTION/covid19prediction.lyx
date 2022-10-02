@@ -129,7 +129,7 @@ A widely used method that constructs features with the incorporation of
  the so - called Grammatical Evolution is proposed here to predict the COVID-19
  cases as well as the mortality rate.
  The method creates new artificial features from the original ones using
- a Genetic algorithm and is guided by a BNF grammar.
+ a Genetic algorithm and is guided by BNF grammar.
 
 \series bold
  
@@ -327,10 +327,10 @@ literal "false"
 
 .
  In the case of the COVID-19 data, the only feature is the recording time
- in ascending form and the output is the number of cases or deaths for that
+ in ascending form and the output is the number of cases or deaths on that
  recording.
  The proposed method creates 1-3 artificial features from the recording
- time and, subsequently an artificial neural network 
+ time and, subsequently, an artificial neural network 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "neural1,neural2"
@@ -350,7 +350,7 @@ literal "false"
 
 \end_inset
 
- to produce the new features from the old ones.
+ to produce new features from the old ones.
  
 \end_layout
 
@@ -415,7 +415,7 @@ literal "false"
 
 \begin_layout Standard
 Furthermore, a series of recent works have been proposed to model the dynamics
- of COVID-19 virus using fractional derivatives 
+ of the COVID-19 virus using fractional derivatives 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "covid_fractional1,covid_fractional2,covid_fractional3"
@@ -678,7 +678,7 @@ with:
 
  
 \series default
-is the set of the non - terminal symbols, used to produce series of terminal
+is the set of the non - terminal symbols, used to produce a series of terminal
  symbols through production rules.
 \end_layout
 
@@ -690,7 +690,7 @@ is the set of the non - terminal symbols, used to produce series of terminal
 
  
 \series default
-is the set of terminal symbols of the grammar.
+is the set of terminal symbols of grammar.
  For example, terminal symbols could be the digits in an arithmetic expression
  of the operators.
 \end_layout
@@ -703,8 +703,8 @@ is the set of terminal symbols of the grammar.
 
  
 \series default
-is the starting non - terminal symbol of the grammar.
- The production of a valid expression initiates from this symbol.
+is the starting non - terminal symbol of grammar.
+ The production of a valid expression is initiated from this symbol.
 \end_layout
 
 \begin_layout Itemize
@@ -2467,9 +2467,9 @@ https://ourworldindata.org/explorers/coronavirus-data-explorer
 
 \end_inset
 
- and was downloaded for the start of pandemic until September 10, 2022.
+ and was downloaded for the start of the pandemic until September 10, 2022.
  To enable the machine learning models to better fit the data, the following
- fair normalization took place in every dataset
+ fair normalization took place in every dataset.
 \end_layout
 
 \begin_layout Enumerate
@@ -2491,9 +2491,9 @@ The number of deaths was divided by
 \begin_layout Standard
 The following countries were selected for testing: Algeria, Argentina, Australia
 , Brazil, Bulgaria, Canada, Germany, Greece, Egypt and Japan.
- For every country, two distinct datasets was obtained from the COVID-19
- database, one dataset for the number of cases in every day of the pandemic
- and one dataset for the number of deaths in every day of the pandemic.
+ For every country, two distinct datasets were obtained from the COVID-19
+ database, one dataset for the number of cases on every day of the pandemic
+ and one dataset for the number of deaths on every day of the pandemic.
  Every run was executed 30 times for every dataset and averages were measured.
  The random number generator used was the drand48() of the C programming
  language.
@@ -2694,7 +2694,7 @@ From the execution of the above experiments, it is clear in principle that
  the mortality rate in each country separately.
  For example, if one looks at the experimental results for Brazil, one will
  find that all the methods present a relatively high error.
- This may be due to the large and abrupt changes that the disease has had
+ This may be due to the large and abrupt changes that the disease has caused
  in this country, as shown in figure 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2707,7 +2707,7 @@ noprefix "false"
 
 , which shows the course of deaths in this country and is available from
  Johns Hopkins University.
- However, even in this country using the proposed methodology there was
+ However, even in this country using the proposed methodology, there was
  a large reduction in approximation error of 90%.
 
 \series bold
@@ -2724,7 +2724,7 @@ Moreover, the proposed method has higher accuracy than the other techniques
  and less when a third constructed feature is added.
  Also, the Adam method appears to achieve worse results than the PSO and
  the Genetic algorithm methods and this is expected, since this method is
- a local optimization technique while the PSO and the Genetic algorithms
+ a local optimization technique, while the PSO and the Genetic algorithms
  are global optimization methods.
 \end_layout
 
@@ -2750,8 +2750,8 @@ noprefix "false"
  This means, however, that the execution time of the method increases as
  well as the memory that will be needed to store the computational structures.
  Therefore, the value of 500 used in the proposed method for the number
- of chromosomes is a good compromise between speed and efficiency of the
- proposed technique.
+ of chromosomes is a good compromise between the speed and efficiency of
+ the proposed technique.
  
 \end_layout
 
@@ -2772,8 +2772,43 @@ noprefix "false"
  Again, increasing the number of generations seems to reduce the error,
  although the reduction is not as drastic as it was with the increase in
  chromosomes.
- Again the choice of 200 made for the number of generations in the experiments
+ Again, the choice of 200 made for the number of generations in the experiments
  appears to be a fair compromise.
+\end_layout
+
+\begin_layout Standard
+The Wilcoxon signed-rank test was used to compare the total test error for
+ the prediction of COVID-19 cases in different countries of the proposed
+ method (FC1, FC2, and FC3) with the respective total test error for ADAM,
+ MLPPSO, and MLPGEN optimization methods.
+ The results obtained through those statistical tests are shown in Figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:boxplot_cases"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ We also compared the average error in predicting deaths per country of
+ the proposed method (FC1, FC2, and FC3) with the average error for ADAM,
+ MLPPSO, and MLPGEN optimization methods using the Wilcoxon signed-rank
+ test.
+ The results obtained through those statistical tests are shown in Figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:boxplot_deaths"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -2982,7 +3017,7 @@ VALUE
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -3822,7 +3857,7 @@ AVERAGE
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -4666,7 +4701,7 @@ AVERAGE
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -4704,7 +4739,7 @@ name "fig:graph_cases"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -4752,10 +4787,6 @@ sideways false
 status open
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -4794,7 +4825,7 @@ name "fig:BrazilJohnHopkins"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -4833,11 +4864,7 @@ name "fig:Average_chromosomes"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
-
-\begin_layout Plain Layout
-
-\end_layout
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -4864,6 +4891,88 @@ name "fig:Average_generations"
 \begin_inset Graphics
 	filename average_generations.eps
 	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Box plot comparing the total test error for predicting COVID-19 cases among
+ the optimization methods of different countries.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:boxplot_cases"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename diagram_cases.eps
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Box plot comparing the average error in predicting deaths per country among
+ the optimization methods.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:boxplot_deaths"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename diagram_deaths.eps
+	scale 80
 
 \end_inset
 
@@ -4904,7 +5013,7 @@ l Evolution and evaluates them using a radial basis network (RBF).
  network error.
  Future research should include the physical interpretation of the generated
  features in relation to the nature of the problem.
- Also, future improvements of the method may include:
+ Also, future improvements to the method may include:
 \end_layout
 
 \begin_layout Enumerate

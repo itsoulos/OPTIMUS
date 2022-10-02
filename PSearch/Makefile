@@ -421,7 +421,9 @@ psearch.o: psearch.cpp psearch.h \
 		../Optimus/nelderMead_global.h \
 		../Optimus/uniformsampler.h \
 		../Optimus/problemsampler.h \
-		../Optimus/rbfsampler.h
+		../Optimus/rbfsampler.h \
+		../Optimus/neuralsampler.h \
+		../Optimus/dataset.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o psearch.o psearch.cpp
 
 ####### Install

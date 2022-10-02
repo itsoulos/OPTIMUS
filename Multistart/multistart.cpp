@@ -9,7 +9,6 @@ Multistart::Multistart(Problem *p)
 
 bool Multistart::terminated()
 {
-    int multistart_maxiterations=params["multistart_maxiterations"].toString().toInt();
     double fmin=fabs(1.0+mbesty);
     if(iteration<=1) {x1=0;x2=0.0;}
     x1+=fmin;
@@ -22,7 +21,7 @@ bool Multistart::terminated()
         stopat=variance/2.0;
     }
     if(fabs(stopat)<1e-8) stopat=variance/2.0;
-    return (iteration>=multistart_maxiterations || (variance<=stopat && iteration>=10));
+    return (iteration>=xsample.size() || (variance<=stopat && iteration>=20));
 }
 
 double mdelta(double a,double r0,double r)
@@ -35,18 +34,14 @@ double mdelta(double a,double r0,double r)
 
 void    Multistart::step()
 {
-    int Multistart_samples=params["multistart_samples"].toString().toInt();
-    ++iteration;
-    Matrix xsample;
-    Data ysample;
-    sampleFromProblem(Multistart_samples,xsample,ysample);
-    printf("Final Samples are: %d \n",Multistart_samples);
-    for(int i=0;i<Multistart_samples;i++)
-    {
-        ysample[i]=localSearch(xsample[i]);
-        if(ysample[i]<mbesty)
-            mbesty=ysample[i];
-    }
+   ysample[iteration]=localSearch(xsample[iteration]);
+
+
+
+        if(ysample[iteration]<mbesty)
+            mbesty=ysample[iteration];
+
+        ++iteration;
     /*
 	QString sampling="repulsion";
     sampling = "uniform";
@@ -100,6 +95,11 @@ void Multistart::init()
     mbesty=1e+100;
     trialx.resize(myProblem->getDimension());
     //samplex.clear();
+    int Multistart_samples=params["multistart_samples"].toString().toInt();
+    int multistart_maxiterations = params["multistart_maxiterations"].toString().toInt();
+
+    int total = Multistart_samples * multistart_maxiterations;
+    sampleFromProblem(total,xsample,ysample);
 }
 
 void Multistart::done()

@@ -29,7 +29,7 @@
 
 \usepackage{babel}
 \begin{document}
-\title{Prediction of Covid-19 cases using constructed features by Grammatical
+\title{Prediction of COVID-19 cases using constructed features by Grammatical
 Evolution}
 \author{Ioannis G. Tsoulos$^{(1)}$\thanks{Corresponding author. Email: itsoulos@uoi.gr},
 Alexandros Tzallas$^{(1)}$, Dimitrios Tsalikakis$^{(2)}$}
@@ -41,15 +41,15 @@ Informatics and Telecommunications, Greece}
 \begin{abstract}
 A widely used method that constructs features with the incorporation
 of the so - called Grammatical Evolution is proposed here to predict
-the Covid-19 cases as well as the mortality rate. The method creates
+the COVID-19 cases as well as the mortality rate. The method creates
 new artificial features from the original ones using a Genetic algorithm
-and is guided by a BNF grammar.\textbf{ }After the artificial features
+and is guided by BNF grammar.\textbf{ }After the artificial features
 are generated, the original data set is modified based on these features
 and an artificial neural network is applied to the modified data and
 the results are reported. From the comparative experiments done, it
 was clear that feature construction has an advantage over other machine
 learning methods for predicting pandemic elements.\\
-\textbf{Keywords:} Genetic algorithms; feature construction; Covid-19
+\textbf{Keywords:} Genetic algorithms; feature construction; COVID-19
 pandemic; stochastic methods; Grammatical Evolution
 \end{abstract}
 
@@ -60,11 +60,11 @@ of a mysterious infection in the Chinese province, Wuhan. Subsequently,
 the WHO\textbf{ (}World Health Organization) declared a new global
 pandemic on March 11, 2020. The name given to the new coronavirus
 was SARS-CoV-2 (Severe Acute Respiratory Syndrome) and the name given
-to the corresponding disease was Covid-19.\textbf{ }As Andersen mentioned
+to the corresponding disease was COVID-19.\textbf{ }As Andersen mentioned
 \cite{Andersen}, the virus's origin is natural selection in an animal
 host before the zoonotic transfer or natural selection in humans following
 the zoonotic transfer.\textbf{ }At the time of writing, the number
-of diagnosed cases of Covid-19 was about 650.000.000 and the number
+of diagnosed cases of COVID-19 was about 650.000.000 and the number
 of people who had died was over 6.500.000. So the fatality rate was
 about 1\%, although this rate may be lower since many people have
 fallen ill without undergoing any diagnostic test. 
@@ -78,18 +78,18 @@ used the Patient Information Based Algorithm (PIBA), that uses real
 an algorithm to forecast the death rates. Also, Tomar and Gupta \cite{Gupta},
 used Long Short-Term Memory (LSTM) to predict the number of COVID-19
 cases. Zhang et al\cite{Zhang} used a Poisson model to analyze the
-Covid-19 cases in Canada,France,Germany, Italy, UK and USA. Pinter
+COVID-19 cases in Canada,France,Germany, Italy, UK and USA. Pinter
 et al. \cite{Pinter} used an ANFIS system and a multilayered perceptron-
 imperialist competitive algorithm (MLP-ICA) to predict the mortality
 rate for Hungary.\textbf{ }Smith et al. \cite{Smith}, used machine
 learning techniques for a dataset made of blood samples taken from
-Covid-19 patients from a hospital in the region of Wuhan, in order
+COVID-19 patients from a hospital in the region of Wuhan, in order
 to estimate the mortality rate.\textbf{ }Additionally, papers \cite{mask1,mask2}
 using machine learning techniques to recognize faces behind masks
 has emerged in recent years.
 
 The current work utilizes a feature construction method initially
-presented in \cite{fcmain}, to predict the Covid-19 cases and deaths
+presented in \cite{fcmain}, to predict the COVID-19 cases and deaths
 for a series of randomly selected countries. The method is based on
 Grammatical Evolution \cite{gemain} and creates artificial features
 from the original ones without a priory knowledge of the structure
@@ -98,17 +98,34 @@ of scientific fields such as Spam identification \cite{fc1}, Fetal
 heart classification \cite{fc2}, epileptic oscillations \cite{fcmain}
 etc. Also, recently a software that implements the feature construction
 method using modern programming approaches has been published \cite{qfc}.
-In the case of the Covid-19 data, the only feature is the recording
+In the case of the COVID-19 data, the only feature is the recording
 time in ascending form and the output is the number of cases or deaths
-for that recording. The proposed method creates 1-3 artificial features
-from the recording time and, subsequently an artificial neural network
+on that recording. The proposed method creates 1-3 artificial features
+from the recording time and, subsequently, an artificial neural network
 \cite{neural1,neural2} is trained on the modified data. The experimental
 results are compared against other methods used to train neural networks
 and the proposed technique appears to significantly outperform the
 others in terms of accuracy. The Grammatical Evolution utilizes a
-Genetic algorithm \cite{genetic1,genetic2} to produce the new features
-from the old ones. Furthermore, genetic algorithms have been used
-in variety of symmetry problems from the relevant literature \cite{gen_symmetry1,gen_symmetry2,gen_symmetry3}.
+Genetic algorithm \cite{genetic1,genetic2} to produce new features
+from the old ones. 
+
+Also, genetic algorithms have been used in variety of symmetry problems
+from the relevant literature \cite{gen_symmetry1,gen_symmetry2,gen_symmetry3}.
+Recently, Krippendorf and Syvaeri have used artificial neural networks
+to detect symmetries in datasets \cite{symmetry_neural}, Qiao et
+al \cite{symmetry_atomic} used deep learning techniques to predict
+energy solutions of the Schrödinger equations using symmetry adapted
+atomic orbital features, Xi et al \cite{symmetry_materials} used
+deep learning methods on high - symmetry materials space, Selvaratnam
+et al \cite{symmetry_convolutional} used symmetry functions to large
+chemical spaces through convolutional neural networks, Wang et al
+\cite{symmetry_wang} have used symmetry - adapted graph neural networks
+for constructing molecular dynamics force fields etc.
+
+Furthermore, a series of recent works have been proposed to model
+the dynamics of the COVID-19 virus using fractional derivatives \cite{covid_fractional1,covid_fractional2,covid_fractional3}
+or the work of Huzaifa et al \cite{ebola_fractional}, that was used
+for another virus, the Ebola virus.
 
 The rest of this article is organized as follows: in section \ref{sec:Method-description}
 the main aspects of Grammatical Evolution and the steps of the proposed
@@ -128,7 +145,16 @@ because the training procedure of RBF is much faster than those of
 artificial neural networks. Subsequently, in the second phase, the
 original dataset is transformed using the best located features and
 a Genetic Algorithm is used to train a neural network on the modified
-dataset.
+dataset. A schematic representation of the whole process is shown
+in Figure \ref{fig:Flowchart}.
+
+\begin{figure}
+
+\caption{Flowchart of the proposed algorithm.\label{fig:Flowchart}}
+
+\centering{}\includegraphics[scale=0.45]{flowchart}
+\end{figure}
+
 
 \subsection{Grammatical Evolution\label{subsec:Grammatical-Evolution}}
 
@@ -145,12 +171,12 @@ energy demand estimation \cite{ge_energy}, combinatorial optimization
 is defined as the set \textbf{$G=\left(N,T,S,P\right)$ }with:
 \begin{itemize}
 \item \textbf{$N$ }is the set of the non - terminal symbols, used to produce
-series of terminal symbols through production rules.
-\item \textbf{$T$ }is the set of terminal symbols of the grammar. For example,
+a series of terminal symbols through production rules.
+\item \textbf{$T$ }is the set of terminal symbols of grammar. For example,
 terminal symbols could be the digits in an arithmetic expression of
 the operators.
-\item \textbf{$S$ }is the starting non - terminal symbol of the grammar.
-The production of a valid expression initiates from this symbol.
+\item \textbf{$S$ }is the starting non - terminal symbol of grammar. The
+production of a valid expression is initiated from this symbol.
 \item \textbf{$P$ }is the set of production rules. Every rule is in the
 form \textbf{$A\rightarrow a$ }or\textbf{ $A\rightarrow aB,\ A,B\in N,\ a\in T$.}
 \end{itemize}
@@ -175,7 +201,7 @@ non - terminal symbol.
 In the current work the extend BNF grammar is illustrated in Figure
 \ref{fig:BNF-grammar-of}. The non - terminal symbols are enclosed
 in the symbols < > and the number N denotes the number of original
-features. For the Covid-19 case the N is considered as 1. An example
+features. For the COVID-19 case the N is considered as 1. An example
 of producing a valid expression is shown in the Table \ref{tab:table_with_steps}.
 The chromosome is $x=\left[9,8,6,4,16,10,17,23,8,14\right]$ and $N=3$.
 The valid expression created finally is\textbf{ $f(x)=x_{2}+\cos\left(x_{3}\right)$}. 
@@ -183,7 +209,7 @@ The valid expression created finally is\textbf{ $f(x)=x_{2}+\cos\left(x_{3}\righ
 Considering the above mapping procedure, the steps to produce $N_{f}$
 artificial features for a given chromosome $g$ are:
 \begin{enumerate}
-\item Divide the into $N_{f}$ parts. Each part $g_{i},\ i=1,..,N_{f}$
+\item Divide the into $N_{f}$ parts. Each part $g_{i},\ i=1,\ldots,N_{f}$
 will construct a separate feature.
 \item A feature $t_{i}$ is constructed for every $g_{i}$ using the grammar
 given in Figure \ref{fig:BNF-grammar-of}
@@ -431,7 +457,7 @@ is $(d+2)\times H.$
 \begin{enumerate}
 \item \textbf{Obtain} the best fitness 
 \[
-f^{*}=\min_{i\in\left[0\ldots N_{c}\right]}f_{i}
+f^{*}=\min_{i\in\left[0,\ldots,N\right]}f_{i}
 \]
 \item \textbf{Terminate} if $\mbox{iter}\ge N_{g}$ OR $f^{*}\le\epsilon$
 \end{enumerate}
@@ -475,18 +501,18 @@ is altered if $r\le p_{m}$
 \section{Experimental results \label{sec:Experimental-results}}
 
 The data was freely available from the URL \url{https://ourworldindata.org/explorers/coronavirus-data-explorer}
-and was downloaded for the start of pandemic until September 10, 2022.
-To enable the machine learning models to better fit the data, the
-following fair normalization took place in every dataset
+and was downloaded for the start of the pandemic until September 10,
+2022. To enable the machine learning models to better fit the data,
+the following fair normalization took place in every dataset.
 \begin{enumerate}
 \item The number of cases was divided by $10^{5}$.
 \item The number of deaths was divided by $10^{3}$.
 \end{enumerate}
 The following countries were selected for testing: Algeria, Argentina,
 Australia, Brazil, Bulgaria, Canada, Germany, Greece, Egypt and Japan.
-For every country, two distinct datasets was obtained from the COVID-19
-database, one dataset for the number of cases in every day of the
-pandemic and one dataset for the number of deaths in every day of
+For every country, two distinct datasets were obtained from the COVID-19
+database, one dataset for the number of cases on every day of the
+pandemic and one dataset for the number of deaths on every day of
 the pandemic. Every run was executed 30 times for every dataset and
 averages were measured. The random number generator used was the drand48()
 of the C programming language. The parameters for the proposed method
@@ -530,13 +556,56 @@ that the efficiency of the methods depends to a great extent on the
 country in question. In some countries the test error is high and
 in others quite low. This is probably due to the different course
 of the number of cases and the mortality rate in each country separately.
-Also, the proposed method has higher accuracy than the other techniques
+For example, if one looks at the experimental results for Brazil,
+one will find that all the methods present a relatively high error.
+This may be due to the large and abrupt changes that the disease has
+caused in this country, as shown in figure \ref{fig:BrazilJohnHopkins},
+which shows the course of deaths in this country and is available
+from Johns Hopkins University. However, even in this country using
+the proposed methodology, there was a large reduction in approximation
+error of 90\%.\textbf{ }
+
+Moreover, the proposed method has higher accuracy than the other techniques
 even if only one artificial feature is created. In fact, in some cases
 of countries, the test error of the proposed technique is so low that
 it is almost zero. Using more than one feature appears to drastically
 reduce the error, although the reduction appears to be more significant
 between one and two features and less when a third constructed feature
-is added.
+is added. Also, the Adam method appears to achieve worse results than
+the PSO and the Genetic algorithm methods and this is expected, since
+this method is a local optimization technique, while the PSO and the
+Genetic algorithms are global optimization methods.
+
+Additional experiments were performed to evaluate the parameters used
+in the proposed method. The figure \ref{fig:Average_chromosomes}
+shows the average error of the proposed method with 2 constructed
+features for all experiment countries. In these experiments, a varying
+number of chromosomes was used from 100 to 1000. As expected, the
+proposed method reduces the average error as the number of chromosomes
+increases. This means, however, that the execution time of the method
+increases as well as the memory that will be needed to store the computational
+structures. Therefore, the value of 500 used in the proposed method
+for the number of chromosomes is a good compromise between the speed
+and efficiency of the proposed technique. 
+
+Regarding the number of generations of the genetic algorithm, similar
+experiments were done with this number between 50 and 400. The results
+of these experiments are shown in graph \ref{fig:Average_generations}.
+Again, increasing the number of generations seems to reduce the error,
+although the reduction is not as drastic as it was with the increase
+in chromosomes. Again, the choice of 200 made for the number of generations
+in the experiments appears to be a fair compromise.
+
+The Wilcoxon signed-rank test was used to compare the total test error
+for the prediction of COVID-19 cases in different countries of the
+proposed method (FC1, FC2, and FC3) with the respective total test
+error for ADAM, MLPPSO, and MLPGEN optimization methods. The results
+obtained through those statistical tests are shown in Figure \ref{fig:boxplot_cases}.
+We also compared the average error in predicting deaths per country
+of the proposed method (FC1, FC2, and FC3) with the average error
+for ADAM, MLPPSO, and MLPGEN optimization methods using the Wilcoxon
+signed-rank test. The results obtained through those statistical tests
+are shown in Figure \ref{fig:boxplot_deaths}.
 
 \begin{table}
 \caption{Experimental parameters.\label{tab:Experimental-parameters.}}
@@ -643,18 +712,57 @@ deaths.\label{fig:graph_deaths}}
 \par\end{centering}
 \end{figure}
 
+\begin{figure}
+\caption{The daily confirmed deaths for Brazil, available from John Hopkins
+University.\label{fig:BrazilJohnHopkins}}
+
+\centering{}\includegraphics[scale=0.45]{brazil_total_deaths}
+\end{figure}
+
+\begin{figure}
+\caption{Average test error for COVID-19 cases and deaths for different number
+of chromosomes and two constructed features.\label{fig:Average_chromosomes}}
+
+\centering{}\includegraphics[scale=0.7]{average_chromosomes}
+\end{figure}
+\begin{figure}
+\caption{Average test error for COVID-19 cases and deaths for different number
+of generations and two constructed features.\label{fig:Average_generations}}
+
+\centering{}\includegraphics[scale=0.7]{average_generations}
+\end{figure}
+\begin{figure}
+\caption{Box plot comparing the total test error for predicting COVID-19 cases
+among the optimization methods of different countries.\label{fig:boxplot_cases}}
+
+\centering{}\includegraphics[scale=0.8]{diagram_cases}
+\end{figure}
+\begin{figure}
+
+\caption{Box plot comparing the average error in predicting deaths per country
+among the optimization methods.\label{fig:boxplot_deaths}}
+
+\centering{}\includegraphics[scale=0.8]{diagram_deaths}
+\end{figure}
+
 
 \section{Conclusions\label{sec:Conclusions}}
 
-An automated artificial feature construction method was presented
-in this work to predict Covid-19 cases and deaths. The method is based
-on Grammatical Evolution through two phases. In the first phase, 1-3
-features were constructed using Genetic Algorithm and Grammatical
-Evolution, and in the second phase, the new features were evaluated
-by an artificial neural network trained using a Genetic Algorithm.
-This procedure was applied to 10 randomly selected countries from
-all continents and appeared to be significantly superior to other
-techniques. Future improvements of the method may include:
+In this paper, the use of a feature construction technique to predict
+the cases of COVID19 disease and also to predict the mortality due
+to it was presented. The prediction was made on widely available data
+for 10 randomly selected countries. The proposed method constructs
+new features from existing ones using Grammatical Evolution and evaluates
+them using a radial basis network (RBF). After the evaluation, the
+best resulting features are used to train an artificial neural network.
+The results of the proposed methodology were compared with those of
+other artificial neural network training techniques and in all cases
+there was a dramatic reduction in the network's error for both case
+number prediction and mortality prediction. Furthermore, the more
+artificial features are created, the lower the neural network error.
+Future research should include the physical interpretation of the
+generated features in relation to the nature of the problem. Also,
+future improvements to the method may include:
 \begin{enumerate}
 \item Incorporation of more advanced stopping rules for the genetic algorithms
 of the two phases.
@@ -755,6 +863,49 @@ in Engineering, Article ID 212794, 2015.
 the structural stability of nanoalloys via symmetry-constrained genetic
 algorithm and neural network potential. npj, Comput Mater \textbf{8},
 121 ,2022.
+
+\bibitem{symmetry_neural}S.Krippendorf, M. Syvaeri, Detecting symmetries
+with neural networks, Mach. Learn.: Sci. Technol. \textbf{2}, 015010,
+2020.
+
+\bibitem{symmetry_atomic}Z. Qiao, M. Welborn, A. Anandkumar, F.R.
+Manby, T.F. Miller III , OrbNet: Deep learning for quantum chemistry
+using symmetry-adapted atomic-orbital features, J. Chem. Phys. \textbf{153},
+124111, 2020.
+
+\bibitem{symmetry_materials}B.Xi, K.F.Tse, T.F.Kok, H.M.Chan, H.M.Chan,
+M.K.Chan, H.Y. Chan, K.Y.C.Wong, S.H.R.Yuen, J. Zhu, Machine-Learning-Assisted
+Acceleration on High-Symmetry Materials Search: Space Group Predictions
+from Band Structures, J. Phys. Chem. C , \textbf{126}, pp. 12264--12273,
+2022.
+
+\bibitem{symmetry_convolutional}B. Selvaratnam, R.T. Koodali, P.
+Miró, Application of Symmetry Functions to Large Chemical Spaces Using
+a Convolutional Neural Network, J. Chem. Inf. Model. \textbf{ 60},
+pp. 1928--1935, 2020.
+
+\bibitem{symmetry_wang}Z. Wang, C. Wang, S. Zhao, S. et al, Symmetry-adapted
+graph neural networks for constructing molecular dynamics force fields.
+Sci. China Phys. Mech. Astron. \textbf{64}, 117211, 2021.
+
+\bibitem{covid_fractional1}N. Huy Tuan, H. Mohammadi, S.Rezapour,
+A mathematical model for COVID-19 transmission by using the Caputo
+fractional derivative, Chaos, Solitons \& Fractals 140, 110107, 2020.
+
+\bibitem{covid_fractional2}V. Singh Panwar, P.S.Sheik Uduman, J.F.Gómez-Aguilar,
+Mathematical modeling of coronavirus disease COVID-19 dynamics using
+CF and ABC non-singular fractional derivatives, Chaos, Solitons \&
+Fractals \textbf{145}, 110757, 2021.
+
+\bibitem{covid_fractional3}A.S. Shaikh, I.N. Shaikh, K.S. Nisar,
+A mathematical model of COVID-19 using fractional derivative: outbreak
+in India with dynamics of transmission and control. Adv Differ Equ
+\textbf{373} , 2020.
+
+\bibitem{ebola_fractional}E. Huzaifa, A. Khan, M. Shah, M. Khan,
+Taylor Series Expansion Method To Compute Approximate Solution for
+Nonlinear Dynamical System. Journal of Fractional Calculus and Nonlinear
+Systems, \textbf{3}, pp. 20-29, 2022.
 
 \bibitem{rbf1}J. Park and I. W. Sandberg, Universal Approximation
 Using Radial-Basis-Function Networks, Neural Computation\textbf{ 3},

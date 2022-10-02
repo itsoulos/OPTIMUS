@@ -20,9 +20,11 @@ Optimizer::Optimizer(Problem *p)
     addParameter("psoLocal_r1","1.0","R1 param for pso local");
     addParameter("psoLocal_r2","1.0","R2 parameter for pso local");
     addParameter("psoLocal_theta","0.1","Theta percentage for pso local");
-    addParameter("sample_method","uniform","The sampling method. Options: uniform, rbf, neural,..");
+    addParameter("sample_method","uniform","The sampling method. Options: uniform, rbf, mlp,..");
     addParameter("rbf_samples","5","Amount of samples to be taken by rbf sampler");
     addParameter("rbf_sampler_weights","10","Amount of weights for rbf sampling");
+    addParameter("mlp_samples","10","Amount of samples used in Mlp Sampler");
+    addParameter("mlp_sampler_weights","10","Number of weights used in mlp sampler");
 }
 
 
@@ -32,6 +34,12 @@ void    Optimizer::sampleFromProblem(int &N,Matrix &xsample,Data &ysample)
     {
         int M = params["rbf_samples"].toString().toInt();
         defaultSampler->sampleFromProblem(M,xsample,ysample);
+    }
+    else
+    if(params["sample_method"].toString()=="mlp")
+    {
+        int M = params["mlp_samples"].toString().toInt();
+        defaultSampler->sampleFromProblem(10,xsample,ysample);
     }
     else
         defaultSampler->sampleFromProblem(N,xsample,ysample);
@@ -223,6 +231,12 @@ void    Optimizer::prepareSampler()
         {
             int M = params["rbf_sampler_weights"].toString().toInt();
             defaultSampler = new RbfSampler(myProblem,M);
+        }
+        else
+        if(method=="mlp")
+        {
+            int M = params["mlp_sampler_weights"].toString().toInt();
+            defaultSampler = new NeuralSampler(myProblem,M);
         }
     }
 }

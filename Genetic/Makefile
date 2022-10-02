@@ -421,6 +421,8 @@ genetic.o: genetic.cpp genetic.h \
 		../Optimus/uniformsampler.h \
 		../Optimus/problemsampler.h \
 		../Optimus/rbfsampler.h \
+		../Optimus/neuralsampler.h \
+		../Optimus/dataset.h \
 		../../OPTIMUS/Optimus/tolmin.h \
 		../../OPTIMUS/Optimus/gradientdescent.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o genetic.o genetic.cpp

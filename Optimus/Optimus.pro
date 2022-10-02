@@ -27,6 +27,7 @@ QMAKE_LFLAGS += -O3
 SOURCES += \
     adam.cpp \
     collection.cc \
+    dataset.cpp \
     dllproblem.cpp \
     doublestack.cc \
     fparser.cc \
@@ -37,6 +38,7 @@ SOURCES += \
     kmeans.cpp \
     lbfgs.cpp \
     nelderMead.cpp \
+    neuralsampler.cpp \
     optimizer.cpp \
     optimus.cpp \
     point.cpp \
@@ -58,6 +60,7 @@ HEADERS += \
     Optimus_global.h \
     adam.h \
     collection.h \
+    dataset.h \
     dllproblem.h \
     doublestack.h \
     fparser.hh \
@@ -69,6 +72,7 @@ HEADERS += \
     lbfgs.h \
     nelderMead.h \
     nelderMead_global.h \
+    neuralsampler.h \
     optimizer.h \
     optimus.h \
     point.h \

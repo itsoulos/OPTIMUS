@@ -25,6 +25,8 @@ private:
     int    iteration;
     Data trialx;
     double mbesty;
+    Matrix xsample;
+    Data   ysample;
     double x1,x2,stopat,variance,oldBesty;
 public:
     Multistart(Problem *p);

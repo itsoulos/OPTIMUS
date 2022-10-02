@@ -423,6 +423,8 @@ intervalmethod.o: intervalmethod.cpp intervalmethod.h \
 		../Optimus/uniformsampler.h \
 		../Optimus/problemsampler.h \
 		../Optimus/rbfsampler.h \
+		../Optimus/neuralsampler.h \
+		../Optimus/dataset.h \
 		../../OPTIMUS/Optimus/tolmin.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o intervalmethod.o intervalmethod.cpp
 

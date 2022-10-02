@@ -8,6 +8,7 @@
 #include "nelderMead.h"
 # include "uniformsampler.h"
 # include "rbfsampler.h"
+# include "neuralsampler.h"
 class Optimizer
 {
 protected:

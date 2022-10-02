@@ -376,7 +376,7 @@ void    RbfSampler::sampleFromModel(int &N,vector<Data> &xsample,Data &ysample)
     xsample.resize(N);
     ysample.resize(N);
 
-    Matrix finalXsample;
+  /*  Matrix finalXsample;
     Data finalYSample;
     for(int i=0;i<N;i++)
     {
@@ -427,7 +427,7 @@ void    RbfSampler::sampleFromModel(int &N,vector<Data> &xsample,Data &ysample)
     }
     N = finalXsample.size();
     xsample = finalXsample;
-    ysample = finalYSample;
+    ysample = finalYSample;*/
 }
 
 double  RbfSampler::gaussianDerivative(Data &x,Data &m,double v,int pos)
