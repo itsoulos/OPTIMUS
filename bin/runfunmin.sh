@@ -24,7 +24,8 @@ then
 	METHODPARAMS="--price_iterations=10000 --price_newpoint=PRICE --price_stopping=DOUBLEBOX"
 elif [ $METHOD = "Multistart" ]
 then
-	METHODPARAMS="--multistart_samples=20 --rbf_samples=200  --mlp_samples=200 --sample_method=rbf --multistart_maxiterations=100"
+	METHODPARAMS="--multistart_samples=20 --rbf_samples=500 --rbf_sampler_weights=10 --mlp_samples=200 --sample_method=rbf --multistart_maxiterations=100"
+
 elif [ $METHOD = "MinCenter" ]
 then
 	METHODPARAMS="--mincenter_samples=600 --mincenter_centers=100 --mincenter_iterations=100"
