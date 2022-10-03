@@ -41,6 +41,7 @@ void    Optimizer::sampleFromProblem(int &N,Matrix &xsample,Data &ysample)
         int M = params["mlp_samples"].toString().toInt();
         defaultSampler->sampleFromProblem(10,xsample,ysample);
     }
+
     else
         defaultSampler->sampleFromProblem(N,xsample,ysample);
     defaultSampler->trainModel();
@@ -237,6 +238,16 @@ void    Optimizer::prepareSampler()
         {
             int M = params["mlp_sampler_weights"].toString().toInt();
             defaultSampler = new NeuralSampler(myProblem,M);
+        }
+        else
+        if(method == "maxwell")
+        {
+            defaultSampler = new MaxwellSampler(myProblem);
+        }
+        else
+        if(method=="triangular")
+        {
+            defaultSampler = new TriangularSampler(myProblem);
         }
     }
 }

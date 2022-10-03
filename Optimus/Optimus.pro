@@ -54,6 +54,8 @@ SOURCES += \
     tolmin.cc \
     brent.cpp \
     cluster.cpp \
+    maxwellsampler.cpp \
+    triangularsampler.cpp \
     uniformsampler.cpp
 
 HEADERS += \
@@ -88,6 +90,8 @@ HEADERS += \
     tolmin.h \
     brent.h \
     cluster.h \
+    maxwellsampler.h \
+    triangularsampler.h \
     uniformsampler.h
 
 # Default rules for deployment.

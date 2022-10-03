@@ -424,6 +424,8 @@ ipso.o: ipso.cpp ipso.h \
 		../Optimus/rbfsampler.h \
 		../Optimus/neuralsampler.h \
 		../Optimus/dataset.h \
+		../Optimus/maxwellsampler.h \
+		../Optimus/triangularsampler.h \
 		../../OPTIMUS/Optimus/tolmin.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ipso.o ipso.cpp
 

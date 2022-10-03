@@ -9,6 +9,8 @@
 # include "uniformsampler.h"
 # include "rbfsampler.h"
 # include "neuralsampler.h"
+# include "maxwellsampler.h"
+# include "triangularsampler.h"
 class Optimizer
 {
 protected:

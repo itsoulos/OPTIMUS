@@ -410,6 +410,8 @@ main.o: main.cpp ../../OPTIMUS/Optimus/dllproblem.h \
 		../Optimus/rbfsampler.h \
 		../Optimus/neuralsampler.h \
 		../Optimus/dataset.h \
+		../Optimus/maxwellsampler.h \
+		../Optimus/triangularsampler.h \
 		getoptions.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 

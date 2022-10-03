@@ -423,7 +423,9 @@ psearch.o: psearch.cpp psearch.h \
 		../Optimus/problemsampler.h \
 		../Optimus/rbfsampler.h \
 		../Optimus/neuralsampler.h \
-		../Optimus/dataset.h
+		../Optimus/dataset.h \
+		../Optimus/maxwellsampler.h \
+		../Optimus/triangularsampler.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o psearch.o psearch.cpp
 
 ####### Install
