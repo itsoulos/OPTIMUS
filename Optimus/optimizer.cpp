@@ -39,7 +39,7 @@ void    Optimizer::sampleFromProblem(int &N,Matrix &xsample,Data &ysample)
     if(params["sample_method"].toString()=="mlp")
     {
         int M = params["mlp_samples"].toString().toInt();
-        defaultSampler->sampleFromProblem(10,xsample,ysample);
+        defaultSampler->sampleFromProblem(M,xsample,ysample);
     }
 
     else
