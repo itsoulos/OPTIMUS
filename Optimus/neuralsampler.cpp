@@ -47,10 +47,57 @@ double  NeuralSampler::eval(Data &x)
         return per;
 }
 
-
-Data    NeuralSampler::evalDeriv(Data &x)
+Data    NeuralSampler::evalDeriv()
 {
+    Data g;
+    g.resize(weight.size());
+    for(int i=0;i<g.size();i++)
+        g[i]=0.0;
+    for(int i=0;i<dataset->getpatterns();i++)
+    {
+        Data trainx = dataset->getx(i);
+        Data gtemp = evalDeriv(trainx);
 
+        double per=eval(trainx)-dataset->gety(i);
+        for(int j=0;j<g.size();j++)	g[j]+=gtemp[j]*per;
+    }
+    for(int j=0;j<g.size();j++) g[j]*=2.0;
+    return g;
+
+}
+Data    NeuralSampler::evalDeriv(Data &xpoint)
+{
+    Data g;
+    g.resize(weight.size());
+
+    int dimension = xpoint.size();
+    for(int i=0;i<g.size();i++) g[i]=0.0;
+    Data tempg;
+    Data tempg2;
+    tempg.resize(g.size());
+    tempg2.resize(g.size());
+
+    int nodes=weight.size()/ (dimension + 2);
+    for(int i=1;i<=nodes;i++)
+    {
+        double arg=0.0;
+        for(int j=1;j<=dimension;j++)
+        {
+            int pos=(dimension+2)*i-(dimension+1)+j;
+            arg+=xpoint[j-1]*weight[pos-1];
+        }
+        arg+=weight[(dimension+2)*i-1];
+        double s=sig(arg);
+        double s2=s*(1-s);
+        g[(dimension+2)*i-(dimension+1)-1]=s;
+        g[(dimension+2)*i-1]=weight[(dimension+2)*i-(dimension+1)-1]*s2;
+        for(int j=1;j<=dimension;j++)
+        {
+            int pos=(dimension+2)*i-(dimension+1)+j;
+            g[pos-1]=weight[(dimension+2)*i-(dimension+1)-1]*xpoint[j-1]*s2;
+        }
+    }
+    return g;
 }
 
 void    NeuralSampler::sampleFromProblem(int N,Matrix &xsample,Data &ysample)
@@ -107,6 +154,9 @@ static double dmax(double a,double b)
 
 void        NeuralProblem::granal(Data &x,Data &g)
 {
+    thisSampler->setWeights(x);
+    g = thisSampler->evalDeriv();
+    return;
     for(int i=0;i<(int)x.size();i++)
         {
             double eps=pow(1e-18,1.0/3.0)*dmax(1.0,fabs(x[i]));

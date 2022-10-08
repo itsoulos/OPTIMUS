@@ -14,7 +14,10 @@ public:
     Data    getWeights();
     void    setWeights(Data &w);
     double  eval(Data &x);
+    ///derivative at point x
     Data    evalDeriv(Data &x);
+    //Total derivative for all dataset
+    Data    evalDeriv();
     void    sampleFromProblem(int N,Matrix &xsample,Data &ysample);
     void    trainModel();
     double  getTrainError();
