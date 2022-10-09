@@ -2,6 +2,7 @@
 #define RBFSAMPLER_H
 # include "problem.h"
 # include "problemsampler.h"
+# include "dataset.h"
 
 class RbfSampler :public ProblemSampler
 {
@@ -31,11 +32,15 @@ public:
     RbfSampler(Problem *p,int w);
     int     getNWeights() const;
     Data    getWeights();
+    int     getParameterSize() const;
+    void    setParameters(Data &x);
+    Data    getParameters();
     void    setWeights(Data &w);
     double  eval(Data &x);
     Data    evalDeriv(Data &x);
     void    sampleFromProblem(int N,Matrix &xsample,Data &ysample);
     void    trainModel();
+    double  getTrainError();
     void    sampleFromModel(int &N,Matrix &xsample,Data &ysample);
     ~RbfSampler();
 };

@@ -30,6 +30,7 @@ string	Program::printRandomProgram(vector<int> &genome,int &redo)
 
 double	Program::fitness(vector<int> &genome)
 {
+    printf("Not called this fitness\n");
 	return 0.0;
 }
 

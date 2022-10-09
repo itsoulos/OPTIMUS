@@ -1,6 +1,6 @@
 # ifndef __RULE__H
-# include <symbol.h>
-# include <doublestack.h>
+# include "symbol.h"
+# include "doublestack.h"
 # include <vector>
 # define REDO_MAX	5
 using namespace std;

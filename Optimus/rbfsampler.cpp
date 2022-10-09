@@ -1,5 +1,6 @@
 #include "rbfsampler.h"
-
+# include "psolocal.h"
+# include "tolmin.h"
 RbfSampler::RbfSampler(Problem *p,int w)
     :ProblemSampler("rbfsampler",p)
 {
@@ -52,7 +53,27 @@ double  RbfSampler::eval(Data &x)
     }
     return sum;
 }
+int     RbfSampler::getParameterSize() const
+{
+    return center.size() * xpoint[0].size() +
+            variance.size()+weight.size();
+}
 
+void    RbfSampler::setParameters(Data &x)
+{
+    int icount = 0;
+    for(int i=0;i<center.size();i++)
+    {
+        for(int j=0;j<center[i].size();j++)
+            center[i][j]=x[icount++];
+
+    }
+    for(int i=0;i<variance.size();i++)
+        variance[i]=x[icount++];
+
+    for(int i=0;i<weight.size();i++)
+        weight[i]=x[icount++];
+}
 void    RbfSampler::sampleFromProblem(int N,Matrix &xsample,Data &ysample)
 {
     xpoint.resize(N);
@@ -311,12 +332,108 @@ Matrix  RbfSampler::matrix_pseudoinverse(Matrix &a,bool &ok)
     return c;
 }
 
+Data    RbfSampler::getParameters()
+{
+    Data xx;
+    xx.resize(getParameterSize());
+    int icount = 0;
+    for(int i=0;i<center.size();i++)
+    {
+        for(int j=0;j<center[i].size();j++)
+            xx[icount++]=center[i][j];
+    }
+    for(int i=0;i<variance.size();i++)
+        xx[icount++]=variance[i];
+    for(int i=0;i<weight.size();i++)
+        xx[icount++]=weight[i];
+    return xx;
+}
+
+class RbfProblem : public IntervalProblem
+{
+private:
+    RbfSampler *thisSampler;
+public:
+    RbfProblem(RbfSampler *p);
+    double      funmin(Data &x);
+    void        granal(Data &x,Data &g);
+    ~RbfProblem();
+};
+
+RbfProblem::RbfProblem(RbfSampler *p)
+    :IntervalProblem(p->getParameterSize())
+{
+    thisSampler = p;
+    vector<Interval> margin;
+    margin.resize(getDimension());
+     int i;
+    for(i=0;i<getDimension();i++)
+    {
+        margin[i]=Interval(0.01,10.0);
+    }
+    setMargins(margin);
+
+}
+
+double      RbfProblem::funmin(Data &x)
+{
+    thisSampler->setParameters(x);
+    return thisSampler->getTrainError();
+}
+
+static double dmax(double a,double b)
+{
+    return a>b?a:b;
+}
+
+void        RbfProblem::granal(Data &x,Data &g)
+{
+    thisSampler->setParameters(x);
+
+    for(int i=0;i<(int)x.size();i++)
+        {
+            double eps=pow(1e-18,1.0/3.0)*dmax(1.0,fabs(x[i]));
+            x[i]+=eps;
+            double v1=funmin(x);
+            x[i]-=2.0 *eps;
+            double v2=funmin(x);
+            g[i]=(v1-v2)/(2.0 * eps);
+            x[i]+=eps;
+        }
+
+}
+
+RbfProblem::~RbfProblem()
+{
+    //nothing for now
+}
+
 
 
 void    RbfSampler::trainModel()
 {
+
+
+
     //kmeans first
     kmeans();
+
+
+/*    RbfProblem *problem = new RbfProblem(this);
+    Problem *np=new Problem(problem);
+    Data bestg=getParameters();
+    PsoLocal pso(np,200);
+    pso.Solve(200);
+    bestg = pso.gestBestParticle();
+
+    Tolmin tol(np);
+    tol.Solve(bestg,true,2001);
+
+    setParameters(bestg);
+    delete np;
+    delete  problem;
+    return;*/
+
     Matrix A;
     Matrix RealOutput;
     int i,j;
@@ -343,6 +460,22 @@ void    RbfSampler::trainModel()
     Matrix pW=matrix_mult(pA,RealOutput);
     for(i=0;i<nweights;i++) weight[i]=pW[i][0];
     //then train
+    printf("Train Error = %lf \n",getTrainError());
+
+
+}
+
+
+
+double  RbfSampler::getTrainError()
+{
+    double sum = 0.0;
+    for(int i=0;i<xpoint.size();i++)
+    {
+        double v = eval(xpoint[i]);
+        sum+=(v-ypoint[i])*(v-ypoint[i]);
+    }
+    return sum/xpoint.size();
 }
 
 void    RbfSampler::sampleFromModel(int &N,vector<Data> &xsample,Data &ysample)

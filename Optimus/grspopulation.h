@@ -1,5 +1,5 @@
 # ifndef __GRSPOPULATION__H
-# include <program.h>
+# include "program.h"
 #include <random>
 
 class GrsPopulation

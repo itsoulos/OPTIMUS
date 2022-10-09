@@ -15,7 +15,7 @@ then
 	METHODPARAMS="--localsearch_rate=0.01  --genetic_crossover_type=double --chromosomes=500 --localsearch_method=bfgs --generations=2000"
 elif [ $METHOD = "Pso" ]
 then
-	METHODPARAMS="--pso_particles=100 --pso_localsearch_rate=0.00 --localsearch_method=bfgs --sample_method=rbf"
+	METHODPARAMS="--pso_particles=100 --pso_localsearch_rate=0.00 --localsearch_method=bfgs --sample_method=mlp --rbf_samples=100"
 elif [ $METHOD = "iPso" ]
 then
 	METHODPARAMS="--ipso_particles=100 --ipso_maxgenerations=100 --ipso_localsearch_rate=0.05 --ipso_stoppingrule=best_fitness -ipso_gradientcheck=true --ipso_inertiatype=2"
@@ -24,7 +24,7 @@ then
 	METHODPARAMS="--price_iterations=10000 --price_newpoint=PRICE --price_stopping=DOUBLEBOX"
 elif [ $METHOD = "Multistart" ]
 then
-	METHODPARAMS="--multistart_samples=20 --rbf_samples=200 --rbf_sampler_weights=10 --mlp_samples=200 --sample_method=rbf --multistart_maxiterations=100"
+	METHODPARAMS="--multistart_samples=20 --rbf_samples=200 --rbf_sampler_weights=20 --mlp_samples=500 --sample_method=nnc --multistart_maxiterations=100"
 
 elif [ $METHOD = "MinCenter" ]
 then

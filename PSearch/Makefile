@@ -422,10 +422,21 @@ psearch.o: psearch.cpp psearch.h \
 		../Optimus/uniformsampler.h \
 		../Optimus/problemsampler.h \
 		../Optimus/rbfsampler.h \
-		../Optimus/neuralsampler.h \
 		../Optimus/dataset.h \
+		../Optimus/neuralsampler.h \
 		../Optimus/maxwellsampler.h \
-		../Optimus/triangularsampler.h
+		../Optimus/triangularsampler.h \
+		../Optimus/nncsampler.h \
+		../Optimus/nncneuralprogram.h \
+		../Optimus/neuralprogram.h \
+		../Optimus/program.h \
+		../Optimus/symbol.h \
+		../Optimus/rule.h \
+		../Optimus/doublestack.h \
+		../Optimus/sigprogram.h \
+		../Optimus/cprogram.h \
+		../Optimus/fparser.hh \
+		../Optimus/neuralparser.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o psearch.o psearch.cpp
 
 ####### Install

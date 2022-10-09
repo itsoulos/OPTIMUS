@@ -11,6 +11,7 @@
 # include "neuralsampler.h"
 # include "maxwellsampler.h"
 # include "triangularsampler.h"
+# include "nncsampler.h"
 class Optimizer
 {
 protected:

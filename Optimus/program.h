@@ -1,7 +1,7 @@
 # ifndef __PROGRAM__H
-# include <symbol.h>
-# include <rule.h>
-# include <doublestack.h>
+# include "symbol.h"
+# include "rule.h"
+# include "doublestack.h"
 # include <vector>
 using namespace std;
 

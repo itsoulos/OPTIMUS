@@ -54,6 +54,8 @@ OBJECTS_DIR   = ./
 
 SOURCES       = adam.cpp \
 		collection.cc \
+		converter.cc \
+		cprogram.cc \
 		dataset.cpp \
 		dllproblem.cpp \
 		doublestack.cc \
@@ -65,7 +67,11 @@ SOURCES       = adam.cpp \
 		kmeans.cpp \
 		lbfgs.cpp \
 		nelderMead.cpp \
+		neuralparser.cc \
+		neuralprogram.cc \
 		neuralsampler.cpp \
+		nncneuralprogram.cpp \
+		nncsampler.cpp \
 		optimizer.cpp \
 		optimus.cpp \
 		point.cpp \
@@ -77,6 +83,7 @@ SOURCES       = adam.cpp \
 		rbfsampler.cpp \
 		rlsprogram.cc \
 		rule.cc \
+		sigprogram.cc \
 		symbol.cc \
 		tolmin.cc \
 		brent.cpp \
@@ -86,6 +93,8 @@ SOURCES       = adam.cpp \
 		uniformsampler.cpp 
 OBJECTS       = adam.o \
 		collection.o \
+		converter.o \
+		cprogram.o \
 		dataset.o \
 		dllproblem.o \
 		doublestack.o \
@@ -97,7 +106,11 @@ OBJECTS       = adam.o \
 		kmeans.o \
 		lbfgs.o \
 		nelderMead.o \
+		neuralparser.o \
+		neuralprogram.o \
 		neuralsampler.o \
+		nncneuralprogram.o \
+		nncsampler.o \
 		optimizer.o \
 		optimus.o \
 		point.o \
@@ -109,6 +122,7 @@ OBJECTS       = adam.o \
 		rbfsampler.o \
 		rlsprogram.o \
 		rule.o \
+		sigprogram.o \
 		symbol.o \
 		tolmin.o \
 		brent.o \
@@ -204,6 +218,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		Optimus.pro Optimus_global.h \
 		adam.h \
 		collection.h \
+		converter.h \
+		cprogram.h \
 		dataset.h \
 		dllproblem.h \
 		doublestack.h \
@@ -216,7 +232,11 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		lbfgs.h \
 		nelderMead.h \
 		nelderMead_global.h \
+		neuralparser.h \
+		neuralprogram.h \
 		neuralsampler.h \
+		nncneuralprogram.h \
+		nncsampler.h \
 		optimizer.h \
 		optimus.h \
 		point.h \
@@ -228,6 +248,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		rbfsampler.h \
 		rlsprogram.h \
 		rule.h \
+		sigprogram.h \
 		symbol.h \
 		tolmin.h \
 		brent.h \
@@ -236,6 +257,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		triangularsampler.h \
 		uniformsampler.h adam.cpp \
 		collection.cc \
+		converter.cc \
+		cprogram.cc \
 		dataset.cpp \
 		dllproblem.cpp \
 		doublestack.cc \
@@ -247,7 +270,11 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		kmeans.cpp \
 		lbfgs.cpp \
 		nelderMead.cpp \
+		neuralparser.cc \
+		neuralprogram.cc \
 		neuralsampler.cpp \
+		nncneuralprogram.cpp \
+		nncsampler.cpp \
 		optimizer.cpp \
 		optimus.cpp \
 		point.cpp \
@@ -259,6 +286,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		rbfsampler.cpp \
 		rlsprogram.cc \
 		rule.cc \
+		sigprogram.cc \
 		symbol.cc \
 		tolmin.cc \
 		brent.cpp \
@@ -482,8 +510,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents Optimus_global.h adam.h collection.h dataset.h dllproblem.h doublestack.h fparser.hh gradientdescent.h grs.h interval.h intervalproblem.h kmeans.h lbfgs.h nelderMead.h nelderMead_global.h neuralsampler.h optimizer.h optimus.h point.h grspopulation.h problem.h problemsampler.h program.h psolocal.h rbfsampler.h rlsprogram.h rule.h symbol.h tolmin.h brent.h cluster.h maxwellsampler.h triangularsampler.h uniformsampler.h $(DISTDIR)/
-	$(COPY_FILE) --parents adam.cpp collection.cc dataset.cpp dllproblem.cpp doublestack.cc fparser.cc gradientdescent.cpp grs.cc interval.cpp intervalproblem.cpp kmeans.cpp lbfgs.cpp nelderMead.cpp neuralsampler.cpp optimizer.cpp optimus.cpp point.cpp grspopulation.cc problem.cpp problemsampler.cpp program.cc psolocal.cpp rbfsampler.cpp rlsprogram.cc rule.cc symbol.cc tolmin.cc brent.cpp cluster.cpp maxwellsampler.cpp triangularsampler.cpp uniformsampler.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents Optimus_global.h adam.h collection.h converter.h cprogram.h dataset.h dllproblem.h doublestack.h fparser.hh gradientdescent.h grs.h interval.h intervalproblem.h kmeans.h lbfgs.h nelderMead.h nelderMead_global.h neuralparser.h neuralprogram.h neuralsampler.h nncneuralprogram.h nncsampler.h optimizer.h optimus.h point.h grspopulation.h problem.h problemsampler.h program.h psolocal.h rbfsampler.h rlsprogram.h rule.h sigprogram.h symbol.h tolmin.h brent.h cluster.h maxwellsampler.h triangularsampler.h uniformsampler.h $(DISTDIR)/
+	$(COPY_FILE) --parents adam.cpp collection.cc converter.cc cprogram.cc dataset.cpp dllproblem.cpp doublestack.cc fparser.cc gradientdescent.cpp grs.cc interval.cpp intervalproblem.cpp kmeans.cpp lbfgs.cpp nelderMead.cpp neuralparser.cc neuralprogram.cc neuralsampler.cpp nncneuralprogram.cpp nncsampler.cpp optimizer.cpp optimus.cpp point.cpp grspopulation.cc problem.cpp problemsampler.cpp program.cc psolocal.cpp rbfsampler.cpp rlsprogram.cc rule.cc sigprogram.cc symbol.cc tolmin.cc brent.cpp cluster.cpp maxwellsampler.cpp triangularsampler.cpp uniformsampler.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -540,6 +568,16 @@ adam.o: adam.cpp adam.h \
 
 collection.o: collection.cc collection.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o collection.o collection.cc
+
+converter.o: converter.cc converter.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o converter.o converter.cc
+
+cprogram.o: cprogram.cc cprogram.h \
+		symbol.h \
+		rule.h \
+		doublestack.h \
+		fparser.hh
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cprogram.o cprogram.cc
 
 dataset.o: dataset.cpp dataset.h \
 		problem.h \
@@ -605,6 +643,20 @@ nelderMead.o: nelderMead.cpp nelderMead.h \
 		interval.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nelderMead.o nelderMead.cpp
 
+neuralparser.o: neuralparser.cc neuralparser.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o neuralparser.o neuralparser.cc
+
+neuralprogram.o: neuralprogram.cc neuralprogram.h \
+		program.h \
+		symbol.h \
+		rule.h \
+		doublestack.h \
+		sigprogram.h \
+		cprogram.h \
+		fparser.hh \
+		neuralparser.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o neuralprogram.o neuralprogram.cc
+
 neuralsampler.o: neuralsampler.cpp neuralsampler.h \
 		problemsampler.h \
 		problem.h \
@@ -613,6 +665,41 @@ neuralsampler.o: neuralsampler.cpp neuralsampler.h \
 		dataset.h \
 		tolmin.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o neuralsampler.o neuralsampler.cpp
+
+nncneuralprogram.o: nncneuralprogram.cpp nncneuralprogram.h \
+		neuralprogram.h \
+		program.h \
+		symbol.h \
+		rule.h \
+		doublestack.h \
+		sigprogram.h \
+		cprogram.h \
+		fparser.hh \
+		neuralparser.h \
+		dataset.h \
+		problem.h \
+		intervalproblem.h \
+		interval.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nncneuralprogram.o nncneuralprogram.cpp
+
+nncsampler.o: nncsampler.cpp nncsampler.h \
+		problemsampler.h \
+		problem.h \
+		intervalproblem.h \
+		interval.h \
+		nncneuralprogram.h \
+		neuralprogram.h \
+		program.h \
+		symbol.h \
+		rule.h \
+		doublestack.h \
+		sigprogram.h \
+		cprogram.h \
+		fparser.hh \
+		neuralparser.h \
+		dataset.h \
+		grspopulation.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nncsampler.o nncsampler.cpp
 
 optimizer.o: optimizer.cpp optimizer.h \
 		problem.h \
@@ -627,18 +714,24 @@ optimizer.o: optimizer.cpp optimizer.h \
 		uniformsampler.h \
 		problemsampler.h \
 		rbfsampler.h \
-		neuralsampler.h \
 		dataset.h \
+		neuralsampler.h \
 		maxwellsampler.h \
 		triangularsampler.h \
-		grs.h \
-		rlsprogram.h \
-		population.h \
+		nncsampler.h \
+		nncneuralprogram.h \
+		neuralprogram.h \
 		program.h \
 		symbol.h \
 		rule.h \
 		doublestack.h \
+		sigprogram.h \
+		cprogram.h \
 		fparser.hh \
+		neuralparser.h \
+		grs.h \
+		rlsprogram.h \
+		population.h \
 		grspopulation.h \
 		collection.h \
 		psolocal.h
@@ -685,7 +778,10 @@ rbfsampler.o: rbfsampler.cpp rbfsampler.h \
 		problem.h \
 		intervalproblem.h \
 		interval.h \
-		problemsampler.h
+		problemsampler.h \
+		dataset.h \
+		psolocal.h \
+		tolmin.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o rbfsampler.o rbfsampler.cpp
 
 rlsprogram.o: rlsprogram.cc rlsprogram.h \
@@ -704,6 +800,14 @@ rule.o: rule.cc rule.h \
 		symbol.h \
 		doublestack.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o rule.o rule.cc
+
+sigprogram.o: sigprogram.cc sigprogram.h \
+		cprogram.h \
+		symbol.h \
+		rule.h \
+		doublestack.h \
+		fparser.hh
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sigprogram.o sigprogram.cc
 
 symbol.o: symbol.cc symbol.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o symbol.o symbol.cc

@@ -1,4 +1,4 @@
-# ifndef __SYMBOL__H
+# ifndef __MYSYMBOL__H
 # include <string>
 # include <vector>
 using namespace std;
@@ -9,7 +9,7 @@ class Symbol
 {
 	private:
 		string name;
-		vector<Rule*> rule;
+        vector<Rule*> rule;
 		int	count_rules;
 		int	is_terminal;
 	public:
@@ -22,13 +22,13 @@ class Symbol
 		void	setTerminalStatus(int status);
 		int	getTerminalStatus() const;
 
-		void	addRule(Rule *r);
+        void	addRule(Rule *r);
 		void	cut(int N);
-		Rule	*getRule(int pos) const;
+        Rule	*getRule(int pos) const;
 		int	getCountRules() const;
 		~Symbol();
 		
 };
 
-# define __SYMBOL__H
+# define __MYSYMBOL__H
 # endif

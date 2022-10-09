@@ -18,6 +18,7 @@ private:
     Data    lmargin;
     Data    rmargin;
 public:
+    PsoLocal(Problem *p,int particles);
     PsoLocal(Problem *p,Data &initialPoint,int particles,double theta);
     void    setR1(double r);
     void    setR2(double r);

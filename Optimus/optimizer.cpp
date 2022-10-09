@@ -41,7 +41,12 @@ void    Optimizer::sampleFromProblem(int &N,Matrix &xsample,Data &ysample)
         int M = params["mlp_samples"].toString().toInt();
         defaultSampler->sampleFromProblem(M,xsample,ysample);
     }
-
+    else
+    if(params["sample_method"].toString()=="nnc")
+    {
+        int M=100;
+        defaultSampler->sampleFromProblem(M,xsample,ysample);
+    }
     else
         defaultSampler->sampleFromProblem(N,xsample,ysample);
     defaultSampler->trainModel();
@@ -248,6 +253,11 @@ void    Optimizer::prepareSampler()
         if(method=="triangular")
         {
             defaultSampler = new TriangularSampler(myProblem);
+        }
+        else
+        if(method == "nnc")
+        {
+            defaultSampler = new NNCSampler(myProblem);
         }
     }
 }
