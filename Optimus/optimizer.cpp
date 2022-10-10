@@ -44,7 +44,7 @@ void    Optimizer::sampleFromProblem(int &N,Matrix &xsample,Data &ysample)
     else
     if(params["sample_method"].toString()=="nnc")
     {
-        int M=100;
+        int M=500;
         defaultSampler->sampleFromProblem(M,xsample,ysample);
     }
     else

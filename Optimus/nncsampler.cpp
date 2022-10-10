@@ -35,6 +35,7 @@ void    NNCSampler::trainModel()
         pop.nextGeneration();
      //   printf("Population fitness: %20.10lg\n",pop.getBestFitness());
     }
+    pop.evaluateBestFitness();
 }
 
 void    NNCSampler::sampleFromModel(int &N,Matrix &xsample,Data &ysample)
