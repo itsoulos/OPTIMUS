@@ -268,14 +268,256 @@ literal "false"
 \end_inset
 
  etc.
+ Also, may hybrid stochastic methods have been appeared recently in the
+ relevant literature such as methods that combine Particle Swarm Optimization
+ and Simulated Annealing 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pso_sa_hybrid1,pso_sa_hybrid2"
+literal "false"
+
+\end_inset
+
+, methods that combine Genetic Algorithms and Differential Evolution 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ga_de_hybrid1,ga_de_hybrid2"
+literal "false"
+
+\end_inset
+
+, combinations of Genetic Algorithms and Particle Swarm Optimization 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ga_pso_hybrid1"
+literal "false"
+
+\end_inset
+
+ etc.
+ Also, due to the wide spread of parallel architectures in recent years
+ as well as the widespread use of GPUs, many methods have emerged that exploit
+ such architectures 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "gpu1,gpu2,gpu3"
+literal "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+This paper proposes an innovative sampling technique for the Multistart
+ stochastic global sampling method.
+ The Multistart technique is one of the simplest stochastic global optimization
+ techniques and is the basis for many modern global optimization methods.
+ In the Multistart method, a series of random samples are taken from the
+ objective function and then a local optimization method is started from
+ each sample.
+ Regarding its simplicity, the method have been used with success in a wide
+ area of practical applications such as the TSP problem
+\series bold
+ 
+\series default
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "multistart-tsp"
+literal "true"
+
+\end_inset
+
+, the vehicle routing problem 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "multistart-vehicle"
+literal "true"
+
+\end_inset
+
+, the facility location problem 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "multistart_fac"
+literal "false"
+
+\end_inset
+
+, the maximum clique problem 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "multistart_clique"
+literal "false"
+
+\end_inset
+
+, the maximum fire risk insured capital problem 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "multistart_fire"
+literal "false"
+
+\end_inset
+
+, aerodynamic shape problems 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "multistart-aero"
+literal "false"
+
+\end_inset
+
+ etc.
+ In addition, the Multistart method has been thoroughly studied by many
+ researchers in recent years, and many works have been proposed on this
+ method, such as methods for finding all local minima of a function 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "tmlsl,Salhi,minfinder"
+literal "false"
+
+\end_inset
+
+, hybrid techniques 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mshybrid1,mshybrid2"
+literal "false"
+
+\end_inset
+
+, GRASP methods
+\begin_inset CommandInset citation
+LatexCommand cite
+key "grasp"
+literal "false"
+
+\end_inset
+
+, new termination rules 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "msstop1,msstop2,msstop3"
+literal "false"
+
+\end_inset
+
+, parallel techniques
+\begin_inset CommandInset citation
+LatexCommand cite
+key "parallel-multistart,parallel-multistart2"
+literal "true"
+
+\end_inset
+
+.
+ Usually in the Multistart method, samples are used from the objective function
+ using some distribution such as the uniform distribution.
+ In the present work, it is proposed that these samples are obtained from
+ a radial basis network 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rbf1"
+literal "false"
+
+\end_inset
+
+ (RBF), which has already been trained on a limited number of real samples
+ from the objective function.
+ RBF networks have been widely used in many real world problems such as
+ face recognition 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rbf_face"
+literal "false"
+
+\end_inset
+
+, function approximation 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rbf_function"
+literal "false"
+
+\end_inset
+
+, image classification 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rbf_image"
+literal "false"
+
+\end_inset
+
+, water quality prediction 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rbf_water"
+literal "false"
+
+\end_inset
+
+ etc.
+\end_layout
+
+\begin_layout Standard
+The rest of this article is organized as follows: in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Method-description"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ the proposed sampling technique is outlined in detail, in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Experiments"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ the test functions used as well the experimental results are listed and
+ finally in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Conclusions"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ some conclusions are presented.
 \end_layout
 
 \begin_layout Section
 Method description 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Method-description"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
 Experiments 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Experiments"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -4836,7 +5078,14 @@ TOTAL
 \end_layout
 
 \begin_layout Section
-Conclusions
+Conclusions 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Conclusions"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Bibliography
@@ -5362,6 +5611,596 @@ K.
  Dorigo, Ant colony optimization for continuous domains, European Journal
  of Operational Research 185, pp.
  1155-1173, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso_sa_hybrid1"
+literal "false"
+
+\end_inset
+
+H.L.
+ Shieh, C.C.
+ Kuo, C.M.
+ Chiang, Modified particle swarm optimization algorithm with simulated annealing
+ behavior and its numerical verification, Applied Mathematics and Computation
+ 
+\series bold
+218
+\series default
+, pp.
+ 4365-4383, 2011.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso_sa_hybrid2"
+literal "false"
+
+\end_inset
+
+S.
+ Zhoua, X.
+ Liu, Y.
+ Hua, X.
+ Zhou, S.Yang, Adaptive model parameter identification for lithium-ion batteries
+ based on improved coupling hybrid adaptive particle swarm optimization-
+ simulated annealing method, Journal of Power Sources 
+\series bold
+482
+\series default
+, Article number 228951, 2021.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ga_de_hybrid1"
+literal "false"
+
+\end_inset
+
+D.
+ He, F.
+ Wang, Z.
+ Mao, A hybrid genetic algorithm approach based on differential evolution
+ for economic dispatch with valve-point effect, International Journal of
+ Electrical Power & Energy Systems 
+\series bold
+30
+\series default
+, pp.
+ 31-38, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ga_de_hybrid2"
+literal "false"
+
+\end_inset
+
+A.
+ Trivedi, D.
+ Srinivasan, S.
+ Biswas, T.
+ Reindl, A genetic algorithm – differential evolution based hybrid framework:
+ Case study on unit commitment scheduling problem, Information Sciences
+ 
+\series bold
+354
+\series default
+, pp.
+ 275-300, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ga_pso_hybrid1"
+literal "false"
+
+\end_inset
+
+Y.T.
+ Kao, E.
+ Zahara, A hybrid genetic algorithm and particle swarm optimization for
+ multimodal functions, Applied Soft Computing 
+\series bold
+8
+\series default
+, pp.
+ 849-857, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gpu1"
+literal "false"
+
+\end_inset
+
+Y.
+ Zhou, Y.
+ Tan, GPU-based parallel particle swarm optimization, 2009 IEEE Congress
+ on Evolutionary Computation, pp.
+ 1493-1500, 2009.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gpu2"
+literal "false"
+
+\end_inset
+
+L.
+ Dawson, I.
+ Stewart, Improving Ant Colony Optimization performance on the GPU using
+ CUDA, in: 2013 IEEE Congress on Evolutionary Computation, pp.
+ 1901-1908, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gpu3"
+literal "false"
+
+\end_inset
+
+Barkalov, K., Gergel, V.
+ Parallel global optimization on GPU.
+ J Glob Optim 
+\series bold
+66
+\series default
+, pp.
+ 3–20, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "multistart-tsp"
+literal "true"
+
+\end_inset
+
+Li W., A Parallel Multi-start Search Algorithm for Dynamic Traveling Salesman
+ Problem.
+ In: Pardalos P.M., Rebennack S.
+ (eds) Experimental Algorithms.
+ SEA 2011.
+ Lecture Notes in Computer Science, vol 6630.
+ Springer, Berlin, Heidelberg, 2011.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "multistart-vehicle"
+literal "true"
+
+\end_inset
+
+Olli Bräysy, Geir Hasle, Wout Dullaert, A multi-start local search algorithm
+ for the vehicle routing problem with time windows, European Journal of
+ Operational Research 
+\series bold
+159
+\series default
+, pp.
+ 586-605, 2004.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "multistart_fac"
+literal "false"
+
+\end_inset
+
+Mauricio G.C.
+ Resende, Renato F.
+ Werneck,A hybrid multistart heuristic for the uncapacitated facility location
+ problem, European Journal of Operational Research 
+\series bold
+174
+\series default
+, pp.
+ 54-68, 2006.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "multistart_clique"
+literal "false"
+
+\end_inset
+
+E.
+ Marchiori, Genetic, Iterated and Multistart Local Search for the Maximum
+ Clique Problem.
+ In: Cagnoni S., Gottlieb J., Hart E., Middendorf M., Raidl G.R.
+ (eds) Applications of Evolutionary Computing.
+ EvoWorkshops 2002.
+ Lecture Notes in Computer Science, vol 2279.
+ Springer, Berlin, Heidelberg.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "multistart_fire"
+literal "false"
+
+\end_inset
+
+Gomes M.I., Afonso L.B., Chibeles-Martins N., Fradinho J.M.
+ (2018) Multi-start Local Search Procedure for the Maximum Fire Risk Insured
+ Capital Problem.
+ In: Lee J., Rinaldi G., Mahjoub A.
+ (eds) Combinatorial Optimization.
+ ISCO 2018.
+ Lecture Notes in Computer Science, vol 10856.
+ Springer, Cham.
+ https://doi.org/10.1007/978-3-319-96151-4_19
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "multistart-aero"
+literal "false"
+
+\end_inset
+
+Streuber, Gregg M.
+ and Zingg, David.
+ W., Evaluating the Risk of Local Optima in Aerodynamic Shape Optimization,
+ AIAA Journal 
+\series bold
+59
+\series default
+, pp.
+ 75-87, 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "tmlsl"
+literal "false"
+
+\end_inset
+
+M.M.
+ Ali, C.
+ Storey, Topographical multilevel single linkage, J.
+ Global Optimization 
+\series bold
+5
+\series default
+, pp.
+ 349–358,1994
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Salhi"
+literal "false"
+
+\end_inset
+
+S.
+ Salhi, N.M.
+ Queen, A hybrid algorithm for identifying global and local minima when
+ optimizing functions with many minima, European J.
+ Oper.
+ Res.
+ 
+\series bold
+155
+\series default
+, pp.
+ 51–67, 2004.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "minfinder"
+literal "false"
+
+\end_inset
+
+I.
+ G.
+ Tsoulos and I.
+ E.
+ Lagaris, MinFinder: Locating all the local minima of a function, Computer
+ Physics Communications 
+\series bold
+174
+\series default
+, pp.
+ 166-179, 2006.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "mshybrid1"
+literal "false"
+
+\end_inset
+
+M.
+ Perez, F.
+ Almeida and J.
+ M.
+ Moreno-Vega, "Genetic algorithm with multistart search for the p-Hub median
+ problem," Proceedings.
+ 24th EUROMICRO Conference (Cat.
+ No.98EX204), Vasteras, Sweden, 1998, pp.
+ 702-707 vol.2.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "mshybrid2"
+literal "false"
+
+\end_inset
+
+H.
+ C.
+ B.
+ d.
+ Oliveira, G.
+ C.
+ Vasconcelos and G.
+ B.
+ Alvarenga, "A Multi-Start Simulated Annealing Algorithm for the Vehicle
+ Routing Problem with Time Windows," 2006 Ninth Brazilian Symposium on Neural
+ Networks (SBRN'06), Ribeirao Preto, Brazil, 2006, pp.
+ 137-142.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "grasp"
+literal "false"
+
+\end_inset
+
+Festa P., Resende M.G.C.
+ (2009) Hybrid GRASP Heuristics.
+ In: Abraham A., Hassanien AE., Siarry P., Engelbrecht A.
+ (eds) Foundations of Computational Intelligence Volume 3.
+ Studies in Computational Intelligence, vol 203.
+ Springer, Berlin, Heidelberg.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "msstop1"
+literal "false"
+
+\end_inset
+
+B.
+ Betro`, F.
+ Schoen, Optimal and sub-optimal stopping rules for the multistart algorithm
+ in global optimization, Math.
+ Program.
+ 
+\series bold
+57
+\series default
+, pp.
+ 445–458, 1992.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "msstop2"
+literal "false"
+
+\end_inset
+
+W.E.
+ Hart, Sequential stopping rules for random optimization methods with applicatio
+ns to multistart local search, Siam J.
+ Optim.
+ 
+\series bold
+9
+\series default
+, pp.
+ 270–290, 1998.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "msstop3"
+literal "false"
+
+\end_inset
+
+I.E.
+ Lagaris and I.G.
+ Tsoulos, Stopping Rules for Box-Constrained Stochastic Global Optimization,
+ Applied Mathematics and Computation 
+\series bold
+197
+\series default
+, pp.
+ 622-632, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "parallel-multistart"
+literal "true"
+
+\end_inset
+
+J.
+ Larson and S.M.
+ Wild, Asynchronously parallel optimization solver for finding multiple
+ minima, Mathematical Programming Computation 
+\series bold
+10
+\series default
+, pp.
+ 303-332, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "parallel-multistart2"
+literal "true"
+
+\end_inset
+
+H.P.J.
+ Bolton, J.F.
+ Schutte, A.A.
+ Groenwold, Multiple Parallel Local Searches in Global Optimization.
+ In: Dongarra J., Kacsuk P., Podhorszki N.
+ (eds) Recent Advances in Parallel Virtual Machine and Message Passing Interface.
+ EuroPVM/MPI 2000.
+ Lecture Notes in Computer Science, vol 1908.
+ Springer, Berlin, Heidelberg, 2000.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbf1"
+literal "false"
+
+\end_inset
+
+J.
+ Park and I.
+ W.
+ Sandberg, Universal Approximation Using Radial-Basis-Function Networks,
+ Neural Computation 
+\series bold
+3
+\series default
+, pp.
+ 246-257, 1991.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbf_face"
+literal "false"
+
+\end_inset
+
+M.J.
+ Er, S.
+ Wu, J.
+ Lu, H.L.
+ Toh, Face recognition with radial basis function (RBF) neural networks,
+ IEEE Transactions on Neural Networks 
+\series bold
+ 13
+\series default
+, pp.
+ 697-710, 2002.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbf_function"
+literal "false"
+
+\end_inset
+
+G.B.
+ Huang, P.
+ Saratchandran, N.
+ Sundararajan, A generalized growing and pruning RBF (GGAP-RBF) neural network
+ for function approximation, IEEE Transactions on Neural Networks 
+\series bold
+16
+\series default
+, pp.
+ 57-67, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbf_image"
+literal "false"
+
+\end_inset
+
+B.C.
+ Kuo, H.H.
+ Ho, C.
+ H.
+ Li, C.
+ C.
+ Hung , J.
+ S.
+ Taur, A Kernel-Based Feature Selection Method for SVM With RBF Kernel for
+ Hyperspectral Image Classification, IEEE Journal of Selected Topics in
+ Applied Earth Observations and Remote Sensing.
+ 
+\series bold
+7
+\series default
+, pp.
+ 317-326, 2014.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbf_water"
+literal "false"
+
+\end_inset
+
+H.G.
+ Han, Q.L.
+ Chen, J.F.
+ Qiao, An efficient self-organizing RBF neural network for water quality
+ prediction, Neural Networks 
+\series bold
+24
+\series default
+, pp.
+ 717-725, 2011.
 \end_layout
 
 \begin_layout Bibliography
