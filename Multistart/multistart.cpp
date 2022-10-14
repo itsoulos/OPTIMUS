@@ -21,7 +21,7 @@ bool Multistart::terminated()
         stopat=variance/2.0;
     }
     if(fabs(stopat)<1e-8) stopat=variance/2.0;
-    return (iteration>=xsample.size() || (variance<=stopat && iteration>=20));
+    return (iteration>=xsample.size()  || (variance<=stopat && iteration>=20));
 }
 
 double mdelta(double a,double r0,double r)

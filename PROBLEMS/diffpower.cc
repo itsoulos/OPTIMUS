@@ -1,12 +1,5 @@
 # include <math.h>
-# include <math.h>
-# include <interval.h>
-# include <vector>
-# include <stdio.h>
-# include <iostream>
-# include <QJsonObject>
-# include <QFile>
-using namespace std;
+
 extern "C"
 {
 
@@ -14,37 +7,33 @@ extern "C"
 	{
 		return a>b?a:b;
 	}
-	int DIMENSION=100;
-void    init(QJsonObject data)
-{
-    if(data.contains("natoms"))
-        DIMENSION=data["natoms"].toString().toInt();
-    if(data.contains("dimension")) 
-	    DIMENSION=data["dimension"].toString().toInt();
-}
-void 	getmargins(vector<Interval> &x)
-{
-    for(int i=0;i<x.size();i++)
-    {
-    x[i]=Interval(-1e+10,1e+10);
-		    }
-		    }
-
+# define DIMENSION 5
 int	getdimension()
 {
 	return DIMENSION;
 }
 
+void	getleftmargin(double *x)
+{
+	for(int i=0;i<DIMENSION;i++)
+		x[i]=-1.0;
+}
 
-double	funmin(vector<double> &x)
+void	getrightmargin(double *x)
+{
+	for(int i=0;i<DIMENSION;i++)
+		x[i]= 1.0;
+}
+
+double	funmin(double *x)
 {
 	double sum=0.0;
 	for(int i=0;i<DIMENSION;i++)
-		sum+=pow(fabs(x[i]),2.0+10.0*(i*1.0)/(DIMENSION-1.0));
+		sum+=pow(fabs(x[i]),(i+2.0));
 	return sum;
 }
 
-void    granal(vector<double> &x,vector<double> &g)
+void    granal(double *x,double *g)
 {
 	 for(int i=0;i<getdimension();i++)
          {
@@ -57,5 +46,6 @@ void    granal(vector<double> &x,vector<double> &g)
                 x[i]+=eps;
         }
 }
+
 
 }

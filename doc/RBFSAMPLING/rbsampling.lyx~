@@ -464,7 +464,38 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-The rest of this article is organized as follows:.....
+The rest of this article is organized as follows: in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Method-description"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ the proposed sampling technique is outlined in detail, in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Experiments"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ the test functions used as well the experimental results are listed and
+ finally in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Conclusions"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ some conclusions are presented.
 \end_layout
 
 \begin_layout Section
@@ -473,6 +504,1150 @@ Method description
 LatexCommand label
 name "sec:Method-description"
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+The Multistart method
+\end_layout
+
+\begin_layout Standard
+A commonly used representation of the Multistart method is shown in Algorithm
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:multistart_typical"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ In practice, the method takes N samples at each iteration and starts a
+ local minimization method from each sample, without doing any other checking.
+ However, despite its simplicity, it has two key components which, with
+ proper adaptation, can make the method extremely efficient.
+ The first component is the termination method used and the second is the
+ sampling method within the central iteration.
+ The local search procedure used here is an adaptation of the BFGS method
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "powell"
+literal "false"
+
+\end_inset
+
+.
+ The used termination rule was also used in a variety of global optimization
+ methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ga_tsoulos,pso_tsoulos"
+literal "false"
+
+\end_inset
+
+.
+ This termination method is outlined in subsection 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:The-used-termination"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ The second point, which this paper focuses on, is the sampling method.
+ Usually sampling is done with random samples from some distribution such
+ as the uniform one.
+ In this paper sampling will be used from an approximation of the objective
+ function 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ constructed using a neural network.
+ This approach is discussed in subsection 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Rbf-networks"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Representation of the Multistart algorithm.
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:multistart_typical"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initialization
+\series default
+ step.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $N$
+\end_inset
+
+ the number of samples, that will taken in every iteration.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $\mbox{ITER}_{\mbox{MAX}}$
+\end_inset
+
+, the maximum number of allowed iterations.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ Iter=0, the iteration number.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $\left(x^{*},y^{*}\right)$
+\end_inset
+
+ as the global minimum.
+ Initialy 
+\begin_inset Formula $y^{*}=\infty$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Evaluation
+\series default
+ step.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ Iter=Iter+1
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1\ldots N$
+\end_inset
+
+ 
+\series bold
+Do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Take
+\series default
+ a new sample 
+\begin_inset Formula $x_{i}\in S$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $y_{i}=\mbox{LS}\left(x_{i}\right)$
+\end_inset
+
+.
+ Where LS(x) is a predefined local search method.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+If
+\series default
+ 
+\begin_inset Formula $y_{i}\le y^{*}$
+\end_inset
+
+ then 
+\begin_inset Formula $x^{*}=x_{i},y^{*}=y_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Termination
+\series default
+ check.
+ The termination criteria are checked and if they are true, then the method
+ terminates.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+The used termination rule
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:The-used-termination"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A typical termination method used is the maximum number of iterations, ie
+ to terminate the method when 
+\begin_inset Formula $\mbox{Iter}\ge\mbox{ITER}_{\mbox{MAX}}$
+\end_inset
+
+.
+ However, this way of termination is not particularly efficient, since for
+ small values of the 
+\begin_inset Formula $\mbox{ITER}_{\mbox{MAX}}$
+\end_inset
+
+ number the total minimum may not be found, while for large values of it
+ it may be found at an early stage of the search and then the computer wastes
+ time on calls of local search method.
+ As an example consider the Hansen function defined as:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+f(x)=\sum_{i=1}^{5}i\cos\left[(i-1)x_{1}+i\right]\sum_{j=1}^{5}j\cos\left[(j+1)x_{2}+j\right],x\in[-10,10]^{2}
+\]
+
+\end_inset
+
+ The global minimum of the function is -176.541793.
+ The progress of solving the above function with 
+\begin_inset Formula $\mbox{ITER}_{\mbox{MAX}}=100$
+\end_inset
+
+ is shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:hansenPlot"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The global minimum was discovered too early at 21th iteration, but the
+ algorithm continues untilt Iter=100, spending 80% of computing time.
+ The termination rule used in this work was first proposed in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ga_tsoulos"
+literal "false"
+
+\end_inset
+
+: at every iteration 
+\begin_inset Formula $n$
+\end_inset
+
+ the variance of the quantity 
+\begin_inset Formula $f\left(x^{*}\right)$
+\end_inset
+
+ is calculated.
+ This quantity is denotes byt 
+\begin_inset Formula $v^{(n)}$
+\end_inset
+
+.
+ If the variance falls below a predetermined threshold, then the method
+ is terminated.
+ This limit is half the value of this variance for the last time a new low
+ was found for 
+\begin_inset Formula $y^{*}$
+\end_inset
+
+.
+ The algorithm terminates when 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+v^{(n)}\le\frac{v^{(\mbox{nlast})}}{2}\label{eq:termination_mine}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\mbox{nlast}$
+\end_inset
+
+ is the last iteration where a new better estimation of the global minimum
+ was discovered.
+ A graphical representation for the proposed method and the function EXP8
+ is shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:exp8_plot"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The value 
+\begin_inset Formula $v^{(n)}$
+\end_inset
+
+ is denoted as VARIANCE in the plot and the value 
+\begin_inset Formula $\frac{v^{(\mbox{nlast})}}{2}$
+\end_inset
+
+ is denoted as STOPAT.
+ The function EXP8 is given by 
+\begin_inset Formula 
+\[
+f(x)=-\exp\left(-0.5\sum_{i=1}^{8}x_{i}^{2}\right),\quad-1\le x_{i}\le1
+\]
+
+\end_inset
+
+The method now terminates at generation 12.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Progress of Multistart for the Hansen function.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:hansenPlot"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename hansen_plot.eps
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Plot of the used termination rule for the EXP8 test function.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:exp8_plot"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename termination_check.eps
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Rbf networks 
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Rbf-networks"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+An RBF neural network typically is expressed as a function: 
+\series bold
+
+\begin_inset Formula 
+\begin{equation}
+y(\overrightarrow{x})=\sum_{i=1}^{k}w_{i}\phi\left(\left\Vert x-c_{i}\right\Vert \right)\label{eq:firstrbf}
+\end{equation}
+
+\end_inset
+
+
+\series default
+where the vector 
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+ stands for the input vector of the network and the vector 
+\begin_inset Formula $\overrightarrow{w}$
+\end_inset
+
+ is called weight vector with 
+\begin_inset Formula $k$
+\end_inset
+
+ elements.
+ Typically, the function 
+\begin_inset Formula $\phi(x)$
+\end_inset
+
+ is the so - called Gaussian function defined as:
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\begin_inset Formula 
+\begin{equation}
+\phi(x)=\exp\left(-\frac{\left(x-c\right)^{2}}{\sigma^{2}}\right)
+\end{equation}
+
+\end_inset
+
+
+\series default
+where the value 
+\begin_inset Formula $\phi(x)$
+\end_inset
+
+ depends mainly on the distance between 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ The vector 
+\begin_inset Formula $\overrightarrow{c}$
+\end_inset
+
+ is called centroid and the vector 
+\begin_inset Formula $\overrightarrow{\sigma}=\left(\sigma_{1},\sigma_{2},\ldots,\sigma_{k}\right)$
+\end_inset
+
+ is considered as the variance vector.
+ A typical plot of this function is shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:gaussianPlot"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The network of equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:firstrbf"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ can be used to appoximate functions 
+\begin_inset Formula $f(x),\ x\in S\subset R^{n}$
+\end_inset
+
+ by minimizing the error:
+\begin_inset Formula 
+\begin{equation}
+E\left(y\left(\overrightarrow{x}\right)\right)=\sum_{i=1}^{M}\left(y\left(x_{i}\right)-f\left(x_{i}\right)\right)^{2}\label{eq:rbf_error}
+\end{equation}
+
+\end_inset
+
+where the variable 
+\begin_inset Formula $M$
+\end_inset
+
+ denotes the number of training samples provided for the function 
+\begin_inset Formula $f(x)$
+\end_inset
+
+.
+ The RBF network is shown graphically in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:rbfExample"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ During a traininig procedure, the parameters of the RBF network are adapted
+ in order to minimize the error of equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:rbf_error"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ .The RBF network us trained using a two - phase methodology:
+\end_layout
+
+\begin_layout Enumerate
+During the first phase the 
+\begin_inset Formula $k$
+\end_inset
+
+ centers of and the associated variances are calculated through K-Means
+ algorithm 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kmeans"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+During the second phase, the weight vector 
+\begin_inset Formula $\overrightarrow{w}=\left(w_{1},w_{2},\ldots,w_{k}\right)$
+\end_inset
+
+ is calcuated by solving a linear system of equations with the following
+ procedure:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\series bold
+
+\begin_inset Formula $W=w_{kj}$
+\end_inset
+
+
+\series default
+,
+\series bold
+ 
+\series default
+the matrix for the 
+\begin_inset Formula $k$
+\end_inset
+
+ weights 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\series bold
+
+\begin_inset Formula $\Phi=\phi_{j}\left(x_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set 
+\begin_inset Formula $T=\left\{ t_{i}=f\left(x_{i}\right),i=1,..,M\right\} $
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+The system to be solved is defined as:
+\series bold
+ 
+\begin_inset Formula 
+\begin{equation}
+\Phi^{T}\left(T-\Phi W^{T}\right)=0
+\end{equation}
+
+\end_inset
+
+
+\series default
+The solution is:
+\series bold
+
+\begin_inset Formula 
+\begin{equation}
+W^{T}=\left(\Phi^{T}\Phi\right)^{-1}\Phi^{T}T=\Phi^{\dagger}T\label{eq:eqoutput}
+\end{equation}
+
+\end_inset
+
+
+\series default
+The matrix
+\series bold
+ 
+\begin_inset Formula $\Phi^{\dagger}=\left(\Phi^{T}\Phi\right)^{-1}\Phi^{T}$
+\end_inset
+
+ 
+\series default
+is the so - called  pseudo-inverse of 
+\begin_inset Formula $\Phi$
+\end_inset
+
+, with the property
+\series bold
+
+\begin_inset Formula 
+\begin{equation}
+\Phi^{\dagger}\Phi=I
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+In the proposed technique, the previously defined network constructs an
+ approximation of the objective function 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ and subsequently the method Multistart takes samples from the approximation
+ of the objective function.
+
+\series bold
+ 
+\series default
+The process starts by taking some samples from the actual 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ function.
+ These samples are then used to train an RBF neural network.
+ After training, many samples are taken from the neural network function
+ and the best ones will be used in the global optimization method.
+ The overall sampling procedure is shown in Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:proposedSampling"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Typical plot of the Gaussian function.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:gaussianPlot"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename gaussian.eps
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+An example of an RBF network.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:rbfExample"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename rbfdiagram.eps
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float algorithm
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The proposed sampling procedure.
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:proposedSampling"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initialization
+\series default
+ step.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $N$
+\end_inset
+
+, the number of required samples.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ ISAMPLES, the initial samples that will be drawn from the function 
+\begin_inset Formula $f(x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $\mbox{FR}$
+\end_inset
+
+ a real number, with 
+\begin_inset Formula $\text{\mbox{FR} }>N$
+\end_inset
+
+.
+ For example, 
+\begin_inset Formula $\mbox{FR}=10\times N$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $\mbox{IS}=\emptyset$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $\mbox{FS}=\emptyset$
+\end_inset
+
+.
+ This is the final outcome of the algorithm.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $k$
+\end_inset
+
+, the number of weights for the RBF network,
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Initial Sampling
+\series default
+ step.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1,\ldots,\mbox{ISAMPLES}$
+\end_inset
+
+
+\series bold
+do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Take a sample 
+\begin_inset Formula $s_{i}=\left(x_{i},f\left(x_{i}\right)\right),x_{i}\in S\subset R^{n}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mbox{IS}=\mbox{IS}\cup s_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+End For
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Training
+\series default
+ step.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Construct
+\series default
+ an RBF network 
+\begin_inset Formula $y(x)$
+\end_inset
+
+ with 
+\begin_inset Formula $k$
+\end_inset
+
+ weights.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Train
+\series default
+ 
+\begin_inset Formula $y(x)$
+\end_inset
+
+ using the set 
+\begin_inset Formula $\mbox{IS}$
+\end_inset
+
+ by minimizing the train error of equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:rbf_error"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Final sampling
+\series default
+ step.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1,\ldots,\mbox{FR}$
+\end_inset
+
+ 
+\series bold
+do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Take
+\series default
+ a sample 
+\begin_inset Formula $s_{i}=\left(x_{i},y\left(x_{i}\right)\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mbox{FS}=\mbox{FS}\cup s_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+End For
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Sort
+\series default
+ FS according to the function values.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Keep
+\series default
+ in the set only the N samples with the lowest functional value.
+\end_layout
+
+\end_deeper
 \end_inset
 
 
@@ -487,6 +1662,19 @@ name "sec:Experiments"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+In order to measure the effectiveness of the proposed approach we utilize
+ several benchmark functions from the relevant literature 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Ali1,Floudas1"
+literal "true"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection
@@ -1107,6 +2295,10 @@ with
 
 \begin_layout Subsection
 Experimental results
+\end_layout
+
+\begin_layout Standard
+Create a table with the experimental parameters.
 \end_layout
 
 \begin_layout Standard
@@ -2209,7 +3401,7 @@ TOTAL
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -6170,6 +7362,128 @@ H.G.
 \series default
 , pp.
  717-725, 2011.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "powell"
+literal "true"
+
+\end_inset
+
+M.J.D Powell, A Tolerant Algorithm for Linearly Constrained Optimization Calculati
+ons, Mathematical Programming 
+\series bold
+45
+\series default
+, pp.
+ 547-566, 1989.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ga_tsoulos"
+literal "false"
+
+\end_inset
+
+I.G.
+ Tsoulos, Modifications of real code genetic algorithm for global optimization,
+ Applied Mathematics and Computation 
+\series bold
+203
+\series default
+, pp.
+ 598-607, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso_tsoulos"
+literal "false"
+
+\end_inset
+
+I.G.
+ Tsoulos, A.
+ Tzallas, E.
+ Karvounis, Improving the PSO method for global optimization problems.
+ Evolving Systems 
+\series bold
+12
+\series default
+, pp.
+ 875–883, 2021
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "kmeans"
+literal "false"
+
+\end_inset
+
+MacQueen, J.: Some methods for classification and analysis of multivariate
+ observations, in: Proceedings of the fifth Berkeley symposium on mathematical
+ statistics and probability, Vol.
+ 1, No.
+ 14, pp.
+ 281-297, 1967.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Ali1"
+literal "true"
+
+\end_inset
+
+M.
+ Montaz Ali, Charoenchai Khompatraporn, Zelda B.
+ Zabinsky, A Numerical Evaluation of Several Stochastic Algorithms on Selected
+ Continuous Global Optimization Test Problems, Journal of Global Optimization
+ 
+\series bold
+31
+\series default
+, pp 635-672, 2005.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Floudas1"
+literal "true"
+
+\end_inset
+
+C.A.
+ Floudas, P.M.
+ Pardalos, C.
+ Adjiman, W.
+ Esposoto, Z.
+ G
+\begin_inset Formula $\ddot{\mbox{u}}$
+\end_inset
+
+m
+\begin_inset Formula $\ddot{\mbox{u}}$
+\end_inset
+
+s, S.
+ Harding, J.
+ Klepeis, C.
+ Meyer, C.
+ Schweiger, Handbook of Test Problems in Local and Global Optimization,
+ Kluwer Academic Publishers, Dordrecht, 1999.
 \end_layout
 
 \begin_layout Bibliography
