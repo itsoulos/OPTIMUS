@@ -125,7 +125,16 @@ University of Western Macedonia, Department of Engineering Informatics and
 \end_layout
 
 \begin_layout Abstract
-Write some abstract here
+In this paper, a new sampling technique is proposed that can be used in
+ the Multistart global optimization technique as well as techniques based
+ on it.
+ The new method takes a limited number of samples from the objective function
+ and then uses them to train an RBF neural network.
+ Subsequently, several samples were taken from the artificial neural network
+ this time, and those with the smallest network value in them are used in
+ the global optimization method.
+ The proposed technique was applied to a wide range of objective functions
+ from the relevant literature and the results were extremely promising.
 \end_layout
 
 \begin_layout Standard
@@ -203,7 +212,7 @@ literal "false"
  etc.
  The global optimization methods have two major categories: deterministic
  and stochastic methods.
-  The most common methods of the first category are the so called Interval
+  The most common methods of the first category are the so-called Interval
  methods 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -216,10 +225,10 @@ literal "true"
 \begin_inset Formula $S$
 \end_inset
 
- is divided iteratively in subregions and some subregions that not contain
- the global solution are discarded using some pre defined criteria.
+ is divided iteratively in subregions and some subregions that do not contain
+ the global solution are discarded using some pre-defined criteria.
  The majority of the methods belong to the second category where the reader
- can found Controlled Random Search methods 
+ can find Controlled Random Search methods 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "crs1,crs2,crs3"
@@ -268,9 +277,10 @@ literal "false"
 \end_inset
 
  etc.
- Also, may hybrid stochastic methods have been appeared recently in the
- relevant literature such as methods that combine Particle Swarm Optimization
- and Simulated Annealing 
+ Also, many hybrid stochastic methods have appeared recently in the relevant
+ literature.
+ such as methods that combine Particle Swarm Optimization and Simulated
+ Annealing 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "pso_sa_hybrid1,pso_sa_hybrid2"
@@ -317,8 +327,8 @@ This paper proposes an innovative sampling technique for the Multistart
  In the Multistart method, a series of random samples are taken from the
  objective function and then a local optimization method is started from
  each sample.
- Regarding its simplicity, the method have been used with success in a wide
- area of practical applications such as the TSP problem
+ Regarding its simplicity, the method has been used with success in a wide
+ area of practical applications, such as the TSP problem
 \series bold
  
 \series default
@@ -414,8 +424,8 @@ literal "true"
 \end_inset
 
 .
- Usually in the Multistart method, samples are used from the objective function
- using some distribution such as the uniform distribution.
+ Usually, in the Multistart method, samples are used from the objective
+ function using some distribution such as the uniform distribution.
  In the present work, it is proposed that these samples are obtained from
  a radial basis network 
 \begin_inset CommandInset citation
@@ -427,7 +437,7 @@ literal "false"
 
  (RBF), which has already been trained on a limited number of real samples
  from the objective function.
- RBF networks have been widely used in many real world problems such as
+ RBF networks have been widely used in many real world problems, such as
  face recognition 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -527,7 +537,7 @@ noprefix "false"
 
 .
  In practice, the method takes N samples at each iteration and starts a
- local minimization method from each sample, without doing any other checking.
+ local minimization method for each sample, without doing any other checking.
  However, despite its simplicity, it has two key components which, with
  proper adaptation, can make the method extremely efficient.
  The first component is the termination method used and the second is the
@@ -563,14 +573,14 @@ noprefix "false"
 \end_inset
 
  The second point, which this paper focuses on, is the sampling method.
- Usually sampling is done with random samples from some distribution such
+ Usually, sampling is done with random samples from some distribution such
  as the uniform one.
- In this paper sampling will be used from an approximation of the objective
+ In this paper, samples will be taken from an approximation of the objective
  function 
 \begin_inset Formula $f(x)$
 \end_inset
 
- constructed using a neural network.
+ constructed using an RBF neural network.
  This approach is discussed in subsection 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -588,7 +598,7 @@ noprefix "false"
 \begin_inset Float algorithm
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -771,7 +781,7 @@ name "subsec:The-used-termination"
 \end_layout
 
 \begin_layout Standard
-A typical termination method used is the maximum number of iterations, ie
+A typical termination method used is the maximum number of iterations, i.e.
  to terminate the method when 
 \begin_inset Formula $\mbox{Iter}\ge\mbox{ITER}_{\mbox{MAX}}$
 \end_inset
@@ -782,10 +792,10 @@ A typical termination method used is the maximum number of iterations, ie
 \begin_inset Formula $\mbox{ITER}_{\mbox{MAX}}$
 \end_inset
 
- number the total minimum may not be found, while for large values of it
+ number the total minimum may not be found, while for larger values of it
  it may be found at an early stage of the search and then the computer wastes
  time on calls of local search method.
- As an example consider the Hansen function defined as:
+ As an example, consider the Hansen function, defined as:
 \end_layout
 
 \begin_layout Standard
@@ -796,7 +806,7 @@ f(x)=\sum_{i=1}^{5}i\cos\left[(i-1)x_{1}+i\right]\sum_{j=1}^{5}j\cos\left[(j+1)x
 
 \end_inset
 
- The global minimum of the function is -176.541793.
+ The global minimum for the function is -176.541793.
  The progress of solving the above function with 
 \begin_inset Formula $\mbox{ITER}_{\mbox{MAX}}=100$
 \end_inset
@@ -812,8 +822,8 @@ noprefix "false"
 \end_inset
 
 .
- The global minimum was discovered too early at 21th iteration, but the
- algorithm continues untilt Iter=100, spending 80% of computing time.
+ The global minimum was discovered too early, at the 21th iteration, but
+ the algorithm continues until Iter=100, spending 80% of computing time.
  The termination rule used in this work was first proposed in 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -831,7 +841,7 @@ literal "false"
 \end_inset
 
  is calculated.
- This quantity is denotes byt 
+ This quantity is denoted as 
 \begin_inset Formula $v^{(n)}$
 \end_inset
 
@@ -1079,7 +1089,7 @@ noprefix "false"
 
 \end_inset
 
- can be used to appoximate functions 
+ can be used to approximate functions 
 \begin_inset Formula $f(x),\ x\in S\subset R^{n}$
 \end_inset
 
@@ -1111,7 +1121,7 @@ noprefix "false"
 \end_inset
 
 .
- During a traininig procedure, the parameters of the RBF network are adapted
+ During a training procedure, the parameters of the RBF network are adapted
  in order to minimize the error of equation 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1147,7 +1157,7 @@ During the second phase, the weight vector
 \begin_inset Formula $\overrightarrow{w}=\left(w_{1},w_{2},\ldots,w_{k}\right)$
 \end_inset
 
- is calcuated by solving a linear system of equations with the following
+ is calculated by solving a linear system of equations with the following
  procedure:
 \end_layout
 
@@ -1289,7 +1299,7 @@ noprefix "false"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1326,11 +1336,7 @@ name "fig:gaussianPlot"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
-
-\begin_layout Plain Layout
-
-\end_layout
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1368,7 +1374,7 @@ name "fig:rbfExample"
 \begin_inset Float algorithm
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1665,7 +1671,7 @@ name "sec:Experiments"
 \end_layout
 
 \begin_layout Standard
-The effectiveness of the proposed method was evaluated using some  benchmark
+The effectiveness of the proposed method was evaluated using some benchmark
  functions from the relevant literature 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1678,7 +1684,35 @@ literal "true"
 \end_layout
 
 \begin_layout Subsection
-Test function 
+Test functions
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Bent Cigar function
+\series default
+ 
+\emph default
+The function is 
+\begin_inset Formula 
+\[
+f(x)=x_{1}^{2}+10^{6}\sum_{i=2}^{n}x_{i}^{2}
+\]
+
+\end_inset
+
+ with the global minimum 
+\begin_inset Formula $f\left(x^{*}\right)=0$
+\end_inset
+
+.
+ For the conducted experiments the value 
+\begin_inset Formula $n=10$
+\end_inset
+
+ was used.
 \end_layout
 
 \begin_layout Itemize
@@ -1803,6 +1837,53 @@ The global minimum has the value of
 \begin_layout Itemize
 
 \series bold
+Discus function
+\series default
+\emph on
+ 
+\emph default
+The function is defined as 
+\begin_inset Formula 
+\[
+f(x)=10^{6}x_{1}^{2}+\sum_{i=2}^{n}x_{i}^{2}
+\]
+
+\end_inset
+
+ with global minimum 
+\begin_inset Formula $f\left(x^{*}\right)=0.$
+\end_inset
+
+ For the conducted experiments the value 
+\begin_inset Formula $n=10$
+\end_inset
+
+ was used.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Easom
+\series default
+ function The function is given by the equation 
+\begin_inset Formula 
+\[
+f(x)=-\cos\left(x_{1}\right)\cos\left(x_{2}\right)\exp\left(\left(x_{2}-\pi\right)^{2}-\left(x_{1}-\pi\right)^{2}\right)
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[-100,100]^{2}$
+\end_inset
+
+ and global minimum -1.0
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
 Exponential
 \series default
  function.
@@ -1824,11 +1905,11 @@ The global minimum is located at
 
 .
  In our experiments we used this function with 
-\begin_inset Formula $n=2,4,8,16,32,64,100$
+\begin_inset Formula $n=4,16,64$
 \end_inset
 
- and the corresponding functions are denoted by the labels EXP2, EXP4, EXP8,
- EXP16, EXP32, EXP64 and EXP100.
+ and the corresponding functions are denoted by the labels EXP4, EXP16,
+ EXP64.
 \end_layout
 
 \begin_layout Itemize
@@ -1985,6 +2066,30 @@ p=\left(\begin{array}{cccccc}
 \end_inset
 
 the value of global minimum is -3.322368.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+High Conditioned Elliptic
+\series default
+ function, defined as 
+\begin_inset Formula 
+\[
+f(x)=\sum_{i=1}^{n}\left(10^{6}\right)^{\frac{i-1}{n-1}}x_{i}^{2}
+\]
+
+\end_inset
+
+with global minimum 
+\begin_inset Formula $f\left(x^{*}\right)=0$
+\end_inset
+
+ and the value 
+\begin_inset Formula $n=10$
+\end_inset
+
+ was used in the conducted experiments
 \end_layout
 
 \begin_layout Itemize
@@ -2298,7 +2403,287 @@ Experimental results
 \end_layout
 
 \begin_layout Standard
-Create a table with the experimental parameters.
+The proposed sampling method was tested against the uniform sampling, for
+ the Multistart global optimization technique.
+ The uniform distribution used to sample points is defined as:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+x_{i}=a_{i}+r\times\left(b_{i}-a_{i}\right),\ i=1\ldots n\label{eq:eq4}
+\end{equation}
+
+\end_inset
+
+with 
+\begin_inset Formula $r\in[0,1]$
+\end_inset
+
+ a random number.
+ The parameters for the experiments are listed in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Parameters"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ All the experiments were executed 30 times with different random numbers
+ each time.
+ In all cases, the stopping rule of subsection 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:The-used-termination"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ was incorporated.
+ The random number function used was the drand48() function of the C programming
+ language.
+ The experimental results for used test functions are listed in Tables 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:multistart_results"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:proposed20"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:proposed50"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The number in the cells denotes the average function calls for the 30 independe
+nt runs.
+ The fraction in parentheses stands for the fraction of runs where the global
+ optimum was found.
+ If this number is missing then the global minimum was discovered in every
+ independent run (100% success).
+ At the end of each table, an additional line named total has been added,
+ representing the total number of function calls and, in parentheses, the
+ average success rate in finding the total minimum.
+\end_layout
+
+\begin_layout Standard
+From the experimental results, it follows in principle that the use of neural
+ networks significantly reduces the required number of function calls needed
+ to find the total minimum.
+ This reduction is proportional to the objective function and can reach
+ up to 60% of the original number of function calls.
+ In addition, the usage of the ISAMPLES parameter significantly increases
+ the reliability of the new sampling method.
+ For example, in the case where N=20 there is an increase in the average
+ success rate for finding the total minimum from 90% to approximately 96%.
+ However, improving the reliability of the method does not imply an increase
+ in the number of function calls.
+ For example, for N=20 the calls are in the interval 
+\begin_inset Formula $[75000,90000]$
+\end_inset
+
+ without showing any clear increase.
+ However, the use of the new sampling technique requires significantly more
+ computing time than the uniform distribution because of the need to train
+ the RBF networks and also because of the classification that precedes taking
+ the final samples.
+ This difference is demonstrated in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:sinuComparison"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ In this we see the significant difference in running time for the SINU
+ problem with a different number of dimensions each time.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Parameters for the experiments.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Parameters"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PARAMETER
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+VALUE
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mbox{ITER}_{\mbox{MAX}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+100
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $k$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20,50
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FR
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10\times N$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2311,7 +2696,19 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Experimental results for the Multistart method.
+Experimental results for the Multistart method, using uniform distribution
+ for the samples as defined in Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eq4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ 
 \begin_inset CommandInset label
 LatexCommand label
 name "tab:multistart_results"
@@ -2348,7 +2745,7 @@ FUNCTION
 \begin_inset Text
 
 \begin_layout Plain Layout
-SAMPLES=20
+N=20
 \end_layout
 
 \end_inset
@@ -2357,7 +2754,7 @@ SAMPLES=20
 \begin_inset Text
 
 \begin_layout Plain Layout
-SAMPLES=50
+N=50
 \end_layout
 
 \end_inset
@@ -2484,6 +2881,35 @@ CAMEL
 \begin_inset Text
 
 \begin_layout Plain Layout
+CIGAR
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5588
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8410
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 CM4
 \end_layout
 
@@ -2513,7 +2939,7 @@ CM4
 \begin_inset Text
 
 \begin_layout Plain Layout
-EXP2
+DISCUS
 \end_layout
 
 \end_inset
@@ -2522,7 +2948,7 @@ EXP2
 \begin_inset Text
 
 \begin_layout Plain Layout
-2688
+2817
 \end_layout
 
 \end_inset
@@ -2531,7 +2957,36 @@ EXP2
 \begin_inset Text
 
 \begin_layout Plain Layout
-5677
+5965
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+EASOM
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2204
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5202
 \end_layout
 
 \end_inset
@@ -2571,35 +3026,6 @@ EXP4
 \begin_inset Text
 
 \begin_layout Plain Layout
-EXP8
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-2805
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-5807
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 EXP16
 \end_layout
 
@@ -2629,35 +3055,6 @@ EXP16
 \begin_inset Text
 
 \begin_layout Plain Layout
-EXP32
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-2842
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-5843
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 EXP64
 \end_layout
 
@@ -2677,35 +3074,6 @@ EXP64
 
 \begin_layout Plain Layout
 5914
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-EXP100
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-2967
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-5959
 \end_layout
 
 \end_inset
@@ -2909,6 +3277,35 @@ HARTMAN6
 
 \begin_layout Plain Layout
 6037
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+HIGHELLIPTIC
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4398
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7306
 \end_layout
 
 \end_inset
@@ -3367,7 +3764,7 @@ TOTAL
 \begin_layout Plain Layout
 
 \series bold
-138927(0.923)
+142632(0.923)
 \end_layout
 
 \end_inset
@@ -3378,7 +3775,7 @@ TOTAL
 \begin_layout Plain Layout
 
 \series bold
-251391(0.916)
+254988(0.916)
 \end_layout
 
 \end_inset
@@ -3401,13 +3798,13 @@ TOTAL
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Experimental results for the proposed method with SAMPLES=20
+Experimental results for the proposed method with N=20
 \begin_inset CommandInset label
 LatexCommand label
 name "tab:proposed20"
@@ -3626,6 +4023,44 @@ CAMEL
 \begin_inset Text
 
 \begin_layout Plain Layout
+CIGAR
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3482
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3236
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2849
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 CM4
 \end_layout
 
@@ -3664,7 +4099,7 @@ CM4
 \begin_inset Text
 
 \begin_layout Plain Layout
-EXP2
+DISCUS
 \end_layout
 
 \end_inset
@@ -3673,7 +4108,7 @@ EXP2
 \begin_inset Text
 
 \begin_layout Plain Layout
-570
+931
 \end_layout
 
 \end_inset
@@ -3682,7 +4117,7 @@ EXP2
 \begin_inset Text
 
 \begin_layout Plain Layout
-672
+1206
 \end_layout
 
 \end_inset
@@ -3691,7 +4126,45 @@ EXP2
 \begin_inset Text
 
 \begin_layout Plain Layout
-966
+1525
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+EASOM
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1063
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+401
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+704
 \end_layout
 
 \end_inset
@@ -3740,44 +4213,6 @@ EXP4
 \begin_inset Text
 
 \begin_layout Plain Layout
-EXP8
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-868
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-947
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1237
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 EXP16
 \end_layout
 
@@ -3816,44 +4251,6 @@ EXP16
 \begin_inset Text
 
 \begin_layout Plain Layout
-EXP32
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-958
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1059
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1354
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 EXP64
 \end_layout
 
@@ -3882,44 +4279,6 @@ EXP64
 
 \begin_layout Plain Layout
 1359
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-EXP100
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1042
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1147
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1445
 \end_layout
 
 \end_inset
@@ -4186,6 +4545,44 @@ HARTMAN6
 
 \begin_layout Plain Layout
 1525(0.97)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+HIGHELLIPTIC
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2618
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2671
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3098
 \end_layout
 
 \end_inset
@@ -4779,7 +5176,7 @@ TOTAL
 \begin_layout Plain Layout
 
 \series bold
-69447(0.902)
+74103(0.902)
 \end_layout
 
 \end_inset
@@ -4790,7 +5187,7 @@ TOTAL
 \begin_layout Plain Layout
 
 \series bold
-88091(0.932)
+91780(0.932)
 \end_layout
 
 \end_inset
@@ -4801,7 +5198,7 @@ TOTAL
 \begin_layout Plain Layout
 
 \series bold
-86660(0.958)
+89834(0.958)
 \end_layout
 
 \end_inset
@@ -4826,7 +5223,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Experimental results for the proposed method with SAMPLES=50
+Experimental results for the proposed method with N=50
 \begin_inset CommandInset label
 LatexCommand label
 name "tab:proposed50"
@@ -5045,6 +5442,44 @@ CAMEL
 \begin_inset Text
 
 \begin_layout Plain Layout
+CIGAR
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3527
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3228
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6729
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 CM4
 \end_layout
 
@@ -5083,7 +5518,7 @@ CM4
 \begin_inset Text
 
 \begin_layout Plain Layout
-EXP2
+DISCUS
 \end_layout
 
 \end_inset
@@ -5092,7 +5527,7 @@ EXP2
 \begin_inset Text
 
 \begin_layout Plain Layout
-522
+828
 \end_layout
 
 \end_inset
@@ -5101,7 +5536,7 @@ EXP2
 \begin_inset Text
 
 \begin_layout Plain Layout
-621
+1365
 \end_layout
 
 \end_inset
@@ -5110,7 +5545,45 @@ EXP2
 \begin_inset Text
 
 \begin_layout Plain Layout
-923
+1215
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+EASOM
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2320
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+398
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+723
 \end_layout
 
 \end_inset
@@ -5159,44 +5632,6 @@ EXP4
 \begin_inset Text
 
 \begin_layout Plain Layout
-EXP8
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-865
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-946
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1231
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 EXP16
 \end_layout
 
@@ -5235,44 +5670,6 @@ EXP16
 \begin_inset Text
 
 \begin_layout Plain Layout
-EXP32
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-961
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1057
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1349
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 EXP64
 \end_layout
 
@@ -5301,44 +5698,6 @@ EXP64
 
 \begin_layout Plain Layout
 1358
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-EXP100
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1053
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1129
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1442
 \end_layout
 
 \end_inset
@@ -5605,6 +5964,44 @@ HARTMAN6
 
 \begin_layout Plain Layout
 1492
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+HIGHELLIPTIC
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3455
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2889
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3078
 \end_layout
 
 \end_inset
@@ -6198,7 +6595,7 @@ TOTAL
 \begin_layout Plain Layout
 
 \series bold
-158172(0.880)
+164901(0.880)
 \end_layout
 
 \end_inset
@@ -6209,7 +6606,7 @@ TOTAL
 \begin_layout Plain Layout
 
 \series bold
-78660(0.918)
+82787(0.918)
 \end_layout
 
 \end_inset
@@ -6220,13 +6617,56 @@ TOTAL
 \begin_layout Plain Layout
 
 \series bold
-85158(0.960)
+91958(0.960)
 \end_layout
 
 \end_inset
 </cell>
 </row>
 </lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparison of execution times for the SINU function between the uniform
+ sampling and the proposed method.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:sinuComparison"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename timeforsinu.eps
+	scale 70
 
 \end_inset
 
@@ -6247,6 +6687,45 @@ name "sec:Conclusions"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+In this paper, an innovative sampling technique was proposed for the Multistart
+ global optimization method.
+ The new technique improves on using a limited number of samples from the
+ objective function in order to construct an estimator of the function.
+ The estimator in the present work was an RBF neural network.
+ After the neural network is trained, a large number of samples are taken
+ from the estimator without using the objective function anymore.
+ Of these samples, only those with the lowest functional value of the estimator
+ are used by the global optimization method.
+ From the experiments performed on a wide range of objective functions,
+ many of which had a large number of dimensions, it appears that the proposed
+ technique significantly outperforms the traditionally used uniform sampling.
+ The gain in the number of calls in many cases exceeds 60%.
+ Nevertheless, the new technique requires more computational time than the
+ uniform distribution, since it is required to train the network as well
+ as to classify a series of samples from it.
+ However, this increase in time could be significantly reduced with the
+ potential use of parallel computing techniques to train neural networks.
+ Moreover, in large computational problems, where the cost of evaluating
+ the objective function is extremely large, the training time of a neural
+ network will be almost negligible.
+ Future research may include:
+\end_layout
+
+\begin_layout Enumerate
+Application of the proposed technique to other more efficient global optimizatio
+n methods.
+\end_layout
+
+\begin_layout Enumerate
+Parallelization of the training method for the neural network.
+\end_layout
+
+\begin_layout Enumerate
+Usage of more efficient methods to train the RBF networks such as Genetic
+ Algorithms.
 \end_layout
 
 \begin_layout Bibliography
