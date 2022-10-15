@@ -348,7 +348,11 @@ Data    RbfSampler::getParameters()
         xx[icount++]=weight[i];
     return xx;
 }
-
+void    RbfSampler::addSampleFromProblem(Data &x,double y)
+{
+    xpoint.push_back(x);
+    ypoint.push_back(y);
+}
 class RbfProblem : public IntervalProblem
 {
 private:
@@ -460,8 +464,8 @@ void    RbfSampler::trainModel()
     Matrix pW=matrix_mult(pA,RealOutput);
     for(i=0;i<nweights;i++) weight[i]=pW[i][0];
     //then train
-    printf("Train Error = %lf \n",getTrainError());
 
+    printf("RBF ERROR = %20.10lg \n",getTrainError());
 
 }
 

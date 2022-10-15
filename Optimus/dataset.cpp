@@ -13,6 +13,11 @@ Dataset::Dataset(Matrix &x,Data &y)
     }
 }
 
+void Dataset::addPoint(Data &x,double y)
+{
+    xpoint.push_back(x);
+    ypoint.push_back(y);
+}
 Dataset::Dataset(Problem *p,int N)
 {
     xpoint.resize(N);

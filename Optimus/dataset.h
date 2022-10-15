@@ -60,6 +60,8 @@ public:
     /**
      * The destructor of the class.
      */
+
+    void addPoint(Data &x,double y);
     ~Dataset();
 };
 

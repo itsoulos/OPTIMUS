@@ -1,4 +1,4 @@
-METHOD=Multistart
+METHOD=NeuralMinimizer
 METHODPARAMS=""
 ### Available local search methods: bfgs, gradient, adam, lbfgs
 if [ $METHOD = "Minfinder" ]
@@ -26,6 +26,9 @@ elif [ $METHOD = "Multistart" ]
 then
 	METHODPARAMS="--multistart_samples=50 --rbf_samples=100 --rbf_sampler_weights=10 --mlp_samples=500 --sample_method=rbf --multistart_maxiterations=100"
 
+elif [ $METHOD = "Tmlsl" ]
+then
+	METHODPARAMS="--multistart_samples=50 --rbf_samples=100 --rbf_sampler_weights=10 --mlp_samples=500 --sample_method=rbf --multistart_maxiterations=100"
 elif [ $METHOD = "MinCenter" ]
 then
 	METHODPARAMS="--mincenter_samples=600 --mincenter_centers=100 --mincenter_iterations=100"

@@ -21,6 +21,8 @@ public:
     void    sampleFromProblem(int N,Matrix &xsample,Data &ysample);
     void    trainModel();
     double  getTrainError();
+    void    addSampleFromProblem(Data &x,double y);
+
     void    sampleFromModel(int &N,Matrix &xsample,Data &ysample);
     ~NeuralSampler();
 };

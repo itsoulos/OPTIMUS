@@ -8,6 +8,11 @@ NeuralSampler::NeuralSampler(Problem *p,int w)
     dataset = NULL;
 }
 
+void    NeuralSampler::addSampleFromProblem(Data &x,double y)
+{
+
+}
+
 int     NeuralSampler::getNWeights() const
 {
     return weight.size();

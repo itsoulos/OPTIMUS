@@ -5,6 +5,7 @@ else
 	if qmake -v > /dev/null
 	then
 		(cd PROBLEMS; for file in *.pro; do  qmake $file; make clean;done)
+		(cd PROBLEMS; rm -f lib*so ) 
 		(cd PROBLEMS/DeRBF; qmake ; make clean)
 		(cd PROBLEMS/DGenClass; qmake; make clean)
 		(cd PROBLEMS/DiffEq; qmake; make clean)

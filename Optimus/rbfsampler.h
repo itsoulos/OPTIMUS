@@ -39,6 +39,7 @@ public:
     double  eval(Data &x);
     Data    evalDeriv(Data &x);
     void    sampleFromProblem(int N,Matrix &xsample,Data &ysample);
+    void    addSampleFromProblem(Data &x,double y);
     void    trainModel();
     double  getTrainError();
     void    sampleFromModel(int &N,Matrix &xsample,Data &ysample);
