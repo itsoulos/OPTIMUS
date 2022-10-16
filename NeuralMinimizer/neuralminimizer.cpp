@@ -74,7 +74,7 @@ void NeuralMinimizer::init()
     x2 = 0;
     if(sampler!=NULL)
         delete sampler;
-    sampler = new NeuralSampler(myProblem,10);
+    sampler = new NNCSampler(myProblem);
     minima.clear();
     int neural_start_samples  = params["neural_start_samples"].toString().toInt();
     sampler->sampleFromProblem(neural_start_samples,xsample,ysample);

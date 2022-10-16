@@ -8,6 +8,7 @@
 # include <Optimus/gradientdescent.h>
 # include <Optimus/rbfsampler.h>
 # include <Optimus/neuralsampler.h>
+# include <Optimus/nncsampler.h>
 class NeuralMinimizerInterface
 {
 public:
@@ -25,7 +26,7 @@ private:
     virtual void init();
     virtual void done();
     int olditer =0;
-    NeuralSampler *sampler;
+    NNCSampler *sampler;
     int iter ;
     Matrix xsample;
     Data   ysample;

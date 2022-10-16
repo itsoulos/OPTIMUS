@@ -22,6 +22,11 @@ void   NNCSampler::sampleFromProblem(int N,Matrix &xsample,Data &ysample)
     }
 }
 
+void    NNCSampler::addSampleFromProblem(Data &x,double y)
+{
+    dataset->addPoint(x,y);
+}
+
 double  NNCSampler::eval(Data &xpoint)
 {
     return program->neuralparser->eval(xpoint);
@@ -33,7 +38,7 @@ void    NNCSampler::trainModel()
     for(int i=0;i<200;i++)
     {
         pop.nextGeneration();
-     //   printf("Population fitness: %20.10lg\n",pop.getBestFitness());
+     //  printf("Population fitness: %20.10lg\n",pop.getBestFitness());
     }
     pop.evaluateBestFitness();
 }

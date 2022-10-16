@@ -14,6 +14,8 @@ public:
     double  eval(Data &xpoint);
     void    sampleFromProblem(int N,Matrix &xsample,Data &ysample);
     void    trainModel();
+    void    addSampleFromProblem(Data &x,double y);
+
     void    sampleFromModel(int &N,Matrix &xsample,Data &ysample);
     virtual ~NNCSampler();
 };
