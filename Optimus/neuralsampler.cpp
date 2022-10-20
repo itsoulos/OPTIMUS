@@ -10,7 +10,10 @@ NeuralSampler::NeuralSampler(Problem *p,int w)
 
 void    NeuralSampler::addSampleFromProblem(Data &x,double y)
 {
-
+    if(dataset!=NULL)
+        delete dataset;
+    dataset = new Dataset(myProblem,0);
+    dataset->addPoint(x,y);
 }
 
 int     NeuralSampler::getNWeights() const

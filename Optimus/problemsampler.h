@@ -52,6 +52,21 @@ public:
     QString getName() const;
 
     /**
+     * @brief eval gets the value of model at point
+     * @param xpoint
+     * @return
+     */
+    virtual double eval(Data &xpoint)=0;
+
+
+    /**
+     * @brief addSampleFromProblem adds a new sample from the problem.
+     * @param x  the xpoint of the new sample
+     * @param y  the ypoint of the new sample
+     */
+    virtual void    addSampleFromProblem(Data &x,double y)=0;
+
+    /**
      * @brief ~ProblemSampler, the virtual destructor of the class.
      */
     virtual ~ProblemSampler();

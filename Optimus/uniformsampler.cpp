@@ -5,6 +5,17 @@ UniformSampler::UniformSampler(Problem *p)
 {
 
 }
+
+double  UniformSampler::eval(Data &xpoint)
+{
+    return 0.0;
+}
+
+void    UniformSampler::addSampleFromProblem(Data &x,double y)
+{
+    //nothing
+}
+
 void    UniformSampler::sampleFromProblem(int N,Matrix &xsample,Data &ysample)
 {
    int i;

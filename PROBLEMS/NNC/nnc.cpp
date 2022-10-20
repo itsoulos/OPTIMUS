@@ -179,6 +179,7 @@ extern "C"
 	program[thread()].neuralparser->sigcount=0;
 	program[thread()].neuralparser->violcount=0;
       double f=program[thread()].fitness(genome);
+      printf(" f returned = %lf \n",f);
 	//double percent=program[thread()].neuralparser->violcount*1.0/program[thread()].neuralparser->sigcount;
 	//return -f * (1.0+percent);
       return -f;

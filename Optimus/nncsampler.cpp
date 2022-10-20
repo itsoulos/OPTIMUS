@@ -24,11 +24,24 @@ void   NNCSampler::sampleFromProblem(int N,Matrix &xsample,Data &ysample)
 
 void    NNCSampler::addSampleFromProblem(Data &x,double y)
 {
+    if(dataset!=NULL) delete dataset;
+    dataset = new Dataset(myProblem,0);
     dataset->addPoint(x,y);
+    if(program!=NULL) delete program;
+    program = new NNCNeuralProgram(dataset,dataset);
+}
+void    NNCSampler::setParameters(Data &x)
+{
+    vector<int> g;
+    g.resize(x.size());
+    for(int i=0;i<x.size();i++)
+        g[i]=(int)x[i];
+    program->fitness(g);
 }
 
 double  NNCSampler::eval(Data &xpoint)
 {
+
     return program->neuralparser->eval(xpoint);
 }
 

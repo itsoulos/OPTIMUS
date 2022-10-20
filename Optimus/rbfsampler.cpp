@@ -14,6 +14,7 @@ RbfSampler::RbfSampler(Problem *p,int w)
     }
 }
 
+
 double  RbfSampler::getDistance(Data &x,Data &y)
 {
     double sum = 0.0;
@@ -55,7 +56,7 @@ double  RbfSampler::eval(Data &x)
 }
 int     RbfSampler::getParameterSize() const
 {
-    return center.size() * xpoint[0].size() +
+    return center.size() * myProblem->getDimension() +
             variance.size()+weight.size();
 }
 

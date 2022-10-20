@@ -1,4 +1,42 @@
 #include "dataset.h"
+# include <stdio.h>
+Dataset::Dataset(QString name)
+{
+    FILE *fp = fopen(name.toStdString().c_str(),"r");
+    if(!fp) return;
+    int d,c;
+    fscanf(fp,"%d",&d);
+    fscanf(fp,"%d",&c);
+    xpoint.resize(c);
+    ypoint.resize(c);
+    for(int i=0;i<c;i++)
+    {
+        xpoint[i].resize(d);
+        for(int j=0;j<d;j++)
+        {
+            fscanf(fp,"%lf",&xpoint[i][j]);
+        }
+        fscanf(fp,"%lf",&ypoint[i]);
+    }
+    fclose(fp);
+}
+
+void    Dataset::getXMargins(Data &xleft,Data &xright)
+{
+    int d = getdimension();
+    xleft.resize(d);
+    xright.resize(d);
+    for(int i=0;i<xpoint.size();i++)
+    {
+        for(int j=0;j<d;j++)
+        {
+            if(i==0 || xpoint[i][j]<xleft[j])
+                xleft[j]=xpoint[i][j];
+            if(i==0 || xpoint[i][j]>xright[j])
+                xright[j]=xpoint[i][j];
+        }
+    }
+}
 
 Dataset::Dataset(Matrix &x,Data &y)
 {

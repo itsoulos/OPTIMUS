@@ -33,8 +33,8 @@ else
 		(cd DAdam; qmake; make clean)
 		(cd Search; qmake; make clean)
 		(cd bin; qmake ; make clean)
+		(cd bin/OptimusFIT; qmake; make clean)
 		(cd bin; rm -f OptimusApp)
-		(cd lib; rm -f lib*)
 	else
 		echo "qmake is not present;"
 	fi

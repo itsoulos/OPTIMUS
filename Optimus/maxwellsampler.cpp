@@ -5,6 +5,14 @@ MaxwellSampler::MaxwellSampler(Problem *p)
 {
 
 }
+double  MaxwellSampler::eval(Data &xpoint)
+{
+    return 0.0;
+}
+void    MaxwellSampler::addSampleFromProblem(Data &x,double y)
+{
+    //nothing
+}
 void    MaxwellSampler::sampleFromProblem(int N,Matrix &xsample,Data &ysample)
 {
     //unsigned seed = chrono::system_clock::now().time_since_epoch().count();

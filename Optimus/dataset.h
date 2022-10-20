@@ -18,6 +18,7 @@ private:
     Matrix xpoint;
     Data ypoint;
 public:
+    Dataset(QString name);
     /**
      * @brief Dataset, constructs a new dataset with x,y as the points
      * @param x
@@ -57,11 +58,11 @@ public:
      * @return  the number of patterns in dataset.
      */
     int     getpatterns() const;
+    void    addPoint(Data &x,double y);
+    void    getXMargins(Data &xleft,Data &xright);
     /**
      * The destructor of the class.
      */
-
-    void addPoint(Data &x,double y);
     ~Dataset();
 };
 

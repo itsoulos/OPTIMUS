@@ -15,6 +15,8 @@ public:
     UniformSampler(Problem *p);
     void    sampleFromProblem(int N,Matrix &xsample,Data &ysample);
     void    sampleFromModel(int &N,Matrix &xsample,Data &ysample);
+    double  eval(Data &xpoint);
+    void    addSampleFromProblem(Data &x,double y);
     ~UniformSampler();
 };
 
