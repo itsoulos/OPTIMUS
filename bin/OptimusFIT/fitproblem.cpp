@@ -149,7 +149,8 @@ double      FitProblem::getClassTestError()
                 imin = j;
             }
         }
-        if(fabs(dclass[dmin]-test->gety(i))>1e-6)
+
+        if(fabs(dclass[imin]-test->gety(i))>1e-6)
             testError+=1.0;
     }
     return testError*100.0/patterns;

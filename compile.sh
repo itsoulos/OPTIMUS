@@ -17,7 +17,7 @@ else
 			(cd $str; qmake;  make install )
 		done
 		(cd bin; qmake ;  make)
-		(cd bin/OptimusFit; qmake; make)
+		(cd bin/OptimusFIT; qmake; make)
 	else
 		echo "qmake is not present;"
 	fi
