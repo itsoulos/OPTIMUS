@@ -2,7 +2,7 @@
 #define ADAM_H
 # include "problem.h"
 
-/** The Adam local optimization method
+/** @brief The Adam local optimization method
  * described in https://machinelearningmastery.com/adam-optimization-algorithm-for-deep-learning/
  */
 class Adam

@@ -6,12 +6,15 @@ METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then
 	METHODPARAMS="--minfinder_samples=50"
+elif [ $METHOD = "IntegerGenetic" ]
+then
+        METHODPARAMS="--integer_chromosomes=200 --sample_method=uniform --localsearch_method=grs --integer_localsearchrate=0.01"
 elif [ $METHOD = "gcrs" ]
 then
 	METHODPARAMS="--gcrs_samples=25 --gcrs_maxiterations=100000"	
 elif [ $METHOD = "DoubleGenetic" ]
 then
-	METHODPARAMS="--double_chromosomes=200 --sample_method=uniform --localsearch_method=bfgs --double_localsearchrate=0.0001"	
+	METHODPARAMS="--double_chromosomes=200 --sample_method=uniform --localsearch_method=grs --double_localsearchrate=0.1 --double_debug=yes"	
 elif [ $METHOD = "Genetic" ]
 then
 	METHODPARAMS="--localsearch_rate=0.01  --genetic_crossover_type=double --chromosomes=500 --localsearch_method=bfgs --generations=2000"
@@ -39,5 +42,5 @@ then
 	METHODPARAMS="--population_count=30 --max_generations=100"
 fi
 
-MLPARAMS="--trainFile=$1.train --testFile=$1.test --datapath=$DATAPATH --weights=$NODES --model=rbf"
-./OptimusFIT  --optMethod=$METHOD   $METHODPARAMS  $MLPARAMS
+MLPARAMS="--trainFile=$1.train --testFile=$1.test --datapath=$DATAPATH --weights=$NODES --model=mlp"
+./OptimusFIT  --optMethod=$METHOD   $METHODPARAMS  $MLPARAMS --iterations=1

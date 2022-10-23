@@ -1,0 +1,55 @@
+\hypertarget{pso_8h_source}{}\doxysection{pso.\+h}
+\label{pso_8h_source}\index{pso.h@{pso.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00001}00001 \textcolor{preprocessor}{\#ifndef PSO\_H}}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00002}00002 \textcolor{preprocessor}{\#define PSO\_H}}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00004}00004 \textcolor{preprocessor}{\#include "{}Pso\_global.h"{}}}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00005}00005 \textcolor{preprocessor}{\# include <Optimus/optimizer.h>}}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00006}00006 \textcolor{preprocessor}{\# include <Optimus/tolmin.h>}}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00007}00007 \textcolor{preprocessor}{\# include <Optimus/rbfsampler.h>}}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00008}\mbox{\hyperlink{classPsoInterface}{00008}} \textcolor{keyword}{class }\mbox{\hyperlink{classPsoInterface}{PsoInterface}}}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00009}00009 \{}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00010}00010 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00011}00011     \textcolor{keyword}{virtual}  \mbox{\hyperlink{classPsoInterface}{\string~PsoInterface}}()}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00012}00012     \{}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00013}00013 }
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00014}00014     \};}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00015}00015 \};}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00017}\mbox{\hyperlink{classPso}{00017}} \textcolor{keyword}{class }PSO\_EXPORT \mbox{\hyperlink{classPso}{Pso}} :\textcolor{keyword}{public} \mbox{\hyperlink{classOptimizer}{Optimizer}},\mbox{\hyperlink{classPsoInterface}{PsoInterface}}}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00018}00018 \{}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00019}00019 \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00020}00020     vector<Data> particle;}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00021}00021     vector<Data> bestParticle;}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00022}00022     vector<Data> velocity;}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00023}00023     Data bestx;}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00024}00024     Data fitness\_array;}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00025}00025     Data bestFitness\_array;}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00026}00026     vector<Data> minimax;}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00027}00027     \textcolor{keywordtype}{int} generation,bestIndex;}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00028}00028     \textcolor{keywordtype}{double} x1,x2,stopat,variance,besty,oldbesty;}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00029}00029     Data lmargin,rmargin;}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00030}00030     \textcolor{keywordtype}{double} RC;}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00031}00031     \textcolor{keywordtype}{int} localSearchCount;}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00032}00032 }
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00033}00033     \textcolor{keywordtype}{double} fitness(Data \&x);}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00034}00034     \textcolor{keywordtype}{bool} checkGradientCriterion(Data \&x);}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00035}00035     \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} terminated();}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00036}00036     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} step();}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00037}00037     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} init();}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00038}00038     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} done();}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00039}00039     \textcolor{keywordtype}{void} calcFitnessArray();}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00040}00040     \textcolor{keywordtype}{void} updateBest();}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00041}00041 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00042}00042     \mbox{\hyperlink{classPso}{Pso}}(\mbox{\hyperlink{classProblem}{Problem}} *p);}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00043}00043     \textcolor{keyword}{virtual}         \textcolor{keywordtype}{void} Solve();}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00044}00044     \textcolor{keyword}{virtual} \mbox{\hyperlink{classPso}{\string~Pso}}();}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00045}00045 \};}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00047}00047 \textcolor{keyword}{extern} \textcolor{stringliteral}{"{}C"{}} PSO\_EXPORT \mbox{\hyperlink{classOptimizer}{Optimizer}} *createOptimizer(\mbox{\hyperlink{classProblem}{Problem}} *p);}
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00048}00048 }
+\DoxyCodeLine{\Hypertarget{pso_8h_source_l00049}00049 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// PSO\_H}}
+
+\end{DoxyCode}

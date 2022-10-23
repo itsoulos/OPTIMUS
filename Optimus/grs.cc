@@ -4,7 +4,7 @@ Grs::Grs(Problem *p)
 {
 	problem = p;
 	program = new RlsProgram(problem);
-	const int def_popcount=10;
+    const int def_popcount=50;
 	const int def_popsize= 200;
 	const double def_srate=0.1;
 	const double def_mrate=0.05;

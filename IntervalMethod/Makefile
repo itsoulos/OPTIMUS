@@ -438,6 +438,7 @@ intervalmethod.o: intervalmethod.cpp intervalmethod.h \
 		../Optimus/cprogram.h \
 		../Optimus/fparser.hh \
 		../Optimus/neuralparser.h \
+		../Optimus/simplexmethod.h \
 		../../OPTIMUS/Optimus/tolmin.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o intervalmethod.o intervalmethod.cpp
 

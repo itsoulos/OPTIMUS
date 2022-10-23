@@ -1,0 +1,67 @@
+\hypertarget{symbol_8cc_source}{}\doxysection{symbol.\+cc}
+\label{symbol_8cc_source}\index{symbol.cc@{symbol.cc}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00001}00001 \textcolor{preprocessor}{\# include <symbol.h>}}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00002}00002 Symbol::Symbol()}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00003}00003 \{}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00004}00004     name = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00005}00005     count\_rules = 0;}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00006}00006     is\_terminal = 1;}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00007}00007 \}}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00010}00010 \textcolor{keywordtype}{void}    Symbol::set(\textcolor{keywordtype}{string} s,\textcolor{keywordtype}{int} status)}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00011}00011 \{}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00012}00012     setName(s);}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00013}00013     setTerminalStatus(status);}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00014}00014 \}}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00015}00015 }
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00016}00016 \textcolor{keywordtype}{void}    Symbol::setName(\textcolor{keywordtype}{string} s)}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00017}00017 \{}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00018}00018     name = s;}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00019}00019 \}}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00021}00021 \textcolor{keywordtype}{string}  Symbol::getName()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00022}00022 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00023}00023     \textcolor{keywordflow}{return} name;}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00024}00024 \}}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00025}00025 }
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00026}00026 \textcolor{keywordtype}{void}    Symbol::setTerminalStatus(\textcolor{keywordtype}{int} status)}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00027}00027 \{}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00028}00028     is\_terminal=status \%  2;}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00029}00029 \}}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00031}00031 \textcolor{keywordtype}{int} Symbol::getTerminalStatus()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00032}00032 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00033}00033     \textcolor{keywordflow}{return} is\_terminal;}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00034}00034 \}}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00036}00036 \textcolor{keywordtype}{void}    Symbol::addRule(\mbox{\hyperlink{classRule}{Rule}} *r)}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00037}00037 \{}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00038}00038     rule.push\_back(r);}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00039}00039     count\_rules++;}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00040}00040 \}}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00042}00042 \mbox{\hyperlink{classRule}{Rule}}    *Symbol::getRule(\textcolor{keywordtype}{int} pos)\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00043}00043 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00044}00044     \textcolor{keywordflow}{if}(pos<0 || pos>=count\_rules) \textcolor{keywordflow}{return} NULL;}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00045}00045     \textcolor{keywordflow}{return} rule[pos];}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00046}00046 \}}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00048}00048 \textcolor{keywordtype}{int} Symbol::getCountRules()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00049}00049 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00050}00050     \textcolor{keywordflow}{return} count\_rules;}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00051}00051 \}}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00052}00052 }
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00053}00053 \textcolor{keywordtype}{void}    Symbol::cut(\textcolor{keywordtype}{int} N)}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00054}00054 \{}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00055}00055     count\_rules=N;}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00056}00056     rule.resize(N);}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00057}00057 \}}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00058}00058 }
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00059}00059 Symbol::\string~Symbol()}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00060}00060 \{}
+\DoxyCodeLine{\Hypertarget{symbol_8cc_source_l00061}00061 \}}
+
+\end{DoxyCode}

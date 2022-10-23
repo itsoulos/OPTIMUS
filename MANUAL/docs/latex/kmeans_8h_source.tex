@@ -1,0 +1,33 @@
+\hypertarget{kmeans_8h_source}{}\doxysection{kmeans.\+h}
+\label{kmeans_8h_source}\index{kmeans.h@{kmeans.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00001}00001 \textcolor{preprocessor}{\#ifndef KMEANS\_\_H}}
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00002}00002 \textcolor{preprocessor}{\#define KMEANS\_\_H}}
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00004}00004 \textcolor{preprocessor}{\#include "{}cluster.h"{}}}
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00005}00005 \textcolor{preprocessor}{\#include "{}point.h"{}}}
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00007}\mbox{\hyperlink{classKMeans}{00007}} \textcolor{keyword}{class }\mbox{\hyperlink{classKMeans}{KMeans}}}
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00008}00008 \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00009}00009 \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00010}00010     \textcolor{keywordtype}{int} K, minK, iters, dimensions, total\_points;}
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00011}00011     std::vector<Cluster> clusters;}
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00012}00012     \textcolor{keywordtype}{int} getNearestClusterId(\mbox{\hyperlink{classPoint}{Point}} point);}
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00013}00013     std::vector<Point> means;}
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00014}00014     std::vector<std::vector<Point>> PMeans;}
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00015}00015     std::vector<int> sizes;}
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00017}00017 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00023}00023     \mbox{\hyperlink{classKMeans_a0ca3e46ac1b1c1b903bd379cada2fb60}{KMeans}}(\textcolor{keywordtype}{int} K, \textcolor{keywordtype}{int} iterations, \textcolor{keywordtype}{int} minK);}
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00027}00027     \textcolor{keywordtype}{void} \mbox{\hyperlink{classKMeans_ab9b74fb58c38e192e8d55432a966cde4}{run}}(std::vector<Point> \&all\_points);}
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00032}00032     std::vector<Point> \mbox{\hyperlink{classKMeans_ac37e5265ed6da5599513efd6c54e2a1d}{getMeans}}();}
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00037}00037     std::vector<std::vector<Point>> \mbox{\hyperlink{classKMeans_af1502340357753e301ac39cd1eb2c912}{pointsOfMeans}}();}
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00041}00041     \textcolor{keywordtype}{void} \mbox{\hyperlink{classKMeans_a0326f99a17c70f858e12114318b10c05}{deleteMean}}(\textcolor{keywordtype}{int} idx);}
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00045}00045     \textcolor{keywordtype}{void} \mbox{\hyperlink{classKMeans_acd6944864a4fd3d70a30e975d8ab0b5b}{setCenters}}(\textcolor{keywordtype}{int} centers);}
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00050}00050     std::vector<int> \mbox{\hyperlink{classKMeans_a01a70b292871a4c5db0f6e2099b28c0f}{getSizes}}();}
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00051}00051 \};}
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00052}00052 }
+\DoxyCodeLine{\Hypertarget{kmeans_8h_source_l00053}00053 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -4,6 +4,10 @@
 # include "problemsampler.h"
 # include "dataset.h"
 
+/**
+ * @brief The RbfSampler class samples points from the objective function using
+ * an RBF network.
+ */
 class RbfSampler :public ProblemSampler
 {
 private:

@@ -1,0 +1,97 @@
+\hypertarget{point_8cpp_source}{}\doxysection{point.\+cpp}
+\label{point_8cpp_source}\index{point.cpp@{point.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00001}00001 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00002}00002 \textcolor{preprocessor}{\#include <sstream>}}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00003}00003 \textcolor{preprocessor}{\#include <istream>}}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00004}00004 \textcolor{preprocessor}{\#include "{}point.h"{}}}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00005}00005 }
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00006}\mbox{\hyperlink{classPoint_ad92f2337b839a94ce97dcdb439b4325a}{00006}} \mbox{\hyperlink{classPoint_ad92f2337b839a94ce97dcdb439b4325a}{Point::Point}}()}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00007}00007 \{}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00008}00008     dimensions = 0;}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00009}00009     pointId = 0;}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00010}00010     clusterId = 0;}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00011}00011 \}}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00013}\mbox{\hyperlink{classPoint_ae6d5a41c6558c97dd02245748822c9ec}{00013}} \mbox{\hyperlink{classPoint_ad92f2337b839a94ce97dcdb439b4325a}{Point::Point}}(\textcolor{keywordtype}{int} \textcolor{keywordtype}{id}, std::string line)}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00014}00014 \{}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00015}00015     dimensions = 0;}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00016}00016     pointId = id;}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00017}00017     std::stringstream is(line);}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00018}00018     \textcolor{keywordtype}{double} val;}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00019}00019     \textcolor{keywordflow}{while} (is >> val)}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00020}00020     \{}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00021}00021         values.push\_back(val);}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00022}00022         dimensions++;}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00023}00023     \}}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00024}00024     clusterId = 0; \textcolor{comment}{//Initially not assigned to any cluster}}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00025}00025 \}}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00027}\mbox{\hyperlink{classPoint_ad3dbbb57f60f4cb374be2268880e38c4}{00027}} \mbox{\hyperlink{classPoint_ad92f2337b839a94ce97dcdb439b4325a}{Point::Point}}(\textcolor{keywordtype}{int} \textcolor{keywordtype}{id}, std::vector<double> v)}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00028}00028 \{}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00029}00029     dimensions = 0;}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00030}00030     pointId = id;}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00031}00031     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{double} val : v)}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00032}00032     \{}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00033}00033         values.push\_back(val);}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00034}00034         dimensions++;}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00035}00035     \}}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00036}00036     clusterId = 0; \textcolor{comment}{//Initially not assigned to any cluster}}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00037}00037 \}}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00038}\mbox{\hyperlink{classPoint_a541cba060d207022ec76fe4c63fbbaa5}{00038}} \mbox{\hyperlink{classPoint_ad92f2337b839a94ce97dcdb439b4325a}{Point::Point}}(\textcolor{keywordtype}{int} \textcolor{keywordtype}{id}, \textcolor{keywordtype}{int} cid, std::vector<double> vdata)}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00039}00039 \{}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00040}00040     this-\/>dimensions = 0;}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00041}00041     this-\/>pointId = id;}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00042}00042     this-\/>clusterId = cid;}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00043}00043     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{double} val : vdata)}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00044}00044     \{}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00045}00045         values.push\_back(val);}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00046}00046         dimensions++;}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00047}00047     \}}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00048}00048 \}}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00049}\mbox{\hyperlink{classPoint_a501a4b2e49ad472eaee247efe97880d7}{00049}} std::vector<double> \mbox{\hyperlink{classPoint_a501a4b2e49ad472eaee247efe97880d7}{Point::getData}}()}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00050}00050 \{}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00051}00051     std::vector<double> tmp;}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00052}00052     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} idx = 0; idx < this-\/>\mbox{\hyperlink{classPoint_aee6c064e53d3fb6caedeec1448771afb}{getDimensions}}(); idx++)}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00053}00053         tmp.push\_back(this-\/>getVal(idx));}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00054}00054     \textcolor{keywordflow}{return} tmp;}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00055}00055 \}}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00056}\mbox{\hyperlink{classPoint_aee6c064e53d3fb6caedeec1448771afb}{00056}} \textcolor{keywordtype}{int} \mbox{\hyperlink{classPoint_aee6c064e53d3fb6caedeec1448771afb}{Point::getDimensions}}()}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00057}00057 \{}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00058}00058     \textcolor{keywordflow}{return} dimensions;}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00059}00059 \}}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00060}00060 }
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00061}\mbox{\hyperlink{classPoint_a716d623e07e5e3e8d281331c3cbf80d8}{00061}} \textcolor{keywordtype}{int} \mbox{\hyperlink{classPoint_a716d623e07e5e3e8d281331c3cbf80d8}{Point::getCluster}}()}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00062}00062 \{}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00063}00063     \textcolor{keywordflow}{return} clusterId;}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00064}00064 \}}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00065}00065 }
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00066}\mbox{\hyperlink{classPoint_a88522022743d86bc664534919aaa08fe}{00066}} \textcolor{keywordtype}{int} \mbox{\hyperlink{classPoint_a88522022743d86bc664534919aaa08fe}{Point::getID}}()}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00067}00067 \{}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00068}00068     \textcolor{keywordflow}{return} pointId;}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00069}00069 \}}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00070}00070 }
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00071}\mbox{\hyperlink{classPoint_aaaadd85694fd500eb1a3629ac7201cc1}{00071}} \textcolor{keywordtype}{void} \mbox{\hyperlink{classPoint_aaaadd85694fd500eb1a3629ac7201cc1}{Point::setCluster}}(\textcolor{keywordtype}{int} val)}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00072}00072 \{}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00073}00073     clusterId = val;}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00074}00074 \}}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00075}00075 }
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00076}\mbox{\hyperlink{classPoint_a4d85f015254af1a5e5061b26a2fe6730}{00076}} \textcolor{keywordtype}{double} \mbox{\hyperlink{classPoint_a4d85f015254af1a5e5061b26a2fe6730}{Point::getVal}}(\textcolor{keywordtype}{int} pos)}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00077}00077 \{}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00078}00078     \textcolor{keywordflow}{return} values[pos];}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00079}00079 \}}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00080}\mbox{\hyperlink{classPoint_a8459ecae1f6b385d117cef057da44e7d}{00080}} \textcolor{keywordtype}{double} \mbox{\hyperlink{classPoint_a8459ecae1f6b385d117cef057da44e7d}{Point::distance}}(\mbox{\hyperlink{classPoint}{Point}} \&p1, \mbox{\hyperlink{classPoint}{Point}} \&p2)}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00081}00081 \{}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00082}00082     \textcolor{comment}{//assert(p1.getDimensions() == p2.getDimensions());}}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00083}00083     \textcolor{keywordtype}{double} dist = 0.0;}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00084}00084 }
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00085}00085     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} idx = 0; idx < p1.\mbox{\hyperlink{classPoint_aee6c064e53d3fb6caedeec1448771afb}{getDimensions}}(); ++idx)}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00086}00086     \{}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00087}00087         \textcolor{keyword}{const} \textcolor{keywordtype}{double} tmp = p1.\mbox{\hyperlink{classPoint_a4d85f015254af1a5e5061b26a2fe6730}{getVal}}(idx) -\/ p2.\mbox{\hyperlink{classPoint_a4d85f015254af1a5e5061b26a2fe6730}{getVal}}(idx);}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00088}00088         dist += tmp * tmp;}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00089}00089     \}}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00090}00090     \textcolor{keywordflow}{return} sqrt(dist);}
+\DoxyCodeLine{\Hypertarget{point_8cpp_source_l00091}00091 \}}
+
+\end{DoxyCode}

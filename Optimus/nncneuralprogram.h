@@ -4,6 +4,7 @@
 #include "neuralprogram.h"
 # include "dataset.h"
 
+
 class NNCNeuralProgram : public NeuralProgram
 {
 private:

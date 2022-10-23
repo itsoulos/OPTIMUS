@@ -1,0 +1,51 @@
+\hypertarget{dllproblem_8h_source}{}\doxysection{dllproblem.\+h}
+\label{dllproblem_8h_source}\index{dllproblem.h@{dllproblem.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00001}00001 \textcolor{preprocessor}{\#ifndef DLLPROBLEM\_H}}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00002}00002 \textcolor{preprocessor}{\#define DLLPROBLEM\_H}}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00003}00003 \textcolor{preprocessor}{\#include "{}intervalproblem.h"{}}}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00004}00004 \textcolor{preprocessor}{\# include <QLibrary>}}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00005}00005 \textcolor{preprocessor}{\# include <QVariant>}}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00008}00008 \textcolor{keyword}{typedef} int (*GETDIMENSION)();}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00009}00009 \textcolor{keyword}{typedef} void(*GETMARGINS)(vector<Interval>\&);}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00010}00010 \textcolor{keyword}{typedef} double(*FUNMIN)(Data \&x);}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00011}00011 \textcolor{keyword}{typedef} void(*GRANAL)(Data \&x,Data \&g);}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00012}00012 \textcolor{keyword}{typedef} QJsonObject(*DONE)(Data \&x);}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00013}00013 \textcolor{keyword}{typedef} void(*INIT)(QJsonObject x);}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00014}00014 \textcolor{keyword}{typedef} void(*SETP)(QString,QVariant);}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00015}00015 \textcolor{keyword}{typedef} void(*SAMPLER)(Data \&x);}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00017}\mbox{\hyperlink{classDllProblem}{00017}} \textcolor{keyword}{class }\mbox{\hyperlink{classDllProblem}{DllProblem}} :\textcolor{keyword}{public} \mbox{\hyperlink{classIntervalProblem}{IntervalProblem}}}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00018}00018 \{}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00019}00019 \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00020}00020       QLibrary      *library;}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00021}00021       GETDIMENSION  getdim;}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00022}00022       GETMARGINS    GetMargins;}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00023}00023       FUNMIN        Funmin;}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00024}00024       GRANAL        Granal;}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00025}00025       DONE          Done;}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00026}00026       INIT          Init;}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00027}00027       SETP          Setp;}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00028}00028       SAMPLER       Sampler;}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00029}00029 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00033}00033     \mbox{\hyperlink{classDllProblem_ac21bd429d98bbe0c607ce9d1a12711f8}{DllProblem}}(QString filename,QJsonObject settings);}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00036}00036     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classDllProblem_a5a4f9135a5449804dc10535c38fbce74}{init}}(QJsonObject x);}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00039}00039     \textcolor{keyword}{virtual} \textcolor{keywordtype}{double} \mbox{\hyperlink{classDllProblem_a906f52fb82c21f2402d0da78ae505f4a}{funmin}}(Data \&x);}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00040}00040 }
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00043}00043     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classDllProblem_a09496c75c1e57d8d9ca6893eac0befc1}{granal}}(Data \&x,Data \&g);}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00047}00047     \textcolor{keyword}{virtual} QJsonObject \mbox{\hyperlink{classDllProblem_a6c86e17770d55d4bae382fd7e9aac5c9}{done}}(Data \&x);}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00048}00048 }
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00050}00050     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void}  \mbox{\hyperlink{classDllProblem_a2eb1bce1df666f3ab1bfbf18d54a83b3}{getSample}}(Data \&x);}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00051}00051 }
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00055}00055     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classDllProblem_ad350ad1d160f48892e83698df0c68219}{setParameter}}(QString name, QVariant value);}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00056}00056 }
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00058}00058     \textcolor{keyword}{virtual} \mbox{\hyperlink{classDllProblem_a65e1fa6d5c2841fde5fd684382650bc7}{\string~DllProblem}}();}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00059}00059 \};}
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00060}00060 }
+\DoxyCodeLine{\Hypertarget{dllproblem_8h_source_l00061}00061 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// DLLPROBLEM\_H}}
+
+\end{DoxyCode}

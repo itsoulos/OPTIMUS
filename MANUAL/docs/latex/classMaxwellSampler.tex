@@ -1,0 +1,164 @@
+\hypertarget{classMaxwellSampler}{}\doxysection{Maxwell\+Sampler Class Reference}
+\label{classMaxwellSampler}\index{MaxwellSampler@{MaxwellSampler}}
+
+
+The \mbox{\hyperlink{classMaxwellSampler}{Maxwell\+Sampler}} class samples point from the objective problem using maxwell distribution.  
+
+
+
+
+{\ttfamily \#include $<$maxwellsampler.\+h$>$}
+
+
+
+Inheritance diagram for Maxwell\+Sampler\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=169pt]{classMaxwellSampler__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Maxwell\+Sampler\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=178pt]{classMaxwellSampler__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classMaxwellSampler_a740932fbe44b547eda202d0fdd1903a7}{Maxwell\+Sampler}} (\mbox{\hyperlink{classProblem}{Problem}} $\ast$p)
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classMaxwellSampler}{Maxwell\+Sampler}}, initializes the sample allocator. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classMaxwellSampler_adeb9ec5bec19f7e9414fd535887b9662}{sample\+From\+Problem}} (int N, Matrix \&xsample, Data \&ysample)
+\begin{DoxyCompactList}\small\item\em sample\+From\+Problem, sample allocator \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classMaxwellSampler_ab447e828ede422b718801a48c9dbe60b}{sample\+From\+Model}} (int \&N, Matrix \&xsample, Data \&ysample)
+\begin{DoxyCompactList}\small\item\em sample\+From\+Model \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classMaxwellSampler_a0b2c033411e331fbdf9e584ef4d1cc28}{eval}} (Data \&x)
+\begin{DoxyCompactList}\small\item\em eval gets the value of model at point \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classMaxwellSampler_a2a2485de8a4062e05f14370f7dc3c4a1}{add\+Sample\+From\+Problem}} (Data \&x, double y)
+\begin{DoxyCompactList}\small\item\em add\+Sample\+From\+Problem adds a new sample from the problem. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMaxwellSampler_a80e5746c1ba4580358dc018e58e78013}{$\sim$\+Maxwell\+Sampler}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{classMaxwellSampler}{Maxwell\+Sampler}} class samples point from the objective problem using maxwell distribution. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classMaxwellSampler_a740932fbe44b547eda202d0fdd1903a7}\label{classMaxwellSampler_a740932fbe44b547eda202d0fdd1903a7}} 
+\index{MaxwellSampler@{MaxwellSampler}!MaxwellSampler@{MaxwellSampler}}
+\index{MaxwellSampler@{MaxwellSampler}!MaxwellSampler@{MaxwellSampler}}
+\doxysubsubsection{\texorpdfstring{MaxwellSampler()}{MaxwellSampler()}}
+{\footnotesize\ttfamily Maxwell\+Sampler\+::\+Maxwell\+Sampler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classProblem}{Problem}} $\ast$}]{p }\end{DoxyParamCaption})}
+
+
+
+\mbox{\hyperlink{classMaxwellSampler}{Maxwell\+Sampler}}, initializes the sample allocator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em p} & is the problem to be optimized. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classMaxwellSampler_a80e5746c1ba4580358dc018e58e78013}\label{classMaxwellSampler_a80e5746c1ba4580358dc018e58e78013}} 
+\index{MaxwellSampler@{MaxwellSampler}!````~MaxwellSampler@{$\sim$MaxwellSampler}}
+\index{````~MaxwellSampler@{$\sim$MaxwellSampler}!MaxwellSampler@{MaxwellSampler}}
+\doxysubsubsection{\texorpdfstring{$\sim$MaxwellSampler()}{~MaxwellSampler()}}
+{\footnotesize\ttfamily Maxwell\+Sampler\+::$\sim$\+Maxwell\+Sampler (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+The destructor of the class. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classMaxwellSampler_a2a2485de8a4062e05f14370f7dc3c4a1}\label{classMaxwellSampler_a2a2485de8a4062e05f14370f7dc3c4a1}} 
+\index{MaxwellSampler@{MaxwellSampler}!addSampleFromProblem@{addSampleFromProblem}}
+\index{addSampleFromProblem@{addSampleFromProblem}!MaxwellSampler@{MaxwellSampler}}
+\doxysubsubsection{\texorpdfstring{addSampleFromProblem()}{addSampleFromProblem()}}
+{\footnotesize\ttfamily void Maxwell\+Sampler\+::add\+Sample\+From\+Problem (\begin{DoxyParamCaption}\item[{Data \&}]{x,  }\item[{double}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+add\+Sample\+From\+Problem adds a new sample from the problem. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & the xpoint of the new sample \\
+\hline
+{\em y} & the ypoint of the new sample \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classProblemSampler_af1ab92bf9bad3d7869080b8c5c7cb57f}{Problem\+Sampler}}.
+
+\mbox{\Hypertarget{classMaxwellSampler_a0b2c033411e331fbdf9e584ef4d1cc28}\label{classMaxwellSampler_a0b2c033411e331fbdf9e584ef4d1cc28}} 
+\index{MaxwellSampler@{MaxwellSampler}!eval@{eval}}
+\index{eval@{eval}!MaxwellSampler@{MaxwellSampler}}
+\doxysubsubsection{\texorpdfstring{eval()}{eval()}}
+{\footnotesize\ttfamily double Maxwell\+Sampler\+::eval (\begin{DoxyParamCaption}\item[{Data \&}]{xpoint }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+eval gets the value of model at point 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xpoint} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classProblemSampler_a95cb4ee5a502d9f85a4688f2e6071d1f}{Problem\+Sampler}}.
+
+\mbox{\Hypertarget{classMaxwellSampler_ab447e828ede422b718801a48c9dbe60b}\label{classMaxwellSampler_ab447e828ede422b718801a48c9dbe60b}} 
+\index{MaxwellSampler@{MaxwellSampler}!sampleFromModel@{sampleFromModel}}
+\index{sampleFromModel@{sampleFromModel}!MaxwellSampler@{MaxwellSampler}}
+\doxysubsubsection{\texorpdfstring{sampleFromModel()}{sampleFromModel()}}
+{\footnotesize\ttfamily void Maxwell\+Sampler\+::sample\+From\+Model (\begin{DoxyParamCaption}\item[{int \&}]{N,  }\item[{Matrix \&}]{xsample,  }\item[{Data \&}]{ysample }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+sample\+From\+Model 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Ν,number} & of samples. \\
+\hline
+{\em xsample,sample} & table. \\
+\hline
+{\em ysample} & f(x) table. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{classProblemSampler_ab7d597e1843b8d361344bbc5751b9a32}{Problem\+Sampler}}.
+
+\mbox{\Hypertarget{classMaxwellSampler_adeb9ec5bec19f7e9414fd535887b9662}\label{classMaxwellSampler_adeb9ec5bec19f7e9414fd535887b9662}} 
+\index{MaxwellSampler@{MaxwellSampler}!sampleFromProblem@{sampleFromProblem}}
+\index{sampleFromProblem@{sampleFromProblem}!MaxwellSampler@{MaxwellSampler}}
+\doxysubsubsection{\texorpdfstring{sampleFromProblem()}{sampleFromProblem()}}
+{\footnotesize\ttfamily void Maxwell\+Sampler\+::sample\+From\+Problem (\begin{DoxyParamCaption}\item[{int}]{N,  }\item[{Matrix \&}]{xsample,  }\item[{Data \&}]{ysample }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+sample\+From\+Problem, sample allocator 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Ν,number} & of samples. \\
+\hline
+{\em xsample,sample} & table. \\
+\hline
+{\em ysample} & f(x) table. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{classProblemSampler_af2608337721073b8286967b37a9b7660}{Problem\+Sampler}}.
+

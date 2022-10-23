@@ -6,6 +6,10 @@
 #define totcal_1 totcal_
 #define units_1 units_
 
+/**
+ * @brief The Tolmin class implements the BFGS local optimization method as
+ * proposed by Powell.
+ */
 class Tolmin
 {
 private:

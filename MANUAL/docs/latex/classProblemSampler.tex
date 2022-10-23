@@ -1,0 +1,200 @@
+\hypertarget{classProblemSampler}{}\doxysection{Problem\+Sampler Class Reference}
+\label{classProblemSampler}\index{ProblemSampler@{ProblemSampler}}
+
+
+The \mbox{\hyperlink{classProblemSampler}{Problem\+Sampler}} class is a virtual class to take samples from the real problem and produce (maybe) additional samples.  
+
+
+
+
+{\ttfamily \#include $<$problemsampler.\+h$>$}
+
+
+
+Inheritance diagram for Problem\+Sampler\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classProblemSampler__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Problem\+Sampler\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=178pt]{classProblemSampler__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classProblemSampler_a761846cee95ed9f228db143ccd5b7d4b}{Problem\+Sampler}} (QString n, \mbox{\hyperlink{classProblem}{Problem}} $\ast$p)
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classProblemSampler}{Problem\+Sampler}}, the constructor of the base class. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classProblemSampler_af2608337721073b8286967b37a9b7660}{sample\+From\+Problem}} (int N, Matrix \&xsample, Data \&ysample)
+\begin{DoxyCompactList}\small\item\em sample\+From\+Problem, takes samples from the problem using some distribution. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classProblemSampler_a0e6ea334728661f429345f8bce993afd}{train\+Model}} ()
+\begin{DoxyCompactList}\small\item\em train\+Model, this method will train the sample models if it is needed. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classProblemSampler_ab7d597e1843b8d361344bbc5751b9a32}{sample\+From\+Model}} (int \&N, Matrix \&xsample, Data \&ysample)
+\begin{DoxyCompactList}\small\item\em sample\+From\+Model, this method will sample from the sample model instead of the real problem. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{classProblemSampler_a39d2f8eeb4613047e2d905b9a2afa4a8}{get\+Name}} () const
+\begin{DoxyCompactList}\small\item\em get\+Name \end{DoxyCompactList}\item 
+virtual double \mbox{\hyperlink{classProblemSampler_a95cb4ee5a502d9f85a4688f2e6071d1f}{eval}} (Data \&xpoint)=0
+\begin{DoxyCompactList}\small\item\em eval gets the value of model at point \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classProblemSampler_af1ab92bf9bad3d7869080b8c5c7cb57f}{add\+Sample\+From\+Problem}} (Data \&x, double y)=0
+\begin{DoxyCompactList}\small\item\em add\+Sample\+From\+Problem adds a new sample from the problem. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classProblemSampler_ae6ebdf324d8a1cb525190baab63631dc}\label{classProblemSampler_ae6ebdf324d8a1cb525190baab63631dc}} 
+virtual {\bfseries $\sim$\+Problem\+Sampler} ()
+\begin{DoxyCompactList}\small\item\em $\sim$\+Problem\+Sampler, the virtual destructor of the class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classProblemSampler_af2f97ab2087ede917b763b5f7dc82715}\label{classProblemSampler_af2f97ab2087ede917b763b5f7dc82715}} 
+\mbox{\hyperlink{classProblem}{Problem}} $\ast$ {\bfseries my\+Problem}
+\item 
+\mbox{\Hypertarget{classProblemSampler_a1df794377c18f3f441ffca0f97ae18a0}\label{classProblemSampler_a1df794377c18f3f441ffca0f97ae18a0}} 
+QString {\bfseries name}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{classProblemSampler}{Problem\+Sampler}} class is a virtual class to take samples from the real problem and produce (maybe) additional samples. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classProblemSampler_a761846cee95ed9f228db143ccd5b7d4b}\label{classProblemSampler_a761846cee95ed9f228db143ccd5b7d4b}} 
+\index{ProblemSampler@{ProblemSampler}!ProblemSampler@{ProblemSampler}}
+\index{ProblemSampler@{ProblemSampler}!ProblemSampler@{ProblemSampler}}
+\doxysubsubsection{\texorpdfstring{ProblemSampler()}{ProblemSampler()}}
+{\footnotesize\ttfamily Problem\+Sampler\+::\+Problem\+Sampler (\begin{DoxyParamCaption}\item[{QString}]{n,  }\item[{\mbox{\hyperlink{classProblem}{Problem}} $\ast$}]{p }\end{DoxyParamCaption})}
+
+
+
+\mbox{\hyperlink{classProblemSampler}{Problem\+Sampler}}, the constructor of the base class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n,the} & name of the sample eg. uniform. \\
+\hline
+{\em p,a} & pointer to the objective optimization problem. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classProblemSampler_af1ab92bf9bad3d7869080b8c5c7cb57f}\label{classProblemSampler_af1ab92bf9bad3d7869080b8c5c7cb57f}} 
+\index{ProblemSampler@{ProblemSampler}!addSampleFromProblem@{addSampleFromProblem}}
+\index{addSampleFromProblem@{addSampleFromProblem}!ProblemSampler@{ProblemSampler}}
+\doxysubsubsection{\texorpdfstring{addSampleFromProblem()}{addSampleFromProblem()}}
+{\footnotesize\ttfamily virtual void Problem\+Sampler\+::add\+Sample\+From\+Problem (\begin{DoxyParamCaption}\item[{Data \&}]{x,  }\item[{double}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+add\+Sample\+From\+Problem adds a new sample from the problem. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & the xpoint of the new sample \\
+\hline
+{\em y} & the ypoint of the new sample \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{classMaxwellSampler_a2a2485de8a4062e05f14370f7dc3c4a1}{Maxwell\+Sampler}}, \mbox{\hyperlink{classNeuralSampler_a69240bc7e6dd93bafd5687a88b26355f}{Neural\+Sampler}}, \mbox{\hyperlink{classNNCSampler_a51cbbda38aadf27b53992d157fe7ccce}{NNCSampler}}, \mbox{\hyperlink{classRbfSampler_aabe387659c568821f5600ea0ed171368}{Rbf\+Sampler}}, \mbox{\hyperlink{classTriangularSampler_acd5d903ad83f2d5bf90ad6d5b2093d72}{Triangular\+Sampler}}, and \mbox{\hyperlink{classUniformSampler_a5f1b9d5a80890559fda43b11ba76d544}{Uniform\+Sampler}}.
+
+\mbox{\Hypertarget{classProblemSampler_a95cb4ee5a502d9f85a4688f2e6071d1f}\label{classProblemSampler_a95cb4ee5a502d9f85a4688f2e6071d1f}} 
+\index{ProblemSampler@{ProblemSampler}!eval@{eval}}
+\index{eval@{eval}!ProblemSampler@{ProblemSampler}}
+\doxysubsubsection{\texorpdfstring{eval()}{eval()}}
+{\footnotesize\ttfamily virtual double Problem\+Sampler\+::eval (\begin{DoxyParamCaption}\item[{Data \&}]{xpoint }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+eval gets the value of model at point 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xpoint} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{classMaxwellSampler_a0b2c033411e331fbdf9e584ef4d1cc28}{Maxwell\+Sampler}}, \mbox{\hyperlink{classNeuralSampler_af221ed47b30c4369ed3fe82748e48a3c}{Neural\+Sampler}}, \mbox{\hyperlink{classRbfSampler_a8604bc1a796174b0c2f3771b4648fccd}{Rbf\+Sampler}}, \mbox{\hyperlink{classNNCSampler_acb73071529278d9297d9824c18b634f6}{NNCSampler}}, \mbox{\hyperlink{classTriangularSampler_a22b94bd8f35b0f50264edadeae423e77}{Triangular\+Sampler}}, and \mbox{\hyperlink{classUniformSampler_a96e39ba66696d08839a3ea1b9165acc6}{Uniform\+Sampler}}.
+
+\mbox{\Hypertarget{classProblemSampler_a39d2f8eeb4613047e2d905b9a2afa4a8}\label{classProblemSampler_a39d2f8eeb4613047e2d905b9a2afa4a8}} 
+\index{ProblemSampler@{ProblemSampler}!getName@{getName}}
+\index{getName@{getName}!ProblemSampler@{ProblemSampler}}
+\doxysubsubsection{\texorpdfstring{getName()}{getName()}}
+{\footnotesize\ttfamily QString Problem\+Sampler\+::get\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+get\+Name 
+
+\begin{DoxyReturn}{Returns}
+the name of the sampler. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classProblemSampler_ab7d597e1843b8d361344bbc5751b9a32}\label{classProblemSampler_ab7d597e1843b8d361344bbc5751b9a32}} 
+\index{ProblemSampler@{ProblemSampler}!sampleFromModel@{sampleFromModel}}
+\index{sampleFromModel@{sampleFromModel}!ProblemSampler@{ProblemSampler}}
+\doxysubsubsection{\texorpdfstring{sampleFromModel()}{sampleFromModel()}}
+{\footnotesize\ttfamily void Problem\+Sampler\+::sample\+From\+Model (\begin{DoxyParamCaption}\item[{int \&}]{N,  }\item[{Matrix \&}]{xsample,  }\item[{Data \&}]{ysample }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+sample\+From\+Model, this method will sample from the sample model instead of the real problem. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em N,the} & number of required samples. \\
+\hline
+{\em xsample} & \\
+\hline
+{\em ysample} & \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \mbox{\hyperlink{classMaxwellSampler_ab447e828ede422b718801a48c9dbe60b}{Maxwell\+Sampler}}, \mbox{\hyperlink{classNeuralSampler_a3e5fb353144d6e2702ac4ad2f1979eba}{Neural\+Sampler}}, \mbox{\hyperlink{classNNCSampler_a5a396432d86df3ba156413a799d3f695}{NNCSampler}}, \mbox{\hyperlink{classRbfSampler_a2bba3588d32b29d119a632e4da15a455}{Rbf\+Sampler}}, \mbox{\hyperlink{classTriangularSampler_a7823202e0c37b943f3f2c7986c40228e}{Triangular\+Sampler}}, and \mbox{\hyperlink{classUniformSampler_aaa07deef7b50fa965c361dd21608a3c2}{Uniform\+Sampler}}.
+
+\mbox{\Hypertarget{classProblemSampler_af2608337721073b8286967b37a9b7660}\label{classProblemSampler_af2608337721073b8286967b37a9b7660}} 
+\index{ProblemSampler@{ProblemSampler}!sampleFromProblem@{sampleFromProblem}}
+\index{sampleFromProblem@{sampleFromProblem}!ProblemSampler@{ProblemSampler}}
+\doxysubsubsection{\texorpdfstring{sampleFromProblem()}{sampleFromProblem()}}
+{\footnotesize\ttfamily void Problem\+Sampler\+::sample\+From\+Problem (\begin{DoxyParamCaption}\item[{int}]{N,  }\item[{Matrix \&}]{xsample,  }\item[{Data \&}]{ysample }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+sample\+From\+Problem, takes samples from the problem using some distribution. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em N,the} & number of samples required. \\
+\hline
+{\em xsample} & \\
+\hline
+{\em ysample} & \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \mbox{\hyperlink{classMaxwellSampler_adeb9ec5bec19f7e9414fd535887b9662}{Maxwell\+Sampler}}, \mbox{\hyperlink{classNeuralSampler_a81b35bc4ade35254c77fc34b1a307fe4}{Neural\+Sampler}}, \mbox{\hyperlink{classNNCSampler_a6265e930e36844103b7538faa39a8266}{NNCSampler}}, \mbox{\hyperlink{classRbfSampler_adb7bcd69657e429c95e287d414522928}{Rbf\+Sampler}}, \mbox{\hyperlink{classTriangularSampler_a0d477fd8f7fa4ee8059241e4b2554c1d}{Triangular\+Sampler}}, and \mbox{\hyperlink{classUniformSampler_ae99d0e30bc4855a7a5a6b4e4ef554e46}{Uniform\+Sampler}}.
+
+\mbox{\Hypertarget{classProblemSampler_a0e6ea334728661f429345f8bce993afd}\label{classProblemSampler_a0e6ea334728661f429345f8bce993afd}} 
+\index{ProblemSampler@{ProblemSampler}!trainModel@{trainModel}}
+\index{trainModel@{trainModel}!ProblemSampler@{ProblemSampler}}
+\doxysubsubsection{\texorpdfstring{trainModel()}{trainModel()}}
+{\footnotesize\ttfamily void Problem\+Sampler\+::train\+Model (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+train\+Model, this method will train the sample models if it is needed. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classNeuralSampler_ad9bbde94e87293520d3e230c19c7bc4d}{Neural\+Sampler}}, \mbox{\hyperlink{classNNCSampler_ae1b61e85e05914264807966b59ade277}{NNCSampler}}, and \mbox{\hyperlink{classRbfSampler_ac87012db40d70ae63a66bf152e2a541b}{Rbf\+Sampler}}.
+

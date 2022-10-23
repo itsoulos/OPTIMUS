@@ -1,0 +1,153 @@
+\hypertarget{tolmin_8h_source}{}\doxysection{tolmin.\+h}
+\label{tolmin_8h_source}\index{tolmin.h@{tolmin.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00001}00001 \textcolor{preprocessor}{\# ifndef \_\_TOLMIN\_\_H}}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00002}00002 \textcolor{preprocessor}{\# define \_\_TOLMIN\_\_H}}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00003}00003 \textcolor{preprocessor}{\# include "{}problem.h"{}}}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00005}00005 }
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00006}00006 \textcolor{preprocessor}{\#define totcal\_1 totcal\_}}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00007}00007 \textcolor{preprocessor}{\#define units\_1 units\_}}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00009}\mbox{\hyperlink{classTolmin}{00009}} \textcolor{keyword}{class }\mbox{\hyperlink{classTolmin}{Tolmin}}}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00010}00010 \{}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00011}00011 \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00012}00012     \mbox{\hyperlink{classProblem}{Problem}} *myProblem;}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00013}00013     \textcolor{keywordtype}{int} ifail;}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00014}00014     \textcolor{keywordtype}{double} oldMin;}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00015}00015     integer c\_\_0 ;}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00016}00016     \textcolor{keywordtype}{int} getmin\_(integer *n, integer *m, integer *meq, \textcolor{keywordtype}{double}}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00017}00017         *a, integer *ia, \textcolor{keywordtype}{double} *b, \textcolor{keywordtype}{double} *xl, \textcolor{keywordtype}{double} *xu,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00018}00018         \textcolor{keywordtype}{double} *x, \textcolor{keywordtype}{double} *acc, integer *iact, integer *nact,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00019}00019         \textcolor{keywordtype}{double} *par, integer *iprint, integer *info, \textcolor{keywordtype}{double} *w);}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00020}00020     \textcolor{keywordtype}{int} initzu\_(integer *n, integer *m, \textcolor{keywordtype}{double} *xl,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00021}00021         \textcolor{keywordtype}{double} *xu, \textcolor{keywordtype}{double} *x, integer *iact, integer *meql, integer *}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00022}00022         info, \textcolor{keywordtype}{double} *z\_\_, \textcolor{keywordtype}{double} *u, \textcolor{keywordtype}{double} *xbig, \textcolor{keywordtype}{double} *}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00023}00023         relacc);}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00024}00024     \textcolor{keywordtype}{int} ktvec\_(integer *n, integer *m, \textcolor{keywordtype}{double} *a, integer *}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00025}00025         ia, integer *iact, integer *nact, \textcolor{keywordtype}{double} *par, \textcolor{keywordtype}{double} *g,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00026}00026         \textcolor{keywordtype}{double} *reskt, \textcolor{keywordtype}{double} *z\_\_, \textcolor{keywordtype}{double} *u, \textcolor{keywordtype}{double} *bres,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00027}00027         \textcolor{keywordtype}{double} *relaxf, integer *meql, \textcolor{keywordtype}{double} *ssqkt, \textcolor{keywordtype}{double} *}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00028}00028         parw, \textcolor{keywordtype}{double} *resktw);}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00029}00029     \textcolor{keywordtype}{int} lsrch\_(integer *n, \textcolor{keywordtype}{double} *x, \textcolor{keywordtype}{double} *g,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00030}00030         \textcolor{keywordtype}{double} *d\_\_, \textcolor{keywordtype}{double} *xs, \textcolor{keywordtype}{double} *gs, \textcolor{keywordtype}{double} *relacc,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00031}00031         \textcolor{keywordtype}{double} *stepcb, \textcolor{keywordtype}{double} *ddotg, \textcolor{keywordtype}{double} *f, \textcolor{keywordtype}{double} *}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00032}00032         step, integer *nfvals, integer *nfmax, \textcolor{keywordtype}{double} *gopt);}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00033}00033     \textcolor{keywordtype}{int} minflc\_(integer *n, integer *m, integer *meq, \textcolor{keywordtype}{double}}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00034}00034         *a, integer *ia, \textcolor{keywordtype}{double} *b, \textcolor{keywordtype}{double} *xl, \textcolor{keywordtype}{double} *xu,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00035}00035         \textcolor{keywordtype}{double} *x, \textcolor{keywordtype}{double} *acc, integer *iact, integer *nact,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00036}00036         \textcolor{keywordtype}{double} *par, integer *iprint, integer *info, \textcolor{keywordtype}{double} *g,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00037}00037         \textcolor{keywordtype}{double} *z\_\_, \textcolor{keywordtype}{double} *u, \textcolor{keywordtype}{double} *xbig, \textcolor{keywordtype}{double} *reskt,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00038}00038         \textcolor{keywordtype}{double} *bres, \textcolor{keywordtype}{double} *d\_\_, \textcolor{keywordtype}{double} *ztg, \textcolor{keywordtype}{double} *gm,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00039}00039         \textcolor{keywordtype}{double} *xs, \textcolor{keywordtype}{double} *gs);}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00040}00040 }
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00041}00041     \textcolor{keywordtype}{int} minfun\_(integer *n, integer *m, \textcolor{keywordtype}{double} *a, integer *}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00042}00042         ia, \textcolor{keywordtype}{double} *b, \textcolor{keywordtype}{double} *xl, \textcolor{keywordtype}{double} *xu, \textcolor{keywordtype}{double} *x,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00043}00043         \textcolor{keywordtype}{double} *acc, integer *iact, integer *nact, \textcolor{keywordtype}{double} *par,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00044}00044         integer *iprint, integer *info, \textcolor{keywordtype}{double} *g, \textcolor{keywordtype}{double} *z\_\_,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00045}00045         \textcolor{keywordtype}{double} *u, \textcolor{keywordtype}{double} *xbig, \textcolor{keywordtype}{double} *relacc, \textcolor{keywordtype}{double} *}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00046}00046         zznorm, \textcolor{keywordtype}{double} *tol, integer *meql, integer *mtot, integer *iterc,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00047}00047          integer *nfvals, integer *nfmax, \textcolor{keywordtype}{double} *reskt, \textcolor{keywordtype}{double} *bres,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00048}00048          \textcolor{keywordtype}{double} *d\_\_, \textcolor{keywordtype}{double} *ztg, \textcolor{keywordtype}{double} *gm, \textcolor{keywordtype}{double} *xs,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00049}00049         \textcolor{keywordtype}{double} *gs, \textcolor{keywordtype}{double} *f, integer *iexau);}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00050}00050 }
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00051}00051     \textcolor{keywordtype}{int} newcon\_(integer *n, integer *m, \textcolor{keywordtype}{double} *a, integer *}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00052}00052         ia, integer *iact, integer *nact, \textcolor{keywordtype}{double} *z\_\_, \textcolor{keywordtype}{double} *u,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00053}00053         \textcolor{keywordtype}{double} *d\_\_, \textcolor{keywordtype}{double} *relacc, integer *mdeg, \textcolor{keywordtype}{double} *}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00054}00054         zzdiag, \textcolor{keywordtype}{double} *gmnew, \textcolor{keywordtype}{double} *cgrad);}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00056}00056     \textcolor{keywordtype}{int} satact\_(integer *n, integer *m, \textcolor{keywordtype}{double} *a, integer *}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00057}00057         ia, \textcolor{keywordtype}{double} *b, \textcolor{keywordtype}{double} *xl, \textcolor{keywordtype}{double} *xu, \textcolor{keywordtype}{double} *x,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00058}00058         integer *iact, integer *nact, integer *info, \textcolor{keywordtype}{double} *z\_\_,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00059}00059         \textcolor{keywordtype}{double} *u, \textcolor{keywordtype}{double} *xbig, \textcolor{keywordtype}{double} *relacc, \textcolor{keywordtype}{double} *tol,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00060}00060         integer *meql);}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00061}00061 }
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00062}00062     \textcolor{keywordtype}{int} sdegen\_(integer *n, integer *m, \textcolor{keywordtype}{double} *a, integer *}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00063}00063        ia, integer *iact, integer *nact, \textcolor{keywordtype}{double} *par, \textcolor{keywordtype}{double} *z\_\_,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00064}00064        \textcolor{keywordtype}{double} *u, \textcolor{keywordtype}{double} *d\_\_, \textcolor{keywordtype}{double} *ztg, \textcolor{keywordtype}{double} *gm,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00065}00065        \textcolor{keywordtype}{double} *relacc, \textcolor{keywordtype}{double} *ddotgm, integer *meql, integer *mdeg,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00066}00066        \textcolor{keywordtype}{double} *gmnew, \textcolor{keywordtype}{double} *parnew, \textcolor{keywordtype}{double} *cgrad);}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00068}00068     \textcolor{keywordtype}{int} sdirn\_(integer *n, integer *nact, \textcolor{keywordtype}{double} *z\_\_,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00069}00069         \textcolor{keywordtype}{double} *d\_\_, \textcolor{keywordtype}{double} *ztg, \textcolor{keywordtype}{double} *gm, \textcolor{keywordtype}{double} *relacc,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00070}00070         \textcolor{keywordtype}{double} *ddotgm);}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00071}00071 }
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00072}00072     \textcolor{keywordtype}{int} stepbd\_(integer *n, integer *m, \textcolor{keywordtype}{double} *a, integer *}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00073}00073         ia, integer *iact, \textcolor{keywordtype}{double} *bres, \textcolor{keywordtype}{double} *d\_\_, \textcolor{keywordtype}{double} *}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00074}00074         stepcb, \textcolor{keywordtype}{double} *ddotg, integer *mdeg, integer *msat, integer *}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00075}00075         mtot, integer *indxbd);}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00076}00076 }
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00077}00077     \textcolor{keywordtype}{int} zbfgs\_(integer *n, \textcolor{keywordtype}{double} *x, integer *nact,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00078}00078        \textcolor{keywordtype}{double} *g, \textcolor{keywordtype}{double} *z\_\_, \textcolor{keywordtype}{double} *ztg, \textcolor{keywordtype}{double} *xs,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00079}00079        \textcolor{keywordtype}{double} *gs, \textcolor{keywordtype}{double} *zznorm);}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00080}00080 }
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00081}00081     \textcolor{keywordtype}{int} getfes\_(integer *n, integer *m, \textcolor{keywordtype}{double} *a, integer *}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00082}00082         ia, \textcolor{keywordtype}{double} *b, \textcolor{keywordtype}{double} *xl, \textcolor{keywordtype}{double} *xu, \textcolor{keywordtype}{double} *x,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00083}00083         integer *iact, integer *nact, \textcolor{keywordtype}{double} *par, integer *info,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00084}00084         \textcolor{keywordtype}{double} *g, \textcolor{keywordtype}{double} *z\_\_, \textcolor{keywordtype}{double} *u, \textcolor{keywordtype}{double} *xbig,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00085}00085         \textcolor{keywordtype}{double} *relacc, \textcolor{keywordtype}{double} *tol, integer *meql, integer *msat,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00086}00086         integer *mtot, \textcolor{keywordtype}{double} *bres, \textcolor{keywordtype}{double} *d\_\_, \textcolor{keywordtype}{double} *ztg,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00087}00087         \textcolor{keywordtype}{double} *gm, \textcolor{keywordtype}{double} *gmnew, \textcolor{keywordtype}{double} *parnew, \textcolor{keywordtype}{double} *}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00088}00088         cgrad);}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00089}00089 }
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00090}00090     \textcolor{keywordtype}{int} addcon\_(integer *n, integer *m, \textcolor{keywordtype}{double} *a, integer *}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00091}00091         ia, integer *iact, integer *nact, \textcolor{keywordtype}{double} *z\_\_, \textcolor{keywordtype}{double} *u,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00092}00092         \textcolor{keywordtype}{double} *relacc, integer *indxbd, \textcolor{keywordtype}{double} *ztc, \textcolor{keywordtype}{double} *}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00093}00093         cgrad);}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00094}00094 }
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00095}00095     \textcolor{keywordtype}{int} adjtol\_(integer *n, integer *m, \textcolor{keywordtype}{double} *a, integer *}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00096}00096         ia, \textcolor{keywordtype}{double} *b, \textcolor{keywordtype}{double} *xl, \textcolor{keywordtype}{double} *xu, \textcolor{keywordtype}{double} *x,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00097}00097         integer *iact, integer *nact, \textcolor{keywordtype}{double} *xbig, \textcolor{keywordtype}{double} *relacc,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00098}00098         \textcolor{keywordtype}{double} *tol, integer *meql);}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00099}00099 }
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00100}00100     \textcolor{keywordtype}{int} conres\_(integer *n, integer *m, \textcolor{keywordtype}{double} *a, integer *}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00101}00101         ia, \textcolor{keywordtype}{double} *b, \textcolor{keywordtype}{double} *xl, \textcolor{keywordtype}{double} *xu, \textcolor{keywordtype}{double} *x,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00102}00102         integer *iact, integer *nact, \textcolor{keywordtype}{double} *par, \textcolor{keywordtype}{double} *g,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00103}00103         \textcolor{keywordtype}{double} *z\_\_, \textcolor{keywordtype}{double} *u, \textcolor{keywordtype}{double} *xbig, \textcolor{keywordtype}{double} *bres,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00104}00104         \textcolor{keywordtype}{double} *d\_\_, \textcolor{keywordtype}{double} *ztg, \textcolor{keywordtype}{double} *relacc, \textcolor{keywordtype}{double} *tol,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00105}00105          \textcolor{keywordtype}{double} *stepcb, \textcolor{keywordtype}{double} *sumres, integer *meql, integer *msat,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00106}00106          integer *mtot, integer *indxbd, \textcolor{keywordtype}{double} *gm, \textcolor{keywordtype}{double} *gmnew,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00107}00107         \textcolor{keywordtype}{double} *parnew, \textcolor{keywordtype}{double} *cgrad);}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00108}00108 }
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00109}00109     \textcolor{keywordtype}{int} delcon\_(integer *n, integer *m, \textcolor{keywordtype}{double} *a, integer *}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00110}00110        ia, integer *iact, integer *nact, \textcolor{keywordtype}{double} *z\_\_, \textcolor{keywordtype}{double} *u,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00111}00111        \textcolor{keywordtype}{double} *relacc, integer *idrop);}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00112}00112 }
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00113}00113     \textcolor{keywordtype}{int} eqcons\_(integer *n, integer *m, integer *meq, \textcolor{keywordtype}{double}}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00114}00114        *a, integer *ia, \textcolor{keywordtype}{double} *b, \textcolor{keywordtype}{double} *xu, integer *iact,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00115}00115        integer *meql, integer *info, \textcolor{keywordtype}{double} *z\_\_, \textcolor{keywordtype}{double} *u,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00116}00116        \textcolor{keywordtype}{double} *relacc, \textcolor{keywordtype}{double} *am, \textcolor{keywordtype}{double} *cgrad);}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00117}00117 }
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00118}00118     \textcolor{keywordtype}{int} getd\_(integer *n, integer *m, \textcolor{keywordtype}{double} *a, integer *ia,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00119}00119          integer *iact, integer *nact, \textcolor{keywordtype}{double} *par, \textcolor{keywordtype}{double} *g,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00120}00120         \textcolor{keywordtype}{double} *z\_\_, \textcolor{keywordtype}{double} *u, \textcolor{keywordtype}{double} *d\_\_, \textcolor{keywordtype}{double} *ztg,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00121}00121         \textcolor{keywordtype}{double} *relacc, \textcolor{keywordtype}{double} *ddotg, integer *meql, integer *mdeg,}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00122}00122         \textcolor{keywordtype}{double} *gm, \textcolor{keywordtype}{double} *gmnew, \textcolor{keywordtype}{double} *parnew, \textcolor{keywordtype}{double} *}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00123}00123         cgrad);}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00124}00124 }
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00125}00125     \textcolor{keywordtype}{int} fgcalc\_(integer *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *,\textcolor{keywordtype}{double} *);}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00126}00126     \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00127}00127         integer itnocs, ipartc, itder, ipder, ithess, iphess, itjac, ipjac;}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00128}00128     \} totcal\_;}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00129}00129 }
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00130}00130 }
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00131}00131     \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00132}00132         integer iuinp, iuout;}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00133}00133     \} units\_;}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00134}00134 }
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00135}00135 \textcolor{keywordtype}{double} *a,*xl,*xu,*xp,*b;}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00136}00136 \textcolor{keywordtype}{long} *iact;}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00137}00137 \textcolor{keywordtype}{double} *par,*w;}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00138}00138 \textcolor{keywordtype}{bool} hasDebug = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00139}00139 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00140}00140     \mbox{\hyperlink{classTolmin}{Tolmin}}(\mbox{\hyperlink{classProblem}{Problem}} *p,Data \&left,Data \&right);}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00141}00141     \mbox{\hyperlink{classTolmin}{Tolmin}}(\mbox{\hyperlink{classProblem}{Problem}} *p);}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00142}00142     \textcolor{keywordtype}{double} Solve(Data \&x,\textcolor{keywordtype}{bool} debug,\textcolor{keywordtype}{int} iters=2001);}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00143}00143     \mbox{\hyperlink{classTolmin}{\string~Tolmin}}();}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00144}00144 \};}
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00145}00145 }
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00146}00146 }
+\DoxyCodeLine{\Hypertarget{tolmin_8h_source_l00147}00147 \textcolor{preprocessor}{\# endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,158 @@
+\hypertarget{classNNCSampler}{}\doxysection{NNCSampler Class Reference}
+\label{classNNCSampler}\index{NNCSampler@{NNCSampler}}
+
+
+The \mbox{\hyperlink{classNNCSampler}{NNCSampler}} class implements sampling from the objective function using a constructed neural network.  
+
+
+
+
+{\ttfamily \#include $<$nncsampler.\+h$>$}
+
+
+
+Inheritance diagram for NNCSampler\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=169pt]{classNNCSampler__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for NNCSampler\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=178pt]{classNNCSampler__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classNNCSampler_af9daa6c97bb49607fb4bb63a99c259e2}\label{classNNCSampler_af9daa6c97bb49607fb4bb63a99c259e2}} 
+{\bfseries NNCSampler} (\mbox{\hyperlink{classProblem}{Problem}} $\ast$p)
+\item 
+double \mbox{\hyperlink{classNNCSampler_acb73071529278d9297d9824c18b634f6}{eval}} (Data \&xpoint)
+\begin{DoxyCompactList}\small\item\em eval gets the value of model at point \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classNNCSampler_a6265e930e36844103b7538faa39a8266}{sample\+From\+Problem}} (int N, Matrix \&xsample, Data \&ysample)
+\begin{DoxyCompactList}\small\item\em sample\+From\+Problem, takes samples from the problem using some distribution. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classNNCSampler_ae1b61e85e05914264807966b59ade277}{train\+Model}} ()
+\begin{DoxyCompactList}\small\item\em train\+Model, this method will train the sample models if it is needed. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classNNCSampler_a51cbbda38aadf27b53992d157fe7ccce}{add\+Sample\+From\+Problem}} (Data \&x, double y)
+\begin{DoxyCompactList}\small\item\em add\+Sample\+From\+Problem adds a new sample from the problem. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classNNCSampler_a51ed5f4baa57814c8883e24fefc0f8cd}\label{classNNCSampler_a51ed5f4baa57814c8883e24fefc0f8cd}} 
+void {\bfseries set\+Parameters} (Data \&x)
+\item 
+void \mbox{\hyperlink{classNNCSampler_a5a396432d86df3ba156413a799d3f695}{sample\+From\+Model}} (int \&N, Matrix \&xsample, Data \&ysample)
+\begin{DoxyCompactList}\small\item\em sample\+From\+Model, this method will sample from the sample model instead of the real problem. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{classNNCSampler}{NNCSampler}} class implements sampling from the objective function using a constructed neural network. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classNNCSampler_a51cbbda38aadf27b53992d157fe7ccce}\label{classNNCSampler_a51cbbda38aadf27b53992d157fe7ccce}} 
+\index{NNCSampler@{NNCSampler}!addSampleFromProblem@{addSampleFromProblem}}
+\index{addSampleFromProblem@{addSampleFromProblem}!NNCSampler@{NNCSampler}}
+\doxysubsubsection{\texorpdfstring{addSampleFromProblem()}{addSampleFromProblem()}}
+{\footnotesize\ttfamily void NNCSampler\+::add\+Sample\+From\+Problem (\begin{DoxyParamCaption}\item[{Data \&}]{x,  }\item[{double}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+add\+Sample\+From\+Problem adds a new sample from the problem. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & the xpoint of the new sample \\
+\hline
+{\em y} & the ypoint of the new sample \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classProblemSampler_af1ab92bf9bad3d7869080b8c5c7cb57f}{Problem\+Sampler}}.
+
+\mbox{\Hypertarget{classNNCSampler_acb73071529278d9297d9824c18b634f6}\label{classNNCSampler_acb73071529278d9297d9824c18b634f6}} 
+\index{NNCSampler@{NNCSampler}!eval@{eval}}
+\index{eval@{eval}!NNCSampler@{NNCSampler}}
+\doxysubsubsection{\texorpdfstring{eval()}{eval()}}
+{\footnotesize\ttfamily double NNCSampler\+::eval (\begin{DoxyParamCaption}\item[{Data \&}]{xpoint }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+eval gets the value of model at point 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xpoint} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classProblemSampler_a95cb4ee5a502d9f85a4688f2e6071d1f}{Problem\+Sampler}}.
+
+\mbox{\Hypertarget{classNNCSampler_a5a396432d86df3ba156413a799d3f695}\label{classNNCSampler_a5a396432d86df3ba156413a799d3f695}} 
+\index{NNCSampler@{NNCSampler}!sampleFromModel@{sampleFromModel}}
+\index{sampleFromModel@{sampleFromModel}!NNCSampler@{NNCSampler}}
+\doxysubsubsection{\texorpdfstring{sampleFromModel()}{sampleFromModel()}}
+{\footnotesize\ttfamily void NNCSampler\+::sample\+From\+Model (\begin{DoxyParamCaption}\item[{int \&}]{N,  }\item[{Matrix \&}]{xsample,  }\item[{Data \&}]{ysample }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+sample\+From\+Model, this method will sample from the sample model instead of the real problem. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em N,the} & number of required samples. \\
+\hline
+{\em xsample} & \\
+\hline
+{\em ysample} & \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{classProblemSampler_ab7d597e1843b8d361344bbc5751b9a32}{Problem\+Sampler}}.
+
+\mbox{\Hypertarget{classNNCSampler_a6265e930e36844103b7538faa39a8266}\label{classNNCSampler_a6265e930e36844103b7538faa39a8266}} 
+\index{NNCSampler@{NNCSampler}!sampleFromProblem@{sampleFromProblem}}
+\index{sampleFromProblem@{sampleFromProblem}!NNCSampler@{NNCSampler}}
+\doxysubsubsection{\texorpdfstring{sampleFromProblem()}{sampleFromProblem()}}
+{\footnotesize\ttfamily void NNCSampler\+::sample\+From\+Problem (\begin{DoxyParamCaption}\item[{int}]{N,  }\item[{Matrix \&}]{xsample,  }\item[{Data \&}]{ysample }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+sample\+From\+Problem, takes samples from the problem using some distribution. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em N,the} & number of samples required. \\
+\hline
+{\em xsample} & \\
+\hline
+{\em ysample} & \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{classProblemSampler_af2608337721073b8286967b37a9b7660}{Problem\+Sampler}}.
+
+\mbox{\Hypertarget{classNNCSampler_ae1b61e85e05914264807966b59ade277}\label{classNNCSampler_ae1b61e85e05914264807966b59ade277}} 
+\index{NNCSampler@{NNCSampler}!trainModel@{trainModel}}
+\index{trainModel@{trainModel}!NNCSampler@{NNCSampler}}
+\doxysubsubsection{\texorpdfstring{trainModel()}{trainModel()}}
+{\footnotesize\ttfamily void NNCSampler\+::train\+Model (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+train\+Model, this method will train the sample models if it is needed. 
+
+
+
+Reimplemented from \mbox{\hyperlink{classProblemSampler_a0e6ea334728661f429345f8bce993afd}{Problem\+Sampler}}.
+

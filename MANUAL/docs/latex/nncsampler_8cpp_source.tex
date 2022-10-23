@@ -1,0 +1,103 @@
+\hypertarget{nncsampler_8cpp_source}{}\doxysection{nncsampler.\+cpp}
+\label{nncsampler_8cpp_source}\index{nncsampler.cpp@{nncsampler.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00001}00001 \textcolor{preprocessor}{\#include "{}nncsampler.h"{}}}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00002}00002 \textcolor{preprocessor}{\# include "{}grspopulation.h"{}}}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00003}00003 NNCSampler::NNCSampler(\mbox{\hyperlink{classProblem}{Problem}} *p)}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00004}00004     :\mbox{\hyperlink{classProblemSampler}{ProblemSampler}}(\textcolor{stringliteral}{"{}nncsampler"{}},p)}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00005}00005 \{}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00006}00006     program=NULL;}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00007}00007     dataset = NULL;}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00008}00008 \}}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00010}\mbox{\hyperlink{classNNCSampler_a6265e930e36844103b7538faa39a8266}{00010}} \textcolor{keywordtype}{void}   \mbox{\hyperlink{classNNCSampler_a6265e930e36844103b7538faa39a8266}{NNCSampler::sampleFromProblem}}(\textcolor{keywordtype}{int} N,Matrix \&xsample,Data \&ysample)}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00011}00011 \{}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00012}00012     \textcolor{keywordflow}{if}(dataset!=NULL) \textcolor{keyword}{delete} dataset;}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00013}00013     dataset = \textcolor{keyword}{new} \mbox{\hyperlink{classDataset}{Dataset}}(myProblem,N);}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00014}00014     program = \textcolor{keyword}{new} \mbox{\hyperlink{classNNCNeuralProgram}{NNCNeuralProgram}}(dataset,dataset);}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00015}00015    \textcolor{comment}{// program-\/>setDimension(myProblem-\/>getDimension());}}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00016}00016     xsample.resize(N);}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00017}00017     ysample.resize(N);}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00018}00018     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<N;i++)}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00019}00019     \{}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00020}00020         xsample[i]=dataset-\/>\mbox{\hyperlink{classDataset_a41c59b4b03b7190e28e98b52f9873cbc}{getx}}(i);}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00021}00021         ysample[i]=dataset-\/>\mbox{\hyperlink{classDataset_af209c1c6858825f15553236311e3f852}{gety}}(i);}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00022}00022     \}}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00023}00023 \}}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00025}\mbox{\hyperlink{classNNCSampler_a51cbbda38aadf27b53992d157fe7ccce}{00025}} \textcolor{keywordtype}{void}    \mbox{\hyperlink{classNNCSampler_a51cbbda38aadf27b53992d157fe7ccce}{NNCSampler::addSampleFromProblem}}(Data \&x,\textcolor{keywordtype}{double} y)}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00026}00026 \{}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00027}00027     \textcolor{keywordflow}{if}(dataset!=NULL) \textcolor{keyword}{delete} dataset;}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00028}00028     dataset = \textcolor{keyword}{new} \mbox{\hyperlink{classDataset}{Dataset}}(myProblem,0);}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00029}00029     dataset-\/>addPoint(x,y);}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00030}00030     \textcolor{keywordflow}{if}(program!=NULL) \textcolor{keyword}{delete} program;}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00031}00031     program = \textcolor{keyword}{new} \mbox{\hyperlink{classNNCNeuralProgram}{NNCNeuralProgram}}(dataset,dataset);}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00032}00032 \}}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00033}00033 \textcolor{keywordtype}{void}    NNCSampler::setParameters(Data \&x)}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00034}00034 \{}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00035}00035     vector<int> g;}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00036}00036     g.resize(x.size());}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00037}00037     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<x.size();i++)}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00038}00038     \{}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00039}00039         g[i]=(int)(fabs(x[i]));}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00040}00040     \}}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00041}00041     program-\/>fitness(g);}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00042}00042 \}}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00043}00043 }
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00044}\mbox{\hyperlink{classNNCSampler_acb73071529278d9297d9824c18b634f6}{00044}} \textcolor{keywordtype}{double}  \mbox{\hyperlink{classNNCSampler_acb73071529278d9297d9824c18b634f6}{NNCSampler::eval}}(Data \&xpoint)}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00045}00045 \{}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00047}00047     \textcolor{keywordflow}{return} program-\/>neuralparser-\/>eval(xpoint);}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00048}00048 \}}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00049}00049 }
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00050}\mbox{\hyperlink{classNNCSampler_ae1b61e85e05914264807966b59ade277}{00050}} \textcolor{keywordtype}{void}    \mbox{\hyperlink{classNNCSampler_ae1b61e85e05914264807966b59ade277}{NNCSampler::trainModel}}()}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00051}00051 \{}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00052}00052     \mbox{\hyperlink{classGrsPopulation}{GrsPopulation}} pop(200,200,program);}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00053}00053     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<200;i++)}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00054}00054     \{}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00055}00055         pop.\mbox{\hyperlink{classGrsPopulation_a16069df7d735b17c5a161389b58f4151}{nextGeneration}}();}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00056}00056      \textcolor{comment}{//  printf("{}Population fitness: \%20.10lg\(\backslash\)n"{},pop.getBestFitness());}}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00057}00057     \}}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00058}00058     pop.\mbox{\hyperlink{classGrsPopulation_a4f14c178d6dd9e5a65fa6f26e98fcab0}{evaluateBestFitness}}();}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00059}00059 \}}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00060}00060 }
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00061}\mbox{\hyperlink{classNNCSampler_a5a396432d86df3ba156413a799d3f695}{00061}} \textcolor{keywordtype}{void}    \mbox{\hyperlink{classNNCSampler_a5a396432d86df3ba156413a799d3f695}{NNCSampler::sampleFromModel}}(\textcolor{keywordtype}{int} \&N,Matrix \&xsample,Data \&ysample)}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00062}00062 \{}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00063}00063     \textcolor{comment}{//sample many points and take the N lowest values}}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00064}00064     \textcolor{keyword}{const} \textcolor{keywordtype}{int} NMany = 10 * N;}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00065}00065     xsample.resize(NMany);}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00066}00066     ysample.resize(NMany);}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00067}00067     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<NMany;i++)}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00068}00068     \{}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00069}00069         xsample[i]=myProblem-\/>\mbox{\hyperlink{classProblem_abb3b2160878127586e1c7d81d7458616}{getRandomPoint}}();}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00070}00070         ysample[i]=\mbox{\hyperlink{classNNCSampler_acb73071529278d9297d9824c18b634f6}{eval}}(xsample[i]);}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00071}00071     \}}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00072}00072     \textcolor{comment}{//sort}}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00073}00073     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<NMany;i++)}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00074}00074     \{}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00075}00075         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} j=0;j<NMany-\/1;j++)}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00076}00076         \{}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00077}00077             \textcolor{keywordflow}{if}(ysample[j+1]<ysample[j])}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00078}00078             \{}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00079}00079                 Data tx = xsample[j];}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00080}00080                 xsample[j]=xsample[j+1];}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00081}00081                 xsample[j+1]=tx;}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00082}00082                 \textcolor{keywordtype}{double} dx = ysample[j];}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00083}00083                 ysample[j]=ysample[j+1];}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00084}00084                 ysample[j+1]=dx;}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00085}00085             \}}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00086}00086         \}}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00087}00087     \}}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00088}00088 }
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00089}00089     xsample.resize(N);}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00090}00090     ysample.resize(N);}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00091}00091 \}}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00092}00092 }
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00093}00093 NNCSampler::\string~NNCSampler()}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00094}00094 \{}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00095}00095     \textcolor{keyword}{delete} program;}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00096}00096     \textcolor{keywordflow}{if}(dataset!=NULL) \textcolor{keyword}{delete} dataset;}
+\DoxyCodeLine{\Hypertarget{nncsampler_8cpp_source_l00097}00097 \}}
+
+\end{DoxyCode}

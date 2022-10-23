@@ -1,0 +1,77 @@
+\hypertarget{triangularsampler_8cpp_source}{}\doxysection{triangularsampler.\+cpp}
+\label{triangularsampler_8cpp_source}\index{triangularsampler.cpp@{triangularsampler.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00001}00001 \textcolor{preprocessor}{\#include "{}triangularsampler.h"{}}}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00003}00003 TriangularSampler::TriangularSampler(\mbox{\hyperlink{classProblem}{Problem}} *p)}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00004}00004     :\mbox{\hyperlink{classProblemSampler}{ProblemSampler}}(\textcolor{stringliteral}{"{}triangular"{}},p)}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00005}00005 \{}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00007}00007 \}}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00009}\mbox{\hyperlink{classTriangularSampler_a22b94bd8f35b0f50264edadeae423e77}{00009}} \textcolor{keywordtype}{double}  \mbox{\hyperlink{classTriangularSampler_a22b94bd8f35b0f50264edadeae423e77}{TriangularSampler::eval}}(Data \&xpoint)}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00010}00010 \{}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00011}00011     \textcolor{keywordflow}{return} 0.0;}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00012}00012 \}}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00013}00013 }
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00014}\mbox{\hyperlink{classTriangularSampler_acd5d903ad83f2d5bf90ad6d5b2093d72}{00014}} \textcolor{keywordtype}{void}    \mbox{\hyperlink{classTriangularSampler_acd5d903ad83f2d5bf90ad6d5b2093d72}{TriangularSampler::addSampleFromProblem}}(Data \&x,\textcolor{keywordtype}{double} y)}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00015}00015 \{}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00016}00016     \textcolor{comment}{//nothing here}}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00017}00017 \}}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00018}00018 }
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00019}\mbox{\hyperlink{classTriangularSampler_a0d477fd8f7fa4ee8059241e4b2554c1d}{00019}} \textcolor{keywordtype}{void}    \mbox{\hyperlink{classTriangularSampler_a0d477fd8f7fa4ee8059241e4b2554c1d}{TriangularSampler::sampleFromProblem}}(\textcolor{keywordtype}{int} N,Matrix \&xsample,Data \&ysample)}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00020}00020 \{}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00021}00021     \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00022}00022       xpoint.resize(N);}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00023}00023       ypoint.resize(N);}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00024}00024       \textcolor{keywordtype}{int} n =myProblem-\/>\mbox{\hyperlink{classProblem_a8d7cf5966e8540ccb6dc03923367dbfe}{getDimension}}();}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00025}00025       Data a, b, c, F;}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00026}00026       a.resize(n);}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00027}00027       b.resize(n);}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00028}00028       c.resize(n);}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00029}00029       F.resize(n);}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00030}00030       a = myProblem-\/>\mbox{\hyperlink{classProblem_ab874a141e8057d1bce73811cf1a6fe4e}{getLeftMargin}}();}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00031}00031       b = myProblem-\/>\mbox{\hyperlink{classProblem_af75470dcb6520f39903d384b4c535121}{getRightMargin}}();}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00032}00032       \textcolor{comment}{//printf("{}n = \%i\(\backslash\)n"{},n);}}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00033}00033       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < n; j++)}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00034}00034       \{}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00035}00035           c[j] = (a[j] + b[j]) / 2.;}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00036}00036           F.at(j) = (c[j]-\/a[j]) / (b[j]-\/a[j]);}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00037}00037       \}}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00038}00038       Data point;}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00039}00039       point.resize(n);}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00040}00040       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < N; i++)}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00041}00041       \{}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00042}00042           xpoint.at(i).resize(n);}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00043}00043           xpoint.at(i) = myProblem-\/>\mbox{\hyperlink{classProblem_abb3b2160878127586e1c7d81d7458616}{getRandomPoint}}();}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00045}00045 }
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00046}00046           \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < n; j++)}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00047}00047           \{}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00048}00048               \textcolor{keywordtype}{double} U = rand() / (double)RAND\_MAX;}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00049}00049               \textcolor{keywordflow}{if} (U <= F[j])}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00050}00050                   point.at(j) = a[j] + sqrt(U * (b[j] -\/ a[j]) * (c[j] -\/ a[j]));}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00051}00051               \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00052}00052                   point.at(j) = b[j] -\/ sqrt((1. -\/ U) * (b[j] -\/ a[j]) * (b[j] -\/ c[j]));}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00053}00053           \}}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00054}00054           xpoint.at(i) = point;}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00055}00055           ypoint.at(i) = myProblem-\/>\mbox{\hyperlink{classProblem_a1d4dd1303141465d145b5b728c0b2d81}{funmin}}(xpoint.at(i));}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00056}00056       \}}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00057}00057       xsample = xpoint;}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00058}00058       ysample = ypoint;}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00059}00059 }
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00060}00060 \}}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00061}\mbox{\hyperlink{classTriangularSampler_a7823202e0c37b943f3f2c7986c40228e}{00061}} \textcolor{keywordtype}{void}    \mbox{\hyperlink{classTriangularSampler_a7823202e0c37b943f3f2c7986c40228e}{TriangularSampler::sampleFromModel}}(\textcolor{keywordtype}{int} \&N,Matrix \&xsample,Data \&ysample)}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00062}00062 \{}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00063}00063     xsample = xpoint;}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00064}00064     ysample = ypoint;}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00065}00065 \}}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00066}00066 }
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00067}00067 TriangularSampler::\string~TriangularSampler()}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00068}00068 \{}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00069}00069 }
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00070}00070 \}}
+\DoxyCodeLine{\Hypertarget{triangularsampler_8cpp_source_l00071}00071 }
+
+\end{DoxyCode}

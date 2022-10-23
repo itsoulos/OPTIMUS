@@ -1,0 +1,117 @@
+\hypertarget{converter_8cc_source}{}\doxysection{converter.\+cc}
+\label{converter_8cc_source}\index{converter.cc@{converter.cc}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00001}00001 \textcolor{preprocessor}{\# include <converter.h>}}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00002}00002 \textcolor{preprocessor}{\# include <math.h>}}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00003}00003 Converter::Converter(Data x,\textcolor{keywordtype}{int} s,\textcolor{keywordtype}{int} d)}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00004}00004 \{}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00005}00005     weight.resize(x.size());}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00006}00006     weight=x;}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00007}00007     sigcount = s;}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00008}00008     dimension = d;}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00009}00009     nodes = x.size()/(d+2);}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00010}00010 \}}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00011}00011 }
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00012}00012 \textcolor{keywordtype}{void}    Converter::add(\textcolor{keywordtype}{int} x,vector<int> \&g,\textcolor{keywordtype}{int} \&pos)}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00013}00013 \{}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00014}00014     \textcolor{keywordflow}{if}(pos>=g.size()) }
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00015}00015     \{}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00016}00016         g.resize(pos+10);}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00017}00017     \}}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00018}00018     g[pos++]=x;}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00019}00019 \}}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00021}00021 \textcolor{keywordtype}{void}    Converter::makeNumber(\textcolor{keywordtype}{double} out,vector<int> \&g,\textcolor{keywordtype}{int} \&pos)}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00022}00022 \{}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00023}00023     \textcolor{keywordflow}{if}(out>=0) add(0,g,pos); \textcolor{keywordflow}{else} add(1,g,pos);}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00024}00024     \textcolor{keywordtype}{char} ss[100];}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00025}00025     sprintf(ss,\textcolor{stringliteral}{"{}\%.5lf"{}},fabs(out));}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00026}00026     \textcolor{keywordtype}{string} leftpart=\textcolor{stringliteral}{"{}"{}},rightpart=\textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00027}00027     \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00028}00028     \textcolor{keywordflow}{for}(i=0;ss[i]!=\textcolor{charliteral}{'.'};i++) leftpart=leftpart+ss[i];}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00029}00029     \textcolor{keywordflow}{for}(i++;i<strlen(ss);i++)  rightpart=rightpart+ss[i];}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00030}00030     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<leftpart.size();i++)}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00031}00031     \{}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00032}00032         \textcolor{keywordflow}{if}(i!=leftpart.size()-\/1) add(1,g,pos); \textcolor{keywordflow}{else} add(0,g,pos);}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00033}00033         \textcolor{keywordtype}{int} digit=leftpart[i]-\/\textcolor{charliteral}{'0'};}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00034}00034         add(digit,g,pos);}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00035}00035     \}}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00036}00036     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<rightpart.size();i++)}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00037}00037     \{}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00038}00038         \textcolor{keywordflow}{if}(i!=rightpart.size()-\/1) add(1,g,pos); \textcolor{keywordflow}{else} add(0,g,pos);}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00039}00039         \textcolor{keywordtype}{int} digit=rightpart[i]-\/\textcolor{charliteral}{'0'};}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00040}00040         add(digit,g,pos);}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00041}00041     \}}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00042}00042 \}}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00043}00043 }
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00044}00044 \textcolor{keywordtype}{void}    Converter::makeOut(vector<int> \&g,\textcolor{keywordtype}{int} \&pos)}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00045}00045 \{}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00046}00046     \textcolor{keywordtype}{double} out=weight[(dimension+2)*nodecounter-\/(dimension+1)-\/1];}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00047}00047     makeNumber(out,g,pos);}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00048}00048 \}}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00049}00049 }
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00050}00050 \textcolor{keywordtype}{void}    Converter::makeBias(vector<int> \&g,\textcolor{keywordtype}{int} \&pos)}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00051}00051 \{}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00052}00052     \textcolor{keywordtype}{double} out=weight[(dimension+2)*nodecounter-\/1];}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00053}00053     makeNumber(out,g,pos);}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00054}00054 \}}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00056}00056 \textcolor{keywordtype}{void}    Converter::makeWeight(vector<int> \&g,\textcolor{keywordtype}{int} \&pos)}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00057}00057 \{}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00058}00058     \textcolor{keywordtype}{double} out=weight[(dimension+2)*nodecounter-\/(dimension+1)+xcounter-\/1];}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00059}00059     makeNumber(out,g,pos);}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00060}00060 \}}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00061}00061 }
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00062}00062 \textcolor{keywordtype}{void}    Converter::makeX(vector<int> \&g,\textcolor{keywordtype}{int} \&pos)}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00063}00063 \{}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00064}00064     add(xcounter-\/1,g,pos);}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00065}00065 \}}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00066}00066 }
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00067}00067 \textcolor{keywordtype}{void}    Converter::makeNode(vector<int> \&g,\textcolor{keywordtype}{int} \&pos)}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00068}00068 \{}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00069}00069     xcounter=0;}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00070}00070     list.resize(0);}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00071}00071     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=1;i<=dimension;i++)}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00072}00072     \{}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00073}00073         \textcolor{keywordtype}{double} v=weight[(dimension+2)*nodecounter-\/(dimension+1)+i-\/1];}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00074}00074         \textcolor{keywordflow}{if}(fabs(v)>1e-\/7) list.push\_back(i);}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00075}00075     \}}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00076}00076     \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00077}00077     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<list.size();i++)}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00078}00078     \{}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00079}00079         xcounter=list[i];}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00080}00080         \textcolor{keywordflow}{if}(i==list.size()-\/1) add(0,g,pos); \textcolor{keywordflow}{else} add(1,g,pos);}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00081}00081         makeWeight(g,pos);  }
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00082}00082         makeX(g,pos);}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00083}00083     \}}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00084}00084     makeBias(g,pos);}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00085}00085     nodecounter++;}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00086}00086 \}}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00087}00087 }
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00088}00088 \textcolor{keywordtype}{void}    Converter::convert(vector<int> \&g)}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00089}00089 \{}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00090}00090     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<g.size();i++) g[i]=0;}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00091}00091     \textcolor{keywordtype}{int} pos=0;}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00092}00092     nodecounter=1;}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00093}00093     \textcolor{keywordflow}{if}(sigcount==1)}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00094}00094     \{}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00095}00095         add(0,g,pos);}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00096}00096         makeOut(g,pos);}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00097}00097         makeNode(g,pos);}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00098}00098     \}}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00099}00099     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00100}00100     \{}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00101}00101         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=1;i<sigcount;i++)}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00102}00102         \{}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00103}00103             add(1,g,pos);}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00104}00104             makeOut(g,pos);}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00105}00105             makeNode(g,pos);}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00106}00106         \}}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00107}00107         add(0,g,pos);}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00108}00108         makeOut(g,pos);}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00109}00109         makeNode(g,pos);}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00110}00110     \}}
+\DoxyCodeLine{\Hypertarget{converter_8cc_source_l00111}00111 \}}
+
+\end{DoxyCode}

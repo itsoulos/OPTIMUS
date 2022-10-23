@@ -4,6 +4,9 @@
 #include "problemsampler.h"
 # include "nncneuralprogram.h"
 # include "dataset.h"
+/**
+ * @brief The NNCSampler class  implements sampling from the objective function using a constructed neural network.
+ */
 class NNCSampler : public ProblemSampler
 {
 private:

@@ -5,6 +5,10 @@
 # define REDO_MAX	5
 using namespace std;
 
+/**
+ * @brief The Rule class implements a rule to be used in the
+ * Grammatical Evolution procedure.
+ */
 class Rule
 {
 	private:

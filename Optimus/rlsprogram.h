@@ -4,6 +4,9 @@
 # include <population.h>
 # include <fparser.hh>
 
+/**
+ * @brief The RlsProgram class constructs a path to perform a line search using Grammatical Evolution.
+ */
 class RlsProgram :public Program
 {
 	private:

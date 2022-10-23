@@ -1,0 +1,237 @@
+\hypertarget{population_8cc_source}{}\doxysection{population.\+cc}
+\label{population_8cc_source}\index{population.cc@{population.cc}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00001}00001 \textcolor{preprocessor}{\# include <population.h>}    }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00002}00002 \textcolor{preprocessor}{\# include <iostream>}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00003}00003 \textcolor{preprocessor}{\# include <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00004}00004 \textcolor{preprocessor}{\# include <string.h>}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00005}00005 }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00006}00006 \textcolor{preprocessor}{\# define MAX\_RULE   256}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00007}00007 }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00009}00009 Population::Population(\textcolor{keywordtype}{int} gcount,\textcolor{keywordtype}{int} gsize,\mbox{\hyperlink{classProgram}{Program}} *p)}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00010}00010 \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00011}00011     elitism=1;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00012}00012     selection\_rate = 0.1;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00013}00013     mutation\_rate  = 0.1;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00014}00014     genome\_count   = gcount;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00015}00015     genome\_size    = gsize;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00016}00016     generation     = 0;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00017}00017     program        = p;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00018}00018 }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00019}00019     \textcolor{keywordtype}{double} f;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00020}00020     genome=\textcolor{keyword}{new} \textcolor{keywordtype}{int}*[genome\_count];}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00021}00021     children=\textcolor{keyword}{new} \textcolor{keywordtype}{int}*[genome\_count];}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00022}00022     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<genome\_count;i++)}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00023}00023     \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00024}00024         genome[i]=\textcolor{keyword}{new} \textcolor{keywordtype}{int}[genome\_size];}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00025}00025         children[i]=\textcolor{keyword}{new} \textcolor{keywordtype}{int}[genome\_size];}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00026}00026             \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} j=0;j<genome\_size;j++)}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00027}00027                 genome[i][j]=rand()\%MAX\_RULE;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00028}00028     \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00029}00029     fitness\_array=\textcolor{keyword}{new} \textcolor{keywordtype}{double}[genome\_count];}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00030}00030 \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00032}00032 \textcolor{keywordtype}{void}    Population::reset()}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00033}00033 \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00034}00034     generation = 0;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00035}00035     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<genome\_count;i++)}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00036}00036         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} j=0;j<genome\_size;j++)}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00037}00037                 genome[i][j]=rand()\%MAX\_RULE;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00038}00038     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<genome\_count;i++)}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00039}00039             fitness\_array[i]=-\/1e+100;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00040}00040 \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00042}00042 \textcolor{keywordtype}{double}  Population::fitness(vector<int> \&g)}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00043}00043 \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00044}00044     \textcolor{keywordflow}{return} program-\/>fitness(g);}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00045}00045 \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00047}00047 \textcolor{keywordtype}{void}    Population::select()}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00048}00048 \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00049}00049     \textcolor{keywordtype}{int} itemp[genome\_size];}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00050}00050     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<genome\_count;i++)}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00051}00051     \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00052}00052         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} j=0;j<genome\_count-\/1;j++)}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00053}00053         \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00054}00054             \textcolor{keywordflow}{if}(fitness\_array[j+1]>fitness\_array[j])}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00055}00055             \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00056}00056                 \textcolor{keywordtype}{double} dtemp;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00057}00057                 dtemp=fitness\_array[j];}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00058}00058                 fitness\_array[j]=fitness\_array[j+1];}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00059}00059                 fitness\_array[j+1]=dtemp;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00060}00060                 }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00061}00061                 memcpy(itemp,genome[j],genome\_size*\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}));}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00062}00062                 memcpy(genome[j],genome[j+1],genome\_size*\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}));}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00063}00063                 memcpy(genome[j+1],itemp,genome\_size*\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}));}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00064}00064             \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00065}00065         \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00066}00066     \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00067}00067 \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00068}00068 }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00069}00069 \textcolor{keywordtype}{void}    Population::crossover()}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00070}00070 \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00071}00071         \textcolor{keywordtype}{int} parent[2];}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00072}00072         \textcolor{keywordtype}{int} nchildren=(int)((1.0 -\/ selection\_rate) * genome\_count);}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00073}00073     \textcolor{keywordflow}{if}(!(nchildren\%2==0)) nchildren++;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00074}00074         \textcolor{keyword}{const} \textcolor{keywordtype}{int} tournament\_size =(genome\_count<=100)?4:10;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00075}00075         \textcolor{keywordtype}{int} count\_children=0;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00076}00076         \textcolor{keywordflow}{while}(1)}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00077}00077         \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00078}00078                 \textcolor{comment}{//epilogi ton goneon}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00079}00079                 \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<2;i++)}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00080}00080                 \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00081}00081             }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00082}00082                         \textcolor{keywordtype}{double} max\_fitness=-\/1e+100;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00083}00083                         \textcolor{keywordtype}{int}    max\_index=-\/1;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00084}00084             \textcolor{keywordtype}{int} r;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00085}00085                         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} j=0;j<tournament\_size;j++)}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00086}00086                         \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00087}00087                 r=rand() \% (genome\_count);}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00088}00088                                 \textcolor{keywordflow}{if}(j==0 || fitness\_array[r]>max\_fitness)}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00089}00089                                 \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00090}00090                                         max\_index=r;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00091}00091                                         max\_fitness=fitness\_array[r];}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00092}00092                                 \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00093}00093                         \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00094}00094                         parent[i]=max\_index;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00095}00095             }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00096}00096                 \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00097}00097         \textcolor{keywordtype}{int} pt1,pt2;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00098}00098         }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00099}00099         \textcolor{comment}{//if(fitness\_array[parent[0]]==fitness\_array[parent[1]] ) continue;}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00100}00100         }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00101}00101         pt1=rand() \% genome\_size;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00102}00102         memcpy(children[count\_children],}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00103}00103                 genome[parent[0]],pt1 * \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}));}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00104}00104         memcpy(\&children[count\_children][pt1],}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00105}00105             \&genome[parent[1]][pt1],(genome\_size-\/pt1)*\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}));}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00106}00106         memcpy(children[count\_children+1],}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00107}00107                 genome[parent[1]],pt1 * \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}));}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00108}00108         memcpy(\&children[count\_children+1][pt1],}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00109}00109             \&genome[parent[0]][pt1],(genome\_size-\/pt1)*\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}));}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00110}00110         count\_children+=2;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00111}00111         \textcolor{keywordflow}{if}(count\_children>=nchildren) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00112}00112     \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00113}00113     }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00114}00114     }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00115}00115     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<nchildren;i++)}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00116}00116     \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00117}00117         memcpy(genome[genome\_count-\/i-\/1],}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00118}00118                 children[i],genome\_size * \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}));}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00119}00119     \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00120}00120 \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00121}00121 }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00122}00122 \textcolor{keywordtype}{void}    Population::setElitism(\textcolor{keywordtype}{int} s)}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00123}00123 \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00124}00124     elitism = s;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00125}00125 \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00126}00126 }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00127}00127 \textcolor{keywordtype}{void}    Population::mutate()}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00128}00128 \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00129}00129     \textcolor{keywordtype}{int} start = elitism * (int)(genome\_count*selection\_rate);}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00130}00130     start = elitism;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00131}00131     start = 1;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00132}00132     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=start;i<genome\_count;i++)}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00133}00133     \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00134}00134         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} j=0;j<genome\_size;j++)}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00135}00135         \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00136}00136             \textcolor{keywordtype}{double} r=rand()*1.0/RAND\_MAX;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00137}00137             \textcolor{keywordflow}{if}(r<mutation\_rate)}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00138}00138             \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00139}00139                 genome[i][j]=rand() \% MAX\_RULE;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00140}00140             \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00141}00141         \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00142}00142     \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00143}00143 \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00144}00144 }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00145}00145 \textcolor{keywordtype}{void}    Population::calcFitnessArray()}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00146}00146 \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00147}00147     vector<int> g;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00148}00148     g.resize(genome\_size);}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00149}00149 }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00150}00150     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<genome\_count;i++)}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00151}00151     \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00152}00152         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} j=0;j<genome\_size;j++) g[j]=genome[i][j];   }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00153}00153         \textcolor{keywordtype}{double} f=fitness(g);}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00154}00154         fitness\_array[i]=f;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00155}00155     \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00156}00156 \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00157}00157 }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00158}00158 \textcolor{keywordtype}{int} Population::getGeneration()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00159}00159 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00160}00160     \textcolor{keywordflow}{return} generation;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00161}00161 \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00162}00162 }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00163}00163 \textcolor{keywordtype}{int} Population::getCount()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00164}00164 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00165}00165     \textcolor{keywordflow}{return} genome\_count;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00166}00166 \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00167}00167 }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00168}00168 \textcolor{keywordtype}{int} Population::getSize()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00169}00169 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00170}00170     \textcolor{keywordflow}{return} genome\_size;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00171}00171 \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00172}00172 }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00173}00173 \textcolor{keywordtype}{void}    Population::nextGeneration()}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00174}00174 \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00175}00175     \textcolor{keywordflow}{if}(generation)}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00176}00176     mutate();}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00177}00177     calcFitnessArray();}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00178}00178     select();}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00179}00179     crossover();}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00180}00180     ++generation;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00181}00181 \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00182}00182 }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00183}00183 \textcolor{keywordtype}{void}    Population::setMutationRate(\textcolor{keywordtype}{double} r)}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00184}00184 \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00185}00185     \textcolor{keywordflow}{if}(r>=0 \&\& r<=1) mutation\_rate = r;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00186}00186 \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00187}00187 }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00188}00188 \textcolor{keywordtype}{void}    Population::setSelectionRate(\textcolor{keywordtype}{double} r)}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00189}00189 \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00190}00190     \textcolor{keywordflow}{if}(r>=0 \&\& r<=1) selection\_rate = r;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00191}00191 \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00192}00192 }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00193}00193 \textcolor{keywordtype}{double}  Population::getSelectionRate()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00194}00194 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00195}00195     \textcolor{keywordflow}{return} selection\_rate;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00196}00196 \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00197}00197 }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00198}00198 \textcolor{keywordtype}{double}  Population::getMutationRate()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00199}00199 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00200}00200     \textcolor{keywordflow}{return} mutation\_rate;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00201}00201 \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00202}00202 }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00203}00203 \textcolor{keywordtype}{double}  Population::getBestFitness()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00204}00204 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00205}00205     \textcolor{keywordflow}{return}  fitness\_array[0];}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00206}00206 \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00207}00207 }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00208}00208 vector<int> Population::getBestGenome()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00209}00209 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00210}00210     vector<int> g;g.resize(genome\_size);}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00211}00211     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<genome\_size;i++) g[i]=genome[0][i];}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00212}00212     \textcolor{keywordflow}{return} g;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00213}00213 \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00214}00214 \textcolor{keywordtype}{double}  Population::evaluateBestFitness() }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00215}00215 \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00216}00216     vector<int> g;g.resize(genome\_size);}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00217}00217     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<genome\_size;i++) g[i]=genome[0][i];   }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00218}00218     \textcolor{keywordflow}{return} fitness(g);}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00219}00219 \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00220}00220 }
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00221}00221 Population::\string~Population()}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00222}00222 \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00223}00223     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<genome\_count;i++)}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00224}00224     \{}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00225}00225         \textcolor{keyword}{delete}[] children[i];}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00226}00226         \textcolor{keyword}{delete}[] genome[i];}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00227}00227     \}}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00228}00228     \textcolor{keyword}{delete}[] genome;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00229}00229     \textcolor{keyword}{delete}[] children;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00230}00230     \textcolor{keyword}{delete}[] fitness\_array;}
+\DoxyCodeLine{\Hypertarget{population_8cc_source_l00231}00231 \}}
+
+\end{DoxyCode}

@@ -1,0 +1,100 @@
+\hypertarget{dataset_8cpp_source}{}\doxysection{dataset.\+cpp}
+\label{dataset_8cpp_source}\index{dataset.cpp@{dataset.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00001}00001 \textcolor{preprocessor}{\#include "{}dataset.h"{}}}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00002}00002 \textcolor{preprocessor}{\# include <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00003}00003 Dataset::Dataset(QString name)}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00004}00004 \{}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00005}00005     FILE *fp = fopen(name.toStdString().c\_str(),\textcolor{stringliteral}{"{}r"{}});}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00006}00006     \textcolor{keywordflow}{if}(!fp) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00007}00007     \textcolor{keywordtype}{int} d,c;}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00008}00008     fscanf(fp,\textcolor{stringliteral}{"{}\%d"{}},\&d);}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00009}00009     fscanf(fp,\textcolor{stringliteral}{"{}\%d"{}},\&c);}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00010}00010     xpoint.resize(c);}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00011}00011     ypoint.resize(c);}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00012}00012     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<c;i++)}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00013}00013     \{}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00014}00014         xpoint[i].resize(d);}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00015}00015         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} j=0;j<d;j++)}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00016}00016         \{}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00017}00017             fscanf(fp,\textcolor{stringliteral}{"{}\%lf"{}},\&xpoint[i][j]);}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00018}00018         \}}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00019}00019         fscanf(fp,\textcolor{stringliteral}{"{}\%lf"{}},\&ypoint[i]);}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00020}00020     \}}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00021}00021     fclose(fp);}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00022}00022 \}}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00023}00023 }
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00024}00024 \textcolor{keywordtype}{void}    Dataset::getXMargins(Data \&xleft,Data \&xright)}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00025}00025 \{}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00026}00026     \textcolor{keywordtype}{int} d = \mbox{\hyperlink{classDataset_a6529f0f8b741a22993983a5747f15a29}{getdimension}}();}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00027}00027     xleft.resize(d);}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00028}00028     xright.resize(d);}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00029}00029     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<xpoint.size();i++)}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00030}00030     \{}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00031}00031         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} j=0;j<d;j++)}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00032}00032         \{}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00033}00033             \textcolor{keywordflow}{if}(i==0 || xpoint[i][j]<xleft[j])}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00034}00034                 xleft[j]=xpoint[i][j];}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00035}00035             \textcolor{keywordflow}{if}(i==0 || xpoint[i][j]>xright[j])}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00036}00036                 xright[j]=xpoint[i][j];}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00037}00037         \}}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00038}00038     \}}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00039}00039 \}}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00040}00040 }
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00041}\mbox{\hyperlink{classDataset_a78d33506857ec2f46abd34e13baec500}{00041}} Dataset::Dataset(Matrix \&x,Data \&y)}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00042}00042 \{}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00043}00043     xpoint.resize(x.size());}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00044}00044     ypoint.resize(y.size());}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00045}00045     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00046}00046     \textcolor{keywordflow}{for}(i=0;i<x.size();i++)}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00047}00047     \{}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00048}00048         xpoint[i].resize(x[i].size());}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00049}00049         xpoint[i] = x[i];}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00050}00050         ypoint[i] = y[i];}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00051}00051     \}}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00052}00052 \}}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00053}00053 }
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00054}00054 \textcolor{keywordtype}{void} Dataset::addPoint(Data \&x,\textcolor{keywordtype}{double} y)}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00055}00055 \{}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00056}00056     xpoint.push\_back(x);}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00057}00057     ypoint.push\_back(y);}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00058}00058 \}}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00059}\mbox{\hyperlink{classDataset_ac0a02331bf222afe1db8045cf08a223e}{00059}} Dataset::Dataset(\mbox{\hyperlink{classProblem}{Problem}} *p,\textcolor{keywordtype}{int} N)}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00060}00060 \{}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00061}00061     xpoint.resize(N);}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00062}00062     ypoint.resize(N);}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00063}00063     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<N;i++)}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00064}00064     \{}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00065}00065         xpoint[i].resize(p-\/>\mbox{\hyperlink{classProblem_a8d7cf5966e8540ccb6dc03923367dbfe}{getDimension}}());}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00066}00066         xpoint[i]=p-\/>\mbox{\hyperlink{classProblem_abb3b2160878127586e1c7d81d7458616}{getRandomPoint}}();}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00067}00067         ypoint[i]=p-\/>\mbox{\hyperlink{classProblem_a1d4dd1303141465d145b5b728c0b2d81}{funmin}}(xpoint[i]);}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00068}00068     \}}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00069}00069 \}}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00070}00070 }
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00071}\mbox{\hyperlink{classDataset_a41c59b4b03b7190e28e98b52f9873cbc}{00071}} Data    \mbox{\hyperlink{classDataset_a41c59b4b03b7190e28e98b52f9873cbc}{Dataset::getx}}(\textcolor{keywordtype}{int} pos)\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00072}00072 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00073}00073     \textcolor{keywordflow}{return} xpoint[pos];}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00074}00074 \}}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00075}00075 }
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00076}\mbox{\hyperlink{classDataset_af209c1c6858825f15553236311e3f852}{00076}} \textcolor{keywordtype}{double}  \mbox{\hyperlink{classDataset_af209c1c6858825f15553236311e3f852}{Dataset::gety}}(\textcolor{keywordtype}{int} pos)\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00077}00077 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00078}00078     \textcolor{keywordflow}{return} ypoint[pos];}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00079}00079 \}}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00080}00080 }
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00081}\mbox{\hyperlink{classDataset_a6529f0f8b741a22993983a5747f15a29}{00081}} \textcolor{keywordtype}{int}     \mbox{\hyperlink{classDataset_a6529f0f8b741a22993983a5747f15a29}{Dataset::getdimension}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00082}00082 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00083}00083     \textcolor{keywordflow}{return} xpoint[0].size();}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00084}00084 \}}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00085}00085 }
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00086}\mbox{\hyperlink{classDataset_aa6bea5498f4c139fbb571527529d3900}{00086}} \textcolor{keywordtype}{int}     \mbox{\hyperlink{classDataset_aa6bea5498f4c139fbb571527529d3900}{Dataset::getpatterns}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00087}00087 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00088}00088     \textcolor{keywordflow}{return} xpoint.size();}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00089}00089 \}}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00090}00090 }
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00091}\mbox{\hyperlink{classDataset_a7f38b79ccbf9ada90d68d3a50250b193}{00091}} \mbox{\hyperlink{classDataset_a7f38b79ccbf9ada90d68d3a50250b193}{Dataset::\string~Dataset}}()}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00092}00092 \{}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00093}00093     \textcolor{comment}{//nothing for now}}
+\DoxyCodeLine{\Hypertarget{dataset_8cpp_source_l00094}00094 \}}
+
+\end{DoxyCode}

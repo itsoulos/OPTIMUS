@@ -1,0 +1,279 @@
+\hypertarget{pso_8cpp_source}{}\doxysection{pso.\+cpp}
+\label{pso_8cpp_source}\index{pso.cpp@{pso.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00001}00001 \textcolor{preprocessor}{\#include "{}pso.h"{}}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00003}00003 Pso::Pso(\mbox{\hyperlink{classProblem}{Problem}} *p)}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00004}00004     :\mbox{\hyperlink{classOptimizer}{Optimizer}}(p)}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00005}00005 \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00006}00006     addParameter(\textcolor{stringliteral}{"{}pso\_particles"{}},\textcolor{stringliteral}{"{}500"{}},\textcolor{stringliteral}{"{}Number of pso particles"{}});}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00007}00007     addParameter(\textcolor{stringliteral}{"{}pso\_generations"{}},\textcolor{stringliteral}{"{}200"{}},\textcolor{stringliteral}{"{}Maximum number of pso generations"{}});}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00008}00008     addParameter(\textcolor{stringliteral}{"{}pso\_c1"{}},\textcolor{stringliteral}{"{}1.0"{}},\textcolor{stringliteral}{"{}Pso c1 parameter"{}});}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00009}00009     addParameter(\textcolor{stringliteral}{"{}pso\_c2"{}},\textcolor{stringliteral}{"{}1.0"{}},\textcolor{stringliteral}{"{}Pso c2 parameter"{}});}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00010}00010     addParameter(\textcolor{stringliteral}{"{}pso\_inertia\_start"{}},\textcolor{stringliteral}{"{}0.4"{}},\textcolor{stringliteral}{"{}Start value for inertia"{}});}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00011}00011     addParameter(\textcolor{stringliteral}{"{}pso\_inertia\_end"{}},\textcolor{stringliteral}{"{}0.9"{}},\textcolor{stringliteral}{"{}End value for inertia"{}});}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00012}00012     addParameter(\textcolor{stringliteral}{"{}pso\_localsearch\_rate"{}},\textcolor{stringliteral}{"{}0.0"{}},\textcolor{stringliteral}{"{}Local search rate for pso"{}});}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00013}00013 \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00014}00014 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00015}00015 \textcolor{keywordtype}{bool} Pso::checkGradientCriterion(Data \&x)}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00016}00016 \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00017}00017 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00018}00018     \textcolor{keywordtype}{double} dmin=1e+100;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00019}00019     \textcolor{keywordtype}{int} imin=0;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00020}00020     \textcolor{keywordflow}{if}(minimax.size()>0)}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00021}00021     \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00022}00022     dmin=getDistance(minimax[0],x);}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00023}00023     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} j=0;j<minimax.size();j++)}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00024}00024     \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00025}00025         \textcolor{keywordtype}{double} d=getDistance(minimax[j],x);}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00026}00026         \textcolor{keywordflow}{if}(d<dmin)}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00027}00027         \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00028}00028             imin=j;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00029}00029             dmin=d;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00030}00030         \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00031}00031     \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00032}00032     \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00033}00033     \textcolor{keywordflow}{else} \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00034}00034     \textcolor{keywordflow}{if}(dmin<1e-\/6 || (dmin<RC/localSearchCount \&\& myProblem-\/>getGradientCriterion(x,minimax[imin])))}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00035}00035         \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00036}00036     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00037}00037 \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00038}00038 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00039}00039 \textcolor{keywordtype}{bool} Pso::terminated()}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00040}00040 \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00041}00041     \textcolor{keywordtype}{int} max\_generations=params[\textcolor{stringliteral}{"{}pso\_generations"{}}].toString().toInt();}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00042}00042     \textcolor{keywordtype}{double} fmin=fabs(1.0+fabs(besty));}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00043}00043     \textcolor{keywordflow}{if}(generation<=1) \{x1=0.0;x2=0.0;\}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00044}00044     x1+=fmin;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00045}00045     x2+=fmin * fmin;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00046}00046     variance = x2/(generation+1) -\/(x1/(generation+1))*(x1/(generation+1));}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00047}00047     variance=fabs(variance);}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00048}00048     \textcolor{keywordflow}{if}(besty<oldbesty)}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00049}00049     \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00050}00050         oldbesty=besty;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00051}00051         stopat=variance/2.0;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00052}00052     \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00053}00053     \textcolor{keywordflow}{if}(stopat<1e-\/8 \&\& !isnan(variance)) stopat=variance/2.0;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00054}00054     printf(\textcolor{stringliteral}{"{}Generation \%5d value: \%12.8lg variance: \%lf stopat: \%lf\(\backslash\)n"{}},generation,besty,}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00055}00055             variance,stopat);}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00056}00056     \textcolor{keywordflow}{return} generation>=max\_generations|| (variance<=stopat \&\& generation>=10);}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00057}00057 \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00058}00058 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00059}00059 \textcolor{keywordtype}{void} Pso::step()}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00060}00060 \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00061}00061     ++generation;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00062}00062     calcFitnessArray();}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00063}00063      updateBest();}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00064}00064 \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00065}00065 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00066}00066 \textcolor{keywordtype}{void} Pso::init()}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00067}00067 \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00068}00068 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00069}00069     \textcolor{keywordtype}{int} pso\_particles=params[\textcolor{stringliteral}{"{}pso\_particles"{}}].toString().toInt();}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00070}00070     particle.resize(pso\_particles);}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00071}00071 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00072}00072     sampleFromProblem(pso\_particles,particle,fitness\_array);}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00073}00073     bestParticle.resize(pso\_particles);}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00074}00074     velocity.resize(pso\_particles);}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00075}00075     fitness\_array.resize(pso\_particles);}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00076}00076     bestFitness\_array.resize(pso\_particles);}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00077}00077     bestx.resize(myProblem-\/>\mbox{\hyperlink{classProblem_a8d7cf5966e8540ccb6dc03923367dbfe}{getDimension}}());}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00078}00078     lmargin=myProblem-\/>\mbox{\hyperlink{classProblem_ab874a141e8057d1bce73811cf1a6fe4e}{getLeftMargin}}();}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00079}00079     rmargin=myProblem-\/>\mbox{\hyperlink{classProblem_af75470dcb6520f39903d384b4c535121}{getRightMargin}}();}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00080}00080 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00081}00081 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00082}00082     generation=0;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00083}00083     besty=1e+100;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00084}00084     oldbesty=1e+100;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00085}00085     x1=0.0;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00086}00086     x2=0.0;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00087}00087     stopat=0.0;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00088}00088     variance=0.0;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00089}00089     RC=0.0;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00090}00090     localSearchCount=0;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00091}00091     minimax.clear();}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00092}00092 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00093}00093 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00094}00094 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00095}00095     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<pso\_particles;i++)}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00096}00096     \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00097}00097 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00098}00098         bestParticle[i].resize(myProblem-\/>\mbox{\hyperlink{classProblem_a8d7cf5966e8540ccb6dc03923367dbfe}{getDimension}}());}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00099}00099         velocity[i].resize(myProblem-\/>\mbox{\hyperlink{classProblem_a8d7cf5966e8540ccb6dc03923367dbfe}{getDimension}}());}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00100}00100         bestParticle[i]=particle[i];}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00101}00101         bestFitness\_array[i]=fitness\_array[i];}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00102}00102 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00103}00103         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} j=0;j<myProblem-\/>\mbox{\hyperlink{classProblem_a8d7cf5966e8540ccb6dc03923367dbfe}{getDimension}}();j++)}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00104}00104         \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00105}00105           \textcolor{keywordtype}{double} left=-\/(rmargin[j]-\/lmargin[j])/20.0;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00106}00106           \textcolor{keywordtype}{double} right=(rmargin[j]-\/lmargin[j])/20.0;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00107}00107         velocity[i][j]=left+myProblem-\/>\mbox{\hyperlink{classProblem_a91395a1d18bb694acfe1b39f4d4af9e8}{randomDouble}}()*(right-\/left);}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00108}00108         \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00109}00109     \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00110}00110     updateBest();}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00111}00111 \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00112}00112 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00113}00113 \textcolor{keywordtype}{void} Pso::done()}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00114}00114 \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00115}00115     besty=localSearch(bestx);}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00116}00116 \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00117}00117 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00118}00118 \textcolor{keywordtype}{void} Pso::calcFitnessArray()}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00119}00119 \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00120}00120     \textcolor{keywordtype}{int} genome\_count=params[\textcolor{stringliteral}{"{}pso\_particles"{}}].toString().toInt();}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00121}00121     \textcolor{keywordtype}{double} wmin=params[\textcolor{stringliteral}{"{}pso\_inertia\_start"{}}].toString().toDouble();}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00122}00122     \textcolor{keywordtype}{double} wmax=params[\textcolor{stringliteral}{"{}pso\_inertia\_end"{}}].toString().toDouble();}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00123}00123     \textcolor{keywordtype}{int} maxGenerations=params[\textcolor{stringliteral}{"{}pso\_generations"{}}].toString().toInt();}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00124}00124     Data distances;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00125}00125     \textcolor{keywordtype}{int} genome\_size=myProblem-\/>\mbox{\hyperlink{classProblem_a8d7cf5966e8540ccb6dc03923367dbfe}{getDimension}}();}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00126}00126     \textcolor{keywordtype}{double} inertia= wmax-\/generation*1.0/maxGenerations*(wmax-\/wmin);}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00127}00127     \textcolor{keywordtype}{double} c1=params[\textcolor{stringliteral}{"{}pso\_c1"{}}].toString().toDouble();}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00128}00128     \textcolor{keywordtype}{double} c2=params[\textcolor{stringliteral}{"{}pso\_c2"{}}].toString().toDouble();}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00129}00129 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00130}00130     \textcolor{keywordtype}{double} localsearch\_rate=params[\textcolor{stringliteral}{"{}pso\_localsearch\_rate"{}}].toString().toDouble();}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00131}00131     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<genome\_count;i++)}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00132}00132     \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00133}00133         Data oldg=particle[i];}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00134}00134         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} j=0;j<genome\_size;j++)}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00135}00135         \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00136}00136             \textcolor{keywordtype}{double} r1=myProblem-\/>\mbox{\hyperlink{classProblem_a91395a1d18bb694acfe1b39f4d4af9e8}{randomDouble}}();}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00137}00137             \textcolor{keywordtype}{double} r2=myProblem-\/>\mbox{\hyperlink{classProblem_a91395a1d18bb694acfe1b39f4d4af9e8}{randomDouble}}();}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00138}00138 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00139}00139             \textcolor{keywordtype}{double} tj=velocity[i][j];}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00140}00140             \textcolor{keywordtype}{double} part1=inertia * velocity[i][j];}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00141}00141             \textcolor{keywordtype}{double} part2=c1 * r1 * (bestParticle[i][j]-\/particle[i][j]);}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00142}00142             \textcolor{keywordtype}{double} part3=c2 * r2 * (bestx[j]-\/particle[i][j]);}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00143}00143             velocity[i][j]=part1+part2+part3;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00144}00144             \textcolor{keywordtype}{double} trialf=particle[i][j]+velocity[i][j];}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00145}00145             \textcolor{keywordflow}{if}(trialf<lmargin[j] || trialf>rmargin[j])}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00146}00146             \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00147}00147                 velocity[i][j]=tj;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00148}00148                 \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00149}00149             \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00150}00150            \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00151}00151             \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00152}00152                 particle[i][j]=trialf;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00153}00153 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00154}00154             \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00155}00155         \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00156}00156     distances.push\_back(getDistance(particle[i],oldg));}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00157}00157     \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00158}00158 \textcolor{preprocessor}{\#pragma omp parallel for num\_threads(threads)}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00159}00159     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<genome\_count;i++)}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00160}00160     \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00161}00161         \textcolor{keywordflow}{if}(distances[i]>1e-\/6  )}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00162}00162         \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00163}00163             \textcolor{keywordflow}{if}(localsearch\_rate>0.0 \&\& myProblem-\/>\mbox{\hyperlink{classProblem_a91395a1d18bb694acfe1b39f4d4af9e8}{randomDouble}}()<=localsearch\_rate}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00164}00164                     \&\& !checkGradientCriterion(particle[i]))}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00165}00165             \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00166}00166                 Data dg=particle[i];}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00167}00167                 fitness\_array[i]=localSearch(particle[i]);}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00168}00168                 RC+=getDistance(dg,particle[i]);}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00169}00169                 localSearchCount++;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00170}00170 \textcolor{preprocessor}{                \#pragma omp critical}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00171}00171                 \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00172}00172                     \textcolor{keywordtype}{bool} found=\textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00173}00173                     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} j=0;j<minimax.size();j++)}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00174}00174                     \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00175}00175                         \textcolor{keywordflow}{if}(getDistance(minimax[j],particle[i])<1e-\/5) \{found=\textcolor{keyword}{true};\textcolor{keywordflow}{break};\}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00176}00176                     \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00177}00177                     \textcolor{keywordflow}{if}(!found)}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00178}00178                     \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00179}00179                         minimax.push\_back(particle[i]);}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00180}00180                     \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00181}00181                     minimax.push\_back(dg);}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00182}00182                 \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00183}00183             \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00184}00184             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00185}00185             fitness\_array[i]=fitness(particle[i]);}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00186}00186         \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00187}00187     \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00188}00188 \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00189}00189 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00190}00190 \textcolor{keywordtype}{void} Pso::updateBest()}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00191}00191 \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00192}00192     \textcolor{keywordtype}{int} genome\_count=params[\textcolor{stringliteral}{"{}pso\_particles"{}}].toString().toInt();}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00193}00193 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00194}00194 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00195}00195     \textcolor{keywordtype}{int} mod=10;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00196}00196     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<genome\_count;i++)}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00197}00197     \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00198}00198 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00199}00199         \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00200}00200 \textcolor{comment}{        //if( fabs(fitness\_array[i]-\/bestfitness\_array[i])>1e-\/5  \&\& rand()\%mod==0)}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00201}00201 \textcolor{comment}{        if( rand()\%mod==0)}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00202}00202 \textcolor{comment}{        \{}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00203}00203 \textcolor{comment}{            int imin=-\/1;}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00204}00204 \textcolor{comment}{            double dmin=1e+100;}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00205}00205 \textcolor{comment}{            for(int j=0;j<minimax.size();j++)}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00206}00206 \textcolor{comment}{            \{}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00207}00207 \textcolor{comment}{                double d=getDistance(genome[i],minimax[j]);}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00208}00208 \textcolor{comment}{                if(d<dmin)}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00209}00209 \textcolor{comment}{                \{}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00210}00210 \textcolor{comment}{                    imin=j;}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00211}00211 \textcolor{comment}{                    dmin=d;}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00212}00212 \textcolor{comment}{                \}}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00213}00213 \textcolor{comment}{            \}}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00214}00214 \textcolor{comment}{            if(imin>=0 \&\& dmin<RC/localSearchCount \&\& problem-\/>getGradientCriterion(genome[i],}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00215}00215 \textcolor{comment}{                        minimax[imin]))}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00216}00216 \textcolor{comment}{                ;}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00217}00217 \textcolor{comment}{            else\{}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00218}00218 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00219}00219 \textcolor{comment}{                bool notFoundBetter=true;}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00220}00220 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00221}00221 \textcolor{comment}{                if(notFoundBetter)}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00222}00222 \textcolor{comment}{                \{}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00223}00223 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00224}00224 \textcolor{comment}{            Data gg=genome[i];}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00225}00225 \textcolor{comment}{            bool found=false;}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00226}00226 \textcolor{comment}{            localSearch(genome[i],fitness\_array[i]);}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00227}00227 \textcolor{comment}{            for(int j=0;j<minimax.size();j++)}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00228}00228 \textcolor{comment}{            \{}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00229}00229 \textcolor{comment}{                if(getDistance(genome[i],minimax[j])<1e-\/5) \{found=true;break;\}}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00230}00230 \textcolor{comment}{            \}}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00231}00231 \textcolor{comment}{            if(!found)}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00232}00232 \textcolor{comment}{            minimax.push\_back(genome[i]);}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00233}00233 \textcolor{comment}{            minimax.push\_back(gg);}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00234}00234 \textcolor{comment}{            RC+=getDistance(gg,genome[i]);}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00235}00235 \textcolor{comment}{            localSearchCount++;}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00236}00236 \textcolor{comment}{                \}}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00237}00237 \textcolor{comment}{                \}}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00238}00238 \textcolor{comment}{        \}*/}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00239}00239         \textcolor{keywordflow}{if}(fitness\_array[i]<bestFitness\_array[i])}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00240}00240         \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00241}00241             bestFitness\_array[i]=fitness\_array[i];}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00242}00242             bestParticle[i]=particle[i];}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00243}00243         \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00244}00244         \textcolor{keywordflow}{if}(besty>bestFitness\_array[i])}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00245}00245         \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00246}00246             bestIndex=i;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00247}00247             bestx=bestParticle[i];}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00248}00248             besty=bestFitness\_array[i];}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00249}00249         \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00250}00250     \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00251}00251 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00252}00252 \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00253}00253 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00254}00254 \textcolor{keywordtype}{double}  Pso::fitness(Data \&x)}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00255}00255 \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00256}00256     \textcolor{keywordflow}{if}(!myProblem-\/>\mbox{\hyperlink{classProblem_a1843d04c88315cb604d3a0ba15c2b56f}{isPointIn}}(x)) \textcolor{keywordflow}{return} 1e+100;}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00257}00257     \textcolor{keywordflow}{return} myProblem-\/>\mbox{\hyperlink{classProblem_a1d4dd1303141465d145b5b728c0b2d81}{funmin}}(x);}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00258}00258 \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00259}00259 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00260}00260 \textcolor{keywordtype}{void} Pso::Solve()}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00261}00261 \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00262}00262     Optimizer::Solve();}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00263}00263 \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00264}00264 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00265}00265 Pso::\string~Pso()}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00266}00266 \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00267}00267 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00268}00268 \}}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00269}00269 }
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00270}00270 \textcolor{keyword}{extern} \textcolor{stringliteral}{"{}C"{}} PSO\_EXPORT \mbox{\hyperlink{classOptimizer}{Optimizer}} *createOptimizer(\mbox{\hyperlink{classProblem}{Problem}} *p)}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00271}00271 \{}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00272}00272     \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{classPso}{Pso}}(p);}
+\DoxyCodeLine{\Hypertarget{pso_8cpp_source_l00273}00273 \}}
+
+\end{DoxyCode}

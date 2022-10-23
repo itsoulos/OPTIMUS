@@ -423,6 +423,7 @@ main.o: main.cpp ../../OPTIMUS/Optimus/dllproblem.h \
 		../Optimus/cprogram.h \
 		../Optimus/fparser.hh \
 		../Optimus/neuralparser.h \
+		../Optimus/simplexmethod.h \
 		getoptions.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 

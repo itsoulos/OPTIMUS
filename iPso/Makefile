@@ -437,6 +437,7 @@ ipso.o: ipso.cpp ipso.h \
 		../Optimus/cprogram.h \
 		../Optimus/fparser.hh \
 		../Optimus/neuralparser.h \
+		../Optimus/simplexmethod.h \
 		../../OPTIMUS/Optimus/tolmin.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ipso.o ipso.cpp
 

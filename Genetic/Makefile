@@ -436,6 +436,7 @@ genetic.o: genetic.cpp genetic.h \
 		../Optimus/cprogram.h \
 		../Optimus/fparser.hh \
 		../Optimus/neuralparser.h \
+		../Optimus/simplexmethod.h \
 		../../OPTIMUS/Optimus/tolmin.h \
 		../../OPTIMUS/Optimus/gradientdescent.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o genetic.o genetic.cpp

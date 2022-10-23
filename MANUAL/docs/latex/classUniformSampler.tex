@@ -1,0 +1,139 @@
+\hypertarget{classUniformSampler}{}\doxysection{Uniform\+Sampler Class Reference}
+\label{classUniformSampler}\index{UniformSampler@{UniformSampler}}
+
+
+The \mbox{\hyperlink{classUniformSampler}{Uniform\+Sampler}} class samples point from the objective problem using uniform distribution.  
+
+
+
+
+{\ttfamily \#include $<$uniformsampler.\+h$>$}
+
+
+
+Inheritance diagram for Uniform\+Sampler\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=169pt]{classUniformSampler__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Uniform\+Sampler\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=178pt]{classUniformSampler__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classUniformSampler_a25005e1fd241beea9e5734c939860055}\label{classUniformSampler_a25005e1fd241beea9e5734c939860055}} 
+{\bfseries Uniform\+Sampler} (\mbox{\hyperlink{classProblem}{Problem}} $\ast$p)
+\item 
+void \mbox{\hyperlink{classUniformSampler_ae99d0e30bc4855a7a5a6b4e4ef554e46}{sample\+From\+Problem}} (int N, Matrix \&xsample, Data \&ysample)
+\begin{DoxyCompactList}\small\item\em sample\+From\+Problem, takes samples from the problem using some distribution. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classUniformSampler_aaa07deef7b50fa965c361dd21608a3c2}{sample\+From\+Model}} (int \&N, Matrix \&xsample, Data \&ysample)
+\begin{DoxyCompactList}\small\item\em sample\+From\+Model, this method will sample from the sample model instead of the real problem. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classUniformSampler_a96e39ba66696d08839a3ea1b9165acc6}{eval}} (Data \&xpoint)
+\begin{DoxyCompactList}\small\item\em eval gets the value of model at point \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classUniformSampler_a5f1b9d5a80890559fda43b11ba76d544}{add\+Sample\+From\+Problem}} (Data \&x, double y)
+\begin{DoxyCompactList}\small\item\em add\+Sample\+From\+Problem adds a new sample from the problem. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{classUniformSampler}{Uniform\+Sampler}} class samples point from the objective problem using uniform distribution. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classUniformSampler_a5f1b9d5a80890559fda43b11ba76d544}\label{classUniformSampler_a5f1b9d5a80890559fda43b11ba76d544}} 
+\index{UniformSampler@{UniformSampler}!addSampleFromProblem@{addSampleFromProblem}}
+\index{addSampleFromProblem@{addSampleFromProblem}!UniformSampler@{UniformSampler}}
+\doxysubsubsection{\texorpdfstring{addSampleFromProblem()}{addSampleFromProblem()}}
+{\footnotesize\ttfamily void Uniform\+Sampler\+::add\+Sample\+From\+Problem (\begin{DoxyParamCaption}\item[{Data \&}]{x,  }\item[{double}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+add\+Sample\+From\+Problem adds a new sample from the problem. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & the xpoint of the new sample \\
+\hline
+{\em y} & the ypoint of the new sample \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classProblemSampler_af1ab92bf9bad3d7869080b8c5c7cb57f}{Problem\+Sampler}}.
+
+\mbox{\Hypertarget{classUniformSampler_a96e39ba66696d08839a3ea1b9165acc6}\label{classUniformSampler_a96e39ba66696d08839a3ea1b9165acc6}} 
+\index{UniformSampler@{UniformSampler}!eval@{eval}}
+\index{eval@{eval}!UniformSampler@{UniformSampler}}
+\doxysubsubsection{\texorpdfstring{eval()}{eval()}}
+{\footnotesize\ttfamily double Uniform\+Sampler\+::eval (\begin{DoxyParamCaption}\item[{Data \&}]{xpoint }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+eval gets the value of model at point 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xpoint} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classProblemSampler_a95cb4ee5a502d9f85a4688f2e6071d1f}{Problem\+Sampler}}.
+
+\mbox{\Hypertarget{classUniformSampler_aaa07deef7b50fa965c361dd21608a3c2}\label{classUniformSampler_aaa07deef7b50fa965c361dd21608a3c2}} 
+\index{UniformSampler@{UniformSampler}!sampleFromModel@{sampleFromModel}}
+\index{sampleFromModel@{sampleFromModel}!UniformSampler@{UniformSampler}}
+\doxysubsubsection{\texorpdfstring{sampleFromModel()}{sampleFromModel()}}
+{\footnotesize\ttfamily void Uniform\+Sampler\+::sample\+From\+Model (\begin{DoxyParamCaption}\item[{int \&}]{N,  }\item[{Matrix \&}]{xsample,  }\item[{Data \&}]{ysample }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+sample\+From\+Model, this method will sample from the sample model instead of the real problem. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em N,the} & number of required samples. \\
+\hline
+{\em xsample} & \\
+\hline
+{\em ysample} & \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{classProblemSampler_ab7d597e1843b8d361344bbc5751b9a32}{Problem\+Sampler}}.
+
+\mbox{\Hypertarget{classUniformSampler_ae99d0e30bc4855a7a5a6b4e4ef554e46}\label{classUniformSampler_ae99d0e30bc4855a7a5a6b4e4ef554e46}} 
+\index{UniformSampler@{UniformSampler}!sampleFromProblem@{sampleFromProblem}}
+\index{sampleFromProblem@{sampleFromProblem}!UniformSampler@{UniformSampler}}
+\doxysubsubsection{\texorpdfstring{sampleFromProblem()}{sampleFromProblem()}}
+{\footnotesize\ttfamily void Uniform\+Sampler\+::sample\+From\+Problem (\begin{DoxyParamCaption}\item[{int}]{N,  }\item[{Matrix \&}]{xsample,  }\item[{Data \&}]{ysample }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+sample\+From\+Problem, takes samples from the problem using some distribution. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em N,the} & number of samples required. \\
+\hline
+{\em xsample} & \\
+\hline
+{\em ysample} & \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{classProblemSampler_af2608337721073b8286967b37a9b7660}{Problem\+Sampler}}.
+

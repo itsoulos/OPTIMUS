@@ -1,0 +1,57 @@
+\hypertarget{gradientdescent_8cpp_source}{}\doxysection{gradientdescent.\+cpp}
+\label{gradientdescent_8cpp_source}\index{gradientdescent.cpp@{gradientdescent.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00001}00001 \textcolor{preprocessor}{\#include "{}gradientdescent.h"{}}}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00003}\mbox{\hyperlink{classGradientDescent_a6a5c849c256c080dfda7ce05632f9d4d}{00003}} \mbox{\hyperlink{classGradientDescent_a6a5c849c256c080dfda7ce05632f9d4d}{GradientDescent::GradientDescent}}(\mbox{\hyperlink{classProblem}{Problem}} *p)}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00004}00004 \{}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00005}00005     myProblem=p;}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00006}00006     iters=10000;}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00007}00007     rate=0.01;}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00008}00008 \}}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00010}\mbox{\hyperlink{classGradientDescent_a1b82c35c7dc3406efedfab1d9a9ed432}{00010}} \textcolor{keywordtype}{double}  \mbox{\hyperlink{classGradientDescent_a1b82c35c7dc3406efedfab1d9a9ed432}{GradientDescent::Solve}}(Data \&x)}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00011}00011 \{}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00012}00012     Data gradient;}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00013}00013     gradient.resize(x.size());}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00014}00014     Data lM=myProblem-\/>\mbox{\hyperlink{classProblem_ab874a141e8057d1bce73811cf1a6fe4e}{getLeftMargin}}();}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00015}00015     Data rM=myProblem-\/>\mbox{\hyperlink{classProblem_af75470dcb6520f39903d384b4c535121}{getRightMargin}}();}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00016}00016     \textcolor{keywordtype}{double} f;}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00017}00017     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{unsigned} i = 0; i < iters; i++)\{}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00018}00018             f=myProblem-\/>\mbox{\hyperlink{classProblem_a1d4dd1303141465d145b5b728c0b2d81}{funmin}}(x);}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00019}00019             myProblem-\/>\mbox{\hyperlink{classProblem_a2f694855dacafb36c04abc3886f09543}{granal}}(x,gradient);}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00020}00020             \textcolor{keywordflow}{for}(\textcolor{keywordtype}{unsigned} j = 0; j < gradient.size(); j++)\{}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00021}00021                 x[j] -\/= rate * gradient[j];}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00022}00022                 \textcolor{keywordflow}{if}(x[j] > rM[j]) x[j] = rM[j];}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00023}00023                 \textcolor{keywordflow}{if}(x[j] < lM[j]) x[j] = lM[j];}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00024}00024             \}}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00025}00025             \textcolor{keywordflow}{if}(i \% (iters/10) == 0)std::cout << \textcolor{stringliteral}{"{}BGD ITER: "{}} << i << \textcolor{stringliteral}{"{} ERROR: "{}} << f << std::endl;}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00026}00026             \textcolor{comment}{//getchar();}}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00027}00027         \}}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00028}00028    \textcolor{keywordflow}{return} f;}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00029}00029 \}}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00032}\mbox{\hyperlink{classGradientDescent_a3251e361b931997c772b9d0e1af3e4df}{00032}} \textcolor{keywordtype}{void}   \mbox{\hyperlink{classGradientDescent_a3251e361b931997c772b9d0e1af3e4df}{GradientDescent::setRate}}(\textcolor{keywordtype}{double} r)}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00033}00033 \{}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00034}00034     \textcolor{keywordflow}{if}(r>0 \&\& r<=1) rate=r;}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00035}00035 \}}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00037}\mbox{\hyperlink{classGradientDescent_a77ef0f786a7ed57407006e9e47001ce3}{00037}} \textcolor{keywordtype}{double} \mbox{\hyperlink{classGradientDescent_a77ef0f786a7ed57407006e9e47001ce3}{GradientDescent::getRate}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00038}00038 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00039}00039     \textcolor{keywordflow}{return} rate;}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00040}00040 \}}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00042}\mbox{\hyperlink{classGradientDescent_adc4d15f7772c2ea10400f0cbf69840ee}{00042}} \textcolor{keywordtype}{void}  \mbox{\hyperlink{classGradientDescent_adc4d15f7772c2ea10400f0cbf69840ee}{GradientDescent::setIters}}(\textcolor{keywordtype}{int} i)}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00043}00043 \{}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00044}00044     \textcolor{keywordflow}{if}(i>0)}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00045}00045         iters=i;}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00046}00046 \}}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00048}\mbox{\hyperlink{classGradientDescent_aa97283e68c0c38e5e1678ffd801b9e8a}{00048}} \textcolor{keywordtype}{int}   \mbox{\hyperlink{classGradientDescent_aa97283e68c0c38e5e1678ffd801b9e8a}{GradientDescent::getIters}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00049}00049 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00050}00050     \textcolor{keywordflow}{return} iters;}
+\DoxyCodeLine{\Hypertarget{gradientdescent_8cpp_source_l00051}00051 \}}
+
+\end{DoxyCode}

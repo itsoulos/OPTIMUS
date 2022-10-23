@@ -1,0 +1,107 @@
+\hypertarget{interval_8cpp_source}{}\doxysection{interval.\+cpp}
+\label{interval_8cpp_source}\index{interval.cpp@{interval.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00001}00001 \textcolor{preprocessor}{\#include "{}interval.h"{}}}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00002}00002 \textcolor{preprocessor}{\# include <QString>}}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00003}\mbox{\hyperlink{classInterval_a6611783e878997fd920f5cc3fc75fc1c}{00003}} \mbox{\hyperlink{classInterval_a6611783e878997fd920f5cc3fc75fc1c}{Interval::Interval}}(\textcolor{keywordtype}{double} a,\textcolor{keywordtype}{double} b)}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00004}00004 \{}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00005}00005     \textcolor{keywordflow}{if}(b<a)}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00006}00006     \{}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00007}00007         \textcolor{keywordtype}{double} t=b;}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00008}00008         b=a;}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00009}00009         a=t;}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00010}00010     \}}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00011}00011     \_left=a;}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00012}00012     \_right=b;}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00013}00013 \}}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00014}00014 }
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00015}\mbox{\hyperlink{classInterval_aacd67b4777a330a61195632e0725b23e}{00015}} \mbox{\hyperlink{classInterval_a6611783e878997fd920f5cc3fc75fc1c}{Interval::Interval}}(\textcolor{keyword}{const} \mbox{\hyperlink{classInterval}{Interval}} \&other)}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00016}00016 \{}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00017}00017     \_left=other.\mbox{\hyperlink{classInterval_ac4344769a396ac83b79374f2a7ab110e}{leftValue}}();}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00018}00018     \_right=other.\mbox{\hyperlink{classInterval_a2339071599eede1e50f1da1a8ca1f809}{rightValue}}();}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00019}00019 \}}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00021}\mbox{\hyperlink{classInterval_a405900d6856bb2a145092e992a7555e4}{00021}} \mbox{\hyperlink{classInterval}{Interval}} operator*(\textcolor{keywordtype}{double} value,\textcolor{keyword}{const} \mbox{\hyperlink{classInterval}{Interval}} \&other)}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00022}00022 \{}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00023}00023     \textcolor{keywordflow}{return} \mbox{\hyperlink{classInterval}{Interval}}(value * other.\mbox{\hyperlink{classInterval_ac4344769a396ac83b79374f2a7ab110e}{leftValue}}(),value * other.\mbox{\hyperlink{classInterval_a2339071599eede1e50f1da1a8ca1f809}{rightValue}}());}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00024}00024 \}}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00025}00025 }
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00026}\mbox{\hyperlink{classInterval_a61809ae2bb4e679e9341413173fe85e9}{00026}} \mbox{\hyperlink{classInterval}{Interval}} operator*(\textcolor{keyword}{const} \mbox{\hyperlink{classInterval}{Interval}} \&other,\textcolor{keywordtype}{double} value)}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00027}00027 \{}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00028}00028     \textcolor{keywordflow}{return} \mbox{\hyperlink{classInterval}{Interval}}(value * other.\mbox{\hyperlink{classInterval_ac4344769a396ac83b79374f2a7ab110e}{leftValue}}(),value * other.\mbox{\hyperlink{classInterval_a2339071599eede1e50f1da1a8ca1f809}{rightValue}}());}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00029}00029 \}}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00031}\mbox{\hyperlink{classInterval_ab167c56e777d20e9127f20c9cc5ffaf3}{00031}} \mbox{\hyperlink{classInterval}{Interval}} operator+(\textcolor{keyword}{const} \mbox{\hyperlink{classInterval}{Interval}}\& a, \textcolor{keyword}{const} \mbox{\hyperlink{classInterval}{Interval}}\& b)}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00032}00032 \{}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00033}00033     \textcolor{keywordflow}{return} \mbox{\hyperlink{classInterval}{Interval}}(a.\mbox{\hyperlink{classInterval_ac4344769a396ac83b79374f2a7ab110e}{leftValue}}()+b.\mbox{\hyperlink{classInterval_ac4344769a396ac83b79374f2a7ab110e}{leftValue}}(),a.\mbox{\hyperlink{classInterval_a2339071599eede1e50f1da1a8ca1f809}{rightValue}}()+b.\mbox{\hyperlink{classInterval_a2339071599eede1e50f1da1a8ca1f809}{rightValue}}());}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00034}00034 \}}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00036}\mbox{\hyperlink{classInterval_ac9c9080572803fc0912362f6cb0f6058}{00036}} \mbox{\hyperlink{classInterval}{Interval}} \mbox{\hyperlink{classInterval_ac9c9080572803fc0912362f6cb0f6058}{Interval::left}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00037}00037 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00038}00038     \textcolor{keywordtype}{double} mid=(\_right-\/\_left)/2.0;}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00039}00039     \textcolor{keywordflow}{return} \mbox{\hyperlink{classInterval_a6611783e878997fd920f5cc3fc75fc1c}{Interval}}(\_left,\_left+mid);}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00040}00040 \}}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00042}\mbox{\hyperlink{classInterval_a3f53eed3e9d35f929be8a14872b43781}{00042}} \mbox{\hyperlink{classInterval}{Interval}} \mbox{\hyperlink{classInterval_a3f53eed3e9d35f929be8a14872b43781}{Interval::right}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00043}00043 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00044}00044     \textcolor{keywordtype}{double} mid=(\_right-\/\_left)/2.0;}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00045}00045     \textcolor{keywordflow}{return} \mbox{\hyperlink{classInterval_a6611783e878997fd920f5cc3fc75fc1c}{Interval}}(\_left+mid,\_right);}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00046}00046 \}}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00048}\mbox{\hyperlink{classInterval_a28ae8aecf13941fc7c7aea6a5d4108d7}{00048}} QString \mbox{\hyperlink{classInterval_a28ae8aecf13941fc7c7aea6a5d4108d7}{Interval::toString}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00049}00049 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00050}00050     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}["{}}+QString::number(\_left)+\textcolor{stringliteral}{"{},"{}}+QString::number(\_right)+\textcolor{stringliteral}{"{}]"{}};}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00051}00051 \}}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00052}00052 }
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00053}\mbox{\hyperlink{classInterval_a3890ede9b7c001e6c3a911df44c8e067}{00053}} \textcolor{keywordtype}{double}  \mbox{\hyperlink{classInterval_a3890ede9b7c001e6c3a911df44c8e067}{Interval::width}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00054}00054 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00055}00055     \textcolor{keywordflow}{return} \_right-\/\_left;}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00056}00056 \}}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00057}00057 }
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00058}\mbox{\hyperlink{classInterval_a5871d9f499de38b8fb125243cf38b6dc}{00058}} std::ostream\& operator<<(std::ostream\& out, \textcolor{keyword}{const} \mbox{\hyperlink{classInterval}{Interval}} \&f1)}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00059}00059 \{}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00060}00060     out << f1.\mbox{\hyperlink{classInterval_a28ae8aecf13941fc7c7aea6a5d4108d7}{toString}}().toStdString();}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00061}00061     \textcolor{keywordflow}{return} out;}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00062}00062 \}}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00063}00063 }
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00064}\mbox{\hyperlink{classInterval_ac4344769a396ac83b79374f2a7ab110e}{00064}} \textcolor{keywordtype}{double} \mbox{\hyperlink{classInterval_ac4344769a396ac83b79374f2a7ab110e}{Interval::leftValue}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00065}00065 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00066}00066     \textcolor{keywordflow}{return} \_left;}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00067}00067 \}}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00068}00068 }
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00069}\mbox{\hyperlink{classInterval_a2339071599eede1e50f1da1a8ca1f809}{00069}} \textcolor{keywordtype}{double} \mbox{\hyperlink{classInterval_a2339071599eede1e50f1da1a8ca1f809}{Interval::rightValue}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00070}00070 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00071}00071     \textcolor{keywordflow}{return} \_right;}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00072}00072 \}}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00073}00073 }
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00074}\mbox{\hyperlink{classInterval_a41bdd87a31bff5ff461d5ab8d399bc82}{00074}} \mbox{\hyperlink{classInterval}{Interval}}\& \mbox{\hyperlink{classInterval_a41bdd87a31bff5ff461d5ab8d399bc82}{Interval::operator=}}(\textcolor{keyword}{const} \mbox{\hyperlink{classInterval}{Interval}} \&other)}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00075}00075 \{}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00076}00076     \_left=other.\mbox{\hyperlink{classInterval_ac4344769a396ac83b79374f2a7ab110e}{leftValue}}();}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00077}00077     \_right=other.\mbox{\hyperlink{classInterval_a2339071599eede1e50f1da1a8ca1f809}{rightValue}}();}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00078}00078     \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00079}00079 \}}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00080}00080 }
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00081}00081 }
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00082}\mbox{\hyperlink{classInterval_a3c1d5738d43ade9561ba9c72ea5c3b0f}{00082}} \textcolor{keywordtype}{void}   \mbox{\hyperlink{classInterval_a3c1d5738d43ade9561ba9c72ea5c3b0f}{Interval::divideLeft}}()}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00083}00083 \{}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00084}00084     \_left/=2.0;}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00085}00085 \}}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00086}00086 }
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00087}\mbox{\hyperlink{classInterval_aed8e19ce264e2ec7b5b1316085730916}{00087}} \textcolor{keywordtype}{void}   \mbox{\hyperlink{classInterval_aed8e19ce264e2ec7b5b1316085730916}{Interval::divideRight}}()}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00088}00088 \{}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00089}00089     \_right/=2.0;}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00090}00090     \textcolor{keywordflow}{if}(\_right<\_left)}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00091}00091     \{}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00092}00092         \textcolor{keywordtype}{double} t=\_left;}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00093}00093         \_left=\_right;}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00094}00094         \_right=t;}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00095}00095     \}}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00096}00096 \}}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00097}00097 }
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00098}\mbox{\hyperlink{classInterval_a923e1717a3dedfe1ba90f81fcb26d5c5}{00098}} \mbox{\hyperlink{classInterval_a923e1717a3dedfe1ba90f81fcb26d5c5}{Interval::\string~Interval}}()}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00099}00099 \{}
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00100}00100 }
+\DoxyCodeLine{\Hypertarget{interval_8cpp_source_l00101}00101 \}}
+
+\end{DoxyCode}

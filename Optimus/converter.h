@@ -9,6 +9,10 @@ typedef vector<double> Data;
 # include <stdio.h>
 # include <stdlib.h>
 
+/**
+ * @brief The Converter class creates a neural network for a given integer chromsome.
+ *
+ */
 class Converter
 {
 	private:

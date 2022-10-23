@@ -1,0 +1,290 @@
+\hypertarget{classOptimizer}{}\doxysection{Optimizer Class Reference}
+\label{classOptimizer}\index{Optimizer@{Optimizer}}
+
+
+The \mbox{\hyperlink{classOptimizer}{Optimizer}} class, a base class for all the Optimizers created.  
+
+
+
+
+{\ttfamily \#include $<$optimizer.\+h$>$}
+
+
+
+Inheritance diagram for Optimizer\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=260pt]{classOptimizer__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Optimizer\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=254pt]{classOptimizer__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classOptimizer_a2bcdf3ce10c0ed0ca295c836e48226d6}{Optimizer}} (\mbox{\hyperlink{classProblem}{Problem}} $\ast$p)
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classOptimizer}{Optimizer}} the constructor of the class. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classOptimizer_adcabe7fa24cc4c71c0acdfd3f7312254}{sample\+From\+Problem}} (int \&N, Matrix \&xsample, Data \&ysample)
+\begin{DoxyCompactList}\small\item\em sample\+From\+Problem, samples from the objective function a series of samples. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classOptimizer_aa56a5681b25a357e918deb8c9c6557d0}{set\+Problem}} (\mbox{\hyperlink{classProblem}{Problem}} $\ast$p)
+\begin{DoxyCompactList}\small\item\em set\+Problem changes the objective function \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classOptimizer_ac2f903ffadf8161d8c93e1e5a3e58f10}{set\+Settings}} (QJson\+Object settings)
+\begin{DoxyCompactList}\small\item\em set\+Settings, setup the settings of the optimizer in json format. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classOptimizer_ab94bf4e28cb10f445fe2dc853757d002}{set\+Threads}} (int t)
+\begin{DoxyCompactList}\small\item\em set\+Threads changes the number of Open\+MP threads used. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classOptimizer_a849f581584a16450089437f0374c357d}{local\+Search}} (Data \&x)
+\begin{DoxyCompactList}\small\item\em local\+Search perform a localsearch starting from x. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classProblem}{Problem}} $\ast$ \mbox{\hyperlink{classOptimizer_a7b70e8c55db0ff15b404ba97a75681b5}{get\+Problem}} ()
+\begin{DoxyCompactList}\small\item\em get\+Problem \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classOptimizer_aa026c531df5d79141495104b20f6e951}{Solve}} ()
+\begin{DoxyCompactList}\small\item\em Solve perform the steps of the optimizer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classOptimizer_ae1106ffe8dcc56d65ba7477ca51ef842}{add\+Parameter}} (QString name, QString value, QString description)
+\begin{DoxyCompactList}\small\item\em add\+Parameter adds a new optimization parameter. \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{classOptimizer_a163ff01bdad10f84e546894ffa8c88a4}{get\+Parameter}} (QString name)
+\begin{DoxyCompactList}\small\item\em get\+Parameter returns the value of a parameter \end{DoxyCompactList}\item 
+QString \mbox{\hyperlink{classOptimizer_abba2e704b151bc053cfd7e413baee17d}{get\+Parameter\+Description}} (QString name)
+\begin{DoxyCompactList}\small\item\em get\+Parameter\+Description returns the usage description of a parameter. \end{DoxyCompactList}\item 
+QJson\+Object \mbox{\hyperlink{classOptimizer_a49a1d7c4b5e711cf0f9c7e6bf92dee06}{get\+Parameters}} ()
+\begin{DoxyCompactList}\small\item\em get\+Parameters returns all the parameters of the optimizer \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classOptimizer_a52c02dc16fbc45201ab64a1c542dea41}\label{classOptimizer_a52c02dc16fbc45201ab64a1c542dea41}} 
+virtual bool {\bfseries terminated} ()
+\item 
+\mbox{\Hypertarget{classOptimizer_a2b3ee87deb4b5218adfece7ecaad5cb1}\label{classOptimizer_a2b3ee87deb4b5218adfece7ecaad5cb1}} 
+virtual void {\bfseries step} ()
+\item 
+\mbox{\Hypertarget{classOptimizer_a27fb9a8463a57b0a010f98053686e818}\label{classOptimizer_a27fb9a8463a57b0a010f98053686e818}} 
+virtual void {\bfseries init} ()
+\item 
+\mbox{\Hypertarget{classOptimizer_a591ee9a182056d9d6bda5206ca952d77}\label{classOptimizer_a591ee9a182056d9d6bda5206ca952d77}} 
+virtual void {\bfseries done} ()
+\item 
+\mbox{\Hypertarget{classOptimizer_a331e39ef007a3b485a49339a7ea08a89}\label{classOptimizer_a331e39ef007a3b485a49339a7ea08a89}} 
+void {\bfseries prepare\+Sampler} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classOptimizer_a880309f7764aa8bc03b8f7f2bdd4e7ed}\label{classOptimizer_a880309f7764aa8bc03b8f7f2bdd4e7ed}} 
+\mbox{\hyperlink{classProblem}{Problem}} $\ast$ {\bfseries my\+Problem}
+\item 
+\mbox{\Hypertarget{classOptimizer_a4802dc5174182f3859c83058b03bfb2f}\label{classOptimizer_a4802dc5174182f3859c83058b03bfb2f}} 
+QJson\+Object {\bfseries params}
+\item 
+\mbox{\Hypertarget{classOptimizer_a0d74fd0eae81be901b19d711e1dc4491}\label{classOptimizer_a0d74fd0eae81be901b19d711e1dc4491}} 
+\mbox{\hyperlink{classProblemSampler}{Problem\+Sampler}} $\ast$ {\bfseries default\+Sampler}
+\item 
+\mbox{\Hypertarget{classOptimizer_abf698b2285a7da08efc76287b4800176}\label{classOptimizer_abf698b2285a7da08efc76287b4800176}} 
+int {\bfseries threads}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{classOptimizer}{Optimizer}} class, a base class for all the Optimizers created. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classOptimizer_a2bcdf3ce10c0ed0ca295c836e48226d6}\label{classOptimizer_a2bcdf3ce10c0ed0ca295c836e48226d6}} 
+\index{Optimizer@{Optimizer}!Optimizer@{Optimizer}}
+\index{Optimizer@{Optimizer}!Optimizer@{Optimizer}}
+\doxysubsubsection{\texorpdfstring{Optimizer()}{Optimizer()}}
+{\footnotesize\ttfamily Optimizer\+::\+Optimizer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classProblem}{Problem}} $\ast$}]{p }\end{DoxyParamCaption})}
+
+
+
+\mbox{\hyperlink{classOptimizer}{Optimizer}} the constructor of the class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em p,the} & objective function. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classOptimizer_ae1106ffe8dcc56d65ba7477ca51ef842}\label{classOptimizer_ae1106ffe8dcc56d65ba7477ca51ef842}} 
+\index{Optimizer@{Optimizer}!addParameter@{addParameter}}
+\index{addParameter@{addParameter}!Optimizer@{Optimizer}}
+\doxysubsubsection{\texorpdfstring{addParameter()}{addParameter()}}
+{\footnotesize\ttfamily void Optimizer\+::add\+Parameter (\begin{DoxyParamCaption}\item[{QString}]{name,  }\item[{QString}]{value,  }\item[{QString}]{description }\end{DoxyParamCaption})}
+
+
+
+add\+Parameter adds a new optimization parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the parameter. \\
+\hline
+{\em value} & The default value of the parameter. \\
+\hline
+{\em description} & A description of the usage of the parameter. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classOptimizer_a163ff01bdad10f84e546894ffa8c88a4}\label{classOptimizer_a163ff01bdad10f84e546894ffa8c88a4}} 
+\index{Optimizer@{Optimizer}!getParameter@{getParameter}}
+\index{getParameter@{getParameter}!Optimizer@{Optimizer}}
+\doxysubsubsection{\texorpdfstring{getParameter()}{getParameter()}}
+{\footnotesize\ttfamily QString Optimizer\+::get\+Parameter (\begin{DoxyParamCaption}\item[{QString}]{name }\end{DoxyParamCaption})}
+
+
+
+get\+Parameter returns the value of a parameter 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & the name of the parameter \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the value 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classOptimizer_abba2e704b151bc053cfd7e413baee17d}\label{classOptimizer_abba2e704b151bc053cfd7e413baee17d}} 
+\index{Optimizer@{Optimizer}!getParameterDescription@{getParameterDescription}}
+\index{getParameterDescription@{getParameterDescription}!Optimizer@{Optimizer}}
+\doxysubsubsection{\texorpdfstring{getParameterDescription()}{getParameterDescription()}}
+{\footnotesize\ttfamily QString Optimizer\+::get\+Parameter\+Description (\begin{DoxyParamCaption}\item[{QString}]{name }\end{DoxyParamCaption})}
+
+
+
+get\+Parameter\+Description returns the usage description of a parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & the name of the parameter \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the description. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classOptimizer_a49a1d7c4b5e711cf0f9c7e6bf92dee06}\label{classOptimizer_a49a1d7c4b5e711cf0f9c7e6bf92dee06}} 
+\index{Optimizer@{Optimizer}!getParameters@{getParameters}}
+\index{getParameters@{getParameters}!Optimizer@{Optimizer}}
+\doxysubsubsection{\texorpdfstring{getParameters()}{getParameters()}}
+{\footnotesize\ttfamily QJson\+Object Optimizer\+::get\+Parameters (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+get\+Parameters returns all the parameters of the optimizer 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{classOptimizer_a7b70e8c55db0ff15b404ba97a75681b5}\label{classOptimizer_a7b70e8c55db0ff15b404ba97a75681b5}} 
+\index{Optimizer@{Optimizer}!getProblem@{getProblem}}
+\index{getProblem@{getProblem}!Optimizer@{Optimizer}}
+\doxysubsubsection{\texorpdfstring{getProblem()}{getProblem()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classProblem}{Problem}} $\ast$ Optimizer\+::get\+Problem (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+get\+Problem 
+
+\begin{DoxyReturn}{Returns}
+a pointer to the objective function. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classOptimizer_a849f581584a16450089437f0374c357d}\label{classOptimizer_a849f581584a16450089437f0374c357d}} 
+\index{Optimizer@{Optimizer}!localSearch@{localSearch}}
+\index{localSearch@{localSearch}!Optimizer@{Optimizer}}
+\doxysubsubsection{\texorpdfstring{localSearch()}{localSearch()}}
+{\footnotesize\ttfamily double Optimizer\+::local\+Search (\begin{DoxyParamCaption}\item[{Data \&}]{x }\end{DoxyParamCaption})}
+
+
+
+local\+Search perform a localsearch starting from x. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{classOptimizer_adcabe7fa24cc4c71c0acdfd3f7312254}\label{classOptimizer_adcabe7fa24cc4c71c0acdfd3f7312254}} 
+\index{Optimizer@{Optimizer}!sampleFromProblem@{sampleFromProblem}}
+\index{sampleFromProblem@{sampleFromProblem}!Optimizer@{Optimizer}}
+\doxysubsubsection{\texorpdfstring{sampleFromProblem()}{sampleFromProblem()}}
+{\footnotesize\ttfamily void Optimizer\+::sample\+From\+Problem (\begin{DoxyParamCaption}\item[{int \&}]{N,  }\item[{Matrix \&}]{xsample,  }\item[{Data \&}]{ysample }\end{DoxyParamCaption})}
+
+
+
+sample\+From\+Problem, samples from the objective function a series of samples. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em N,the} & number of samples. \\
+\hline
+{\em xsample,the} & vector holding the samples. \\
+\hline
+{\em ysample,the} & function values of the samples. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classOptimizer_aa56a5681b25a357e918deb8c9c6557d0}\label{classOptimizer_aa56a5681b25a357e918deb8c9c6557d0}} 
+\index{Optimizer@{Optimizer}!setProblem@{setProblem}}
+\index{setProblem@{setProblem}!Optimizer@{Optimizer}}
+\doxysubsubsection{\texorpdfstring{setProblem()}{setProblem()}}
+{\footnotesize\ttfamily void Optimizer\+::set\+Problem (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classProblem}{Problem}} $\ast$}]{p }\end{DoxyParamCaption})}
+
+
+
+set\+Problem changes the objective function 
+
+
+\begin{DoxyParams}{Parameters}
+{\em p,the} & new objective function to be used. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classOptimizer_ac2f903ffadf8161d8c93e1e5a3e58f10}\label{classOptimizer_ac2f903ffadf8161d8c93e1e5a3e58f10}} 
+\index{Optimizer@{Optimizer}!setSettings@{setSettings}}
+\index{setSettings@{setSettings}!Optimizer@{Optimizer}}
+\doxysubsubsection{\texorpdfstring{setSettings()}{setSettings()}}
+{\footnotesize\ttfamily void Optimizer\+::set\+Settings (\begin{DoxyParamCaption}\item[{QJson\+Object}]{settings }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+set\+Settings, setup the settings of the optimizer in json format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em settings} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classOptimizer_ab94bf4e28cb10f445fe2dc853757d002}\label{classOptimizer_ab94bf4e28cb10f445fe2dc853757d002}} 
+\index{Optimizer@{Optimizer}!setThreads@{setThreads}}
+\index{setThreads@{setThreads}!Optimizer@{Optimizer}}
+\doxysubsubsection{\texorpdfstring{setThreads()}{setThreads()}}
+{\footnotesize\ttfamily void Optimizer\+::set\+Threads (\begin{DoxyParamCaption}\item[{int}]{t }\end{DoxyParamCaption})}
+
+
+
+set\+Threads changes the number of Open\+MP threads used. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em t,the} & number of threads \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classOptimizer_aa026c531df5d79141495104b20f6e951}\label{classOptimizer_aa026c531df5d79141495104b20f6e951}} 
+\index{Optimizer@{Optimizer}!Solve@{Solve}}
+\index{Solve@{Solve}!Optimizer@{Optimizer}}
+\doxysubsubsection{\texorpdfstring{Solve()}{Solve()}}
+{\footnotesize\ttfamily void Optimizer\+::\+Solve (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Solve perform the steps of the optimizer. 
+
+
+
+Reimplemented in \mbox{\hyperlink{classDoubleGenetic_a22694e6f41aaeafcfa6ad78613722fda}{Double\+Genetic}}, \mbox{\hyperlink{classIntegerGenetic_a5815202ab2ab53d546dca6a82773c8d6}{Integer\+Genetic}}, \mbox{\hyperlink{classiPso_a1858a621cd3bf02f83088ef6c250957b}{i\+Pso}}, \mbox{\hyperlink{classMinfinder_a8eb30d9ee9a47d9f4d292bfdcc3ca716}{Minfinder}}, \mbox{\hyperlink{classMultistart_abdca91d82790f6c40dc0b428d400eb6e}{Multistart}}, \mbox{\hyperlink{classNeuralMinimizer_af3e00a09924901534999d608a8f91c6d}{Neural\+Minimizer}}, \mbox{\hyperlink{classPso_aec57d6bec0b6f0a1cc7f2ebbe2e6ee33}{Pso}}, and \mbox{\hyperlink{classTmlsl_a395caebeeb7f9098ae9dd5563455faaa}{Tmlsl}}.
+

@@ -1,0 +1,130 @@
+\hypertarget{collection_8cc_source}{}\doxysection{collection.\+cc}
+\label{collection_8cc_source}\index{collection.cc@{collection.cc}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00001}00001 \textcolor{preprocessor}{\# include <collection.h>}}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00002}00002 \textcolor{preprocessor}{\# include <math.h>}}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00004}\mbox{\hyperlink{classCollection_ae55be1192290d6f37d6a5b8962759693}{00004}} \mbox{\hyperlink{classCollection_ae55be1192290d6f37d6a5b8962759693}{Collection::Collection}}(\textcolor{keywordtype}{int} d)}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00005}00005 \{}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00006}00006     dimension = d;}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00007}00007     xpoint.resize(0);}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00008}00008     ypoint.resize(0);}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00009}00009 \}}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00011}\mbox{\hyperlink{classCollection_a4b96e9eb6ef006dfdd241bf6af44b478}{00011}} \textcolor{keywordtype}{void}    \mbox{\hyperlink{classCollection_a4b96e9eb6ef006dfdd241bf6af44b478}{Collection::addSample}}(Data x,\textcolor{keywordtype}{double} y)}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00012}00012 \{}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00013}00013     \textcolor{keywordtype}{int} s=xpoint.size();}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00014}00014     xpoint.resize(s+1);}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00015}00015     ypoint.resize(s+1);}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00016}00016     xpoint[s].resize(dimension);}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00017}00017     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<dimension;i++) xpoint[s][i]=x[i];}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00018}00018     ypoint[s]=y;}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00019}00019 \}}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00021}\mbox{\hyperlink{classCollection_a9e06a17a054c387d727555170ba340f7}{00021}} \textcolor{keywordtype}{void}    \mbox{\hyperlink{classCollection_a9e06a17a054c387d727555170ba340f7}{Collection::replaceSample}}(\textcolor{keywordtype}{int} pos,Data x,\textcolor{keywordtype}{double} y)}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00022}00022 \{}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00023}00023     \textcolor{keywordflow}{if}(pos>=xpoint.size() || pos<0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00024}00024     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<dimension;i++) xpoint[pos][i]=x[i];}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00025}00025     ypoint[pos]=y;}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00026}00026 \}}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00028}00028 \textcolor{keywordtype}{void}    \mbox{\hyperlink{classCollection_a9e06a17a054c387d727555170ba340f7}{Collection::replaceSample}}(\textcolor{keywordtype}{int} pos,Data x)}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00029}00029 \{}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00030}00030     \textcolor{keywordflow}{if}(pos>=xpoint.size() || pos<0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00031}00031     xpoint[pos]=x;}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00032}00032 \}}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00034}\mbox{\hyperlink{classCollection_ac9f0bf9b6918f90d4b011ee927ee6fda}{00034}} \textcolor{keywordtype}{void}    \mbox{\hyperlink{classCollection_a9e06a17a054c387d727555170ba340f7}{Collection::replaceSample}}(\textcolor{keywordtype}{int} pos,\textcolor{keywordtype}{double} y)}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00035}00035 \{}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00036}00036     \textcolor{keywordflow}{if}(pos>=xpoint.size() || pos<0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00037}00037     ypoint[pos]=y;}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00038}00038 \}}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00040}\mbox{\hyperlink{classCollection_a4ad0c6dbe424289301ad7ae724b55819}{00040}} \textcolor{keywordtype}{void}    \mbox{\hyperlink{classCollection_a4ad0c6dbe424289301ad7ae724b55819}{Collection::getSampleX}}(\textcolor{keywordtype}{int} pos,Data \&x)}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00041}00041 \{}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00042}00042     \textcolor{keywordflow}{if}(pos>=xpoint.size() || pos<0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00043}00043     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<dimension;i++) x[i]=xpoint[pos][i];}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00044}00044 \}}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00045}00045 }
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00046}\mbox{\hyperlink{classCollection_a2ea849529111e2dca474f99909f61a29}{00046}} \textcolor{keywordtype}{void}    \mbox{\hyperlink{classCollection_a2ea849529111e2dca474f99909f61a29}{Collection::getSampleY}}(\textcolor{keywordtype}{int} pos,\textcolor{keywordtype}{double} \&y)}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00047}00047 \{}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00048}00048     \textcolor{keywordflow}{if}(pos>=xpoint.size() || pos<0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00049}00049     y=ypoint[pos];}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00050}00050 \}}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00051}00051 }
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00052}\mbox{\hyperlink{classCollection_aefaefcf4d127afef99f8a81140cc9744}{00052}} \textcolor{keywordtype}{double}  \mbox{\hyperlink{classCollection_a2ea849529111e2dca474f99909f61a29}{Collection::getSampleY}}(\textcolor{keywordtype}{int} pos)}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00053}00053 \{}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00054}00054     \textcolor{keywordflow}{if}(pos>=xpoint.size() || pos<0) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00055}00055     \textcolor{keywordflow}{return} ypoint[pos];}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00056}00056 \}}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00057}00057 }
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00058}\mbox{\hyperlink{classCollection_afc0368b137fc65ef46660c9204dc2467}{00058}} \textcolor{keywordtype}{void}    \mbox{\hyperlink{classCollection_afc0368b137fc65ef46660c9204dc2467}{Collection::sortDesc}}()}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00059}00059 \{}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00060}00060     \textcolor{keywordtype}{int} s=xpoint.size();}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00061}00061     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<s;i++)}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00062}00062     \{}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00063}00063         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} j=0;j<s-\/1;j++)}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00064}00064         \{}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00065}00065             \textcolor{keywordflow}{if}(ypoint[j+1]<ypoint[j])}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00066}00066             \{}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00067}00067                 \textcolor{keywordtype}{double} dtemp;}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00068}00068                 dtemp=ypoint[j+1];}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00069}00069                 ypoint[j+1]=ypoint[j];}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00070}00070                 ypoint[j]=dtemp;}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00071}00071                 \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} k=0;k<dimension;k++)}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00072}00072                 \{}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00073}00073                     dtemp=xpoint[j+1][k];}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00074}00074                     xpoint[j+1][k]=xpoint[j][k];}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00075}00075                     xpoint[j][k]=dtemp;}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00076}00076                 \}}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00077}00077             \}}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00078}00078         \}}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00079}00079     \}}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00080}00080 \}}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00081}00081 }
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00082}\mbox{\hyperlink{classCollection_ab0782be993e99708bb059b54730d158e}{00082}} \textcolor{keywordtype}{void}    \mbox{\hyperlink{classCollection_ab0782be993e99708bb059b54730d158e}{Collection::Cut}}(\textcolor{keywordtype}{int} N)}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00083}00083 \{}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00084}00084     \textcolor{keywordflow}{if}(N<=0 ||  N>=xpoint.size()) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00085}00085     xpoint.resize(N);}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00086}00086     ypoint.resize(N);}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00087}00087 \}}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00088}00088 }
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00089}00089 }
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00090}\mbox{\hyperlink{classCollection_adc78bc777d3cb7eac6bef6328e1db975}{00090}} \textcolor{keywordtype}{int} \mbox{\hyperlink{classCollection_adc78bc777d3cb7eac6bef6328e1db975}{Collection::isSampleIn}}(Data x,\textcolor{keywordtype}{double} y)}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00091}00091 \{}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00092}00092     \textcolor{keywordtype}{int} s=xpoint.size();}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00093}00093     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<s;i++)}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00094}00094     \{}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00095}00095         \textcolor{keywordtype}{double} d=0.0;}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00096}00096         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} j=0;j<dimension;j++)}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00097}00097             d+=(xpoint[i][j]-\/x[j])*(xpoint[i][j]-\/x[j]);}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00098}00098         \textcolor{keywordflow}{if}(sqrt(d)<1e-\/5) }
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00099}00099         \{}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00100}00100             \textcolor{keywordflow}{return} i+1;}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00101}00101         \}}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00102}00102     \}}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00103}00103     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00104}00104 \}}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00105}00105 }
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00106}\mbox{\hyperlink{classCollection_a0514f87443b6eabd81304b20510e1b29}{00106}} \textcolor{keywordtype}{int} \mbox{\hyperlink{classCollection_a0514f87443b6eabd81304b20510e1b29}{Collection::getSize}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00107}00107 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00108}00108     \textcolor{keywordflow}{return} ypoint.size();}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00109}00109 \}}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00110}00110 }
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00111}\mbox{\hyperlink{classCollection_a243d3aa24c5a4bb8abe5f56477a5434d}{00111}} \textcolor{keywordtype}{int} \mbox{\hyperlink{classCollection_a243d3aa24c5a4bb8abe5f56477a5434d}{Collection::getDimension}}()}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00112}00112 \{}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00113}00113     \textcolor{keywordflow}{return} dimension;}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00114}00114 \}}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00115}00115 }
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00116}\mbox{\hyperlink{classCollection_a4456bc2c80af2b59cf81cd93a7c92bcf}{00116}} \textcolor{keywordtype}{void}    \mbox{\hyperlink{classCollection_a4456bc2c80af2b59cf81cd93a7c92bcf}{Collection::clear}}()}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00117}00117 \{}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00118}00118     xpoint.resize(0);}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00119}00119     ypoint.resize(0);}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00120}00120 \}}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00121}00121 }
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00122}\mbox{\hyperlink{classCollection_a017dd492156e6b570a21f58a07dd73f5}{00122}} \mbox{\hyperlink{classCollection_a017dd492156e6b570a21f58a07dd73f5}{Collection::\string~Collection}}()}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00123}00123 \{}
+\DoxyCodeLine{\Hypertarget{collection_8cc_source_l00124}00124 \}}
+
+\end{DoxyCode}

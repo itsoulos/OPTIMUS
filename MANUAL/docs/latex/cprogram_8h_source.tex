@@ -1,0 +1,42 @@
+\hypertarget{cprogram_8h_source}{}\doxysection{cprogram.\+h}
+\label{cprogram_8h_source}\index{cprogram.h@{cprogram.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00001}00001 \textcolor{preprocessor}{\# ifndef \_\_CPROGRAM\_\_H}}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00002}00002 \textcolor{preprocessor}{\# include "{}symbol.h"{}}}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00003}00003 \textcolor{preprocessor}{\# include "{}rule.h"{}}}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00004}00004 \textcolor{preprocessor}{\# include "{}fparser.hh"{}}}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00005}00005 }
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00006}\mbox{\hyperlink{classCprogram}{00006}} \textcolor{keyword}{class }\mbox{\hyperlink{classCprogram}{Cprogram}}}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00007}00007 \{}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00008}00008     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00009}00009         \textcolor{keywordtype}{string}      vars;}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00010}00010         \mbox{\hyperlink{classGrsFunctionParser}{GrsFunctionParser}}  parser;}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00011}00011         \textcolor{keywordtype}{int}         dimension;}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00012}00012         vector<Rule*> rule;}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00013}00013         \mbox{\hyperlink{classSymbol}{Symbol}}        Start, Expr, function, binaryop, terminal,}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00014}00014                     XXlist,DigitList, Digit0, Digit1, MinMax;}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00015}00015         \mbox{\hyperlink{classSymbol}{Symbol}}        Sin, Cos, Exp, Log, Abs, Sqrt, Min, PI, Max;}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00016}00016         \mbox{\hyperlink{classSymbol}{Symbol}}        Plus, Minus, Mult, Div, Pow;}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00017}00017         \mbox{\hyperlink{classSymbol}{Symbol}}        Lpar, Rpar, Dot, Comma;}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00018}00018         \mbox{\hyperlink{classSymbol}{Symbol}}        Tan, Int, Log10;}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00019}00019         vector<Symbol>  Digit;}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00020}00020         vector<Symbol>  XX;}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00021}00021         \textcolor{keywordtype}{int}         newRule();}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00022}00022         \textcolor{keywordtype}{void}            makeTerminals();}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00023}00023         \textcolor{keywordtype}{void}            makeNonTerminals();}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00024}00024         \textcolor{keywordtype}{void}            makeRules();}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00025}00025     \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00026}00026         \mbox{\hyperlink{classCprogram}{Cprogram}}(\textcolor{keywordtype}{int} dim);}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00027}00027         \textcolor{keywordtype}{int} Parse(\textcolor{keywordtype}{string} expr);}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00028}00028         \textcolor{keywordtype}{double}  Eval(\textcolor{keyword}{const} \textcolor{keywordtype}{double} *X);}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00029}00029         \textcolor{keywordtype}{double}  EvalDeriv(\textcolor{keyword}{const} \textcolor{keywordtype}{double} *X,\textcolor{keywordtype}{int} pos);}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00030}00030         \textcolor{keywordtype}{double}  EvalDeriv2(\textcolor{keyword}{const} \textcolor{keywordtype}{double} *X,\textcolor{keywordtype}{int} pos);}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00031}00031         \textcolor{keywordtype}{int} EvalError();}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00032}00032         \mbox{\hyperlink{classSymbol}{Symbol}}    *getStartSymbol();}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00033}00033         \mbox{\hyperlink{classCprogram}{\string~Cprogram}}();}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00034}00034 \};}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00035}00035 \textcolor{preprocessor}{\# define \_\_CPROGRAM\_\_H}}
+\DoxyCodeLine{\Hypertarget{cprogram_8h_source_l00036}00036 \textcolor{preprocessor}{\# endif}}
+
+\end{DoxyCode}

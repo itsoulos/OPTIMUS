@@ -1,0 +1,183 @@
+\hypertarget{classInterval}{}\doxysection{Interval Class Reference}
+\label{classInterval}\index{Interval@{Interval}}
+
+
+The base class for interval arithmetics.  
+
+
+
+
+{\ttfamily \#include $<$interval.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classInterval_a6611783e878997fd920f5cc3fc75fc1c}{Interval}} (double a=0.\+0, double b=0.\+0)
+\item 
+\mbox{\hyperlink{classInterval_aacd67b4777a330a61195632e0725b23e}{Interval}} (const \mbox{\hyperlink{classInterval}{Interval}} \&other)
+\item 
+\mbox{\hyperlink{classInterval}{Interval}} \mbox{\hyperlink{classInterval_ac9c9080572803fc0912362f6cb0f6058}{left}} () const
+\item 
+\mbox{\hyperlink{classInterval}{Interval}} \mbox{\hyperlink{classInterval_a3f53eed3e9d35f929be8a14872b43781}{right}} () const
+\item 
+QString \mbox{\hyperlink{classInterval_a28ae8aecf13941fc7c7aea6a5d4108d7}{to\+String}} () const
+\item 
+\mbox{\hyperlink{classInterval}{Interval}} \& \mbox{\hyperlink{classInterval_a41bdd87a31bff5ff461d5ab8d399bc82}{operator=}} (const \mbox{\hyperlink{classInterval}{Interval}} \&other)
+\item 
+double \mbox{\hyperlink{classInterval_ac4344769a396ac83b79374f2a7ab110e}{left\+Value}} () const
+\item 
+double \mbox{\hyperlink{classInterval_a2339071599eede1e50f1da1a8ca1f809}{right\+Value}} () const
+\item 
+double \mbox{\hyperlink{classInterval_a3890ede9b7c001e6c3a911df44c8e067}{width}} () const
+\item 
+void \mbox{\hyperlink{classInterval_a3c1d5738d43ade9561ba9c72ea5c3b0f}{divide\+Left}} ()
+\item 
+void \mbox{\hyperlink{classInterval_aed8e19ce264e2ec7b5b1316085730916}{divide\+Right}} ()
+\item 
+\mbox{\hyperlink{classInterval_a923e1717a3dedfe1ba90f81fcb26d5c5}{$\sim$\+Interval}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+std\+::ostream \& \mbox{\hyperlink{classInterval_a5871d9f499de38b8fb125243cf38b6dc}{operator$<$$<$}} (std\+::ostream \&out, const \mbox{\hyperlink{classInterval}{Interval}} \&f1)
+\item 
+\mbox{\hyperlink{classInterval}{Interval}} \mbox{\hyperlink{classInterval_ab167c56e777d20e9127f20c9cc5ffaf3}{operator+}} (const \mbox{\hyperlink{classInterval}{Interval}} \&a, const \mbox{\hyperlink{classInterval}{Interval}} \&b)
+\item 
+\mbox{\hyperlink{classInterval}{Interval}} \mbox{\hyperlink{classInterval_a405900d6856bb2a145092e992a7555e4}{operator$\ast$}} (double value, const \mbox{\hyperlink{classInterval}{Interval}} \&other)
+\item 
+\mbox{\hyperlink{classInterval}{Interval}} \mbox{\hyperlink{classInterval_a61809ae2bb4e679e9341413173fe85e9}{operator$\ast$}} (const \mbox{\hyperlink{classInterval}{Interval}} \&other, double value)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The base class for interval arithmetics. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classInterval_a6611783e878997fd920f5cc3fc75fc1c}\label{classInterval_a6611783e878997fd920f5cc3fc75fc1c}} 
+\index{Interval@{Interval}!Interval@{Interval}}
+\index{Interval@{Interval}!Interval@{Interval}}
+\doxysubsubsection{\texorpdfstring{Interval()}{Interval()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Interval\+::\+Interval (\begin{DoxyParamCaption}\item[{double}]{a = {\ttfamily 0.0},  }\item[{double}]{b = {\ttfamily 0.0} }\end{DoxyParamCaption})}
+
+Create a new interval using
+\begin{DoxyParams}{Parameters}
+{\em a} & and\\
+\hline
+{\em b} & as the bounds of the interval \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classInterval_aacd67b4777a330a61195632e0725b23e}\label{classInterval_aacd67b4777a330a61195632e0725b23e}} 
+\index{Interval@{Interval}!Interval@{Interval}}
+\index{Interval@{Interval}!Interval@{Interval}}
+\doxysubsubsection{\texorpdfstring{Interval()}{Interval()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Interval\+::\+Interval (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classInterval}{Interval}} \&}]{other }\end{DoxyParamCaption})}
+
+Assign other interval to the current \mbox{\Hypertarget{classInterval_a923e1717a3dedfe1ba90f81fcb26d5c5}\label{classInterval_a923e1717a3dedfe1ba90f81fcb26d5c5}} 
+\index{Interval@{Interval}!````~Interval@{$\sim$Interval}}
+\index{````~Interval@{$\sim$Interval}!Interval@{Interval}}
+\doxysubsubsection{\texorpdfstring{$\sim$Interval()}{~Interval()}}
+{\footnotesize\ttfamily Interval\+::$\sim$\+Interval (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+The destructor of the class 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classInterval_a3c1d5738d43ade9561ba9c72ea5c3b0f}\label{classInterval_a3c1d5738d43ade9561ba9c72ea5c3b0f}} 
+\index{Interval@{Interval}!divideLeft@{divideLeft}}
+\index{divideLeft@{divideLeft}!Interval@{Interval}}
+\doxysubsubsection{\texorpdfstring{divideLeft()}{divideLeft()}}
+{\footnotesize\ttfamily void Interval\+::divide\+Left (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Split the interval in the left bound \mbox{\Hypertarget{classInterval_aed8e19ce264e2ec7b5b1316085730916}\label{classInterval_aed8e19ce264e2ec7b5b1316085730916}} 
+\index{Interval@{Interval}!divideRight@{divideRight}}
+\index{divideRight@{divideRight}!Interval@{Interval}}
+\doxysubsubsection{\texorpdfstring{divideRight()}{divideRight()}}
+{\footnotesize\ttfamily void Interval\+::divide\+Right (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Split the interval in the right bound \mbox{\Hypertarget{classInterval_ac9c9080572803fc0912362f6cb0f6058}\label{classInterval_ac9c9080572803fc0912362f6cb0f6058}} 
+\index{Interval@{Interval}!left@{left}}
+\index{left@{left}!Interval@{Interval}}
+\doxysubsubsection{\texorpdfstring{left()}{left()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classInterval}{Interval}} Interval\+::left (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\begin{DoxyReturn}{Returns}
+the left bound of the interval in interval format 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classInterval_ac4344769a396ac83b79374f2a7ab110e}\label{classInterval_ac4344769a396ac83b79374f2a7ab110e}} 
+\index{Interval@{Interval}!leftValue@{leftValue}}
+\index{leftValue@{leftValue}!Interval@{Interval}}
+\doxysubsubsection{\texorpdfstring{leftValue()}{leftValue()}}
+{\footnotesize\ttfamily double Interval\+::left\+Value (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\begin{DoxyReturn}{Returns}
+the left value of the interval 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classInterval_a41bdd87a31bff5ff461d5ab8d399bc82}\label{classInterval_a41bdd87a31bff5ff461d5ab8d399bc82}} 
+\index{Interval@{Interval}!operator=@{operator=}}
+\index{operator=@{operator=}!Interval@{Interval}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classInterval}{Interval}} \& Interval\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classInterval}{Interval}} \&}]{other }\end{DoxyParamCaption})}
+
+Assign overloaded operator \mbox{\Hypertarget{classInterval_a3f53eed3e9d35f929be8a14872b43781}\label{classInterval_a3f53eed3e9d35f929be8a14872b43781}} 
+\index{Interval@{Interval}!right@{right}}
+\index{right@{right}!Interval@{Interval}}
+\doxysubsubsection{\texorpdfstring{right()}{right()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classInterval}{Interval}} Interval\+::right (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\begin{DoxyReturn}{Returns}
+the right bound of the interval in interval format 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classInterval_a2339071599eede1e50f1da1a8ca1f809}\label{classInterval_a2339071599eede1e50f1da1a8ca1f809}} 
+\index{Interval@{Interval}!rightValue@{rightValue}}
+\index{rightValue@{rightValue}!Interval@{Interval}}
+\doxysubsubsection{\texorpdfstring{rightValue()}{rightValue()}}
+{\footnotesize\ttfamily double Interval\+::right\+Value (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\begin{DoxyReturn}{Returns}
+the right value of the interval 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classInterval_a28ae8aecf13941fc7c7aea6a5d4108d7}\label{classInterval_a28ae8aecf13941fc7c7aea6a5d4108d7}} 
+\index{Interval@{Interval}!toString@{toString}}
+\index{toString@{toString}!Interval@{Interval}}
+\doxysubsubsection{\texorpdfstring{toString()}{toString()}}
+{\footnotesize\ttfamily QString Interval\+::to\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\begin{DoxyReturn}{Returns}
+the string representation of the interval 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classInterval_a3890ede9b7c001e6c3a911df44c8e067}\label{classInterval_a3890ede9b7c001e6c3a911df44c8e067}} 
+\index{Interval@{Interval}!width@{width}}
+\index{width@{width}!Interval@{Interval}}
+\doxysubsubsection{\texorpdfstring{width()}{width()}}
+{\footnotesize\ttfamily double Interval\+::width (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\begin{DoxyReturn}{Returns}
+the width of the interval 
+\end{DoxyReturn}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{classInterval_a61809ae2bb4e679e9341413173fe85e9}\label{classInterval_a61809ae2bb4e679e9341413173fe85e9}} 
+\index{Interval@{Interval}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!Interval@{Interval}}
+\doxysubsubsection{\texorpdfstring{operator$\ast$}{operator*}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classInterval}{Interval}} operator$\ast$ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classInterval}{Interval}} \&}]{other,  }\item[{double}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+Overloaded operator $\ast$ for intervals \mbox{\Hypertarget{classInterval_a405900d6856bb2a145092e992a7555e4}\label{classInterval_a405900d6856bb2a145092e992a7555e4}} 
+\index{Interval@{Interval}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!Interval@{Interval}}
+\doxysubsubsection{\texorpdfstring{operator$\ast$}{operator*}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classInterval}{Interval}} operator$\ast$ (\begin{DoxyParamCaption}\item[{double}]{value,  }\item[{const \mbox{\hyperlink{classInterval}{Interval}} \&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+Overloaded operator $\ast$ for intervals \mbox{\Hypertarget{classInterval_ab167c56e777d20e9127f20c9cc5ffaf3}\label{classInterval_ab167c56e777d20e9127f20c9cc5ffaf3}} 
+\index{Interval@{Interval}!operator+@{operator+}}
+\index{operator+@{operator+}!Interval@{Interval}}
+\doxysubsubsection{\texorpdfstring{operator+}{operator+}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classInterval}{Interval}} operator+ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classInterval}{Interval}} \&}]{a,  }\item[{const \mbox{\hyperlink{classInterval}{Interval}} \&}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+Overloaded operator + for intervals \mbox{\Hypertarget{classInterval_a5871d9f499de38b8fb125243cf38b6dc}\label{classInterval_a5871d9f499de38b8fb125243cf38b6dc}} 
+\index{Interval@{Interval}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!Interval@{Interval}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$}{operator<<}}
+{\footnotesize\ttfamily std\+::ostream \& operator$<$$<$ (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out,  }\item[{const \mbox{\hyperlink{classInterval}{Interval}} \&}]{f1 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+Overloaded operator \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} for intervals 

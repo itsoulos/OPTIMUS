@@ -1,0 +1,58 @@
+\hypertarget{intervalproblem_8h_source}{}\doxysection{intervalproblem.\+h}
+\label{intervalproblem_8h_source}\index{intervalproblem.h@{intervalproblem.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00001}00001 \textcolor{preprocessor}{\#ifndef INTERVALPROBLEM\_H}}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00002}00002 \textcolor{preprocessor}{\#define INTERVALPROBLEM\_H}}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00003}00003 \textcolor{preprocessor}{\# include <vector>}}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00004}00004 \textcolor{preprocessor}{\# include <iostream>}}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00005}00005 \textcolor{preprocessor}{\# include <QVector>}}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00006}00006 \textcolor{preprocessor}{\# include <QJsonObject>}}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00007}00007 \textcolor{preprocessor}{\# include "{}interval.h"{}}}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00008}00008 \textcolor{preprocessor}{\# include <QRandomGenerator>}}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00009}00009 \textcolor{keyword}{using namespace  }std;}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00010}00010 \textcolor{keyword}{typedef} vector<double> Data;}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00011}00011 \textcolor{keyword}{typedef} vector<Interval> IntervalData;}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00017}\mbox{\hyperlink{classIntervalProblem}{00017}} \textcolor{keyword}{class }\mbox{\hyperlink{classIntervalProblem}{IntervalProblem}}}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00018}00018 \{}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00019}00019 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00020}00020     \textcolor{keywordtype}{int}                 dimension;}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00021}00021     IntervalData        margin;}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00022}00022     \textcolor{keyword}{const} \textcolor{keywordtype}{int}     maxSearchDepth=5;}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00023}00023     QRandomGenerator randGen;}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00024}00024     \textcolor{keywordtype}{int} threads;}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00025}00025     QVector<QRandomGenerator> threadGen;}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00026}00026 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00028}00028     \mbox{\hyperlink{classIntervalProblem_ac387b1638afb801921b460ebe4b6e738}{IntervalProblem}}(\textcolor{keywordtype}{int} d);}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00032}00032     \textcolor{keywordtype}{void}                \mbox{\hyperlink{classIntervalProblem_a87b1ac082b68b19c704a7aab3d4a71a0}{setDimension}}(\textcolor{keywordtype}{int} d);}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00035}00035     \textcolor{keywordtype}{void}                setMargins(IntervalData \&m);}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00036}00036     IntervalData        getMargins() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00037}00037     \textcolor{keywordtype}{int}                 getDimension() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00038}00038     \textcolor{keywordtype}{bool}                isPointIn(Data \&x) \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00039}00039     \textcolor{keywordtype}{bool}                isPointIn(IntervalData \&x) \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00040}00040     IntervalData        createRandomInterval();}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00041}00041     \textcolor{keywordtype}{void}                randomize(IntervalData \&x,\textcolor{keywordtype}{int} pos);}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00042}00042     \textcolor{keyword}{virtual}             \textcolor{keywordtype}{void} init(QJsonObject x);}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00043}00043     \textcolor{keyword}{virtual}             \textcolor{keywordtype}{void} setParameter(QString name,QVariant value);}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00044}00044     \textcolor{keyword}{virtual} \textcolor{keywordtype}{double}      funmin(Data \&x);}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00045}00045     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void}        granal(Data \&x,Data \&g);}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00046}00046     \textcolor{keyword}{virtual} QJsonObject done(Data \&x);}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00047}00047     \textcolor{keywordtype}{bool}                lowerValue(\mbox{\hyperlink{classInterval}{Interval}} \&a,\mbox{\hyperlink{classInterval}{Interval}} \&b);}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00048}00048     \textcolor{keywordtype}{double}              getVolume() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00049}00049     \textcolor{keywordtype}{double}              getVolume(IntervalData \&x) \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00050}00050     \textcolor{keywordtype}{void}                boundInterval(IntervalData \&x);}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00051}00051     \textcolor{keywordtype}{void}                printData(IntervalData \&x);}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00052}00052     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void}                getSample(Data \&x);}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00053}00053     \textcolor{keywordtype}{double}              randomDouble();}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00054}00054     \textcolor{keywordtype}{void}                setRandomSeed(\textcolor{keywordtype}{int} k);}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00055}00055     \textcolor{keywordtype}{void}                setRandomSeedForThreads(\textcolor{keywordtype}{int} k,\textcolor{keywordtype}{int} t);}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00056}00056     \textcolor{keyword}{virtual}             \mbox{\hyperlink{classIntervalProblem}{\string~IntervalProblem}}();}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00057}00057 \};}
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00058}00058 }
+\DoxyCodeLine{\Hypertarget{intervalproblem_8h_source_l00059}00059 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// INTERVALPROBLEM\_H}}
+
+\end{DoxyCode}

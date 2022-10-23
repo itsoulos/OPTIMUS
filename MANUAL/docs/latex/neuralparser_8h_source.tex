@@ -1,0 +1,61 @@
+\hypertarget{neuralparser_8h_source}{}\doxysection{neuralparser.\+h}
+\label{neuralparser_8h_source}\index{neuralparser.h@{neuralparser.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00001}00001 \textcolor{preprocessor}{\# ifndef \_\_NEURALPARSER\_\_H}}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00002}00002 \textcolor{preprocessor}{\# define \_\_NEURALPARSER\_\_H}}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00003}00003 \textcolor{preprocessor}{\# include <string>}}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00004}00004 \textcolor{preprocessor}{\# include <vector>}}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00005}00005 \textcolor{keyword}{using namespace }std;}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00006}00006 \textcolor{keyword}{typedef} vector<double> Data;}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00007}00007 }
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00009}\mbox{\hyperlink{structMultiplier}{00009}} \textcolor{keyword}{struct }\mbox{\hyperlink{structMultiplier}{Multiplier}}}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00010}00010 \{}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00011}00011     \textcolor{keywordtype}{double}  m;}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00012}00012     \textcolor{keywordtype}{int} index;}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00013}00013 \};}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00014}00014 }
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00015}\mbox{\hyperlink{structNode}{00015}} \textcolor{keyword}{struct }\mbox{\hyperlink{structNode}{Node}}}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00016}00016 \{}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00017}00017     \textcolor{keywordtype}{double} out;}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00018}00018     vector<Multiplier> mult;    }
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00019}00019     \textcolor{keywordtype}{double} bias;}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00020}00020 \};}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00022}\mbox{\hyperlink{classNeuralParser}{00022}} \textcolor{keyword}{class }\mbox{\hyperlink{classNeuralParser}{NeuralParser}}}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00023}00023 \{}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00024}00024     \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00025}00025         \textcolor{keywordtype}{int} dimension;}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00026}00026         vector<int>     fixstatus;}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00027}00027         vector<Node>    node;}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00028}00028         vector<double>  weight;}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00029}00029         Data left,right;}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00030}00030     \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00031}00031         \textcolor{keywordtype}{void} setleftmargin(Data \&x);}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00032}00032         \textcolor{keywordtype}{void} setrightmargin(Data \&x);}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00033}00033         Data getleftmargin();}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00034}00034         Data getrightmargin();}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00035}00035         \textcolor{keywordtype}{int}   sigcount,violcount;}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00036}00036         \mbox{\hyperlink{classNeuralParser}{NeuralParser}}(\textcolor{keywordtype}{int} Dimension);}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00037}00037         \textcolor{keywordtype}{int} getDimension() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00038}00038         \textcolor{keywordtype}{void}    makeVector(\textcolor{keywordtype}{string} str);}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00039}00039         \textcolor{keywordtype}{void}    getWeights(vector<double> \&w);}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00040}00040         \textcolor{keywordtype}{void}    getFixStatus(vector<int> \&status);  }
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00041}00041         \textcolor{keywordtype}{void}    setWeights(vector<double> w);}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00042}00042         \textcolor{keywordtype}{double}  eval(vector<double> xpoint);}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00043}00043         \textcolor{keywordtype}{double}  eval(\textcolor{keywordtype}{double} *xpoint);}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00044}00044         \textcolor{keywordtype}{double}  evalDeriv(vector<double> xpoint,\textcolor{keywordtype}{int} pos);}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00045}00045         \textcolor{keywordtype}{double}  evalDeriv2(vector<double> xpoint,\textcolor{keywordtype}{int} pos);}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00046}00046         \textcolor{keywordtype}{void}    getDeriv(vector<double> xpoint,vector<double> \&g);}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00047}00047         \textcolor{keywordtype}{void}    getXDeriv(vector<double> xpoint,\textcolor{keywordtype}{int} pos,vector<double> \&g);}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00048}00048         \textcolor{keywordtype}{void}    getX2Deriv(vector<double> xpoint,\textcolor{keywordtype}{int} pos,vector<double> \&g);}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00049}00049         \textcolor{keyword}{virtual} \textcolor{keywordtype}{double}  valError();}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00050}00050         \textcolor{keywordtype}{void}    getMargins(Data \&l,Data \&r);}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00051}00051         \textcolor{keywordtype}{string}  print();}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00052}00052         \textcolor{keywordtype}{int} getWeightSize();}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00053}00053         \mbox{\hyperlink{classNeuralParser}{\string~NeuralParser}}();}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00054}00054 \};}
+\DoxyCodeLine{\Hypertarget{neuralparser_8h_source_l00055}00055 \textcolor{preprocessor}{\# endif}}
+
+\end{DoxyCode}

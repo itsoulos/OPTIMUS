@@ -1,0 +1,224 @@
+\hypertarget{classGrsPopulation}{}\doxysection{Grs\+Population Class Reference}
+\label{classGrsPopulation}\index{GrsPopulation@{GrsPopulation}}
+
+
+The \mbox{\hyperlink{classGrsPopulation}{Grs\+Population}} class implements the Genetic \mbox{\hyperlink{classPopulation}{Population}} used in the GRS local optimizer.  
+
+
+
+
+{\ttfamily \#include $<$grspopulation.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classGrsPopulation_ad41d8c6e85c3ac398523ce40c1d4bab6}{Grs\+Population}} (int gcount, int gsize, \mbox{\hyperlink{classProgram}{Program}} $\ast$p)
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classGrsPopulation}{Grs\+Population}} the constructor of the class. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classGrsPopulation_a12050d2a269753fb59828a07d70cdba7}{set\+Elitism}} (int s)
+\begin{DoxyCompactList}\small\item\em set\+Elitism. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classGrsPopulation_afa27e866ef6e09f878187809610b64bd}{get\+Generation}} () const
+\begin{DoxyCompactList}\small\item\em get\+Generation \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classGrsPopulation_a2f934b5d6c6462e23b2a143c7612260c}{get\+Count}} () const
+\begin{DoxyCompactList}\small\item\em get\+Gount \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classGrsPopulation_a4957daf4d7f82c684d33b48ca90a02bc}{get\+Size}} () const
+\begin{DoxyCompactList}\small\item\em get\+Size \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGrsPopulation_a16069df7d735b17c5a161389b58f4151}\label{classGrsPopulation_a16069df7d735b17c5a161389b58f4151}} 
+void {\bfseries next\+Generation} ()
+\begin{DoxyCompactList}\small\item\em next\+Generation execution of procedures\+: mutate, calc\+Fitness\+Array, select, crossover, ++generation. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classGrsPopulation_a25e990651ec341b33fded163ed3e50e7}{set\+Mutation\+Rate}} (double r)
+\begin{DoxyCompactList}\small\item\em set\+Mutation\+Rate. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classGrsPopulation_a816264ac8854f93e815b56fa33515b93}{set\+Selection\+Rate}} (double r)
+\begin{DoxyCompactList}\small\item\em set\+Selection\+Rate. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classGrsPopulation_a65aefaaa647767afc1209a725e927f73}{get\+Selection\+Rate}} () const
+\begin{DoxyCompactList}\small\item\em get\+Selection\+Rate \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classGrsPopulation_aaef1f85099691d5e9b9a610e3a21a1bf}{get\+Mutation\+Rate}} () const
+\begin{DoxyCompactList}\small\item\em get\+Mutation\+Rate \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classGrsPopulation_a0e2ebaf22f32e2e3e5ac0e74b66689a3}{get\+Best\+Fitness}} () const
+\begin{DoxyCompactList}\small\item\em get\+Best\+Fittness\+Rate \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classGrsPopulation_a4f14c178d6dd9e5a65fa6f26e98fcab0}{evaluate\+Best\+Fitness}} ()
+\begin{DoxyCompactList}\small\item\em evaluate\+Best\+Fitness \end{DoxyCompactList}\item 
+vector$<$ int $>$ \mbox{\hyperlink{classGrsPopulation_a4eeecc906f966c170abfa0d70859b26f}{get\+Best\+Genome}} () const
+\begin{DoxyCompactList}\small\item\em get\+Best\+Genome \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGrsPopulation_a2912658e442710ab0ac86ab769269b61}\label{classGrsPopulation_a2912658e442710ab0ac86ab769269b61}} 
+void {\bfseries reset} ()
+\begin{DoxyCompactList}\small\item\em reset, restore population in random values \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classGrsPopulation_aca403fd2328ea078e9bf9c35cf0b1805}\label{classGrsPopulation_aca403fd2328ea078e9bf9c35cf0b1805}} 
+{\bfseries $\sim$\+Grs\+Population} ()
+\begin{DoxyCompactList}\small\item\em $\sim$\+Grs\+Population is the destructor of class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{classGrsPopulation}{Grs\+Population}} class implements the Genetic \mbox{\hyperlink{classPopulation}{Population}} used in the GRS local optimizer. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classGrsPopulation_ad41d8c6e85c3ac398523ce40c1d4bab6}\label{classGrsPopulation_ad41d8c6e85c3ac398523ce40c1d4bab6}} 
+\index{GrsPopulation@{GrsPopulation}!GrsPopulation@{GrsPopulation}}
+\index{GrsPopulation@{GrsPopulation}!GrsPopulation@{GrsPopulation}}
+\doxysubsubsection{\texorpdfstring{GrsPopulation()}{GrsPopulation()}}
+{\footnotesize\ttfamily Grs\+Population\+::\+Grs\+Population (\begin{DoxyParamCaption}\item[{int}]{gcount,  }\item[{int}]{gsize,  }\item[{\mbox{\hyperlink{classProgram}{Program}} $\ast$}]{p }\end{DoxyParamCaption})}
+
+
+
+\mbox{\hyperlink{classGrsPopulation}{Grs\+Population}} the constructor of the class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em p} & is the objective problem to be minimized \\
+\hline
+{\em gcount} & is the number of chromosomes \\
+\hline
+{\em gsize} & is the lenght of chromosome \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classGrsPopulation_a4f14c178d6dd9e5a65fa6f26e98fcab0}\label{classGrsPopulation_a4f14c178d6dd9e5a65fa6f26e98fcab0}} 
+\index{GrsPopulation@{GrsPopulation}!evaluateBestFitness@{evaluateBestFitness}}
+\index{evaluateBestFitness@{evaluateBestFitness}!GrsPopulation@{GrsPopulation}}
+\doxysubsubsection{\texorpdfstring{evaluateBestFitness()}{evaluateBestFitness()}}
+{\footnotesize\ttfamily double Grs\+Population\+::evaluate\+Best\+Fitness (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+evaluate\+Best\+Fitness 
+
+\begin{DoxyReturn}{Returns}
+the evaluate best value. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGrsPopulation_a0e2ebaf22f32e2e3e5ac0e74b66689a3}\label{classGrsPopulation_a0e2ebaf22f32e2e3e5ac0e74b66689a3}} 
+\index{GrsPopulation@{GrsPopulation}!getBestFitness@{getBestFitness}}
+\index{getBestFitness@{getBestFitness}!GrsPopulation@{GrsPopulation}}
+\doxysubsubsection{\texorpdfstring{getBestFitness()}{getBestFitness()}}
+{\footnotesize\ttfamily double Grs\+Population\+::get\+Best\+Fitness (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+get\+Best\+Fittness\+Rate 
+
+\begin{DoxyReturn}{Returns}
+the best minimum value. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGrsPopulation_a4eeecc906f966c170abfa0d70859b26f}\label{classGrsPopulation_a4eeecc906f966c170abfa0d70859b26f}} 
+\index{GrsPopulation@{GrsPopulation}!getBestGenome@{getBestGenome}}
+\index{getBestGenome@{getBestGenome}!GrsPopulation@{GrsPopulation}}
+\doxysubsubsection{\texorpdfstring{getBestGenome()}{getBestGenome()}}
+{\footnotesize\ttfamily vector$<$ int $>$ Grs\+Population\+::get\+Best\+Genome (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+get\+Best\+Genome 
+
+\begin{DoxyReturn}{Returns}
+the vector of best genome. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGrsPopulation_a2f934b5d6c6462e23b2a143c7612260c}\label{classGrsPopulation_a2f934b5d6c6462e23b2a143c7612260c}} 
+\index{GrsPopulation@{GrsPopulation}!getCount@{getCount}}
+\index{getCount@{getCount}!GrsPopulation@{GrsPopulation}}
+\doxysubsubsection{\texorpdfstring{getCount()}{getCount()}}
+{\footnotesize\ttfamily int Grs\+Population\+::get\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+get\+Gount 
+
+\begin{DoxyReturn}{Returns}
+the number of genome Count. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGrsPopulation_afa27e866ef6e09f878187809610b64bd}\label{classGrsPopulation_afa27e866ef6e09f878187809610b64bd}} 
+\index{GrsPopulation@{GrsPopulation}!getGeneration@{getGeneration}}
+\index{getGeneration@{getGeneration}!GrsPopulation@{GrsPopulation}}
+\doxysubsubsection{\texorpdfstring{getGeneration()}{getGeneration()}}
+{\footnotesize\ttfamily int Grs\+Population\+::get\+Generation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+get\+Generation 
+
+\begin{DoxyReturn}{Returns}
+the number of generation. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGrsPopulation_aaef1f85099691d5e9b9a610e3a21a1bf}\label{classGrsPopulation_aaef1f85099691d5e9b9a610e3a21a1bf}} 
+\index{GrsPopulation@{GrsPopulation}!getMutationRate@{getMutationRate}}
+\index{getMutationRate@{getMutationRate}!GrsPopulation@{GrsPopulation}}
+\doxysubsubsection{\texorpdfstring{getMutationRate()}{getMutationRate()}}
+{\footnotesize\ttfamily double Grs\+Population\+::get\+Mutation\+Rate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+get\+Mutation\+Rate 
+
+\begin{DoxyReturn}{Returns}
+the mutation rate. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGrsPopulation_a65aefaaa647767afc1209a725e927f73}\label{classGrsPopulation_a65aefaaa647767afc1209a725e927f73}} 
+\index{GrsPopulation@{GrsPopulation}!getSelectionRate@{getSelectionRate}}
+\index{getSelectionRate@{getSelectionRate}!GrsPopulation@{GrsPopulation}}
+\doxysubsubsection{\texorpdfstring{getSelectionRate()}{getSelectionRate()}}
+{\footnotesize\ttfamily double Grs\+Population\+::get\+Selection\+Rate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+get\+Selection\+Rate 
+
+\begin{DoxyReturn}{Returns}
+the selection rate. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGrsPopulation_a4957daf4d7f82c684d33b48ca90a02bc}\label{classGrsPopulation_a4957daf4d7f82c684d33b48ca90a02bc}} 
+\index{GrsPopulation@{GrsPopulation}!getSize@{getSize}}
+\index{getSize@{getSize}!GrsPopulation@{GrsPopulation}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily int Grs\+Population\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+get\+Size 
+
+\begin{DoxyReturn}{Returns}
+the number of genome size. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGrsPopulation_a12050d2a269753fb59828a07d70cdba7}\label{classGrsPopulation_a12050d2a269753fb59828a07d70cdba7}} 
+\index{GrsPopulation@{GrsPopulation}!setElitism@{setElitism}}
+\index{setElitism@{setElitism}!GrsPopulation@{GrsPopulation}}
+\doxysubsubsection{\texorpdfstring{setElitism()}{setElitism()}}
+{\footnotesize\ttfamily void Grs\+Population\+::set\+Elitism (\begin{DoxyParamCaption}\item[{int}]{s }\end{DoxyParamCaption})}
+
+
+
+set\+Elitism. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & the position of best chromosome. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classGrsPopulation_a25e990651ec341b33fded163ed3e50e7}\label{classGrsPopulation_a25e990651ec341b33fded163ed3e50e7}} 
+\index{GrsPopulation@{GrsPopulation}!setMutationRate@{setMutationRate}}
+\index{setMutationRate@{setMutationRate}!GrsPopulation@{GrsPopulation}}
+\doxysubsubsection{\texorpdfstring{setMutationRate()}{setMutationRate()}}
+{\footnotesize\ttfamily void Grs\+Population\+::set\+Mutation\+Rate (\begin{DoxyParamCaption}\item[{double}]{r }\end{DoxyParamCaption})}
+
+
+
+set\+Mutation\+Rate. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & the mutation rate. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classGrsPopulation_a816264ac8854f93e815b56fa33515b93}\label{classGrsPopulation_a816264ac8854f93e815b56fa33515b93}} 
+\index{GrsPopulation@{GrsPopulation}!setSelectionRate@{setSelectionRate}}
+\index{setSelectionRate@{setSelectionRate}!GrsPopulation@{GrsPopulation}}
+\doxysubsubsection{\texorpdfstring{setSelectionRate()}{setSelectionRate()}}
+{\footnotesize\ttfamily void Grs\+Population\+::set\+Selection\+Rate (\begin{DoxyParamCaption}\item[{double}]{r }\end{DoxyParamCaption})}
+
+
+
+set\+Selection\+Rate. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & the selection rate. \\
+\hline
+\end{DoxyParams}

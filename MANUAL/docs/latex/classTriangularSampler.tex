@@ -1,0 +1,139 @@
+\hypertarget{classTriangularSampler}{}\doxysection{Triangular\+Sampler Class Reference}
+\label{classTriangularSampler}\index{TriangularSampler@{TriangularSampler}}
+
+
+The \mbox{\hyperlink{classTriangularSampler}{Triangular\+Sampler}} class samples point from the objective problem using triangular distribution.  
+
+
+
+
+{\ttfamily \#include $<$triangularsampler.\+h$>$}
+
+
+
+Inheritance diagram for Triangular\+Sampler\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=175pt]{classTriangularSampler__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Triangular\+Sampler\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=181pt]{classTriangularSampler__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classTriangularSampler_ad23349a0baf210972c3eefd593a26c22}\label{classTriangularSampler_ad23349a0baf210972c3eefd593a26c22}} 
+{\bfseries Triangular\+Sampler} (\mbox{\hyperlink{classProblem}{Problem}} $\ast$p)
+\item 
+void \mbox{\hyperlink{classTriangularSampler_a0d477fd8f7fa4ee8059241e4b2554c1d}{sample\+From\+Problem}} (int N, Matrix \&xsample, Data \&ysample)
+\begin{DoxyCompactList}\small\item\em sample\+From\+Problem, takes samples from the problem using some distribution. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classTriangularSampler_a7823202e0c37b943f3f2c7986c40228e}{sample\+From\+Model}} (int \&N, Matrix \&xsample, Data \&ysample)
+\begin{DoxyCompactList}\small\item\em sample\+From\+Model, this method will sample from the sample model instead of the real problem. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classTriangularSampler_a22b94bd8f35b0f50264edadeae423e77}{eval}} (Data \&xpoint)
+\begin{DoxyCompactList}\small\item\em eval gets the value of model at point \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classTriangularSampler_acd5d903ad83f2d5bf90ad6d5b2093d72}{add\+Sample\+From\+Problem}} (Data \&x, double y)
+\begin{DoxyCompactList}\small\item\em add\+Sample\+From\+Problem adds a new sample from the problem. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{classTriangularSampler}{Triangular\+Sampler}} class samples point from the objective problem using triangular distribution. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classTriangularSampler_acd5d903ad83f2d5bf90ad6d5b2093d72}\label{classTriangularSampler_acd5d903ad83f2d5bf90ad6d5b2093d72}} 
+\index{TriangularSampler@{TriangularSampler}!addSampleFromProblem@{addSampleFromProblem}}
+\index{addSampleFromProblem@{addSampleFromProblem}!TriangularSampler@{TriangularSampler}}
+\doxysubsubsection{\texorpdfstring{addSampleFromProblem()}{addSampleFromProblem()}}
+{\footnotesize\ttfamily void Triangular\+Sampler\+::add\+Sample\+From\+Problem (\begin{DoxyParamCaption}\item[{Data \&}]{x,  }\item[{double}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+add\+Sample\+From\+Problem adds a new sample from the problem. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & the xpoint of the new sample \\
+\hline
+{\em y} & the ypoint of the new sample \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classProblemSampler_af1ab92bf9bad3d7869080b8c5c7cb57f}{Problem\+Sampler}}.
+
+\mbox{\Hypertarget{classTriangularSampler_a22b94bd8f35b0f50264edadeae423e77}\label{classTriangularSampler_a22b94bd8f35b0f50264edadeae423e77}} 
+\index{TriangularSampler@{TriangularSampler}!eval@{eval}}
+\index{eval@{eval}!TriangularSampler@{TriangularSampler}}
+\doxysubsubsection{\texorpdfstring{eval()}{eval()}}
+{\footnotesize\ttfamily double Triangular\+Sampler\+::eval (\begin{DoxyParamCaption}\item[{Data \&}]{xpoint }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+eval gets the value of model at point 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xpoint} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classProblemSampler_a95cb4ee5a502d9f85a4688f2e6071d1f}{Problem\+Sampler}}.
+
+\mbox{\Hypertarget{classTriangularSampler_a7823202e0c37b943f3f2c7986c40228e}\label{classTriangularSampler_a7823202e0c37b943f3f2c7986c40228e}} 
+\index{TriangularSampler@{TriangularSampler}!sampleFromModel@{sampleFromModel}}
+\index{sampleFromModel@{sampleFromModel}!TriangularSampler@{TriangularSampler}}
+\doxysubsubsection{\texorpdfstring{sampleFromModel()}{sampleFromModel()}}
+{\footnotesize\ttfamily void Triangular\+Sampler\+::sample\+From\+Model (\begin{DoxyParamCaption}\item[{int \&}]{N,  }\item[{Matrix \&}]{xsample,  }\item[{Data \&}]{ysample }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+sample\+From\+Model, this method will sample from the sample model instead of the real problem. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em N,the} & number of required samples. \\
+\hline
+{\em xsample} & \\
+\hline
+{\em ysample} & \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{classProblemSampler_ab7d597e1843b8d361344bbc5751b9a32}{Problem\+Sampler}}.
+
+\mbox{\Hypertarget{classTriangularSampler_a0d477fd8f7fa4ee8059241e4b2554c1d}\label{classTriangularSampler_a0d477fd8f7fa4ee8059241e4b2554c1d}} 
+\index{TriangularSampler@{TriangularSampler}!sampleFromProblem@{sampleFromProblem}}
+\index{sampleFromProblem@{sampleFromProblem}!TriangularSampler@{TriangularSampler}}
+\doxysubsubsection{\texorpdfstring{sampleFromProblem()}{sampleFromProblem()}}
+{\footnotesize\ttfamily void Triangular\+Sampler\+::sample\+From\+Problem (\begin{DoxyParamCaption}\item[{int}]{N,  }\item[{Matrix \&}]{xsample,  }\item[{Data \&}]{ysample }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+sample\+From\+Problem, takes samples from the problem using some distribution. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em N,the} & number of samples required. \\
+\hline
+{\em xsample} & \\
+\hline
+{\em ysample} & \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{classProblemSampler_af2608337721073b8286967b37a9b7660}{Problem\+Sampler}}.
+

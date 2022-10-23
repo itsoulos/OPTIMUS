@@ -3,6 +3,10 @@
 # include <string>
 using namespace std;
 
+/**
+ * @brief The SigProgram class constructs  the grammar for
+ * Constructed Neural networks by the Grammatical Evolution procedure.
+ */
 class	SigProgram :public Cprogram
 {
 	private:

@@ -24,6 +24,10 @@ public:
 
 };
 
+/**
+ * @brief The DoubleGenetic class implements a Genetic Algorithm for
+ * global optimization purposes.
+ */
 class DOUBLEGENETIC_EXPORT DoubleGenetic: public Optimizer, DoubleGeneticInterface
 {
 private:
@@ -51,7 +55,14 @@ private:
 
 
 public:
+    /**
+     * @brief DoubleGenetic the constructor of the class.
+     * @param p
+     */
     DoubleGenetic(Problem *p);
+    /**
+     * @brief Solve, perform the steps of the Genetic algorithm.
+     */
     virtual         void Solve();
     virtual         ~DoubleGenetic();
 };

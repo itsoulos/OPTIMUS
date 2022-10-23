@@ -18,6 +18,7 @@ bool nelderMead::terminated()
 {
 
     double dd = fabs(newSum - sum);
+    if(dd<1e-6) return true;
      printf("%4d] Generation  change: %10.6lf ybest:%10.6lf \n", generation, dd,ybestPoint);
     if (dd < 1e-8)
         n++;
@@ -37,6 +38,7 @@ void nelderMead::order()
 void nelderMead::center()
 {
 
+    centerPoint.resize(population_size);
     for (int i = 0; i < population_size; i++)
     {
         centerPoint[i] = 0.0;
@@ -59,6 +61,7 @@ void nelderMead::center()
 }
 void nelderMead::reflection()
 {
+    reflectedPoint.resize(population_size);
     for (int j = 0; j < population_size; j++)
     {
         reflectedPoint[j] = centerPoint[j] + alpha * (centerPoint[j] - population[population_count - 1].second[j]);
@@ -67,6 +70,7 @@ void nelderMead::reflection()
 }
 void nelderMead::expansion()
 {
+    expandedPoint.resize(population_size);
     for (int j = 0; j < population_size; j++)
     {
         expandedPoint[j] = centerPoint[j] + gamma * (reflectedPoint[j] - centerPoint[j]);
@@ -75,6 +79,7 @@ void nelderMead::expansion()
 }
 void nelderMead::contraction()
 {
+    contractedPoint.resize(population_size);
     for (int j = 0; j < population_size; j++)
     {
         contractedPoint[j] = centerPoint[j] + ro * (reflectedPoint[j] - centerPoint[j]);
@@ -102,6 +107,7 @@ void nelderMead::shrink()
 }
 void nelderMead::step()
 {
+
 start:
     order();
   center();

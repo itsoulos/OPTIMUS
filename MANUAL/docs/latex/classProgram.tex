@@ -1,0 +1,131 @@
+\hypertarget{classProgram}{}\doxysection{Program Class Reference}
+\label{classProgram}\index{Program@{Program}}
+
+
+The \mbox{\hyperlink{classProgram}{Program}} class implements the Genetic \mbox{\hyperlink{classProgram}{Program}} used in the Grammatical Evolution process.  
+
+
+
+
+{\ttfamily \#include $<$program.\+h$>$}
+
+
+
+Inheritance diagram for Program\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=259pt]{classProgram__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Program\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=167pt]{classProgram__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classProgram_aaefaa0df08f3484476fc4d61e97acbdc}\label{classProgram_aaefaa0df08f3484476fc4d61e97acbdc}} 
+{\bfseries Program} ()
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classProgram}{Program}} the constructor of the class. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classProgram_a8b2dd179f6475e22513ac9da46d28418}{set\+Start\+Symbol}} (\mbox{\hyperlink{classSymbol}{Symbol}} $\ast$s)
+\begin{DoxyCompactList}\small\item\em set\+Start\+Symbol sets the start symbol of the genetic grammar. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classSymbol}{Symbol}} $\ast$ \mbox{\hyperlink{classProgram_a90691afb84623aeec6fca550b083c1c9}{get\+Start\+Symbol}} () const
+\begin{DoxyCompactList}\small\item\em get\+Start\+Symbol returns the start symbol of the genetic grammar. \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{classProgram_a5f96ec99c770cf0ba70e416d098039e3}{print\+Random\+Program}} (vector$<$ int $>$ \&chromosome, int \&redo)
+\begin{DoxyCompactList}\small\item\em print\+Random\+Program, constructs in string format a new program. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classProgram_aba9bb347293a4966a6031cf00a7d16b6}\label{classProgram_aba9bb347293a4966a6031cf00a7d16b6}} 
+int {\bfseries has\+Failed} ()
+\item 
+\mbox{\Hypertarget{classProgram_a42852c36cc3b68d73e3706aeb2454c7b}\label{classProgram_a42852c36cc3b68d73e3706aeb2454c7b}} 
+int {\bfseries parse} (vector$<$ \mbox{\hyperlink{classSymbol}{Symbol}} $\ast$ $>$ slist)
+\item 
+virtual double \mbox{\hyperlink{classProgram_ac37f313aca3a1b8590ca297bb2094537}{fitness}} (vector$<$ int $>$ \&chromosome)
+\begin{DoxyCompactList}\small\item\em fitness, return the fitness value for a given chromosome. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classProgram_a43b0a6ddf8b95ee95129365b3ce611a6}\label{classProgram_a43b0a6ddf8b95ee95129365b3ce611a6}} 
+\mbox{\hyperlink{classSymbol}{Symbol}} $\ast$ {\bfseries start\+\_\+symbol}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{classProgram}{Program}} class implements the Genetic \mbox{\hyperlink{classProgram}{Program}} used in the Grammatical Evolution process. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classProgram_ac37f313aca3a1b8590ca297bb2094537}\label{classProgram_ac37f313aca3a1b8590ca297bb2094537}} 
+\index{Program@{Program}!fitness@{fitness}}
+\index{fitness@{fitness}!Program@{Program}}
+\doxysubsubsection{\texorpdfstring{fitness()}{fitness()}}
+{\footnotesize\ttfamily double Program\+::fitness (\begin{DoxyParamCaption}\item[{vector$<$ int $>$ \&}]{chromosome }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+fitness, return the fitness value for a given chromosome. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em chromosome} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{classNeuralProgram_af32d0a1b7e2c527d9a7093e97ef2b9b8}{Neural\+Program}}, and \mbox{\hyperlink{classRlsProgram_a31f3a21cc0293231fe7438e9a3313dd9}{Rls\+Program}}.
+
+\mbox{\Hypertarget{classProgram_a90691afb84623aeec6fca550b083c1c9}\label{classProgram_a90691afb84623aeec6fca550b083c1c9}} 
+\index{Program@{Program}!getStartSymbol@{getStartSymbol}}
+\index{getStartSymbol@{getStartSymbol}!Program@{Program}}
+\doxysubsubsection{\texorpdfstring{getStartSymbol()}{getStartSymbol()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classSymbol}{Symbol}} $\ast$ Program\+::get\+Start\+Symbol (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+get\+Start\+Symbol returns the start symbol of the genetic grammar. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{classProgram_a5f96ec99c770cf0ba70e416d098039e3}\label{classProgram_a5f96ec99c770cf0ba70e416d098039e3}} 
+\index{Program@{Program}!printRandomProgram@{printRandomProgram}}
+\index{printRandomProgram@{printRandomProgram}!Program@{Program}}
+\doxysubsubsection{\texorpdfstring{printRandomProgram()}{printRandomProgram()}}
+{\footnotesize\ttfamily string Program\+::print\+Random\+Program (\begin{DoxyParamCaption}\item[{vector$<$ int $>$ \&}]{chromosome,  }\item[{int \&}]{redo }\end{DoxyParamCaption})}
+
+
+
+print\+Random\+Program, constructs in string format a new program. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em chromosome,the} & chromosome used in the genetic process. \\
+\hline
+{\em redo} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{classProgram_a8b2dd179f6475e22513ac9da46d28418}\label{classProgram_a8b2dd179f6475e22513ac9da46d28418}} 
+\index{Program@{Program}!setStartSymbol@{setStartSymbol}}
+\index{setStartSymbol@{setStartSymbol}!Program@{Program}}
+\doxysubsubsection{\texorpdfstring{setStartSymbol()}{setStartSymbol()}}
+{\footnotesize\ttfamily void Program\+::set\+Start\+Symbol (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classSymbol}{Symbol}} $\ast$}]{s }\end{DoxyParamCaption})}
+
+
+
+set\+Start\+Symbol sets the start symbol of the genetic grammar. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & \\
+\hline
+\end{DoxyParams}

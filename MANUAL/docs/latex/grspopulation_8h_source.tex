@@ -1,0 +1,54 @@
+\hypertarget{grspopulation_8h_source}{}\doxysection{grspopulation.\+h}
+\label{grspopulation_8h_source}\index{grspopulation.h@{grspopulation.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00001}00001 \textcolor{preprocessor}{\#ifndef \_\_GRSPOPULATION\_\_H}}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00002}00002 \textcolor{preprocessor}{\#include "{}program.h"{}}}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00003}00003 \textcolor{preprocessor}{\#include <random>}}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00005}\mbox{\hyperlink{classGrsPopulation}{00005}} \textcolor{keyword}{class }\mbox{\hyperlink{classGrsPopulation}{GrsPopulation}}}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00006}00006 \{}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00007}00007 \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00008}00008     \textcolor{keywordtype}{int} **children;}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00009}00009     \textcolor{keywordtype}{int} **genome;}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00010}00010     \textcolor{keywordtype}{double} *fitness\_array;}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00011}00011     \textcolor{keywordtype}{double} mutation\_rate, selection\_rate;}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00012}00012     \textcolor{keywordtype}{int} genome\_count;}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00013}00013     \textcolor{keywordtype}{int} genome\_size;}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00014}00014     \textcolor{keywordtype}{int} generation;}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00015}00015     \mbox{\hyperlink{classProgram}{Program}} *program;}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00021}00021     \textcolor{keywordtype}{double} fitness(vector<int> \&g);}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00025}00025     \textcolor{keywordtype}{void} select();}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00029}00029     \textcolor{keywordtype}{void} crossover();}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00033}00033     \textcolor{keywordtype}{void} mutate();}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00037}00037     \textcolor{keywordtype}{void} calcFitnessArray();}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00038}00038     \textcolor{keywordtype}{int} elitism;}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00039}00039     \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00040}00040 \textcolor{comment}{     * uniform distribution machine}}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00041}00041 \textcolor{comment}{     */}}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00042}00042     std::mt19937 *rng;}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00043}00043     std::uniform\_int\_distribution<std::mt19937::result\_type> *dist;}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00045}00045     \textcolor{keywordtype}{int} randint();}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00047}00047 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00053}00053     \mbox{\hyperlink{classGrsPopulation_ad41d8c6e85c3ac398523ce40c1d4bab6}{GrsPopulation}}(\textcolor{keywordtype}{int} gcount, \textcolor{keywordtype}{int} gsize, \mbox{\hyperlink{classProgram}{Program}} *p);}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00058}00058     \textcolor{keywordtype}{void} \mbox{\hyperlink{classGrsPopulation_a12050d2a269753fb59828a07d70cdba7}{setElitism}}(\textcolor{keywordtype}{int} s);}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00063}00063     \textcolor{keywordtype}{int} \mbox{\hyperlink{classGrsPopulation_afa27e866ef6e09f878187809610b64bd}{getGeneration}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00068}00068     \textcolor{keywordtype}{int} \mbox{\hyperlink{classGrsPopulation_a2f934b5d6c6462e23b2a143c7612260c}{getCount}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00073}00073     \textcolor{keywordtype}{int} \mbox{\hyperlink{classGrsPopulation_a4957daf4d7f82c684d33b48ca90a02bc}{getSize}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00078}00078     \textcolor{keywordtype}{void} \mbox{\hyperlink{classGrsPopulation_a16069df7d735b17c5a161389b58f4151}{nextGeneration}}();}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00083}00083     \textcolor{keywordtype}{void} \mbox{\hyperlink{classGrsPopulation_a25e990651ec341b33fded163ed3e50e7}{setMutationRate}}(\textcolor{keywordtype}{double} r);}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00088}00088     \textcolor{keywordtype}{void} \mbox{\hyperlink{classGrsPopulation_a816264ac8854f93e815b56fa33515b93}{setSelectionRate}}(\textcolor{keywordtype}{double} r);}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00093}00093     \textcolor{keywordtype}{double} \mbox{\hyperlink{classGrsPopulation_a65aefaaa647767afc1209a725e927f73}{getSelectionRate}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00098}00098     \textcolor{keywordtype}{double} \mbox{\hyperlink{classGrsPopulation_aaef1f85099691d5e9b9a610e3a21a1bf}{getMutationRate}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00103}00103     \textcolor{keywordtype}{double} \mbox{\hyperlink{classGrsPopulation_a0e2ebaf22f32e2e3e5ac0e74b66689a3}{getBestFitness}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00108}00108     \textcolor{keywordtype}{double} \mbox{\hyperlink{classGrsPopulation_a4f14c178d6dd9e5a65fa6f26e98fcab0}{evaluateBestFitness}}();}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00113}00113     vector<int> \mbox{\hyperlink{classGrsPopulation_a4eeecc906f966c170abfa0d70859b26f}{getBestGenome}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00117}00117     \textcolor{keywordtype}{void} \mbox{\hyperlink{classGrsPopulation_a2912658e442710ab0ac86ab769269b61}{reset}}();}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00121}00121     \mbox{\hyperlink{classGrsPopulation_aca403fd2328ea078e9bf9c35cf0b1805}{\string~GrsPopulation}}();}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00122}00122 \};}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00123}00123 \textcolor{preprocessor}{\#define \_\_GRSPOPULATION\_\_H}}
+\DoxyCodeLine{\Hypertarget{grspopulation_8h_source_l00124}00124 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

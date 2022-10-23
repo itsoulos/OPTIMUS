@@ -5,6 +5,10 @@ using namespace std;
 
 class Rule;
 
+/**
+ * @brief The Symbol class represents a symbol to be used in
+ *  the Grammatical Evolution procedure.
+ */
 class Symbol
 {
 	private:

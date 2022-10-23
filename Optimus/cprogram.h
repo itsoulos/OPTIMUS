@@ -3,6 +3,9 @@
 # include "rule.h"
 # include "fparser.hh"
 
+/**
+ * @brief The Cprogram class implements the grammar for integer chromosomes in a C like programming language.
+ */
 class Cprogram
 {
 	protected:

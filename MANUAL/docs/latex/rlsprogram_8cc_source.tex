@@ -1,0 +1,374 @@
+\hypertarget{rlsprogram_8cc_source}{}\doxysection{rlsprogram.\+cc}
+\label{rlsprogram_8cc_source}\index{rlsprogram.cc@{rlsprogram.cc}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00001}00001 \textcolor{preprocessor}{\# include <rlsprogram.h>}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00002}00002 \textcolor{preprocessor}{\# include <math.h>}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00003}00003 \textcolor{preprocessor}{\# define REDO\_MAX 2}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00005}00005 RlsProgram::RlsProgram(\mbox{\hyperlink{classProblem}{Problem}} *P)}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00006}00006 \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00007}00007     problem = P;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00008}00008     dimension = problem-\/>\mbox{\hyperlink{classProblem_a8d7cf5966e8540ccb6dc03923367dbfe}{getDimension}}();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00009}00009     x0=\textcolor{keyword}{new} \textcolor{keywordtype}{double}[dimension];}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00010}00010     bestx0=\textcolor{keyword}{new} \textcolor{keywordtype}{double}[dimension];}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00011}00011     makeTerminals();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00012}00012     makeNonTerminals();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00013}00013     makeRules();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00014}00014     \textcolor{keywordtype}{int} r=newRule();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00015}00015     start\_symbol=\textcolor{keyword}{new} \mbox{\hyperlink{classSymbol}{Symbol}}();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00016}00016     start\_symbol-\/>setName(\textcolor{stringliteral}{"{}START"{}});}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00017}00017     start\_symbol-\/>setTerminalStatus(0);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00018}00018     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<dimension-\/1;i++)}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00019}00019     \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00020}00020         rule[r]-\/>addSymbol(\&Expr);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00021}00021         rule[r]-\/>addSymbol(\&Delim);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00022}00022     \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00023}00023     rule[r]-\/>addSymbol(\&Expr);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00024}00024     rule[r]-\/>addSymbol(\&Delim);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00025}00025     start\_symbol-\/>addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00026}00026     bestValue=1e+100;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00027}00027 \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00029}00029 \textcolor{keywordtype}{void}    RlsProgram::makeTerminals()}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00030}00030 \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00031}00031     Add.setName(\textcolor{stringliteral}{"{}+"{}});}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00032}00032     Add.setTerminalStatus(1);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00033}00033     Sub.setName(\textcolor{stringliteral}{"{}-\/"{}});}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00034}00034     Sub.setTerminalStatus(1);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00035}00035     Mult.setName(\textcolor{stringliteral}{"{}*"{}});}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00036}00036     Mult.setTerminalStatus(1);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00037}00037     Div.setName(\textcolor{stringliteral}{"{}/"{}});}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00038}00038     Div.setTerminalStatus(1);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00039}00039     Sin.setName(\textcolor{stringliteral}{"{}sin"{}});}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00040}00040     Sin.setTerminalStatus(1);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00041}00041     Cos.setName(\textcolor{stringliteral}{"{}cos"{}});}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00042}00042     Cos.setTerminalStatus(1);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00043}00043     Exp.setName(\textcolor{stringliteral}{"{}exp"{}});}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00044}00044     Exp.setTerminalStatus(1);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00045}00045     Log.setName(\textcolor{stringliteral}{"{}log"{}});}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00046}00046     Log.setTerminalStatus(1);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00047}00047     Digit.resize(10);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00048}00048     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<10;i++)}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00049}00049     \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00050}00050         \textcolor{keywordtype}{char} str[10];}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00051}00051         sprintf(str,\textcolor{stringliteral}{"{}\%d"{}},i);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00052}00052         Digit[i].setName(str);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00053}00053         Digit[i].setTerminalStatus(1);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00054}00054     \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00055}00055     X.setName(\textcolor{stringliteral}{"{}x"{}});}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00056}00056     X.setTerminalStatus(1);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00057}00057     Lpar.setName(\textcolor{stringliteral}{"{}("{}});}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00058}00058     Lpar.setTerminalStatus(1);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00059}00059     Rpar.setName(\textcolor{stringliteral}{"{})"{}});}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00060}00060     Rpar.setTerminalStatus(1);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00061}00061     Dot.setName(\textcolor{stringliteral}{"{}."{}});}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00062}00062     Dot.setTerminalStatus(1);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00063}00063     Delim.setName(\textcolor{stringliteral}{"{}\#"{}});}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00064}00064     Delim.setTerminalStatus(1);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00065}00065 \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00066}00066 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00067}00067 \textcolor{keywordtype}{void}    RlsProgram::setX0(\textcolor{keywordtype}{double} *X0,\textcolor{keywordtype}{double} f)}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00068}00068 \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00069}00069     \textcolor{keywordflow}{if}(isinf(f) || isnan(f)) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00070}00070     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<dimension;i++) }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00071}00071         x0[i]=X0[i];}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00072}00072     fvalue=f;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00073}00073     \textcolor{keywordflow}{if}(fvalue<bestValue) }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00074}00074     \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00075}00075         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<dimension;i++) bestx0[i]=X0[i];}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00076}00076         bestValue=fvalue;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00077}00077     \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00078}00078 \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00079}00079 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00080}00080 \textcolor{keywordtype}{void}    RlsProgram::makeNonTerminals()}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00081}00081 \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00082}00082     Expr.setName(\textcolor{stringliteral}{"{}EXPR"{}});}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00083}00083     Expr.setTerminalStatus(0);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00084}00084     BinaryOp.setName(\textcolor{stringliteral}{"{}BINARYOP"{}});}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00085}00085     BinaryOp.setTerminalStatus(0);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00086}00086     Function.setName(\textcolor{stringliteral}{"{}FUNCTION"{}});}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00087}00087     Function.setTerminalStatus(0);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00088}00088     Terminal.setName(\textcolor{stringliteral}{"{}TERMINAL"{}});}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00089}00089     Terminal.setTerminalStatus(0);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00090}00090     DigitList.setName(\textcolor{stringliteral}{"{}DIGITLIST"{}});}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00091}00091     DigitList.setTerminalStatus(0);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00092}00092     Digit0.setName(\textcolor{stringliteral}{"{}DIGIT0"{}});}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00093}00093     Digit0.setTerminalStatus(0);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00094}00094     Digit1.setName(\textcolor{stringliteral}{"{}DIGIT1"{}});}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00095}00095     Digit1.setTerminalStatus(0);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00096}00096 \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00097}00097 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00098}00098 \textcolor{keywordtype}{void}    RlsProgram::makeRules()}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00099}00099 \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00100}00100     \textcolor{keywordtype}{int} r;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00101}00101     r=newRule();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00102}00102     rule[r]-\/>addSymbol(\&Lpar);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00103}00103     rule[r]-\/>addSymbol(\&Expr);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00104}00104     rule[r]-\/>addSymbol(\&Rpar);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00105}00105     \textcolor{comment}{//Expr.addRule(rule[r]);}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00106}00106     }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00107}00107     r=newRule();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00108}00108     rule[r]-\/>addSymbol(\&Lpar);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00109}00109     rule[r]-\/>addSymbol(\&Expr);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00110}00110     rule[r]-\/>addSymbol(\&BinaryOp);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00111}00111     rule[r]-\/>addSymbol(\&Expr);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00112}00112     rule[r]-\/>addSymbol(\&Rpar);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00113}00113     Expr.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00114}00114 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00115}00115     r=newRule();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00116}00116     rule[r]-\/>addSymbol(\&Function);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00117}00117     rule[r]-\/>addSymbol(\&Lpar);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00118}00118     rule[r]-\/>addSymbol(\&Expr);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00119}00119     rule[r]-\/>addSymbol(\&Rpar);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00120}00120     Expr.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00121}00121 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00122}00122     r=newRule();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00123}00123     rule[r]-\/>addSymbol(\&Terminal);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00124}00124     Expr.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00125}00125 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00126}00126     r=newRule();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00127}00127     rule[r]-\/>addSymbol(\&Add);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00128}00128     BinaryOp.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00129}00129 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00130}00130     r=newRule();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00131}00131     rule[r]-\/>addSymbol(\&Sub);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00132}00132     BinaryOp.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00133}00133 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00134}00134     r=newRule();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00135}00135     rule[r]-\/>addSymbol(\&Mult);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00136}00136     BinaryOp.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00137}00137 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00138}00138     r=newRule();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00139}00139     rule[r]-\/>addSymbol(\&Div);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00140}00140     BinaryOp.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00141}00141 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00142}00142     r=newRule();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00143}00143     rule[r]-\/>addSymbol(\&Sin);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00144}00144     Function.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00145}00145 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00146}00146     r=newRule();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00147}00147     rule[r]-\/>addSymbol(\&Cos);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00148}00148     Function.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00149}00149 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00150}00150     r=newRule();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00151}00151     rule[r]-\/>addSymbol(\&Exp);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00152}00152     Function.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00153}00153 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00154}00154     r=newRule();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00155}00155     rule[r]-\/>addSymbol(\&Log);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00156}00156     Function.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00157}00157     }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00158}00158     r=newRule();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00159}00159     rule[r]-\/>addSymbol(\&Digit0);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00160}00160     DigitList.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00161}00161 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00162}00162     }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00163}00163     r=newRule();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00164}00164     rule[r]-\/>addSymbol(\&Digit0);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00165}00165     rule[r]-\/>addSymbol(\&Digit0);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00166}00166     DigitList.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00167}00167 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00168}00168     r=newRule();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00169}00169     rule[r]-\/>addSymbol(\&Digit0);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00170}00170     rule[r]-\/>addSymbol(\&Digit0);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00171}00171     rule[r]-\/>addSymbol(\&Digit0);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00172}00172     DigitList.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00173}00173 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00174}00174     r=newRule();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00175}00175     rule[r]-\/>addSymbol(\&DigitList);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00176}00176     rule[r]-\/>addSymbol(\&Dot);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00177}00177     rule[r]-\/>addSymbol(\&DigitList);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00178}00178     Terminal.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00179}00179 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00180}00180     r=newRule();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00181}00181     rule[r]-\/>addSymbol(\&Lpar);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00182}00182     rule[r]-\/>addSymbol(\&Sub);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00183}00183     rule[r]-\/>addSymbol(\&DigitList);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00184}00184     rule[r]-\/>addSymbol(\&Dot);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00185}00185     rule[r]-\/>addSymbol(\&DigitList);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00186}00186     rule[r]-\/>addSymbol(\&Rpar);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00187}00187     Terminal.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00188}00188 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00189}00189     r=newRule();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00190}00190     rule[r]-\/>addSymbol(\&X);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00191}00191     Terminal.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00192}00192 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00193}00193     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<Digit.size();i++)}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00194}00194     \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00195}00195         r=newRule();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00196}00196         rule[r]-\/>addSymbol(\&Digit[i]);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00197}00197         Digit0.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00198}00198         \textcolor{keywordflow}{if}(i) Digit1.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00199}00199     \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00200}00200 \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00201}00201 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00202}00202 \textcolor{keywordtype}{int} RlsProgram::newRule()}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00203}00203 \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00204}00204     \textcolor{keywordtype}{int} s=rule.size();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00205}00205     rule.resize(s+1);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00206}00206     rule[s]=\textcolor{keyword}{new} \mbox{\hyperlink{classRule}{Rule}}();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00207}00207     \textcolor{keywordflow}{return} s;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00208}00208 \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00209}00209 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00210}00210 \textcolor{keywordtype}{double}  RlsProgram::fitness(vector<int> \&genome)}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00211}00211 \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00212}00212     \textcolor{keywordtype}{double}  value=0.0;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00213}00213     vector<double> dx;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00214}00214     dx.resize(dimension);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00215}00215     Data xx1;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00216}00216     xx1.resize(dimension);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00217}00217     Data xx2;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00218}00218     xx2.resize(dimension);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00219}00219     \textcolor{keywordtype}{int} ok\_flag=0;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00220}00220     vector<double> lmargin,rmargin;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00221}00221     lmargin=problem-\/>\mbox{\hyperlink{classProblem_ab874a141e8057d1bce73811cf1a6fe4e}{getLeftMargin}}();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00222}00222     rmargin=problem-\/>\mbox{\hyperlink{classProblem_af75470dcb6520f39903d384b4c535121}{getRightMargin}}();}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00223}00223     \textcolor{keywordtype}{int} ok\_flag1=0;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00224}00224     \textcolor{keywordtype}{int} ok\_flag2=0;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00225}00225     \textcolor{keywordtype}{int} redo=0;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00226}00226     \textcolor{keywordtype}{string} totalstr=printRandomProgram(genome,redo);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00227}00227     \textcolor{keywordflow}{if}(redo>=REDO\_MAX) \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00228}00228         \textcolor{keywordflow}{return} }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00229}00229         -\/1e+100;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00230}00230     \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00231}00231     \textcolor{keywordtype}{int} lastpos=0;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00232}00232     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<dimension;i++)}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00233}00233     \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00234}00234         \textcolor{keywordtype}{string} str=\textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00235}00235         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} j=lastpos;j<totalstr.size() \&\& totalstr[j]!=\textcolor{charliteral}{'\#'};j++)}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00236}00236         \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00237}00237             str=str+totalstr[j];}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00238}00238             lastpos++;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00239}00239         \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00240}00240         lastpos++;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00241}00241         \textcolor{keywordtype}{int} icode=parser.Parse(str,\textcolor{stringliteral}{"{}x"{}});}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00242}00242         \textcolor{keywordflow}{if}(icode!=-\/1)}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00243}00243         \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00244}00244             \textcolor{keywordflow}{return} -\/1e+100;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00245}00245         \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00246}00246 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00247}00247         dx[i]=parser.Eval(\&x0[i]);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00248}00248         \textcolor{keywordflow}{if}(isnan(dx[i]) || isinf(dx[i])|| parser.EvalError())}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00249}00249         \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00250}00250             \textcolor{keywordflow}{return} -\/1e+100;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00251}00251             dx[i]=0.0;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00252}00252             ok\_flag++;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00253}00253             ok\_flag1++;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00254}00254             ok\_flag2++;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00255}00255         \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00256}00256     }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00257}00257         xx1[i]=x0[i]+dx[i];}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00258}00258         \textcolor{keywordtype}{int} pflag=0;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00259}00259         \textcolor{keywordflow}{if}(xx1[i]>rmargin[i] || xx1[i]<lmargin[i]) }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00260}00260         \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00261}00261             ok\_flag++;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00262}00262             xx1[i]=x0[i];}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00263}00263             ok\_flag1++;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00264}00264         \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00265}00265         xx2[i]=x0[i]-\/dx[i];}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00266}00266         \textcolor{keywordflow}{if}(xx2[i]>rmargin[i] || xx2[i]<lmargin[i]) }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00267}00267         \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00268}00268             ok\_flag++;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00269}00269             xx2[i]=x0[i];}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00270}00270             ok\_flag2++;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00271}00271         \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00272}00272 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00273}00273     \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00274}00274     \textcolor{keywordflow}{if}(ok\_flag>=dimension) \textcolor{keywordflow}{return} -\/fvalue;\textcolor{comment}{// \{return -\/1e+100;\}}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00275}00275     \textcolor{keywordtype}{double} val1,val2;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00276}00276     \textcolor{keywordflow}{if}(problem-\/>\mbox{\hyperlink{classProblem_a1843d04c88315cb604d3a0ba15c2b56f}{isPointIn}}(xx1) \&\& ok\_flag1<dimension)}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00277}00277         val1=problem-\/>\mbox{\hyperlink{classProblem_a1d4dd1303141465d145b5b728c0b2d81}{funmin}}(xx1);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00278}00278     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00279}00279     \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00280}00280         val1=fvalue+1;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00281}00281     \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00282}00282     \textcolor{keywordflow}{if}(val1<fvalue) }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00283}00283     \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00284}00284         \textcolor{keywordflow}{if}(isnan(val1) || isinf(val1)) \textcolor{keywordflow}{return} -\/1e+100;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00285}00285         \textcolor{keywordflow}{if}(val1<bestValue)}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00286}00286         \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00287}00287             \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<dimension;i++) bestx0[i]=xx1[i];}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00288}00288             bestValue=val1;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00289}00289         \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00290}00290         \textcolor{keywordflow}{return} -\/val1;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00291}00291     \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00292}00292     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00293}00293     \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00294}00294         \textcolor{keywordflow}{if}(problem-\/>\mbox{\hyperlink{classProblem_a1843d04c88315cb604d3a0ba15c2b56f}{isPointIn}}(xx2) \&\& ok\_flag2<dimension)}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00295}00295             val2=problem-\/>\mbox{\hyperlink{classProblem_a1d4dd1303141465d145b5b728c0b2d81}{funmin}}(xx2);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00296}00296         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00297}00297             val2=fvalue+1;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00298}00298         \textcolor{keywordflow}{if}(val2<fvalue)}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00299}00299         \{   }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00300}00300             \textcolor{keywordflow}{if}(isnan(val2) || isinf(val2)) \textcolor{keywordflow}{return} -\/1e+100;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00301}00301             \textcolor{keywordflow}{if}(val2<bestValue)}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00302}00302             \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00303}00303                 \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<dimension;i++) bestx0[i]=xx2[i];}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00304}00304                 bestValue=val2;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00305}00305             \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00306}00306             \textcolor{keywordflow}{return} -\/val2;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00307}00307         \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00308}00308         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00309}00309             \textcolor{keywordflow}{return} -\/fvalue;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00310}00310     \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00311}00311     \textcolor{keywordflow}{return} 0.0;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00312}00312 \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00313}00313 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00314}00314 \textcolor{keywordtype}{string}  RlsProgram::printProgram(vector<int> \&genome)}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00315}00315 \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00316}00316     \textcolor{keywordtype}{string} s1=\textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00317}00317     vector<int> subgenome;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00318}00318     subgenome.resize(genome.size()/dimension);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00319}00319     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<dimension;i++)}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00320}00320     \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00321}00321         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} j=0;j<genome.size()/dimension;j++)}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00322}00322             subgenome[j]=genome[i*genome.size()/dimension+j];}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00323}00323         \textcolor{keywordtype}{int} redo=0;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00324}00324         \textcolor{keywordtype}{string} str=printRandomProgram(subgenome,redo);}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00325}00325         \textcolor{keywordflow}{if}(redo>=REDO\_MAX) }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00326}00326         \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00327}00327             \textcolor{keywordflow}{return}  \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00328}00328         \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00329}00329         s1=s1+\textcolor{stringliteral}{"{}f(x)="{}}+str+\textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00330}00330     \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00331}00331     \textcolor{keywordflow}{return} s1;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00332}00332 \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00333}00333 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00334}00334 \textcolor{keywordtype}{void}    RlsProgram::getX0(\textcolor{keywordtype}{double} *X0)}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00335}00335 \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00336}00336     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<dimension;i++) }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00337}00337     \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00338}00338         X0[i]=x0[i];}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00339}00339     \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00340}00340 \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00341}00341 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00342}00342 \textcolor{keywordtype}{double}  RlsProgram::getValue()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00343}00343 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00344}00344     \textcolor{keywordflow}{return} fvalue;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00345}00345 \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00346}00346 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00347}00347 \textcolor{keywordtype}{double}  RlsProgram::getBestValue()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00348}00348 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00349}00349     \textcolor{keywordflow}{return} bestValue;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00350}00350 \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00351}00351 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00352}00352 \textcolor{keywordtype}{void}    RlsProgram::getBestX0(\textcolor{keywordtype}{double} *X0)}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00353}00353 \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00354}00354     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<dimension;i++) X0[i]=bestx0[i];}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00355}00355 \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00356}00356 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00357}00357 \textcolor{keywordtype}{void}    RlsProgram::clear()}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00358}00358 \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00359}00359     bestValue = 1e+100;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00360}00360 \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00361}00361 }
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00362}00362 RlsProgram::\string~RlsProgram()}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00363}00363 \{}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00364}00364     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<rule.size();i++) \textcolor{keyword}{delete} rule[i];}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00365}00365     \textcolor{keyword}{delete} start\_symbol;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00366}00366     \textcolor{keyword}{delete}[] x0;}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00367}00367 \}}
+\DoxyCodeLine{\Hypertarget{rlsprogram_8cc_source_l00368}00368 }
+
+\end{DoxyCode}

@@ -57,6 +57,7 @@ SOURCES += \
     rlsprogram.cc \
     rule.cc \
     sigprogram.cc \
+    simplexmethod.cpp \
     symbol.cc \
     tolmin.cc \
     brent.cpp \
@@ -100,6 +101,7 @@ HEADERS += \
     rlsprogram.h \
     rule.h \
     sigprogram.h \
+    simplexmethod.h \
     symbol.h \
     tolmin.h \
     brent.h \

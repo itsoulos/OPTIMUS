@@ -1,0 +1,35 @@
+\hypertarget{neuralsampler_8h_source}{}\doxysection{neuralsampler.\+h}
+\label{neuralsampler_8h_source}\index{neuralsampler.h@{neuralsampler.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00001}00001 \textcolor{preprocessor}{\#ifndef NEURALSAMPLER\_H}}
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00002}00002 \textcolor{preprocessor}{\#define NEURALSAMPLER\_H}}
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00004}00004 \textcolor{preprocessor}{\#include "{}problemsampler.h"{}}}
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00005}00005 \textcolor{preprocessor}{\# include "{}dataset.h"{}}}
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00006}\mbox{\hyperlink{classNeuralSampler}{00006}} \textcolor{keyword}{class }\mbox{\hyperlink{classNeuralSampler}{NeuralSampler}} : \textcolor{keyword}{public} \mbox{\hyperlink{classProblemSampler}{ProblemSampler}}}
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00007}00007 \{}
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00008}00008 \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00009}00009     Data weight;}
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00010}00010     \mbox{\hyperlink{classDataset}{Dataset}} *dataset;}
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00011}00011 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00012}00012     \mbox{\hyperlink{classNeuralSampler}{NeuralSampler}}(\mbox{\hyperlink{classProblem}{Problem}} *p,\textcolor{keywordtype}{int} w);}
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00013}00013     \textcolor{keywordtype}{int}     getNWeights() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00014}00014     Data    getWeights();}
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00015}00015     \textcolor{keywordtype}{void}    setWeights(Data \&w);}
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00016}00016     \textcolor{keywordtype}{double}  \mbox{\hyperlink{classNeuralSampler_af221ed47b30c4369ed3fe82748e48a3c}{eval}}(Data \&x);}
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00018}00018     Data    \mbox{\hyperlink{classNeuralSampler_a1061a277c43acacfc1c2cf0257741c33}{evalDeriv}}(Data \&x);}
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00019}00019     \textcolor{comment}{//Total derivative for all dataset}}
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00020}00020     Data    evalDeriv();}
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00021}00021     \textcolor{keywordtype}{void}    \mbox{\hyperlink{classNeuralSampler_a81b35bc4ade35254c77fc34b1a307fe4}{sampleFromProblem}}(\textcolor{keywordtype}{int} N,Matrix \&xsample,Data \&ysample);}
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00022}00022     \textcolor{keywordtype}{void}    \mbox{\hyperlink{classNeuralSampler_ad9bbde94e87293520d3e230c19c7bc4d}{trainModel}}();}
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00023}00023     \textcolor{keywordtype}{double}  getTrainError();}
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00024}00024     \textcolor{keywordtype}{void}    \mbox{\hyperlink{classNeuralSampler_a69240bc7e6dd93bafd5687a88b26355f}{addSampleFromProblem}}(Data \&x,\textcolor{keywordtype}{double} y);}
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00025}00025 }
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00026}00026     \textcolor{keywordtype}{void}    \mbox{\hyperlink{classNeuralSampler_a3e5fb353144d6e2702ac4ad2f1979eba}{sampleFromModel}}(\textcolor{keywordtype}{int} \&N,Matrix \&xsample,Data \&ysample);}
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00027}00027     \mbox{\hyperlink{classNeuralSampler}{\string~NeuralSampler}}();}
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00028}00028 \};}
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{neuralsampler_8h_source_l00030}00030 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// NEURALSAMPLER\_H}}
+
+\end{DoxyCode}

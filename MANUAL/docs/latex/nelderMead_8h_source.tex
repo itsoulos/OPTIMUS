@@ -1,0 +1,43 @@
+\hypertarget{nelderMead_8h_source}{}\doxysection{nelder\+Mead.\+h}
+\label{nelderMead_8h_source}\index{nelderMead.h@{nelderMead.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00001}00001 \textcolor{preprocessor}{\#ifndef NELDERMEAD\_H}}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00002}00002 \textcolor{preprocessor}{\#define NELDERMEAD\_H}}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00004}00004 \textcolor{preprocessor}{\#include "{}nelderMead\_global.h"{}}}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00005}00005 \textcolor{preprocessor}{\#include "{}problem.h"{}}}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00007}\mbox{\hyperlink{classnelderMead}{00007}} \textcolor{keyword}{class }NELDERMEAD\_EXPORT \mbox{\hyperlink{classnelderMead}{nelderMead}}}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00008}00008 \{}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00009}00009 \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00010}00010     \mbox{\hyperlink{classProblem}{Problem}} *myProblem;}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00013}00013     vector<pair<double, Data>> population;}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00014}00014     \textcolor{keywordtype}{int} max\_generations;}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00015}00015     Data lmargin, rmargin, fitness\_array, bestPoint, centerPoint, reflectedPoint,}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00016}00016         expandedPoint, contractedPoint;}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00017}00017     \textcolor{keywordtype}{double} x1, x2, stopat, variance, ybestPoint, sum, newSum, alpha, gamma, ro, sigma,}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00018}00018         worst, secondWorst, yreflectedPoint, yexpandedPoint, ycontractedPoint;}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00019}00019     \textcolor{keywordtype}{int} generation, population\_count, population\_size, bestMinIndex, n;}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00022}00022     \textcolor{keywordtype}{void} order();}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00025}00025     \textcolor{keywordtype}{void} center();}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00028}00028     \textcolor{keywordtype}{void} reflection();}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00031}00031     \textcolor{keywordtype}{void} expansion();}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00034}00034     \textcolor{keywordtype}{void} contraction();}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00037}00037     \textcolor{keywordtype}{void} contractionB();}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00040}00040     \textcolor{keywordtype}{void} shrink();}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00042}00042 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00048}00048     \mbox{\hyperlink{classnelderMead}{nelderMead}}(\mbox{\hyperlink{classProblem}{Problem}} *p, Data \&x, \textcolor{keywordtype}{double} y);}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00053}00053     \textcolor{keywordtype}{bool} terminated();}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00056}00056     \textcolor{keywordtype}{void} step();}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00059}00059     \textcolor{keywordtype}{void} init();}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00062}00062     \textcolor{keywordtype}{void} done();}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00067}00067     Data getBestX() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00072}00072     \textcolor{keywordtype}{double} getBestY() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00076}00076     \mbox{\hyperlink{classnelderMead}{\string~nelderMead}}();}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00077}00077 \};}
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00078}00078 }
+\DoxyCodeLine{\Hypertarget{nelderMead_8h_source_l00079}00079 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// NELDERMEAD\_H}}
+
+\end{DoxyCode}

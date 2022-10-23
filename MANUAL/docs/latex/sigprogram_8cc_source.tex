@@ -1,0 +1,122 @@
+\hypertarget{sigprogram_8cc_source}{}\doxysection{sigprogram.\+cc}
+\label{sigprogram_8cc_source}\index{sigprogram.cc@{sigprogram.cc}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00001}00001 \textcolor{preprocessor}{\# include <sigprogram.h>}}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00002}00002 \textcolor{preprocessor}{\# include <math.h>}}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00005}00005 \textcolor{keyword}{static} \textcolor{keywordtype}{double} sig(\textcolor{keyword}{const} \textcolor{keywordtype}{double} *X)}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00006}00006 \{}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00007}00007     \textcolor{keywordflow}{return} 1.0/(1.0+exp(-\/X[0]));}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00008}00008 \}}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00010}00010 \textcolor{keyword}{static} \textcolor{keywordtype}{double} remf(\textcolor{keyword}{const} \textcolor{keywordtype}{double} *X)}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00011}00011 \{}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00012}00012     \textcolor{keywordflow}{return} X[0]-\/(int)X[0];}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00013}00013 \}}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00014}00014 }
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00015}00015 SigProgram::SigProgram(\textcolor{keywordtype}{int} d)}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00016}00016     :\mbox{\hyperlink{classCprogram}{Cprogram}}(d)}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00017}00017 \{}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00018}00018     \textcolor{keywordtype}{int} r;}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00019}00019     Start.cut(0);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00021}00021     parser.AddFunction(\textcolor{stringliteral}{"{}sig"{}},sig,1);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00022}00022     parser.AddFunction(\textcolor{stringliteral}{"{}remf"{}},remf,1);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00023}00023 }
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00024}00024     Sig.set(\textcolor{stringliteral}{"{}sig"{}},1);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00025}00025     s0.set(\textcolor{stringliteral}{"{}s0"{}},0);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00026}00026     sx.set(\textcolor{stringliteral}{"{}sx"{}},0);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00027}00027     SigFunction.set(\textcolor{stringliteral}{"{}SIGF"{}},0);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00028}00028     Abs.set(\textcolor{stringliteral}{"{}remf"{}},1);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00030}00030     r=newRule();}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00031}00031     rule[r]-\/>addSymbol(\&s0);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00032}00032     Start.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00034}00034     r=newRule();}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00035}00035     rule[r]-\/>addSymbol(\&Out);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00036}00036     rule[r]-\/>addSymbol(\&Mult);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00037}00037     rule[r]-\/>addSymbol(\&Sig);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00038}00038     rule[r]-\/>addSymbol(\&Lpar);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00039}00039     rule[r]-\/>addSymbol(\&sx);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00040}00040     rule[r]-\/>addSymbol(\&Plus);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00041}00041     rule[r]-\/>addSymbol(\&Out);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00042}00042     rule[r]-\/>addSymbol(\&Rpar);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00043}00043     s0.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00045}00045 }
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00046}00046     r=newRule();}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00047}00047     rule[r]-\/>addSymbol(\&Out);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00048}00048     rule[r]-\/>addSymbol(\&Mult);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00049}00049     rule[r]-\/>addSymbol(\&Sig);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00050}00050     rule[r]-\/>addSymbol(\&Lpar);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00051}00051     rule[r]-\/>addSymbol(\&sx);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00052}00052     rule[r]-\/>addSymbol(\&Plus);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00053}00053     rule[r]-\/>addSymbol(\&Out);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00054}00054     rule[r]-\/>addSymbol(\&Rpar);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00055}00055     rule[r]-\/>addSymbol(\&Plus);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00056}00056     rule[r]-\/>addSymbol(\&s0);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00057}00057     s0.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00058}00058 }
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00059}00059 }
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00060}00060     r=newRule();}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00061}00061     rule[r]-\/>addSymbol(\&Out);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00062}00062     rule[r]-\/>addSymbol(\&Mult);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00063}00063     rule[r]-\/>addSymbol(\&XXlist);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00064}00064     sx.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00065}00065 }
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00066}00066     r=newRule();}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00067}00067     rule[r]-\/>addSymbol(\&Out);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00068}00068     rule[r]-\/>addSymbol(\&Mult);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00069}00069     rule[r]-\/>addSymbol(\&XXlist);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00070}00070     rule[r]-\/>addSymbol(\&Plus);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00071}00071     rule[r]-\/>addSymbol(\&sx);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00072}00072     sx.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00073}00073 }
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00074}00074 }
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00075}00075     }
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00076}00076     DigitList.cut(0);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00077}00077     smallNumber.set(\textcolor{stringliteral}{"{}SMALLNUMBER"{}},0);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00078}00078 }
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00079}00079     r=newRule();}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00080}00080     rule[r]-\/>addSymbol(\&Digit0);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00081}00081     smallNumber.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00082}00082 }
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00083}00083     r=newRule();}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00084}00084     rule[r]-\/>addSymbol(\&Digit0);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00085}00085     rule[r]-\/>addSymbol(\&Digit0);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00086}00086     smallNumber.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00087}00087 }
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00088}00088     r=newRule();}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00089}00089     rule[r]-\/>addSymbol(\&Digit0);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00090}00090     DigitList.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00091}00091 }
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00092}00092     r=newRule();}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00093}00093     rule[r]-\/>addSymbol(\&Digit0);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00094}00094     rule[r]-\/>addSymbol(\&DigitList);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00095}00095     DigitList.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00096}00096 }
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00097}00097     Out.set(\textcolor{stringliteral}{"{}OUT"{}},0);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00098}00098     }
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00099}00099     r=newRule();}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00100}00100     rule[r]-\/>addSymbol(\&Lpar);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00101}00101     rule[r]-\/>addSymbol(\&DigitList);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00102}00102     rule[r]-\/>addSymbol(\&Dot);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00103}00103     rule[r]-\/>addSymbol(\&DigitList);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00104}00104     rule[r]-\/>addSymbol(\&Rpar);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00105}00105     Out.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00106}00106 }
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00107}00107     r=newRule();}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00108}00108     rule[r]-\/>addSymbol(\&Lpar);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00109}00109     rule[r]-\/>addSymbol(\&Minus);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00110}00110     rule[r]-\/>addSymbol(\&DigitList);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00111}00111     rule[r]-\/>addSymbol(\&Dot);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00112}00112     rule[r]-\/>addSymbol(\&DigitList);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00113}00113     rule[r]-\/>addSymbol(\&Rpar);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00114}00114     Out.addRule(rule[r]);}
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00115}00115 }
+\DoxyCodeLine{\Hypertarget{sigprogram_8cc_source_l00116}00116 \}}
+
+\end{DoxyCode}

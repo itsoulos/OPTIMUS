@@ -1,0 +1,95 @@
+\hypertarget{dllproblem_8cpp_source}{}\doxysection{dllproblem.\+cpp}
+\label{dllproblem_8cpp_source}\index{dllproblem.cpp@{dllproblem.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00001}00001 \textcolor{preprocessor}{\#include "{}dllproblem.h"{}}}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00002}00002 \textcolor{preprocessor}{\# include <QDebug>}}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00004}\mbox{\hyperlink{classDllProblem_ac21bd429d98bbe0c607ce9d1a12711f8}{00004}} \mbox{\hyperlink{classDllProblem_ac21bd429d98bbe0c607ce9d1a12711f8}{DllProblem::DllProblem}}(QString filename,QJsonObject settings)}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00005}00005     :\mbox{\hyperlink{classIntervalProblem}{IntervalProblem}}(1)}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00006}00006 \{}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00007}00007     library=\textcolor{keyword}{new} QLibrary(filename);}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00008}00008     library-\/>load();}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00009}00009     Init=(INIT)library-\/>resolve(\textcolor{stringliteral}{"{}init"{}});}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00010}00010     \textcolor{keywordflow}{if}(Init==NULL)}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00011}00011         Init=(INIT)library-\/>resolve(\textcolor{stringliteral}{"{}init\_"{}});}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00013}00013     \mbox{\hyperlink{classDllProblem_a5a4f9135a5449804dc10535c38fbce74}{init}}(settings);}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00014}00014 }
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00015}00015 }
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00016}00016     getdim=(GETDIMENSION)library-\/>resolve(\textcolor{stringliteral}{"{}getdimension"{}});}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00017}00017     \textcolor{keywordflow}{if}(getdim==NULL)}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00018}00018         getdim=(GETDIMENSION)library-\/>resolve(\textcolor{stringliteral}{"{}getdimension\_"{}});}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00019}00019     \textcolor{keywordtype}{int} dim=(getdim!=NULL)?getdim():1;}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00021}00021     this-\/>\mbox{\hyperlink{classIntervalProblem_a87b1ac082b68b19c704a7aab3d4a71a0}{setDimension}}(dim);}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00022}00022     GetMargins=(GETMARGINS)library-\/>resolve(\textcolor{stringliteral}{"{}getmargins"{}});}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00023}00023     \textcolor{keywordflow}{if}(GetMargins==NULL)}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00024}00024         GetMargins=(GETMARGINS)library-\/>resolve(\textcolor{stringliteral}{"{}getmargins\_"{}});}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00025}00025     GetMargins(margin);}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00027}00027     Funmin=(FUNMIN)library-\/>resolve(\textcolor{stringliteral}{"{}funmin"{}});}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00028}00028     \textcolor{keywordflow}{if}(Funmin==NULL)}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00029}00029         Funmin=(FUNMIN)library-\/>resolve(\textcolor{stringliteral}{"{}funmin\_"{}});}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00030}00030     Granal=(GRANAL)library-\/>resolve(\textcolor{stringliteral}{"{}granal"{}});}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00031}00031     \textcolor{keywordflow}{if}(Granal==NULL)}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00032}00032         Granal=(GRANAL)library-\/>resolve(\textcolor{stringliteral}{"{}granal\_"{}});}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00033}00033     Done=(DONE)library-\/>resolve(\textcolor{stringliteral}{"{}done"{}});}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00034}00034     \textcolor{keywordflow}{if}(Done==NULL)}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00035}00035         Done=(DONE)library-\/>resolve(\textcolor{stringliteral}{"{}done\_"{}});}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00037}00037     Setp=(SETP)library-\/>resolve(\textcolor{stringliteral}{"{}setParameter"{}});}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00038}00038     \textcolor{keywordflow}{if}(Setp==NULL)}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00039}00039         Setp=(SETP)library-\/>resolve(\textcolor{stringliteral}{"{}setParameter\_"{}});}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00040}00040     Sampler=(SAMPLER)library-\/>resolve(\textcolor{stringliteral}{"{}getSample"{}});}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00041}00041     \textcolor{keywordflow}{if}(Sampler==NULL)}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00042}00042         Sampler=(SAMPLER)library-\/>resolve(\textcolor{stringliteral}{"{}getSample\_"{}});}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00043}00043 \}}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00045}\mbox{\hyperlink{classDllProblem_a5a4f9135a5449804dc10535c38fbce74}{00045}} \textcolor{keywordtype}{void}    \mbox{\hyperlink{classDllProblem_a5a4f9135a5449804dc10535c38fbce74}{DllProblem::init}}(QJsonObject x)}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00046}00046 \{}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00047}00047     \textcolor{keywordflow}{if}(Init!=NULL)}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00048}00048         Init(x);}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00049}00049 \}}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00050}00050 }
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00051}\mbox{\hyperlink{classDllProblem_a906f52fb82c21f2402d0da78ae505f4a}{00051}} \textcolor{keywordtype}{double} \mbox{\hyperlink{classDllProblem_a906f52fb82c21f2402d0da78ae505f4a}{DllProblem::funmin}}(Data \&x)}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00052}00052 \{}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00053}00053     \textcolor{keywordflow}{return} Funmin(x);}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00054}00054 \}}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00056}\mbox{\hyperlink{classDllProblem_a09496c75c1e57d8d9ca6893eac0befc1}{00056}} \textcolor{keywordtype}{void}    \mbox{\hyperlink{classDllProblem_a09496c75c1e57d8d9ca6893eac0befc1}{DllProblem::granal}}(Data \&x, Data \&g)}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00057}00057 \{}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00058}00058     Granal(x,g);}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00059}00059 \}}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00060}00060 }
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00061}00061 }
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00062}\mbox{\hyperlink{classDllProblem_ad350ad1d160f48892e83698df0c68219}{00062}} \textcolor{keywordtype}{void} \mbox{\hyperlink{classDllProblem_ad350ad1d160f48892e83698df0c68219}{DllProblem::setParameter}}(QString name, QVariant value)}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00063}00063 \{}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00064}00064     \textcolor{keywordflow}{if}(Setp!=NULL)}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00065}00065         Setp(name,value);}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00066}00066 \}}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00068}00068 }
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00069}\mbox{\hyperlink{classDllProblem_a6c86e17770d55d4bae382fd7e9aac5c9}{00069}} QJsonObject \mbox{\hyperlink{classDllProblem_a6c86e17770d55d4bae382fd7e9aac5c9}{DllProblem::done}}(Data \&x)}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00070}00070 \{}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00071}00071     \textcolor{keywordflow}{if}(Done!=NULL)}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00072}00072         \textcolor{keywordflow}{return} Done(x);}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00073}00073     \textcolor{keywordflow}{return} QJsonObject();}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00074}00074 \}}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00075}00075 }
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00076}00076 }
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00077}\mbox{\hyperlink{classDllProblem_a2eb1bce1df666f3ab1bfbf18d54a83b3}{00077}} \textcolor{keywordtype}{void} \mbox{\hyperlink{classDllProblem_a2eb1bce1df666f3ab1bfbf18d54a83b3}{DllProblem::getSample}}(Data \&x)}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00078}00078 \{}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00079}00079     \textcolor{keywordflow}{if}(Sampler!=NULL)}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00080}00080         Sampler(x);}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00081}00081     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00082}00082         IntervalProblem::getSample(x);}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00083}00083 }
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00084}00084 \}}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00085}\mbox{\hyperlink{classDllProblem_a65e1fa6d5c2841fde5fd684382650bc7}{00085}} \mbox{\hyperlink{classDllProblem_a65e1fa6d5c2841fde5fd684382650bc7}{DllProblem::\string~DllProblem}}()}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00086}00086 \{}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00087}00087     library-\/>unload();}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00088}00088     \textcolor{keyword}{delete} library;}
+\DoxyCodeLine{\Hypertarget{dllproblem_8cpp_source_l00089}00089 \}}
+
+\end{DoxyCode}

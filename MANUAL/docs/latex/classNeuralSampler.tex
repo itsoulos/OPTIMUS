@@ -1,0 +1,173 @@
+\hypertarget{classNeuralSampler}{}\doxysection{Neural\+Sampler Class Reference}
+\label{classNeuralSampler}\index{NeuralSampler@{NeuralSampler}}
+
+
+The \mbox{\hyperlink{classNeuralSampler}{Neural\+Sampler}} class implements sampling from the objective function using an artificial neural network.  
+
+
+
+
+{\ttfamily \#include $<$neuralsampler.\+h$>$}
+
+
+
+Inheritance diagram for Neural\+Sampler\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=169pt]{classNeuralSampler__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Neural\+Sampler\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=178pt]{classNeuralSampler__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classNeuralSampler_a7151bffc8e406439503c1242a2452a60}\label{classNeuralSampler_a7151bffc8e406439503c1242a2452a60}} 
+{\bfseries Neural\+Sampler} (\mbox{\hyperlink{classProblem}{Problem}} $\ast$p, int w)
+\item 
+\mbox{\Hypertarget{classNeuralSampler_a6c512d47972e9abb802dd3607c62789d}\label{classNeuralSampler_a6c512d47972e9abb802dd3607c62789d}} 
+int {\bfseries get\+NWeights} () const
+\item 
+\mbox{\Hypertarget{classNeuralSampler_af3b2e4170b4972486edb254a14829542}\label{classNeuralSampler_af3b2e4170b4972486edb254a14829542}} 
+Data {\bfseries get\+Weights} ()
+\item 
+\mbox{\Hypertarget{classNeuralSampler_ae3ba02a52416183ce427e2aad0a72b06}\label{classNeuralSampler_ae3ba02a52416183ce427e2aad0a72b06}} 
+void {\bfseries set\+Weights} (Data \&w)
+\item 
+double \mbox{\hyperlink{classNeuralSampler_af221ed47b30c4369ed3fe82748e48a3c}{eval}} (Data \&x)
+\begin{DoxyCompactList}\small\item\em eval gets the value of model at point \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classNeuralSampler_a1061a277c43acacfc1c2cf0257741c33}\label{classNeuralSampler_a1061a277c43acacfc1c2cf0257741c33}} 
+Data {\bfseries eval\+Deriv} (Data \&x)
+\begin{DoxyCompactList}\small\item\em derivative at point x \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classNeuralSampler_a3be7d264640ac0475644c445b3aaa6b7}\label{classNeuralSampler_a3be7d264640ac0475644c445b3aaa6b7}} 
+Data {\bfseries eval\+Deriv} ()
+\item 
+void \mbox{\hyperlink{classNeuralSampler_a81b35bc4ade35254c77fc34b1a307fe4}{sample\+From\+Problem}} (int N, Matrix \&xsample, Data \&ysample)
+\begin{DoxyCompactList}\small\item\em sample\+From\+Problem, takes samples from the problem using some distribution. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classNeuralSampler_ad9bbde94e87293520d3e230c19c7bc4d}{train\+Model}} ()
+\begin{DoxyCompactList}\small\item\em train\+Model, this method will train the sample models if it is needed. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classNeuralSampler_a2b1f29f51968d8491cc1182f19fb8623}\label{classNeuralSampler_a2b1f29f51968d8491cc1182f19fb8623}} 
+double {\bfseries get\+Train\+Error} ()
+\item 
+void \mbox{\hyperlink{classNeuralSampler_a69240bc7e6dd93bafd5687a88b26355f}{add\+Sample\+From\+Problem}} (Data \&x, double y)
+\begin{DoxyCompactList}\small\item\em add\+Sample\+From\+Problem adds a new sample from the problem. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classNeuralSampler_a3e5fb353144d6e2702ac4ad2f1979eba}{sample\+From\+Model}} (int \&N, Matrix \&xsample, Data \&ysample)
+\begin{DoxyCompactList}\small\item\em sample\+From\+Model, this method will sample from the sample model instead of the real problem. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{classNeuralSampler}{Neural\+Sampler}} class implements sampling from the objective function using an artificial neural network. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classNeuralSampler_a69240bc7e6dd93bafd5687a88b26355f}\label{classNeuralSampler_a69240bc7e6dd93bafd5687a88b26355f}} 
+\index{NeuralSampler@{NeuralSampler}!addSampleFromProblem@{addSampleFromProblem}}
+\index{addSampleFromProblem@{addSampleFromProblem}!NeuralSampler@{NeuralSampler}}
+\doxysubsubsection{\texorpdfstring{addSampleFromProblem()}{addSampleFromProblem()}}
+{\footnotesize\ttfamily void Neural\+Sampler\+::add\+Sample\+From\+Problem (\begin{DoxyParamCaption}\item[{Data \&}]{x,  }\item[{double}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+add\+Sample\+From\+Problem adds a new sample from the problem. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & the xpoint of the new sample \\
+\hline
+{\em y} & the ypoint of the new sample \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classProblemSampler_af1ab92bf9bad3d7869080b8c5c7cb57f}{Problem\+Sampler}}.
+
+\mbox{\Hypertarget{classNeuralSampler_af221ed47b30c4369ed3fe82748e48a3c}\label{classNeuralSampler_af221ed47b30c4369ed3fe82748e48a3c}} 
+\index{NeuralSampler@{NeuralSampler}!eval@{eval}}
+\index{eval@{eval}!NeuralSampler@{NeuralSampler}}
+\doxysubsubsection{\texorpdfstring{eval()}{eval()}}
+{\footnotesize\ttfamily double Neural\+Sampler\+::eval (\begin{DoxyParamCaption}\item[{Data \&}]{xpoint }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+eval gets the value of model at point 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xpoint} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classProblemSampler_a95cb4ee5a502d9f85a4688f2e6071d1f}{Problem\+Sampler}}.
+
+\mbox{\Hypertarget{classNeuralSampler_a3e5fb353144d6e2702ac4ad2f1979eba}\label{classNeuralSampler_a3e5fb353144d6e2702ac4ad2f1979eba}} 
+\index{NeuralSampler@{NeuralSampler}!sampleFromModel@{sampleFromModel}}
+\index{sampleFromModel@{sampleFromModel}!NeuralSampler@{NeuralSampler}}
+\doxysubsubsection{\texorpdfstring{sampleFromModel()}{sampleFromModel()}}
+{\footnotesize\ttfamily void Neural\+Sampler\+::sample\+From\+Model (\begin{DoxyParamCaption}\item[{int \&}]{N,  }\item[{Matrix \&}]{xsample,  }\item[{Data \&}]{ysample }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+sample\+From\+Model, this method will sample from the sample model instead of the real problem. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em N,the} & number of required samples. \\
+\hline
+{\em xsample} & \\
+\hline
+{\em ysample} & \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{classProblemSampler_ab7d597e1843b8d361344bbc5751b9a32}{Problem\+Sampler}}.
+
+\mbox{\Hypertarget{classNeuralSampler_a81b35bc4ade35254c77fc34b1a307fe4}\label{classNeuralSampler_a81b35bc4ade35254c77fc34b1a307fe4}} 
+\index{NeuralSampler@{NeuralSampler}!sampleFromProblem@{sampleFromProblem}}
+\index{sampleFromProblem@{sampleFromProblem}!NeuralSampler@{NeuralSampler}}
+\doxysubsubsection{\texorpdfstring{sampleFromProblem()}{sampleFromProblem()}}
+{\footnotesize\ttfamily void Neural\+Sampler\+::sample\+From\+Problem (\begin{DoxyParamCaption}\item[{int}]{N,  }\item[{Matrix \&}]{xsample,  }\item[{Data \&}]{ysample }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+sample\+From\+Problem, takes samples from the problem using some distribution. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em N,the} & number of samples required. \\
+\hline
+{\em xsample} & \\
+\hline
+{\em ysample} & \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{classProblemSampler_af2608337721073b8286967b37a9b7660}{Problem\+Sampler}}.
+
+\mbox{\Hypertarget{classNeuralSampler_ad9bbde94e87293520d3e230c19c7bc4d}\label{classNeuralSampler_ad9bbde94e87293520d3e230c19c7bc4d}} 
+\index{NeuralSampler@{NeuralSampler}!trainModel@{trainModel}}
+\index{trainModel@{trainModel}!NeuralSampler@{NeuralSampler}}
+\doxysubsubsection{\texorpdfstring{trainModel()}{trainModel()}}
+{\footnotesize\ttfamily void Neural\+Sampler\+::train\+Model (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+train\+Model, this method will train the sample models if it is needed. 
+
+
+
+Reimplemented from \mbox{\hyperlink{classProblemSampler_a0e6ea334728661f429345f8bce993afd}{Problem\+Sampler}}.
+

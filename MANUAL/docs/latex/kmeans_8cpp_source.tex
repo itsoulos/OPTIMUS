@@ -1,0 +1,233 @@
+\hypertarget{kmeans_8cpp_source}{}\doxysection{kmeans.\+cpp}
+\label{kmeans_8cpp_source}\index{kmeans.cpp@{kmeans.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00001}00001 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00002}00002 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00003}00003 \textcolor{preprocessor}{\#include <cmath>}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00004}00004 \textcolor{preprocessor}{\#include <fstream>}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00005}00005 \textcolor{preprocessor}{\#include <algorithm>}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00007}00007 \textcolor{preprocessor}{\#include "{}kmeans.h"{}}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00009}\mbox{\hyperlink{classKMeans_a0ca3e46ac1b1c1b903bd379cada2fb60}{00009}} \mbox{\hyperlink{classKMeans_a0ca3e46ac1b1c1b903bd379cada2fb60}{KMeans::KMeans}}(\textcolor{keywordtype}{int} K, \textcolor{keywordtype}{int} iterations, \textcolor{keywordtype}{int} minK)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00010}00010 \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00011}00011     this-\/>K = K;}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00012}00012     this-\/>iters = iterations;}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00013}00013     this-\/>minK = minK;}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00014}00014     this-\/>means.resize(K);}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00015}00015     this-\/>PMeans.resize(K);}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00016}00016 \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00017}00017 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00018}00018 \textcolor{keywordtype}{int} KMeans::getNearestClusterId(\mbox{\hyperlink{classPoint}{Point}} point)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00019}00019 \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00020}00020     \textcolor{keywordtype}{double} sum = 0.0, min\_dist;}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00021}00021     \textcolor{keywordtype}{int} NearestClusterId;}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00023}00023     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < dimensions; i++)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00024}00024     \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00025}00025         sum += pow(clusters[0].getCentroidByPos(i) -\/ point.\mbox{\hyperlink{classPoint_a4d85f015254af1a5e5061b26a2fe6730}{getVal}}(i), 2.0);}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00026}00026     \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00028}00028     min\_dist = sqrt(sum);}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00029}00029     NearestClusterId = clusters[0].getId();}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00031}00031     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 1; i < K; i++)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00032}00032     \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00033}00033         \textcolor{keywordtype}{double} dist;}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00034}00034         sum = 0.0;}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00036}00036         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < dimensions; j++)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00037}00037         \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00038}00038             sum += pow(clusters[i].getCentroidByPos(j) -\/ point.\mbox{\hyperlink{classPoint_a4d85f015254af1a5e5061b26a2fe6730}{getVal}}(j), 2.0);}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00039}00039         \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00040}00040 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00041}00041         dist = sqrt(sum);}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00043}00043         \textcolor{keywordflow}{if} (dist < min\_dist)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00044}00044         \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00045}00045             min\_dist = dist;}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00046}00046             NearestClusterId = clusters[i].getId();}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00047}00047         \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00048}00048     \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00049}00049 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00050}00050     \textcolor{keywordflow}{return} NearestClusterId;}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00051}00051 \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00052}00052 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00053}\mbox{\hyperlink{classKMeans_ab9b74fb58c38e192e8d55432a966cde4}{00053}} \textcolor{keywordtype}{void} \mbox{\hyperlink{classKMeans_ab9b74fb58c38e192e8d55432a966cde4}{KMeans::run}}(std::vector<Point> \&all\_points)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00054}00054 \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00056}00056     total\_points = all\_points.size();}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00057}00057     dimensions = all\_points[0].getDimensions();}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00058}00058 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00059}00059     std::vector<int> used\_pointIds;}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00060}00060 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00061}00061     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 1; i <= K; i++)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00062}00062     \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00063}00063         \textcolor{keywordflow}{while} (\textcolor{keyword}{true})}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00064}00064         \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00065}00065             \textcolor{keywordtype}{int} index = rand() \% total\_points;}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00066}00066 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00067}00067             \textcolor{keywordflow}{if} (std::find(used\_pointIds.begin(), used\_pointIds.end(), index) == used\_pointIds.end())}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00068}00068             \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00069}00069                 used\_pointIds.push\_back(index);}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00070}00070                 all\_points[index].setCluster(i);}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00071}00071                 \mbox{\hyperlink{classCluster}{Cluster}} cluster(i, all\_points[index]);}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00072}00072                 clusters.push\_back(cluster);}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00073}00073                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00074}00074             \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00075}00075         \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00076}00076     \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00077}00077 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00078}00078 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00079}00079     \textcolor{keywordtype}{int} iter = 1;}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00080}00080     \textcolor{keywordflow}{while} (\textcolor{keyword}{true})}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00081}00081     \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00082}00082 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00083}00083         \textcolor{keywordtype}{bool} done = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00084}00084 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00085}00085         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < total\_points; i++)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00086}00086         \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00087}00087             \textcolor{keywordtype}{int} currentClusterId = all\_points[i].getCluster();}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00088}00088             \textcolor{keywordtype}{int} nearestClusterId = getNearestClusterId(all\_points[i]);}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00089}00089 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00090}00090             \textcolor{keywordflow}{if} (currentClusterId != nearestClusterId)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00091}00091             \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00092}00092                 \textcolor{keywordflow}{if} (currentClusterId != 0)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00093}00093                 \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00094}00094                     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < K; j++)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00095}00095                     \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00096}00096                         \textcolor{keywordflow}{if} (clusters[j].getId() == currentClusterId)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00097}00097                         \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00098}00098                             clusters[j].removePoint(all\_points[i].getID());}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00099}00099                         \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00100}00100                     \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00101}00101                 \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00102}00102 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00103}00103                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < K; j++)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00104}00104                 \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00105}00105                     \textcolor{keywordflow}{if} (clusters[j].getId() == nearestClusterId)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00106}00106                     \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00107}00107                         clusters[j].addPoint(all\_points[i]);}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00108}00108                     \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00109}00109                 \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00110}00110                 all\_points[i].setCluster(nearestClusterId);}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00111}00111                 done = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00112}00112             \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00113}00113         \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00114}00114 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00115}00115         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < K; i++)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00116}00116         \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00117}00117             \textcolor{keywordtype}{int} ClusterSize = clusters[i].getSize();}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00118}00118 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00119}00119             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < dimensions; j++)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00120}00120             \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00121}00121                 \textcolor{keywordtype}{double} sum = 0.0;}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00122}00122                 \textcolor{keywordflow}{if} (ClusterSize > 0)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00123}00123                 \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00124}00124                     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} p = 0; p < ClusterSize; p++)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00125}00125                         sum += clusters[i].getPoint(p).getVal(j);}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00126}00126                     clusters[i].setCentroidByPos(j, (\textcolor{keywordtype}{double})sum / (\textcolor{keywordtype}{double})ClusterSize);}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00127}00127                 \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00128}00128             \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00129}00129         \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00130}00130 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00131}00131         \textcolor{keywordflow}{if} (done || iter >= iters)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00132}00132         \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00133}00133             \textcolor{comment}{//std::cout << "{}Clustering completed in iteration : "{} << iter << std::endl << std::endl;}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00134}00134             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00135}00135         \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00136}00136         iter++;}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00137}00137     \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00138}00138 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00139}00139     PMeans.clear();}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00140}00140     PMeans.resize(K);}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00141}00141     std::vector<Point> pp;}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00142}00142     std::vector<double> ppp;}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00143}00143 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00144}00144     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < K; i++)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00145}00145     \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00146}00146         \textcolor{comment}{//std::cout << "{}Points in cluster "{} << clusters[i].getId() << "{} : "{};}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00147}00147         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < clusters[j].getSize(); j++)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00148}00148         \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00149}00149             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} e = 0; e < dimensions; e++)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00150}00150             \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00151}00151                 ppp.push\_back(clusters[i].getCentroidByPos(e));}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00152}00152             \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00153}00153             \mbox{\hyperlink{classPoint}{Point}} p(clusters[i].getId(), ppp);}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00154}00154             pp.push\_back(p);}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00155}00155             ppp.clear();}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00156}00156             \textcolor{comment}{//std::cout << clusters[i].getPoint(j).getID() << "{} "{};}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00157}00157         \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00158}00158         PMeans[i] = pp;}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00159}00159         pp.clear();}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00160}00160         \textcolor{comment}{//std::cout << std::endl << std::endl;}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00161}00161     \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00162}00162 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00163}00163     sizes.clear();}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00164}00164     sizes.resize(K);}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00165}00165     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < K; i++)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00166}00166         sizes[i] = clusters[i].getSize();}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00167}00167 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00168}00168     std::ofstream outfile;}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00169}00169     outfile.open(\textcolor{stringliteral}{"{}clusters.txt"{}});}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00170}00170 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00171}00171     \textcolor{keywordflow}{if} (outfile.is\_open())}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00172}00172     \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00173}00173 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00174}00174         std::vector<double> tmp;}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00175}00175         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < K; i++)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00176}00176         \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00177}00177             \textcolor{comment}{//std::cout << "{}Cluster "{} << clusters[i].getId() << "{} centroid : "{};}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00178}00178             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < dimensions; j++)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00179}00179             \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00180}00180                 tmp.push\_back(clusters[i].getCentroidByPos(j));}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00181}00181                 \textcolor{comment}{//std::cout << clusters[i].getCentroidByPos(j) << "{} "{};    //Output to console}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00182}00182                 \textcolor{comment}{//outfile << clusters[i].getCentroidByPos(j) << "{} "{}; //Output to file}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00183}00183             \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00184}00184             \mbox{\hyperlink{classPoint}{Point}} p(i, clusters[i].getId(), tmp);}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00185}00185             means.at(i) = p;}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00186}00186             tmp.clear();}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00187}00187             \textcolor{comment}{//std::cout << std::endl;}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00188}00188             \textcolor{comment}{//outfile << std::endl;}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00189}00189         \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00190}00190 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00191}00191         outfile.close();}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00192}00192     \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00193}00193     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00194}00194     \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00195}00195         \textcolor{comment}{//std::cout << "{}Error: Unable to write to clusters.txt"{};}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00196}00196     \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00197}00197 \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00198}00198 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00199}\mbox{\hyperlink{classKMeans_ac37e5265ed6da5599513efd6c54e2a1d}{00199}} std::vector<Point> \mbox{\hyperlink{classKMeans_ac37e5265ed6da5599513efd6c54e2a1d}{KMeans::getMeans}}()}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00200}00200 \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00201}00201 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00202}00202     \textcolor{keywordflow}{return} means;}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00203}00203 \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00204}00204 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00205}\mbox{\hyperlink{classKMeans_af1502340357753e301ac39cd1eb2c912}{00205}} std::vector<std::vector<Point>> \mbox{\hyperlink{classKMeans_af1502340357753e301ac39cd1eb2c912}{KMeans::pointsOfMeans}}()}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00206}00206 \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00207}00207     \textcolor{keywordflow}{return} PMeans;}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00208}00208 \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00209}\mbox{\hyperlink{classKMeans_a01a70b292871a4c5db0f6e2099b28c0f}{00209}} std::vector<int> \mbox{\hyperlink{classKMeans_a01a70b292871a4c5db0f6e2099b28c0f}{KMeans::getSizes}}()}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00210}00210 \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00211}00211 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00212}00212     \textcolor{keywordflow}{return} sizes;}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00213}00213 \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00214}00214 }
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00215}\mbox{\hyperlink{classKMeans_a0326f99a17c70f858e12114318b10c05}{00215}} \textcolor{keywordtype}{void} \mbox{\hyperlink{classKMeans_a0326f99a17c70f858e12114318b10c05}{KMeans::deleteMean}}(\textcolor{keywordtype}{int} idx)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00216}00216 \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00217}00217     \textcolor{keywordflow}{if} (K >= this-\/>minK)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00218}00218     \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00219}00219         K-\/-\/;}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00220}00220         std::vector<Point> tmp = PMeans.at(idx);}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00221}00221         means.erase(means.begin() + idx);}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00222}00222     \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00223}00223 \}}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00224}\mbox{\hyperlink{classKMeans_acd6944864a4fd3d70a30e975d8ab0b5b}{00224}} \textcolor{keywordtype}{void} \mbox{\hyperlink{classKMeans_acd6944864a4fd3d70a30e975d8ab0b5b}{KMeans::setCenters}}(\textcolor{keywordtype}{int} centers)}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00225}00225 \{}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00226}00226     this-\/>K = centers;}
+\DoxyCodeLine{\Hypertarget{kmeans_8cpp_source_l00227}00227 \}}
+
+\end{DoxyCode}

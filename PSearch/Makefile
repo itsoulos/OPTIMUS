@@ -436,7 +436,8 @@ psearch.o: psearch.cpp psearch.h \
 		../Optimus/sigprogram.h \
 		../Optimus/cprogram.h \
 		../Optimus/fparser.hh \
-		../Optimus/neuralparser.h
+		../Optimus/neuralparser.h \
+		../Optimus/simplexmethod.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o psearch.o psearch.cpp
 
 ####### Install

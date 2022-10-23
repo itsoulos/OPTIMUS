@@ -1,0 +1,223 @@
+\hypertarget{lbfgs_8h_source}{}\doxysection{lbfgs.\+h}
+\label{lbfgs_8h_source}\index{lbfgs.h@{lbfgs.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00001}00001 \textcolor{preprocessor}{\#ifndef LBFGS\_H}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00002}00002 \textcolor{preprocessor}{\#define LBFGS\_H}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00003}00003 \textcolor{preprocessor}{\# include "{}problem.h"{}}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00005}00005 }
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00006}00006 \textcolor{preprocessor}{\#include <time.h>}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00007}00007 }
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00008}00008 \textcolor{preprocessor}{\#ifndef FTOL}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00009}00009 \textcolor{preprocessor}{\#define FTOL .001}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00010}00010 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00011}00011 \textcolor{preprocessor}{\#ifndef GTOL}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00012}00012 \textcolor{preprocessor}{\#define GTOL .9}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00013}00013 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00014}00014 \textcolor{preprocessor}{\#ifndef XTOL}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00015}00015 \textcolor{preprocessor}{\#define XTOL .1}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00016}00016 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00017}00017 \textcolor{preprocessor}{\#ifndef STEPMIN}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00018}00018 \textcolor{preprocessor}{\#define STEPMIN 0.}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00019}00019 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00020}00020 \textcolor{preprocessor}{\#if defined(\_WIN32) || defined(\_\_hpux) || !defined(\_\_GFORTRAN\_\_)}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00021}00021 \textcolor{preprocessor}{\#define FORTRAN\_WRAPPER(x) x}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00022}00022 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00023}00023 \textcolor{preprocessor}{\#define FORTRAN\_WRAPPER(x) x \#\# \_}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00024}00024 \textcolor{comment}{/* if we're not WIN32 or HPUX, then if we are linking}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00025}00025 \textcolor{comment}{ * with gfortran (instead of gcc or g++), we need to mangle}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00026}00026 \textcolor{comment}{ * names appropriately */}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00027}00027 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00030}00030 \textcolor{comment}{/* If we want machine precision in a nice fashion, do this: */}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00031}00031 \textcolor{preprocessor}{\#include <float.h>}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00032}00032 \textcolor{preprocessor}{\#ifndef DBL\_EPSILON}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00033}00033 \textcolor{preprocessor}{\#define DBL\_EPSILON 2.2e-\/16}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00034}00034 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00038}00038 }
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00039}00039 \textcolor{preprocessor}{\#define TRUE\_ (1)}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00040}00040 \textcolor{preprocessor}{\#define FALSE\_ (0)}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00041}00041 \textcolor{preprocessor}{\#define START 1}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00042}00042 \textcolor{preprocessor}{\#define NEW\_X 2}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00043}00043 \textcolor{preprocessor}{\#define ABNORMAL 3 }\textcolor{comment}{/* message: ABNORMAL\_TERMINATION\_IN\_LNSRCH. */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00044}00044 \textcolor{preprocessor}{\#define RESTART 4 }\textcolor{comment}{/* message: RESTART\_FROM\_LNSRCH. */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00045}00045 }
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00046}00046 \textcolor{preprocessor}{\#define FG      10}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00047}00047 \textcolor{preprocessor}{\#define FG\_END  15}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00048}00048 \textcolor{preprocessor}{\#define IS\_FG(x) ( ((x)>=FG) ?  ( ((x)<=FG\_END) ? 1 : 0 ) : 0 )}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00049}00049 \textcolor{preprocessor}{\#define FG\_LN   11}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00050}00050 \textcolor{preprocessor}{\#define FG\_LNSRCH FG\_LN}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00051}00051 \textcolor{preprocessor}{\#define FG\_ST   12}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00052}00052 \textcolor{preprocessor}{\#define FG\_START FG\_ST}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00053}00053 }
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00054}00054 \textcolor{preprocessor}{\#define CONVERGENCE 20}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00055}00055 \textcolor{preprocessor}{\#define CONVERGENCE\_END  25}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00056}00056 \textcolor{preprocessor}{\#define IS\_CONVERGED(x) ( ((x)>=CONVERGENCE) ?  ( ((x)<=CONVERGENCE\_END) ? 1 : 0 ) : 0 )}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00057}00057 \textcolor{preprocessor}{\#define CONV\_GRAD   21 }\textcolor{comment}{/* message: CONVERGENCE: NORM\_OF\_PROJECTED\_GRADIENT\_<=\_PGTOL. */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00058}00058 \textcolor{preprocessor}{\#define CONV\_F      22 }\textcolor{comment}{/* message: CONVERGENCE: REL\_REDUCTION\_OF\_F\_<=\_FACTR*EPSMCH. */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00059}00059 }
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00060}00060 \textcolor{preprocessor}{\#define STOP  30}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00061}00061 \textcolor{preprocessor}{\#define STOP\_END 40}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00062}00062 \textcolor{preprocessor}{\#define IS\_STOP(x) ( ((x)>=STOP) ?  ( ((x)<=STOP\_END) ? 1 : 0 ) : 0 )}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00063}00063 \textcolor{preprocessor}{\#define STOP\_CPU  31 }\textcolor{comment}{/* message: STOP: CPU EXCEEDING THE TIME LIMIT. */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00064}00064 \textcolor{preprocessor}{\#define STOP\_ITER 32 }\textcolor{comment}{/* message: STOP: TOTAL NO. of f AND g EVALUATIONS EXCEEDS LIM.  */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00065}00065 \textcolor{preprocessor}{\#define STOP\_GRAD 33 }\textcolor{comment}{/* message: STOP: THE PROJECTED GRADIENT IS SUFFICIENTLY SMALL. */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00066}00066 }
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00067}00067 \textcolor{preprocessor}{\#define WARNING 100}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00068}00068 \textcolor{preprocessor}{\#define WARNING\_END 110}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00069}00069 \textcolor{preprocessor}{\#define IS\_WARNING(x) ( ((x)>=WARNING) ?  ( ((x)<=WARNING\_END) ? 1 : 0 ) : 0 )}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00070}00070 \textcolor{preprocessor}{\#define WARNING\_ROUND 101  }\textcolor{comment}{/* WARNING: ROUNDING ERRORS PREVENT PROGRESS */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00071}00071 \textcolor{preprocessor}{\#define WARNING\_XTOL  102  }\textcolor{comment}{/* WARNING: XTOL TEST SATISIED */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00072}00072 \textcolor{preprocessor}{\#define WARNING\_STPMAX 103 }\textcolor{comment}{/* WARNING: STP = STPMAX */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00073}00073 \textcolor{preprocessor}{\#define WARNING\_STPMIN 104 }\textcolor{comment}{/* WARNING: STP = STPMIN */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00074}00074 }
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00075}00075 \textcolor{preprocessor}{\#define ERROR 200}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00076}00076 \textcolor{preprocessor}{\#define ERROR\_END 240}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00077}00077 \textcolor{preprocessor}{\#define IS\_ERROR(x) ( ((x)>=ERROR) ?  ( ((x)<=ERROR\_END) ? 1 : 0 ) : 0 )}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00078}00078 \textcolor{comment}{/* More specific conditions below */}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00079}00079 \textcolor{preprocessor}{\#define ERROR\_SMALLSTP 201 }\textcolor{comment}{/* message: ERROR: STP .LT. STPMIN  */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00080}00080 \textcolor{preprocessor}{\#define ERROR\_LARGESTP 202 }\textcolor{comment}{/* message: ERROR: STP .GT. STPMAX  */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00081}00081 \textcolor{preprocessor}{\#define ERROR\_INITIAL  203 }\textcolor{comment}{/* message: ERROR: INITIAL G .GE. ZERO */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00082}00082 \textcolor{preprocessor}{\#define ERROR\_FTOL     204 }\textcolor{comment}{/* message: ERROR: FTOL .LT. ZERO   */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00083}00083 \textcolor{preprocessor}{\#define ERROR\_GTOL     205 }\textcolor{comment}{/* message: ERROR: GTOL .LT. ZERO   */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00084}00084 \textcolor{preprocessor}{\#define ERROR\_XTOL     206 }\textcolor{comment}{/* message: ERROR: XTOL .LT. ZERO   */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00085}00085 \textcolor{preprocessor}{\#define ERROR\_STP0     207 }\textcolor{comment}{/* message: ERROR: STPMIN .LT. ZERO */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00086}00086 \textcolor{preprocessor}{\#define ERROR\_STP1     208 }\textcolor{comment}{/* message: ERROR: STPMAX .LT. STPMIN */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00087}00087 \textcolor{preprocessor}{\#define ERROR\_N0       209 }\textcolor{comment}{/* ERROR: N .LE. 0 */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00088}00088 \textcolor{preprocessor}{\#define ERROR\_M0       210 }\textcolor{comment}{/* ERROR: M .LE. 0 */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00089}00089 \textcolor{preprocessor}{\#define ERROR\_FACTR    211 }\textcolor{comment}{/* ERROR: FACTR .LT. 0 */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00090}00090 \textcolor{preprocessor}{\#define ERROR\_NBD      212 }\textcolor{comment}{/* ERROR: INVALID NBD */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00091}00091 \textcolor{preprocessor}{\#define ERROR\_FEAS     213 }\textcolor{comment}{/* ERROR: NO FEASIBLE SOLUTION */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00092}00092 }
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00093}00093 }
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00094}00094 \textcolor{comment}{/* and "{}word"{} was a char that was one fo these: */}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00095}00095 \textcolor{preprocessor}{\#define WORD\_DEFAULT 0 }\textcolor{comment}{/* aka "{}-\/-\/-\/"{}.  */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00096}00096 \textcolor{preprocessor}{\#define WORD\_CON 1 }\textcolor{comment}{/*  the subspace minimization converged. */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00097}00097 \textcolor{preprocessor}{\#define WORD\_BND 2 }\textcolor{comment}{/* the subspace minimization stopped at a bound. */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00098}00098 \textcolor{preprocessor}{\#define WORD\_TNT 3 }\textcolor{comment}{/*  the truncated Newton step has been used. */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00099}00099 }
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00101}\mbox{\hyperlink{classLbfgs}{00101}} \textcolor{keyword}{class }\mbox{\hyperlink{classLbfgs}{Lbfgs}}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00102}00102 \{}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00103}00103 \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00104}00104     \mbox{\hyperlink{classProblem}{Problem}} *myProblem;}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00105}00105     \textcolor{keywordtype}{int} prn1lb(integer *n, integer *m, \textcolor{keywordtype}{double} *l,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00106}00106         \textcolor{keywordtype}{double} *u, \textcolor{keywordtype}{double} *x, integer *iprint, FILE* itfile,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00107}00107         \textcolor{keywordtype}{double} *epsmch);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00108}00108 }
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00109}00109     \textcolor{keywordtype}{int} prn2lb(integer *n, \textcolor{keywordtype}{double} *x, \textcolor{keywordtype}{double} *f,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00110}00110        \textcolor{keywordtype}{double} *g, integer *iprint, FILE* itfile, integer *iter,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00111}00111        integer *nfgv, integer *nact, \textcolor{keywordtype}{double} *sbgnrm, integer *nseg, integer}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00112}00112        *word, integer *iword, integer *iback, \textcolor{keywordtype}{double} *stp, \textcolor{keywordtype}{double} *}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00113}00113        xstep, ftnlen word\_len);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00114}00114 }
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00115}00115 }
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00116}00116     \textcolor{keywordtype}{int} daxpy(integer *n, \textcolor{keywordtype}{double} *da, \textcolor{keywordtype}{double} *dx,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00117}00117         integer *incx, \textcolor{keywordtype}{double} *dy, integer *incy);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00118}00118 }
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00119}00119     \textcolor{keywordtype}{int} prn3lb(integer *n, \textcolor{keywordtype}{double} *x, \textcolor{keywordtype}{double} *f, integer *}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00120}00120         task, integer *iprint, integer *info, FILE* itfile, integer *iter,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00121}00121         integer *nfgv, integer *nintol, integer *nskip, integer *nact,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00122}00122         \textcolor{keywordtype}{double} *sbgnrm, \textcolor{keywordtype}{double} *time, integer *nseg, integer *word,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00123}00123         integer *iback, \textcolor{keywordtype}{double} *stp, \textcolor{keywordtype}{double} *xstep, integer *k,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00124}00124         \textcolor{keywordtype}{double} *cachyt, \textcolor{keywordtype}{double} *sbtime, \textcolor{keywordtype}{double} *lnscht, ftnlen}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00125}00125         task\_len, ftnlen word\_len);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00126}00126 }
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00127}00127     \textcolor{keywordtype}{double} ddot(integer *n, \textcolor{keywordtype}{double} *dx, integer *incx, \textcolor{keywordtype}{double} *dy,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00128}00128             integer *incy);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00129}00129     \textcolor{keywordtype}{int} dscal(integer *n, \textcolor{keywordtype}{double} *da, \textcolor{keywordtype}{double} *dx,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00130}00130             integer *incx);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00131}00131     \textcolor{keywordtype}{int} hpsolb(integer *n, \textcolor{keywordtype}{double} *t, integer *iorder,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00132}00132             integer *iheap);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00133}00133     \textcolor{keywordtype}{int} bmv(integer *m, \textcolor{keywordtype}{double} *sy, \textcolor{keywordtype}{double} *wt, integer}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00134}00134         *col, \textcolor{keywordtype}{double} *v, \textcolor{keywordtype}{double} *p, integer *info);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00135}00135     \textcolor{keywordtype}{int} dcopy(integer *, \textcolor{keywordtype}{double} *, integer *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00136}00136             \textcolor{keywordtype}{double} *, integer *);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00137}00137     \textcolor{keywordtype}{int} setulb(integer *n, integer *m, \textcolor{keywordtype}{double} *x,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00138}00138         \textcolor{keywordtype}{double} *l, \textcolor{keywordtype}{double} *u, integer *nbd, \textcolor{keywordtype}{double} *f, \textcolor{keywordtype}{double}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00139}00139         *g, \textcolor{keywordtype}{double} *factr, \textcolor{keywordtype}{double} *pgtol, \textcolor{keywordtype}{double} *wa, integer *}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00140}00140         iwa, integer *task, integer *iprint, integer *csave, logical *lsave,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00141}00141         integer *isave, \textcolor{keywordtype}{double} *dsave);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00142}00142     \textcolor{keywordtype}{int} mainlb(integer *n, integer *m, \textcolor{keywordtype}{double} *x,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00143}00143             \textcolor{keywordtype}{double} *l, \textcolor{keywordtype}{double} *u, integer *nbd, \textcolor{keywordtype}{double} *f, \textcolor{keywordtype}{double}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00144}00144             *g, \textcolor{keywordtype}{double} *factr, \textcolor{keywordtype}{double} *pgtol, \textcolor{keywordtype}{double} *ws, \textcolor{keywordtype}{double} *}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00145}00145             wy, \textcolor{keywordtype}{double} *sy, \textcolor{keywordtype}{double} *ss, \textcolor{keywordtype}{double} *wt, \textcolor{keywordtype}{double} *wn,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00146}00146             \textcolor{keywordtype}{double} *snd, \textcolor{keywordtype}{double} *z\_\_, \textcolor{keywordtype}{double} *r\_\_, \textcolor{keywordtype}{double} *d\_\_,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00147}00147             \textcolor{keywordtype}{double} *t, \textcolor{keywordtype}{double} *xp, \textcolor{keywordtype}{double} *wa, integer *index,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00148}00148             integer *iwhere, integer *indx2, integer *task, integer *iprint,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00149}00149             integer *csave, logical *lsave, integer *isave, \textcolor{keywordtype}{double} *dsave);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00150}00150     \textcolor{keywordtype}{int} freev(integer *, integer *, integer *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00151}00151            integer *, integer *, integer *, integer *, logical *, logical *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00152}00152            logical *, integer *, integer *);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00153}00153     \textcolor{keywordtype}{int} timer(\textcolor{keywordtype}{double} *);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00154}00154     \textcolor{keywordtype}{int} formk(integer *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00155}00155             integer *, integer *, integer *, integer *, integer *, integer *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00156}00156             logical *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, integer *, \textcolor{keywordtype}{double} *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00157}00157             \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, integer *, integer *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00158}00158             integer *);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00159}00159     \textcolor{keywordtype}{int} formt(integer *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00160}00160             \textcolor{keywordtype}{double} *, integer *, \textcolor{keywordtype}{double} *, integer *);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00161}00161     \textcolor{keywordtype}{int} subsm(integer *, integer *, integer *, integer *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00162}00162            integer *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00163}00163            \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, integer *}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00164}00164            , integer *, integer *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, integer *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00165}00165            integer *);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00166}00166 }
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00167}00167     \textcolor{keywordtype}{int} errclb(integer *n, integer *m, \textcolor{keywordtype}{double} *factr,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00168}00168             \textcolor{keywordtype}{double} *l, \textcolor{keywordtype}{double} *u, integer *nbd, integer *task, integer *info,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00169}00169             integer *k, ftnlen task\_len);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00170}00170     \textcolor{keywordtype}{int} active(integer *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00171}00171            integer *, \textcolor{keywordtype}{double} *, integer *, integer *, logical *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00172}00172            logical *, logical *);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00173}00173     \textcolor{keywordtype}{int} cauchy(integer *, \textcolor{keywordtype}{double} *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00174}00174             \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, integer *, \textcolor{keywordtype}{double} *, integer *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00175}00175             integer *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, integer *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00176}00176             \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00177}00177             \textcolor{keywordtype}{double} *, integer *, integer *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00178}00178             \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, integer *, integer *, \textcolor{keywordtype}{double} *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00179}00179             integer *, \textcolor{keywordtype}{double} *);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00180}00180     \textcolor{keywordtype}{int} cmprlb(integer *, integer *, \textcolor{keywordtype}{double} *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00181}00181             \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00182}00182             \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, integer *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00183}00183             \textcolor{keywordtype}{double} *, integer *, integer *, integer *, logical *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00184}00184             integer *);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00185}00185     \textcolor{keywordtype}{int} matupd(integer *, integer *, \textcolor{keywordtype}{double} *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00186}00186             \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00187}00187             \textcolor{keywordtype}{double} *, integer *, integer *, integer *, integer *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00188}00188             \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00189}00189             \textcolor{keywordtype}{double} *);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00190}00190     \textcolor{keywordtype}{int} lnsrlb(integer *n, \textcolor{keywordtype}{double} *l, \textcolor{keywordtype}{double} *u,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00191}00191             integer *nbd, \textcolor{keywordtype}{double} *x, \textcolor{keywordtype}{double} *f, \textcolor{keywordtype}{double} *fold,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00192}00192             \textcolor{keywordtype}{double} *gd, \textcolor{keywordtype}{double} *gdold, \textcolor{keywordtype}{double} *g, \textcolor{keywordtype}{double} *d\_\_,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00193}00193             \textcolor{keywordtype}{double} *r\_\_, \textcolor{keywordtype}{double} *t, \textcolor{keywordtype}{double} *z\_\_, \textcolor{keywordtype}{double} *stp,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00194}00194             \textcolor{keywordtype}{double} *dnorm, \textcolor{keywordtype}{double} *dtd, \textcolor{keywordtype}{double} *xstep, \textcolor{keywordtype}{double} *}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00195}00195             stpmx, integer *iter, integer *ifun, integer *iback, integer *nfgv,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00196}00196             integer *info, integer *task, logical *boxed, logical *cnstnd, integer *}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00197}00197             csave, integer *isave, \textcolor{keywordtype}{double} *dsave); \textcolor{comment}{/* ftnlen task\_len, ftnlen}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00198}00198 \textcolor{comment}{            csave\_len); */}}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00199}00199     \textcolor{keywordtype}{int} projgr(integer *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00200}00200            integer *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00201}00201     \textcolor{keywordtype}{int} dcsrch(\textcolor{keywordtype}{double} *f, \textcolor{keywordtype}{double} *g, \textcolor{keywordtype}{double} *stp,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00202}00202             \textcolor{keywordtype}{double} *ftol, \textcolor{keywordtype}{double} *gtol, \textcolor{keywordtype}{double} *xtol, \textcolor{keywordtype}{double} *}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00203}00203             stpmin, \textcolor{keywordtype}{double} *stpmax, integer *task, integer *isave, \textcolor{keywordtype}{double} *}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00204}00204             dsave);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00205}00205     \textcolor{keywordtype}{int} dcstep(\textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00206}00206             \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00207}00207             \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, \textcolor{keywordtype}{double} *, logical *, \textcolor{keywordtype}{double} *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00208}00208             \textcolor{keywordtype}{double} *);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00209}00209     \textcolor{keywordtype}{int} dpofa(\textcolor{keywordtype}{double} *, integer *, integer *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00210}00210            integer *);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00211}00211     \textcolor{keywordtype}{int}  dtrsl(\textcolor{keywordtype}{double} *, integer *, integer *,}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00212}00212            \textcolor{keywordtype}{double} *, integer *, integer *);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00213}00213 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00214}00214     \mbox{\hyperlink{classLbfgs}{Lbfgs}}(\mbox{\hyperlink{classProblem}{Problem}} *p);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00215}00215     \textcolor{keywordtype}{double} Solve(Data \&x);}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00216}00216 \};}
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00217}00217 }
+\DoxyCodeLine{\Hypertarget{lbfgs_8h_source_l00218}00218 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// LBFGS\_H}}
+
+\end{DoxyCode}

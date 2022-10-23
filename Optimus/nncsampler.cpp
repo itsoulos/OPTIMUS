@@ -35,7 +35,9 @@ void    NNCSampler::setParameters(Data &x)
     vector<int> g;
     g.resize(x.size());
     for(int i=0;i<x.size();i++)
-        g[i]=(int)x[i];
+    {
+        g[i]=(int)(fabs(x[i]));
+    }
     program->fitness(g);
 }
 

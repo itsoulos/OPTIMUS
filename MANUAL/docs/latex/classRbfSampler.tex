@@ -1,0 +1,179 @@
+\hypertarget{classRbfSampler}{}\doxysection{Rbf\+Sampler Class Reference}
+\label{classRbfSampler}\index{RbfSampler@{RbfSampler}}
+
+
+The \mbox{\hyperlink{classRbfSampler}{Rbf\+Sampler}} class samples points from the objective function using an RBF network.  
+
+
+
+
+{\ttfamily \#include $<$rbfsampler.\+h$>$}
+
+
+
+Inheritance diagram for Rbf\+Sampler\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=169pt]{classRbfSampler__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Rbf\+Sampler\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=178pt]{classRbfSampler__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classRbfSampler_abcacfb0e49464fb8de805c9852cb882d}\label{classRbfSampler_abcacfb0e49464fb8de805c9852cb882d}} 
+{\bfseries Rbf\+Sampler} (\mbox{\hyperlink{classProblem}{Problem}} $\ast$p, int w)
+\item 
+\mbox{\Hypertarget{classRbfSampler_a0e8ca27b1641abf9ede33acd371d8fb6}\label{classRbfSampler_a0e8ca27b1641abf9ede33acd371d8fb6}} 
+int {\bfseries get\+NWeights} () const
+\item 
+\mbox{\Hypertarget{classRbfSampler_a2872aba60d2044450291450c95a3e349}\label{classRbfSampler_a2872aba60d2044450291450c95a3e349}} 
+Data {\bfseries get\+Weights} ()
+\item 
+\mbox{\Hypertarget{classRbfSampler_a899ceb6aa344b0816948ade0ed689703}\label{classRbfSampler_a899ceb6aa344b0816948ade0ed689703}} 
+int {\bfseries get\+Parameter\+Size} () const
+\item 
+\mbox{\Hypertarget{classRbfSampler_ade168d3040d281294a93a830a642b2ea}\label{classRbfSampler_ade168d3040d281294a93a830a642b2ea}} 
+void {\bfseries set\+Parameters} (Data \&x)
+\item 
+\mbox{\Hypertarget{classRbfSampler_a935e99e0492c8213a2742088772a4c2f}\label{classRbfSampler_a935e99e0492c8213a2742088772a4c2f}} 
+Data {\bfseries get\+Parameters} ()
+\item 
+\mbox{\Hypertarget{classRbfSampler_a9704e3f52225c7cadf4c427cb3532091}\label{classRbfSampler_a9704e3f52225c7cadf4c427cb3532091}} 
+void {\bfseries set\+Weights} (Data \&w)
+\item 
+double \mbox{\hyperlink{classRbfSampler_a8604bc1a796174b0c2f3771b4648fccd}{eval}} (Data \&x)
+\begin{DoxyCompactList}\small\item\em eval gets the value of model at point \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classRbfSampler_a3d212d6fa0f84a202427ce81726b8087}\label{classRbfSampler_a3d212d6fa0f84a202427ce81726b8087}} 
+Data {\bfseries eval\+Deriv} (Data \&x)
+\item 
+void \mbox{\hyperlink{classRbfSampler_adb7bcd69657e429c95e287d414522928}{sample\+From\+Problem}} (int N, Matrix \&xsample, Data \&ysample)
+\begin{DoxyCompactList}\small\item\em sample\+From\+Problem, takes samples from the problem using some distribution. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classRbfSampler_aabe387659c568821f5600ea0ed171368}{add\+Sample\+From\+Problem}} (Data \&x, double y)
+\begin{DoxyCompactList}\small\item\em add\+Sample\+From\+Problem adds a new sample from the problem. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classRbfSampler_ac87012db40d70ae63a66bf152e2a541b}{train\+Model}} ()
+\begin{DoxyCompactList}\small\item\em train\+Model, this method will train the sample models if it is needed. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classRbfSampler_a22e9d0b4d68071d9a130d92276b3f486}\label{classRbfSampler_a22e9d0b4d68071d9a130d92276b3f486}} 
+double {\bfseries get\+Train\+Error} ()
+\item 
+void \mbox{\hyperlink{classRbfSampler_a2bba3588d32b29d119a632e4da15a455}{sample\+From\+Model}} (int \&N, Matrix \&xsample, Data \&ysample)
+\begin{DoxyCompactList}\small\item\em sample\+From\+Model, this method will sample from the sample model instead of the real problem. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{classRbfSampler}{Rbf\+Sampler}} class samples points from the objective function using an RBF network. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classRbfSampler_aabe387659c568821f5600ea0ed171368}\label{classRbfSampler_aabe387659c568821f5600ea0ed171368}} 
+\index{RbfSampler@{RbfSampler}!addSampleFromProblem@{addSampleFromProblem}}
+\index{addSampleFromProblem@{addSampleFromProblem}!RbfSampler@{RbfSampler}}
+\doxysubsubsection{\texorpdfstring{addSampleFromProblem()}{addSampleFromProblem()}}
+{\footnotesize\ttfamily void Rbf\+Sampler\+::add\+Sample\+From\+Problem (\begin{DoxyParamCaption}\item[{Data \&}]{x,  }\item[{double}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+add\+Sample\+From\+Problem adds a new sample from the problem. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & the xpoint of the new sample \\
+\hline
+{\em y} & the ypoint of the new sample \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classProblemSampler_af1ab92bf9bad3d7869080b8c5c7cb57f}{Problem\+Sampler}}.
+
+\mbox{\Hypertarget{classRbfSampler_a8604bc1a796174b0c2f3771b4648fccd}\label{classRbfSampler_a8604bc1a796174b0c2f3771b4648fccd}} 
+\index{RbfSampler@{RbfSampler}!eval@{eval}}
+\index{eval@{eval}!RbfSampler@{RbfSampler}}
+\doxysubsubsection{\texorpdfstring{eval()}{eval()}}
+{\footnotesize\ttfamily double Rbf\+Sampler\+::eval (\begin{DoxyParamCaption}\item[{Data \&}]{xpoint }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+eval gets the value of model at point 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xpoint} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{classProblemSampler_a95cb4ee5a502d9f85a4688f2e6071d1f}{Problem\+Sampler}}.
+
+\mbox{\Hypertarget{classRbfSampler_a2bba3588d32b29d119a632e4da15a455}\label{classRbfSampler_a2bba3588d32b29d119a632e4da15a455}} 
+\index{RbfSampler@{RbfSampler}!sampleFromModel@{sampleFromModel}}
+\index{sampleFromModel@{sampleFromModel}!RbfSampler@{RbfSampler}}
+\doxysubsubsection{\texorpdfstring{sampleFromModel()}{sampleFromModel()}}
+{\footnotesize\ttfamily void Rbf\+Sampler\+::sample\+From\+Model (\begin{DoxyParamCaption}\item[{int \&}]{N,  }\item[{Matrix \&}]{xsample,  }\item[{Data \&}]{ysample }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+sample\+From\+Model, this method will sample from the sample model instead of the real problem. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em N,the} & number of required samples. \\
+\hline
+{\em xsample} & \\
+\hline
+{\em ysample} & \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{classProblemSampler_ab7d597e1843b8d361344bbc5751b9a32}{Problem\+Sampler}}.
+
+\mbox{\Hypertarget{classRbfSampler_adb7bcd69657e429c95e287d414522928}\label{classRbfSampler_adb7bcd69657e429c95e287d414522928}} 
+\index{RbfSampler@{RbfSampler}!sampleFromProblem@{sampleFromProblem}}
+\index{sampleFromProblem@{sampleFromProblem}!RbfSampler@{RbfSampler}}
+\doxysubsubsection{\texorpdfstring{sampleFromProblem()}{sampleFromProblem()}}
+{\footnotesize\ttfamily void Rbf\+Sampler\+::sample\+From\+Problem (\begin{DoxyParamCaption}\item[{int}]{N,  }\item[{Matrix \&}]{xsample,  }\item[{Data \&}]{ysample }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+sample\+From\+Problem, takes samples from the problem using some distribution. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em N,the} & number of samples required. \\
+\hline
+{\em xsample} & \\
+\hline
+{\em ysample} & \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{classProblemSampler_af2608337721073b8286967b37a9b7660}{Problem\+Sampler}}.
+
+\mbox{\Hypertarget{classRbfSampler_ac87012db40d70ae63a66bf152e2a541b}\label{classRbfSampler_ac87012db40d70ae63a66bf152e2a541b}} 
+\index{RbfSampler@{RbfSampler}!trainModel@{trainModel}}
+\index{trainModel@{trainModel}!RbfSampler@{RbfSampler}}
+\doxysubsubsection{\texorpdfstring{trainModel()}{trainModel()}}
+{\footnotesize\ttfamily void Rbf\+Sampler\+::train\+Model (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+train\+Model, this method will train the sample models if it is needed. 
+
+
+
+Reimplemented from \mbox{\hyperlink{classProblemSampler_a0e6ea334728661f429345f8bce993afd}{Problem\+Sampler}}.
+

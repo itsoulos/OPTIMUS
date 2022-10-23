@@ -1,0 +1,211 @@
+\hypertarget{problem_8cpp_source}{}\doxysection{problem.\+cpp}
+\label{problem_8cpp_source}\index{problem.cpp@{problem.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00001}00001 \textcolor{preprocessor}{\#include "{}problem.h"{}}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00002}\mbox{\hyperlink{classProblem_a16de4ed4f588a1cd6aa16fff408f3cb8}{00002}} \mbox{\hyperlink{classProblem_a16de4ed4f588a1cd6aa16fff408f3cb8}{Problem::Problem}}(\mbox{\hyperlink{classIntervalProblem}{IntervalProblem}} *p)}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00003}00003 \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00004}00004     problem=p;}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00005}00005     dimension=p-\/>getDimension();}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00006}00006     lmargin.resize(dimension);}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00007}00007     rmargin.resize(dimension);}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00008}00008     IntervalData bound=p-\/>getMargins();}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00009}00009     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<dimension;i++)}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00010}00010     \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00011}00011         lmargin[i]=bound[i].leftValue();}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00012}00012         rmargin[i]=bound[i].rightValue();}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00013}00013     \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00014}00014     functionCalls=0;}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00015}00015     tempx.resize(dimension);}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00016}00016     tempg.resize(dimension);}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00017}00017     bestx.resize(dimension);}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00018}00018     besty=1e+100;}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00019}00019 \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00021}\mbox{\hyperlink{classProblem_aefc288d4dd109bdfedb17b59569a37d8}{00021}} \textcolor{keywordtype}{int} \mbox{\hyperlink{classProblem_aefc288d4dd109bdfedb17b59569a37d8}{Problem::getFunctionCalls}}()}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00022}00022 \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00023}00023     \textcolor{keywordflow}{return} functionCalls;}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00024}00024 \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00025}00025 }
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00026}\mbox{\hyperlink{classProblem_abb1b118ed2717b710818f5a743369ffe}{00026}} Data   \mbox{\hyperlink{classProblem_abb1b118ed2717b710818f5a743369ffe}{Problem::getBestx}}()}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00027}00027 \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00028}00028     \textcolor{keywordflow}{return} bestx;}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00029}00029 \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00031}\mbox{\hyperlink{classProblem_a978c43d1b5092744f6583811f2db6b55}{00031}} \textcolor{keywordtype}{double}  \mbox{\hyperlink{classProblem_a978c43d1b5092744f6583811f2db6b55}{Problem::getBesty}}()}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00032}00032 \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00033}00033     \textcolor{keywordflow}{return} besty;}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00034}00034 \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00036}00036 \textcolor{keywordtype}{double} getDistance(Data \&x1,Data \&x2)}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00037}00037 \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00038}00038     \textcolor{keywordtype}{double} sum=0.0;}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00039}00039     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<x1.size();i++)}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00040}00040         sum+=(x1[i]-\/x2[i])*(x1[i]-\/x2[i]);}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00041}00041     \textcolor{keywordflow}{return} sqrt(sum);}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00042}00042 \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00043}00043 }
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00044}\mbox{\hyperlink{classProblem_a6ca67fc1c3c86ad24f2d991947f9c9fc}{00044}} \textcolor{keywordtype}{void}    \mbox{\hyperlink{classProblem_a6ca67fc1c3c86ad24f2d991947f9c9fc}{Problem::resetFunctionCalls}}()}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00045}00045 \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00046}00046     functionCalls=0;}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00048}00048     besty=1e+100;}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00049}00049 \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00050}00050 }
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00051}\mbox{\hyperlink{classProblem_ab6409de07df598d29a0bf4467240ae11}{00051}} \textcolor{keywordtype}{void}    \mbox{\hyperlink{classProblem_a6ca67fc1c3c86ad24f2d991947f9c9fc}{Problem::resetFunctionCalls}}(QJsonObject \&settings)}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00052}00052 \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00053}00053     \mbox{\hyperlink{classProblem_a6ca67fc1c3c86ad24f2d991947f9c9fc}{resetFunctionCalls}}();}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00054}00054     problem-\/>init(settings);}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00055}00055 \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00056}00056 }
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00057}\mbox{\hyperlink{classProblem_a68248f257c59b169c34451bb5578344a}{00057}} Data       \mbox{\hyperlink{classProblem_a68248f257c59b169c34451bb5578344a}{Problem::getUniformRandomPoint}}()}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00058}00058 \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00059}00059     Data x;}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00060}00060     x.resize(dimension);}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00061}00061     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<dimension;i++)}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00062}00062     \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00063}00063         \textcolor{keywordtype}{double} r=\mbox{\hyperlink{classProblem_a91395a1d18bb694acfe1b39f4d4af9e8}{randomDouble}}();}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00064}00064         x[i]=(2.0*r-\/1.0);}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00065}00065     \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00066}00066     \textcolor{keywordflow}{return} x;}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00067}00067 \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00068}00068 }
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00069}\mbox{\hyperlink{classProblem_a0d19ac85cde6ad686806daa1d9b734fe}{00069}} \mbox{\hyperlink{classProblem_a16de4ed4f588a1cd6aa16fff408f3cb8}{Problem::Problem}}(\mbox{\hyperlink{classIntervalProblem}{IntervalProblem}} *p,IntervalData \&m)}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00070}00070 \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00071}00071     problem=p;}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00072}00072     dimension=p-\/>getDimension();}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00073}00073     lmargin.resize(dimension);}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00074}00074     rmargin.resize(dimension);}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00075}00075 }
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00076}00076     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<dimension;i++)}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00077}00077     \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00078}00078         lmargin[i]=m[i].leftValue();}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00079}00079         rmargin[i]=m[i].rightValue();}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00080}00080     \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00081}00081 \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00082}00082 }
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00083}\mbox{\hyperlink{classProblem_a8d7cf5966e8540ccb6dc03923367dbfe}{00083}} \textcolor{keywordtype}{int}  \mbox{\hyperlink{classProblem_a8d7cf5966e8540ccb6dc03923367dbfe}{Problem::getDimension}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00084}00084 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00085}00085     \textcolor{keywordflow}{return} dimension;}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00086}00086 \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00087}00087 }
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00088}\mbox{\hyperlink{classProblem_ab874a141e8057d1bce73811cf1a6fe4e}{00088}} Data \mbox{\hyperlink{classProblem_ab874a141e8057d1bce73811cf1a6fe4e}{Problem::getLeftMargin}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00089}00089 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00090}00090     \textcolor{keywordflow}{return} lmargin;}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00091}00091 \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00092}00092 }
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00093}\mbox{\hyperlink{classProblem_af75470dcb6520f39903d384b4c535121}{00093}} Data \mbox{\hyperlink{classProblem_af75470dcb6520f39903d384b4c535121}{Problem::getRightMargin}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00094}00094 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00095}00095     \textcolor{keywordflow}{return} rmargin;}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00096}00096 \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00097}00097 }
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00098}\mbox{\hyperlink{classProblem_a91395a1d18bb694acfe1b39f4d4af9e8}{00098}} \textcolor{keywordtype}{double}  \mbox{\hyperlink{classProblem_a91395a1d18bb694acfe1b39f4d4af9e8}{Problem::randomDouble}}()}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00099}00099 \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00100}00100     \textcolor{keywordflow}{return} problem-\/>randomDouble();}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00101}00101 \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00102}\mbox{\hyperlink{classProblem_a56c412d0707c8e7212e1dd1353111f35}{00102}} \textcolor{keywordtype}{void}       \mbox{\hyperlink{classProblem_a56c412d0707c8e7212e1dd1353111f35}{Problem::getleftmarginx}}(\textcolor{keywordtype}{double} *x)}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00103}00103 \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00104}00104    \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<lmargin.size();i++)}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00105}00105        x[i]=lmargin[i];}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00106}00106 \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00107}\mbox{\hyperlink{classProblem_abc38aa5f26b833cae8d719303ad3e079}{00107}} \textcolor{keywordtype}{void}       \mbox{\hyperlink{classProblem_abc38aa5f26b833cae8d719303ad3e079}{Problem::getrightmarginx}}(\textcolor{keywordtype}{double} *x)}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00108}00108 \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00109}00109     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<lmargin.size();i++)}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00110}00110         x[i]=rmargin[i];}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00111}00111 \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00112}\mbox{\hyperlink{classProblem_a1d4dd1303141465d145b5b728c0b2d81}{00112}} \textcolor{keywordtype}{double} \mbox{\hyperlink{classProblem_a1d4dd1303141465d145b5b728c0b2d81}{Problem::funmin}}(Data \&x)}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00113}00113 \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00114}00114     \textcolor{keywordtype}{double} y;}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00115}00115     ++functionCalls;}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00116}00116 \textcolor{preprocessor}{\#pragma omp critical}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00117}00117     \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00118}00118     y=problem-\/>funmin(x);}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00119}00119     \textcolor{keywordflow}{if}(y<besty)}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00120}00120     \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00121}00121         besty=y;}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00122}00122         bestx=x;}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00123}00123     \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00124}00124 \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00125}00125     \textcolor{keywordflow}{return} y;}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00126}00126 \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00127}00127 }
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00128}00128 }
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00129}\mbox{\hyperlink{classProblem_a64fa085a795c7715fd368cb9a8149577}{00129}} \textcolor{keywordtype}{double}  \mbox{\hyperlink{classProblem_a1d4dd1303141465d145b5b728c0b2d81}{Problem::funmin}}(\textcolor{keywordtype}{double} *x)}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00130}00130 \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00131}00131     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<tempx.size();i++)}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00132}00132         tempx[i]=x[i];}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00133}00133     \textcolor{keywordflow}{return} \mbox{\hyperlink{classProblem_a1d4dd1303141465d145b5b728c0b2d81}{funmin}}(tempx);}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00134}00134 \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00135}00135 }
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00136}00136 }
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00137}\mbox{\hyperlink{classProblem_a72309c4eaf6b728d2f1ca27a27fd9324}{00137}} \textcolor{keywordtype}{void} \mbox{\hyperlink{classProblem_a2f694855dacafb36c04abc3886f09543}{Problem::granal}}(\textcolor{keywordtype}{double} *x, \textcolor{keywordtype}{double} *g)}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00138}00138 \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00139}00139     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<tempx.size();i++)}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00140}00140         tempx[i]=x[i];}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00141}00141     \mbox{\hyperlink{classProblem_a2f694855dacafb36c04abc3886f09543}{granal}}(tempx,tempg);}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00142}00142     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<tempx.size();i++)}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00143}00143         g[i]=tempg[i];}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00144}00144 \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00145}\mbox{\hyperlink{classProblem_a2f694855dacafb36c04abc3886f09543}{00145}} \textcolor{keywordtype}{void} \mbox{\hyperlink{classProblem_a2f694855dacafb36c04abc3886f09543}{Problem::granal}}(Data \&x,Data \&g)}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00146}00146 \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00147}00147     problem-\/>granal(x,g);}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00148}00148 \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00149}00149 }
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00150}\mbox{\hyperlink{classProblem_abb3b2160878127586e1c7d81d7458616}{00150}} Data    \mbox{\hyperlink{classProblem_abb3b2160878127586e1c7d81d7458616}{Problem::getRandomPoint}}()}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00151}00151 \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00152}00152 }
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00153}00153     Data x;}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00154}00154     x.resize(dimension);}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00155}00155 }
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00156}00156     problem-\/>getSample(x);}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00157}00157     \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00158}00158 \textcolor{comment}{    for(int i=0;i<dimension;i++)}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00159}00159 \textcolor{comment}{    \{}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00160}00160 \textcolor{comment}{        double r=randomDouble();}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00161}00161 \textcolor{comment}{        //double middle=lmargin[i]+(rmargin[i]-\/lmargin[i])/2.0;}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00162}00162 \textcolor{comment}{        //double delta = (r-\/1.0);}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00163}00163 \textcolor{comment}{        //x[i]=middle+delta*(0.1 * (rmargin[i]-\/lmargin[i]));}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00164}00164 \textcolor{comment}{        x[i]=lmargin[i]+r*(rmargin[i]-\/lmargin[i]);}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00165}00165 \textcolor{comment}{    \}*/}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00166}00166     \textcolor{keywordflow}{return} x;}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00167}00167 \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00168}00168 }
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00169}00169 }
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00170}\mbox{\hyperlink{classProblem_a1843d04c88315cb604d3a0ba15c2b56f}{00170}} \textcolor{keywordtype}{bool}    \mbox{\hyperlink{classProblem_a1843d04c88315cb604d3a0ba15c2b56f}{Problem::isPointIn}}(Data \&x)}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00171}00171 \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00172}00172     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<x.size();i++)}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00173}00173         \textcolor{keywordflow}{if}(x[i]<lmargin[i] || x[i]>rmargin[i])}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00174}00174             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00175}00175     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00176}00176 \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00177}00177 }
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00178}00178 }
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00179}\mbox{\hyperlink{classProblem_a03d7bf61fe4e86c69fcd86d464f95b8d}{00179}} \textcolor{keywordtype}{bool}     \mbox{\hyperlink{classProblem_a03d7bf61fe4e86c69fcd86d464f95b8d}{Problem::getGradientCriterion}}(Data \&x1,Data \&x2)}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00180}00180 \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00181}00181         Data g1,g2;}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00182}00182         g1.resize(x1.size());}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00183}00183         g2.resize(x2.size());}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00184}00184         \mbox{\hyperlink{classProblem_a2f694855dacafb36c04abc3886f09543}{granal}}(x1,g1);}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00185}00185         \mbox{\hyperlink{classProblem_a2f694855dacafb36c04abc3886f09543}{granal}}(x2,g2);}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00186}00186         \textcolor{keywordtype}{double} s=0.0;}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00187}00187         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<x1.size();i++)}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00188}00188                 s+=(x1[i]-\/x2[i])*(g1[i]-\/g2[i]);}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00189}00189         \textcolor{keywordflow}{return} s>=0;}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00190}00190 \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00191}00191 }
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00192}\mbox{\hyperlink{classProblem_a6284262ffe3b12abd27d8ce23ef6a111}{00192}} \textcolor{keywordtype}{double}  \mbox{\hyperlink{classProblem_a6284262ffe3b12abd27d8ce23ef6a111}{Problem::getVolume}}()}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00193}00193 \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00194}00194     \textcolor{keywordtype}{double} s= 0.0;}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00195}00195     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<lmargin.size();i++)}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00196}00196     \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00197}00197         \textcolor{comment}{//if(fabs(rmargin[i]-\/lmargin[i])>s)}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00198}00198             s += (rmargin[i]-\/lmargin[i])*(rmargin[i]-\/lmargin[i]);}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00199}00199     \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00200}00200     \textcolor{keywordflow}{return} sqrt(s);}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00201}00201 \}}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00202}\mbox{\hyperlink{classProblem_a0fda26de99b685d112dc7593b50dfc6d}{00202}} QJsonObject    \mbox{\hyperlink{classProblem_a0fda26de99b685d112dc7593b50dfc6d}{Problem::done}}(Data \&x)}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00203}00203 \{}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00204}00204     \textcolor{keywordflow}{return} problem-\/>done(x);}
+\DoxyCodeLine{\Hypertarget{problem_8cpp_source_l00205}00205 \}}
+
+\end{DoxyCode}

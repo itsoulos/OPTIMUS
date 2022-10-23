@@ -1,0 +1,55 @@
+\hypertarget{rbfsampler_8h_source}{}\doxysection{rbfsampler.\+h}
+\label{rbfsampler_8h_source}\index{rbfsampler.h@{rbfsampler.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00001}00001 \textcolor{preprocessor}{\#ifndef RBFSAMPLER\_H}}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00002}00002 \textcolor{preprocessor}{\#define RBFSAMPLER\_H}}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00003}00003 \textcolor{preprocessor}{\# include "{}problem.h"{}}}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00004}00004 \textcolor{preprocessor}{\# include "{}problemsampler.h"{}}}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00005}00005 \textcolor{preprocessor}{\# include "{}dataset.h"{}}}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00007}\mbox{\hyperlink{classRbfSampler}{00007}} \textcolor{keyword}{class }\mbox{\hyperlink{classRbfSampler}{RbfSampler}} :\textcolor{keyword}{public} \mbox{\hyperlink{classProblemSampler}{ProblemSampler}}}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00008}00008 \{}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00009}00009 \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00010}00010     \textcolor{keywordtype}{int}     nweights;}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00011}00011     Data    weight;}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00012}00012     \textcolor{keywordtype}{int}     dimension;}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00013}00013     vector<Data>    center;}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00014}00014     Data            variance;}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00015}00015     vector<int> member;}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00016}00016     \textcolor{comment}{//for Problem Samples}}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00017}00017     vector<Data>    xpoint;}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00018}00018     Data            ypoint;}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00019}00019     vector<int>     teamMembers;}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00020}00020     \textcolor{keywordtype}{double}      getDistance(Data \&x,Data \&y);}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00021}00021     \textcolor{keywordtype}{double}      gaussian(Data \&x,Data \&m,\textcolor{keywordtype}{double} v);}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00022}00022     \textcolor{keywordtype}{double}      gaussianDerivative(Data \&x,Data \&m,\textcolor{keywordtype}{double} v,\textcolor{keywordtype}{int} pos);}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00023}00023     \textcolor{keywordtype}{void}        initCenters();}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00024}00024     \textcolor{keywordtype}{void}        kmeans();}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00025}00025     \textcolor{keywordtype}{int}         nearestTeam(Data \&x);}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00026}00026     \textcolor{keywordtype}{void}        updateCenters();}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00027}00027     Matrix      matrix\_transpose(Matrix \&x);}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00028}00028     Matrix      matrix\_mult(Matrix \&x,Matrix \&y);}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00029}00029     Matrix      matrix\_inverse(Matrix x,\textcolor{keywordtype}{bool} \&ok);}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00030}00030     Matrix      matrix\_pseudoinverse(Matrix \&x,\textcolor{keywordtype}{bool} \&ok);}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00031}00031 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00032}00032     \mbox{\hyperlink{classRbfSampler}{RbfSampler}}(\mbox{\hyperlink{classProblem}{Problem}} *p,\textcolor{keywordtype}{int} w);}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00033}00033     \textcolor{keywordtype}{int}     getNWeights() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00034}00034     Data    getWeights();}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00035}00035     \textcolor{keywordtype}{int}     getParameterSize() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00036}00036     \textcolor{keywordtype}{void}    setParameters(Data \&x);}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00037}00037     Data    getParameters();}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00038}00038     \textcolor{keywordtype}{void}    setWeights(Data \&w);}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00039}00039     \textcolor{keywordtype}{double}  \mbox{\hyperlink{classRbfSampler_a8604bc1a796174b0c2f3771b4648fccd}{eval}}(Data \&x);}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00040}00040     Data    evalDeriv(Data \&x);}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00041}00041     \textcolor{keywordtype}{void}    \mbox{\hyperlink{classRbfSampler_adb7bcd69657e429c95e287d414522928}{sampleFromProblem}}(\textcolor{keywordtype}{int} N,Matrix \&xsample,Data \&ysample);}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00042}00042     \textcolor{keywordtype}{void}    \mbox{\hyperlink{classRbfSampler_aabe387659c568821f5600ea0ed171368}{addSampleFromProblem}}(Data \&x,\textcolor{keywordtype}{double} y);}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00043}00043     \textcolor{keywordtype}{void}    \mbox{\hyperlink{classRbfSampler_ac87012db40d70ae63a66bf152e2a541b}{trainModel}}();}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00044}00044     \textcolor{keywordtype}{double}  getTrainError();}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00045}00045     \textcolor{keywordtype}{void}    \mbox{\hyperlink{classRbfSampler_a2bba3588d32b29d119a632e4da15a455}{sampleFromModel}}(\textcolor{keywordtype}{int} \&N,Matrix \&xsample,Data \&ysample);}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00046}00046     \mbox{\hyperlink{classRbfSampler}{\string~RbfSampler}}();}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00047}00047 \};}
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00048}00048 }
+\DoxyCodeLine{\Hypertarget{rbfsampler_8h_source_l00049}00049 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// RBFSAMPLER\_H}}
+
+\end{DoxyCode}

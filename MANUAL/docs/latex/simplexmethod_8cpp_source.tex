@@ -1,0 +1,234 @@
+\hypertarget{simplexmethod_8cpp_source}{}\doxysection{simplexmethod.\+cpp}
+\label{simplexmethod_8cpp_source}\index{simplexmethod.cpp@{simplexmethod.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00001}00001 \textcolor{preprocessor}{\#include "{}simplexmethod.h"{}}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00003}00003 SimplexMethod::SimplexMethod(\mbox{\hyperlink{classProblem}{Problem}} *p)}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00004}00004 \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00005}00005     myProblem = p;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00006}00006     alpha = 1.0;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00007}00007     gamma = 2.0;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00008}00008     beta = 0.5;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00009}00009 \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00011}00011 Data SimplexMethod::getCentroid()}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00012}00012 \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00013}00013     Data x;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00014}00014     \textcolor{keywordtype}{int} n = myProblem-\/>\mbox{\hyperlink{classProblem_a8d7cf5966e8540ccb6dc03923367dbfe}{getDimension}}();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00015}00015     x.resize(n);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00016}00016     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i <= n -\/ 1; i++)}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00017}00017     \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00018}00018         x[i] = 0.0;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00019}00019         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < n; j++)}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00020}00020             x[i] += xpoint[i][j];}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00021}00021         x[i] /= n;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00022}00022     \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00023}00023     \textcolor{keywordflow}{return} x;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00024}00024 \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00025}00025 }
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00026}00026 Data SimplexMethod::getReflected(Data \&centroid)}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00027}00027 \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00028}00028     Data x;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00029}00029     \textcolor{keywordtype}{int} n = myProblem-\/>\mbox{\hyperlink{classProblem_a8d7cf5966e8540ccb6dc03923367dbfe}{getDimension}}();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00030}00030     x.resize(n);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00031}00031     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < n; i++)}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00032}00032     \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00033}00033         x[i] = centroid[i] + alpha * (centroid[i] -\/ xpoint[n][i]);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00034}00034     \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00035}00035     \textcolor{keywordflow}{return} x;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00036}00036 \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00038}00038 \textcolor{keywordtype}{void} SimplexMethod::sortPoints()}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00039}00039 \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00040}00040     \textcolor{keywordtype}{int} n = myProblem-\/>\mbox{\hyperlink{classProblem_a8d7cf5966e8540ccb6dc03923367dbfe}{getDimension}}();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00041}00041     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i <= n; i++)}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00042}00042     \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00043}00043         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < n; j++)}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00044}00044         \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00045}00045             \textcolor{keywordflow}{if} (ypoint[j] > ypoint[j + 1])}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00046}00046             \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00047}00047                 \textcolor{keywordtype}{double} t = ypoint[j];}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00048}00048                 ypoint[j] = ypoint[j + 1];}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00049}00049                 ypoint[j + 1] = t;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00050}00050                 Data xt;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00051}00051                 xt = xpoint[j];}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00052}00052                 xpoint[j] = xpoint[j + 1];}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00053}00053                 xpoint[j + 1] = xt;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00054}00054             \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00055}00055         \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00056}00056     \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00057}00057 \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00058}00058 }
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00059}00059 \textcolor{keywordtype}{double} SimplexMethod::getMeanf()}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00060}00060 \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00061}00061     \textcolor{keywordtype}{double} mf = 0.0;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00062}00062     \textcolor{keywordtype}{int} n = myProblem-\/>\mbox{\hyperlink{classProblem_a8d7cf5966e8540ccb6dc03923367dbfe}{getDimension}}();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00063}00063     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i <= n; i++)}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00064}00064         mf += ypoint[i];}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00065}00065     \textcolor{keywordflow}{return} mf / (n + 1);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00066}00066 \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00068}00068 \textcolor{keywordtype}{double} SimplexMethod::getVariancef()}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00069}00069 \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00070}00070     \textcolor{keywordtype}{double} sigma = 0.0;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00071}00071     \textcolor{keywordtype}{double} mf = getMeanf();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00072}00072     printf(\textcolor{stringliteral}{"{}Simplex mean = \%lf \(\backslash\)n"{}},mf);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00073}00073     \textcolor{keywordtype}{int} n = myProblem-\/>\mbox{\hyperlink{classProblem_a8d7cf5966e8540ccb6dc03923367dbfe}{getDimension}}();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00074}00074     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i <= n; i++)}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00075}00075         sigma += pow(ypoint[i] -\/ mf, 2.0);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00076}00076     \textcolor{keywordflow}{return} sigma / n;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00077}00077 \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00078}00078 }
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00079}00079 \textcolor{keywordtype}{void} SimplexMethod::insertionStep()}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00080}00080 \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00081}00081     \textcolor{comment}{// insert fr in the correct place}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00082}00082     \textcolor{keywordtype}{int} pos = -\/1;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00083}00083     \textcolor{keywordtype}{int} n = myProblem-\/>\mbox{\hyperlink{classProblem_a8d7cf5966e8540ccb6dc03923367dbfe}{getDimension}}();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00084}00084     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < n; i++)}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00085}00085     \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00086}00086         \textcolor{keywordflow}{if} (fr >= ypoint[i] \&\& fr <= ypoint[i + 1])}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00087}00087         \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00088}00088             pos = i;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00089}00089             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00090}00090         \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00091}00091     \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00092}00092     \textcolor{keywordflow}{if} (pos == -\/1)}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00093}00093         pos = n;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00094}00094     xpoint[pos] = xr;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00095}00095     ypoint[pos] = fr;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00096}00096 \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00097}00097 }
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00098}00098 \textcolor{keywordtype}{void} SimplexMethod::stretchingStep()}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00099}00099 \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00100}00100     Data xe;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00101}00101     \textcolor{keywordtype}{int} n = myProblem-\/>\mbox{\hyperlink{classProblem_a8d7cf5966e8540ccb6dc03923367dbfe}{getDimension}}();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00102}00102     xe.resize(n);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00103}00103     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < n; i++)}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00104}00104         xe[i] = xc[i] + gamma * (xr[i] -\/ xc[i]);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00105}00105     \textcolor{keywordtype}{double} fe = myProblem-\/>\mbox{\hyperlink{classProblem_a1d4dd1303141465d145b5b728c0b2d81}{funmin}}(xe);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00106}00106     \textcolor{keywordflow}{if} (fe < fr)}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00107}00107     \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00108}00108         xpoint[n] = xe;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00109}00109         ypoint[n] = fe;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00110}00110     \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00111}00111     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00112}00112     \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00113}00113         xpoint[n] = xr;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00114}00114         ypoint[n] = fr;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00115}00115     \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00116}00116 \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00117}00117 }
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00118}00118 \textcolor{keywordtype}{void} SimplexMethod::contractionStep()}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00119}00119 \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00120}00120     Data xk;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00121}00121     \textcolor{keywordtype}{int} n = myProblem-\/>\mbox{\hyperlink{classProblem_a8d7cf5966e8540ccb6dc03923367dbfe}{getDimension}}();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00122}00122     xk.resize(n);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00123}00123     \textcolor{keywordflow}{if} (fr < ypoint[n])}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00124}00124     \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00125}00125         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < n; i++)}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00126}00126             xk[i] = xc[i] + beta * (xr[i] -\/ xc[i]);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00127}00127     \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00128}00128     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00129}00129     \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00130}00130         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < n; i++)}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00131}00131             xk[i] = xc[i] + beta * (xpoint[n][i] -\/ xc[i]);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00132}00132     \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00133}00133     \textcolor{keywordtype}{double} fk = myProblem-\/>\mbox{\hyperlink{classProblem_a1d4dd1303141465d145b5b728c0b2d81}{funmin}}(xk);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00134}00134     \textcolor{keywordtype}{double} dmin = fr < ypoint[n] ? fr : ypoint[n];}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00135}00135     \textcolor{keywordflow}{if} (fk < dmin)}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00136}00136     \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00137}00137         xpoint[n] = xk;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00138}00138         ypoint[n] = fk;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00139}00139     \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00140}00140     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00141}00141     \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00142}00142         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 1; i <= n; i++)}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00143}00143         \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00144}00144             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < n; j++)}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00145}00145             \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00146}00146                 xpoint[i][j] = 0.5 * (xpoint[0][j] + xpoint[i][j]);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00147}00147             \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00148}00148             ypoint[i] = myProblem-\/>\mbox{\hyperlink{classProblem_a1d4dd1303141465d145b5b728c0b2d81}{funmin}}(xpoint[i]);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00149}00149         \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00150}00150     \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00151}00151 \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00152}00152 }
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00153}00153 \textcolor{keywordtype}{void} SimplexMethod::setAlpha(\textcolor{keywordtype}{double} a)}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00154}00154 \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00155}00155     alpha = a > 0 ? a : 2.0;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00156}00156 \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00157}00157 }
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00158}00158 \textcolor{keywordtype}{double} SimplexMethod::getAlpha()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00159}00159 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00160}00160     \textcolor{keywordflow}{return} alpha;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00161}00161 \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00162}00162 }
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00163}00163 \textcolor{keywordtype}{void} SimplexMethod::setBeta(\textcolor{keywordtype}{double} b)}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00164}00164 \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00165}00165     beta = (b > 0) ? b : 0.5;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00166}00166 \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00167}00167 }
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00168}00168 \textcolor{keywordtype}{double} SimplexMethod::getBeta()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00169}00169 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00170}00170     \textcolor{keywordflow}{return} beta;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00171}00171 \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00172}00172 }
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00173}00173 \textcolor{keywordtype}{void} SimplexMethod::setGamma(\textcolor{keywordtype}{double} g)}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00174}00174 \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00175}00175     gamma = (g > 0) ? g : 2.0;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00176}00176 \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00177}00177 }
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00178}00178 \textcolor{keywordtype}{double} SimplexMethod::getGamma()\textcolor{keyword}{ const}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00179}00179 \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00180}00180     \textcolor{keywordflow}{return} gamma;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00181}00181 \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00182}00182 }
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00183}00183 \textcolor{keywordtype}{void} SimplexMethod::runAlgorithm()}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00184}00184 \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00185}00185     \textcolor{comment}{// sample}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00186}00186     \textcolor{keyword}{const} \textcolor{keywordtype}{double} eps = 1e-\/6;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00187}00187     \textcolor{keywordtype}{int} n = myProblem-\/>\mbox{\hyperlink{classProblem_a8d7cf5966e8540ccb6dc03923367dbfe}{getDimension}}();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00188}00188     xpoint.resize(n + 1);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00189}00189     ypoint.resize(n + 1);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00190}00190     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i <= n; i++)}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00191}00191     \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00192}00192 }
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00193}00193         xpoint[i] = myProblem-\/>\mbox{\hyperlink{classProblem_abb3b2160878127586e1c7d81d7458616}{getRandomPoint}}();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00194}00194 }
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00195}00195         ypoint[i] = myProblem-\/>\mbox{\hyperlink{classProblem_a1d4dd1303141465d145b5b728c0b2d81}{funmin}}(xpoint[i]);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00196}00196     \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00197}00197     \textcolor{keywordtype}{int} iter = 0;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00198}00198     \textcolor{keywordflow}{while} (\textcolor{keyword}{true})}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00199}00199     \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00200}00200         sortPoints();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00201}00201         \textcolor{keywordtype}{double} s = getVariancef();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00202}00202         \textcolor{keywordflow}{if} (s < eps)}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00203}00203             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00204}00204         xc = getCentroid();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00205}00205         fc = myProblem-\/>\mbox{\hyperlink{classProblem_a1d4dd1303141465d145b5b728c0b2d81}{funmin}}(xc);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00206}00206         xr = getReflected(xc);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00207}00207         fr = myProblem-\/>\mbox{\hyperlink{classProblem_a1d4dd1303141465d145b5b728c0b2d81}{funmin}}(xr);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00208}00208         \textcolor{keywordflow}{if} (fr >= ypoint[0] \&\& fr <= ypoint[n -\/ 1])}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00209}00209             insertionStep();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00210}00210         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (fr <= ypoint[0])}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00211}00211             stretchingStep();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00212}00212         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00213}00213             contractionStep();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00214}00214         iter++;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00215}00215         printf(\textcolor{stringliteral}{"{}ITER=\%4d BEST VALUE=\%20.10lg VARIANCE=\%20.10lg\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00216}00216                iter, ypoint[0], s);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00217}00217     \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00218}00218 \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00219}00219 }
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00220}00220 Data    SimplexMethod::getBest()}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00221}00221 \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00222}00222     \textcolor{keywordflow}{return} xpoint[0];}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00223}00223 }
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00224}00224 \}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00225}00225 }
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00226}00226 SimplexMethod::\string~SimplexMethod()}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00227}00227 \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8cpp_source_l00228}00228 \}}
+
+\end{DoxyCode}

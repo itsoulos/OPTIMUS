@@ -2,7 +2,7 @@
 #define INTERVAL_H
 # include <QString>
 # include <math.h>
-/** The base class for interval arithmetics**/
+/** @brief The base class for interval arithmetics**/
 class Interval
 {
 private:

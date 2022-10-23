@@ -3,8 +3,6 @@
 #include "intervalproblem.h"
 # include <QLibrary>
 # include <QVariant>
-/** Abstract class for loading
- * global optimization problems from shared libraries **/
 typedef int (*GETDIMENSION)();
 typedef void(*GETMARGINS)(vector<Interval>&);
 typedef double(*FUNMIN)(Data &x);
@@ -14,6 +12,10 @@ typedef void(*INIT)(QJsonObject x);
 typedef void(*SETP)(QString,QVariant);
 typedef void(*SAMPLER)(Data &x);
 
+
+
+/** @brief Abstract class for loading
+ * global optimization problems from shared libraries **/
 class DllProblem :public IntervalProblem
 {
 private:

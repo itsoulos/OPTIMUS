@@ -1,5 +1,8 @@
 # ifndef __DOUBLESTACK__H
 
+/**
+ * @brief The DoubleStack class implements a stack of double numbers.
+ */
 class DoubleStack
 {
 	private:

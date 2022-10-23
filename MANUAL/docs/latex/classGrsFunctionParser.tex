@@ -1,0 +1,74 @@
+\hypertarget{classGrsFunctionParser}{}\doxysection{Grs\+Function\+Parser Class Reference}
+\label{classGrsFunctionParser}\index{GrsFunctionParser@{GrsFunctionParser}}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classGrsFunctionParser_abedf58b972a9adba145f4e2028050699}\label{classGrsFunctionParser_abedf58b972a9adba145f4e2028050699}} 
+enum {\bfseries Parse\+Error\+Type} \{ \newline
+{\bfseries SYNTAX\+\_\+\+ERROR} =0
+, {\bfseries MISM\+\_\+\+PARENTH}
+, {\bfseries MISSING\+\_\+\+PARENTH}
+, {\bfseries EMPTY\+\_\+\+PARENTH}
+, \newline
+{\bfseries EXPECT\+\_\+\+OPERATOR}
+, {\bfseries OUT\+\_\+\+OF\+\_\+\+MEMORY}
+, {\bfseries UNEXPECTED\+\_\+\+ERROR}
+, {\bfseries INVALID\+\_\+\+VARS}
+, \newline
+{\bfseries ILL\+\_\+\+PARAMS\+\_\+\+AMOUNT}
+, {\bfseries PREMATURE\+\_\+\+EOS}
+, {\bfseries EXPECT\+\_\+\+PARENTH\+\_\+\+FUNC}
+, {\bfseries FP\+\_\+\+NO\+\_\+\+ERROR}
+ \}
+\item 
+\mbox{\Hypertarget{classGrsFunctionParser_a46e1fe6922295c25e7babb464f7b62fc}\label{classGrsFunctionParser_a46e1fe6922295c25e7babb464f7b62fc}} 
+typedef double($\ast$ {\bfseries Function\+Ptr}) (const double $\ast$)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classGrsFunctionParser_a704677dff2c2b4ed0b475e0c71fd0b2d}\label{classGrsFunctionParser_a704677dff2c2b4ed0b475e0c71fd0b2d}} 
+int {\bfseries Parse} (const std\+::string \&Function, const std\+::string \&Vars, bool use\+Degrees=false)
+\item 
+\mbox{\Hypertarget{classGrsFunctionParser_a059a5f7fcfc854e0f4e2a0d0a853c547}\label{classGrsFunctionParser_a059a5f7fcfc854e0f4e2a0d0a853c547}} 
+const char $\ast$ {\bfseries Error\+Msg} () const
+\item 
+\mbox{\Hypertarget{classGrsFunctionParser_aaa5693ae234943dff9796b700701a2c1}\label{classGrsFunctionParser_aaa5693ae234943dff9796b700701a2c1}} 
+Parse\+Error\+Type {\bfseries Get\+Parse\+Error\+Type} () const
+\item 
+\mbox{\Hypertarget{classGrsFunctionParser_ad0f7ff81f3d01cad9618ddfc054e03e3}\label{classGrsFunctionParser_ad0f7ff81f3d01cad9618ddfc054e03e3}} 
+double {\bfseries Eval} (const double $\ast$Vars)
+\item 
+\mbox{\Hypertarget{classGrsFunctionParser_a00066c6d73f4e4cdffb78d8c0e97901d}\label{classGrsFunctionParser_a00066c6d73f4e4cdffb78d8c0e97901d}} 
+double {\bfseries Eval\+Deriv} (const double $\ast$Vars, int pos)
+\item 
+\mbox{\Hypertarget{classGrsFunctionParser_a0fc269541cba604ba1316e50f55f7468}\label{classGrsFunctionParser_a0fc269541cba604ba1316e50f55f7468}} 
+double {\bfseries Eval\+Deriv2} (const double $\ast$Vars, int pos)
+\item 
+\mbox{\Hypertarget{classGrsFunctionParser_a242a8399a42450b93c03889b37701737}\label{classGrsFunctionParser_a242a8399a42450b93c03889b37701737}} 
+double {\bfseries last\+Eval} ()
+\item 
+\mbox{\Hypertarget{classGrsFunctionParser_a1b9844b4bb96441463a07d4b0598b590}\label{classGrsFunctionParser_a1b9844b4bb96441463a07d4b0598b590}} 
+double {\bfseries last\+Eval\+Deriv} ()
+\item 
+\mbox{\Hypertarget{classGrsFunctionParser_ad47bdd429fe444c8f9aa9c8c6137099e}\label{classGrsFunctionParser_ad47bdd429fe444c8f9aa9c8c6137099e}} 
+int {\bfseries Eval\+Error} () const
+\item 
+\mbox{\Hypertarget{classGrsFunctionParser_ac04fadd4bb522e5bc5f8b3d8983e2a26}\label{classGrsFunctionParser_ac04fadd4bb522e5bc5f8b3d8983e2a26}} 
+bool {\bfseries Add\+Constant} (const std\+::string \&name, double value)
+\item 
+\mbox{\Hypertarget{classGrsFunctionParser_a0556bc3e6d518031f0d9e394f65df5b1}\label{classGrsFunctionParser_a0556bc3e6d518031f0d9e394f65df5b1}} 
+bool {\bfseries Add\+Function} (const std\+::string \&name, Function\+Ptr, unsigned params\+Amount)
+\item 
+\mbox{\Hypertarget{classGrsFunctionParser_aa2fb2ed2019d19d9e9bb50a9adf04a54}\label{classGrsFunctionParser_aa2fb2ed2019d19d9e9bb50a9adf04a54}} 
+bool {\bfseries Add\+Function} (const std\+::string \&name, \mbox{\hyperlink{classGrsFunctionParser}{Grs\+Function\+Parser}} \&)
+\item 
+\mbox{\Hypertarget{classGrsFunctionParser_a361063cc44d10c27f009ad90d96768dd}\label{classGrsFunctionParser_a361063cc44d10c27f009ad90d96768dd}} 
+void {\bfseries Optimize} ()
+\item 
+\mbox{\Hypertarget{classGrsFunctionParser_a523187179ec16c6f5e676ec360480a17}\label{classGrsFunctionParser_a523187179ec16c6f5e676ec360480a17}} 
+{\bfseries Grs\+Function\+Parser} (const \mbox{\hyperlink{classGrsFunctionParser}{Grs\+Function\+Parser}} \&)
+\item 
+\mbox{\Hypertarget{classGrsFunctionParser_a50be57b8dfe153d7a863cc6a5771325d}\label{classGrsFunctionParser_a50be57b8dfe153d7a863cc6a5771325d}} 
+\mbox{\hyperlink{classGrsFunctionParser}{Grs\+Function\+Parser}} \& {\bfseries operator=} (const \mbox{\hyperlink{classGrsFunctionParser}{Grs\+Function\+Parser}} \&)
+\end{DoxyCompactItemize}

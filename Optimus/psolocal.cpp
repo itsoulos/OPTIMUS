@@ -147,7 +147,7 @@ void    PsoLocal::Solve(int generations)
                 bestg = position[i];
             }
         }
-       printf("PSO LOCAL ITER=%4d VALUE=%20.10lg\n",g,bestFitness);
+      // printf("PSO LOCAL ITER=%4d VALUE=%20.10lg\n",g,bestFitness);
     }
 }
 

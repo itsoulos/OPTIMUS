@@ -10,7 +10,7 @@ using namespace  std;
 typedef vector<double> Data;
 typedef vector<Interval> IntervalData;
 
-/** This class used to represent the objective problem
+/** @brief This class used to represent the objective problem
  * as an interval problem. Objects from this class will
    be used as fields in Problem class.**/
 

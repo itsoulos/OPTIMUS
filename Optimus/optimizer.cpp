@@ -74,6 +74,15 @@ double  Optimizer::localSearch(Data &x)
 
     }
     else
+    if(method=="simplex")
+    {
+        SimplexMethod *method = new SimplexMethod(myProblem);
+        method->runAlgorithm();
+        x= method->getBest();
+        delete method;
+        return myProblem->funmin(x);
+    }
+    else
     if(method=="bfgs")
     {
         Tolmin mt(myProblem);
@@ -115,7 +124,7 @@ double  Optimizer::localSearch(Data &x)
     if(method=="grs")
     {
         Grs *solver=new Grs(myProblem);
-        solver->setGenomeCount(20);
+        solver->setGenomeCount(50);
         solver->setGenomeLength(10 * myProblem->getDimension());
        double y=myProblem->funmin(x);
        solver->Solve(x,y);
@@ -146,6 +155,7 @@ double  Optimizer::localSearch(Data &x)
         double y = myProblem->funmin(x);
         nelderMead n(myProblem,x,y);
         n.init();
+
         while(!n.terminated())
         {
             n.step();

@@ -1,0 +1,1484 @@
+\hypertarget{brent_8cpp_source}{}\doxysection{brent.\+cpp}
+\label{brent_8cpp_source}\index{brent.cpp@{brent.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00001}00001 \textcolor{preprocessor}{\# include <cmath>}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00002}00002 \textcolor{preprocessor}{\# include <cstdlib>}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00003}00003 \textcolor{preprocessor}{\# include <ctime>}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00004}00004 \textcolor{preprocessor}{\# include <iostream>}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00005}00005 \textcolor{preprocessor}{\# include <problem.h>}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00006}00006 \textcolor{keyword}{using namespace }std;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00007}00007 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00008}00008 \textcolor{preprocessor}{\# include "{}brent.h"{}}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00010}00010 \textcolor{keyword}{namespace }brent\{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00011}00011 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00012}00012 \textcolor{comment}{//****************************************************************************80}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00013}00013 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00014}00014 \textcolor{keywordtype}{double} glomin ( \textcolor{keywordtype}{double} a, \textcolor{keywordtype}{double} b, \textcolor{keywordtype}{double} c, \textcolor{keywordtype}{double} m, \textcolor{keywordtype}{double} e, \textcolor{keywordtype}{double} t,}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00015}00015   func\_base\& f, \textcolor{keywordtype}{double} \&x )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00017}00017 \textcolor{comment}{//****************************************************************************80}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00018}00018 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00019}00019 \textcolor{comment}{//  Purpose:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00020}00020 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00021}00021 \textcolor{comment}{//    GLOMIN seeks a global minimum of a function F(X) in an interval [A,B].}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00022}00022 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00023}00023 \textcolor{comment}{//  Discussion:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00024}00024 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00025}00025 \textcolor{comment}{//    This function assumes that F(X) is twice continuously differentiable}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00026}00026 \textcolor{comment}{//    over [A,B] and that F''(X) <= M for all X in [A,B].}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00027}00027 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00028}00028 \textcolor{comment}{//  Licensing:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00029}00029 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00030}00030 \textcolor{comment}{//    This code is distributed under the GNU LGPL license.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00031}00031 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00032}00032 \textcolor{comment}{//  Modified:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00033}00033 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00034}00034 \textcolor{comment}{//    17 July 2011}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00035}00035 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00036}00036 \textcolor{comment}{//  Author:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00037}00037 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00038}00038 \textcolor{comment}{//    Original FORTRAN77 version by Richard Brent.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00039}00039 \textcolor{comment}{//    C++ version by John Burkardt.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00040}00040 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00041}00041 \textcolor{comment}{//  Reference:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00042}00042 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00043}00043 \textcolor{comment}{//    Richard Brent,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00044}00044 \textcolor{comment}{//    Algorithms for Minimization Without Derivatives,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00045}00045 \textcolor{comment}{//    Dover, 2002,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00046}00046 \textcolor{comment}{//    ISBN: 0-\/486-\/41998-\/3,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00047}00047 \textcolor{comment}{//    LC: QA402.5.B74.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00048}00048 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00049}00049 \textcolor{comment}{//  Parameters:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00050}00050 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00051}00051 \textcolor{comment}{//    Input, double A, B, the endpoints of the interval.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00052}00052 \textcolor{comment}{//    It must be the case that A < B.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00053}00053 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00054}00054 \textcolor{comment}{//    Input, double C, an initial guess for the global}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00055}00055 \textcolor{comment}{//    minimizer.  If no good guess is known, C = A or B is acceptable.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00056}00056 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00057}00057 \textcolor{comment}{//    Input, double M, the bound on the second derivative.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00058}00058 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00059}00059 \textcolor{comment}{//    Input, double E, a positive tolerance, a bound for the}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00060}00060 \textcolor{comment}{//    absolute error in the evaluation of F(X) for any X in [A,B].}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00061}00061 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00062}00062 \textcolor{comment}{//    Input, double T, a positive error tolerance.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00063}00063 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00064}00064 \textcolor{comment}{//    Input, func\_base\& F, a user-\/supplied c++ functor whose}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00065}00065 \textcolor{comment}{//    global minimum is being sought.  The input and output}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00066}00066 \textcolor{comment}{//    of F() are of type double.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00067}00067 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00068}00068 \textcolor{comment}{//    Output, double \&X, the estimated value of the abscissa}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00069}00069 \textcolor{comment}{//    for which F attains its global minimum value in [A,B].}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00070}00070 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00071}00071 \textcolor{comment}{//    Output, double GLOMIN, the value F(X).}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00072}00072 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00073}00073 \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00074}00074   \textcolor{keywordtype}{double} a0;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00075}00075   \textcolor{keywordtype}{double} a2;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00076}00076   \textcolor{keywordtype}{double} a3;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00077}00077   \textcolor{keywordtype}{double} d0;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00078}00078   \textcolor{keywordtype}{double} d1;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00079}00079   \textcolor{keywordtype}{double} d2;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00080}00080   \textcolor{keywordtype}{double} h;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00081}00081   \textcolor{keywordtype}{int} k;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00082}00082   \textcolor{keywordtype}{double} m2;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00083}00083   \textcolor{keywordtype}{double} macheps;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00084}00084   \textcolor{keywordtype}{double} p;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00085}00085   \textcolor{keywordtype}{double} q;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00086}00086   \textcolor{keywordtype}{double} qs;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00087}00087   \textcolor{keywordtype}{double} r;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00088}00088   \textcolor{keywordtype}{double} s;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00089}00089   \textcolor{keywordtype}{double} sc;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00090}00090   \textcolor{keywordtype}{double} y;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00091}00091   \textcolor{keywordtype}{double} y0;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00092}00092   \textcolor{keywordtype}{double} y1;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00093}00093   \textcolor{keywordtype}{double} y2;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00094}00094   \textcolor{keywordtype}{double} y3;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00095}00095   \textcolor{keywordtype}{double} yb;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00096}00096   \textcolor{keywordtype}{double} z0;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00097}00097   \textcolor{keywordtype}{double} z1;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00098}00098   \textcolor{keywordtype}{double} z2;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00099}00099 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00100}00100   a0 = b;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00101}00101   x = a0;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00102}00102   a2 = a;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00103}00103   y0 = f ( b );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00104}00104   yb = y0;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00105}00105   y2 = f ( a );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00106}00106   y = y2;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00107}00107 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00108}00108   \textcolor{keywordflow}{if} ( y0 < y )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00109}00109   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00110}00110     y = y0;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00111}00111   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00112}00112   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00113}00113   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00114}00114     x = a;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00115}00115   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00116}00116 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00117}00117   \textcolor{keywordflow}{if} ( m <= 0.0 || b <= a )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00118}00118   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00119}00119     \textcolor{keywordflow}{return} y;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00120}00120   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00121}00121 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00122}00122   macheps = r8\_epsilon ( );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00123}00123 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00124}00124   m2 = 0.5 * ( 1.0 + 16.0 * macheps ) * m;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00125}00125 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00126}00126   \textcolor{keywordflow}{if} ( c <= a || b <= c )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00127}00127   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00128}00128     sc = 0.5 * ( a + b );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00129}00129   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00130}00130   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00131}00131   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00132}00132     sc = c;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00133}00133   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00134}00134 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00135}00135   y1 = f ( sc );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00136}00136   k = 3;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00137}00137   d0 = a2 -\/ sc;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00138}00138   h = 9.0 / 11.0;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00139}00139 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00140}00140   \textcolor{keywordflow}{if} ( y1 < y )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00141}00141   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00142}00142     x = sc;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00143}00143     y = y1;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00144}00144   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00145}00145 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00146}00146 \textcolor{comment}{//  Loop.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00147}00147 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00148}00148   \textcolor{keywordflow}{for} ( ; ; )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00149}00149   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00150}00150     d1 = a2 -\/ a0;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00151}00151     d2 = sc -\/ a0;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00152}00152     z2 = b -\/ a2;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00153}00153     z0 = y2 -\/ y1;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00154}00154     z1 = y2 -\/ y0;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00155}00155     r = d1 * d1 * z0 -\/ d0 * d0 * z1;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00156}00156     p = r;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00157}00157     qs = 2.0 * ( d0 * z1 -\/ d1 * z0 );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00158}00158     q = qs;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00159}00159 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00160}00160     \textcolor{keywordflow}{if} ( k < 1000000 || y2 <= y )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00161}00161     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00162}00162       \textcolor{keywordflow}{for} ( ; ; )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00163}00163       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00164}00164         \textcolor{keywordflow}{if} ( q * ( r * ( yb -\/ y2 ) + z2 * q * ( ( y2 -\/ y ) + t ) ) <}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00165}00165           z2 * m2 * r * ( z2 * q -\/ r ) )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00166}00166         \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00167}00167           a3 = a2 + r / q;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00168}00168           y3 = f ( a3 );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00169}00169 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00170}00170           \textcolor{keywordflow}{if} ( y3 < y )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00171}00171           \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00172}00172             x = a3;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00173}00173             y = y3;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00174}00174           \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00175}00175         \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00176}00176         k = ( ( 1611 * k ) \% 1048576 );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00177}00177         q = 1.0;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00178}00178         r = ( b -\/ a ) * 0.00001 * ( \textcolor{keywordtype}{double} ) ( k );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00179}00179 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00180}00180         \textcolor{keywordflow}{if} ( z2 <= r )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00181}00181         \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00182}00182           \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00183}00183         \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00184}00184       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00185}00185     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00186}00186     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00187}00187     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00188}00188       k = ( ( 1611 * k ) \% 1048576 );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00189}00189       q = 1.0;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00190}00190       r = ( b -\/ a ) * 0.00001 * ( \textcolor{keywordtype}{double} ) ( k );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00191}00191 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00192}00192       \textcolor{keywordflow}{while} ( r < z2 )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00193}00193       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00194}00194         \textcolor{keywordflow}{if} ( q * ( r * ( yb -\/ y2 ) + z2 * q * ( ( y2 -\/ y ) + t ) ) <}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00195}00195           z2 * m2 * r * ( z2 * q -\/ r ) )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00196}00196         \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00197}00197           a3 = a2 + r / q;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00198}00198           y3 = f ( a3 );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00199}00199 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00200}00200           \textcolor{keywordflow}{if} ( y3 < y )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00201}00201           \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00202}00202             x = a3;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00203}00203             y = y3;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00204}00204           \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00205}00205         \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00206}00206         k = ( ( 1611 * k ) \% 1048576 );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00207}00207         q = 1.0;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00208}00208         r = ( b -\/ a ) * 0.00001 * ( \textcolor{keywordtype}{double} ) ( k );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00209}00209       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00210}00210     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00211}00211 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00212}00212     r = m2 * d0 * d1 * d2;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00213}00213     s = sqrt ( ( ( y2 -\/ y ) + t ) / m2 );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00214}00214     h = 0.5 * ( 1.0 + h );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00215}00215     p = h * ( p + 2.0 * r * s );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00216}00216     q = q + 0.5 * qs;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00217}00217     r = -\/ 0.5 * ( d0 + ( z0 + 2.01 * e ) / ( d0 * m2 ) );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00218}00218 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00219}00219     \textcolor{keywordflow}{if} ( r < s || d0 < 0.0 )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00220}00220     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00221}00221       r = a2 + s;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00222}00222     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00223}00223     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00224}00224     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00225}00225       r = a2 + r;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00226}00226     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00227}00227 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00228}00228     \textcolor{keywordflow}{if} ( 0.0 < p * q )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00229}00229     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00230}00230       a3 = a2 + p / q;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00231}00231     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00232}00232     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00233}00233     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00234}00234       a3 = r;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00235}00235     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00236}00236 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00237}00237     \textcolor{keywordflow}{for} ( ; ; )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00238}00238     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00239}00239       a3 = r8\_max ( a3, r );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00240}00240 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00241}00241       \textcolor{keywordflow}{if} ( b <= a3 )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00242}00242       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00243}00243         a3 = b;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00244}00244         y3 = yb;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00245}00245       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00246}00246       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00247}00247       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00248}00248         y3 = f ( a3 );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00249}00249       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00250}00250 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00251}00251       \textcolor{keywordflow}{if} ( y3 < y )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00252}00252       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00253}00253         x = a3;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00254}00254         y = y3;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00255}00255       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00256}00256 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00257}00257       d0 = a3 -\/ a2;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00258}00258 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00259}00259       \textcolor{keywordflow}{if} ( a3 <= r )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00260}00260       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00261}00261         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00262}00262       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00263}00263 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00264}00264       p = 2.0 * ( y2 -\/ y3 ) / ( m * d0 );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00265}00265 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00266}00266       \textcolor{keywordflow}{if} ( ( 1.0 + 9.0 * macheps ) * d0 <= fabs ( p ) )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00267}00267       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00268}00268         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00269}00269       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00270}00270 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00271}00271       \textcolor{keywordflow}{if} ( 0.5 * m2 * ( d0 * d0 + p * p ) <= ( y2 -\/ y ) + ( y3 -\/ y ) + 2.0 * t )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00272}00272       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00273}00273         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00274}00274       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00275}00275       a3 = 0.5 * ( a2 + a3 );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00276}00276       h = 0.9 * h;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00277}00277     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00278}00278 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00279}00279     \textcolor{keywordflow}{if} ( b <= a3 )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00280}00280     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00281}00281       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00282}00282     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00283}00283 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00284}00284     a0 = sc;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00285}00285     sc = a2;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00286}00286     a2 = a3;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00287}00287     y0 = y1;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00288}00288     y1 = y2;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00289}00289     y2 = y3;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00290}00290   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00291}00291 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00292}00292   \textcolor{keywordflow}{return} y;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00293}00293 \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00294}00294 \textcolor{comment}{//****************************************************************************80}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00295}00295 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00296}00296 \textcolor{keywordtype}{double} local\_min ( \textcolor{keywordtype}{double} a, \textcolor{keywordtype}{double} b, \textcolor{keywordtype}{double} t, func\_base\& f,}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00297}00297   \textcolor{keywordtype}{double} \&x )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00298}00298 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00299}00299 \textcolor{comment}{//****************************************************************************80}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00300}00300 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00301}00301 \textcolor{comment}{//  Purpose:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00302}00302 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00303}00303 \textcolor{comment}{//    LOCAL\_MIN seeks a local minimum of a function F(X) in an interval [A,B].}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00304}00304 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00305}00305 \textcolor{comment}{//  Discussion:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00306}00306 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00307}00307 \textcolor{comment}{//    The method used is a combination of golden section search and}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00308}00308 \textcolor{comment}{//    successive parabolic interpolation.  Convergence is never much slower}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00309}00309 \textcolor{comment}{//    than that for a Fibonacci search.  If F has a continuous second}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00310}00310 \textcolor{comment}{//    derivative which is positive at the minimum (which is not at A or}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00311}00311 \textcolor{comment}{//    B), then convergence is superlinear, and usually of the order of}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00312}00312 \textcolor{comment}{//    about 1.324....}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00313}00313 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00314}00314 \textcolor{comment}{//    The values EPS and T define a tolerance TOL = EPS * abs ( X ) + T.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00315}00315 \textcolor{comment}{//    F is never evaluated at two points closer than TOL.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00316}00316 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00317}00317 \textcolor{comment}{//    If F is a unimodal function and the computed values of F are always}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00318}00318 \textcolor{comment}{//    unimodal when separated by at least SQEPS * abs ( X ) + (T/3), then}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00319}00319 \textcolor{comment}{//    LOCAL\_MIN approximates the abscissa of the global minimum of F on the}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00320}00320 \textcolor{comment}{//    interval [A,B] with an error less than 3*SQEPS*abs(LOCAL\_MIN)+T.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00321}00321 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00322}00322 \textcolor{comment}{//    If F is not unimodal, then LOCAL\_MIN may approximate a local, but}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00323}00323 \textcolor{comment}{//    perhaps non-\/global, minimum to the same accuracy.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00324}00324 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00325}00325 \textcolor{comment}{//  Licensing:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00326}00326 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00327}00327 \textcolor{comment}{//    This code is distributed under the GNU LGPL license.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00328}00328 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00329}00329 \textcolor{comment}{//  Modified:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00330}00330 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00331}00331 \textcolor{comment}{//    17 July 2011}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00332}00332 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00333}00333 \textcolor{comment}{//  Author:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00334}00334 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00335}00335 \textcolor{comment}{//    Original FORTRAN77 version by Richard Brent.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00336}00336 \textcolor{comment}{//    C++ version by John Burkardt.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00337}00337 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00338}00338 \textcolor{comment}{//  Reference:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00339}00339 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00340}00340 \textcolor{comment}{//    Richard Brent,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00341}00341 \textcolor{comment}{//    Algorithms for Minimization Without Derivatives,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00342}00342 \textcolor{comment}{//    Dover, 2002,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00343}00343 \textcolor{comment}{//    ISBN: 0-\/486-\/41998-\/3,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00344}00344 \textcolor{comment}{//    LC: QA402.5.B74.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00345}00345 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00346}00346 \textcolor{comment}{//  Parameters:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00347}00347 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00348}00348 \textcolor{comment}{//    Input, double A, B, the endpoints of the interval.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00349}00349 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00350}00350 \textcolor{comment}{//    Input, double T, a positive absolute error tolerance.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00351}00351 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00352}00352 \textcolor{comment}{//    Input, func\_base\& F, a user-\/supplied c++ functor whose}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00353}00353 \textcolor{comment}{//    local minimum is being sought.  The input and output}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00354}00354 \textcolor{comment}{//    of F() are of type double.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00355}00355 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00356}00356 \textcolor{comment}{//    Output, double \&X, the estimated value of an abscissa}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00357}00357 \textcolor{comment}{//    for which F attains a local minimum value in [A,B].}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00358}00358 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00359}00359 \textcolor{comment}{//    Output, double LOCAL\_MIN, the value F(X).}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00360}00360 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00361}00361 \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00362}00362   \textcolor{keywordtype}{double} c;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00363}00363   \textcolor{keywordtype}{double} d;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00364}00364   \textcolor{keywordtype}{double} e;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00365}00365   \textcolor{keywordtype}{double} eps;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00366}00366   \textcolor{keywordtype}{double} fu;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00367}00367   \textcolor{keywordtype}{double} fv;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00368}00368   \textcolor{keywordtype}{double} fw;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00369}00369   \textcolor{keywordtype}{double} fx;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00370}00370   \textcolor{keywordtype}{double} m;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00371}00371   \textcolor{keywordtype}{double} p;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00372}00372   \textcolor{keywordtype}{double} q;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00373}00373   \textcolor{keywordtype}{double} r;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00374}00374   \textcolor{keywordtype}{double} sa;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00375}00375   \textcolor{keywordtype}{double} sb;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00376}00376   \textcolor{keywordtype}{double} t2;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00377}00377   \textcolor{keywordtype}{double} tol;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00378}00378   \textcolor{keywordtype}{double} u;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00379}00379   \textcolor{keywordtype}{double} v;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00380}00380   \textcolor{keywordtype}{double} w;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00381}00381 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00382}00382 \textcolor{comment}{//  C is the square of the inverse of the golden ratio.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00383}00383 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00384}00384   c = 0.5 * ( 3.0 -\/ sqrt ( 5.0 ) );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00385}00385 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00386}00386   eps = sqrt ( r8\_epsilon ( ) );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00387}00387 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00388}00388   sa = a;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00389}00389   sb = b;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00390}00390   x = sa + c * ( b -\/ a );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00391}00391   w = x;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00392}00392   v = w;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00393}00393   e = 0.0;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00394}00394   fx = f ( x );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00395}00395   fw = fx;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00396}00396   fv = fw;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00397}00397 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00398}00398   \textcolor{keywordflow}{for} ( ; ; )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00399}00399   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00400}00400     m = 0.5 * ( sa + sb ) ;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00401}00401     tol = eps * fabs ( x ) + t;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00402}00402     t2 = 2.0 * tol;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00403}00403 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00404}00404 \textcolor{comment}{//  Check the stopping criterion.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00405}00405 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00406}00406     \textcolor{keywordflow}{if} ( fabs ( x -\/ m ) <= t2 -\/ 0.5 * ( sb -\/ sa ) )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00407}00407     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00408}00408       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00409}00409     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00410}00410 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00411}00411 \textcolor{comment}{//  Fit a parabola.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00412}00412 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00413}00413     r = 0.0;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00414}00414     q = r;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00415}00415     p = q;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00416}00416 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00417}00417     \textcolor{keywordflow}{if} ( tol < fabs ( e ) )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00418}00418     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00419}00419       r = ( x -\/ w ) * ( fx -\/ fv );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00420}00420       q = ( x -\/ v ) * ( fx -\/ fw );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00421}00421       p = ( x -\/ v ) * q -\/ ( x -\/ w ) * r;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00422}00422       q = 2.0 * ( q -\/ r );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00423}00423       \textcolor{keywordflow}{if} ( 0.0 < q )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00424}00424       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00425}00425         p = -\/ p;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00426}00426       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00427}00427       q = fabs ( q );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00428}00428       r = e;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00429}00429       e = d;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00430}00430     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00431}00431 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00432}00432     \textcolor{keywordflow}{if} ( fabs ( p ) < fabs ( 0.5 * q * r ) \&\&}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00433}00433          q * ( sa -\/ x ) < p \&\&}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00434}00434          p < q * ( sb -\/ x ) )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00435}00435     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00436}00436 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00437}00437 \textcolor{comment}{//  Take the parabolic interpolation step.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00438}00438 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00439}00439       d = p / q;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00440}00440       u = x + d;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00441}00441 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00442}00442 \textcolor{comment}{//  F must not be evaluated too close to A or B.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00443}00443 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00444}00444       \textcolor{keywordflow}{if} ( ( u -\/ sa ) < t2 || ( sb -\/ u ) < t2 )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00445}00445       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00446}00446         \textcolor{keywordflow}{if} ( x < m )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00447}00447         \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00448}00448           d = tol;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00449}00449         \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00450}00450         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00451}00451         \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00452}00452           d = -\/ tol;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00453}00453         \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00454}00454       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00455}00455     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00456}00456 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00457}00457 \textcolor{comment}{//  A golden-\/section step.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00458}00458 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00459}00459     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00460}00460     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00461}00461       \textcolor{keywordflow}{if} ( x < m )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00462}00462       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00463}00463         e = sb -\/ x;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00464}00464       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00465}00465       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00466}00466       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00467}00467         e = sa -\/ x;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00468}00468       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00469}00469       d = c * e;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00470}00470     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00471}00471 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00472}00472 \textcolor{comment}{//  F must not be evaluated too close to X.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00473}00473 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00474}00474     \textcolor{keywordflow}{if} ( tol <= fabs ( d ) )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00475}00475     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00476}00476       u = x + d;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00477}00477     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00478}00478     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ( 0.0 < d )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00479}00479     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00480}00480       u = x + tol;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00481}00481     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00482}00482     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00483}00483     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00484}00484       u = x -\/ tol;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00485}00485     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00486}00486 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00487}00487     fu = f ( u );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00488}00488 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00489}00489 \textcolor{comment}{//  Update A, B, V, W, and X.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00490}00490 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00491}00491     \textcolor{keywordflow}{if} ( fu <= fx )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00492}00492     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00493}00493       \textcolor{keywordflow}{if} ( u < x )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00494}00494       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00495}00495         sb = x;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00496}00496       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00497}00497       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00498}00498       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00499}00499         sa = x;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00500}00500       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00501}00501       v = w;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00502}00502       fv = fw;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00503}00503       w = x;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00504}00504       fw = fx;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00505}00505       x = u;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00506}00506       fx = fu;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00507}00507     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00508}00508     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00509}00509     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00510}00510       \textcolor{keywordflow}{if} ( u < x )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00511}00511       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00512}00512         sa = u;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00513}00513       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00514}00514       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00515}00515       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00516}00516         sb = u;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00517}00517       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00518}00518 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00519}00519       \textcolor{keywordflow}{if} ( fu <= fw || w == x )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00520}00520       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00521}00521         v = w;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00522}00522         fv = fw;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00523}00523         w = u;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00524}00524         fw = fu;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00525}00525       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00526}00526       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ( fu <= fv || v == x || v == w )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00527}00527       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00528}00528         v = u;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00529}00529         fv = fu;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00530}00530       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00531}00531     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00532}00532   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00533}00533   \textcolor{keywordflow}{return} fx;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00534}00534 \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00535}00535 \textcolor{comment}{//****************************************************************************80}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00536}00536 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00537}00537 \textcolor{keywordtype}{double} local\_min\_rc ( \textcolor{keywordtype}{double} \&a, \textcolor{keywordtype}{double} \&b, \textcolor{keywordtype}{int} \&status, \textcolor{keywordtype}{double} value )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00538}00538 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00539}00539 \textcolor{comment}{//****************************************************************************80}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00540}00540 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00541}00541 \textcolor{comment}{//  Purpose:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00542}00542 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00543}00543 \textcolor{comment}{//    LOCAL\_MIN\_RC seeks a minimizer of a scalar function of a scalar variable.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00544}00544 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00545}00545 \textcolor{comment}{//  Discussion:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00546}00546 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00547}00547 \textcolor{comment}{//    This routine seeks an approximation to the point where a function}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00548}00548 \textcolor{comment}{//    F attains a minimum on the interval (A,B).}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00549}00549 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00550}00550 \textcolor{comment}{//    The method used is a combination of golden section search and}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00551}00551 \textcolor{comment}{//    successive parabolic interpolation.  Convergence is never much}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00552}00552 \textcolor{comment}{//    slower than that for a Fibonacci search.  If F has a continuous}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00553}00553 \textcolor{comment}{//    second derivative which is positive at the minimum (which is not}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00554}00554 \textcolor{comment}{//    at A or B), then convergence is superlinear, and usually of the}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00555}00555 \textcolor{comment}{//    order of about 1.324...}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00556}00556 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00557}00557 \textcolor{comment}{//    The routine is a revised version of the Brent local minimization}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00558}00558 \textcolor{comment}{//    algorithm, using reverse communication.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00559}00559 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00560}00560 \textcolor{comment}{//    It is worth stating explicitly that this routine will NOT be}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00561}00561 \textcolor{comment}{//    able to detect a minimizer that occurs at either initial endpoint}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00562}00562 \textcolor{comment}{//    A or B.  If this is a concern to the user, then the user must}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00563}00563 \textcolor{comment}{//    either ensure that the initial interval is larger, or to check}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00564}00564 \textcolor{comment}{//    the function value at the returned minimizer against the values}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00565}00565 \textcolor{comment}{//    at either endpoint.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00566}00566 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00567}00567 \textcolor{comment}{//  Licensing:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00568}00568 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00569}00569 \textcolor{comment}{//    This code is distributed under the GNU LGPL license.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00570}00570 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00571}00571 \textcolor{comment}{//  Modified:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00572}00572 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00573}00573 \textcolor{comment}{//    17 July 2011}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00574}00574 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00575}00575 \textcolor{comment}{//  Author:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00576}00576 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00577}00577 \textcolor{comment}{//    John Burkardt}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00578}00578 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00579}00579 \textcolor{comment}{//  Reference:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00580}00580 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00581}00581 \textcolor{comment}{//    Richard Brent,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00582}00582 \textcolor{comment}{//    Algorithms for Minimization Without Derivatives,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00583}00583 \textcolor{comment}{//    Dover, 2002,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00584}00584 \textcolor{comment}{//    ISBN: 0-\/486-\/41998-\/3,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00585}00585 \textcolor{comment}{//    LC: QA402.5.B74.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00586}00586 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00587}00587 \textcolor{comment}{//    David Kahaner, Cleve Moler, Steven Nash,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00588}00588 \textcolor{comment}{//    Numerical Methods and Software,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00589}00589 \textcolor{comment}{//    Prentice Hall, 1989,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00590}00590 \textcolor{comment}{//    ISBN: 0-\/13-\/627258-\/4,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00591}00591 \textcolor{comment}{//    LC: TA345.K34.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00592}00592 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00593}00593 \textcolor{comment}{//  Parameters}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00594}00594 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00595}00595 \textcolor{comment}{//    Input/output, double \&A, \&B.  On input, the left and right}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00596}00596 \textcolor{comment}{//    endpoints of the initial interval.  On output, the lower and upper}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00597}00597 \textcolor{comment}{//    bounds for an interval containing the minimizer.  It is required}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00598}00598 \textcolor{comment}{//    that A < B.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00599}00599 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00600}00600 \textcolor{comment}{//    Input/output, int \&STATUS, used to communicate between}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00601}00601 \textcolor{comment}{//    the user and the routine.  The user only sets STATUS to zero on the first}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00602}00602 \textcolor{comment}{//    call, to indicate that this is a startup call.  The routine returns STATUS}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00603}00603 \textcolor{comment}{//    positive to request that the function be evaluated at ARG, or returns}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00604}00604 \textcolor{comment}{//    STATUS as 0, to indicate that the iteration is complete and that}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00605}00605 \textcolor{comment}{//    ARG is the estimated minimizer.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00606}00606 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00607}00607 \textcolor{comment}{//    Input, double VALUE, the function value at ARG, as requested}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00608}00608 \textcolor{comment}{//    by the routine on the previous call.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00609}00609 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00610}00610 \textcolor{comment}{//    Output, double LOCAL\_MIN\_RC, the currently considered point.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00611}00611 \textcolor{comment}{//    On return with STATUS positive, the user is requested to evaluate the}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00612}00612 \textcolor{comment}{//    function at this point, and return the value in VALUE.  On return with}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00613}00613 \textcolor{comment}{//    STATUS zero, this is the routine's estimate for the function minimizer.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00614}00614 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00615}00615 \textcolor{comment}{//  Local parameters:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00616}00616 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00617}00617 \textcolor{comment}{//    C is the squared inverse of the golden ratio.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00618}00618 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00619}00619 \textcolor{comment}{//    EPS is the square root of the relative machine precision.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00620}00620 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00621}00621 \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00622}00622   \textcolor{keyword}{static} \textcolor{keywordtype}{double} arg;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00623}00623   \textcolor{keyword}{static} \textcolor{keywordtype}{double} c;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00624}00624   \textcolor{keyword}{static} \textcolor{keywordtype}{double} d;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00625}00625   \textcolor{keyword}{static} \textcolor{keywordtype}{double} e;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00626}00626   \textcolor{keyword}{static} \textcolor{keywordtype}{double} eps;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00627}00627   \textcolor{keyword}{static} \textcolor{keywordtype}{double} fu;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00628}00628   \textcolor{keyword}{static} \textcolor{keywordtype}{double} fv;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00629}00629   \textcolor{keyword}{static} \textcolor{keywordtype}{double} fw;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00630}00630   \textcolor{keyword}{static} \textcolor{keywordtype}{double} fx;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00631}00631   \textcolor{keyword}{static} \textcolor{keywordtype}{double} midpoint;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00632}00632   \textcolor{keyword}{static} \textcolor{keywordtype}{double} p;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00633}00633   \textcolor{keyword}{static} \textcolor{keywordtype}{double} q;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00634}00634   \textcolor{keyword}{static} \textcolor{keywordtype}{double} r;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00635}00635   \textcolor{keyword}{static} \textcolor{keywordtype}{double} tol;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00636}00636   \textcolor{keyword}{static} \textcolor{keywordtype}{double} tol1;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00637}00637   \textcolor{keyword}{static} \textcolor{keywordtype}{double} tol2;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00638}00638   \textcolor{keyword}{static} \textcolor{keywordtype}{double} u;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00639}00639   \textcolor{keyword}{static} \textcolor{keywordtype}{double} v;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00640}00640   \textcolor{keyword}{static} \textcolor{keywordtype}{double} w;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00641}00641   \textcolor{keyword}{static} \textcolor{keywordtype}{double} x;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00642}00642 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00643}00643 \textcolor{comment}{//  STATUS (INPUT) = 0, startup.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00644}00644 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00645}00645   \textcolor{keywordflow}{if} ( status == 0 )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00646}00646   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00647}00647     \textcolor{keywordflow}{if} ( b <= a )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00648}00648     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00649}00649       cout << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00650}00650       cout << \textcolor{stringliteral}{"{}LOCAL\_MIN\_RC -\/ Fatal error!\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00651}00651       cout << \textcolor{stringliteral}{"{}  A < B is required, but\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00652}00652       cout << \textcolor{stringliteral}{"{}  A = "{}} << a << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00653}00653       cout << \textcolor{stringliteral}{"{}  B = "{}} << b << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00654}00654       status = -\/1;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00655}00655       exit ( 1 );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00656}00656     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00657}00657     c = 0.5 * ( 3.0 -\/ sqrt ( 5.0 ) );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00658}00658 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00659}00659     eps = sqrt ( r8\_epsilon ( ) );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00660}00660     tol = r8\_epsilon ( );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00661}00661 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00662}00662     v = a + c * ( b -\/ a );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00663}00663     w = v;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00664}00664     x = v;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00665}00665     e = 0.0;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00666}00666 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00667}00667     status = 1;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00668}00668     arg = x;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00669}00669 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00670}00670     \textcolor{keywordflow}{return} arg;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00671}00671   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00672}00672 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00673}00673 \textcolor{comment}{//  STATUS (INPUT) = 1, return with initial function value of FX.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00674}00674 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00675}00675   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ( status == 1 )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00676}00676   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00677}00677     fx = value;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00678}00678     fv = fx;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00679}00679     fw = fx;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00680}00680   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00681}00681 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00682}00682 \textcolor{comment}{//  STATUS (INPUT) = 2 or more, update the data.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00683}00683 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00684}00684   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ( 2 <= status )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00685}00685   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00686}00686     fu = value;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00687}00687 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00688}00688     \textcolor{keywordflow}{if} ( fu <= fx )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00689}00689     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00690}00690       \textcolor{keywordflow}{if} ( x <= u )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00691}00691       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00692}00692         a = x;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00693}00693       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00694}00694       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00695}00695       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00696}00696         b = x;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00697}00697       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00698}00698       v = w;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00699}00699       fv = fw;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00700}00700       w = x;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00701}00701       fw = fx;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00702}00702       x = u;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00703}00703       fx = fu;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00704}00704     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00705}00705     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00706}00706     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00707}00707       \textcolor{keywordflow}{if} ( u < x )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00708}00708       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00709}00709         a = u;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00710}00710       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00711}00711       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00712}00712       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00713}00713         b = u;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00714}00714       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00715}00715 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00716}00716       \textcolor{keywordflow}{if} ( fu <= fw || w == x )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00717}00717       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00718}00718         v = w;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00719}00719         fv = fw;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00720}00720         w = u;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00721}00721         fw = fu;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00722}00722       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00723}00723       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ( fu <= fv || v == x || v == w )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00724}00724       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00725}00725         v = u;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00726}00726         fv = fu;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00727}00727       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00728}00728     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00729}00729   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00730}00730 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00731}00731 \textcolor{comment}{//  Take the next step.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00732}00732 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00733}00733   midpoint = 0.5 * ( a + b );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00734}00734   tol1 = eps * fabs ( x ) + tol / 3.0;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00735}00735   tol2 = 2.0 * tol1;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00736}00736 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00737}00737 \textcolor{comment}{//  If the stopping criterion is satisfied, we can exit.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00738}00738 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00739}00739   \textcolor{keywordflow}{if} ( fabs ( x -\/ midpoint ) <= ( tol2 -\/ 0.5 * ( b -\/ a ) ) )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00740}00740   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00741}00741     status = 0;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00742}00742     \textcolor{keywordflow}{return} arg;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00743}00743   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00744}00744 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00745}00745 \textcolor{comment}{//  Is golden-\/section necessary?}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00746}00746 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00747}00747   \textcolor{keywordflow}{if} ( fabs ( e ) <= tol1 )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00748}00748   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00749}00749     \textcolor{keywordflow}{if} ( midpoint <= x )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00750}00750     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00751}00751       e = a -\/ x;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00752}00752     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00753}00753     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00754}00754     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00755}00755       e = b -\/ x;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00756}00756     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00757}00757     d = c * e;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00758}00758   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00759}00759 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00760}00760 \textcolor{comment}{//  Consider fitting a parabola.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00761}00761 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00762}00762   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00763}00763   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00764}00764     r = ( x -\/ w ) * ( fx -\/ fv );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00765}00765     q = ( x -\/ v ) * ( fx -\/ fw );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00766}00766     p = ( x -\/ v ) * q -\/ ( x -\/ w ) * r;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00767}00767     q = 2.0 * ( q -\/ r );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00768}00768     \textcolor{keywordflow}{if} ( 0.0 < q )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00769}00769     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00770}00770       p = -\/ p;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00771}00771     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00772}00772     q = fabs ( q );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00773}00773     r = e;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00774}00774     e = d;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00775}00775 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00776}00776 \textcolor{comment}{//  Choose a golden-\/section step if the parabola is not advised.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00777}00777 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00778}00778     \textcolor{keywordflow}{if} (}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00779}00779       ( fabs ( 0.5 * q * r ) <= fabs ( p ) ) ||}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00780}00780       ( p <= q * ( a -\/ x ) ) ||}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00781}00781       ( q * ( b -\/ x ) <= p ) )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00782}00782     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00783}00783       \textcolor{keywordflow}{if} ( midpoint <= x )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00784}00784       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00785}00785         e = a -\/ x;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00786}00786       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00787}00787       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00788}00788       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00789}00789         e = b -\/ x;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00790}00790       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00791}00791       d = c * e;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00792}00792     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00793}00793 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00794}00794 \textcolor{comment}{//  Choose a parabolic interpolation step.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00795}00795 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00796}00796     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00797}00797     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00798}00798       d = p / q;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00799}00799       u = x + d;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00800}00800 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00801}00801       \textcolor{keywordflow}{if} ( ( u -\/ a ) < tol2 )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00802}00802       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00803}00803         d = tol1 * r8\_sign ( midpoint -\/ x );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00804}00804       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00805}00805 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00806}00806       \textcolor{keywordflow}{if} ( ( b -\/ u ) < tol2 )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00807}00807       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00808}00808         d = tol1 * r8\_sign ( midpoint -\/ x );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00809}00809       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00810}00810     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00811}00811   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00812}00812 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00813}00813 \textcolor{comment}{//  F must not be evaluated too close to X.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00814}00814 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00815}00815   \textcolor{keywordflow}{if} ( tol1 <= fabs ( d ) )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00816}00816   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00817}00817     u = x + d;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00818}00818   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00819}00819   \textcolor{keywordflow}{if} ( fabs ( d ) < tol1 )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00820}00820   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00821}00821     u = x + tol1 * r8\_sign ( d );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00822}00822   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00823}00823 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00824}00824 \textcolor{comment}{//  Request value of F(U).}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00825}00825 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00826}00826   arg = u;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00827}00827   status = status + 1;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00828}00828 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00829}00829   \textcolor{keywordflow}{return} arg;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00830}00830 \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00831}00831 \textcolor{comment}{//****************************************************************************80}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00832}00832 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00833}00833 \textcolor{keywordtype}{double} r8\_epsilon ( )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00834}00834 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00835}00835 \textcolor{comment}{//****************************************************************************80}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00836}00836 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00837}00837 \textcolor{comment}{//  Purpose:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00838}00838 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00839}00839 \textcolor{comment}{//    R8\_EPSILON returns the R8 roundoff unit.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00840}00840 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00841}00841 \textcolor{comment}{//  Discussion:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00842}00842 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00843}00843 \textcolor{comment}{//    The roundoff unit is a number R which is a power of 2 with the}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00844}00844 \textcolor{comment}{//    property that, to the precision of the computer's arithmetic,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00845}00845 \textcolor{comment}{//      1 < 1 + R}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00846}00846 \textcolor{comment}{//    but}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00847}00847 \textcolor{comment}{//      1 = ( 1 + R / 2 )}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00848}00848 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00849}00849 \textcolor{comment}{//  Licensing:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00850}00850 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00851}00851 \textcolor{comment}{//    This code is distributed under the GNU LGPL license.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00852}00852 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00853}00853 \textcolor{comment}{//  Modified:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00854}00854 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00855}00855 \textcolor{comment}{//    01 September 2012}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00856}00856 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00857}00857 \textcolor{comment}{//  Author:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00858}00858 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00859}00859 \textcolor{comment}{//    John Burkardt}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00860}00860 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00861}00861 \textcolor{comment}{//  Parameters:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00862}00862 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00863}00863 \textcolor{comment}{//    Output, double R8\_EPSILON, the R8 round-\/off unit.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00864}00864 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00865}00865 \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00866}00866   \textcolor{keyword}{const} \textcolor{keywordtype}{double} value = 2.220446049250313E-\/016;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00867}00867 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00868}00868   \textcolor{keywordflow}{return} value;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00869}00869 \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00870}00870 \textcolor{comment}{//****************************************************************************80}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00871}00871 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00872}00872 \textcolor{keywordtype}{double} r8\_max ( \textcolor{keywordtype}{double} x, \textcolor{keywordtype}{double} y )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00873}00873 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00874}00874 \textcolor{comment}{//****************************************************************************80}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00875}00875 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00876}00876 \textcolor{comment}{//  Purpose:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00877}00877 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00878}00878 \textcolor{comment}{//    R8\_MAX returns the maximum of two R8's.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00879}00879 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00880}00880 \textcolor{comment}{//  Licensing:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00881}00881 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00882}00882 \textcolor{comment}{//    This code is distributed under the GNU LGPL license.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00883}00883 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00884}00884 \textcolor{comment}{//  Modified:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00885}00885 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00886}00886 \textcolor{comment}{//    18 August 2004}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00887}00887 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00888}00888 \textcolor{comment}{//  Author:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00889}00889 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00890}00890 \textcolor{comment}{//    John Burkardt}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00891}00891 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00892}00892 \textcolor{comment}{//  Parameters:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00893}00893 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00894}00894 \textcolor{comment}{//    Input, double X, Y, the quantities to compare.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00895}00895 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00896}00896 \textcolor{comment}{//    Output, double R8\_MAX, the maximum of X and Y.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00897}00897 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00898}00898 \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00899}00899   \textcolor{keywordtype}{double} value;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00900}00900 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00901}00901   \textcolor{keywordflow}{if} ( y < x )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00902}00902   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00903}00903     value = x;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00904}00904   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00905}00905   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00906}00906   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00907}00907     value = y;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00908}00908   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00909}00909   \textcolor{keywordflow}{return} value;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00910}00910 \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00911}00911 \textcolor{comment}{//****************************************************************************80}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00912}00912 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00913}00913 \textcolor{keywordtype}{double} r8\_sign ( \textcolor{keywordtype}{double} x )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00914}00914 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00915}00915 \textcolor{comment}{//****************************************************************************80}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00916}00916 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00917}00917 \textcolor{comment}{//  Purpose:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00918}00918 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00919}00919 \textcolor{comment}{//    R8\_SIGN returns the sign of an R8.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00920}00920 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00921}00921 \textcolor{comment}{//  Licensing:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00922}00922 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00923}00923 \textcolor{comment}{//    This code is distributed under the GNU LGPL license.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00924}00924 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00925}00925 \textcolor{comment}{//  Modified:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00926}00926 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00927}00927 \textcolor{comment}{//    18 October 2004}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00928}00928 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00929}00929 \textcolor{comment}{//  Author:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00930}00930 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00931}00931 \textcolor{comment}{//    John Burkardt}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00932}00932 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00933}00933 \textcolor{comment}{//  Parameters:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00934}00934 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00935}00935 \textcolor{comment}{//    Input, double X, the number whose sign is desired.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00936}00936 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00937}00937 \textcolor{comment}{//    Output, double R8\_SIGN, the sign of X.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00938}00938 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00939}00939 \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00940}00940   \textcolor{keywordtype}{double} value;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00941}00941 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00942}00942   \textcolor{keywordflow}{if} ( x < 0.0 )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00943}00943   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00944}00944     value = -\/1.0;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00945}00945   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00946}00946   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00947}00947   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00948}00948     value = 1.0;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00949}00949   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00950}00950   \textcolor{keywordflow}{return} value;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00951}00951 \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00952}00952 \textcolor{comment}{//****************************************************************************80}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00953}00953 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00954}00954 \textcolor{keywordtype}{void} timestamp ( )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00955}00955 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00956}00956 \textcolor{comment}{//****************************************************************************80}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00957}00957 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00958}00958 \textcolor{comment}{//  Purpose:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00959}00959 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00960}00960 \textcolor{comment}{//    TIMESTAMP prints the current YMDHMS date as a time stamp.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00961}00961 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00962}00962 \textcolor{comment}{//  Example:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00963}00963 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00964}00964 \textcolor{comment}{//    31 May 2001 09:45:54 AM}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00965}00965 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00966}00966 \textcolor{comment}{//  Licensing:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00967}00967 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00968}00968 \textcolor{comment}{//    This code is distributed under the GNU LGPL license.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00969}00969 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00970}00970 \textcolor{comment}{//  Modified:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00971}00971 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00972}00972 \textcolor{comment}{//    24 September 2003}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00973}00973 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00974}00974 \textcolor{comment}{//  Author:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00975}00975 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00976}00976 \textcolor{comment}{//    John Burkardt}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00977}00977 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00978}00978 \textcolor{comment}{//  Parameters:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00979}00979 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00980}00980 \textcolor{comment}{//    None}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00981}00981 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00982}00982 \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00983}00983   \textcolor{keyword}{const} \textcolor{keywordtype}{int} TIME\_SIZE(40);}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00984}00984 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00985}00985   \textcolor{keyword}{static} \textcolor{keywordtype}{char} time\_buffer[TIME\_SIZE];}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00986}00986   \textcolor{keyword}{const} \textcolor{keyword}{struct }tm *tm;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00987}00987   time\_t now;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00988}00988 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00989}00989   now = time ( NULL );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00990}00990   tm = localtime ( \&now );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00991}00991 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00992}00992   strftime ( time\_buffer, TIME\_SIZE, \textcolor{stringliteral}{"{}\%d \%B \%Y \%I:\%M:\%S \%p"{}}, tm );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00993}00993 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00994}00994   cout << time\_buffer << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00995}00995 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00996}00996   \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00997}00997 \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00998}00998 \textcolor{comment}{//****************************************************************************80}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l00999}00999 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01000}01000 \textcolor{keywordtype}{double} zero ( \textcolor{keywordtype}{double} a, \textcolor{keywordtype}{double} b, \textcolor{keywordtype}{double} t, func\_base\& f )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01001}01001 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01002}01002 \textcolor{comment}{//****************************************************************************80}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01003}01003 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01004}01004 \textcolor{comment}{//  Purpose:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01005}01005 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01006}01006 \textcolor{comment}{//    ZERO seeks the root of a function F(X) in an interval [A,B].}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01007}01007 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01008}01008 \textcolor{comment}{//  Discussion:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01009}01009 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01010}01010 \textcolor{comment}{//    The interval [A,B] must be a change of sign interval for F.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01011}01011 \textcolor{comment}{//    That is, F(A) and F(B) must be of opposite signs.  Then}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01012}01012 \textcolor{comment}{//    assuming that F is continuous implies the existence of at least}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01013}01013 \textcolor{comment}{//    one value C between A and B for which F(C) = 0.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01014}01014 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01015}01015 \textcolor{comment}{//    The location of the zero is determined to within an accuracy}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01016}01016 \textcolor{comment}{//    of 6 * MACHEPS * abs ( C ) + 2 * T.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01017}01017 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01018}01018 \textcolor{comment}{//    Thanks to Thomas Secretin for pointing out a transcription error in the}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01019}01019 \textcolor{comment}{//    setting of the value of P, 11 February 2013.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01020}01020 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01021}01021 \textcolor{comment}{//  Licensing:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01022}01022 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01023}01023 \textcolor{comment}{//    This code is distributed under the GNU LGPL license.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01024}01024 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01025}01025 \textcolor{comment}{//  Modified:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01026}01026 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01027}01027 \textcolor{comment}{//    11 February 2013}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01028}01028 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01029}01029 \textcolor{comment}{//  Author:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01030}01030 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01031}01031 \textcolor{comment}{//    Original FORTRAN77 version by Richard Brent.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01032}01032 \textcolor{comment}{//    C++ version by John Burkardt.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01033}01033 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01034}01034 \textcolor{comment}{//  Reference:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01035}01035 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01036}01036 \textcolor{comment}{//    Richard Brent,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01037}01037 \textcolor{comment}{//    Algorithms for Minimization Without Derivatives,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01038}01038 \textcolor{comment}{//    Dover, 2002,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01039}01039 \textcolor{comment}{//    ISBN: 0-\/486-\/41998-\/3,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01040}01040 \textcolor{comment}{//    LC: QA402.5.B74.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01041}01041 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01042}01042 \textcolor{comment}{//  Parameters:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01043}01043 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01044}01044 \textcolor{comment}{//    Input, double A, B, the endpoints of the change of sign interval.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01045}01045 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01046}01046 \textcolor{comment}{//    Input, double T, a positive error tolerance.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01047}01047 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01048}01048 \textcolor{comment}{//    Input, func\_base\& F, the name of a user-\/supplied c++ functor}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01049}01049 \textcolor{comment}{//    whose zero is being sought.  The input and output}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01050}01050 \textcolor{comment}{//    of F() are of type double.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01051}01051 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01052}01052 \textcolor{comment}{//    Output, double ZERO, the estimated value of a zero of}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01053}01053 \textcolor{comment}{//    the function F.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01054}01054 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01055}01055 \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01056}01056   \textcolor{keywordtype}{double} c;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01057}01057   \textcolor{keywordtype}{double} d;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01058}01058   \textcolor{keywordtype}{double} e;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01059}01059   \textcolor{keywordtype}{double} fa;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01060}01060   \textcolor{keywordtype}{double} fb;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01061}01061   \textcolor{keywordtype}{double} fc;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01062}01062   \textcolor{keywordtype}{double} m;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01063}01063   \textcolor{keywordtype}{double} macheps;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01064}01064   \textcolor{keywordtype}{double} p;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01065}01065   \textcolor{keywordtype}{double} q;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01066}01066   \textcolor{keywordtype}{double} r;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01067}01067   \textcolor{keywordtype}{double} s;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01068}01068   \textcolor{keywordtype}{double} sa;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01069}01069   \textcolor{keywordtype}{double} sb;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01070}01070   \textcolor{keywordtype}{double} tol;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01071}01071 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01072}01072 \textcolor{comment}{//  Make local copies of A and B.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01073}01073 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01074}01074   sa = a;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01075}01075   sb = b;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01076}01076   fa = f ( sa );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01077}01077   fb = f ( sb );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01078}01078 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01079}01079   c = sa;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01080}01080   fc = fa;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01081}01081   e = sb -\/ sa;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01082}01082   d = e;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01083}01083 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01084}01084   macheps = r8\_epsilon ( );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01085}01085 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01086}01086   \textcolor{keywordflow}{for} ( ; ; )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01087}01087   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01088}01088     \textcolor{keywordflow}{if} ( fabs ( fc ) < fabs ( fb ) )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01089}01089     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01090}01090       sa = sb;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01091}01091       sb = c;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01092}01092       c = sa;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01093}01093       fa = fb;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01094}01094       fb = fc;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01095}01095       fc = fa;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01096}01096     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01097}01097 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01098}01098     tol = 2.0 * macheps * fabs ( sb ) + t;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01099}01099     m = 0.5 * ( c -\/ sb );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01100}01100 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01101}01101     \textcolor{keywordflow}{if} ( fabs ( m ) <= tol || fb == 0.0 )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01102}01102     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01103}01103       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01104}01104     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01105}01105 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01106}01106     \textcolor{keywordflow}{if} ( fabs ( e ) < tol || fabs ( fa ) <= fabs ( fb ) )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01107}01107     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01108}01108       e = m;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01109}01109       d = e;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01110}01110     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01111}01111     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01112}01112     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01113}01113       s = fb / fa;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01114}01114 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01115}01115       \textcolor{keywordflow}{if} ( sa == c )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01116}01116       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01117}01117         p = 2.0 * m * s;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01118}01118         q = 1.0 -\/ s;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01119}01119       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01120}01120       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01121}01121       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01122}01122         q = fa / fc;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01123}01123         r = fb / fc;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01124}01124         p = s * ( 2.0 * m * q * ( q -\/ r ) -\/ ( sb -\/ sa ) * ( r -\/ 1.0 ) );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01125}01125         q = ( q -\/ 1.0 ) * ( r -\/ 1.0 ) * ( s -\/ 1.0 );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01126}01126       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01127}01127 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01128}01128       \textcolor{keywordflow}{if} ( 0.0 < p )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01129}01129       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01130}01130         q = -\/ q;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01131}01131       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01132}01132       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01133}01133       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01134}01134         p = -\/ p;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01135}01135       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01136}01136 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01137}01137       s = e;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01138}01138       e = d;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01139}01139 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01140}01140       \textcolor{keywordflow}{if} ( 2.0 * p < 3.0 * m * q -\/ fabs ( tol * q ) \&\&}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01141}01141         p < fabs ( 0.5 * s * q ) )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01142}01142       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01143}01143         d = p / q;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01144}01144       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01145}01145       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01146}01146       \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01147}01147         e = m;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01148}01148         d = e;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01149}01149       \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01150}01150     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01151}01151     sa = sb;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01152}01152     fa = fb;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01153}01153 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01154}01154     \textcolor{keywordflow}{if} ( tol < fabs ( d ) )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01155}01155     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01156}01156       sb = sb + d;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01157}01157     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01158}01158     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ( 0.0 < m )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01159}01159     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01160}01160       sb = sb + tol;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01161}01161     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01162}01162     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01163}01163     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01164}01164       sb = sb -\/ tol;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01165}01165     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01166}01166 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01167}01167     fb = f ( sb );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01168}01168 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01169}01169     \textcolor{keywordflow}{if} ( ( 0.0 < fb \&\& 0.0 < fc ) || ( fb <= 0.0 \&\& fc <= 0.0 ) )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01170}01170     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01171}01171       c = sa;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01172}01172       fc = fa;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01173}01173       e = sb -\/ sa;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01174}01174       d = e;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01175}01175     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01176}01176   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01177}01177   \textcolor{keywordflow}{return} sb;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01178}01178 \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01179}01179 \textcolor{comment}{//****************************************************************************80}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01180}01180 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01181}01181 \textcolor{keywordtype}{void} zero\_rc ( \textcolor{keywordtype}{double} a, \textcolor{keywordtype}{double} b, \textcolor{keywordtype}{double} t, \textcolor{keywordtype}{double} \&arg, \textcolor{keywordtype}{int} \&status,}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01182}01182   \textcolor{keywordtype}{double} value )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01183}01183 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01184}01184 \textcolor{comment}{//****************************************************************************80}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01185}01185 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01186}01186 \textcolor{comment}{//  Purpose:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01187}01187 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01188}01188 \textcolor{comment}{//    ZERO\_RC seeks the root of a function F(X) using reverse communication.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01189}01189 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01190}01190 \textcolor{comment}{//  Discussion:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01191}01191 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01192}01192 \textcolor{comment}{//    The interval [A,B] must be a change of sign interval for F.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01193}01193 \textcolor{comment}{//    That is, F(A) and F(B) must be of opposite signs.  Then}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01194}01194 \textcolor{comment}{//    assuming that F is continuous implies the existence of at least}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01195}01195 \textcolor{comment}{//    one value C between A and B for which F(C) = 0.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01196}01196 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01197}01197 \textcolor{comment}{//    The location of the zero is determined to within an accuracy}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01198}01198 \textcolor{comment}{//    of 6 * MACHEPS * abs ( C ) + 2 * T.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01199}01199 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01200}01200 \textcolor{comment}{//    The routine is a revised version of the Brent zero finder}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01201}01201 \textcolor{comment}{//    algorithm, using reverse communication.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01202}01202 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01203}01203 \textcolor{comment}{//    Thanks to Thomas Secretin for pointing out a transcription error in the}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01204}01204 \textcolor{comment}{//    setting of the value of P, 11 February 2013.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01205}01205 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01206}01206 \textcolor{comment}{//  Licensing:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01207}01207 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01208}01208 \textcolor{comment}{//    This code is distributed under the GNU LGPL license.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01209}01209 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01210}01210 \textcolor{comment}{//  Modified:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01211}01211 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01212}01212 \textcolor{comment}{//    11 February 2013}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01213}01213 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01214}01214 \textcolor{comment}{//  Author:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01215}01215 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01216}01216 \textcolor{comment}{//    John Burkardt}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01217}01217 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01218}01218 \textcolor{comment}{//  Reference:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01219}01219 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01220}01220 \textcolor{comment}{//    Richard Brent,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01221}01221 \textcolor{comment}{//    Algorithms for Minimization Without Derivatives,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01222}01222 \textcolor{comment}{//    Dover, 2002,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01223}01223 \textcolor{comment}{//    ISBN: 0-\/486-\/41998-\/3,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01224}01224 \textcolor{comment}{//    LC: QA402.5.B74.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01225}01225 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01226}01226 \textcolor{comment}{//  Parameters:}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01227}01227 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01228}01228 \textcolor{comment}{//    Input, double A, B, the endpoints of the change of sign interval.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01229}01229 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01230}01230 \textcolor{comment}{//    Input, double T, a positive error tolerance.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01231}01231 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01232}01232 \textcolor{comment}{//    Output, double \&ARG, the currently considered point.  The user}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01233}01233 \textcolor{comment}{//    does not need to initialize this value.  On return with STATUS positive,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01234}01234 \textcolor{comment}{//    the user is requested to evaluate the function at ARG, and return}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01235}01235 \textcolor{comment}{//    the value in VALUE.  On return with STATUS zero, ARG is the routine's}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01236}01236 \textcolor{comment}{//    estimate for the function's zero.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01237}01237 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01238}01238 \textcolor{comment}{//    Input/output, int \&STATUS, used to communicate between}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01239}01239 \textcolor{comment}{//    the user and the routine.  The user only sets STATUS to zero on the first}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01240}01240 \textcolor{comment}{//    call, to indicate that this is a startup call.  The routine returns STATUS}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01241}01241 \textcolor{comment}{//    positive to request that the function be evaluated at ARG, or returns}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01242}01242 \textcolor{comment}{//    STATUS as 0, to indicate that the iteration is complete and that}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01243}01243 \textcolor{comment}{//    ARG is the estimated zero}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01244}01244 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01245}01245 \textcolor{comment}{//    Input, double VALUE, the function value at ARG, as requested}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01246}01246 \textcolor{comment}{//    by the routine on the previous call.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01247}01247 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01248}01248 \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01249}01249   \textcolor{keyword}{static} \textcolor{keywordtype}{double} c;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01250}01250   \textcolor{keyword}{static} \textcolor{keywordtype}{double} d;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01251}01251   \textcolor{keyword}{static} \textcolor{keywordtype}{double} e;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01252}01252   \textcolor{keyword}{static} \textcolor{keywordtype}{double} fa;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01253}01253   \textcolor{keyword}{static} \textcolor{keywordtype}{double} fb;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01254}01254   \textcolor{keyword}{static} \textcolor{keywordtype}{double} fc;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01255}01255   \textcolor{keywordtype}{double} m;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01256}01256   \textcolor{keyword}{static} \textcolor{keywordtype}{double} macheps;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01257}01257   \textcolor{keywordtype}{double} p;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01258}01258   \textcolor{keywordtype}{double} q;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01259}01259   \textcolor{keywordtype}{double} r;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01260}01260   \textcolor{keywordtype}{double} s;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01261}01261   \textcolor{keyword}{static} \textcolor{keywordtype}{double} sa;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01262}01262   \textcolor{keyword}{static} \textcolor{keywordtype}{double} sb;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01263}01263   \textcolor{keywordtype}{double} tol;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01264}01264 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01265}01265 \textcolor{comment}{//  Input STATUS = 0.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01266}01266 \textcolor{comment}{//  Initialize, request F(A).}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01267}01267 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01268}01268   \textcolor{keywordflow}{if} ( status == 0 )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01269}01269   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01270}01270     macheps = r8\_epsilon ( );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01271}01271 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01272}01272     sa = a;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01273}01273     sb = b;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01274}01274     e = sb -\/ sa;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01275}01275     d = e;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01276}01276 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01277}01277     status = 1;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01278}01278     arg = a;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01279}01279     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01280}01280   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01281}01281 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01282}01282 \textcolor{comment}{//  Input STATUS = 1.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01283}01283 \textcolor{comment}{//  Receive F(A), request F(B).}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01284}01284 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01285}01285   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ( status == 1 )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01286}01286   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01287}01287     fa = value;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01288}01288     status = 2;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01289}01289     arg = sb;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01290}01290     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01291}01291   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01292}01292 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01293}01293 \textcolor{comment}{//  Input STATUS = 2}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01294}01294 \textcolor{comment}{//  Receive F(B).}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01295}01295 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01296}01296   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ( status == 2 )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01297}01297   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01298}01298     fb = value;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01299}01299 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01300}01300     \textcolor{keywordflow}{if} ( 0.0 < fa * fb )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01301}01301     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01302}01302       status = -\/1;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01303}01303       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01304}01304     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01305}01305     c = sa;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01306}01306     fc = fa;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01307}01307   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01308}01308   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01309}01309   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01310}01310     fb = value;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01311}01311 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01312}01312     \textcolor{keywordflow}{if} ( ( 0.0 < fb \&\& 0.0 < fc ) || ( fb <= 0.0 \&\& fc <= 0.0 ) )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01313}01313     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01314}01314       c = sa;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01315}01315       fc = fa;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01316}01316       e = sb -\/ sa;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01317}01317       d = e;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01318}01318     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01319}01319   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01320}01320 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01321}01321 \textcolor{comment}{//  Compute the next point at which a function value is requested.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01322}01322 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01323}01323   \textcolor{keywordflow}{if} ( fabs ( fc ) < fabs ( fb ) )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01324}01324   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01325}01325     sa = sb;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01326}01326     sb = c;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01327}01327     c = sa;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01328}01328     fa = fb;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01329}01329     fb = fc;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01330}01330     fc = fa;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01331}01331   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01332}01332 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01333}01333   tol = 2.0 * macheps * fabs ( sb ) + t;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01334}01334   m = 0.5 * ( c -\/ sb );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01335}01335 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01336}01336   \textcolor{keywordflow}{if} ( fabs ( m ) <= tol || fb == 0.0 )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01337}01337   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01338}01338     status = 0;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01339}01339     arg = sb;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01340}01340     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01341}01341   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01342}01342 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01343}01343   \textcolor{keywordflow}{if} ( fabs ( e ) < tol || fabs ( fa ) <= fabs ( fb ) )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01344}01344   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01345}01345     e = m;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01346}01346     d = e;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01347}01347   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01348}01348   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01349}01349   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01350}01350     s = fb / fa;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01351}01351 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01352}01352     \textcolor{keywordflow}{if} ( sa == c )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01353}01353     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01354}01354       p = 2.0 * m * s;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01355}01355       q = 1.0 -\/ s;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01356}01356     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01357}01357     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01358}01358     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01359}01359       q = fa / fc;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01360}01360       r = fb / fc;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01361}01361       p = s * ( 2.0 * m * q * ( q -\/ r ) -\/ ( sb -\/ sa ) * ( r -\/ 1.0 ) );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01362}01362       q = ( q -\/ 1.0 ) * ( r -\/ 1.0 ) * ( s -\/ 1.0 );}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01363}01363     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01364}01364 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01365}01365     \textcolor{keywordflow}{if} ( 0.0 < p )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01366}01366     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01367}01367       q = -\/ q;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01368}01368     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01369}01369     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01370}01370     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01371}01371       p = -\/ p;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01372}01372     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01373}01373     s = e;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01374}01374     e = d;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01375}01375 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01376}01376     \textcolor{keywordflow}{if} ( 2.0 * p < 3.0 * m * q -\/ fabs ( tol * q ) \&\&}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01377}01377          p < fabs ( 0.5 * s * q ) )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01378}01378     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01379}01379       d = p / q;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01380}01380     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01381}01381     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01382}01382     \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01383}01383       e = m;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01384}01384       d = e;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01385}01385     \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01386}01386   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01387}01387 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01388}01388   sa = sb;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01389}01389   fa = fb;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01390}01390 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01391}01391   \textcolor{keywordflow}{if} ( tol < fabs ( d ) )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01392}01392   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01393}01393     sb = sb + d;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01394}01394   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01395}01395   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ( 0.0 < m )}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01396}01396   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01397}01397     sb = sb + tol;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01398}01398   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01399}01399   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01400}01400   \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01401}01401     sb = sb -\/ tol;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01402}01402   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01403}01403 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01404}01404   arg = sb;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01405}01405   status = status + 1;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01406}01406 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01407}01407   \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01408}01408 \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01409}01409 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01410}01410 \textcolor{comment}{// ======================================================================}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01411}01411 \textcolor{comment}{// === Simple wrapper functions}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01412}01412 \textcolor{comment}{// === for convenience and/or compatibility.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01413}01413 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01414}01414 \textcolor{comment}{// === The three functions are the same as above,}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01415}01415 \textcolor{comment}{// === except that they take a plain function F}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01416}01416 \textcolor{comment}{// === instead of a c++ functor.  In all cases, the}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01417}01417 \textcolor{comment}{// === input and output of F() are of type double.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01418}01418 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01419}01419 \textcolor{keyword}{typedef} \textcolor{keywordtype}{double} DoubleOfDouble (\textcolor{keywordtype}{double});}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01420}01420 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01421}\mbox{\hyperlink{classbrent_1_1func__wrapper}{01421}} \textcolor{keyword}{class }\mbox{\hyperlink{classbrent_1_1func__wrapper}{func\_wrapper}} : \textcolor{keyword}{public} \mbox{\hyperlink{classbrent_1_1func__base}{func\_base}} \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01422}01422   DoubleOfDouble* func;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01423}01423 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01424}01424   \mbox{\hyperlink{classbrent_1_1func__wrapper}{func\_wrapper}}(DoubleOfDouble* f) \{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01425}01425     func = f;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01426}01426   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01427}01427   \textcolor{keyword}{virtual} \textcolor{keywordtype}{double} operator() (\textcolor{keywordtype}{double} x)\{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01428}01428     \textcolor{keywordflow}{return} func(x);}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01429}01429   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01430}01430 \};}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01431}01431 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01432}01432 \textcolor{comment}{//****************************************************************************80}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01433}01433 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01434}01434 \textcolor{keywordtype}{double} glomin ( \textcolor{keywordtype}{double} a, \textcolor{keywordtype}{double} b, \textcolor{keywordtype}{double} c, \textcolor{keywordtype}{double} m, \textcolor{keywordtype}{double} e,}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01435}01435          \textcolor{keywordtype}{double} t, \textcolor{keywordtype}{double} f ( \textcolor{keywordtype}{double} x ), \textcolor{keywordtype}{double} \&x )\{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01436}01436   \mbox{\hyperlink{classbrent_1_1func__wrapper}{func\_wrapper}} foo(f);}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01437}01437   \textcolor{keywordflow}{return} glomin(a, b, c, m, e, t, foo, x);}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01438}01438 \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01439}01439 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01440}01440 \textcolor{comment}{//****************************************************************************80}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01441}01441 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01442}01442 \textcolor{keywordtype}{double} local\_min ( \textcolor{keywordtype}{double} a, \textcolor{keywordtype}{double} b, \textcolor{keywordtype}{double} t, \textcolor{keywordtype}{double} f ( \textcolor{keywordtype}{double} x ),}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01443}01443   \textcolor{keywordtype}{double} \&x )\{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01444}01444   func\_wrapper foo(f);}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01445}01445   \textcolor{keywordflow}{return} local\_min(a, b, t, foo, x);}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01446}01446 \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01447}01447 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01448}01448 \textcolor{comment}{//****************************************************************************80}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01449}01449 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01450}01450 \textcolor{keywordtype}{double} zero ( \textcolor{keywordtype}{double} a, \textcolor{keywordtype}{double} b, \textcolor{keywordtype}{double} t, \textcolor{keywordtype}{double} f ( \textcolor{keywordtype}{double} x ) )\{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01451}01451   func\_wrapper foo(f);}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01452}01452   \textcolor{keywordflow}{return} zero(a, b, t, foo);}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01453}01453 \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01454}01454 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01455}01455 \textcolor{comment}{// ======================================================================}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01456}01456 \textcolor{comment}{// Generally useful functor to evaluate a monic polynomial.}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01457}01457 \textcolor{comment}{// For details, see class definition in brent.hpp}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01458}01458 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01459}01459 \textcolor{keywordtype}{double} monicPoly::operator()(\textcolor{keywordtype}{double} x)\{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01460}01460   \textcolor{keywordtype}{double} rslt(1);}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01461}01461   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} ii = coeff.size()-\/1; ii >= 0; ii-\/-\/)\{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01462}01462     rslt *= x;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01463}01463     rslt += coeff[ii];}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01464}01464   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01465}01465   \textcolor{keywordflow}{return} rslt;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01466}01466 \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01467}01467 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01468}01468 \textcolor{comment}{// Similarly, evaluate a general polynomial (not necessarily monic):}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01469}01469 \textcolor{keywordtype}{double} Poly::operator()(\textcolor{keywordtype}{double} x)\{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01470}01470   \textcolor{keywordtype}{double} rslt(0);}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01471}01471   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} ii = coeff.size()-\/1; ii >= 0; ii-\/-\/)\{}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01472}01472     rslt *= x;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01473}01473     rslt += coeff[ii];}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01474}01474   \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01475}01475   \textcolor{keywordflow}{return} rslt;}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01476}01476 \}}
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01477}01477 }
+\DoxyCodeLine{\Hypertarget{brent_8cpp_source_l01478}01478 \} \textcolor{comment}{// end namespace brent}}
+
+\end{DoxyCode}

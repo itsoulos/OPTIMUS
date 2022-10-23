@@ -1,7 +1,7 @@
 #ifndef GRADIENTDESCENT_H
 #define GRADIENTDESCENT_H
 # include "problem.h"
-/** Implement the steepest descent optimization method **/
+/** @brief Implement the steepest descent optimization method **/
 class GradientDescent
 {
 private:

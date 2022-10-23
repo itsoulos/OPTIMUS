@@ -1,0 +1,43 @@
+\hypertarget{simplexmethod_8h_source}{}\doxysection{simplexmethod.\+h}
+\label{simplexmethod_8h_source}\index{simplexmethod.h@{simplexmethod.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00001}00001 \textcolor{preprocessor}{\#ifndef SIMPLEXMETHOD\_H}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00002}00002 \textcolor{preprocessor}{\#define SIMPLEXMETHOD\_H}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00003}00003 \textcolor{preprocessor}{\# include "{}problem.h"{}}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00005}00005 \textcolor{keyword}{typedef} vector<Data> Matrix;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00006}\mbox{\hyperlink{classSimplexMethod}{00006}} \textcolor{keyword}{class }\mbox{\hyperlink{classSimplexMethod}{SimplexMethod}}}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00007}00007 \{}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00008}00008 \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00009}00009     Matrix xpoint;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00010}00010     Data ypoint;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00011}00011     \mbox{\hyperlink{classProblem}{Problem}} *myProblem;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00012}00012     Data xc, xr;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00013}00013     \textcolor{keywordtype}{double} fc, fr;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00014}00014     \textcolor{keywordtype}{double} alpha, beta, gamma;}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00015}00015     Data getCentroid();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00016}00016     Data getReflected(Data \&centroid);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00017}00017     \textcolor{keywordtype}{void} sortPoints();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00018}00018     \textcolor{keywordtype}{double} getMeanf();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00019}00019     \textcolor{keywordtype}{double} getVariancef();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00020}00020     \textcolor{keywordtype}{void} insertionStep();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00021}00021     \textcolor{keywordtype}{void} stretchingStep();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00022}00022     \textcolor{keywordtype}{void} contractionStep();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00023}00023 }
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00024}00024 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00025}00025     \mbox{\hyperlink{classSimplexMethod}{SimplexMethod}}(\mbox{\hyperlink{classProblem}{Problem}} *p);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00026}00026     \textcolor{keywordtype}{void} setAlpha(\textcolor{keywordtype}{double} a);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00027}00027     \textcolor{keywordtype}{double} getAlpha() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00028}00028     \textcolor{keywordtype}{void} setBeta(\textcolor{keywordtype}{double} b);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00029}00029     \textcolor{keywordtype}{double} getBeta() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00030}00030     \textcolor{keywordtype}{void} setGamma(\textcolor{keywordtype}{double} g);}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00031}00031     \textcolor{keywordtype}{double} getGamma() \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00032}00032     \textcolor{keywordtype}{void} runAlgorithm();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00033}00033     Data getBest();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00034}00034     \mbox{\hyperlink{classSimplexMethod}{\string~SimplexMethod}}();}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00035}00035 \};}
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{simplexmethod_8h_source_l00037}00037 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// SIMPLEXMETHOD\_H}}
+
+\end{DoxyCode}

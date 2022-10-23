@@ -3,6 +3,10 @@
 
 #include "problemsampler.h"
 # include "dataset.h"
+/**
+ * @brief The NeuralSampler class implements sampling from the objective function
+ * using an artificial neural network.
+ */
 class NeuralSampler : public ProblemSampler
 {
 private:
