@@ -10,5 +10,5 @@
   * <b> Issue</b> the command:  cd $OPTIMUSPATH
   * <b> Execute</b> the compilation script: ./compile.sh
   
-Full documentation at [manual](http://htmlpreview.github.io/?https://github.com/itsoulos/OPTIMUS/blob/master/MANUAL/docs/html/index.html)
-https://raw.githack.com/itsoulos/OPTIMUS/master/MANUAL/docs/html/index.html
+Full documentation at [manual](
+https://raw.githack.com/itsoulos/OPTIMUS/master/MANUAL/docs/html/index.html)
