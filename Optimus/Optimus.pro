@@ -56,6 +56,7 @@ SOURCES += \
     rbfsampler.cpp \
     rlsprogram.cc \
     rule.cc \
+    rulesampler.cpp \
     sigprogram.cc \
     simplexmethod.cpp \
     symbol.cc \
@@ -100,6 +101,7 @@ HEADERS += \
     rbfsampler.h \
     rlsprogram.h \
     rule.h \
+    rulesampler.h \
     sigprogram.h \
     simplexmethod.h \
     symbol.h \
