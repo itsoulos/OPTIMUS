@@ -9,4 +9,4 @@
   * <b> Set</b> the LD_LIBRAPY_PATH to include the OPTIMUS/lib subdirectory e.g. LD_LIBRAPY_PATH=$LD_LIBRAPY_PATH:$OPTIMUSPATH/lib/:
   * <b> Issue</b> the command:  cd $OPTIMUSPATH
   * <b> Execute</b> the compilation script: ./compile.sh
-The full manual is available at [I'm an inline-style link](https://www.google.com)
+The full manual is available at [I'm an inline-style link](https://github.com/itsoulos/OPTIMUS/)
