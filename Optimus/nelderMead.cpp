@@ -18,7 +18,7 @@ bool nelderMead::terminated()
 {
 
     double dd = fabs(newSum - sum);
-    if(dd<1e-6) return true;
+    if(dd<1e-6 || generation>=10) return true;
      printf("%4d] Generation  change: %10.6lf ybest:%10.6lf \n", generation, dd,ybestPoint);
     if (dd < 1e-8)
         n++;
@@ -162,7 +162,9 @@ start:
                 goto start;
             }
             else
+	    {
                 shrink();
+	    }
         }
     }
     newSum = accumulate(&population.begin()->first, &population.end()->first, 0);
@@ -206,8 +208,19 @@ void nelderMead::init()
     n = 0;
 }
 
-Data nelderMead::getBestX() const
+Data nelderMead::getBestX()
 {
+	double dmin=1e+100;
+	int imin = -1;
+	for(int i=0;i<population_count;i++)
+	{
+		if(population[i].first<dmin)
+		{
+			dmin = population[i].first;
+			imin =i;
+		}
+	}
+	bestPoint = population[imin].second;
     return bestPoint;
 }
 

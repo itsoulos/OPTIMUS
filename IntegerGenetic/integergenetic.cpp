@@ -138,9 +138,9 @@ void    IntegerGenetic::calcFitnessArray()
 		
         }
 	if(fabs(fitness_array[i])<dmin) dmin = fabs(fitness_array[i]);
-	if(i%20==0){ printf("%d:%lf ",i,dmin); fflush(stdout);}
+//	if(i%20==0){ printf("%d:%lf ",i,dmin); fflush(stdout);}
     }
-    printf("\n");
+  //  printf("\n");
 }
 
 void    IntegerGenetic::select()

@@ -1,4 +1,4 @@
-METHOD=DoubleGenetic
+METHOD=IntegerGenetic
 DATAPATH=/home/sheridan/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfolding/
 NODES=10
 METHODPARAMS=""
@@ -8,13 +8,13 @@ then
 	METHODPARAMS="--minfinder_samples=50"
 elif [ $METHOD = "IntegerGenetic" ]
 then
-        METHODPARAMS="--integer_chromosomes=200 --sample_method=uniform --localsearch_method=grs --integer_localsearchrate=0.01"
+        METHODPARAMS="--integer_chromosomes=500 --integer_generations=500 --sample_method=uniform --localsearch_method=random --integer_localsearchrate=0.05"
 elif [ $METHOD = "gcrs" ]
 then
 	METHODPARAMS="--gcrs_samples=25 --gcrs_maxiterations=100000"	
 elif [ $METHOD = "DoubleGenetic" ]
 then
-	METHODPARAMS="--double_chromosomes=200 --sample_method=uniform --localsearch_method=grs --double_localsearchrate=0.1 --double_debug=yes"	
+	METHODPARAMS="--double_chromosomes=200 --sample_method=uniform --localsearch_method=nelderMead --double_localsearchrate=0.001 --double_debug=yes"	
 elif [ $METHOD = "Genetic" ]
 then
 	METHODPARAMS="--localsearch_rate=0.01  --genetic_crossover_type=double --chromosomes=500 --localsearch_method=bfgs --generations=2000"
@@ -42,5 +42,5 @@ then
 	METHODPARAMS="--population_count=30 --max_generations=100"
 fi
 
-MLPARAMS="--trainFile=$1.train --testFile=$1.test --datapath=$DATAPATH --weights=$NODES --model=mlp"
+MLPARAMS="--trainFile=$1.train --testFile=$1.test --datapath=$DATAPATH --weights=$NODES --model=nnc"
 ./OptimusFIT  --optMethod=$METHOD   $METHODPARAMS  $MLPARAMS --iterations=1

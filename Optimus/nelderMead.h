@@ -67,7 +67,7 @@ public:
      * @brief getBestX.
      * @return the best sample.
      */
-    Data getBestX() const;
+    Data getBestX() ;
     /**
      * @brief getBestX.
      * @return f(x) from best sample.

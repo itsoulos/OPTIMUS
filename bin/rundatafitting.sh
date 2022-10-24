@@ -12,7 +12,7 @@ then
 	METHODPARAMS="--localsearch_rate=0.001 --localsearch_method=bfgs --max_generations=200 --chromosome_count=500"
 elif [ $METHOD = "IntegerGenetic" ]
 then
-	METHODPARAMS="--integer_localsearchrate=0.01 --localsearch_method=bfgs"	
+	METHODPARAMS="--integer_localsearchrate=0.000 --localsearch_method=hill --integer_stoprule=generations"
 elif [ $METHOD = "DoubleGenetic" ]
 then
 	METHODPARAMS="--double_localsearchrate=0.01 --localsearch_method=bfgs"	
@@ -30,8 +30,8 @@ then
 	METHODPARAMS="--localsearch_method=adam"
 fi
 
-PROBLEM=DataFitting
+PROBLEM=datafitting
 
-MLPARAMS="--model=nnc --trainName=$DATAPATH/$1.train --testName=$DATAPATH/$1.test --weights=10"
-./OptimusApp --filename=../PROBLEMS/DataFitting/lib$PROBLEM.so  --opt_method=$METHOD   $METHODPARAMS  $MLPARAMS --threads=1  --iterations=1
+MLPARAMS="--model=gdf --trainName=$DATAPATH/$1.train --testName=$DATAPATH/$1.test --weights=10"
+./OptimusApp --filename=../PROBLEMS/DataFitting/lib$PROBLEM.so  --opt_method=$METHOD   $METHODPARAMS  $MLPARAMS --threads=1  --iterations=30
 

@@ -142,7 +142,6 @@ double  Optimizer::localSearch(Data &x)
 			double zy = myProblem->funmin(z);
 			if(zy<y)
 			{
-			printf("random[%d]=%lf \n",i,zy);
 				y = zy;
 				x = z;
 			}
@@ -160,10 +159,12 @@ double  Optimizer::localSearch(Data &x)
         {
             n.step();
         }
+	printf("Entering done \n");
         n.done();
+	printf("Finishing done \n");
         x = n.getBestX();
-        y = n.getBestY();
-
+        y = myProblem->funmin(x);
+	return y;
     }
     else
     if(method=="hill")
@@ -232,6 +233,7 @@ double  Optimizer::localSearch(Data &x)
    for(int i=0;i<x.size();i++) x[i]=currentPoint[i];
     return myProblem->funmin(x);
     }
+    return 0.0;
 }
 
 void    Optimizer::prepareSampler()
