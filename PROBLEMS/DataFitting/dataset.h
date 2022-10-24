@@ -7,7 +7,7 @@
 using namespace std;
 typedef vector<double> Data;
 
-class Dataset
+class DataSet
 {
 private:
     int dimension;
@@ -15,8 +15,8 @@ private:
     Data  ypoint;
     Data dclass;
 public:
-    Dataset();
-    Dataset(const char *filename);
+    DataSet();
+    DataSet(const char *filename);
     int     getdimension() const;
     Data    getpoint(int pos);
     double  gety(int pos);
@@ -24,7 +24,7 @@ public:
     void    normalizeZeroOne();
     double  getNearestClass(double y);
     double getMinDistClass(double y);
-    ~Dataset();
+    ~DataSet();
 };
 
 #endif // DATASET_H

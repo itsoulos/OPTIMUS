@@ -17,7 +17,7 @@ private:
     double      gaussianDerivative(Data &x,Data &m,double v,int pos);
     double      gaussianSecondDerivative(Data &x,Data &m,double v,int pos);
 public:
-    RbfModel(int nweights,Dataset *tr,Dataset *tt);
+    RbfModel(int nweights,DataSet *tr,DataSet *tt);
     int     getNWeights() const;
     Data    getWeights();
     void    setWeights(Data &w);

@@ -16,7 +16,7 @@ private:
     bool lastError = false;
     string  lastExpr = "";
 public:
-    GdfModel(Dataset *tr,Dataset *tt);
+    GdfModel(DataSet *tr,DataSet *tt);
     void    setChromosome(vector<int> &g);
     virtual double eval(Data &x);
     virtual double evalDeriv(Data &x,int pos);

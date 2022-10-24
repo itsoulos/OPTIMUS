@@ -24,7 +24,7 @@ double cmyelse(const double *x)
 {
     return x[0];
 }
-RulerModel::RulerModel(Dataset *tr,Dataset *tt)
+RulerModel::RulerModel(DataSet *tr,DataSet *tt)
     :DataModel(tr,tt)
 {
     dimension = tr->getdimension();

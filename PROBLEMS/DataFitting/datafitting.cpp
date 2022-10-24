@@ -24,8 +24,8 @@ int     weights = 10;
 DataModel *demodel = NULL;
 QString trainName  = "";
 QString testName   = "";
-Dataset *trainSet = NULL;
-Dataset *testSet  = NULL;
+DataSet *trainSet = NULL;
+DataSet *testSet  = NULL;
 void    init(QJsonObject data)
 {
     if(data.contains("model"))
@@ -38,8 +38,8 @@ void    init(QJsonObject data)
         testName = data["testName"].toString();
     if(trainName=="" || testName=="")
         exit(1);
-    trainSet  = new Dataset(trainName.toStdString().c_str());
-    testSet   = new Dataset(testName.toStdString().c_str());
+    trainSet  = new DataSet(trainName.toStdString().c_str());
+    testSet   = new DataSet(testName.toStdString().c_str());
 
     if (model == "mlp")
         demodel = new MlpModel(weights,trainSet,testSet);
@@ -157,6 +157,7 @@ QJsonObject    done(vector<double> &x)
     double classError = 0.0;
     QJsonObject jxx;
     testError = demodel->getTestError();
+    classError = demodel->getClassError();
     if(model == "gdf")
     {
 

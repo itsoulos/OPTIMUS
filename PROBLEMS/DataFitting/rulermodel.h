@@ -16,7 +16,7 @@ private:
     QStringList list;
     vector<string> clist;
 public:
-    RulerModel(Dataset *tr,Dataset *tt);
+    RulerModel(DataSet *tr,DataSet *tt);
     virtual double eval(Data &x);
     virtual double evalDeriv(Data &x,int pos);
     virtual double evalSecondDeriv(Data &x,int pos);

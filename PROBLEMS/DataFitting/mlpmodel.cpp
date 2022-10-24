@@ -1,6 +1,6 @@
 #include "mlpmodel.h"
 # include <math.h>
-MlpModel::MlpModel(int nweights,Dataset *tr,Dataset *tt)
+MlpModel::MlpModel(int nweights,DataSet *tr,DataSet *tt)
     :DataModel(tr,tt)
 {
     dimension = tr->getdimension();

@@ -1,6 +1,6 @@
 #include "polymodel.h"
 
-PolyModel::PolyModel(int m,Dataset *tr,Dataset *tt)
+PolyModel::PolyModel(int m,DataSet *tr,DataSet *tt)
     :DataModel(tr,tt)
 {
     dimension = tr->getdimension();

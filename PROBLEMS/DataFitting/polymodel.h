@@ -9,7 +9,7 @@ private:
     int dimension;
     Data weights;
 public:
-    PolyModel(int m,Dataset *tr,Dataset *tt);
+    PolyModel(int m,DataSet *tr,DataSet *tt);
     void    setWeights(Data &x);
     virtual double eval(Data &x);
     virtual double evalDeriv(Data &x,int pos);

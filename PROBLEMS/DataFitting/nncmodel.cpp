@@ -1,9 +1,11 @@
 #include "nncmodel.h"
 
-NncModel::NncModel(Dataset *tr,Dataset *tt)
+NncModel::NncModel(DataSet *tr,DataSet *tt)
     :DataModel(tr,tt)
 {
+	printf("tr = %x \n",tr);
     dimension = tr->getdimension();
+    printf("Dimension %d \n",dimension);
     program = new NeuralProgram();
     program->setDimension(dimension);
 }

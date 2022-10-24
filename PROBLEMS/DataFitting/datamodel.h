@@ -5,14 +5,15 @@
 class DataModel
 {
 protected:
-    Dataset *trainSet,*testSet;
+    DataSet *trainSet,*testSet;
 public:
-    DataModel(Dataset *tr,Dataset *tt);
+    DataModel(DataSet *tr,DataSet *tt);
     virtual double  eval(Data &point)=0;
     virtual double  evalDeriv(Data &point,int pos)=0;
     virtual double  evalSecondDeriv(Data &point,int pos)=0;
     virtual double  getTrainError();
     virtual double  getTestError();
+    virtual double  getClassError();
     virtual ~DataModel();
 };
 

@@ -10,7 +10,7 @@ private:
     int dimension;
     bool lastError = false;
 public:
-    NncModel(Dataset *tr,Dataset *tt);
+    NncModel(DataSet *tr,DataSet *tt);
     virtual double eval(Data &x);
     virtual double evalDeriv(Data &x,int pos);
     virtual double evalSecondDeriv(Data &x,int pos);

@@ -1,6 +1,6 @@
 #include "rbfmodel.h"
 # include <math.h>
-RbfModel::RbfModel(int nweights,Dataset *tr,Dataset *tt)
+RbfModel::RbfModel(int nweights,DataSet *tr,DataSet *tt)
     :DataModel(tr,tt)
 {
     dimension = tr->getdimension();

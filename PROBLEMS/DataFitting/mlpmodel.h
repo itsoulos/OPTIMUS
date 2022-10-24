@@ -12,7 +12,7 @@ private:
     double sigder(double x);
     double sigder2(double x);
 public:
-    MlpModel(int nweights,Dataset *tr,Dataset *tt);
+    MlpModel(int nweights,DataSet *tr,DataSet *tt);
     int     getNWeights() const;
     Data    getWeights();
     void    setWeights(Data &w);

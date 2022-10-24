@@ -1,5 +1,5 @@
 #include "gdfmodel.h"
-GdfModel::GdfModel(Dataset *tr,Dataset *tt)
+GdfModel::GdfModel(DataSet *tr,DataSet *tt)
     :DataModel(tr,tt)
 {
     dimension = tr->getdimension();

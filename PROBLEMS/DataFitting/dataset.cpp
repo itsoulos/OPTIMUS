@@ -1,11 +1,11 @@
 #include "dataset.h"
 # include <math.h>
-Dataset::Dataset()
+DataSet::DataSet()
 {
 dimension=0;
 }
 
-Dataset::Dataset(const char *filename)
+DataSet::DataSet(const char *filename)
 {
     FILE *fp=fopen(filename,"r");
     if(!fp) return;
@@ -29,7 +29,7 @@ Dataset::Dataset(const char *filename)
     fclose(fp);
 }
 
-double  Dataset::getNearestClass(double y)
+double  DataSet::getNearestClass(double y)
 {
     int found = -1;
     const double eps = 1e-5;
@@ -45,7 +45,7 @@ double  Dataset::getNearestClass(double y)
     return -1e+100;
 }
 
-double Dataset::getMinDistClass(double y)
+double DataSet::getMinDistClass(double y)
 {
     int minPos=-1;
     double minDist=1e+100;
@@ -61,13 +61,13 @@ double Dataset::getMinDistClass(double y)
     return dclass[minPos];
 }
 
-double Dataset::gety(int pos)
+double DataSet::gety(int pos)
 {
     return ypoint[pos];
 }
 
 
-void    Dataset::normalizeZeroOne()
+void    DataSet::normalizeZeroOne()
 {
     Data max;
     Data min;
@@ -94,22 +94,22 @@ void    Dataset::normalizeZeroOne()
 }
 
 
-int     Dataset::getdimension() const
+int     DataSet::getdimension() const
 {
     return dimension;
 }
 
-int     Dataset::getpatterns() const
+int     DataSet::getpatterns() const
 {
     return xpoint.size();
 }
 
-Data    Dataset::getpoint(int pos)
+Data    DataSet::getpoint(int pos)
 {
     return xpoint[pos];
 }
 
-Dataset::~Dataset()
+DataSet::~DataSet()
 {
 
 }
