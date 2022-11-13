@@ -1,0 +1,670 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass elsarticle
+\begin_preamble
+% specify here the journal
+\journal{MethodsX}
+
+% use this if you need line numbers
+%\usepackage{lineno}
+\end_preamble
+\use_default_options false
+\begin_modules
+theorems-std
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style elsarticle-num
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle headings
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout BeginFrontmatter
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Keep this empty!
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Title
+OPTIMUS: a multidimensional global optimization package
+\end_layout
+
+\begin_layout Author
+Vasileios Charilogis
+\end_layout
+
+\begin_layout Email
+v.charilog@uoi.gr
+\end_layout
+
+\begin_layout Author
+Ioannis G.
+ Tsoulos
+\begin_inset Flex CorAuthormark
+status open
+
+\begin_layout Plain Layout
+cor1
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+
+\size normal
+With 
+\series bold
+\size default
+
+\backslash
+fnref
+\series default
+\size normal
+ and you refer to the author footnotes.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Email
+itsoulos@uoi.gr
+\end_layout
+
+\begin_layout Corresponding author
+Corresponding author
+\begin_inset Argument 1
+status collapsed
+
+\begin_layout Plain Layout
+cor1
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Address
+Department of Informatics and Telecommunications, University of Ioannina,
+ Greece
+\end_layout
+
+\begin_layout Abstract
+A variety of problems from many research areas can be modeled using global
+ optimization, such as problems in the area of image processing, medical
+ informatics, economic models, etc.
+ This paper presents a programming tool written in ANSI C++, which researchers
+ can use to formulate the problem to be solved and then make use of the
+ local and global optimization methods provided by this tool to efficiently
+ solve such problems.
+\end_layout
+
+\begin_layout Keywords
+Global optimization 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+sep
+\end_layout
+
+\end_inset
+
+ Termination rules 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+sep
+\end_layout
+
+\end_inset
+
+ Stochastic methods
+\end_layout
+
+\begin_layout EndFrontmatter
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Keep this empty!
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Use here the command 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+linenumbers 
+\end_layout
+
+\end_inset
+
+ and enable the package 
+\series bold
+lineno
+\series default
+ in the preamble if you need line numbers.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Graphical abstract 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename optimus_abstract.eps
+	scale 20
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Specicifications table
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Subject area
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Computer science
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+More specific subject area
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Global Optimization
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Method name
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Optimus
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Name and reference of original method
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Resource availability
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://github.com/itsoulos/OPTIMUS/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+The task of locating the global minimum of a continuous and differentiable
+ function 
+\begin_inset Formula $f:S\rightarrow R,S\subset R^{n}$
+\end_inset
+
+ is defined as
+\begin_inset Formula 
+\begin{equation}
+x^{*}=\mbox{arg}\min_{x\in S}f(x)\label{eq:eq1}
+\end{equation}
+
+\end_inset
+
+with 
+\begin_inset Formula $S$
+\end_inset
+
+: 
+\begin_inset Formula 
+\[
+S=\left[a_{1},b_{1}\right]\otimes\left[a_{2},b_{2}\right]\otimes\ldots\left[a_{n},b_{n}\right]
+\]
+
+\end_inset
+
+Methods that aim to locate the global minimum finds application in economics
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "globalecon1,globalecon2"
+literal "false"
+
+\end_inset
+
+, physics 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "global_physics1,global_physics2"
+literal "false"
+
+\end_inset
+
+, chemistry 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "global_chemistry1,global_chemistry2"
+literal "false"
+
+\end_inset
+
+, medicine 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "global_med1,global_med2"
+literal "false"
+
+\end_inset
+
+ etc.
+\end_layout
+
+\begin_layout Section
+Software 
+\end_layout
+
+\begin_layout Section*
+Acknowledgements
+\end_layout
+
+\begin_layout Standard
+The experiments of this research work was performed at the high performance
+ computing system established at Knowledge and Intelligent Computing Lab-oratory
+, Dept of Informatics and Telecommunications, University of Ioannina, acquired
+ with the project "Educational Laboratory equipment of TEI of Epirus" with
+ MIS 5007094 funded by the Operational Programme "Epirus" 2014-2020, by
+ ERDF and national finds.
+\end_layout
+
+\begin_layout Section*
+Declaration of interests
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+x
+\series default
+ The authors declare that they have no known competing financial interests
+ or personal relationships that could have appeared to influence the work
+ reported in this paper.
+\begin_inset Newline newline
+\end_inset
+
+☐ The authors declare the following financial interests/personal relationships
+ which may be considered as potential competing interests: 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "globalecon1"
+literal "true"
+
+\end_inset
+
+Zwe-Lee Gaing, Particle swarm optimization to solving the economic dispatch
+ considering the generator constraints, IEEE Transactions on 
+\series bold
+18
+\series default
+ Power Systems, pp.
+ 1187-1195, 2003.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "globalecon2"
+literal "true"
+
+\end_inset
+
+C.
+ D.
+ Maranas, I.
+ P.
+ Androulakis, C.
+ A.
+ Floudas, A.
+ J.
+ Berger, J.
+ M.
+ Mulvey, Solving long-term financial planning problems via global optimization,
+ Journal of Economic Dynamics and Control 
+\series bold
+21
+\series default
+, pp.
+ 1405-1425, 1997.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "global_physics1"
+literal "false"
+
+\end_inset
+
+Q.
+ Duan, S.
+ Sorooshian, V.
+ Gupta, Effective and efficient global optimization for conceptual rainfall-runo
+ff models, Water Resources Research 
+\series bold
+28
+\series default
+, pp.
+ 1015-1031 , 1992.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "global_physics2"
+literal "false"
+
+\end_inset
+
+P.
+ Charbonneau, Genetic Algorithms in Astronomy and Astrophysics, Astrophysical
+ Journal Supplement 
+\series bold
+101
+\series default
+, p.
+ 309, 1995
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "global_chemistry1"
+literal "true"
+
+\end_inset
+
+A.
+ Liwo, J.
+ Lee, D.R.
+ Ripoll, J.
+ Pillardy, H.
+ A.
+ Scheraga, Protein structure prediction by global optimization of a potential
+ energy function, Biophysics 
+\series bold
+96
+\series default
+, pp.
+ 5482-5485, 1999.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "global_chemistry2"
+literal "true"
+
+\end_inset
+
+P.M.
+ Pardalos, D.
+ Shalloway, G.
+ Xue, Optimization methods for computing global minima of nonconvex potential
+ energy functions, Journal of Global Optimization 
+\series bold
+4
+\series default
+, pp.
+ 117-133, 1994.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "global_med1"
+literal "true"
+
+\end_inset
+
+Eva K.
+ Lee, Large-Scale Optimization-Based Classification Models in Medicine and
+ Biology, Annals of Biomedical Engineering 
+\series bold
+35
+\series default
+, pp 1095-1109, 2007.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "global_med2"
+literal "true"
+
+\end_inset
+
+Y.
+ Cherruault, Global optimization in biology and medicine, Mathematical and
+ Computer Modelling 
+\series bold
+20
+\series default
+, pp.
+ 119-132, 1994.
+\end_layout
+
+\end_body
+\end_document

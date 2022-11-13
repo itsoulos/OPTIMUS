@@ -2,7 +2,7 @@
 NeuralMinimizer::NeuralMinimizer(Problem *p)
     :Optimizer(p)
 {
-    addParameter("neural_samples","20","Number of samples for Neural Minimizer");
+    addParameter("neural_samples","10","Number of samples for Neural Minimizer");
     addParameter("neural_iterations","100","Number of maximum iterations for Neural Minimizer");
     addParameter("neural_start_samples","100","Number of start samples for Neural Minimizer");
     sampler= NULL;
