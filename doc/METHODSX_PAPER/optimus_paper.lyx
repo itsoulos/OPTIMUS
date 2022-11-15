@@ -572,6 +572,281 @@ The software forms a strategy for these problems.
 Software 
 \end_layout
 
+\begin_layout Standard
+The software is entirely written in ANSI C++ using the freely avaible QT
+ programming library, that can be downloaded from 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://qt.io
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Installation 
+\end_layout
+
+\begin_layout Standard
+At the present time, the software package can only be installed on computers
+ with the Linux operating system, but in the future it will be able to be
+ installed on other systems as well.
+ The instructions to install the package on a computer are as follows:
+\end_layout
+
+\begin_layout Enumerate
+Download and install the QT programming library from 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://qt.io 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Download the software from 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://github.com/itsoulos/OPTIMUS
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Set the 
+\emph on
+OPTIMUSPATH
+\emph default
+ environment variable pointing at the installation directory of OPTIMUS
+ e.g.
+ OPTIMUSPATH=/home/user/OPTIMUS/, where user is the user name in the Linux
+ operating system.
+\end_layout
+
+\begin_layout Enumerate
+Set the 
+\emph on
+LD_LIBRAPY_PATH
+\emph default
+ to include the OPTIMUS/lib subdirectory e.g.
+ LD_LIBRAPY_PATH=$LD_LIBRAPY_PATH:$OPTIMUSPATH/lib/:
+\end_layout
+
+\begin_layout Enumerate
+Issue the command: cd $OPTIMUSPATH 
+\end_layout
+
+\begin_layout Enumerate
+Execute the compilation script: ./compile.sh 
+\end_layout
+
+\begin_layout Subsection
+Objective problem deployment 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+A typical representation of an objective problem, suitable for the OPTIMUS
+ programming tool.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:A-typical-representation"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "language={C++}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# include <math.h> 
+\end_layout
+
+\begin_layout Plain Layout
+
+# include <interval.h> 
+\end_layout
+
+\begin_layout Plain Layout
+
+# include <vector> 
+\end_layout
+
+\begin_layout Plain Layout
+
+# include <stdio.h> 
+\end_layout
+
+\begin_layout Plain Layout
+
+# include <iostream> 
+\end_layout
+
+\begin_layout Plain Layout
+
+# include <QJsonObject> 
+\end_layout
+
+\begin_layout Plain Layout
+
+using namespace std;
+\end_layout
+
+\begin_layout Plain Layout
+
+extern "C" {
+\end_layout
+
+\begin_layout Plain Layout
+
+void    init(QJsonObject data) {
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+int	getdimension() { 	
+\end_layout
+
+\begin_layout Plain Layout
+
+	return 2; 
+\end_layout
+
+\begin_layout Plain Layout
+
+} 
+\end_layout
+
+\begin_layout Plain Layout
+
+void    getmargins(vector<Interval> &x) {         
+\end_layout
+
+\begin_layout Plain Layout
+
+  for(int i=0;i<x.size();i++)                 
+\end_layout
+
+\begin_layout Plain Layout
+
+	x[i]=Interval(-1,1); 
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+double	funmin(vector<double> &x) {    
+\end_layout
+
+\begin_layout Plain Layout
+
+	return (x[0]*x[0])+(x[1]*x[1])-cos(18.0*x[0])-cos(18.0*x[1]); 
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+void    granal(vector<double> &x,vector<double> &g) {       
+\end_layout
+
+\begin_layout Plain Layout
+
+	g[0]=2.0*x[0]+18.0*sin(18.0*x[0]);       
+\end_layout
+
+\begin_layout Plain Layout
+
+	g[1]=2.0*x[1]+18.0*sin(18.0*x[1]); 
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+QJsonObject    done(vector<double> &x) {     
+\end_layout
+
+\begin_layout Plain Layout
+
+return QJsonObject(); 
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Experiments 
 \end_layout
