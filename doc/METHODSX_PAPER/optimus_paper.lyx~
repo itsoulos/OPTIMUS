@@ -566,6 +566,10 @@ The software forms a strategy for these problems.
 
 \begin_layout Standard
 4) local search methods
+\begin_inset Newline newline
+\end_inset
+
+The rest of this article is organized as follows....
 \end_layout
 
 \begin_layout Section
@@ -654,22 +658,525 @@ Issue the command: cd $OPTIMUSPATH
 \end_layout
 
 \begin_layout Enumerate
-Execute the compilation script: ./compile.sh 
+Execute the compilation script:
+\emph on
+ ./compile.sh 
+\end_layout
+
+\begin_layout Subsection
+Implemented global optimization methods 
+\end_layout
+
+\begin_layout Standard
+The global optimization methods that have been included in the implemented
+ software are presented below.
+ In most of them, a local optimization method is applied at the end of the
+ algorithm, in order to locate the global minimum with greater reliability.
+\end_layout
+
+\begin_layout Enumerate
+Differential Evolution.
+ The differential evolution method is included in the software as suggested
+ by Storn
+\begin_inset CommandInset citation
+LatexCommand citep
+key "de_main_paper"
+literal "false"
+
+\end_inset
+
+ and denoted as 
+\series bold
+de
+\series default
+.
+ This global optimization technique has been widely used in areas such as
+ community detection 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "de_symmetry1"
+literal "false"
+
+\end_inset
+
+, structure prediction of materials 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "de_symmetry3"
+literal "false"
+
+\end_inset
+
+, motor fault diagnosis 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "de_symmetry6"
+literal "false"
+
+\end_inset
+
+, automatic clustering techniques 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "de_symmetry7"
+literal "false"
+
+\end_inset
+
+ etc.
+\end_layout
+
+\begin_layout Enumerate
+Improved Differential Evolution.
+ The modified Differential Evolution method as suggested by Charilogis et
+ al 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "gende"
+literal "false"
+
+\end_inset
+
+ is implemented and denoted as 
+\series bold
+gende
+\series default
+.
+\end_layout
+
+\begin_layout Enumerate
+Double precision genetic algorithm.
+ A modified genetic algorithm 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "doublepop_tsoulos"
+literal "false"
+
+\end_inset
+
+ is included in the software and it is denoted as 
+\series bold
+DoubleGenetic
+\series default
+.
+ Genetic algorithms are typical representatives of evolutionary techniques
+ with many applications such as scheduling problems 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "genetic1"
+literal "false"
+
+\end_inset
+
+, the vehicle routing problem 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "genetic2"
+literal "false"
+
+\end_inset
+
+, combinatorial optimization 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "genetic3"
+literal "false"
+
+\end_inset
+
+, architectural design etc 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "genetic4"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Integer precision genetic algorithm.
+ The method denoted as 
+\series bold
+IntegerGenetic
+\series default
+ is a copy of the 
+\series bold
+DoubleGenetic
+\series default
+ method, but with the usage of integer values as chromosomes.
+ This global optimization method is ideal for problems such as the TSP problem
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "tsp1,tsp2"
+literal "false"
+
+\end_inset
+
+, path planning 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "pathPlanning"
+literal "false"
+
+\end_inset
+
+, Grammatical Evolution applications 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "ge"
+literal "false"
+
+\end_inset
+
+ etc.
+\end_layout
+
+\begin_layout Enumerate
+Improved Controlled Random Search.
+ An improved version of Controlled Random Search as suggested by Charilogis
+ et al 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "gcrs"
+literal "false"
+
+\end_inset
+
+ is implemented and it is denoted as 
+\series bold
+CCRS
+\series default
+.
+\end_layout
+
+\begin_layout Enumerate
+Particle Swarm Optimization.
+ A PSO variant denoted as 
+\series bold
+Pso
+\series default
+ is also included in the software.
+ The particle swarm optimization method was applied sucesfully in a vast
+ area of problems such as parameter extraction of solar cells 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "psoApp1"
+literal "false"
+
+\end_inset
+
+, crystal structure prediction 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "psoApp2"
+literal "false"
+
+\end_inset
+
+, molecular simulations 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "psoApp3"
+literal "false"
+
+\end_inset
+
+ etc.
+\end_layout
+
+\begin_layout Enumerate
+Improved Particle Swarm Optimization.
+\end_layout
+
+\begin_layout Enumerate
+Multistart
+\end_layout
+
+\begin_layout Enumerate
+Topographical Multi level single linkage.
+\end_layout
+
+\begin_layout Enumerate
+The MinCenter method.
+\end_layout
+
+\begin_layout Subsection
+Implemented local optimization methods
+\end_layout
+
+\begin_layout Standard
+The proposed software uses in addition to global optimization methods and
+ local optimization methods, which can be used in most global minimization
+ techniques with the 
+\begin_inset Formula $--$
+\end_inset
+
+localsearch_method parameter.
+ The implemented local optimization methods are the following:
+\end_layout
+
+\begin_layout Enumerate
+The 
+\series bold
+bfgs
+\series default
+ method.
+ The Broyden–Fletcher–Goldfarb–Shanno (BFGS) algorithm was implemented using
+ a variant of Powell 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "powell"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+The 
+\series bold
+lbfgs
+\series default
+ method.
+ The limited memory BFGS method 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "lbfgs"
+literal "false"
+
+\end_inset
+
+ is implemented as an approximation of the BFGS method using a limited amount
+ of computer memory.
+ This local search procedure is ideal for objective functions of higher
+ dimensions.
+\end_layout
+
+\begin_layout Enumerate
+The Gradient descent method.
+ This method is denoted as 
+\series bold
+gradient
+\series default
+ in the software and implements the Gradient Descent local optimization
+ procedure.
+ This local search procedure is used in various problems such as neural
+ network training 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "gradient1"
+literal "false"
+
+\end_inset
+
+, image registration 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "gradient2"
+literal "false"
+
+\end_inset
+
+etc.
+\end_layout
+
+\begin_layout Enumerate
+The 
+\series bold
+adam
+\series default
+ method.
+ The adam local optimizer 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Adam"
+literal "false"
+
+\end_inset
+
+ is implemented also.
+\end_layout
+
+\begin_layout Enumerate
+The Nelder Mead method.
+ The Nelder - Mead simplex procedure for local optimization 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nelderMead"
+literal "false"
+
+\end_inset
+
+ is also included in the software and it is denoted as 
+\series bold
+nelderMead
+\series default
+.
+\end_layout
+
+\begin_layout Enumerate
+Hill climbing.
+ The hill climbing local search procedure denoted as hill is also implemeted.
+ The method has been used in various fields such as design of photovoltaic
+ power systems 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "hill1"
+literal "false"
+
+\end_inset
+
+, load balancing in cloud computing 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "hill2"
+literal "false"
+
+\end_inset
+
+ etc.
 \end_layout
 
 \begin_layout Subsection
 Objective problem deployment 
 \end_layout
 
+\begin_layout Subsubsection
+Objective function coding
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:A-typical-representation"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows an objective function written with the functions required by this
+ software.
+ This code is used for the minimization of the Rastrigin function defined
+ as:
+\begin_inset Formula 
+\[
+f(x)=x_{1}^{2}+x_{2}^{2}-\cos\left(18x_{1}\right)-\cos\left(18x_{2}\right)
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[-1,1]^{2}$
+\end_inset
+
+.
+ The functions shown in the figure have the following meaning:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+void
+\series default
+ init(QJsonObject data).
+ The function init() is called before the objective function is executed
+ and its purpose is to pass parameters from the execution environment to
+ the objective function.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+int
+\series default
+ getDimension().
+ This function returns the dimension of the objective problem.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+void
+\series default
+    getmargins(vector<Interval> &x).
+ The getmargins() functions returns in the vector x the bounds of the objective
+ problem.
+ The class Interval is a simple class that represents double precision intervals
+ eg 
+\begin_inset Formula $[2,4$
+\end_inset
+
+] is an interval with left bound the value 2 and right bound the value 4.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+double
+\series default
+	funmin(vector<
+\series bold
+double
+\series default
+> &x).
+ This function returns the objective problem 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ for a given point 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+void
+\series default
+    granal(vector<
+\series bold
+double
+\series default
+> &x,vector<
+\series bold
+double
+\series default
+> &g).
+ This functions stores in vector g the gradient 
+\begin_inset Formula $\nabla f(x)$
+\end_inset
+
+ for a given point x.
+\end_layout
+
+\begin_layout Enumerate
+QJsonObject    done(vector<
+\series bold
+double
+\series default
+> &x).
+ This function is executed after the objective function optimization process
+ is completed.
+ The point x is the global minimum for the function 
+\begin_inset Formula $f(x)$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
-status open
-
-\begin_layout Plain Layout
-
-\end_layout
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -804,7 +1311,12 @@ void    granal(vector<double> &x,vector<double> &g) {
 
 \begin_layout Plain Layout
 
-g[0]=2.0*x[0]+18.0*sin(18.0*x[0]);       g[1]=2.0*x[1]+18.0*sin(18.0*x[1]); 
+	g[0]=2.0*x[0]+18.0*sin(18.0*x[0]);       
+\end_layout
+
+\begin_layout Plain Layout
+
+	g[1]=2.0*x[1]+18.0*sin(18.0*x[1]); 
 \end_layout
 
 \begin_layout Plain Layout
@@ -840,6 +1352,111 @@ return QJsonObject();
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsubsection
+Objective function compilation 
+\end_layout
+
+\begin_layout Standard
+In order to build the objective function the user should create an accompaniment
+ project file as demonstrated in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:proFile"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The compilation is performed with the following series of commands in the
+ terminal:
+\end_layout
+
+\begin_layout Enumerate
+qmake 
+\emph on
+file.pro
+\end_layout
+
+\begin_layout Enumerate
+make
+\end_layout
+
+\begin_layout Standard
+where
+\emph on
+ file.pro 
+\emph default
+stands for the name of the project file.
+ The final outcome of this compilation will be the shared library 
+\emph on
+libfile.so
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The associated project file for the Rastrigin problem.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:proFile"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+TEMPLATE=lib 
+\end_layout
+
+\begin_layout Plain Layout
+
+SOURCES+=rastrigin.cc interval.cpp
+\end_layout
+
+\begin_layout Plain Layout
+
+HEADERS += interval.h
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Objective function execution
 \end_layout
 
 \begin_layout Section
@@ -1404,6 +2021,524 @@ N.K.
 \series default
 , pp.
  407–411, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_main_paper"
+literal "false"
+
+\end_inset
+
+R.
+ Storn, On the usage of differential evolution for function optimization,
+ In: Proceedings of North American Fuzzy Information Processing, pp.
+ 519-523, 1996.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_symmetry1"
+literal "false"
+
+\end_inset
+
+Y.H.
+ Li, J.Q.
+ Wang, X.J.
+ Wang, Y.L.
+ Zhao, X.H.
+ Lu, D.L.
+ Liu, Community Detection Based on Differential Evolution Using Social Spider
+ Optimization, Symmetry 
+\series bold
+9
+\series default
+, 2017.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_symmetry3"
+literal "false"
+
+\end_inset
+
+W.
+ Yang, E.M.
+ Dilanga Siriwardane, R.
+ Dong, Y.
+ Li, J.
+ Hu, Crystal structure prediction of materials with high symmetry using
+ differential evolution, J.
+ Phys.: Condens.
+ Matter 
+\series bold
+33
+\series default
+ 455902, 2021.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_symmetry6"
+literal "false"
+
+\end_inset
+
+C.Y.
+ Lee, C.H.
+ Hung, Feature Ranking and Differential Evolution for Feature Selection
+ in Brushless DC Motor Fault Diagnosis , Symmetry 
+\series bold
+13
+\series default
+, 2021.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_symmetry7"
+literal "false"
+
+\end_inset
+
+S.
+ Saha, R.
+ Das, Exploring differential evolution and particle swarm optimization to
+ develop some symmetry-based automatic clustering techniques: application
+ to gene clustering, Neural Comput & Applic 
+\series bold
+30
+\series default
+, pp.
+ 735–757, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gende"
+literal "false"
+
+\end_inset
+
+V.
+ Charilogis, I.G.
+ Tsoulos, A.
+ Tzallas, E.
+ Karvounis, Modifications for the Differential Evolution Algorithm, Symmetry
+ 
+\series bold
+14
+\series default
+, 447, 2022.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "doublepop_tsoulos"
+literal "false"
+
+\end_inset
+
+I.G.
+ Tsoulos, Modifications of real code genetic algorithm for global optimization,
+ Applied Mathematics and Computation 
+\series bold
+203
+\series default
+, pp.
+ 598-607, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "genetic1"
+literal "false"
+
+\end_inset
+
+J.F.Gonçalves, J.J.M.
+ Mendes, M.G.C.
+ Resende, A genetic algorithm for the resource constrained multi-project
+ scheduling problem, European Journal of Operational Research 
+\series bold
+189
+\series default
+, pp.
+ 1171-1190, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "genetic2"
+literal "false"
+
+\end_inset
+
+W.Ho, G.T.S.
+ Ho, P.
+ Ji, H.C.W.
+ Lau, A hybrid genetic algorithm for the multi-depot vehicle routing problem,
+ Engineering Applications of Artificial Intelligence 
+\series bold
+21
+\series default
+, pp.
+ 548-557, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "genetic3"
+literal "false"
+
+\end_inset
+
+J.F.
+ Gonçalves, M.G.C.
+ Resende, Biased random-key genetic algorithms for combinatorial optimization.
+ J Heuristics 
+\series bold
+17
+\series default
+, pp.
+ 487–525, 2011.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "genetic4"
+literal "false"
+
+\end_inset
+
+M.
+ Turrin, P.
+ Buelow, R.
+ Stouffs, Design explorations of performance driven geometry in architectural
+ design using parametric modeling and genetic algorithms, Advanced Engineering
+ Informatics 
+\series bold
+25
+\series default
+, pp.
+ 656-675, 2011.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "tsp1"
+literal "false"
+
+\end_inset
+
+J.
+ Kaabi, Y.
+ Harrath, Permutation rules and genetic algorithm to solve the traveling
+ salesman problem, Arab Journal of Basic and Applied Sciences 
+\series bold
+26
+\series default
+, pp.
+ 283-291, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "tsp2"
+literal "false"
+
+\end_inset
+
+Q.M.
+ Ha, Y.
+ Deville, Q.D.
+ Pham et al., A hybrid genetic algorithm for the traveling salesman problem
+ with drone, J Heuristics 
+\series bold
+26
+\series default
+, pp.
+ 219–247, 2020.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pathPlanning"
+literal "false"
+
+\end_inset
+
+F.
+ Ahmed, K.
+ Deb, Multi-objective optimal path planning using elitist non-dominated
+ sorting genetic algorithms, Soft Comput 
+\series bold
+17
+\series default
+, pp.
+ 1283–1299, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ge"
+literal "true"
+
+\end_inset
+
+M.
+ O'Neill, C.
+ Ryan, Grammatical Evolution, IEEE Trans.
+ Evolutionary Computation 
+\series bold
+5
+\series default
+, pp.
+ 349-358, 2001.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gcrs"
+literal "false"
+
+\end_inset
+
+V.
+ Charilogis, I.G.
+ Tsoulos, A.
+ Tzallas, N.
+ Anastasopoulos, An Improved Controlled Random Search Method, Symmetry 
+\series bold
+13
+\series default
+, 1981, 2021.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psoApp1"
+literal "false"
+
+\end_inset
+
+M.
+ Ye, X.
+ Wang, Y.
+ Xu, Parameter extraction of solar cells using particle swarm optimization,
+ Journal of Applied Physics 
+\series bold
+105
+\series default
+, 094502, 2009.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psoApp2"
+literal "false"
+
+\end_inset
+
+Y.
+ Wang, J.
+ Lv, L.
+ Zhu, Y.
+ Ma, Crystal structure prediction via particle-swarm optimization, Phys.
+ Rev.
+ B 
+\series bold
+82
+\series default
+, 094116, 2010.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psoApp3"
+literal "false"
+
+\end_inset
+
+M.
+ Weiel, M.
+ Götz, A.
+ Klein et al, Dynamic particle swarm optimization of biomolecular simulation
+ parameters with flexible objective functions.
+ Nat Mach Intell 
+\series bold
+3
+\series default
+, pp.
+ 727–734, 2021.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "powell"
+literal "true"
+
+\end_inset
+
+M.J.D Powell, A Tolerant Algorithm for Linearly Constrained Optimization Calculati
+ons, Mathematical Programming 
+\series bold
+45
+\series default
+, pp.
+ 547-566, 1989.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "lbfgs"
+literal "false"
+
+\end_inset
+
+D.C.
+ Liu, J.
+ Nocedal, On the Limited Memory Method for Large Scale Optimization, Mathematica
+l Programming B 
+\series bold
+45
+\series default
+, pp.
+ 503-528, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gradient1"
+literal "false"
+
+\end_inset
+
+S.I.
+ Amari, Backpropagation and stochastic gradient descent method, Neurocomputing
+ 
+\series bold
+5
+\series default
+, pp.
+ 185-196, 1993.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gradient2"
+literal "false"
+
+\end_inset
+
+S.
+ Klein, J.P.W.
+ Pluim, M.
+ Staring, Adaptive Stochastic Gradient Descent Optimisation for Image Registrati
+on, Int J Comput Vis 
+\series bold
+81
+\series default
+, pp.
+ 227–239, 2009.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Adam"
+literal "false"
+
+\end_inset
+
+D.P.
+ Kingma, J.
+ Ba, Adam: A Method for Stochastic Optimization, ICLR (Poster), 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nelderMead"
+literal "false"
+
+\end_inset
+
+D.M.
+ Olsson,L.S.
+ Nelson, The Nelder-Mead Simplex Procedure for Function Minimization, Technometr
+ics 
+\series bold
+17
+\series default
+, pp.
+ 45-51, 1975.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "hill1"
+literal "false"
+
+\end_inset
+
+W.
+ Xiao, W.
+ G.
+ Dunford, A modified adaptive hill climbing MPPT method for photovoltaic
+ power systems, In: 2004 IEEE 35th Annual Power Electronics Specialists
+ Conference (IEEE Cat.
+ No.04CH37551) pp.
+ 1957-1963 Vol.3, 2004.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "hill2"
+literal "false"
+
+\end_inset
+
+B.
+ Mondal, K.
+ Dasgupta, P.
+ Dutta, Load Balancing in Cloud Computing using Stochastic Hill Climbing-A
+ Soft Computing Approach, Procedia Technology 
+\series bold
+4
+\series default
+, pp.
+ 783-789, 2012.
 \end_layout
 
 \end_body
