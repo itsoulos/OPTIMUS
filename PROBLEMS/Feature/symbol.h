@@ -3,6 +3,8 @@
 # include <vector>
 using namespace std;
 
+namespace  FeatureProblem
+{
 class Rule;
 
 class Symbol
@@ -29,6 +31,6 @@ class Symbol
 		~Symbol();
 		
 };
-
+}
 # define __SYMBOL__H
 # endif

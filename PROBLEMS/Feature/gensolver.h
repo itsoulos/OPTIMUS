@@ -2,6 +2,8 @@
 # include <problem.h>
 # include <vector>
 using namespace std;
+namespace FeatureProblem
+{
 class GenSolver
 {
 	private:
@@ -43,6 +45,9 @@ class GenSolver
 		~GenSolver();
 		
 };
+
+}
+using namespace FeatureProblem;
 extern void GenSolve(Problem *p,Matrix &x,double &y,double mx,int f);
 extern void GenSolve2(Problem *p,Matrix &x,double &y,double mx,int f);
 # define __POPULATION__H

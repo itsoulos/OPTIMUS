@@ -1,5 +1,6 @@
 # include <rule.h>
 # include <iostream>
+using namespace FeatureProblem;
 Rule::Rule()
 {
 	length =0;

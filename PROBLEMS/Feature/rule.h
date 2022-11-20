@@ -5,6 +5,8 @@
 # define REDO_MAX	2
 using namespace std;
 
+namespace FeatureProblem
+{
 class Rule
 {
 	private:
@@ -27,5 +29,6 @@ class Rule
 		void	setWeight(double w);
 		~Rule();
 };
+}
 # define __RULE__H
 # endif

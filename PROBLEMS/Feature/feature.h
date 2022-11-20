@@ -16,5 +16,6 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 # include <QUrlQuery>
+using namespace  FeatureProblem;
 
 #endif // FEATURE_H

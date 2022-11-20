@@ -2,6 +2,8 @@
 # define __KNN__H
 # include <model.h>
 typedef vector<int> IntVector;
+namespace FeatureProblem
+{
 class KNN :public Model
 {
 	private:
@@ -17,5 +19,5 @@ class KNN :public Model
 		double	KNNtestError(vector<Matrix> &testx,Matrix &testy,vector<Matrix> &distance);
 		~KNN();
 };
-
+}
 # endif

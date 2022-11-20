@@ -6,20 +6,20 @@
 #include "fpconfig.hh"
 #include "fptypes.hh"
 #include "omp.h"
-using namespace FUNCTIONPARSERTYPES;
 
 
 #include <cstdlib>
 #include <cstring>
 #include <cctype>
 #include <cmath>
-
+using namespace FeatureProblem::FUNCTIONPARSERTYPES;
+using namespace FeatureProblem;
 using namespace std;
 
 #pragma GCC optimize("unroll-loops","omit-frame-pointer","inline", "unsafe-math-optimizations")
 #pragma GCC option("arch=native","tune=native","no-zero-upper")
 
-int lastVariable;
+//int lastVariable;
 #ifndef M_PI
 #define M_PI 3.1415926535897932384626433832795
 #endif
@@ -371,9 +371,9 @@ FunctionParser::FindVariable(const char* F, const Data::VarMap_t& vars) const
         if(ind)
         {
             string name(F, ind);
-		/**GIANNIS **/
+		/**GIANNIS 
 		if(name[0]=='x' && isdigit(name[1])) lastVariable = atoi(name.substr(1).c_str());
-		/**END OF GIANNIS **/
+		*END OF GIANNIS **/
             return vars.find(name);
         }
     }

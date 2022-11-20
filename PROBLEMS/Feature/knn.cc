@@ -25,7 +25,7 @@ KNN::KNN(Mapper *m):Model(m)
 
 double KNN::train1()
 {
-	extern int random_seed;
+	int random_seed=1;
 	srand48(random_seed);
 
 	vector<double> classes;

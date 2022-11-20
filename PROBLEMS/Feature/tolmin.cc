@@ -1,7 +1,6 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
-
 # include <tolmin.h>
 # include <omp.h>
 int ifail=0;
@@ -10,6 +9,7 @@ long iabs(long x)
 {
     return x>0?x:-x;
 }
+using namespace  FeatureProblem;
 
 #ifdef __cplusplus
 extern "C" {

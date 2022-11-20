@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <limits.h>
-# include "grand.h"
 /* ---------------------------------------------- */
 /* K-Means Clusteriing Algorithm                  */
 /* Reads data from data_vectors matrix,           */
@@ -22,5 +21,5 @@
 /* ---------------------------------------------- */
 
 
-void Kmeans(GRand *rnd,double * data_vectors, double * centers, 
+void Kmeans(double * data_vectors, double * centers, 
             double * variances, int m, int n, int K);

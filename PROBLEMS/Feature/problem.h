@@ -5,6 +5,8 @@
 # include <math.h>
 # include <vector>
 using namespace std;
+namespace FeatureProblem
+{
 typedef vector<double> Matrix;
 typedef vector<double> Data;
 class Problem;
@@ -65,6 +67,7 @@ typedef struct MinInfo
 
 extern "C"{
 extern double small_tolmin(Matrix &,MinInfo&);
+}
 }
 # define __PROBLEM__H
 # endif

@@ -92,6 +92,8 @@ EXAMPLE USAGE
 //     In no other cases will any member function throw.
 //     Whenever an exception is thrown, the Strong Guarantee holds, as
 //      long as it holds for the type that originated the exception.
+
+namespace FeatureProblem{
 class GRand {
 
 // ***** GRand: internal-use types *****
@@ -326,6 +328,7 @@ private:
 
 };  // End class GRand
 
+}
 // Undefine internal-use-only preprocessor symbols
 #undef GRAND_OP_PAREN
 #undef GRAND_CONSTEXPR

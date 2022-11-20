@@ -7,9 +7,9 @@
 # include <knn.h>
 # include <mapper.h>
 # include <vector>
-# include "grand.h"
 using namespace std;
 
+namespace FeatureProblem{
 # define MODEL_NEURAL		1
 # define MODEL_RBF		2
 # define MODEL_KNN		3
@@ -25,11 +25,9 @@ class NNprogram	:public Program
 		Model	 *model;
 		Mapper	 *mapper;
 		int random_seed;
-		GRand rnd;	
 	public:
         NNprogram();
 	void	setSeed(int r);
-	GRand   *getRand();
         void setData(int type,int pdimension,double scale,vector<Matrix> &xdata,Matrix &ydata);
 		NNprogram(int type,int pdimension,char *filename);
         NNprogram(int type,int pdimension,double scale,vector<Matrix> &xdata,Matrix &ydata);
@@ -39,5 +37,6 @@ class NNprogram	:public Program
 		Mapper	*getMapper();
 		~NNprogram();
 };
+}
 # define __NNPROGRAM__H
 # endif

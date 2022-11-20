@@ -1,7 +1,8 @@
 //==============================
 // Function parser v2.8 by Warp
 //==============================
-
+namespace FeatureProblem
+{
 // Configuration file
 // ------------------
 
@@ -54,3 +55,4 @@
  can introduce inaccuracies in comparisons.)
 */
 #define FP_EPSILON 1e-14
+}

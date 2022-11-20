@@ -1,5 +1,6 @@
 # ifndef __DOUBLESTACK__H
-
+namespace FeatureProblem
+{
 class DoubleStack
 {
 	private:
@@ -14,6 +15,6 @@ class DoubleStack
 		void	clear();
 		~DoubleStack();
 };
-
+}
 # define __DOUBLESTACK__H
 # endif

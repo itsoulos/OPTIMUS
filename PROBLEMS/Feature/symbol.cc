@@ -1,4 +1,6 @@
 # include <symbol.h>
+using namespace  FeatureProblem;
+
 Symbol::Symbol()
 {
 	name = "";

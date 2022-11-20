@@ -3,7 +3,7 @@
 
 # include <problem.h>
 # include <mapper.h>
-# include "grand.h"
+namespace FeatureProblem{
 class Model :public Problem
 {
 	protected:
@@ -18,14 +18,12 @@ class Model :public Problem
 		Matrix		ypoint;
 		Matrix		originalTesty;
 		Matrix		originalResult;
-		GRand 		*rnd;
 	public:
 
 		Mapper	*mapper;
 		Model(Mapper *m);
 		void	setPatternDimension(int d);
 		void	setNumOfWeights(int w);
-		void	setRand(GRand *r);
         void    readPatterns(vector<Matrix> &xdata,Matrix &ydata);
 		void 	readPatterns(char *filename);
 		void	replacePattern(int pos,Matrix x,double y);
@@ -58,5 +56,5 @@ class Model :public Problem
 		void	getErrorMatrix(Matrix &original,Matrix &result);
 		~Model();
 };
-
+}
 # endif

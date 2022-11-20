@@ -88,10 +88,6 @@ void	NNprogram::setSeed(int r)
 	random_seed=r;
 }
 
-GRand *NNprogram::getRand()
-{
-	return &rnd;
-}
 double 	NNprogram::fitness(vector<int> &genome)
 {
 	double value=0.0;
@@ -106,8 +102,6 @@ double 	NNprogram::fitness(vector<int> &genome)
 		if(redo>=REDO_MAX) return -1e+8;
 	}
 	mapper->setExpr(pstring);
-    	rnd.seed(random_seed+getpid());
-    	model->setRand(&rnd);
 	model->setPatternDimension(pattern_dimension);
 	if(model_type==MODEL_NEURAL) model->randomizeWeights();
 	value=model->train1();

@@ -3,7 +3,6 @@
 #include "Rbf.h"
 #include "matrix_functions.h"
 #include "kmeans.h"
-
 /* -------------------------------------------- */
 /* Trains an RBF Neural Netowrk                 */
 /* Input Parameters:                            */

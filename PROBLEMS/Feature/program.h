@@ -9,6 +9,8 @@
 # include <vector>
 using namespace std;
 
+namespace FeatureProblem
+{
 class Program
 {
 	protected:
@@ -26,6 +28,6 @@ class Program
 		void	updateAll(vector<int> &genome1,vector<int> &genome2);
 		~Program();
 };
-
+}
 # define __PROGRAM__H
 # endif

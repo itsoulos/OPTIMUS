@@ -4,6 +4,7 @@
 # include <string>
 using namespace std;
 typedef vector<double> Matrix;
+using namespace  FeatureProblem;
 class Mapper
 {
 	private:

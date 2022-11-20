@@ -17,11 +17,6 @@ static int iszero(double x)
 }
 
 
-void	Model::setRand(GRand *r)
-{
-	rnd=r;
-}
-
 Model::Model(Mapper *m)
 {
 	num_weights = 1;
@@ -45,7 +40,7 @@ void	Model::randomizeWeights()
 {
 	weight.resize((pattern_dimension+2)*num_weights);
 	setDimension(weight.size());
-	for(int i=0;i<weight.size();i++) weight[i]=rnd->d();
+	for(int i=0;i<weight.size();i++) weight[i]=drand48();
 }
 
 void	Model::setPatternDimension(int d)

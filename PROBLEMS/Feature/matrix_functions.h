@@ -3,6 +3,7 @@
 #include <math.h>
 
 
+
 /* ---------------------------------------------------- */
 /* Matrix Multiplication                                */
 /* Computes the product:  [C] = [A][B]                  */
@@ -109,6 +110,5 @@ void matrix_add(double * a, double * b, double * c, int m, int n);
 
 
 void matrix_sub(double * a, double * b, double * c, int m, int n);
-
 
 

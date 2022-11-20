@@ -16,6 +16,8 @@
 #ifdef FUNCTIONPARSER_SUPPORT_DEBUG_OUTPUT
 #include <iostream>
 #endif
+namespace FeatureProblem{
+
 
 extern int lastVariable;
 
@@ -154,5 +156,5 @@ private:
 
     void MakeTree(void*) const;
 };
-
+}
 #endif

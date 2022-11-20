@@ -4,7 +4,7 @@
 # include <stdlib.h>
 # include <math.h>
 using namespace std;
-
+using namespace FeatureProblem;
 DoubleStack::DoubleStack()
 {
 	data = (double*)malloc(512*sizeof(double));//NULL;

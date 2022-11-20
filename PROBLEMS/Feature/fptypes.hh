@@ -8,7 +8,8 @@
 // only.
 
 
-
+namespace FeatureProblem
+{
 namespace FUNCTIONPARSERTYPES
 {
 // The functions must be in alphabetical order:
@@ -114,4 +115,5 @@ namespace FUNCTIONPARSERTYPES
         { "tan", 3, cTan, 1 },
         { "tanh", 4, cTanh, 1 }
     };
+}
 }

@@ -3,6 +3,7 @@
 # include <stdlib.h>
 # include <math.h>
 
+using namespace FeatureProblem;
 
 static double sum2(Matrix x)
 {

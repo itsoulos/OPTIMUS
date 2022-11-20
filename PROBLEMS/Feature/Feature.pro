@@ -55,7 +55,6 @@ HEADERS += feature.h\
     interval.h \
     tolmin.h \
     program.h \
-    grand.h \
     fptypes.hh \
     fpconfig.hh \
     fparser.hh \

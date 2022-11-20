@@ -1,7 +1,6 @@
 /* K-Means Clustering Algorithm */
 
 #include "kmeans.h"
-# include "grand.h"
 # include <vector>
 using namespace std;
 
@@ -24,7 +23,7 @@ using namespace std;
 /* ---------------------------------------------- */
 
 
-void Kmeans(GRand *rnd,double * data_vectors, double * centers, 
+void Kmeans(double * data_vectors, double * centers, 
             double * variances, int m, int n, int K)
 {
 ///	return 
@@ -56,7 +55,7 @@ void Kmeans(GRand *rnd,double * data_vectors, double * centers,
 	for(i=0; i<K; i++)
 	{
 		do{
-            random_centers[i]=(int)((m-1) * rnd->d());
+            random_centers[i]=(int)((m-1) * drand48());
 		}while(random_centers[i]>m);
 		
 	}

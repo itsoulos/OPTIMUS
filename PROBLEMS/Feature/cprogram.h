@@ -2,7 +2,8 @@
 # include <symbol.h>
 # include <rule.h>
 # include <fparser.hh>
-
+namespace FeatureProblem
+{
 class Cprogram
 {
 	protected:
@@ -37,5 +38,6 @@ class Cprogram
 		Symbol	*getStartSymbol();
 		~Cprogram();
 };
+}
 # define __CPROGRAM__H
 # endif

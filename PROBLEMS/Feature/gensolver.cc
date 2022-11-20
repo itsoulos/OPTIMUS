@@ -10,6 +10,7 @@
 
 # define MAXTHREADS 32
 
+using namespace FeatureProblem;
 GenSolver::GenSolver(int gcount,Problem *p,double mx,int ff)
 {
 	small_tolmin_flag=ff;

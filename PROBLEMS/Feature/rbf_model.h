@@ -2,6 +2,8 @@
 # define __FC_RBF__H
 # include <model.h>
 # include <Rbf.h>
+namespace FeatureProblem
+{
 class Rbf :public Model
 {
 	private:
@@ -14,5 +16,5 @@ class Rbf :public Model
 		virtual void   getDeriv(Matrix x,Matrix &g);
 		~Rbf();
 };
-
+}
 # endif

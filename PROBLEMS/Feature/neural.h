@@ -1,6 +1,8 @@
 # ifndef __NEURAL__H
 # define __NEURAL__H
 # include <model.h>
+namespace FeatureProblem
+{
 class Neural :public Model
 {
 	public:
@@ -13,5 +15,5 @@ class Neural :public Model
 		void	setWeights(Matrix x);
 		~Neural();
 };
-
+}
 # endif

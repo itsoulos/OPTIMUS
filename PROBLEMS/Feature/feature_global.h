@@ -2,7 +2,10 @@
 #define FEATURE_GLOBAL_H
 
 #include <QtCore/qglobal.h>
+namespace FeatureProblem
+{
 
+}
 #if defined(FEATURE_LIBRARY)
 #  define FEATURESHARED_EXPORT Q_DECL_EXPORT
 #else

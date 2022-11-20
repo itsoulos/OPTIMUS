@@ -3,7 +3,7 @@
 # include <string.h>
 # include <stdio.h>
 # include <math.h>
-
+using namespace  FeatureProblem;
 
 double sig(const double *x)
 {

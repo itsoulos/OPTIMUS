@@ -1,5 +1,5 @@
 # include <program.h>		
-
+using namespace FeatureProblem;
 Program::Program()
 {
 	start_symbol = NULL;

@@ -1,6 +1,7 @@
 # include <rbf_model.h>
 //# define CLASSMODEL
 
+using namespace FeatureProblem;
 Rbf::Rbf(Mapper *m)
 	:Model(m)
 {
@@ -56,7 +57,7 @@ double Rbf::train1()
 		Output[i]=ypoint[i];
 	}
 
-        Kmeans(rnd,input,centers,variances,
+        Kmeans(input,centers,variances,
 			xpoint.size(),pattern_dimension,num_weights);
 	
         int icode=train_rbf(pattern_dimension,num_weights,noutput,xpoint.size(),

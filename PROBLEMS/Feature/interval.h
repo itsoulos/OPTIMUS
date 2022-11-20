@@ -2,6 +2,7 @@
 #define INTERVAL_H
 # include <QString>
 # include <math.h>
+
 class Interval
 {
 private:
