@@ -1,5 +1,7 @@
 #include "kmeans.h"
 # include <math.h>
+using namespace RbfTestName;
+
 kmeans::kmeans(Dataset *d,int nteams)
 {
     int i;

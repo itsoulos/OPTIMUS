@@ -3,7 +3,8 @@
 # include <QVector>
 # include <QString>
 typedef QVector<double> Data;
-
+namespace RbfTestName
+{
 class Dataset
 {
 private:
@@ -22,5 +23,5 @@ public:
 
     ~Dataset();
 };
-
+}
 #endif // DATASET_H

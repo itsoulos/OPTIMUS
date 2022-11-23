@@ -2,6 +2,8 @@
 # include <QLocale>
 # include <QFile>
 # include <QTextStream>
+using namespace RbfTestName;
+
 Dataset::Dataset()
 {
 dimension=0;

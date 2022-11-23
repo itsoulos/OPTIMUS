@@ -4,6 +4,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <adept.h>
+using namespace RbfTestName;
 
 using namespace std;
 #pragma GCC optimize("-Ofast")

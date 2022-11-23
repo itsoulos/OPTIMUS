@@ -9,6 +9,8 @@
 using namespace arma;
 using namespace  std;
 typedef QVector<Data> Matrix;
+namespace RbfTestName
+{
 class Rbf
 {
 private:
@@ -51,5 +53,5 @@ public:
     double  product(Data &x,Data &y);
     ~Rbf();
 };
-
+}
 #endif // RBF_H

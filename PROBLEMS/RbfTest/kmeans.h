@@ -1,7 +1,8 @@
 #ifndef KMEANS_H
 #define KMEANS_H
 # include <dataset.h>
-
+namespace RbfTestName
+{
 class kmeans
 {
 private:
@@ -28,5 +29,5 @@ public:
     QVector<Data> getCenters();
     Data          getVariances();
 };
-
+}
 #endif // KMEANS_H

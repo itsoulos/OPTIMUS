@@ -14,6 +14,8 @@
 #include <adept.h>
 #pragma GCC optimize("-Ofast")
 using namespace std;
+using namespace RbfTestName;
+
 RbfTest::RbfTest()
 {
 }
