@@ -129,7 +129,7 @@ In this paper, a new sampling technique is proposed that can be used in
  the Multistart global optimization technique as well as techniques based
  on it.
  The new method takes a limited number of samples from the objective function
- and then uses them to train an RBF neural network.
+ and then uses them to train an Radial Basis Function (RBF) neural network.
  Subsequently, several samples were taken from the artificial neural network
  this time, and those with the smallest network value in them are used in
  the global optimization method.
@@ -306,8 +306,8 @@ literal "false"
 
  etc.
  Also, due to the wide spread of parallel architectures in recent years
- as well as the widespread use of GPUs, many methods have emerged that exploit
- such architectures 
+ as well as the widespread use of Graphics Processing Units (GPU), many
+ methods have emerged that exploit such architectures 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "gpu1,gpu2,gpu3"
@@ -328,14 +328,15 @@ This paper proposes an innovative sampling technique for the Multistart
  objective function and then a local optimization method is started from
  each sample.
  Regarding its simplicity, the method has been used with success in a wide
- area of practical applications, such as the TSP problem
+ area of practical applications, such as the Travelling Salesman Problem
+ (TSP)
 \series bold
  
 \series default
 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "multistart-tsp"
+key "multistart-tsp1,multistart_tsp2,multistart_tsp3"
 literal "true"
 
 \end_inset
@@ -343,7 +344,7 @@ literal "true"
 , the vehicle routing problem 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "multistart-vehicle"
+key "multistart-vehicle1,multistart-vehicle2"
 literal "true"
 
 \end_inset
@@ -427,7 +428,7 @@ literal "true"
  Usually, in the Multistart method, samples are used from the objective
  function using some distribution such as the uniform distribution.
  In the present work, it is proposed that these samples are obtained from
- a radial basis network 
+ an RBF network 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "rbf1"
@@ -435,8 +436,8 @@ literal "false"
 
 \end_inset
 
- (RBF), which has already been trained on a limited number of real samples
- from the objective function.
+ , which has already been trained on a limited number of real samples from
+ the objective function.
  RBF networks have been widely used in many real world problems, such as
  face recognition 
 \begin_inset CommandInset citation
@@ -449,7 +450,7 @@ literal "false"
 , function approximation 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "rbf_function"
+key "rbf_function1,rbf_function2"
 literal "false"
 
 \end_inset
@@ -471,6 +472,12 @@ literal "false"
 \end_inset
 
  etc.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+(write some motivation here)
 \end_layout
 
 \begin_layout Standard
@@ -542,8 +549,8 @@ noprefix "false"
  proper adaptation, can make the method extremely efficient.
  The first component is the termination method used and the second is the
  sampling method within the central iteration.
- The local search procedure used here is an adaptation of the BFGS method
- 
+ The local search procedure used here is an adaptation of the Broyden–Fletcher–G
+oldfarb–Shanno (BFGS) method 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "powell"
@@ -596,6 +603,7 @@ noprefix "false"
 
 \begin_layout Standard
 \begin_inset Float algorithm
+placement H
 wide false
 sideways false
 status open
@@ -905,6 +913,7 @@ The method now terminates at generation 12.
 
 \begin_layout Standard
 \begin_inset Float figure
+placement H
 wide false
 sideways false
 status open
@@ -943,13 +952,10 @@ name "fig:hansenPlot"
 
 
 \begin_inset Float figure
+placement H
 wide false
 sideways false
-status collapsed
-
-\begin_layout Plain Layout
-
-\end_layout
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -987,7 +993,7 @@ name "fig:exp8_plot"
 \end_layout
 
 \begin_layout Subsection
-Rbf networks 
+RBF networks 
 \begin_inset CommandInset label
 LatexCommand label
 name "subsec:Rbf-networks"
@@ -1293,13 +1299,29 @@ noprefix "false"
 \end_inset
 
 .
+ 
+\end_layout
+
+\begin_layout Standard
+The overall algorithm is graphically represented in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:The-overall-algorithm"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ in the form of a flowchart.
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float figure
+placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1334,9 +1356,10 @@ name "fig:gaussianPlot"
 
 
 \begin_inset Float figure
+placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1372,9 +1395,10 @@ name "fig:rbfExample"
 
 
 \begin_inset Float algorithm
+placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1654,6 +1678,49 @@ Keep
 \end_layout
 
 \end_deeper
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The overall algorithm as a flowchart.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:The-overall-algorithm"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename flowchart.eps
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
 \end_inset
 
 
@@ -2447,6 +2514,23 @@ noprefix "false"
  was incorporated.
  The random number function used was the drand48() function of the C programming
  language.
+ The used software was implemented using the OPTIMUS global optimization
+ environment freely available from 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://github.com/itsoulos/OPTIMUS
+\end_layout
+
+\end_inset
+
+.
+ All the experiments were conducted on an AMD Ryzen 5950X equipped with
+ 128GB of RAM.
+ The operating system used was Debian Linux and all the programs are compiled
+ using the GNU C++ compiler.
  The experimental results for used test functions are listed in Tables 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2528,9 +2612,10 @@ noprefix "false"
 
 \begin_layout Standard
 \begin_inset Float table
+placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -2688,9 +2773,10 @@ FR
 
 \begin_layout Standard
 \begin_inset Float table
+placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -3796,9 +3882,10 @@ TOTAL
 
 
 \begin_inset Float table
+placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -5215,9 +5302,10 @@ TOTAL
 
 
 \begin_inset Float table
+placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -6634,13 +6722,10 @@ TOTAL
 
 
 \begin_inset Float figure
+placement H
 wide false
 sideways false
-status collapsed
-
-\begin_layout Plain Layout
-
-\end_layout
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -6736,13 +6821,18 @@ literal "true"
 
 \end_inset
 
-Zwe-Lee Gaing, Particle swarm optimization to solving the economic dispatch
- considering the generator constraints, IEEE Transactions on 
+D.
+ Cheong,Y.M.
+ Kim, H.W.
+ Byun, K.J.
+ Oh, T.Y.
+ Kim, Using genetic algorithm to support clustering-based portfolio optimization
+ by investor information, Applied Soft Computing 
 \series bold
-18
+61
 \series default
- Power Systems, pp.
- 1187-1195, 2003.
+, pp.
+ 593-602, 2017.
 \end_layout
 
 \begin_layout Bibliography
@@ -6753,23 +6843,16 @@ literal "true"
 
 \end_inset
 
-C.
- D.
- Maranas, I.
- P.
- Androulakis, C.
- A.
- Floudas, A.
- J.
- Berger, J.
- M.
- Mulvey, Solving long-term financial planning problems via global optimization,
- Journal of Economic Dynamics and Control 
+J.G.
+ Díaz, B.G.
+ Rodríguez, M.
+ Leal, J.
+ Puerto, Global optimization for bilevel portfolio design: Economic insights
+ from the Dow Jones index, Omega 
 \series bold
-21
+102
 \series default
-, pp.
- 1405-1425, 1997.
+, 102353, 2021.
 \end_layout
 
 \begin_layout Bibliography
@@ -6802,16 +6885,15 @@ literal "false"
 
 \end_inset
 
-Q.
- Duan, S.
- Sorooshian, V.
- Gupta, Effective and efficient global optimization for conceptual rainfall-runo
-ff models, Water Resources Research 
+X.L.
+ Luo, J.
+ Feng, H.H.
+ Zhang, A genetic algorithm for astroparticle physics studies, Computer
+ Physics Communications 
 \series bold
-28
+250
 \series default
-, pp.
- 1015-1031 , 1992.
+, 106818, 2020.
 \end_layout
 
 \begin_layout Bibliography
@@ -6822,14 +6904,17 @@ literal "false"
 
 \end_inset
 
-P.
- Charbonneau, Genetic Algorithms in Astronomy and Astrophysics, Astrophysical
- Journal Supplement 
+T.
+ Biekötter, M.O.
+ Olea-Romacho, Reconciling Higgs physics and pseudo-Nambu-Goldstone dark
+ matter in the S2HDM using a genetic algorithm, J.
+ High Energ.
+ Phys.
+ 
 \series bold
-101
+2021
 \series default
-, p.
- 309, 1995
+, 215, 2021.
 \end_layout
 
 \begin_layout Bibliography
@@ -6859,19 +6944,20 @@ literal "true"
 
 \end_inset
 
-A.
- Liwo, J.
- Lee, D.R.
- Ripoll, J.
- Pillardy, H.
- A.
- Scheraga, Protein structure prediction by global optimization of a potential
- energy function, Biophysics 
+H.
+ Fang, J.
+ Zhou, Z.
+ Wang et al, Hybrid method integrating machine learning and particle swarm
+ optimization for smart chemical process operations, Front.
+ Chem.
+ Sci.
+ Eng.
+ 
 \series bold
-96
+16
 \series default
 , pp.
- 5482-5485, 1999.
+ 274–287, 2022.
 \end_layout
 
 \begin_layout Bibliography
@@ -6882,16 +6968,20 @@ literal "true"
 
 \end_inset
 
-P.M.
- Pardalos, D.
- Shalloway, G.
- Xue, Optimization methods for computing global minima of nonconvex potential
- energy functions, Journal of Global Optimization 
+D.
+ Furman, B.
+ Carmeli, Y.
+ Zeiri, R.
+ Kosloff, Enhanced Particle Swarm Optimization Algorithm: Efficient Training
+ of ReaxFF Reactive Force Fields, J.
+ Chem.
+ Theory Comput.
+ 
 \series bold
-4
+14
 \series default
 , pp.
- 117-133, 1994.
+ 3100–3112, 2018.
 \end_layout
 
 \begin_layout Bibliography
@@ -6941,14 +7031,17 @@ literal "true"
 
 \end_inset
 
-Y.
- Cherruault, Global optimization in biology and medicine, Mathematical and
- Computer Modelling 
+I.
+ Hilali-Jaghdam, A.
+ Ben Ishak, S.
+ Abdel-Khalek, A.
+ Jamal, Quantum and classical genetic algorithms for multilevel segmentation
+ of medical images: A comparative study, Computer Communications 
 \series bold
-20
+162
 \series default
 , pp.
- 119-132, 1994.
+ 83-93, 2020.
 \end_layout
 
 \begin_layout Bibliography
@@ -6977,19 +7070,19 @@ literal "true"
 
 \end_inset
 
-T.
- Csendes and D.
- Ratz, Subdivision Direction Selection in Interval Methods for Global Optimizati
-on, SIAM J.
- Numer.
- Anal.
- 
+M.
+ Allahdadi, H.
+ M.
+ Nehi, H.
+ A.
+ Ashayerinasab, M.
+ Javanmard, Improving the modified interval linear programming method by
+ new techniques, Information Sciences 
 \series bold
-34
+339
 \series default
 , pp.
- 922–938, 1997.
- 
+ 224-236, 2016.
 \end_layout
 
 \begin_layout Bibliography
@@ -7038,13 +7131,17 @@ literal "true"
 
 \end_inset
 
-Ivan Křivý, Josef Tvrdík, The controlled random search algorithm in optimizing
- regression models, Computational Statistics & Data Analysis 
+N.M.
+ Filho, R.B.F.
+ Albuquerque, B.S.
+ Sousa, L.G.C.
+ Santos, A comparative study of controlled random search algorithms with
+ application to inverse aerofoil design, Engineering Optimization 
 \series bold
-20
+50
 \series default
 , pp.
- 229-234, 1995.
+ 996-1015, 2018.
 \end_layout
 
 \begin_layout Bibliography
@@ -7088,15 +7185,16 @@ literal "false"
 
 \end_inset
 
-B.
- Suman, P.
- Kumar, A survey of simulated annealing as a tool for single and multiobjective
- optimization, J Oper Res Soc 
+A.M.
+ Ferreiro, J.A.
+ García, J.G.
+ López-Salas et al, An efficient implementation of parallel simulated annealing
+ algorithm in GPUs, J Glob Optim 
 \series bold
 57
 \series default
 , pp.
- 1143–1160, 2006.
+ 863–890, 2013.
 \end_layout
 
 \begin_layout Bibliography
@@ -7146,9 +7244,11 @@ literal "true"
 
 \end_inset
 
-D.
- Goldberg, Genetic Algorithms in Search, Optimization and Machine Learning,
- Addison-Wesley Publishing Company, Reading, Massachussets, 1989.
+O.
+ Kramer, Genetic Algorithms.
+ In: Genetic Algorithm Essentials.
+ Studies in Computational Intelligence, vol 679.
+ Springer, Cham, 2017.
 \end_layout
 
 \begin_layout Bibliography
@@ -7159,9 +7259,16 @@ literal "true"
 
 \end_inset
 
-Z.
- Michaelewicz, Genetic Algorithms + Data Structures = Evolution Programs.
- Springer - Verlag, Berlin, 1996.
+S.
+ Katoch, S.S.
+ Chauhan, V.A.
+ Kumar, A review on genetic algorithm: past, present, and future.
+ Multimed Tools Appl 
+\series bold
+80
+\series default
+, pp.
+ 8091–8126, 2021.
 \end_layout
 
 \begin_layout Bibliography
@@ -7209,13 +7316,15 @@ literal "true"
 
 \end_inset
 
-Ioan Cristian Trelea, The particle swarm optimization algorithm: convergence
- analysis and parameter selection, Information Processing Letters 
+D.
+ Wang, D.
+ Tan, L.
+ Liu, Particle swarm optimization algorithm: an overview, Soft Comput 
 \series bold
-85
+22
 \series default
 , pp.
- 317-325, 2003.
+ 387–408, 2018.
 \end_layout
 
 \begin_layout Bibliography
@@ -7365,36 +7474,6 @@ literal "false"
 
 \end_inset
 
-Y.
- Zhou, Y.
- Tan, GPU-based parallel particle swarm optimization, 2009 IEEE Congress
- on Evolutionary Computation, pp.
- 1493-1500, 2009.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "gpu2"
-literal "false"
-
-\end_inset
-
-L.
- Dawson, I.
- Stewart, Improving Ant Colony Optimization performance on the GPU using
- CUDA, in: 2013 IEEE Congress on Evolutionary Computation, pp.
- 1901-1908, 2013.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "gpu3"
-literal "false"
-
-\end_inset
-
 Barkalov, K., Gergel, V.
  Parallel global optimization on GPU.
  J Glob Optim 
@@ -7408,7 +7487,48 @@ Barkalov, K., Gergel, V.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
-key "multistart-tsp"
+key "gpu2"
+literal "false"
+
+\end_inset
+
+G.
+ Kan et al., A multi-core CPU and many-core GPU based fast parallel shuffled
+ complex evolution global optimization approach, IEEE Transactions on Parallel
+ and Distributed Systems 
+\series bold
+28
+\series default
+, pp.
+ 332-344, 2017.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gpu3"
+literal "false"
+
+\end_inset
+
+A.M.
+ Ferreiro, J.A.
+ García-Rodríguez, C.
+ Vázquez, E.
+ Costa, A.
+ Correia, Parallel two-phase methods for global optimization on GPU, Mathematics
+ and Computers in Simulation 
+\series bold
+156
+\series default
+, pp.
+ 67-90, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "multistart-tsp1"
 literal "true"
 
 \end_inset
@@ -7425,7 +7545,46 @@ Li W., A Parallel Multi-start Search Algorithm for Dynamic Traveling Salesman
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
-key "multistart-vehicle"
+key "multistart_tsp2"
+literal "false"
+
+\end_inset
+
+R.
+ Martí, M.G.C.
+ Resende, C.C.
+ Ribeiro, Multi-start methods for combinatorial optimization, European Journal
+ of Operational Research 
+\series bold
+226
+\series default
+, pp.
+ 1-8, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "multistart_tsp3"
+literal "false"
+
+\end_inset
+
+V.
+ Pandiri, A.
+ Singh, Two multi-start heuristics for the k-traveling salesman problem,
+ OPSEARCH 
+\series bold
+57
+\series default
+, pp.
+ 1164–1204, 2020.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "multistart-vehicle1"
 literal "true"
 
 \end_inset
@@ -7438,6 +7597,29 @@ Olli Bräysy, Geir Hasle, Wout Dullaert, A multi-start local search algorithm
 \series default
 , pp.
  586-605, 2004.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "multistart-vehicle2"
+literal "false"
+
+\end_inset
+
+J.
+ Michallet, C.
+ Prins, L.
+ Amodeo, F.
+ Yalaoui, G.
+ Vitry, Multi-start iterated local search for the periodic vehicle routing
+ problem with time windows and time spread constraints on services, Computers
+ & Operations Research 
+\series bold
+41
+\series default
+, pp.
+ 196-207, 2014.
 \end_layout
 
 \begin_layout Bibliography
@@ -7587,25 +7769,6 @@ literal "false"
 
 \end_inset
 
-M.
- Perez, F.
- Almeida and J.
- M.
- Moreno-Vega, "Genetic algorithm with multistart search for the p-Hub median
- problem," Proceedings.
- 24th EUROMICRO Conference (Cat.
- No.98EX204), Vasteras, Sweden, 1998, pp.
- 702-707 vol.2.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "mshybrid2"
-literal "false"
-
-\end_inset
-
 H.
  C.
  B.
@@ -7618,6 +7781,24 @@ H.
  Routing Problem with Time Windows," 2006 Ninth Brazilian Symposium on Neural
  Networks (SBRN'06), Ribeirao Preto, Brazil, 2006, pp.
  137-142.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "mshybrid2"
+literal "false"
+
+\end_inset
+
+R.F.
+ Day, P.Y.
+ Yin, Y.C.
+ Wang, C.H.
+ Chao, A new hybrid multi-start tabu search for finding hidden purchase
+ decision strategies in WWW based on eye-movements, Applied Soft Computing
+ 48, pp.
+ 217-229, 2016.
 \end_layout
 
 \begin_layout Bibliography
@@ -7646,7 +7827,7 @@ literal "false"
 \end_inset
 
 B.
- Betro`, F.
+ Betro, F.
  Schoen, Optimal and sub-optimal stopping rules for the multistart algorithm
  in global optimization, Math.
  Program.
@@ -7705,15 +7886,12 @@ literal "true"
 
 \end_inset
 
-J.
- Larson and S.M.
- Wild, Asynchronously parallel optimization solver for finding multiple
- minima, Mathematical Programming Computation 
-\series bold
-10
-\series default
-, pp.
- 303-332, 2018.
+K.
+ Rocki, R.
+ Suda, An efficient GPU implementation of a multi-start TSP solver for large
+ problem instances, In: GECCO '12: Proceedings of the 14th annual conference
+ companion on Genetic and evolutionary computation, pp.
+ 1441–1442, 2012.
 \end_layout
 
 \begin_layout Bibliography
@@ -7724,15 +7902,15 @@ literal "true"
 
 \end_inset
 
-H.P.J.
- Bolton, J.F.
- Schutte, A.A.
- Groenwold, Multiple Parallel Local Searches in Global Optimization.
- In: Dongarra J., Kacsuk P., Podhorszki N.
- (eds) Recent Advances in Parallel Virtual Machine and Message Passing Interface.
- EuroPVM/MPI 2000.
- Lecture Notes in Computer Science, vol 1908.
- Springer, Berlin, Heidelberg, 2000.
+J.
+ Larson and S.M.
+ Wild, Asynchronously parallel optimization solver for finding multiple
+ minima, Mathematical Programming Computation 
+\series bold
+10
+\series default
+, pp.
+ 303-332, 2018.
 \end_layout
 
 \begin_layout Bibliography
@@ -7763,23 +7941,22 @@ literal "false"
 
 \end_inset
 
-M.J.
- Er, S.
- Wu, J.
- Lu, H.L.
- Toh, Face recognition with radial basis function (RBF) neural networks,
- IEEE Transactions on Neural Networks 
+S.H.
+ Yoo, S.K.
+ Oh, W.
+ Pedrycz, Optimized face recognition algorithm using radial basis function
+ neural networks and its practical applications, Neural Networks
 \series bold
- 13
+ 69, 
 \series default
-, pp.
- 697-710, 2002.
+pp.
+ 111-125, 2015.
 \end_layout
 
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
-key "rbf_function"
+key "rbf_function1"
 literal "false"
 
 \end_inset
@@ -7794,6 +7971,25 @@ G.B.
 \series default
 , pp.
  57-67, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbf_function2"
+literal "false"
+
+\end_inset
+
+Z.
+ Majdisova, V.
+ Skala, Radial basis function approximations: comparison and applications,
+ Applied Mathematical Modelling 
+\series bold
+51
+\series default
+, pp.
+ 728-743, 2017.
 \end_layout
 
 \begin_layout Bibliography
@@ -7973,17 +8169,15 @@ literal "true"
 
 \end_inset
 
-J.E.
- Lennard-Jones, On the Determination of Molecular Fields, Proc.
- R.
- Soc.
- Lond.
- A 
+J.
+ Zhang, V.A.
+ Glezakou, Global optimization of chemical cluster structures: Methods,
+ applications, and challenges, Int J Quantum Chem.
+ 
 \series bold
- 106
+121
 \series default
-, pp.
- 463–477, 1924.
+, 2021.
 \end_layout
 
 \end_body
