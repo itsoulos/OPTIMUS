@@ -141,8 +141,8 @@ void parseCmdLine(QStringList args)
             if(keys.contains(param))
             {
                 availableParams[param]=value;
-                printf("USER PARAM[%s]=%s\n",param.toStdString().c_str(),
-                       value.toStdString().c_str());
+              //  printf("USER PARAM[%s]=%s\n",param.toStdString().c_str(),
+              //         value.toStdString().c_str());
             }
             else
                {
@@ -178,7 +178,7 @@ void  loadOptimizers()
                       {
                          QString optimizerNameIs=name.mid(3);
                          optimizerNameIs=optimizerNameIs.mid(0,optimizerNameIs.size()-3);
-                         qDebug()<<"OPTIMIZER: "<<optimizerNameIs<<" loaded.";
+//                         qDebug()<<"OPTIMIZER: "<<optimizerNameIs<<" loaded.";
                          optimizerName<<optimizerNameIs;
                          optimizerList[optimizerNameIs]=myClassInstance;
                          QJsonObject optimizerParams=myClassInstance->getParameters();
@@ -240,6 +240,10 @@ void printStatistics()
             if(statisticsMinimum[i]<minimumValue)
                 minimumValue=statisticsMinimum[i];
             averageFunctionCalls+=statisticsFunctionCalls[i];
+	    if(statisticsMinimum.size()==1)
+            printf("Minimum:%20.10lf Function calls: %7d\n",
+                   statisticsMinimum[i],statisticsFunctionCalls[i]);
+	    else
             printf("Iteration:%4d Minimum:%20.10lf Function calls: %7d\n",
                    i+1,statisticsMinimum[i],statisticsFunctionCalls[i]);
         }
@@ -257,10 +261,13 @@ void printStatistics()
 	}
 	std = 1.0/statisticsMinimum.size() * std;
 	std = sqrt(std);
+	if(statisticsMinimum.size()>1)
+	{
         printf("Global minimum: %20.10lf\n",minimumValue);
         printf("Average Calls : %20.2lf\n",averageFunctionCalls);
 	printf("Std     Calls : %20.4lf\n",std);
         printf("Global found  : %20.2lf%%\n",minimumTimesFound*100.0/statisticsMinimum.size());
+	}
     }
 }
 

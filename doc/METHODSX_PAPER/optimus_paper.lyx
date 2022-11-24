@@ -663,13 +663,18 @@ https://qt.io
 \end_inset
 
 .
- 
-\end_layout
-
-\begin_layout Standard
+ The user can code the objective problem in C++ by defining some critical
+ functions such as the dimension of the function or the objective function.
+ Subsequently, the user can select a global optimization method to apply
+ to the problem from a wide range of available methods.
+ Also, the user can extend the series of methods by adding some new method.
 
 \series bold
-(Write some text more)
+ 
+\series default
+In the following subsections, the installation process of the proposed software
+ will be analyzed and a complete example of running an objective problem
+ will be given.
 \end_layout
 
 \begin_layout Subsection
@@ -680,7 +685,7 @@ Installation
 At the present time, the software package can only be installed on computers
  with the Linux operating system, but in the future it will be able to be
  installed on other systems as well.
- The instructions to install the package on a computer are as follows:
+ The instructions to install the package on a computer have as follows:
 \end_layout
 
 \begin_layout Enumerate
@@ -743,15 +748,46 @@ Execute the compilation script:
  ./compile.sh 
 \end_layout
 
+\begin_layout Standard
+After the compilation is complete, the 
+\emph on
+lib
+\emph default
+ folder will contain the supported global optimization methods in the form
+ of shared libraries, the 
+\emph on
+PROBLEMS
+\emph default
+ folder will contain a number of example optimization problems from the
+ relevant literature, and the 
+\emph on
+bin
+\emph default
+ folder will contain the main executable of the software named 
+\emph on
+OptimusApp
+\emph default
+.
+ This executable can be used to apply global optimization techniques to
+ objective problems.
+\end_layout
+
 \begin_layout Subsection
 Implemented global optimization methods 
 \end_layout
 
 \begin_layout Standard
-The global optimization methods that have been included in the implemented
- software are presented below.
- In most of them, a local optimization method is applied at the end of the
- algorithm, in order to locate the global minimum with greater reliability.
+In the following, the global optimization methods present in the proposed
+ software are presented.
+ In most of them, a local optimization method is applied after their end
+ in order to find the global minimum with greater reliability.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+(edo na grapso pos kathe methodos exei kai mia seira parametrous pou orizoun
+ tin symperifora tis methodou)
 \end_layout
 
 \begin_layout Enumerate
@@ -1231,6 +1267,13 @@ literal "false"
 Objective problem deployment 
 \end_layout
 
+\begin_layout Standard
+The objective problem must be coded in the C++ programming language.
+ The programmer must provide the software with a series of functions that
+ describe key components of the problem, such as the problem dimension,
+ the objective function, and the derivative.
+\end_layout
+
 \begin_layout Subsubsection
 Objective function coding
 \end_layout
@@ -1262,7 +1305,17 @@ with
 \end_inset
 
 .
- The functions shown in the figure have the following meaning:
+ The functions shown in the figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:A-typical-representation"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ have the following meaning:
 \end_layout
 
 \begin_layout Enumerate
@@ -1274,6 +1327,32 @@ void
  The function init() is called before the objective function is executed
  and its purpose is to pass parameters from the execution environment to
  the objective function.
+ For example in the optimization of the Lennard Jones potential 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Jones"
+literal "false"
+
+\end_inset
+
+ the user can pass the number of individuals in the potential using an assignmen
+t as follows
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+        natoms=data["natoms"].toString().toInt(); 
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Enumerate
@@ -1356,6 +1435,17 @@ double
 \end_inset
 
 .
+ This function can be used in various cases, such as to generate a graph
+ after the optimization is finished or even in the case of artificial neural
+ networks 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nn1,nn2"
+literal "false"
+
+\end_inset
+
+ to apply the resulting trained network to the test set of the problem.
 \end_layout
 
 \begin_layout Standard
@@ -1557,6 +1647,8 @@ noprefix "false"
 \end_inset
 
 .
+ The software incorporates the utility qmake of the QT library to compile
+ the objective function.
  The compilation is performed with the following series of commands in the
  terminal:
 \end_layout
@@ -1646,6 +1738,132 @@ Objective function execution
 \end_layout
 
 \begin_layout Standard
+\begin_inset listings
+lstparams "language={C++},basicstyle={\normalsize},breaklines=true,literate={{-}{-}1}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+./OptimusApp --filename=librastrigin.so --opt_method=Pso
+\backslash
+ --pso_particles=100 --pso_generations=10
+\backslash
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+    --localsearch_method=bfgs
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Output for the minimization of the Rastrigin function using the PSO optimizer.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:rastrigin_output"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Generation     1 value:   -1.7464048
+\end_layout
+
+\begin_layout Plain Layout
+
+Generation     2 value:   -1.8619942
+\end_layout
+
+\begin_layout Plain Layout
+
+Generation     3 value:   -1.8852439
+\end_layout
+
+\begin_layout Plain Layout
+
+Generation     4 value:   -1.9490074
+\end_layout
+
+\begin_layout Plain Layout
+
+Generation     5 value:   -1.9490074
+\end_layout
+
+\begin_layout Plain Layout
+
+Generation     6 value:   -1.9490074
+\end_layout
+
+\begin_layout Plain Layout
+
+Generation     7 value:   -1.9490074
+\end_layout
+
+\begin_layout Plain Layout
+
+Generation     8 value:   -1.9775267
+\end_layout
+
+\begin_layout Plain Layout
+
+Generation     9 value:   -1.9972928
+\end_layout
+
+\begin_layout Plain Layout
+
+Generation    10 value:   -1.9977027
+\end_layout
+
+\begin_layout Plain Layout
+
+Minimum:       -2.0000000000  Function calls:    1028
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
 (give a full detail example)
 \end_layout
 
@@ -1658,6 +1876,12 @@ name "sec:Experiments"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+(write some functions and some experimental results from previous papers)
 \end_layout
 
 \begin_layout Section
@@ -1699,19 +1923,6 @@ Future work:
 
 \series bold
 4) Programming language to guide the optimization process
-\end_layout
-
-\begin_layout Section*
-Acknowledgements
-\end_layout
-
-\begin_layout Standard
-The experiments of this research work was performed at the high performance
- computing system established at Knowledge and Intelligent Computing Lab-oratory
-, Dept of Informatics and Telecommunications, University of Ioannina, acquired
- with the project "Educational Laboratory equipment of TEI of Epirus" with
- MIS 5007094 funded by the Operational Programme "Epirus" 2014-2020, by
- ERDF and national finds.
 \end_layout
 
 \begin_layout Section*
@@ -3101,6 +3312,56 @@ B.
 \series default
 , pp.
  783-789, 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Jones"
+literal "true"
+
+\end_inset
+
+J.
+ Zhang, V.A.
+ Glezakou, Global optimization of chemical cluster structures: Methods,
+ applications, and challenges, Int J Quantum Chem.
+ 
+\series bold
+121
+\series default
+, 2021.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nn1"
+literal "true"
+
+\end_inset
+
+C.
+ Bishop, Neural Networks for Pattern Recognition, Oxford University Press,
+ 1995.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nn2"
+literal "true"
+
+\end_inset
+
+G.
+ Cybenko, Approximation by superpositions of a sigmoidal function, Mathematics
+ of Control Signals and Systems 
+\series bold
+2
+\series default
+, pp.
+ 303-314, 1989.
 \end_layout
 
 \end_body

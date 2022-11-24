@@ -475,9 +475,23 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
+The proposed sampling methodology generates an approximation of the objective
+ function by first taking some samples from it and then trains a neural
+ network to approximate the function.
 
 \series bold
-(write some motivation here)
+ 
+\series default
+Once the neural network training process is completed, a bunch of points
+ can be sampled from the neural network and those with the lowest functional
+ value will be used as starting points for the Multistart method.
+ This way, the actual function will not be sampled but the neural network
+ approximating it, which should significantly reduce the required number
+ of function calls.
+ Furthermore, using points with a low function value as starting points
+ is expected to speed up the location of the global minimum.
+ In addition, the RBF neural network is incorporated since it has a very
+ fast training technique.
 \end_layout
 
 \begin_layout Standard
