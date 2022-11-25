@@ -781,13 +781,12 @@ In the following, the global optimization methods present in the proposed
  software are presented.
  In most of them, a local optimization method is applied after their end
  in order to find the global minimum with greater reliability.
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-(edo na grapso pos kathe methodos exei kai mia seira parametrous pou orizoun
- tin symperifora tis methodou)
+ In the proposed software, each implemented global optimization method has
+ a set of parameters that can determine the global optimization path and
+ the effectiveness of the method.
+ For example, the genetic algorithm contains parameters such as the number
+ of chromosomes or the maximum number of generations allowed.
+ The implemented global optimization methods are:
 \end_layout
 
 \begin_layout Enumerate
@@ -1738,6 +1737,15 @@ Objective function execution
 \end_layout
 
 \begin_layout Standard
+A full working command for the Rastrigin problem using the utility program
+ 
+\emph on
+OptimusApp
+\emph default
+ is shown below
+\end_layout
+
+\begin_layout Standard
 \begin_inset listings
 lstparams "language={C++},basicstyle={\normalsize},breaklines=true,literate={{-}{-}1}"
 inline false
@@ -1759,18 +1767,75 @@ status open
 
 \end_inset
 
+The command line arguments have as follows:
+\end_layout
 
+\begin_layout Enumerate
+The argument 
+\begin_inset Formula $--$
+\end_inset
+
+filename determines the objective problem in shared library format.
+\end_layout
+
+\begin_layout Enumerate
+The argument 
+\begin_inset Formula $--$
+\end_inset
+
+opt_method sets the used global optimization procedure.
+ For this case, the Particle Swarm Optimizer was used.
+ 
+\end_layout
+
+\begin_layout Enumerate
+The argument 
+\begin_inset Formula $--$
+\end_inset
+
+pso_particles sets the number of particles for the PSO optimizer 
+\end_layout
+
+\begin_layout Enumerate
+The argument 
+\begin_inset Formula $--$
+\end_inset
+
+pso_generations sets the maximum number of allowed generations
+\end_layout
+
+\begin_layout Enumerate
+The argument 
+\begin_inset Formula $--$
+\end_inset
+
+localsearch_method sets the used local optimization procedure, that will
+ be applied on the best particle of the PSO procedure when it finishes.
+\end_layout
+
+\begin_layout Standard
+The output of the previous command is shown in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:rastrigin_output"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ As it is obvious, the global optimization method is quite close to the
+ global minimum of the function which is -2, however with the help of the
+ local optimization method applied after its end this minimum is found with
+ greater numerical accuracy.
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
-status open
-
-\begin_layout Plain Layout
-
-\end_layout
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1848,12 +1913,7 @@ Generation    10 value:   -1.9977027
 
 \begin_layout Plain Layout
 
-Minimum:       -2.0000000000  Function calls:    1017 
-\end_layout
-
-\begin_layout Plain Layout
-
-Global minimum:        -2.0000000000 
+Minimum:       -2.0000000000  Function calls:    1028
 \end_layout
 
 \end_inset
@@ -1864,12 +1924,6 @@ Global minimum:        -2.0000000000
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-(give a full detail example)
 \end_layout
 
 \begin_layout Section
@@ -1877,6 +1931,584 @@ Experiments
 \begin_inset CommandInset label
 LatexCommand label
 name "sec:Experiments"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Some of the proposed methods are tested on a series of well - known test
+ problems from the relevant literature.
+ These problems are used by many researchers in the field.
+ The description of the test functions has as follows:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Griewank2
+\series default
+ function.
+ The function is defined as:
+\begin_inset Formula 
+\[
+f(x)=1+\frac{1}{200}\sum_{i=1}^{2}x_{i}^{2}-\prod_{i=1}^{2}\frac{\cos(x_{i})}{\sqrt{(i)}},\quad x\in[-100,100]^{2}
+\]
+
+\end_inset
+
+The global minimum is located at the 
+\begin_inset Formula $x^{*}=(0,0,...,0)$
+\end_inset
+
+ with value 0.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Potential
+\series default
+ function.
+ The molecular conformation corresponding to the global minimum of the energy
+ of N atoms interacting via the Lennard-Jones potential 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Jones"
+literal "true"
+
+\end_inset
+
+ is considered.
+ The objective function is defined as:
+\begin_inset Formula 
+\begin{equation}
+V_{LJ}(r)=4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^{6}\right]\label{eq:potential}
+\end{equation}
+
+\end_inset
+
+For the conducted experiements the values 
+\begin_inset Formula $N=3,\ 4,\ 5$
+\end_inset
+
+ were used.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Rastrigin
+\series default
+ function.
+ The function is given by 
+\begin_inset Formula 
+\[
+f(x)=x_{1}^{2}+x_{2}^{2}-\cos(18x_{1})-\cos(18x_{2}),\quad x\in[-1,1]^{2}
+\]
+
+\end_inset
+
+The global minimum is located at 
+\begin_inset Formula $x^{*}=(0,0)$
+\end_inset
+
+ with value -2.0.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Test2N
+\series default
+ function.
+ This function is given by the equation 
+\begin_inset Formula 
+\[
+f(x)=\frac{1}{2}\sum_{i=1}^{n}x_{i}^{4}-16x_{i}^{2}+5x_{i},\quad x_{i}\in[-5,5].
+\]
+
+\end_inset
+
+The function has 
+\begin_inset Formula $2^{n}$
+\end_inset
+
+ in the specified range and in our experiments we used 
+\begin_inset Formula $n=4,5,6,7$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+xxxx
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Experimental results for some test functions using a series of global optimizati
+on methods.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:results"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="11" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FUNCTION
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PSO
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+iPSO
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+GENETIC
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+GRIEWANK2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+POTENTIAL3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+POTENTIAL4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+POTENTIAL5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+RASTRIGIN
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+TEST2N4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+TEST2N5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+TEST2N6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+TEST2N7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+AVERAGE
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -3322,20 +3954,22 @@ B.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
-key "Jones"
+key "Jones-1"
 literal "true"
 
 \end_inset
 
-J.
- Zhang, V.A.
- Glezakou, Global optimization of chemical cluster structures: Methods,
- applications, and challenges, Int J Quantum Chem.
- 
+J.E.
+ Lennard-Jones, On the Determination of Molecular Fields, Proc.
+ R.
+ Soc.
+ Lond.
+ A 
 \series bold
-121
+ 106
 \series default
-, 2021.
+, pp.
+ 463–477, 1924.
 \end_layout
 
 \begin_layout Bibliography
@@ -3367,6 +4001,80 @@ G.
 \series default
 , pp.
  303-314, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "testfunctions1"
+literal "false"
+
+\end_inset
+
+M.M.
+ Ali and P.
+ Kaelo, Improved particle swarm algorithms for global optimization, Applied
+ Mathematics and Computation 
+\series bold
+196
+\series default
+, pp.
+ 578-593, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "testfunctions2"
+literal "false"
+
+\end_inset
+
+H.
+ Koyuncu, R.
+ Ceylan, A PSO based approach: Scout particle swarm algorithm for continuous
+ global optimization problems, Journal of Computational Design and Engineering
+ 
+\series bold
+6
+\series default
+, pp.
+ 129–142, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "testfunctions3"
+literal "false"
+
+\end_inset
+
+Patrick Siarry, Gérard Berthiau, François Durdin, Jacques Haussy, ACM Transactio
+ns on Mathematical Software 
+\series bold
+23
+\series default
+, pp 209–228, 1997.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "testfunctions4"
+literal "false"
+
+\end_inset
+
+I.G.
+ Tsoulos, I.E.
+ Lagaris, GenMin: An enhanced genetic algorithm for global optimization,
+ Computer Physics Communications
+\series bold
+ 178, 
+\series default
+pp.
+ 843-851, 2008.
 \end_layout
 
 \end_body
