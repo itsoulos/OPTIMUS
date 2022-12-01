@@ -200,7 +200,7 @@ void Minfinder::init()
 void Minfinder::done()
 {
     Tolmin mTolmin(myProblem);
-    minimay[bestIndex]=mTolmin.Solve(minimax[bestIndex]);
+    minimay[bestIndex]=mTolmin.Solve(minimax[bestIndex],false);
 }
 
 void Minfinder::Solve()

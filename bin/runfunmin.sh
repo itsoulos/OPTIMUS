@@ -1,4 +1,4 @@
-METHOD=multistart
+METHOD=islandde
 METHODPARAMS=""
 ### Available local search methods: bfgs, gradient, adam, lbfgs
 if [ $METHOD = "Minfinder" ]

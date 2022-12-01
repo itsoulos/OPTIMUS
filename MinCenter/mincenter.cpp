@@ -207,7 +207,7 @@ void MinCenter::done()
         Point p = allmeans[i];
         Tolmin mTolmin(myProblem);
         trialx = p.getData();
-        y = mTolmin.Solve(trialx);
+        y = mTolmin.Solve(trialx,false);
 	}
         //for (unsigned j = 0; j < trialx.size(); j++)
         //    printf("%lf ", trialx[j]);

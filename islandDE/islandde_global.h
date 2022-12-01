@@ -1,0 +1,12 @@
+#ifndef ISLANDDE_GLOBAL_H
+#define ISLANDDE_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(ISLANDDE_LIBRARY)
+#define ISLANDMULTISTART_EXPORT Q_DECL_EXPORT
+#else
+#define ISLANDDE_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // ISLANDDE_GLOBAL_H
