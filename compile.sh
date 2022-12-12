@@ -4,7 +4,7 @@ then
 else
 	if qmake -v > /dev/null
 	then
-		methods=("Optimus" "islandDE" "islandMultistart" "Bfgs" "IntegerGenetic" "Genetic" "DoubleGenetic" "MinCenter" "Tmlsl" "GENDE" "GCRS" "DE" "Price" "Multistart" "Pso" "iPso"  "Minfinder" "NeuralMinimizer" )
+		methods=("Optimus" "islandDE" "islandMultistart" "Bfgs" "IntegerGenetic" "Genetic" "DoubleGenetic" "MinCenter" "Tmlsl" "GENDE" "GCRS" "DE" "Price" "Multistart" "Pso" "iPso"  "Minfinder" "NeuralMinimizer" "ParallelDe" )
 		problems=("Feature" "GenClass" "DGenclass" "NNC" "RbfTest" "DiffEq")
 		(cd PROBLEMS; for file in *.pro; do  qmake $file;  make; done)
 		(cd PROBLEMS/Feature; for file in *.pro; do  qmake $file;  make; done)

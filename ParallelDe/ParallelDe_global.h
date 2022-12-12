@@ -1,0 +1,12 @@
+#ifndef PARALLELDE_GLOBAL_H
+#define PARALLELDE_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(PARALLELDE_LIBRARY)
+#  define PARALLELDE_EXPORT Q_DECL_EXPORT
+#else
+#  define PARALLELDE_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // PARALLELDE_GLOBAL_H
