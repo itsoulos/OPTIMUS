@@ -1,4 +1,4 @@
-METHOD=islandde
+METHOD=gende
 METHODPARAMS=""
 ### Available local search methods: bfgs, gradient, adam, lbfgs
 if [ $METHOD = "Minfinder" ]
@@ -32,9 +32,9 @@ then
 elif [ $METHOD = "MinCenter" ]
 then
 	METHODPARAMS="--mincenter_samples=600 --mincenter_centers=100 --mincenter_iterations=100"
-elif [ $METHOD = "de" ]
+elif [ $METHOD = "islandde" ]
 then
-	METHODPARAMS="--population_count=30 --max_generations=100"
+	METHODPARAMS="--islandde_samples=100 --islandde_maxiterations=100 --islandde_islands=5 --stopping_rule=0 --tournament=1"
 fi
 
 PROBLEM=$1
