@@ -1,4 +1,4 @@
-METHOD=ParallelDe
+METHOD=NeuralMinimizer
 METHODPARAMS=""
 ### Available local search methods: bfgs, gradient, adam, lbfgs
 if [ $METHOD = "Minfinder" ]
@@ -9,7 +9,7 @@ then
 	METHODPARAMS="--gcrs_samples=25 --gcrs_maxiterations=100000"	
 elif [ $METHOD = "DoubleGenetic" ]
 then
-	METHODPARAMS="--double_chromosomes=200 --double_generations=200  --sample_method=uniform --localsearch_method=bfgs --double_localsearchrate=0.00"	
+	METHODPARAMS="--double_chromosomes=100 --double_generations=200  --sample_method=uniform --localsearch_method=bfgs --double_localsearchrate=0.00"	
 elif [ $METHOD = "Genetic" ]
 then
 	METHODPARAMS="--localsearch_rate=0.01  --genetic_crossover_type=double --chromosomes=500 --localsearch_method=bfgs --generations=2000"
