@@ -13,7 +13,7 @@ ParallelDe::ParallelDe(Problem *p)
     addParameter("parde_islands","10","Number of thread islands");
     addParameter("parde_propagate_rate","5","The number of generations before the propagation takes place");
     addParameter("parde_selection_method","tournament","The selection method used. Available values are: tournament,random");
-    addParameter("parde_propagate_method","1-1","The propagation method used. Available values: 1-1,1-N,N-1,N-N");
+    addParameter("parde_propagate_method","1to1","The propagation method used. Available values: 1to1,1toN,Nto1,NtoN");
 }
 
 int     ParallelDe::selectAtom(int islandIndex)
@@ -85,33 +85,80 @@ void    ParallelDe::init()
     bestIslandValues.resize(islands);
 }
 
+void    ParallelDe::replaceValueInIsland(int islandIndex,Data &x,double &y)
+{
+    //find worst value
+    int minIndex =0;
+    double minValue = -1e+100;
+    for(int pos=islandStartPos(islandIndex);pos<=islandEndPos(islandIndex);pos++)
+    {
+        if(fitness_array[pos]>minValue)
+        {
+            minIndex = pos;
+            minValue = fitness_array[pos];
+        }
+    }
+    if(fitness_array[minIndex]>y)
+    {
+        fitness_array[minIndex]=y;
+        population[minIndex]=x;
+    }
+}
+
 void    ParallelDe::propagateIslandValues()
 {
-    for(int i=0;i<islands;i++)
+    QString parde_propagate_method = params["parde_propagate_method"].toString();
+    if(parde_propagate_method=="1to1")
     {
-        int randomIsland = rand()  % islands;
-        if(randomIsland == i) continue;
-
+        int island1  = rand() % islands;
+        int island2  = rand() % islands;
+        if(island1==island2) return;
+        Data xx = population[bestIslandIndex[island1]];
+        double yy = bestIslandValues[island1];
+        replaceValueInIsland(island2,xx,yy);
+    }
+    else
+    if(parde_propagate_method=="1toN")
+    {
+        int island1  = rand() % islands;
+        Data xx = population[bestIslandIndex[island1]];
+        double yy = bestIslandValues[island1];
+        for(int i=0;i<islands;i++)
         {
-
-            //find worst value
-            int minIndex =0;
-            double minValue = -1e+100;
-            for(int pos=islandStartPos(randomIsland);pos<=islandEndPos(randomIsland);pos++)
+            if(i==island1) continue;
+            replaceValueInIsland(i,xx,yy);
+        }
+    }
+    else
+    if(parde_propagate_method=="Nto1")
+    {
+        int island2 = rand() % islands;
+        for(int i=0;i<islands;i++)
+        {
+            if(i==island2) continue;
+            int island1 = i;
+            Data xx = population[bestIslandIndex[island1]];
+            double yy = bestIslandValues[island1];
+            replaceValueInIsland(island2,xx,yy);
+        }
+    }
+    else
+    if(parde_propagate_method=="NtoN")
+    {
+        for(int i=0;i<islands;i++)
+        {
+            for(int j=0;j<islands;j++)
             {
-                if(fitness_array[pos]>minValue)
-                {
-                    minIndex = pos;
-                    minValue = fitness_array[pos];
-                }
-            }
-            if(fitness_array[minIndex]>bestIslandValues[i])
-            {
-                fitness_array[minIndex]=bestIslandValues[i];
-                population[minIndex]=population[bestIslandIndex[i]];
+                if(i==j) continue;
+                int island1=i;
+                int island2=j;
+                Data xx = population[bestIslandIndex[island1]];
+                double yy = bestIslandValues[island1];
+                replaceValueInIsland(island2,xx,yy);
             }
         }
     }
+
 }
 
 int     ParallelDe::tournament(int islandIndex,int tsize)

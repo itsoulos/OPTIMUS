@@ -27,6 +27,8 @@ public:
  * 9) parde_propagate_rate: The number of generations before the propagation starts.
  * 10) parde_selection_method: The selection method used to select atoms in crossover. Available values
  *     are: random, tournament.
+ * 11) parde_propagate_method: The used propagation method between islands.
+ *     Available values are: 1to1,1toN,Nto1,NtoN
  */
 class PARALLELDE_EXPORT ParallelDe :public Optimizer, ParDEInterface
 {
@@ -61,6 +63,7 @@ private:
     void    getBestValue(int &index,double &value);
     double  getDifferentialWeight();
     int     selectAtom(int islandIndex);
+    void    replaceValueInIsland(int islandIndex,Data &x,double &y);
 public:
     ParallelDe(Problem *p);
     virtual ~ParallelDe();
