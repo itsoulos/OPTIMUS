@@ -3,13 +3,47 @@
 ParallelDe::ParallelDe(Problem *p)
     :Optimizer(p)
 {
-    addParameter("parde_agents", "100", "Number of population");
+    addParameter("parde_termination","similarity","Termination rule. Available values: maxiters,doublebox,similarity");
+    addParameter("parde_similarityMax","10","Maximum allowed itearations for Similarity Stopping rule");
+    addParameter("parde_agents", "20", "Number of population");
     addParameter("parde_generations", "1000", "Maximum number of generations");
     addParameter("parde_cr", "0.9", "Crossover Probability");
+    addParameter("parde_weight_method","random","The differential weight method. Available values are: random, ali, constant");
     addParameter("parde_f", "0.8", "Differential Weight");
     addParameter("parde_islands","10","Number of thread islands");
+    addParameter("parde_propagate_rate","5","The number of generations before the propagation takes place");
+    addParameter("parde_selection_method","tournament","The selection method used. Available values are: tournament,random");
+    addParameter("parde_propagate_method","1-1","The propagation method used. Available values: 1-1,1-N,N-1,N-N");
 }
 
+int     ParallelDe::selectAtom(int islandIndex)
+{
+    QString parde_selection_method = params["parde_selection_method"].toString();
+    if(parde_selection_method == "random")
+    {
+        int a = islandStartPos(islandIndex);
+        int b = islandEndPos(islandIndex);
+        int r = a+rand() % (b-a);
+        return r;
+    }
+    else return tournament(islandIndex);
+}
+
+void    ParallelDe::getBestValue(int &index,double &value)
+{
+    value = 1e+100;
+    index = 0;
+    for(int i=0;(int)i<population.size();i++)
+    {
+        if(fitness_array[i]<value || i==0)
+        {
+
+            value = fitness_array[i];
+            index = i;
+        }
+    }
+
+}
 
 int     ParallelDe::islandStartPos(int islandIndex)
 {
@@ -25,15 +59,24 @@ int     ParallelDe::islandEndPos(int islandIndex)
 void    ParallelDe::init()
 {
     generation = 0;
+    similarity_best_value=1e+100;
+    similarity_max_count=10;
+    similarity_current_count=0;
+    doublebox_xx1=0.0;
+    doublebox_xx2=0.0;
+    doublebox_best_value = 1e+100;
+    doublebox_stopat = 1e+100;
+    doublebox_variance= 1e+100;
+
     islands = params["parde_islands"].toString().toInt();
     parde_F = params["parde_f"].toString().toDouble();
     parde_CR = params["parde_cr"].toString().toDouble();
     int agents = params["parde_agents"].toString().toInt();
     lmargin = myProblem->getLeftMargin();
     rmargin = myProblem->getRightMargin();
-    population.resize(agents);
-    fitness_array.resize(agents);
-    for(int i=0;i<agents;i++)
+    population.resize(agents * islands);
+    fitness_array.resize(agents * islands);
+    for(int i=0;i<agents*islands;i++)
     {
         population[i]=myProblem->getRandomPoint();
         fitness_array[i]=myProblem->funmin(population[i]);
@@ -91,13 +134,61 @@ int     ParallelDe::tournament(int islandIndex,int tsize)
 
 bool    ParallelDe::terminated()
 {
+
+    double bestValue;
+    int bestIndex;
    int parde_generations = params["parde_generations"].toString().toInt();
-   printf("Generation=%d Max=%d\n",generation,parde_generations);
-   for(int i=0;i<islands;i++)
+   getBestValue(bestIndex,bestValue);
+   printf("Generation=%d Value=%20.10lf\n",generation,bestValue);
+ /*  for(int i=0;i<islands;i++)
    {
        printf("BEST ISLAND[%d]=%20.10lg\n",i,bestIslandValues[i]);
+   }*/
+   QString parde_termination =  params["parde_termination"].toString();
+   if(parde_termination=="maxiters")
+    return generation>=parde_generations;
+   else
+   if(parde_termination == "similarity")
+   {
+       int parde_similarityMax = params["parde_similarityMax"].toString().toInt();
+       similarity_max_count = parde_similarityMax;
+        if(fabs(bestValue-similarity_best_value)>1e-5)
+        {
+            similarity_best_value=bestValue;
+            similarity_current_count=0;
+        }
+        else similarity_current_count++;
+        return (similarity_current_count>=similarity_max_count ||
+                generation>=parde_generations);
    }
-   return generation>=parde_generations;
+   else
+   if(parde_termination=="doublebox")
+   {
+        doublebox_xx1+=bestValue;
+        doublebox_xx2+=bestValue * bestValue;
+        doublebox_variance = doublebox_xx2/generation-(doublebox_xx1/generation)*(doublebox_xx1/generation);
+        if(bestValue<doublebox_best_value)
+        {
+            doublebox_best_value = bestValue;
+            doublebox_stopat = doublebox_variance/2.0;
+        }
+        return (doublebox_variance<=doublebox_stopat || generation>=parde_generations);
+   }
+   else return false;
+}
+
+double  ParallelDe::getDifferentialWeight()
+{
+    QString parde_weight_method = params["parde_weight_method"].toString();
+    if(parde_weight_method=="constant")
+        return parde_F;
+    else
+    if(parde_weight_method=="ali")
+    {
+
+    }
+    else
+        return -0.5 + 2.0 * rand()*1.0/RAND_MAX;
 }
 
 void    ParallelDe::step()
@@ -111,14 +202,13 @@ void    ParallelDe::step()
         bestIslandValues[t]=1e+100;
         for(int j=islandStartPos(t);j<=islandEndPos(t);j++)
         {
-            double alfa = -0.5 + 2.0 * rand()*1.0/RAND_MAX;
-            double differentialWeight = alfa;
+            double differentialWeight = getDifferentialWeight();
             int indexA,indexB,indexC;
             do
             {
-                indexA = tournament(t);
-                indexB = tournament(t);
-                indexC = tournament(t);
+                indexA = selectAtom(t);
+                indexB = selectAtom(t);
+                indexC = selectAtom(t);
             }while(indexA==indexB || indexB==indexC || indexA==indexC);
             Data y;
 
@@ -153,21 +243,16 @@ void    ParallelDe::step()
         }
 
     }
-    propagateIslandValues();
+    int parde_propagate_rate = params["parde_propagate_rate"].toString().toInt();
+    if(generation%parde_propagate_rate)
+        propagateIslandValues();
 }
 
 void    ParallelDe::done()
 {
     int bestIndex = 0;
     double bestValue = 1e+100;
-    for(int i=0;(int)i<population.size();i++)
-    {
-        if(fitness_array[i]<bestValue || i==0)
-        {
-            bestIndex = i;
-            bestValue = fitness_array[i];
-        }
-    }
+    getBestValue(bestIndex,bestValue);
     bestValue = localSearch(population[bestIndex]);
 }
 
