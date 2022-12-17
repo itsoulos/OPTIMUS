@@ -47,7 +47,11 @@ private:
     Data   ysample;
     Data bestx;
     double besty;
-      double x1,x2,stopat,variance,oldBesty;
+
+    //for the doublebox stopping rule
+    double doublebox_xx1,doublebox_xx2,doublebox_stopat,
+            doublebox_variance,doublebox_oldBesty;
+
    //for the similarity stopping rule
    double similarity_best_value;
    int similarity_current_count,similarity_max_count;

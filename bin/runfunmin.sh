@@ -1,4 +1,4 @@
-METHOD=NeuralMinimizer
+METHOD=Pso
 METHODPARAMS=""
 ### Available local search methods: bfgs, gradient, adam, lbfgs
 if [ $METHOD = "Minfinder" ]
@@ -15,7 +15,7 @@ then
 	METHODPARAMS="--localsearch_rate=0.01  --genetic_crossover_type=double --chromosomes=500 --localsearch_method=bfgs --generations=2000"
 elif [ $METHOD = "Pso" ]
 then
-	METHODPARAMS="--pso_particles=200 --localsearch_method=bfgs --pso_generations=200 --pso_localsearch_rate=0.05"
+	METHODPARAMS="--pso_particles=100 --localsearch_method=bfgs --pso_generations=200 --pso_localsearch_rate=0.00"
 elif [ $METHOD = "iPso" ]
 then
 	METHODPARAMS="--ipso_particles=200 --ipso_maxgenerations=200 --ipso_localsearch_rate=0.05 --ipso_stoppingrule=best_fitness -ipso_gradientcheck=true --ipso_inertiatype=2"

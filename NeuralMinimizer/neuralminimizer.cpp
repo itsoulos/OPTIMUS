@@ -3,11 +3,11 @@ NeuralMinimizer::NeuralMinimizer(Problem *p)
     :Optimizer(p)
 {
     addParameter("neural_model","rbf","Model used. Available values: neural,rbf,nnc");
-    addParameter("neural_weights","10","The weights used in the neural sampler");
+    addParameter("neural_weights","5","The weights used in the neural sampler");
     addParameter("neural_samples","100","Number of samples for Neural Minimizer");
     addParameter("neural_iterations","200","Number of maximum iterations for Neural Minimizer");
     addParameter("neural_start_samples","200","Number of start samples for Neural Minimizer");
-    addParameter("neural_termination","similarity","The used stopping rule. Available values: similarity, doublebox");
+    addParameter("neural_termination","doublebox","The used stopping rule. Available values: similarity, doublebox");
     addParameter("neural_similarityMaxValue","20","The maximum number of iterations for the similarity stopping rule");
     sampler= NULL;
 }
@@ -23,18 +23,17 @@ bool NeuralMinimizer::terminated()
        for(int i=0;i<minima.size();i++)
            avg_minima+=minima[i];
        avg_minima/=minima.size();
-    fmin=fabs(1.0+fabs(avg_minima));
-    x1=x1+fmin;
-    x2=x2+fmin * fmin;
+   // fmin=fabs(1.0+fabs(avg_minima));
+    doublebox_xx1+=fmin;
+    doublebox_xx2+=fmin * fmin;
 
     iter++;
-    variance = x2/(iter+1) -(x1/(iter+1))*(x1/(iter+1));
-    variance=sqrt(fabs(variance));
+    doublebox_variance = doublebox_xx2/(iter+1) -(doublebox_xx1/(iter+1))*(doublebox_xx1/(iter+1));
 
-    if(fabs(besty-oldBesty)>1e-6)
+    if(fabs(besty-doublebox_oldBesty)>1e-6)
     {
-        oldBesty=besty;
-        stopat=variance/2.0;
+        doublebox_oldBesty=besty;
+        doublebox_stopat=doublebox_variance/2.0;
     }
 
     QString neural_termination = params["neural_termination"].toString();
@@ -49,8 +48,8 @@ bool NeuralMinimizer::terminated()
         return iter>=neural_iterations || similarity_current_count>=similarity_max_count;
     }
     printf("Iter = %d Value =%20.10lg VARIANCE=%20.10lg STOPAT=%20.10lg MINIMA=%20.10lg\n",
-           iter,besty,variance,stopat,avg_minima);
-    return iter>=neural_iterations|| (variance<=stopat && iter>=50);
+           iter,besty,doublebox_variance,doublebox_stopat,avg_minima);
+    return iter>=neural_iterations|| (doublebox_variance<=doublebox_stopat && iter>=20);
 
 }
 
@@ -87,14 +86,19 @@ void NeuralMinimizer::init()
     int neural_similarityMaxValue = params["neural_similarityMaxValue"].toString().toInt();
     similarity_max_count= neural_similarityMaxValue;
     besty = 1e+100;
-    oldBesty = 1e+100;
+    doublebox_oldBesty = 1e+100;
     iter = 0;
-    x1 = 0;
-    x2 = 0;
+    doublebox_xx1 = 0;
+    doublebox_xx2 = 0;
     if(sampler!=NULL)
         delete sampler;
     int neural_weights  = params["neural_weights"].toString().toInt();
-    sampler = new RbfSampler(myProblem,neural_weights);
+    QString neural_model = params["neural_model"].toString();
+    if(neural_model=="rbf")
+        sampler = new RbfSampler(myProblem,neural_weights);
+    else
+        sampler = new NeuralSampler(myProblem,neural_weights);
+
     minima.clear();
     int neural_start_samples  = params["neural_start_samples"].toString().toInt();
     sampler->sampleFromProblem(neural_start_samples,xsample,ysample);
