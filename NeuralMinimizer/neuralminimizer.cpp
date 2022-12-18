@@ -2,11 +2,11 @@
 NeuralMinimizer::NeuralMinimizer(Problem *p)
     :Optimizer(p)
 {
-    addParameter("neural_model","rbf","Model used. Available values: neural,rbf,nnc");
-    addParameter("neural_weights","5","The weights used in the neural sampler");
+    addParameter("neural_model","neural","Model used. Available values: neural,rbf,nnc");
+    addParameter("neural_weights","10","The weights used in the neural sampler");
     addParameter("neural_samples","100","Number of samples for Neural Minimizer");
     addParameter("neural_iterations","200","Number of maximum iterations for Neural Minimizer");
-    addParameter("neural_start_samples","200","Number of start samples for Neural Minimizer");
+    addParameter("neural_start_samples","50","Number of start samples for Neural Minimizer");
     addParameter("neural_termination","doublebox","The used stopping rule. Available values: similarity, doublebox");
     addParameter("neural_similarityMaxValue","20","The maximum number of iterations for the similarity stopping rule");
     sampler= NULL;

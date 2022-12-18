@@ -1,4 +1,4 @@
-METHOD=Pso
+METHOD=NeuralMinimizer
 METHODPARAMS=""
 ### Available local search methods: bfgs, gradient, adam, lbfgs
 if [ $METHOD = "Minfinder" ]

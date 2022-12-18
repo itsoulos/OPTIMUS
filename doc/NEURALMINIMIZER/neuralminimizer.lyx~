@@ -235,7 +235,7 @@ literal "true"
 
 \end_inset
 
-, Particle Swarm Optimization methods 
+, Particle Swarm Optimization (PSO) methods 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "pso_major,pso1,pso2"
@@ -270,30 +270,163 @@ literal "false"
 \end_inset
 
 .
+ In addition, during the last few years, a variety of work has been proposed
+ on combinations and modifications on some global optimization methods to
+ more efficiently find the global minimum such as methods that combine PSO
+ with other methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pso_hybrid1,pso_hybrid2,pso_hybrid3"
+literal "false"
+
+\end_inset
+
+, methods aimed to discover all the local minima of functions 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "tmlsl,Salhi,minfinder"
+literal "false"
+
+\end_inset
+
+, new stopping rules to efficiently terminate the global optimization techniques
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "msstop1,msstop2,msstop3"
+literal "false"
+
+\end_inset
+
+ etc.
+ Also, due to the massive use of parallel processing techniques several
+ methods have been proposed that take full advantage of parallel processing
+ such as parallel techniques 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "parallel-pso,parallel-multistart,parallel-doublepop"
+literal "false"
+
+\end_inset
+
+, methods that utlize the GPU architectures 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "msgpu1,msgpu2"
+literal "false"
+
+\end_inset
+
+ etc.
 \end_layout
 
 \begin_layout Standard
-(review of hybrid methods)
+In this paper, a new multi-start method is proposed that uses a machine
+ learning model, which is trained in parallel with the evolution of the
+ optimization process.
+ Although multistart methods are considered the basis for more modern optimizati
+on techniques, they have been successfully used in several problems such
+ as the Travelling Salesman Problem (TSP)
+\series bold
+ 
+\series default
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "multistart-tsp1,multistart_tsp2,multistart_tsp3"
+literal "true"
+
+\end_inset
+
+, the maximum clique problem 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ms_clique1,ms_clique2"
+literal "false"
+
+\end_inset
+
+, the vehicle routing problem 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "multistart-vehicle1,multistart-vehicle2"
+literal "false"
+
+\end_inset
+
+, scheduling problems 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ms_schedule1,ms_schedule2"
+literal "false"
+
+\end_inset
+
+ etc.
+ In the new technique a Radial Basis Function (RBF) network is used to construct
+ an approximation of the objective function.
+ This construction is carried out in parallel with the execution of the
+ optimization.
+ A limited number of samples from the objective function and the local minima
+ discovered during the optimization are used to construct the approximation
+ function.
 \end_layout
 
 \begin_layout Standard
-(review of parallel methods)
-\end_layout
+The rest of this article is organized as follows: in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Method-Description"
+plural "false"
+caps "false"
+noprefix "false"
 
-\begin_layout Standard
-(the proposed method in 2 lines)
-\end_layout
+\end_inset
 
-\begin_layout Standard
+ the description of the proposed method is provided, in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Experiments"
+plural "false"
+caps "false"
+noprefix "false"
 
+\end_inset
+
+ the used experimental functions as well as the experimental results and
+ comparisons are listed and finally in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Conclusions"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ some conclusions and final thoughts are given.
 \end_layout
 
 \begin_layout Section
 Method Description 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Method-Description"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
 Experiments 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Experiments"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -3951,7 +4084,14 @@ AVERAGE
 \end_layout
 
 \begin_layout Section
-Conclusions
+Conclusions 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Conclusions"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Bibliography
@@ -4439,6 +4579,484 @@ C.A.
 \series default
 , pp.
  3–38, 2009.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso_hybrid1"
+literal "false"
+
+\end_inset
+
+Y.
+ Da, G.
+ Xiurun, An improved PSO-based ANN with simulated annealing technique, Neurocomp
+uting 
+\series bold
+63
+\series default
+, pp.
+ 527-533, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso_hybrid2"
+literal "false"
+
+\end_inset
+
+H.
+ Liu, Z.
+ Cai, Y.
+ Wang, Hybridizing particle swarm optimization with differential evolution
+ for constrained numerical and engineering optimization, Applied Soft Computing
+ 
+\series bold
+10
+\series default
+, pp.
+ 629-640, 2010.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso_hybrid3"
+literal "false"
+
+\end_inset
+
+X.
+ Pan, L.
+ Xue, Y.
+ Lu Y.
+ et al, Hybrid particle swarm optimization with simulated annealing, Multimed
+ Tools Appl 
+\series bold
+78
+\series default
+, pp.
+ 29921–29936, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "tmlsl"
+literal "false"
+
+\end_inset
+
+M.M.
+ Ali, C.
+ Storey, Topographical multilevel single linkage, J.
+ Global Optimization 
+\series bold
+5
+\series default
+, pp.
+ 349–358,1994
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Salhi"
+literal "false"
+
+\end_inset
+
+S.
+ Salhi, N.M.
+ Queen, A hybrid algorithm for identifying global and local minima when
+ optimizing functions with many minima, European J.
+ Oper.
+ Res.
+ 
+\series bold
+155
+\series default
+, pp.
+ 51–67, 2004.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "minfinder"
+literal "false"
+
+\end_inset
+
+I.
+ G.
+ Tsoulos and I.
+ E.
+ Lagaris, MinFinder: Locating all the local minima of a function, Computer
+ Physics Communications 
+\series bold
+174
+\series default
+, pp.
+ 166-179, 2006.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "msstop1"
+literal "false"
+
+\end_inset
+
+B.
+ Betro`, F.
+ Schoen, Optimal and sub-optimal stopping rules for the multistart algorithm
+ in global optimization, Math.
+ Program.
+ 
+\series bold
+57
+\series default
+, pp.
+ 445–458, 1992.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "msstop2"
+literal "false"
+
+\end_inset
+
+W.E.
+ Hart, Sequential stopping rules for random optimization methods with applicatio
+ns to multistart local search, Siam J.
+ Optim.
+ 
+\series bold
+9
+\series default
+, pp.
+ 270–290, 1998.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "msstop3"
+literal "false"
+
+\end_inset
+
+I.E.
+ Lagaris and I.G.
+ Tsoulos, Stopping Rules for Box-Constrained Stochastic Global Optimization,
+ Applied Mathematics and Computation 
+\series bold
+197
+\series default
+, pp.
+ 622-632, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "parallel-pso"
+literal "false"
+
+\end_inset
+
+J.
+ F.
+ Schutte, J.
+ A.
+ Reinbolt, B.
+ J.
+ Fregly, R.
+ T.
+ Haftka, A.
+ D.
+ George, Parallel global optimization with the particle swarm algorithm,
+ International journal for Numerical methods in Engineering 
+\series bold
+61
+\series default
+, pp.
+ 2296-2315, 2004.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "parallel-multistart"
+literal "true"
+
+\end_inset
+
+J.
+ Larson and S.M.
+ Wild, Asynchronously parallel optimization solver for finding multiple
+ minima, Mathematical Programming Computation 
+\series bold
+10
+\series default
+, pp.
+ 303-332, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "parallel-doublepop"
+literal "false"
+
+\end_inset
+
+I.G.
+ Tsoulos, A.
+ Tzallas, D.
+ Tsalikakis, PDoublePop: An implementation of parallel genetic algorithm
+ for function optimization, Computer Physics Communications 
+\series bold
+209
+\series default
+, pp.
+ 183-189, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "msgpu1"
+literal "false"
+
+\end_inset
+
+R.
+ Kamil, S.
+ Reiji, An Efficient GPU Implementation of a Multi-Start TSP Solver for
+ Large Problem Instances, Proceedings of the 14th Annual Conference Companion
+ on Genetic and Evolutionary Computation, pp.
+ 1441-1442, 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "msgpu2"
+literal "false"
+
+\end_inset
+
+Van Luong T., Melab N., Talbi EG.
+ (2011) GPU-Based Multi-start Local Search Algorithms.
+ In: Coello C.A.C.
+ (eds) Learning and Intelligent Optimization.
+ LION 2011.
+ Lecture Notes in Computer Science, vol 6683.
+ Springer, Berlin, Heidelberg.
+ https://doi.org/10.1007/978-3-642-25566-3_24
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "multistart-tsp1"
+literal "true"
+
+\end_inset
+
+Li W., A Parallel Multi-start Search Algorithm for Dynamic Traveling Salesman
+ Problem.
+ In: Pardalos P.M., Rebennack S.
+ (eds) Experimental Algorithms.
+ SEA 2011.
+ Lecture Notes in Computer Science, vol 6630.
+ Springer, Berlin, Heidelberg, 2011.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "multistart_tsp2"
+literal "false"
+
+\end_inset
+
+R.
+ Martí, M.G.C.
+ Resende, C.C.
+ Ribeiro, Multi-start methods for combinatorial optimization, European Journal
+ of Operational Research 
+\series bold
+226
+\series default
+, pp.
+ 1-8, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "multistart_tsp3"
+literal "false"
+
+\end_inset
+
+V.
+ Pandiri, A.
+ Singh, Two multi-start heuristics for the k-traveling salesman problem,
+ OPSEARCH 
+\series bold
+57
+\series default
+, pp.
+ 1164–1204, 2020.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ms_clique1"
+literal "false"
+
+\end_inset
+
+Q.
+ Wu, J.K.
+ Hao,An adaptive multistart tabu search approach to solve the maximum clique
+ problem, J Comb Optim 
+\series bold
+26
+\series default
+, pp.86–108, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ms_clique2"
+literal "false"
+
+\end_inset
+
+Y.
+ Djeddi, H.A.
+ Haddadene, N.
+ Belacel, An extension of adaptive multi-start tabu search for the maximum
+ quasi-clique problem, Computers & Industrial Engineering 
+\series bold
+132
+\series default
+, pp.
+ 280-292, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "multistart-vehicle1"
+literal "true"
+
+\end_inset
+
+Olli Bräysy, Geir Hasle, Wout Dullaert, A multi-start local search algorithm
+ for the vehicle routing problem with time windows, European Journal of
+ Operational Research 
+\series bold
+159
+\series default
+, pp.
+ 586-605, 2004.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "multistart-vehicle2"
+literal "false"
+
+\end_inset
+
+J.
+ Michallet, C.
+ Prins, L.
+ Amodeo, F.
+ Yalaoui, G.
+ Vitry, Multi-start iterated local search for the periodic vehicle routing
+ problem with time windows and time spread constraints on services, Computers
+ & Operations Research 
+\series bold
+41
+\series default
+, pp.
+ 196-207, 2014.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ms_schedule1"
+literal "false"
+
+\end_inset
+
+K.
+ Peng, Q.K.
+ Pan, L.
+ Gao, X.
+ Li, S.
+ Das, B.
+ Zhang, A multi-start variable neighbourhood descent algorithm for hybrid
+ flowshop rescheduling, Swarm and Evolutionary Computation 
+\series bold
+45
+\series default
+, pp.
+ 92-112, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ms_schedule2"
+literal "false"
+
+\end_inset
+
+J.Y.
+ Mao, Q.K.
+ Pan, Z.H.
+ Miao, L.
+ Gao, An effective multi-start iterated greedy algorithm to minimize makespan
+ for the distributed permutation flowshop scheduling problem with preventive
+ maintenance, Expert Systems with Applications 
+\series bold
+169
+\series default
+, 114495, 2021.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbf_main1"
+literal "false"
+
+\end_inset
+
+J.
+ Park, I.W.
+ Sandberg, Approximation and Radial-Basis-Function Networks, Neural Computation
+ 5, pp.
+ 305-316, 1993.
 \end_layout
 
 \begin_layout Bibliography
