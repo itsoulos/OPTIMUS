@@ -76,7 +76,7 @@
 \begin_body
 
 \begin_layout Title
-NeuralMinimizer, a novell method for global optimization that incorporates
+NeuralMinimizer, a novel method for global optimization that incorporates
  machine learning
 \end_layout
 
@@ -130,7 +130,20 @@ University of Western Macedonia, Department of Engineering Informatics and
 \end_layout
 
 \begin_layout Abstract
-Write some abstract here
+The problem of finding the global minimum of multidimensional functions
+ is often applied to a wide range of problems.
+ An innovative technique for finding the global minimum is proposed in this
+ paper.
+ In this technique, an estimation of the objective function is constructed
+ using an RBF network.
+ The network constantly updates the estimation for the objective function
+ with information it gathers from performing local minimizations.
+ In addition, the proposed technique uses as a termination criterion a widely
+ used criterion from the relevant literature which in fact evaluates it
+ after each execution of the local minimization.
+ The proposed technique was applied to a number of well-known problems from
+ the relevant literature, and the comparative results with respect to modern
+ global minimization techniques are extremely promising.
 \end_layout
 
 \begin_layout Section
@@ -167,7 +180,7 @@ S=\left[a_{1},b_{1}\right]\otimes\left[a_{2},b_{2}\right]\otimes\ldots\left[a_{n
 \end_inset
 
 A variety of problems in the physical world can be represented as global
- minimum problems such as problems from physics 
+ minimum problems, such as problems from physics 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "go_physics1,go_physics2,go_physics3"
@@ -271,9 +284,9 @@ literal "false"
 
 .
  In addition, during the last few years, a variety of work has been proposed
- on combinations and modifications on some global optimization methods to
- more efficiently find the global minimum such as methods that combine PSO
- with other methods 
+ on combinations and modifications to some global optimization methods to
+ more efficiently find the global minimum, such as methods that combine
+ PSO with other methods 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "pso_hybrid1,pso_hybrid2,pso_hybrid3"
@@ -299,8 +312,8 @@ literal "false"
 \end_inset
 
  etc.
- Also, due to the massive use of parallel processing techniques several
- methods have been proposed that take full advantage of parallel processing
+ Also, due to the massive use of parallel processing techniques, several
+ methods have been proposed that take full advantage of parallel processing,
  such as parallel techniques 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -309,7 +322,7 @@ literal "false"
 
 \end_inset
 
-, methods that utlize the GPU architectures 
+, methods that utilize the GPU architectures 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "msgpu1,msgpu2"
@@ -326,7 +339,7 @@ In this paper, a new multi-start method is proposed that uses a machine
  optimization process.
  Although multistart methods are considered the basis for more modern optimizati
 on techniques, they have been successfully used in several problems such
- as the Travelling Salesman Problem (TSP)
+ as the Traveling Salesman Problem (TSP)
 \series bold
  
 \series default
@@ -363,13 +376,49 @@ literal "false"
 \end_inset
 
  etc.
- In the new technique a Radial Basis Function (RBF) network is used to construct
- an approximation of the objective function.
+ In the new technique, a Radial Basis Function (RBF) network 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rbf_main1"
+literal "false"
+
+\end_inset
+
+ is used to construct an approximation of the objective function.
  This construction is carried out in parallel with the execution of the
  optimization.
  A limited number of samples from the objective function and the local minima
  discovered during the optimization are used to construct the approximation
  function.
+ During the execution of the method, the samples needed to start local minimizer
+s are taken from the approximation function that is constructed by the neural
+ network.
+ The RBF network was used as an approximation tool as it has been successfully
+ used in a wide range of problems in the field of artificial intelligence
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rbf_face,rbf_function1,rbf_function2,rbf_image"
+literal "false"
+
+\end_inset
+
+ and its training procedure is very fast, if compared to artificial neural
+ networks for example.
+ In addition, for more efficient termination of the method, a termination
+ method proposed by Tsoulos is used 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Tsoulos1"
+literal "false"
+
+\end_inset
+
+, but this termination method is applied after each execution of the local
+ minimization procedure.
+ The proposed technique was applied to a series of problems from the relevant
+ literature and the results are extremely promising even compared to established
+ global optimization techniques.
 \end_layout
 
 \begin_layout Standard
@@ -418,6 +467,679 @@ name "sec:Method-Description"
 
 \end_layout
 
+\begin_layout Standard
+The proposed technique generates an estimation of the objective function
+ during the optimization using an RBF network.
+ This estimation is initially generated from some samples from the objective
+ function and gradually local minima that will have been discovered during
+ the optimization are added to it.
+ In this way, the estimation of the objective function will be continuously
+ improved to approximate the true function as much as possible.
+ At every iteration, several samples are then taken from the estimated function
+ and sorted in ascending order.
+ Those with the lowest value will be starting points of the local minimization
+ method.
+ The local optimization method used here is a BFGS variant of Powell 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "powell"
+literal "false"
+
+\end_inset
+
+.
+ This process has the effect of drastically reducing the total number of
+ function calls that are made and, at the same time, the points used as
+ initiators of the local minimization technique approach the global minimum
+ of the objective function.
+ Also, the proposed method checks the termination rule after the application
+ of every local search method.
+ That way, if the absolute minimum has already been discovered with some
+ certainty, no more function calls will be wasted finding it.
+\end_layout
+
+\begin_layout Standard
+In the following subsections, the training procedure of RBF networks as
+ well as the proposed method are fully described.
+\end_layout
+
+\begin_layout Subsection
+Rbf preliminaries
+\end_layout
+
+\begin_layout Standard
+An RBF network can be defined as:
+\series bold
+
+\begin_inset Formula 
+\begin{equation}
+N\left(\overrightarrow{x}\right)=\sum_{i=1}^{k}w_{i}\phi\left(\left\Vert \overrightarrow{x}-\overrightarrow{c_{i}}\right\Vert \right)\label{eq:firstrbf}
+\end{equation}
+
+\end_inset
+
+
+\series default
+Where 
+\end_layout
+
+\begin_layout Enumerate
+The vector 
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+ is called the input pattern to the equation.
+ 
+\end_layout
+
+\begin_layout Enumerate
+The vectors 
+\begin_inset Formula $\overrightarrow{c_{i}},\ i=1,..,k$
+\end_inset
+
+ are called the center vectors.
+\end_layout
+
+\begin_layout Enumerate
+The vector 
+\begin_inset Formula $\overrightarrow{w}$
+\end_inset
+
+ stands for the the output weight of the RBF network.
+\end_layout
+
+\begin_layout Standard
+In most cases the function 
+\begin_inset Formula $\phi(x)$
+\end_inset
+
+ is a Gaussian function:
+\series bold
+
+\begin_inset Formula 
+\begin{equation}
+\phi(x)=\exp\left(-\frac{\left(x-c\right)^{2}}{\sigma^{2}}\right)
+\end{equation}
+
+\end_inset
+
+
+\series default
+A plot for this function with 
+\begin_inset Formula $c=0,\ \sigma=1$
+\end_inset
+
+ is shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:A-plot-for"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The training error for the RBF network on a set 
+\begin_inset Formula $T=\left\{ \left(x_{1},y_{1}\right),\left(x_{2},y_{2}\right),\ldots,\left(x_{M},y_{M}\right)\right\} $
+\end_inset
+
+ points is estimated as
+\begin_inset Formula 
+\begin{equation}
+E\left(N\left(\overrightarrow{x}\right)\right)=\sum_{i=1}^{M}\left(N\left(x_{i}\right)-y_{i}\right)^{2}\label{eq:rbf_error}
+\end{equation}
+
+\end_inset
+
+In most approaches, the equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:rbf_error"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is minimized with respect to the parameters of the RBF network using a
+ two phase procedure:
+\end_layout
+
+\begin_layout Enumerate
+During the first phase, the 
+\begin_inset Formula $k$
+\end_inset
+
+ centers and the corresponding variances are calculated using the K-Means
+ algorithm 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kmeans"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+During the second phase, the weights 
+\begin_inset Formula $\overrightarrow{w}=\left(w_{1},w_{2},\ldots,w_{k}\right)$
+\end_inset
+
+ are calculated by solving a linear system of equations with the following
+ procedure:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\series bold
+
+\begin_inset Formula $W=w_{kj}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\series bold
+
+\begin_inset Formula $\Phi=\phi_{j}\left(x_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set 
+\begin_inset Formula $T=\left\{ t_{i}=f\left(x_{i}\right),i=1,..,M\right\} $
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+The system to be solved is identified as:
+\series bold
+ 
+\begin_inset Formula 
+\begin{equation}
+\Phi^{T}\left(T-\Phi W^{T}\right)=0
+\end{equation}
+
+\end_inset
+
+
+\series default
+With solution:
+\series bold
+
+\begin_inset Formula 
+\begin{equation}
+W^{T}=\left(\Phi^{T}\Phi\right)^{-1}\Phi^{T}T=\Phi^{\dagger}T\label{eq:eqoutput}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+A plot for the Gaussian function.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:A-plot-for"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename gaussian.eps
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+The main algorithm
+\end_layout
+
+\begin_layout Standard
+The main steps of the proposed algorithm have as follows:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initialization
+\series default
+ step.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $k$
+\end_inset
+
+ the number of weights in RBF network.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $N_{S}$
+\end_inset
+
+ the initial samples that will be taken from the function 
+\begin_inset Formula $f(x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $N_{T}$
+\end_inset
+
+ the number of samples, that will used in every iteration as starting points
+ for the local optimization procedure.
+\end_layout
+
+\begin_layout Enumerate
+Set 
+\begin_inset Formula $N_{R}$
+\end_inset
+
+ the number of samples that will be drawn from the RBF network at every
+ iteration with 
+\begin_inset Formula $N_{R}>N_{T}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $N_{G}$
+\end_inset
+
+ the maximum number of allowed iterations.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ Iter=0, the iteration number.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $\left(x^{*},y^{*}\right)$
+\end_inset
+
+ as the global minimum.
+ Initially 
+\begin_inset Formula $y^{*}=\infty$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Creation 
+\series default
+Step.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $T=\emptyset$
+\end_inset
+
+, the training set for the RBF network.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1,..,N_{S}$
+\end_inset
+
+ do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Take
+\series default
+ a new sample 
+\begin_inset Formula $x_{i}\in S$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Calculate
+\series default
+ 
+\begin_inset Formula $y_{i}=f\left(x_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $T=T\cup\left(x_{i},y_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Train
+\series default
+ the RBF network on the training set 
+\begin_inset Formula $T$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Sampling 
+\series default
+Step
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $T_{R}=\emptyset$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1,..,N_{R}$
+\end_inset
+
+ 
+\series bold
+do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Take
+\series default
+ a random sample 
+\begin_inset Formula $\left(x_{i},y_{i}\right)$
+\end_inset
+
+ from the RBF network.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $T_{R}=T_{R}\cup\left(x_{i,}y_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Sort
+\series default
+ 
+\begin_inset Formula $T_{R}$
+\end_inset
+
+ according to the y values in ascending order.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Optimization
+\series default
+ Step.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1,..,N_{T}$
+\end_inset
+
+ do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Take
+\series default
+ the next sample 
+\begin_inset Formula $\left(x_{i},y_{i}\right)$
+\end_inset
+
+ from 
+\begin_inset Formula $T_{R}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $y_{i}=\mbox{LS}\left(x_{i}\right)$
+\end_inset
+
+.
+ Where LS(x) is a predefined local search method.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $T=T\cup\left(x_{i},y_{i}\right)$
+\end_inset
+
+, this step updates the training set of the RBF network.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Train
+\series default
+ the RBF network on set 
+\begin_inset Formula $T$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+If
+\series default
+ 
+\begin_inset Formula $y_{i}\le y^{*}$
+\end_inset
+
+ then 
+\begin_inset Formula $x^{*}=x_{i},y^{*}=y_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Check
+\series default
+ the termination rule as suggested in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Tsoulos1"
+literal "false"
+
+\end_inset
+
+.
+ If it holds report 
+\begin_inset Formula $\left(x^{*},y^{*}\right)$
+\end_inset
+
+ as the located global minimum and terminate.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ iter=iter+1
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Goto
+\series default
+ to Sampling step.
+\end_layout
+
 \begin_layout Section
 Experiments 
 \begin_inset CommandInset label
@@ -434,8 +1156,8 @@ Test functions
 \end_layout
 
 \begin_layout Standard
-The effectiveness of the proposed method was evaluated using some benchmark
- functions from the relevant literature 
+To estimate the efficiency of the new technique a number of functions from
+ the relevant literature were used 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Ali1,Floudas1"
@@ -444,10 +1166,7 @@ literal "true"
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Subsection
-Test functions
+ These functions are provided in the following.
 \end_layout
 
 \begin_layout Itemize
@@ -855,7 +1574,7 @@ V_{LJ}(r)=4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{
 
 \end_inset
 
-In the current experiments three different cases were studied: 
+In the current experiments two different cases were studied: 
 \begin_inset Formula $N=3,\ 5$
 \end_inset
 
@@ -876,11 +1595,7 @@ f(x)=x_{1}^{2}+x_{2}^{2}-\cos(18x_{1})-\cos(18x_{2}),\quad x\in[-1,1]^{2}
 
 \end_inset
 
-The global minimum is located at 
-\begin_inset Formula $x^{*}=(0,0)$
-\end_inset
 
- with value -2.0.
 \end_layout
 
 \begin_layout Itemize
@@ -1116,7 +1831,7 @@ with
 \begin_inset Formula $n=3,4$
 \end_inset
 
- in our experiments.
+ in the conducted experiments.
 \end_layout
 
 \begin_layout Subsection
@@ -1124,14 +1839,116 @@ Experimental results
 \end_layout
 
 \begin_layout Standard
-\begin_inset Float table
-wide false
-sideways false
+The proposed technique was tested on the previously presented test functions
+ and the results produced were compared with those given by a simple genetic
+ algorithm or a PSO method.
+ In order to have fairness in the comparison of the results, both in the
+ case of genetic algorithms and in the case of the PSO method, the same
+ local minimization method has been used as that of the proposed method.
+ In addition, the number of chromosomes in the genetic algorithm and the
+ number of particles in the PSO method are identical to the parameter 
+\begin_inset Formula $N_{T}$
+\end_inset
+
+ of the proposed procedure.
+ The values for the used parameters are listed in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Experimental-settings."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The conducted experiments were executed 30 times for each test function
+ and averages were taken.
+ In each execution, different seed for the random generator was used.
+ The proposed method is implemented as the method with the name 
+\emph on
+NeuralMinimizer
+\emph default
+ in the 
+\emph on
+OPTIMUS
+\emph default
+ global optimization environment, which is freely available from 
+\begin_inset Flex URL
 status open
 
 \begin_layout Plain Layout
 
+https://github.com/itsoulos/OPTIMUS
 \end_layout
+
+\end_inset
+
+.
+ All the experiments were conducted on an AMD Ryzen 5950X with 128GB of
+ RAM and the Debian Linux operating system.
+ 
+\end_layout
+
+\begin_layout Standard
+The experimental results from the application of the proposed method and
+ the Genetic algorithm and the PSO method are shown in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Comparison"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The number show in the cells denote average function calls.
+ The fraction in parentheses represents the fraction of executions where
+ the global optimum was successfully found.
+ When this number is absent, then the global minimum is computed for every
+ execution (100% success).
+ At the end of the table, an additional row named AVERAGE indicates the
+ total number of function calls and the average success rate in locating
+ the global minimum.
+ In the experimental results, the superiority of the proposed technique
+ over the other two methods in terms of the number of function calls is
+ clear.
+ The proposed technique requires an average of 90% fewer function calls
+ than the other methods.
+ In addition, the proposed technique appears to be more efficient than the
+ other two as it finds more times on average the global minimum of most
+ test functions in the experiments.
+\end_layout
+
+\begin_layout Standard
+In addition, the table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:kexperiments"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ presents the experimental results for the proposed method and for various
+ values of the parameter 
+\begin_inset Formula $N_{S}$
+\end_inset
+
+.
+ As can be seen, the increase in this parameter does not cause a large increase
+ in the total number of function calls, while at the same time it improves
+ to some extent the ability of the proposed technique to find the global
+ minimum.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1155,7 +1972,7 @@ name "tab:Experimental-settings."
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="6" columns="3">
+<lyxtabular version="3" rows="7" columns="3">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -1270,7 +2087,7 @@ Start samples
 \begin_inset Text
 
 \begin_layout Plain Layout
-Number of drawn samples
+Number of samples used as starting points
 \end_layout
 
 \end_inset
@@ -1280,6 +2097,41 @@ Number of drawn samples
 
 \begin_layout Plain Layout
 100
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{R}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Number of samples that will be drawn from the RBF network
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10\times N_{T}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1365,7 +2217,7 @@ Maximum number of iterations
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -2716,18 +3568,14 @@ AVERAGE
 \begin_inset Float table
 wide false
 sideways false
-status open
-
-\begin_layout Plain Layout
-
-\end_layout
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Experimental results for different values of the weights parameter 
-\begin_inset Formula $N_{K}$
+Experimental results for different values of the parameter 
+\begin_inset Formula $N_{S}$
 \end_inset
 
  and the proposed method.
@@ -4094,6 +4942,35 @@ name "sec:Conclusions"
 
 \end_layout
 
+\begin_layout Standard
+An innovative technique for finding the global minimum of multidimensional
+ functions was presented in this work.
+ This new technique is based on the multistart procedure, but also generates
+ an estimation of the objective function through a machine learning model.
+ The machine learning model constructs an estimation of the objective function
+ using a small number of samples from the true function but also with the
+ contribution of local minima discovered during the execution of the method.
+ In this way, the estimation of the objective function is continuously improved
+ and the sampling to perform local minimization is done from the estimated
+ function rather than the actual one.
+ This procedure combined with checking the termination criterion after each
+ execution of the local minimization method led the proposed method to have
+ excellent results both in terms of the speed of finding the global minimum
+ and its efficiency.
+ In addition, the method shows significant stability in its performance
+ even in large changes of its parameters as presented in the experimental
+ results section.
+\end_layout
+
+\begin_layout Standard
+In the future, the use of the RBF network to construct an approximation
+ of the objective function can be applied to more modern optimization techniques
+ such as genetic algorithms.
+ It would also be interesting to create a parallel implementation of the
+ proposed method, in order to significantly speed up its execution and to
+ be able to be used efficiently in optimization problems of higher dimensions.
+\end_layout
+
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
@@ -5055,8 +5932,153 @@ literal "false"
 J.
  Park, I.W.
  Sandberg, Approximation and Radial-Basis-Function Networks, Neural Computation
- 5, pp.
+ 
+\series bold
+5
+\series default
+, pp.
  305-316, 1993.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbf_face"
+literal "false"
+
+\end_inset
+
+S.H.
+ Yoo, S.K.
+ Oh, W.
+ Pedrycz, Optimized face recognition algorithm using radial basis function
+ neural networks and its practical applications, Neural Networks
+\series bold
+ 69, 
+\series default
+pp.
+ 111-125, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbf_function1"
+literal "false"
+
+\end_inset
+
+G.B.
+ Huang, P.
+ Saratchandran, N.
+ Sundararajan, A generalized growing and pruning RBF (GGAP-RBF) neural network
+ for function approximation, IEEE Transactions on Neural Networks 
+\series bold
+16
+\series default
+, pp.
+ 57-67, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbf_function2"
+literal "false"
+
+\end_inset
+
+Z.
+ Majdisova, V.
+ Skala, Radial basis function approximations: comparison and applications,
+ Applied Mathematical Modelling 
+\series bold
+51
+\series default
+, pp.
+ 728-743, 2017.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbf_image"
+literal "false"
+
+\end_inset
+
+B.C.
+ Kuo, H.H.
+ Ho, C.
+ H.
+ Li, C.
+ C.
+ Hung , J.
+ S.
+ Taur, A Kernel-Based Feature Selection Method for SVM With RBF Kernel for
+ Hyperspectral Image Classification, IEEE Journal of Selected Topics in
+ Applied Earth Observations and Remote Sensing.
+ 
+\series bold
+7
+\series default
+, pp.
+ 317-326, 2014.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Tsoulos1"
+literal "false"
+
+\end_inset
+
+I.G.
+ Tsoulos, Modifications of real code genetic algorithm for global optimization,
+ Applied Mathematics and Computation 
+\series bold
+203
+\series default
+, pp.
+ 598-607, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "powell"
+literal "true"
+
+\end_inset
+
+M.J.D Powell, A Tolerant Algorithm for Linearly Constrained Optimization Calculati
+ons, Mathematical Programming 
+\series bold
+45
+\series default
+, pp.
+ 547-566, 1989.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "kmeans"
+literal "false"
+
+\end_inset
+
+MacQueen, J.: Some methods for classification and analysis of multivariate
+ observations, in: Proceedings of the fifth Berkeley symposium on mathematical
+ statistics and probability 
+\series bold
+1
+\series default
+, pp.
+ 281-297, 1967.
+ 
 \end_layout
 
 \begin_layout Bibliography
