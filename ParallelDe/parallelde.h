@@ -30,40 +30,38 @@ public:
  * 11) parde_propagate_method: The used propagation method between islands.
  *     Available values are: 1to1,1toN,Nto1,NtoN
  */
-class PARALLELDE_EXPORT ParallelDe :public Optimizer, ParDEInterface
+class PARALLELDE_EXPORT ParallelDe : public Optimizer, ParDEInterface
 {
 private:
     Matrix population;
-    Data   fitness_array;
-    double  parde_F,parde_CR;
-    int     islands;
-    int     generation;
-    Data    lmargin,rmargin;
-    Data    bestIslandValues;
-    vector<int> bestIslandIndex;
 
-    int     tournament(int islandIndex,int tsize=8);
+    double parde_F, parde_CR;
+    int islands, agents,generation, parde_generations, similarity_max_count, parde_islands_enable,parde_propagate_rate;
+    vector<int> bestIslandIndex,similarity_current_count;
+    vector<double> similarity_best_value,lmargin, rmargin,bestIslandValues,fitness_array,sum,newSum, MO, newMO;
+    vector<double> doublebox_xx1, doublebox_xx2, doublebox_best_value, doublebox_variance, doublebox_stopat;
+    QString parde_termination, parde_propagate_method, parde_weight_method;
+    std::chrono::time_point<std::chrono::system_clock> before, after;
 
-    int     islandStartPos(int islandIndex);
-    int     islandEndPos(int islandIndex);
-
-    void    propagateIslandValues();
+    int selectAtom(int islandIndex);
+    int tournament(int islandIndex, int tsize = 8);
+    int islandStartPos(int islandIndex);
+    int islandEndPos(int islandIndex);
+    void propagateIslandValues();
+    void getBestValue(int &index, double &value);
+    void getBestValue(int islandName, int &index, double &value);
+    double getDifferentialWeight();
+    void replaceValueInIsland(int islandIndex, Data &x, double &y);
+    bool checkIsland(int islandName);
     virtual bool terminated();
     virtual void step();
     virtual void init();
     virtual void done();
 
     //for similarity stopping rule
-    double similarity_best_value;
-    int similarity_max_count;
-    int similarity_current_count;
-    //for doublebox stopping rule
-    double doublebox_xx1,doublebox_xx2,doublebox_best_value,
-        doublebox_variance,doublebox_stopat;
-    void    getBestValue(int &index,double &value);
-    double  getDifferentialWeight();
-    int     selectAtom(int islandIndex);
-    void    replaceValueInIsland(int islandIndex,Data &x,double &y);
+    double global_sim_value;
+    int global_sim_count;
+
 public:
     ParallelDe(Problem *p);
     virtual ~ParallelDe();
