@@ -12,12 +12,15 @@ using namespace std;
 
 extern "C"
 {
-
+int natoms = 10;
+int DIMENSION = 10;
 void    init(QJsonObject data)
 {
 
+    if(data.contains("natoms"))
+        natoms=data["natoms"].toString().toInt();
+    DIMENSION = natoms;
 }
-# define	DIMENSION 10
 int	getdimension()
 {
 	return DIMENSION;

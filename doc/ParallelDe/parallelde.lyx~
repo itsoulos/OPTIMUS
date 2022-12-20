@@ -770,6 +770,19 @@ Set
 \begin_layout Enumerate
 
 \series bold
+Set
+\series default
+ as 
+\begin_inset Formula $N_{I}$
+\end_inset
+
+ the number of islands that should terminate in order to terminate the whole
+ process.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
 Initialize
 \series default
  all agents in 
@@ -797,7 +810,7 @@ For
 do in Parallel
 \begin_inset CommandInset label
 LatexCommand label
-name "enu:For-i=1,..,N-do"
+name "enu:enu6"
 
 \end_inset
 
@@ -881,7 +894,7 @@ noprefix "false"
  is not valid, goto 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "enu:For-i=1,..,N-do"
+reference "enu:enu6"
 plural "false"
 caps "false"
 noprefix "false"
@@ -980,30 +993,61 @@ name "subsec:Termination-rule"
 \end_layout
 
 \begin_layout Standard
-
-\series bold
-In the proposed termination technique in each iteration 
-\begin_inset Formula $\mbox{k}$
+In the proposed termination criterion, a simple criterion is checked separately
+ on each island.
+ For every island 
+\begin_inset Formula $i$
 \end_inset
 
- the difference between the current best value and the previous best value
- is measured, ie the difference 
-\begin_inset Formula $\left|f_{\mbox{min}}^{(k)}-f_{\mbox{min}}^{(k-1)}\right|\le\epsilon.$
+ the difference
+\begin_inset Formula 
+\begin{equation}
+\delta_{i}^{(k)}=\left|f_{i,\mbox{min}}^{(k)}-f_{i,\mbox{min}}^{(k-1)}\right|\label{eq:term}
+\end{equation}
+
 \end_inset
 
- If this difference is zero for a series of predefined number of iterations
- 
-\begin_inset Formula $k_{\mbox{max}}$
+ is measured in each iteration 
+\begin_inset Formula $k,$
 \end_inset
 
-, then the method terminates.
- 
-\end_layout
+ where 
+\begin_inset Formula $f_{i,\mbox{min}}^{(k)}$
+\end_inset
 
-\begin_layout Standard
+ is the best located function value for island 
+\begin_inset Formula $i$
+\end_inset
 
-\series bold
-(define the base rule and the voting system)
+ at itearation 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\delta_{i}^{(k)}\le\epsilon$
+\end_inset
+
+ for at least M consecutive iterations, then most likely the island 
+\begin_inset Formula $i$
+\end_inset
+
+ should terminate population evolution.
+ In the proposed technique, if the quantity of equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:term"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ holds for more than 
+\begin_inset Formula $N_{I}$
+\end_inset
+
+ islands, then the overall algorithm terminates.
 \end_layout
 
 \begin_layout Section
@@ -1017,13 +1061,18 @@ name "sec:Experiments"
 
 \end_layout
 
+\begin_layout Standard
+In the following, the benchmark functions used in the experiments as well
+ as the experimental results are presented.
+\end_layout
+
 \begin_layout Subsection
 Test functions 
 \end_layout
 
 \begin_layout Standard
-To estimate the efficiency of the new technique a number of functions from
- the relevant literature were used 
+To evaluate the ability of the proposed technique to find the total minimum
+ of functions, a series of test functions from the relevant literature 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Ali1,Floudas1"
@@ -1031,8 +1080,7 @@ literal "true"
 
 \end_inset
 
-.
- These functions are provided in the following.
+ were used and presented below.
 \end_layout
 
 \begin_layout Itemize
@@ -1728,6 +1776,10 @@ Experimental results
 \end_layout
 
 \begin_layout Standard
+(na grafei pos egine xrisi OPENMP kai OPTIMUS)
+\end_layout
+
+\begin_layout Standard
 (Na grafei pos sta peiramata egine xrisi tou differential weight apo to
  allo paper, kathos parexei megalyteri axiopistia sta apotelesmata, opos
  fanike ekei)
@@ -1739,14 +1791,18 @@ Experimental results
 \end_layout
 
 \begin_layout Standard
+(pinakas me termination voting)
+\end_layout
+
+\begin_layout Standard
+(pinakas me propagation)
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
-
-\begin_layout Plain Layout
-
-\end_layout
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1770,7 +1826,7 @@ name "tab:Experimental-settings."
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="7" columns="2">
+<lyxtabular version="3" rows="8" columns="2">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -1856,6 +1912,29 @@ PROPAGATION
 
 \begin_layout Plain Layout
 5
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{I}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
 \end_layout
 
 \end_inset
