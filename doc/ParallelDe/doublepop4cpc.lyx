@@ -1,0 +1,3912 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+PDoublePop: An implementation of parallel genetic algorithm for function
+ optimization
+\end_layout
+
+\begin_layout Author
+Ioannis G.
+ Tsoulos
+\begin_inset Formula $^{(1)}$
+\end_inset
+
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Corresponding author.
+ Email: itsoulos@teiep.gr
+\end_layout
+
+\end_inset
+
+, Alexandros Tzallas
+\begin_inset Formula $^{(1)}$
+\end_inset
+
+, Dimitris Tsalikakis
+\begin_inset Formula $^{(2)}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Date
+\begin_inset Formula $^{(1)}$
+\end_inset
+
+Department of Communications, Informatics and Management, Technological
+ Educational Institute of Epirus, Greece 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $^{(2)}$
+\end_inset
+
+University of Western Macedonia, Greece
+\end_layout
+
+\begin_layout Abstract
+A software for the implementation of parallel genetic algorithms is presented
+ in this article.
+ The underlying genetic algorithm is aimed to locate the global minimum
+ of a multidimensional function inside a rectangular hyperbox.
+ The proposed software named PDoublePop implements a client - server model
+ for parallel genetic algorithms with advanced features for the local genetic
+ algorithms such as: an enhanced stopping rule, an advanced mutation scheme
+ and periodical application of a local search procedure.
+ The user may code the objective function either in C++ or in Fortran77.
+ The method is tested on a series of well - known test functions and the
+ results are reported.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+PACS
+\series default
+:02.60.-x ; 02.60.Pn ; 07.05.Kf;  02.70.Lq; 07.05.Mh 
+\end_layout
+
+\begin_layout Section*
+PROGRAM SUMMARY 
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+Title of program
+\shape default
+: PDoublePop
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+Catalogue identifier
+\shape default
+:
+\end_layout
+
+\begin_layout Standard
+\align left
+
+\shape italic
+Program available from
+\shape default
+: CPC Program Library, Queen's University of Belfast, N.
+ Ireland.
+\end_layout
+
+\begin_layout Standard
+\align left
+
+\shape italic
+Computer for which the program is designed and others on which it has been
+ tested
+\shape default
+: The tool has been tested on Linux and FreeBSD.
+ The tool is designed to be portable in all systems running the GNU C++
+ compiler, with Open MPI or LAM MPI.
+\end_layout
+
+\begin_layout Standard
+\align left
+
+\emph on
+Installation
+\emph default
+: Technological Educational Institute of Epirus, Greece.
+\end_layout
+
+\begin_layout Standard
+\align left
+
+\shape italic
+Programming language used
+\shape default
+: GNU-C++, GNU-C, GNU Fortran - 77, MPI.
+\end_layout
+
+\begin_layout Standard
+\align left
+
+\emph on
+Memory required to execute with typical data
+\emph default
+: 200KB.
+\end_layout
+
+\begin_layout Standard
+\align left
+
+\shape italic
+No.
+ of bits in a word
+\shape default
+: 64
+\end_layout
+
+\begin_layout Standard
+\align left
+
+\emph on
+No.
+ of processors used
+\emph default
+: many
+\end_layout
+
+\begin_layout Standard
+\align left
+
+\emph on
+Has the code been vectorized or parallelized?
+\emph default
+: Yes.
+\end_layout
+
+\begin_layout Standard
+\align left
+
+\emph on
+No.
+ of bytes in distributed program,including test data etc
+\emph default
+.: 100 Kbytes.
+\end_layout
+
+\begin_layout Standard
+\align left
+
+\emph on
+Distribution format
+\emph default
+: gzipped tar file.
+\end_layout
+
+\begin_layout Standard
+\align left
+
+\emph on
+Keywords
+\emph default
+: Global optimization, stochastic methods, genetic algorithms, parallel
+ programming.
+\end_layout
+
+\begin_layout Standard
+\align left
+
+\emph on
+Nature of physical problem
+\emph default
+: A series of problems in science and engineering usually can be formulated
+ as a problem of minimizing a function of many variables.
+ The so called local optimization techniques are frequently trapped in local
+ minima, that it sub optimal solutions.
+ For that reason researchers should use more advanced methods that aim to
+ estimate the global minimum of the function.
+\end_layout
+
+\begin_layout Standard
+\align left
+
+\emph on
+Typical running time
+\emph default
+: Depending on the objective function.
+\end_layout
+
+\begin_layout Section*
+LONG WRITE UP
+\end_layout
+
+\begin_layout Section
+Introduction 
+\end_layout
+
+\begin_layout Standard
+The frequently arised problem of discovering the global minimum of a multi
+ - dimensional function can be formulated as 
+\begin_inset Formula 
+\begin{equation}
+x^{*}=\mbox{arg}\min_{x\in S}f(x)\label{eq:eq1}
+\end{equation}
+
+\end_inset
+
+Where 
+\begin_inset Formula $S\subset R^{n}$
+\end_inset
+
+ is given by: 
+\begin_inset Formula 
+\begin{equation}
+S=\left[a_{1},b_{1}\right]\otimes\left[a_{2},b_{2}\right]\otimes\ldots\left[a_{n},b_{n}\right]\label{eq:eq2}
+\end{equation}
+
+\end_inset
+
+The above problem appears in a series of cases in physics 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "physics1,physics2"
+
+\end_inset
+
+, chemistry 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "chemistry1,chemistry2"
+
+\end_inset
+
+, economics 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "econ1"
+
+\end_inset
+
+ etc.
+ The naturally inspired method of genetic algorithms 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "gen1"
+
+\end_inset
+
+ is one of the most common method to tackle the problem of global minimum.
+ Genetic algorithms have been used in a many fields 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "gen2,gen3,gen4"
+
+\end_inset
+
+ and they have many advantages such as:
+\end_layout
+
+\begin_layout Itemize
+Adaptation in every problem
+\end_layout
+
+\begin_layout Itemize
+Requirement for the objective function only and not for gradient functions
+\end_layout
+
+\begin_layout Itemize
+They can be parallelized easily
+\end_layout
+
+\begin_layout Standard
+Although, genetic algorithms have many advantages they require many generations
+ and a lot of function calls to finish.
+ Hence, the parallelization of the process was mandatory.
+ During the past years many researches have published articles and software
+ using parallel genetic algorithms in many cases such as aerodynamic optimizatio
+n 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "par1"
+
+\end_inset
+
+, steel structure optimization 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "par2"
+
+\end_inset
+
+, brain images 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "par3"
+
+\end_inset
+
+ etc.
+ The most frequent model for parallel genetic algorithms is the server -
+ client model, such as the so called Island model 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "island1,island2"
+
+\end_inset
+
+, where clients run a a local genetic algorithm and the server collects
+ information from the clients and occasionally distributes information to
+ them, such as the best discovered minimum.
+ The proposed software named PDoublePop implements a client - server model
+ for parallel genetic algorithms with advanced features for the local genetic
+ algorithms such as: an enhanced stopping rule, an advanced mutation scheme
+ and periodical application of a local search procedure.
+ These new features have been proposed also in a recent work 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Tsoulos1"
+
+\end_inset
+
+ and they are general enough to be adapted in any genetic algorithm.
+ The proposed software has been written entirely in ANSI C++ using MPI libraries
+ and it is independent of the used MPI variant: it has been tested also
+ in Lam MPI 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mpi"
+
+\end_inset
+
+ and in Open Mpi 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "openmpi"
+
+\end_inset
+
+ frameworks.
+\end_layout
+
+\begin_layout Standard
+The rest of this article has as follows: in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Method-description"
+
+\end_inset
+
+ a detailed description of the method is given, in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Experiments"
+
+\end_inset
+
+ some experiments that outline the usability of the software are listed
+ and in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Software-documentation"
+
+\end_inset
+
+ full documentation of the software is provided.
+\end_layout
+
+\begin_layout Section
+Method description 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Method-description"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Server side algorithm 
+\end_layout
+
+\begin_layout Standard
+The algorithm executed on server machine gathers periodically from clients
+ the discovered minimums.
+ Upon termination of all clients, the server outputs the best discovered
+ minimum (denoted by 
+\begin_inset Formula $\left(x^{*},y^{*}\right)$
+\end_inset
+
+).
+ This algorithm has as follows.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $N$
+\end_inset
+
+ the number of clients.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+If
+\series default
+ all clients have finished 
+\series bold
+then
+\series default
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:If-all-clients"
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Report
+\series default
+ 
+\begin_inset Formula $\left(x^{*},y^{*}\right)$
+\end_inset
+
+ as the global minimum.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Terminate
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndIf
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1\ldots N$
+\end_inset
+
+ 
+\series bold
+Do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Obtain
+\series default
+ the minimum 
+\begin_inset Formula $\left(x_{i},y_{i}\right)$
+\end_inset
+
+ from the client 
+\begin_inset Formula $i$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+If
+\series default
+ 
+\begin_inset Formula $y_{i}<y^{*}$
+\end_inset
+
+ 
+\series bold
+Then
+\series default
+ 
+\begin_inset Formula $\left(x^{*},y^{*}\right)=\left(x_{i},y_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Goto
+\series default
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:If-all-clients"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Client side algorithm
+\end_layout
+
+\begin_layout Standard
+On the side of every client the recently introduced algorithm from 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Tsoulos1"
+
+\end_inset
+
+ is implemented.
+ Every genetic algorithm aims to discover the global minimum in all set
+ 
+\begin_inset Formula $S$
+\end_inset
+
+ as defined in equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eq2"
+
+\end_inset
+
+.
+ The steps of the genetic algorithm are the following:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Parameter initialization 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ iter=0, where iter is the current number of generations
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $N_{c}$
+\end_inset
+
+ as the number of chromosomes in the population.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initialize
+\series default
+ chromosomes 
+\begin_inset Formula $X_{i},i=1\ldots N_{c}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ ITERMAX the maximum number of allowed generations.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $p_{c}$
+\end_inset
+
+ as the selection rate and 
+\begin_inset Formula $p_{m}$
+\end_inset
+
+ the mutation rate (positive values less than 1.0) 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $f_{l}=\infty$
+\end_inset
+
+, the best discovered local minimum
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Check
+\series default
+ the termination rule.
+ The rule is based on the observation of the variance of the best discovered
+ value 
+\begin_inset Formula $f_{l}$
+\end_inset
+
+.
+ At every generation the variance 
+\begin_inset Formula $\sigma^{(\mbox{iter})}$
+\end_inset
+
+ of 
+\begin_inset Formula $f_{l}$
+\end_inset
+
+ is computed.
+ If genetic algorithm fails to find any new minimum for a number of generations,
+ then the algorithm should terminate.
+ Hence, the stopping rule is stated as
+\begin_inset Formula 
+\begin{equation}
+\left|f_{h}-f_{l}\right|\le e\ \mbox{OR}\ \sigma^{(\mbox{iter})}\le\frac{\sigma^{(\mbox{last})}}{2}\mbox{\ \ \ OR iter>ITERMAX }\label{eq:termination_mine}
+\end{equation}
+
+\end_inset
+
+Where last is the generation where the best value 
+\begin_inset Formula $f_{l}$
+\end_inset
+
+ was firstly recorded.
+ 
+\series bold
+If
+\series default
+ equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:termination_mine"
+
+\end_inset
+
+ is true 
+\series bold
+then
+\series default
+ 
+\series bold
+Goto
+\series default
+ step 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:Apply-the-local"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Calculate
+\series default
+ the corresponding fitness value 
+\begin_inset Formula $f_{i}=f\left(X_{i}\right),i=1\ldots N_{c}$
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:Calculate-the-corresponding"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Genetic Operators
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Apply
+\series default
+ the process of crossover, where 
+\begin_inset Formula $M\le N_{c}$
+\end_inset
+
+ parents are selected from the population.
+ The selection of every couple 
+\begin_inset Formula $x,y$
+\end_inset
+
+ is performed using tournament selection.
+ Having selected the parents, the offsprings 
+\begin_inset Formula $\tilde{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\tilde{y}$
+\end_inset
+
+ are produced according to:
+\begin_inset Formula 
+\begin{eqnarray}
+\tilde{x_{i}} & = & a_{i}x_{i}+\left(1-a_{i}\right)y_{i}\nonumber \\
+\tilde{y_{i}} & = & a_{i}y_{i}+\left(1-a_{i}\right)x_{i}\label{eq:crossover_ali}
+\end{eqnarray}
+
+\end_inset
+
+where 
+\begin_inset Formula $a_{i}$
+\end_inset
+
+ are random numbers in 
+\begin_inset Formula $[-0.5,1.5]$
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "doublecrossover"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Mutate
+\series default
+ the offsprings produced during crossover with probability 
+\begin_inset Formula $p_{m}$
+\end_inset
+
+.
+ Suppose that the element 
+\begin_inset Formula $i$
+\end_inset
+
+ of a given chromosome 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+.
+ The new element 
+\begin_inset Formula $x_{i}'$
+\end_inset
+
+ is calculated an equation borrowed from the popular PSO optimization method
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pso"
+
+\end_inset
+
+: 
+\begin_inset Formula 
+\begin{equation}
+x_{i}'=c_{1}r_{1}\left(x_{i}^{b}-x_{i}\right)+c_{2}r_{2}\left(x_{l}^{b}-x_{i}\right)\label{eq:proposed_mutation}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $c_{1}$
+\end_inset
+
+and 
+\begin_inset Formula $c_{2}$
+\end_inset
+
+ are two positive constants (acceleration coefficients), 
+\begin_inset Formula $r_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $r_{2}$
+\end_inset
+
+ are random numbers in the range [0,1] and the vector 
+\begin_inset Formula $x^{b}$
+\end_inset
+
+ is a copy of the best so far position of chromosome 
+\begin_inset Formula $x$
+\end_inset
+
+ (i.e.
+ the position with the lowest function value).
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Replace
+\series default
+ the 
+\begin_inset Formula $m$
+\end_inset
+
+ worst chromosomes in the population with the previously generated offsprings.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ iter=iter+1
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Obtain 
+\series default
+the best value in the population, denoted as 
+\begin_inset Formula $f_{l}$
+\end_inset
+
+ .
+ 
+\series bold
+If
+\series default
+ there was improvement Send 
+\begin_inset Formula $\left(x_{l},f_{l}\right)$
+\end_inset
+
+ to Server machine
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Goto
+\series default
+ step 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:Calculate-the-corresponding"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Apply
+\series default
+ the local search procedure 
+\begin_inset Formula ${\cal LS}()$
+\end_inset
+
+ to the best chromosome 
+\begin_inset Formula $x_{l}$
+\end_inset
+
+.
+ The local search procedure used was a BFGS variant due to Powell 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "powell"
+
+\end_inset
+
+.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:Apply-the-local"
+
+\end_inset
+
+ The method is called Tolmin and it is a numerical optimization algorithm
+ that seeks for the minimum of differentiable function subject to some constrain
+ts.
+ In the case of the proposed algorithm only simple bounds on the variables
+ are used.
+
+\series bold
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Obtain
+\series default
+ 
+\begin_inset Formula $\left(x_{l},f_{l}\right)={\cal LS}\left(x_{l}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Send
+\series default
+ 
+\begin_inset Formula $\left(x_{l},f_{l}\right)$
+\end_inset
+
+ to Server machine.
+\end_layout
+
+\begin_layout Section
+Experiments 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Experiments"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In order to measure the efficiency and the effectiveness of the proposed
+ software a comparison is maid against one of the most known software GAlib
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "galib"
+
+\end_inset
+
+.
+ More specific a parallel improvement of Galib named GAlib-mpi where used
+ that utilizes MPI for parallelization.
+ In the following the experimental test functions are listed as well as
+ the results from the application of both GAlib and PDoublePop to the mentioned
+ test functions.
+\end_layout
+
+\begin_layout Subsection
+Test functions
+\end_layout
+
+\begin_layout Subsubsection*
+Rastrigin
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f(x)=x_{1}^{2}+x_{2}^{2}-\cos(18x_{1})-\cos(18x_{2})$
+\end_inset
+
+, 
+\begin_inset Formula $x\in[-1,1]^{2}$
+\end_inset
+
+ with 49 local minima and global minimum 
+\begin_inset Formula $f^{*}=-2.0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection*
+Griewank2
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f(x)=1+\frac{1}{200}\sum_{i=1}^{2}x_{i}^{2}-\prod_{i=1}^{2}\frac{\cos(x_{i})}{\sqrt{(i)}}$
+\end_inset
+
+, 
+\begin_inset Formula $x\in[-100,100]^{2}$
+\end_inset
+
+ with 529 local minima and global minimum 
+\begin_inset Formula $f^{*}=0.0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Griewank10 
+\end_layout
+
+\begin_layout Standard
+The function is given by the equation 
+\begin_inset Formula 
+\[
+f(x)=\sum_{i=1}^{n}\frac{x_{i}^{2}}{4000}-\prod_{i=1}^{n}\cos\left(\frac{x_{i}}{\sqrt{i}}\right)+1
+\]
+
+\end_inset
+
+In our experiments we have used 
+\begin_inset Formula $n=10$
+\end_inset
+
+ and the global minimum is 0.0 
+\end_layout
+
+\begin_layout Subsubsection*
+Hansen function 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f(x)=\sum_{i=1}^{5}i\cos\left[(i-1)x_{1}+i\right]\sum_{j=1}^{5}j\cos\left[(j+1)x_{2}+j\right]$
+\end_inset
+
+, 
+\begin_inset Formula $x\in[-10,10]^{2}$
+\end_inset
+
+ .
+ The global minimum of the function is -176.541793.
+\end_layout
+
+\begin_layout Subsubsection*
+Rosenbrock
+\end_layout
+
+\begin_layout Standard
+This function is given by 
+\begin_inset Formula 
+\[
+f(x)=\sum_{i=1}^{n-1}\left(100\left(x_{i+1}-x_{i}^{2}\right)^{2}+\left(x_{i}-1\right)^{2}\right),\quad-30\le x_{i}\le30.
+\]
+
+\end_inset
+
+The global minimum is located at the 
+\begin_inset Formula $x^{*}=(0,0,...,0)$
+\end_inset
+
+ with 
+\begin_inset Formula $f\left(x^{*}\right)=0$
+\end_inset
+
+.
+ In our experiments we used this function with 
+\begin_inset Formula $n=32$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection*
+Gkls
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f(x)=\mbox{Gkls}(x,n,w)$
+\end_inset
+
+, is a function with 
+\begin_inset Formula $w$
+\end_inset
+
+ local minima, described in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Gkls"
+
+\end_inset
+
+, 
+\begin_inset Formula $x\in[-1,1]^{n},\ n\in[2,100]$
+\end_inset
+
+.
+ In our experiments we use 
+\begin_inset Formula $n=3$
+\end_inset
+
+ and 
+\begin_inset Formula $w=50$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection*
+Shekel 5 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+f(x)=-\sum_{i=1}^{5}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}
+\]
+
+\end_inset
+
+ with 
+\begin_inset Formula $x\in[0,10]^{4}$
+\end_inset
+
+ and 
+\begin_inset Formula $a=\left(\begin{array}{cccc}
+4 & 4 & 4 & 4\\
+1 & 1 & 1 & 1\\
+8 & 8 & 8 & 8\\
+6 & 6 & 6 & 6\\
+3 & 7 & 3 & 7
+\end{array}\right),\ c=\left(\begin{array}{c}
+0.1\\
+0.2\\
+0.2\\
+0.4\\
+0.4
+\end{array}\right)$
+\end_inset
+
+.
+ The value of global minimum is -10.107749.
+\end_layout
+
+\begin_layout Subsubsection*
+Shubert function
+\end_layout
+
+\begin_layout Standard
+The function is given by 
+\begin_inset Formula $f(x)=-\sum_{i=1}^{2}\sum_{j=1}^{5}j\left\{ \sin((j+1)x_{i})+1\right\} ,$
+\end_inset
+
+
+\begin_inset Formula $x\in[-10,10]^{2}$
+\end_inset
+
+ .
+ The value of global minimum is -24.06249.
+\end_layout
+
+\begin_layout Subsubsection*
+Test2N 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+f(x)=\frac{1}{2}\sum_{i=1}^{n}x_{i}^{4}-16x_{i}^{2}+5x_{i}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[-5,5]^{n}$
+\end_inset
+
+.
+ The function has 
+\begin_inset Formula $2^{n}$
+\end_inset
+
+ local minima in the specified range.
+ In our experiments we used the cases of 
+\begin_inset Formula $n=5,6,7$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection*
+
+\emph on
+Sinusoidal function
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+The function is given by 
+\begin_inset Formula 
+\[
+f(x)=-\left(2.5\prod_{i=1}^{n}\sin\left(x_{i}-z\right)+\prod_{i=1}^{n}\sin\left(5\left(x_{i}-z\right)\right)\right),\quad0\le x_{i}\le\pi.
+\]
+
+\end_inset
+
+The global minimum is located at 
+\begin_inset Formula $x^{*}=(2.09435,2.09435,...,2.09435)$
+\end_inset
+
+ with 
+\begin_inset Formula $f\left(x^{*}\right)=-3.5$
+\end_inset
+
+.
+ In our experiments we used 
+\begin_inset Formula $n=16$
+\end_inset
+
+ and 
+\begin_inset Formula $z=\frac{\pi}{6}$
+\end_inset
+
+ and the corresponding function is denoted by the label SINU16.
+\end_layout
+
+\begin_layout Subsubsection*
+Elp16 
+\end_layout
+
+\begin_layout Standard
+The function is given by the equation 
+\begin_inset Formula 
+\[
+f(x)=\sum_{i=1}^{n}ix_{i}^{3}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[-n,n]^{n}$
+\end_inset
+
+.
+ The value of global minimum is 0.0 and in our experiments we have used 
+\begin_inset Formula $n=16$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Lennard Jones potential
+\end_layout
+
+\begin_layout Standard
+The molecular conformation corresponding to the global minimum of the energy
+ of N atoms interacting via the Lennard-Jones potential is determined for
+ the case of N = 6 and N=7 atoms (denoted by POTENTIAL6 and POTENTIAL7).
+ The value of global minimum for POTENTIAL5 is -12.712062 and -16.505384 for
+ POTENTIAL7.
+\end_layout
+
+\begin_layout Subsection*
+Tersoff potential
+\end_layout
+
+\begin_layout Standard
+The binding energy for Tersoff potentials
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Tersoff"
+
+\end_inset
+
+ is used as test function here.
+ We used the potential for 3 atoms named Tersoff3 in the relevant experiments
+ with global minimum -5.33
+\end_layout
+
+\begin_layout Subsection
+Experimental results
+\end_layout
+
+\begin_layout Standard
+In table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:galib"
+
+\end_inset
+
+ we list the results from the application of GAlib and PDoublePop to the
+ above test functions.
+ The cells denote average number of generations.
+ The figures in parentheses denote the fraction of runs that located the
+ global minimum and were not trapped in one of the local minima.
+ Absence of this number denotes that the global minimum has been recovered
+ in every single run.
+ The experiments were performed 30 times using different seed for the random
+ generator each times and averages were taken.
+ In every experiment the number of chromosomes was set to 200 and the maximum
+ number of allowed generations was set to 2000.
+ The stopping rule used was the same in all the algorithms.
+ The column FUNCTION denotes the function name, the column GAlib denotes
+ the average number of generations for GAlib algorithm and PDoublePop denotes
+ the average number of generations for the proposed software.
+\end_layout
+
+\begin_layout Standard
+The proposed method seems to require a significantly lower number of generations
+ than GAlib.
+ Also, the method managed to find the global minimum in all cases, as deduced
+ from the fraction of runs that succeeded in finding the global minimum.
+ 
+\end_layout
+
+\begin_layout Subsection
+Comparison with the sequential version
+\end_layout
+
+\begin_layout Standard
+The proposed method is compared against the sequential version of the algorithm
+ in terms of speed.
+ For this purpose the test function ELP is used.
+ The function is defined by 
+\begin_inset Formula 
+\[
+f(x)=\sum_{i=1}^{n}ix_{i}^{3}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[-n,n]^{n}$
+\end_inset
+
+.
+ In these tests 
+\begin_inset Formula $n$
+\end_inset
+
+ was set to 
+\begin_inset Formula $n=4,8,16,32,64$
+\end_inset
+
+ The experiments were performed 30 times using different seed for the random
+ generator each times and averages were taken.
+ In all experiments the maximum number of generations was set to 2000.
+ For the sequential version of the algorithm 500 chromosomes were used.
+ For The parallel version the number of chromosomes was set to 250 for 2
+ machines and to 100 for 5 machines.
+ That indicates a fixed total population of 500 chromosomes for the parallel
+ version of the algorithm.
+ All the experiments were executed on a series of Intel I5 machines with
+ 4GB of RAM running Linux.
+ The results from this comparison are outlined in table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:parallel"
+
+\end_inset
+
+.
+ The numbers in cells denote average time in seconds.
+ The column PROBLEM denotes the name of the test problem, the column SERIAL
+ stands for the sequential version of the algorithm, the column PARALLEL-2
+ stands for the parallel version with 2 machines and the column PARALLEL-5
+ stands for the parallel version stands for the parallel version with 5
+ machines.
+ The same results are presented graphically in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Plot-figure-of"
+
+\end_inset
+
+.
+ It is obvious that the parallel version requires a radically lower execution
+ time than the sequential version for the same test cases.
+ 
+\end_layout
+
+\begin_layout Section
+Software documentation 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Software-documentation"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Distribution 
+\end_layout
+
+\begin_layout Standard
+The package is distributed in a tar.gz file named 
+\family typewriter
+PDoublePop.tar.gz
+\family default
+ and under UNIX systems the user must issue the following commands to extract
+ the associated files:
+\end_layout
+
+\begin_layout Enumerate
+gunzip 
+\family typewriter
+PDoublePop.tar.gz
+\end_layout
+
+\begin_layout Enumerate
+tar xfv 
+\family typewriter
+PDoublePop.tar
+\end_layout
+
+\begin_layout Standard
+These steps create a directory named 
+\family typewriter
+PDoublePop
+\family default
+ with the following contents:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+bin
+\series default
+: A directory which is initially empty.
+ After compilation of the package, it will contain the executable 
+\series bold
+make_doublepop 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+doc
+\series default
+: This directory contains the documentation of the package (this file) in
+ different formats: A LyX file, A LaTeX file and a PostScript file.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+examples
+\series default
+: A directory that contains some test functions.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+include
+\series default
+: A directory which contains the header files for all the classes of the
+ package.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+src
+\series default
+: A directory containing the source files of the package.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Makefile
+\series default
+: The input file to the 
+\family typewriter
+make
+\family default
+ utility in order to build the tool.
+ Usually, the user does not need to change this file.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Makefile.inc
+\series default
+: The file that contains some configuration parameters, such as the name
+ of the C++ compiler etc.
+ The user must edit and change this file before installation.
+\end_layout
+
+\begin_layout Subsection
+Installation 
+\end_layout
+
+\begin_layout Standard
+The following steps are required in order to build the tool:
+\end_layout
+
+\begin_layout Enumerate
+Uncompress the tool as described in the previous section.
+\end_layout
+
+\begin_layout Enumerate
+
+\family typewriter
+cd PDoublePop 
+\end_layout
+
+\begin_layout Enumerate
+Edit the file 
+\family typewriter
+Makefile.inc
+\family default
+ and change (if needed) the five configuration parameters.
+\end_layout
+
+\begin_layout Enumerate
+Type 
+\family typewriter
+make
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+The five parameters in 
+\family typewriter
+Makefile.inc
+\family default
+ are the following:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+CXX
+\series default
+: It is the most important parameter.
+ It specifies the name of the C++ compiler.
+ In most systems running the GNU C++ compiler this parameter must be set
+ to mpiCC.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+CC
+\series default
+: If the user written programs are in C, set this parameter to the name
+ of the C compiler.
+ Usually, for the GNU compiler suite, this parameter is set to mpicc.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+F77
+\series default
+: If the user written programs are in Fortran 77, set this parameter to
+ the name of the Fortran 77 compiler.
+ For the GNU compiler suite a usual value for this parameter is mpif77.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+F77FLAGS
+\series default
+: The compiler GNU FORTRAN 77 (g77) appends an underscore to the name of
+ all subroutines and functions after the compilation of a Fortran source
+ file.
+ In order to prevent this from happening we can pass some flags to the compiler.
+ Normally, this parameter must be set to -fno-underscoring.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+ROOTDIR
+\series default
+: Is the location of the PDoublePop directory.
+ It is critical for the system that this parameter is set correctly.
+ In most systems, it is the only parameter which must be changed.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+MAKE
+\series default
+: The name of the 
+\family typewriter
+make
+\family default
+ utility.
+ The default value is make and on some systems (such as FreeBSD) it should
+ change to 
+\family typewriter
+gmake
+\family default
+.
+\end_layout
+
+\begin_layout Subsection
+User written subprograms 
+\end_layout
+
+\begin_layout Standard
+The user should code the objective function using any of the following programmi
+ng languages: C, C++, Fortran77.
+ The C++ files should have the following command before any function in
+ the file 
+\end_layout
+
+\begin_layout LyX-Code
+ extern 
+\begin_inset Formula $"\mbox{C}"$
+\end_inset
+
+ {
+\end_layout
+
+\begin_layout Standard
+and the line 
+\end_layout
+
+\begin_layout LyX-Code
+}
+\end_layout
+
+\begin_layout Standard
+after them.
+ The user should supply the following functions:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+getdimension
+\series default
+(): It is an integer function which returns the dimension of the objective
+ function.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+getleftmargin
+\series default
+(left): It is a subroutine (or a void function in C) which fills the double
+ precision array left with the left margins of the objective function.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+getrightmargin
+\series default
+(right): Is is a subrourine ( or a void function in C) which fills the double
+ precision array right with the right margins of the objective function.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+funmin
+\series default
+(x): It is a double precision function which returns the value of the objective
+ function evaluated at point x.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+granal
+\series default
+(x,g): It is a subroutine (or a void function in C) which returns in a double
+ precision array g the gradient of the objective function at point x.
+\end_layout
+
+\begin_layout Subsection
+The utility make_doublepop 
+\end_layout
+
+\begin_layout Standard
+After the compilation of the package, the executable 
+\family typewriter
+make_doublepop
+\family default
+ will be placed in the subdirectory 
+\family typewriter
+bin
+\family default
+ in the distribution directory.
+ This program creates the final executable and it takes the following command
+ line parameters:
+\end_layout
+
+\begin_layout Enumerate
+
+\family typewriter
+-h
+\family default
+: Prints a help screen and terminates.
+\end_layout
+
+\begin_layout Enumerate
+
+\family typewriter
+-p
+\family default
+ 
+\series bold
+filename
+\series default
+: The 
+\series bold
+filename
+\series default
+ parameter specifies the name of the file containing the objective function.
+ The utility checks the suffix of the file and it uses the appropriate compiler.
+ If this suffix is .cc or .c++ or .CC or .cpp, then it invokes the C++ compiler.
+ If the suffix is .f or .F or .for then it invokes the Fortran 77 compiler.
+ Finally, if the suffix is .c it invokes the C compiler.
+\end_layout
+
+\begin_layout Enumerate
+
+\family typewriter
+-o
+\family default
+ 
+\series bold
+filename
+\series default
+: The 
+\series bold
+filename
+\series default
+ parameter specifies the name of the final executable.
+ The default value for this parameter is
+\family typewriter
+ doublepop
+\family default
+.
+\end_layout
+
+\begin_layout Subsection
+The program doublepop 
+\end_layout
+
+\begin_layout Standard
+The final executable 
+\family typewriter
+doublepop
+\family default
+ has the following command line parameters:
+\end_layout
+
+\begin_layout Enumerate
+
+\family typewriter
+-h
+\family default
+:The program prints a help and it terminates.
+\end_layout
+
+\begin_layout Enumerate
+
+\family typewriter
+-c
+\family default
+ 
+\family typewriter
+\series bold
+count
+\family default
+\series default
+: The integer parameter 
+\family typewriter
+\series bold
+count
+\family default
+\series default
+ specifies the number of chromosomes for the genetic algorithm.
+ The default value for this parameter is 100.
+\end_layout
+
+\begin_layout Enumerate
+-g 
+\series bold
+gens
+\series default
+: The integer parameter 
+\series bold
+gens
+\series default
+ determines the maximum number of generations allowed for the genetic algorithm.
+ The default value is 200.
+\end_layout
+
+\begin_layout Enumerate
+
+\family typewriter
+-s
+\family default
+ 
+\family typewriter
+\series bold
+srate
+\family default
+\series default
+: The double parameter 
+\family typewriter
+\series bold
+srate
+\family default
+\series default
+ specifies the selection rate used in the genetic algorithm.
+ The default value for this parameter is 0.10 (10%).
+\end_layout
+
+\begin_layout Enumerate
+
+\family typewriter
+-m
+\family default
+ 
+\family typewriter
+\series bold
+mrate
+\family default
+\series default
+: The double parameter 
+\family typewriter
+\series bold
+mrate
+\family default
+\series default
+ specifies the mutation rate used in the genetic algorithm.
+ The default value for this parameter is 0.05 (5%).
+\end_layout
+
+\begin_layout Enumerate
+-l 
+\series bold
+flag
+\series default
+: The integer parameter 
+\series bold
+flag
+\series default
+ determines if local search will be applied every few generations to the
+ best chromosome.
+ The value of 
+\series bold
+flag
+\series default
+=1 denotes that this option is enabled and the value of 
+\series bold
+flag
+\series default
+=0 denoted that this option is disabled.
+ the default value is 0 (disabled).
+\end_layout
+
+\begin_layout Enumerate
+-p 
+\series bold
+method
+\series default
+: The integer parameter 
+\series bold
+method
+\series default
+ with default value 0 accepts 3 values
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+0: Simple printing method.
+ In this case the values of best chromosome, best fitness and average number
+ of generations are printed in free format.
+\end_layout
+
+\begin_layout Enumerate
+1: Csv printing method.
+ In this case the values of best chromosome, best fitness and average number
+ of generations are printed in csv format.
+\end_layout
+
+\begin_layout Enumerate
+2: Json printing method.
+ In this case the values of best chromosome, best fitness and average number
+ of generations are printed in json format.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\family typewriter
+-r
+\family default
+ 
+\family typewriter
+\series bold
+seed
+\family default
+\series default
+: The integer parameter 
+\family typewriter
+\series bold
+seed
+\family default
+\series default
+ specifies the seed for the random number generator.
+ It can assume any integer value.
+\end_layout
+
+\begin_layout Subsection
+A working example
+\end_layout
+
+\begin_layout Subsubsection
+Test function
+\end_layout
+
+\begin_layout Standard
+Consider the rastrigin function 
+\begin_inset Formula 
+\[
+f\left(x_{1},x_{2}\right)=x_{1}^{2}+x_{2}^{2}-\cos\left(18x_{1}\right)-\cos\left(18x_{2}\right)\ x\in\left[-1,1\right]^{2}
+\]
+
+\end_inset
+
+The function has 49 local minima in that range with the global minimum located
+ in 
+\begin_inset Formula $x^{*}=(0,0),\ f\left(x^{*}\right)=0.$
+\end_inset
+
+ The plot of the function for the particular range is given in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Plot-figure-of"
+
+\end_inset
+
+.
+ The implementation of the function in ANSI C++ is given in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:rastrigin1"
+
+\end_inset
+
+ and in Fortran77 in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:rastrigin2"
+
+\end_inset
+
+.
+ The corresponding files under 
+\family typewriter
+examples
+\family default
+ subdirectory are 
+\family typewriter
+rastrigin.cc 
+\family default
+and 
+\family typewriter
+rastrigin.f
+\family default
+.
+ Change to subdirectory 
+\family typewriter
+examples
+\family default
+ and issue the following command for the first file
+\end_layout
+
+\begin_layout LyX-Code
+../bin/make_doublepop -p rastrigin.cc
+\end_layout
+
+\begin_layout Standard
+and for the second file
+\end_layout
+
+\begin_layout LyX-Code
+../bin/make_doublepop -p rastrigin.f
+\end_layout
+
+\begin_layout Standard
+In both cases the software 
+\family typewriter
+make_doublepop
+\family default
+ responds with
+\end_layout
+
+\begin_layout LyX-Code
+RUN ./doublepop IN ORDER TO RUN THE PROBLEM 
+\end_layout
+
+\begin_layout Subsubsection
+Ssh preparation
+\end_layout
+
+\begin_layout Standard
+In order to work with the parallel framework MPI between two computer we
+ should ensure that we can login without password credentials.
+ Let us that we have the following nodes: 
+\family typewriter
+node1
+\family default
+ with IP 192.168.1.5 and 
+\family typewriter
+node2
+\family default
+ with IP 192.168.1.10 In both nodes we have installed Linux or FreeBSD.
+ The first node will be the server node and the second the client node.
+ Under 
+\family typewriter
+node1
+\family default
+ we execute the following commands:
+\end_layout
+
+\begin_layout LyX-Code
+ssh-keygen
+\end_layout
+
+\begin_layout LyX-Code
+ssh-copy-id -i ~/.ssh/id_rsa.pub 192.168.1.10
+\end_layout
+
+\begin_layout Standard
+Now we can login to node2 issuing the following command
+\end_layout
+
+\begin_layout LyX-Code
+ssh 192.168.1.10
+\end_layout
+
+\begin_layout Standard
+Now we should compile 
+\family typewriter
+PDoublePop
+\family default
+ in all nodes and put the test executable 
+\family typewriter
+doublepop
+\family default
+ in the same directory.
+ In our case we use the subdirectory
+\family typewriter
+ /home/user/PDoublePop/examples/,
+\family default
+ where 
+\family typewriter
+user
+\family default
+ is the name of the user in Unix environment.
+\end_layout
+
+\begin_layout Subsubsection
+The case of Lam MPI 
+\end_layout
+
+\begin_layout Standard
+Let us say that we have again the nodes node1 and node2 with the above IPs.
+ We create the file hostfile under home subdirectory with the following
+ contents
+\end_layout
+
+\begin_layout LyX-Code
+192.168.1.5
+\end_layout
+
+\begin_layout LyX-Code
+192.168.1.10
+\end_layout
+
+\begin_layout Standard
+We start the MPI environment with the following command
+\end_layout
+
+\begin_layout LyX-Code
+lamboot -v -d /home/user/hostfile
+\end_layout
+
+\begin_layout Standard
+Now we can run the example with the command
+\end_layout
+
+\begin_layout LyX-Code
+mpirun -np 3 /home/user/PDoublePop/examples/doublepop  -p 1
+\end_layout
+
+\begin_layout Standard
+The output of the above command will be something like
+\end_layout
+
+\begin_layout LyX-Code
+0.0000 ,-0.0000 ,-2,42.00 
+\end_layout
+
+\begin_layout Standard
+If we want the output in JSON format then we issue the following
+\end_layout
+
+\begin_layout LyX-Code
+mpirun -np 3 /home/user/PDoublePop/examples/doublepop -p 2
+\end_layout
+
+\begin_layout Standard
+And the output will be
+\end_layout
+
+\begin_layout LyX-Code
+{"x":[0.0000 ,-0.0000 ],"y":-2,"generations":42.00} 
+\end_layout
+
+\begin_layout Subsubsection
+The case of OPEN MPI
+\end_layout
+
+\begin_layout Standard
+For the case of Open MPI we start the program with just one command:
+\end_layout
+
+\begin_layout LyX-Code
+mpirun -hostfile /home/user/hostfile -np 3 /home/user/PDoublePop/examples/double
+pop -p 2
+\end_layout
+
+\begin_layout Standard
+The output will be the same as mentioned in Lam MPI case.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "physics1"
+
+\end_inset
+
+Patrice Ogou Yapo, Hoshin Vijai Gupta, Soroosh Sorooshian, Multi-objective
+ global optimization for hydrologic models, Journal of Hydrology 204, pp.
+ 83-97, 1998.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "physics2"
+
+\end_inset
+
+Q.
+ Duan, S.
+ Sorooshian, V.
+ Gupta, Effective and efficient global optimization for conceptual rainfall-runo
+ff models, Water Resources Research 
+\series bold
+28
+\series default
+, pp.
+ 1015-1031 , 1992.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "chemistry1"
+
+\end_inset
+
+David J.
+ Wales, Harold A.
+ Scheraga, Global Optimization of Clusters, Crystals, and Biomolecules,
+ Science 
+\series bold
+27
+\series default
+, pp.
+ 1368-1372, 1999.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "chemistry2"
+
+\end_inset
+
+P.M.
+ Pardalos, D.
+ Shalloway, G.
+ Xue, Optimization methods for computing global minima of nonconvex potential
+ energy functions, Journal of Global Optimization 
+\series bold
+4
+\series default
+, pp.
+ 117-133, 1994.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "econ1"
+
+\end_inset
+
+Zwe-Lee Gaing, Particle swarm optimization to solving the economic dispatch
+ considering the generator constraints, IEEE Transactions on 
+\series bold
+18
+\series default
+ Power Systems, pp.
+ 1187-1195, 2003.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gen1"
+
+\end_inset
+
+David E.
+ Goldberg , John H.
+ Holland, Genetic Algorithms and Machine Learning, Machine Learning 3, pp.
+ 95-99, 1988.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gen2"
+
+\end_inset
+
+J.J.
+ Grefenstette, R.
+ Gopal, B.
+ J.
+ Rosmaita, D.
+ Van Gucht, Genetic Algorithms for the Traveling Salesman Problem, In: Proceedin
+gs of the 1st International Conference on Genetic Algorithms, pp.
+ 160 - 168, Lawrence Erlbaum Associates, 1985.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gen3"
+
+\end_inset
+
+P.
+ Kaelo, M.M.
+ Ali, Integrated crossover rules in real coded genetic algorithms, European
+ Journal of Operational Research 
+\series bold
+176
+\series default
+, pp.
+ 60-76, 2007.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gen4"
+
+\end_inset
+
+T.
+ Prasad, N.
+ Park, Multiobjective Genetic Algorithms for Design of Water Distribution
+ Networks, J.
+ Water Resour.
+ Plann.
+ Manage.
+ 
+\series bold
+130
+\series default
+, pp.
+ 73-82, 2004.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "par1"
+
+\end_inset
+
+D.
+ J.
+ Doorly , J.
+ Peiró, Supervised Parallel Genetic Algorithms in Aerodynamic Optimisation,
+ Artificial Neural Nets and Genetic Algorithms, pp.
+ 229-233, 1997.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "par2"
+
+\end_inset
+
+Kamal C.
+ Sarma, Hojjat Adeli, Bilevel Parallel Genetic Algorithms for Optimization
+ of Large Steel Structures, Computer-Aided Civil and Infrastructure Engineering
+ 
+\series bold
+16
+\series default
+, pp.
+ 295-304, 2001.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "par3"
+
+\end_inset
+
+Yong Fan, Tianzi Jiang, Evans, D.J., Volumetric segmentation of brain images
+ using parallel genetic algorithms, IEEE Transactions on Medical Imaging
+ 
+\series bold
+21
+\series default
+, pp.
+ 904-909, 2002.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "island1"
+
+\end_inset
+
+Arthur L.
+ Corcoran, Roger L.
+ Wainwright, A parallel island model genetic algorithm for the multiprocessor
+ scheduling problem, SAC '94 Proceedings of the 1994 ACM symposium on Applied
+ computing, pp.
+ 483-487, 1994.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "island2"
+
+\end_inset
+
+Darrell Whitley , Soraya Rana, Robert B.
+ Heckendorn, Island model genetic algorithms and linearly separable problems,
+ Evolutionary Computing Volume 1305 of the series Lecture Notes in Computer
+ Science, pp 109-125, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Tsoulos1"
+
+\end_inset
+
+I.G.
+ Tsoulos, Modifications of real code genetic algorithm for global optimization,
+ Applied Mathematics and Computation 
+\series bold
+203
+\series default
+, pp.
+ 598-607, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "mpi"
+
+\end_inset
+
+Burns Greg, Raja Daoud, James Vaigl, LAM: An open cluster environment for
+ MPI, Proceedings of supercomputing symposium 94, 1994.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "openmpi"
+
+\end_inset
+
+Richard L.
+ Graham , Timothy S.
+ Woodall , Jeffrey M.
+ Squyres, Open MPI: A Flexible High Performance MPI, Parallel Processing
+ and Applied Mathematics Volume 3911 of the series Lecture Notes in Computer
+ Science, pp 228-239, 2006.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "doublecrossover"
+
+\end_inset
+
+Z.
+ Michaelewicz, Genetic Algorithms + Data Structures = Evolution Programs.
+ Springer - Verlag, Berlin, 1996.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso"
+
+\end_inset
+
+J.
+ Kennedy and R.C.
+ Eberhart, The particle swarm: social adaptation in information processing
+ systems, in: D.
+ Corne, M.
+ Dorigo and F.
+ Glover (eds.), New ideas in Optimization, McGraw-Hill, Cambridge, UK, pp.
+ 11-32, 1999.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "powell"
+
+\end_inset
+
+M.J.D Powell , A Tolerant Algorithm for Linearly Constrained Optimization
+ Calculations, Mathematical Programming 
+\series bold
+45
+\series default
+, pp 547.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "galib"
+
+\end_inset
+
+M.
+ WALL GAlib: A C++ library of genetic algorithm components.
+ Mechanical Engineering Department, Massachusetts Institute of Technology
+ 87: pp.54, 1996.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Gkls"
+
+\end_inset
+
+M.
+ Gaviano , D.E.
+ Ksasov, D.
+ Lera Y.D.
+ Sergeyev,  Software for generation of classes of test functions with known
+ local and global minima for global optimization, ACM Trans.
+ Math.
+ Softw.
+ 
+\series bold
+29
+\series default
+, pp.
+ 469-480, 2003.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Tersoff"
+
+\end_inset
+
+J.
+ Tersoff, New empirical approach for the structure and energy of covalent
+ systems, Physical Review B 37, pp.
+ 6991-7000, 1998.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Average number of generations from GALib and the proposed method
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:galib"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="17" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FUNCTION
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+GALib
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PDoublePop
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Rastrigin
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1608.27(0.97)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+19.42
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Griewank2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+257.13(0.67)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20.34
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Griewank10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+694.40(0.87)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+35.38
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Hansen
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+281.43
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+29.38
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Rosenbrock32
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+881.67
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+31.69
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sinu16
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1335.30
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+99.85
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Shekel5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1503.34
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+139.47
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Shubert
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+239.01
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17.80
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Gkls350
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+287.53
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+24.97
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Test2N5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+840.83(0.87)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+43.78
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Test2N6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1067.77(0.80)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+55.19
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Test2N7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+986.33(0.60)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+74.78
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Elp16
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1061.73
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+286.99
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Potential6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+863.37(0.70)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+418.87
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Potential7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+339.03
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+224.73
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Tersoff3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+323.80(0.60)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+62.77
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Results from the comparison of sequential and parallel genetic algorithms.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:parallel"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PROBLEM
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SERIAL
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PARALLEL-2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PARALLEL-5
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Elp4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.57
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.21
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.10
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Elp8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.93
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.33
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.17
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Elp16
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.29
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.53
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.14
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Elp32
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.46
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.42
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.23
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Elp64
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.55
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.49
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.22
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Graphical comparison between the serial and parallel version of the algorithm.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Graphical-comparison-between"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename plot_linear.eps
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Plot figure of rastrigin function.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Plot-figure-of"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename rastrigin.eps
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Implementation of rastrigin function in C++.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:rastrigin1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "language={C++}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# include <math.h>
+\end_layout
+
+\begin_layout Plain Layout
+
+extern "C"
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+int	getdimension()
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	return 2;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+void	getleftmargin(double *x)
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	x[0]=-1;
+\end_layout
+
+\begin_layout Plain Layout
+
+	x[1]=-1;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+void	getrightmargin(double *x)
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	x[0]=1;
+\end_layout
+
+\begin_layout Plain Layout
+
+	x[1]=1;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+double	funmin(double *x)
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+   return x[0]*x[0]+x[1]*x[1]-cos(18.0*x[0])-cos(18.0*x[1]);
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+void    granal(double *x,double *g)
+\end_layout
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+      g[0]=2.0*x[0]+18.0*sin(18.0*x[0]);
+\end_layout
+
+\begin_layout Plain Layout
+
+      g[1]=2.0*x[1]+18.0*sin(18.0*x[1]);
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Implementation of rastrigin function in Fortran77.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:rastrigin2"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "language=Fortran"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+        integer function getdimension()
+\end_layout
+
+\begin_layout Plain Layout
+
+                getdimension=2
+\end_layout
+
+\begin_layout Plain Layout
+
+        end
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+        subroutine getleftmargin(x)
+\end_layout
+
+\begin_layout Plain Layout
+
+        double precision x(2)
+\end_layout
+
+\begin_layout Plain Layout
+
+        x(1)=-1.0
+\end_layout
+
+\begin_layout Plain Layout
+
+        x(2)=-1.0
+\end_layout
+
+\begin_layout Plain Layout
+
+        end
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+        subroutine getrightmargin(x)
+\end_layout
+
+\begin_layout Plain Layout
+
+        double precision x(2)
+\end_layout
+
+\begin_layout Plain Layout
+
+        x(1)= 1.0
+\end_layout
+
+\begin_layout Plain Layout
+
+        x(2)= 1.0
+\end_layout
+
+\begin_layout Plain Layout
+
+        end
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+        double precision function funmin(x)
+\end_layout
+
+\begin_layout Plain Layout
+
+        double precision x(2)
+\end_layout
+
+\begin_layout Plain Layout
+
+	funmin=x(1)**2+x(2)**2-cos(18*x(1))-cos(18*x(2))
+\end_layout
+
+\begin_layout Plain Layout
+
+        end
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+        subroutine granal(x,g)
+\end_layout
+
+\begin_layout Plain Layout
+
+        double precision x(2)
+\end_layout
+
+\begin_layout Plain Layout
+
+        double precision g(2)
+\end_layout
+
+\begin_layout Plain Layout
+
+	g(1)=2*x(1)+18*sin(18.0*x(1))
+\end_layout
+
+\begin_layout Plain Layout
+
+	g(2)=2*x(2)+18*sin(18.0*x(2))
+\end_layout
+
+\begin_layout Plain Layout
+
+        end
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

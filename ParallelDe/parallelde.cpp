@@ -5,17 +5,17 @@ ParallelDe::ParallelDe(Problem *p)
 {
     before = std::chrono::system_clock::now();
     addParameter("parde_termination", "similarity", "Termination rule. Available values: maxiters,doublebox,similarity");
-    addParameter("parde_agents", "20", "Number of population");
+    addParameter("parde_agents", "40", "Number of population");
     addParameter("parde_generations", "1000", "Maximum number of generations");
     addParameter("parde_cr", "0.9", "Crossover Probability");
     addParameter("parde_weight_method", "random", "The differential weight method. Available values are: random, ali, constant");
     addParameter("parde_f", "0.8", "Differential Weight");
     addParameter("parde_propagate_rate", "5", "The number of generations before the propagation takes place");
     addParameter("parde_selection_method", "random", "The selection method used. Available values are: tournament,random");
-    addParameter("parde_propagate_method", "1toN", "The propagation method used. Available values: 1to1,1toN,Nto1,NtoN");    
+    addParameter("parde_propagate_method", "NtoN", "The propagation method used. Available values: 1to1,1toN,Nto1,NtoN");    
     addParameter("parde_similarityMax", "15", "Maximum allowed itearations for Similarity Stopping rule");
-    addParameter("parde_islands", "10", "Number of thread islands");
-    addParameter("parde_islands_enable", "1", "the number of islands that play a role in the termination rule: [1, islands. O for global check.");
+    addParameter("parde_islands", "5", "Number of thread islands");
+    addParameter("parde_islands_enable", "2", "the number of islands that play a role in the termination rule: [1, islands. O for global check.");
 }
 
 int ParallelDe::selectAtom(int islandIndex)
