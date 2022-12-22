@@ -62,6 +62,8 @@ private:
     double global_sim_value;
     int global_sim_count;
 
+    double start,end;
+
 public:
     ParallelDe(Problem *p);
     virtual ~ParallelDe();

@@ -1,8 +1,8 @@
 #!/bin/bash
-DATAPATH=/home/sheridan/Desktop/ERGASIES/WEKA/CON/
+DATAPATH=/home/sheridan/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfolding/
 NODES=10
 
-METHOD=Genetic
+METHOD=ParallelDe
 METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then

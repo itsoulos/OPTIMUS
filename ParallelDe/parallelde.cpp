@@ -1,11 +1,12 @@
 #include "parallelde.h"
+# include "omp.h"
 
 ParallelDe::ParallelDe(Problem *p)
     : Optimizer(p)
 {
     before = std::chrono::system_clock::now();
     addParameter("parde_termination", "similarity", "Termination rule. Available values: maxiters,doublebox,similarity");
-    addParameter("parde_agents", "50", "Number of population");
+    addParameter("parde_agents", "20", "Number of population");
     addParameter("parde_generations", "1000", "Maximum number of generations");
     addParameter("parde_cr", "0.9", "Crossover Probability");
     addParameter("parde_weight_method", "random", "The differential weight method. Available values are: random, ali, constant");
@@ -14,7 +15,7 @@ ParallelDe::ParallelDe(Problem *p)
     addParameter("parde_selection_method", "random", "The selection method used. Available values are: tournament,random");
     addParameter("parde_propagate_method", "NtoN", "The propagation method used. Available values: 1to1,1toN,Nto1,NtoN");    
     addParameter("parde_similarityMax", "15", "Maximum allowed itearations for Similarity Stopping rule");
-    addParameter("parde_islands", "4", "Number of thread islands");
+    addParameter("parde_islands", "10", "Number of thread islands");
     addParameter("parde_islands_enable", "2", "the number of islands that play a role in the termination rule: [1, islands. O for global check.");
 }
 
@@ -78,13 +79,17 @@ int ParallelDe::islandEndPos(int islandIndex)
 
 void ParallelDe::init()
 {
+
     generation = 0;
     similarity_max_count = 10;
     global_sim_value = 1e+100;
     global_sim_count = 0;
 
-    parde_generations = params["parde_generations"].toString().toInt();
     islands = params["parde_islands"].toString().toInt();
+    omp_set_dynamic(0);
+    omp_set_num_threads(islands);
+    start = omp_get_wtime();
+    parde_generations = params["parde_generations"].toString().toInt();
     doublebox_xx1.resize(islands);
     doublebox_xx2.resize(islands);
     doublebox_best_value.resize(islands);
@@ -427,6 +432,10 @@ void ParallelDe::done()
     after = std::chrono::system_clock::now();
     auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(after - before);
     auto ms = milliseconds.count();
+    end = omp_get_wtime();
+    FILE *fp=fopen("debug.txt","a");
+    fprintf(fp,"%.10lf \n",end-start);
+    fclose(fp);
 //    std::cout << "Douration: " << (double)ms / 1000.0 << " sec" << std::endl;
 }
 
