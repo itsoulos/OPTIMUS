@@ -25,6 +25,11 @@ private:
     virtual void init();
     virtual void done();
     vector<Data> population;
+
+    //for the delb method
+    vector<Data> ypopulation;
+    Data yfitness_array;
+
     Data lmargin,rmargin, fitness_array;
     int generation;
     int population_count;
@@ -33,8 +38,11 @@ private:
     double bestMin;
     int bestMinIndex;
     double crossoverProbability, differentialWeight;
-    void calcFitnessArray();
+    double parameterW;
+    void    getBestWorst(double &fmin,double &fmax);
     void selectAndCrossover();
+    int  tournament(int tsize=8);
+    int getBestIndex();
     double randMToN(double M, double N);
 public:
     DE(Problem *p);
