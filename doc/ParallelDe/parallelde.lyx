@@ -128,12 +128,16 @@ The task of locating the global minimum of a continuous and differentiable
 is defined as
 \begin_inset Formula 
 \begin{equation}
-x^{*}=\mbox{arg}\min_{x\in S}f(x)\label{eq:eq1}
+x^{*}=\mbox{arg}\min_{x\in S}f(x).\label{eq:eq1}
 \end{equation}
 
 \end_inset
 
-where
+The set 
+\begin_inset Formula $S$
+\end_inset
+
+ is defined as:
 \series bold
  
 \begin_inset Formula 
@@ -422,6 +426,13 @@ In this section, the basic DE method is first presented and then the proposed
 
 \begin_layout Subsection
 The original DE method
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:The-original-DE"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -476,9 +487,12 @@ literal "false"
 \begin_layout Enumerate
 
 \series bold
-Set
-\series default
- the population size 
+INPUT:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The population size 
 \begin_inset Formula $\mbox{NP}\ge$
 \end_inset
 
@@ -487,11 +501,7 @@ Set
 \end_layout
 
 \begin_layout Enumerate
-
-\series bold
-Set
-\series default
- the crossover probability 
+The crossover probability 
 \begin_inset Formula $\mbox{CR}\in[0,1]$
 \end_inset
 
@@ -500,17 +510,36 @@ Set
 \end_layout
 
 \begin_layout Enumerate
-
-\series bold
-Set
-\series default
- the differential weight 
+The differential weight 
 \begin_inset Formula $F\in[0,2].$
 \end_inset
 
  
 \end_layout
 
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+OUTPUT
+\series default
+: 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The agent 
+\begin_inset Formula $x_{\mbox{best}}$
+\end_inset
+
+ with the lower function value 
+\begin_inset Formula $f\left(x_{\mbox{best}}\right)$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
 \begin_layout Enumerate
 
 \series bold
@@ -698,17 +727,7 @@ EndFor
 \begin_layout Enumerate
 
 \series bold
-Return
-\series default
- the agent 
-\begin_inset Formula $x_{\mbox{best}}$
-\end_inset
-
- with the lower function value 
-\begin_inset Formula $f\left(x_{\mbox{best}}\right)$
-\end_inset
-
-.
+End While
 \end_layout
 
 \begin_layout Subsection
@@ -741,9 +760,12 @@ tly.
 \begin_layout Enumerate
 
 \series bold
-Set
-\series default
- the parameters NP, CR, 
+INPUT:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The parameters NP, CR, 
 \begin_inset Formula $F$
 \end_inset
 
@@ -751,42 +773,49 @@ Set
 \end_layout
 
 \begin_layout Enumerate
-
-\series bold
-Set
-\series default
- N the number of islands.
+The integer parameter N, which stands for the number of islands.
 \end_layout
 
 \begin_layout Enumerate
-
-\series bold
-Set
-\series default
- as 
+The integer parameter 
 \begin_inset Formula $N_{R}$
 \end_inset
 
- the propagation rate, where 
-\begin_inset Formula $N_{R}$
-\end_inset
-
- is a positive integer.
+, which represents the propagation rate.
 \end_layout
 
 \begin_layout Enumerate
-
-\series bold
-Set
-\series default
- as 
+The integer parameter 
 \begin_inset Formula $N_{I}$
 \end_inset
 
- the number of islands that should terminate in order to terminate the whole
- process.
+, which represents the number of islands that should terminate in order
+ to terminate the whole process.
 \end_layout
 
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+OUTPUT
+\series default
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The agent 
+\begin_inset Formula $x_{\mbox{best}}$
+\end_inset
+
+ with the lower function value 
+\begin_inset Formula $f\left(x_{\mbox{best}}\right)$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
 \begin_layout Enumerate
 
 \series bold
@@ -834,7 +863,17 @@ Perform
 \begin_inset Formula $i$
 \end_inset
 
- the step 5.a of the base DE algorithm
+ the step 4.a of the base DE algorithm of subsection 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:The-original-DE"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \end_deeper
@@ -1009,7 +1048,7 @@ In the proposed termination criterion, a simple criterion is checked separately
  the difference
 \begin_inset Formula 
 \begin{equation}
-\delta_{i}^{(k)}=\left|f_{i,\mbox{min}}^{(k)}-f_{i,\mbox{min}}^{(k-1)}\right|\label{eq:term}
+\delta_{i}^{(k)}=\left|f_{i,\mbox{min}}^{(k)}-f_{i,\mbox{min}}^{(k-1)}\right|,\label{eq:term}
 \end{equation}
 
 \end_inset
@@ -1720,6 +1759,19 @@ The global minimum is located at
 \end_inset
 
  were studied.
+ The parameter 
+\begin_inset Formula $z$
+\end_inset
+
+ is used to shift the location of the global minimum 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Sinu"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Itemize
@@ -1811,7 +1863,8 @@ https://github.com/itsoulos/OPTIMUS
  RAM and the Debian Linux operating system.
  All the experiments were conducted 30 times using different seed for the
  random generator each time and averages were reported.
- The experimental settings are shown in the table 
+ The values for the parameters used in DE algorithm are shown in the table
+ 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:Experimental-settings."
@@ -1829,7 +1882,7 @@ noprefix "false"
  (differential weight) is calculated as:
 \begin_inset Formula 
 \begin{equation}
-F=-\frac{1}{2}+2\times R\label{eq:proposedF}
+F=-\frac{1}{2}+2\times R,\label{eq:proposedF}
 \end{equation}
 
 \end_inset
@@ -1847,8 +1900,18 @@ literal "false"
 \end_inset
 
 .
- The experimental results for different numbers of threads for the test
- functions of the previous subsection are shown in Table 
+ This random scheme for the calculation of the parameter 
+\begin_inset Formula $F$
+\end_inset
+
+ was used successfully to better explore the search space of the objective
+ function.
+
+\series bold
+ 
+\series default
+The experimental results for different numbers of threads for the test functions
+ of the previous subsection are shown in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:Comparison"
@@ -1948,7 +2011,7 @@ N to N
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -2014,7 +2077,7 @@ NP
 \begin_inset Text
 
 \begin_layout Plain Layout
-200
+200 agents
 \end_layout
 
 \end_inset
@@ -2034,7 +2097,7 @@ PROPAGATION
 \begin_inset Text
 
 \begin_layout Plain Layout
-1 to 1
+1 to 1 method
 \end_layout
 
 \end_inset
@@ -2057,7 +2120,7 @@ PROPAGATION
 \begin_inset Text
 
 \begin_layout Plain Layout
-5
+5 iterations
 \end_layout
 
 \end_inset
@@ -2080,7 +2143,7 @@ PROPAGATION
 \begin_inset Text
 
 \begin_layout Plain Layout
-2
+2 number of islands
 \end_layout
 
 \end_inset
@@ -2100,7 +2163,7 @@ CR
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.9
+0.9 the crossover probability
 \end_layout
 
 \end_inset
@@ -2123,7 +2186,7 @@ CR
 \begin_inset Text
 
 \begin_layout Plain Layout
-15
+15 iterations
 \end_layout
 
 \end_inset
@@ -2171,14 +2234,24 @@ CR
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Comparison of experimental results for a variety of processing threads and
- 1to1 propagation scheme.
+Comparison of experimental results with 
+\begin_inset Quotes eld
+\end_inset
+
+1 to 1
+\begin_inset Quotes erd
+\end_inset
+
+ propagation scheme.
+ The first column represents the name of the objective function and the
+ remaining columns are the average function calls using 1 to 10 processing
+ threads for the proposed method.
 \begin_inset CommandInset label
 LatexCommand label
 name "tab:Comparison"
@@ -3881,7 +3954,7 @@ AVERAGE
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -3925,7 +3998,10 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Experiments with the propagation method and 10 processing threads.
+Experiments for the proposed method using different options for the propagation
+ method.
+ The number of processing threads was set to 10.
+ Numbers in cells represent average function calls for every  test function.
 \begin_inset CommandInset label
 LatexCommand label
 name "tab:propagation"
@@ -6735,6 +6811,23 @@ J.E.
 \series default
 , pp.
  463–477, 1924.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Sinu"
+literal "false"
+
+\end_inset
+
+Z.B.
+ Zabinsky, D.L.
+ Graesser, M.E.
+ Tuttle, G.I.
+ Kim, Global optimization of composite laminates using improving hit and
+ run, In: Recent advances in global optimization, pp.
+ 343-368, 1992.
 \end_layout
 
 \begin_layout Bibliography
