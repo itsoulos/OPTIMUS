@@ -101,14 +101,19 @@ Department of Informatics and Telecommunications, University of Ioannina,
 \end_layout
 
 \begin_layout Abstract
-An innovative parallel global optimization technique is presented in current
- work.
- This new technique adapts the Differential Evolution method to be executed
- in parallel and adds to it a new communication technique between the independen
-t parallel processing units as well as an appropriately configured termination
- technique, which can be exploited in a parallel computing environment.
- This method was applied to a series of well-known problems from the relevant
- literature and the experimental results were more than promising.
+Global optimization is a widely used technique that finds application in
+ many sciences such as physics, economics, medicine, etc.
+ and with many extensions as for example in the area of machine learning.
+ However, in many cases global minimization techniques require high computationa
+l time and for this reason parallel computational approaches should be used.
+ In this paper, a new parallel global optimization technique based on the
+ differential evolutionary method is proposed.
+ This new technique uses a series of independent parallel computing units
+ that periodically exchange the best solutions they have found.
+ Additionally, a new termination rule is proposed here that exploits parallelism
+ to accelerate process termination in a timely and valid manner.
+ The new method was applied to a number of problems in the established literatur
+e and the results were quite promising.
 \end_layout
 
 \begin_layout Section
@@ -2005,6 +2010,40 @@ N to N
  reliability techniques from 99% to 91%.
  This may be because, due to the exchange of the best prices between all
  the islands, the total population is locked into local minima.
+\end_layout
+
+\begin_layout Standard
+Furthermore, the proposed method was compared against the original Differential
+ Evolution method and two variants from the relevant literature mentioned
+ as DERL and DELB
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_kaelo"
+literal "false"
+
+\end_inset
+
+.
+ The results from this comparison are shown in the Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:deVariants"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ As is evident, the proposed technique significantly outperforms the other
+ modifications of the different evolutionary method.
+ This is largely due to the different differential weight calculation technique
+ but also to the proposed method termination methodology.
+ The used differential weight calculation technique largely succeeds in
+ making a better search of the search space, while the new termination method
+ terminates the optimization method in time.
+ Also, this new termination technique has been modified to perform well
+ in parallel computing environments as well.
 \end_layout
 
 \begin_layout Standard
