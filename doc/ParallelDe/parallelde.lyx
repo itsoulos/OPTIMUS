@@ -103,9 +103,10 @@ Department of Informatics and Telecommunications, University of Ioannina,
 \begin_layout Abstract
 Global optimization is a widely used technique that finds application in
  many sciences such as physics, economics, medicine, etc.
- and with many extensions as for example in the area of machine learning.
- However, in many cases global minimization techniques require high computationa
-l time and for this reason parallel computational approaches should be used.
+ and with many extensions, as for example, in the area of machine learning.
+ However, in many cases, global minimization techniques require high computation
+al time and, for this reason, parallel computational approaches should be
+ used.
  In this paper, a new parallel global optimization technique based on the
  differential evolutionary method is proposed.
  This new technique uses a series of independent parallel computing units
@@ -269,7 +270,7 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-The current work proposed a parallel implementation of The Differential
+The current work proposes a parallel implementation of The Differential
  Evolution (DE) method that aims to speed up the optimization process of
  this particular method and also tries to make adequate use of modern computing
  structures of multi-core architectures.
@@ -375,6 +376,31 @@ literal "false"
 \end_inset
 
  proposed a parallel compact DE method applied to image segmentation.
+ 
+\end_layout
+
+\begin_layout Standard
+The proposed technique is a modified version of the parallel island methodology
+ for the different evolutionary techniques 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_island1,de_island2"
+literal "false"
+
+\end_inset
+
+.
+ Therefore, in the proposed technique, the initial population of agents
+ (candidate solutions) is divided into a series of independent populations
+ and each individual population evolves independently in a parallel computing
+ unit, such as a thread.
+ Populations periodically exchange information with each other, such as
+ the lowest functional value to which they have been driven.
+ The proposed technique uses a new differential weight calculation scheme,
+ can use a number of different information exchange methods between the
+ parallel computing units, and furthermore proposes a new termination method
+ of the optimization process that can take advantage of the parallelism
+ so that the optimization terminates in time and valid.
 \end_layout
 
 \begin_layout Standard
@@ -476,7 +502,7 @@ literal "false"
 \end_inset
 
  etc.
- Also, a numerical study on some modifications of the DE method can be bound
+ Also, a numerical study on some modifications of the DE method can be found
  in the work of Kaelo et al 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -2014,7 +2040,7 @@ N to N
 
 \begin_layout Standard
 Furthermore, the proposed method was compared against the original Differential
- Evolution method and two variants from the relevant literature mentioned
+ Evolution method and two variants from the relevant literature are mentioned
  as DERL and DELB
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -2038,7 +2064,7 @@ noprefix "false"
  As is evident, the proposed technique significantly outperforms the other
  modifications of the different evolutionary method.
  This is largely due to the different differential weight calculation technique
- but also to the proposed method termination methodology.
+ but also to the proposed termination method.
  The used differential weight calculation technique largely succeeds in
  making a better search of the search space, while the new termination method
  terminates the optimization method in time.
@@ -4031,7 +4057,7 @@ name "fig:Time-comparison"
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -7472,15 +7498,24 @@ name "sec:Conclusions"
 \end_layout
 
 \begin_layout Standard
-A new parallel global optimization technique was presented in this paper.
- The new method is based on the Differential Evolution technique and partitions
- the overall process into independent computational units, such as threads.
- Communication between threads is done at regular intervals by propagating
- the best values they have discovered from thread to thread.
- To terminate the overall process, a new stopping rule was implemented,
- in which the decision to terminate can be taken by some of the processing
- units.
- From the experimental results, it appears that the proposed technique can
+A new global optimization technique was presented in this manuscript, which
+ can be performed in parallel computing environments.
+ This method is based on the well-known differential evolutionary technique
+ and partitions the initial population of agents, so as to create independent
+ populations that are executed on parallel computing units.
+ The parallel units periodically exchange the best values for the objective
+ function with each other, and from the experiments carried out it was found
+ that the most robust information exchange technique is the so-called "1
+ to 1", where a randomly selected subpopulation exchanges information with
+ another randomly selected subpopulation.
+ Furthermore, a new termination method was proposed here which can take
+ full advantage of the parallel computing environment.
+ With this termination rule, the decision to terminate the method can be
+ efficiently made even by a small portion of the independent computing units.
+\end_layout
+
+\begin_layout Standard
+From the experimental results, it appears that the proposed technique can
  successfully find the global minimum in a series of problems from the relevant
  literature, and in fact, as the number of parallel processing units increases,
  the required number of function calls decreases.
@@ -8289,6 +8324,44 @@ X.
 10
 \series default
 , 2195, 2020.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_island1"
+literal "false"
+
+\end_inset
+
+A.
+ Skakovski, P.
+ Jędrzejowicz, An island-based differential evolution algorithm with the
+ multi-size populations, Expert Systems with Applications 
+\series bold
+126
+\series default
+, pp.
+ 308-320, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_island2"
+literal "false"
+
+\end_inset
+
+A.
+ Skakovski and P.
+ Jędrzejowicz, A Multisize no Migration Island-Based Differential Evolution
+ Algorithm With Removal of Ineffective Islands, IEEE Access 
+\series bold
+10
+\series default
+, pp.
+ 34539-34549, 2022.
 \end_layout
 
 \begin_layout Bibliography
