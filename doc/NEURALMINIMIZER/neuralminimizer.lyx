@@ -76,8 +76,7 @@
 \begin_body
 
 \begin_layout Title
-NeuralMinimizer, a novel method for global optimization that incorporates
- machine learning
+NeuralMinimizer, a novel method for global optimization 
 \end_layout
 
 \begin_layout Author
@@ -147,7 +146,7 @@ The problem of finding the global minimum of multidimensional functions
  after each execution of the local minimization.
  The proposed technique was applied to a number of well-known problems from
  the relevant literature, and the comparative results with respect to modern
- global minimization techniques are extremely promising.
+ global minimization techniques are shown extremely promising.
 \end_layout
 
 \begin_layout Section
@@ -508,7 +507,7 @@ In the following subsections, the training procedure of RBF networks as
 \end_layout
 
 \begin_layout Subsection
-Rbf preliminaries
+RBF preliminaries
 \end_layout
 
 \begin_layout Standard
@@ -524,7 +523,7 @@ N\left(\overrightarrow{x}\right)=\sum_{i=1}^{k}w_{i}\phi\left(\left\Vert \overri
 
 
 \series default
-Where 
+where 
 \end_layout
 
 \begin_layout Enumerate
@@ -569,21 +568,6 @@ In most cases the function
 
 
 \series default
-A plot for this function with 
-\begin_inset Formula $c=0,\ \sigma=1$
-\end_inset
-
- is shown in Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:A-plot-for"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
  The training error for the RBF network on a set 
 \begin_inset Formula $T=\left\{ \left(x_{1},y_{1}\right),\left(x_{2},y_{2}\right),\ldots,\left(x_{M},y_{M}\right)\right\} $
 \end_inset
@@ -703,47 +687,6 @@ W^{T}=\left(\Phi^{T}\Phi\right)^{-1}\Phi^{T}T=\Phi^{\dagger}T\label{eq:eqoutput}
 \end_layout
 
 \end_deeper
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-A plot for the Gaussian function.
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:A-plot-for"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename gaussian.eps
-	scale 70
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Subsection
 The main algorithm
 \end_layout
@@ -1155,10 +1098,6 @@ name "sec:Experiments"
 
 \end_layout
 
-\begin_layout Subsection
-Test functions 
-\end_layout
-
 \begin_layout Standard
 To estimate the efficiency of the new technique a number of functions from
  the relevant literature were used 
@@ -1170,691 +1109,24 @@ literal "true"
 \end_inset
 
 .
- These functions are provided in the following.
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-\emph on
-Bent Cigar function
-\series default
- 
-\emph default
-The function is 
-\begin_inset Formula 
-\[
-f(x)=x_{1}^{2}+10^{6}\sum_{i=2}^{n}x_{i}^{2}
-\]
-
-\end_inset
-
- with the global minimum 
-\begin_inset Formula $f\left(x^{*}\right)=0$
-\end_inset
-
-.
- For the conducted experiments the value 
-\begin_inset Formula $n=10$
-\end_inset
-
- was used.
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Bf1
-\series default
- function.
- The function Bohachevsky 1 is given by the equation
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-f(x)=x_{1}^{2}+2x_{2}^{2}-\frac{3}{10}\cos\left(3\pi x_{1}\right)-\frac{4}{10}\cos\left(4\pi x_{2}\right)+\frac{7}{10}
-\]
-
-\end_inset
-
-with 
-\begin_inset Formula $x\in[-100,100]^{2}$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Bf2
-\series default
- function.
- The function Bohachevsky 2 is given by the equation 
-\begin_inset Formula 
-\[
-f(x)=x_{1}^{2}+2x_{2}^{2}-\frac{3}{10}\cos\left(3\pi x_{1}\right)\cos\left(4\pi x_{2}\right)+\frac{3}{10}
-\]
-
-\end_inset
-
-with 
-\begin_inset Formula $x\in[-50,50]^{2}$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Branin
-\series default
- function.
- The function is defined by 
-\begin_inset Formula $f(x)=\left(x_{2}-\frac{5.1}{4\pi^{2}}x_{1}^{2}+\frac{5}{\pi}x_{1}-6\right)^{2}+10\left(1-\frac{1}{8\pi}\right)\cos(x_{1})+10$
-\end_inset
-
- with 
-\begin_inset Formula $-5\le x_{1}\le10,\ 0\le x_{2}\le15$
-\end_inset
-
-.
- The value of global minimum is 0.397887.with 
-\begin_inset Formula $x\in[-10,10]^{2}$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-CM
-\series default
- function.
- The Cosine Mixture function is given by the equation 
-\begin_inset Formula 
-\[
-f(x)=\sum_{i=1}^{n}x_{i}^{2}-\frac{1}{10}\sum_{i=1}^{n}\cos\left(5\pi x_{i}\right)
-\]
-
-\end_inset
-
-with 
-\begin_inset Formula $x\in[-1,1]^{n}$
-\end_inset
-
-.
- For the conducted experiments the value 
-\begin_inset Formula $n=4$
-\end_inset
-
- was used.
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Camel
-\series default
- function.
- The function is given by 
-\begin_inset Formula 
-\[
-f(x)=4x_{1}^{2}-2.1x_{1}^{4}+\frac{1}{3}x_{1}^{6}+x_{1}x_{2}-4x_{2}^{2}+4x_{2}^{4},\quad x\in[-5,5]^{2}
-\]
-
-\end_inset
-
-The global minimum has the value of 
-\begin_inset Formula $f\left(x^{*}\right)=-1.0316$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Discus function
-\series default
-\emph on
- 
-\emph default
-The function is defined as 
-\begin_inset Formula 
-\[
-f(x)=10^{6}x_{1}^{2}+\sum_{i=2}^{n}x_{i}^{2}
-\]
-
-\end_inset
-
- with global minimum 
-\begin_inset Formula $f\left(x^{*}\right)=0.$
-\end_inset
-
- For the conducted experiments the value 
-\begin_inset Formula $n=10$
-\end_inset
-
- was used.
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Easom
-\series default
- function The function is given by the equation 
-\begin_inset Formula 
-\[
-f(x)=-\cos\left(x_{1}\right)\cos\left(x_{2}\right)\exp\left(\left(x_{2}-\pi\right)^{2}-\left(x_{1}-\pi\right)^{2}\right)
-\]
-
-\end_inset
-
-with 
-\begin_inset Formula $x\in[-100,100]^{2}$
-\end_inset
-
- and global minimum -1.0
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Exponential
-\series default
- function.
- The function is given by 
-\begin_inset Formula 
-\[
-f(x)=-\exp\left(-0.5\sum_{i=1}^{n}x_{i}^{2}\right),\quad-1\le x_{i}\le1
-\]
-
-\end_inset
-
-The global minimum is located at 
-\begin_inset Formula $x^{*}=(0,0,...,0)$
-\end_inset
-
- with value 
-\begin_inset Formula $-1$
-\end_inset
-
-.
- In our experiments we used this function with 
-\begin_inset Formula $n=4,16,64$
-\end_inset
-
- and the corresponding functions are denoted by the labels EXP4, EXP16,
- EXP64.
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Griewank10
-\series default
- function.
- The function is given by the equation 
-\begin_inset Formula 
-\[
-f(x)=\sum_{i=1}^{n}\frac{x_{i}^{2}}{4000}-\prod_{i=1}^{n}\cos\left(\frac{x_{i}}{\sqrt{i}}\right)+1
-\]
-
-\end_inset
-
-with 
-\begin_inset Formula $n=10$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Hansen
-\series default
- function.
- 
-\begin_inset Formula $f(x)=\sum_{i=1}^{5}i\cos\left[(i-1)x_{1}+i\right]\sum_{j=1}^{5}j\cos\left[(j+1)x_{2}+j\right]$
-\end_inset
-
-, 
-\begin_inset Formula $x\in[-10,10]^{2}$
-\end_inset
-
- .
- The global minimum of the function is -176.541793.
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Hartman 3
-\series default
- function.
- The function is given by
-\begin_inset Formula 
-\[
-f(x)=-\sum_{i=1}^{4}c_{i}\exp\left(-\sum_{j=1}^{3}a_{ij}\left(x_{j}-p_{ij}\right)^{2}\right)
-\]
-
-\end_inset
-
-with 
-\begin_inset Formula $x\in[0,1]^{3}$
-\end_inset
-
- and 
-\begin_inset Formula $a=\left(\begin{array}{ccc}
-3 & 10 & 30\\
-0.1 & 10 & 35\\
-3 & 10 & 30\\
-0.1 & 10 & 35
-\end{array}\right),\ c=\left(\begin{array}{c}
-1\\
-1.2\\
-3\\
-3.2
-\end{array}\right)$
-\end_inset
-
- and
-\begin_inset Formula 
-\[
-p=\left(\begin{array}{ccc}
-0.3689 & 0.117 & 0.2673\\
-0.4699 & 0.4387 & 0.747\\
-0.1091 & 0.8732 & 0.5547\\
-0.03815 & 0.5743 & 0.8828
-\end{array}\right)
-\]
-
-\end_inset
-
-The value of global minimum is -3.862782.
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Hartman 6
-\series default
- function.
-\begin_inset Formula 
-\[
-f(x)=-\sum_{i=1}^{4}c_{i}\exp\left(-\sum_{j=1}^{6}a_{ij}\left(x_{j}-p_{ij}\right)^{2}\right)
-\]
-
-\end_inset
-
-with 
-\begin_inset Formula $x\in[0,1]^{6}$
-\end_inset
-
- and 
-\begin_inset Formula $a=\left(\begin{array}{cccccc}
-10 & 3 & 17 & 3.5 & 1.7 & 8\\
-0.05 & 10 & 17 & 0.1 & 8 & 14\\
-3 & 3.5 & 1.7 & 10 & 17 & 8\\
-17 & 8 & 0.05 & 10 & 0.1 & 14
-\end{array}\right),\ c=\left(\begin{array}{c}
-1\\
-1.2\\
-3\\
-3.2
-\end{array}\right)$
-\end_inset
-
- and
-\begin_inset Formula 
-\[
-p=\left(\begin{array}{cccccc}
-0.1312 & 0.1696 & 0.5569 & 0.0124 & 0.8283 & 0.5886\\
-0.2329 & 0.4135 & 0.8307 & 0.3736 & 0.1004 & 0.9991\\
-0.2348 & 0.1451 & 0.3522 & 0.2883 & 0.3047 & 0.6650\\
-0.4047 & 0.8828 & 0.8732 & 0.5743 & 0.1091 & 0.0381
-\end{array}\right)
-\]
-
-\end_inset
-
-the value of global minimum is -3.322368.
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-High Conditioned Elliptic
-\series default
- function, defined as 
-\begin_inset Formula 
-\[
-f(x)=\sum_{i=1}^{n}\left(10^{6}\right)^{\frac{i-1}{n-1}}x_{i}^{2}
-\]
-
-\end_inset
-
-with global minimum 
-\begin_inset Formula $f\left(x^{*}\right)=0$
-\end_inset
-
- and the value 
-\begin_inset Formula $n=10$
-\end_inset
-
- was used in the conducted experiments
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Potential
-\series default
- function.
- The molecular conformation corresponding to the global minimum of the energy
- of N atoms interacting via the Lennard-Jones potential
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Jones"
-literal "true"
-
-\end_inset
-
- is used as a test case here.
- The function to be minimized is given by:
-\begin_inset Formula 
-\begin{equation}
-V_{LJ}(r)=4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^{6}\right]\label{eq:potential}
-\end{equation}
-
-\end_inset
-
-In the current experiments two different cases were studied: 
-\begin_inset Formula $N=3,\ 5$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Rastrigin
-\series default
- function.
- The function is given by 
-\begin_inset Formula 
-\[
-f(x)=x_{1}^{2}+x_{2}^{2}-\cos(18x_{1})-\cos(18x_{2}),\quad x\in[-1,1]^{2}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Shekel 7
-\series default
- function.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-f(x)=-\sum_{i=1}^{7}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-with 
-\begin_inset Formula $x\in[0,10]^{4}$
-\end_inset
-
- and 
-\begin_inset Formula $a=\left(\begin{array}{cccc}
-4 & 4 & 4 & 4\\
-1 & 1 & 1 & 1\\
-8 & 8 & 8 & 8\\
-6 & 6 & 6 & 6\\
-3 & 7 & 3 & 7\\
-2 & 9 & 2 & 9\\
-5 & 3 & 5 & 3
-\end{array}\right),\ c=\left(\begin{array}{c}
-0.1\\
-0.2\\
-0.2\\
-0.4\\
-0.4\\
-0.6\\
-0.3
-\end{array}\right)$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Shekel 5 
-\series default
-function.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-f(x)=-\sum_{i=1}^{5}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}
-\]
-
-\end_inset
-
- 
-\end_layout
-
-\begin_layout Standard
-with 
-\begin_inset Formula $x\in[0,10]^{4}$
-\end_inset
-
- and 
-\begin_inset Formula $a=\left(\begin{array}{cccc}
-4 & 4 & 4 & 4\\
-1 & 1 & 1 & 1\\
-8 & 8 & 8 & 8\\
-6 & 6 & 6 & 6\\
-3 & 7 & 3 & 7
-\end{array}\right),\ c=\left(\begin{array}{c}
-0.1\\
-0.2\\
-0.2\\
-0.4\\
-0.4
-\end{array}\right)$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Shekel 10
-\series default
- function.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-f(x)=-\sum_{i=1}^{10}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}
-\]
-
-\end_inset
-
- 
-\end_layout
-
-\begin_layout Standard
-with 
-\begin_inset Formula $x\in[0,10]^{4}$
-\end_inset
-
- and 
-\begin_inset Formula $a=\left(\begin{array}{cccc}
-4 & 4 & 4 & 4\\
-1 & 1 & 1 & 1\\
-8 & 8 & 8 & 8\\
-6 & 6 & 6 & 6\\
-3 & 7 & 3 & 7\\
-2 & 9 & 2 & 9\\
-5 & 5 & 3 & 3\\
-8 & 1 & 8 & 1\\
-6 & 2 & 6 & 2\\
-7 & 3.6 & 7 & 3.6
-\end{array}\right),\ c=\left(\begin{array}{c}
-0.1\\
-0.2\\
-0.2\\
-0.4\\
-0.4\\
-0.6\\
-0.3\\
-0.7\\
-0.5\\
-0.6
-\end{array}\right)$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Sinusoidal
-\series default
- function.
- The function is given by 
-\begin_inset Formula 
-\[
-f(x)=-\left(2.5\prod_{i=1}^{n}\sin\left(x_{i}-z\right)+\prod_{i=1}^{n}\sin\left(5\left(x_{i}-z\right)\right)\right),\quad0\le x_{i}\le\pi.
-\]
-
-\end_inset
-
-The global minimum is located at 
-\begin_inset Formula $x^{*}=(2.09435,2.09435,...,2.09435)$
-\end_inset
-
- with 
-\begin_inset Formula $f\left(x^{*}\right)=-3.5$
-\end_inset
-
-.
- For the conducted experiments the cases of 
-\begin_inset Formula $n=4,8$
-\end_inset
-
- and 
-\begin_inset Formula $z=\frac{\pi}{6}$
-\end_inset
-
- were studied.
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Test2N
-\series default
- function.
- This function is given by the equation 
-\begin_inset Formula 
-\[
-f(x)=\frac{1}{2}\sum_{i=1}^{n}x_{i}^{4}-16x_{i}^{2}+5x_{i},\quad x_{i}\in[-5,5].
-\]
-
-\end_inset
-
-The function has 
-\begin_inset Formula $2^{n}$
-\end_inset
-
- in the specified range and in our experiments we used 
-\begin_inset Formula $n=4,5,6,7$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Test30N
-\series default
- function.
- This function is given by 
-\begin_inset Formula 
-\[
-f(x)=\frac{1}{10}\sin^{2}\left(3\pi x_{1}\right)\sum_{i=2}^{n-1}\left(\left(x_{i}-1\right)^{2}\left(1+\sin^{2}\left(3\pi x_{i+1}\right)\right)\right)+\left(x_{n}-1\right)^{2}\left(1+\sin^{2}\left(2\pi x_{n}\right)\right)
-\]
-
-\end_inset
-
-with 
-\begin_inset Formula $x\in[-10,10]$
-\end_inset
-
-.
- The function has 
-\begin_inset Formula $30^{n}$
-\end_inset
-
- local minima in the specified range and we used 
-\begin_inset Formula $n=3,4$
-\end_inset
-
- in the conducted experiments.
-\end_layout
-
-\begin_layout Subsection
-Experimental results
-\end_layout
-
-\begin_layout Standard
-The proposed technique was tested on the previously presented test functions
- and the results produced were compared with those given by a simple genetic
- algorithm or a PSO method.
- In order to have fairness in the comparison of the results, both in the
- case of genetic algorithms and in the case of the PSO method, the same
- local minimization method has been used as that of the proposed method.
+ These functions are provided in the Appendix.
+ The proposed technique was tested on the these test functions and the results
+ produced were compared with those given by a simple genetic algorithm or
+ a PSO method or differential evolution (DE) method.
+ In order to have fairness in the comparison of the results, for all global
+ optimizition techniques the same local minimization method has been used
+ as that of the proposed method.
  In addition, the number of chromosomes in the genetic algorithm and the
  number of particles in the PSO method are identical to the parameter 
 \begin_inset Formula $N_{T}$
 \end_inset
 
  of the proposed procedure.
+ Also, for the DE method the number of agents was set to 
+\begin_inset Formula $N_{T}$
+\end_inset
+
+.
  The values for the used parameters are listed in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1896,7 +1168,7 @@ https://github.com/itsoulos/OPTIMUS
 
 \begin_layout Standard
 The experimental results from the application of the proposed method and
- the Genetic algorithm and the PSO method are shown in Table 
+ the other methods are shown in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:Comparison"
@@ -1923,6 +1195,18 @@ noprefix "false"
  In addition, the proposed technique appears to be more efficient than the
  other two as it finds more times on average the global minimum of most
  test functions in the experiments.
+ Also, the statistical comparison between the global optimization methods
+ is shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Statistical"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -1950,6 +1234,7 @@ noprefix "false"
 
 \begin_layout Standard
 \begin_inset Float table
+placement H
 wide false
 sideways false
 status collapsed
@@ -2158,7 +1443,7 @@ Number of samples that will be drawn from the RBF network
 \begin_inset Text
 
 \begin_layout Plain Layout
-Chromosomes or Particles
+Chromosomes or Particles or agents
 \end_layout
 
 \end_inset
@@ -2219,6 +1504,7 @@ Maximum number of iterations
 
 \begin_layout Standard
 \begin_inset Float table
+placement H
 wide false
 sideways false
 status collapsed
@@ -2245,8 +1531,9 @@ name "tab:Comparison"
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="34" columns="4">
+<lyxtabular version="3" rows="34" columns="5">
 <features tabularvalignment="middle">
+<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -2281,6 +1568,17 @@ GENETIC
 
 \series bold
 PSO
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+DE
 \end_layout
 
 \end_inset
@@ -2325,6 +1623,15 @@ BF1
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5579
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -2359,6 +1666,15 @@ BF2
 
 \begin_layout Plain Layout
 6505(0.67)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5598
 \end_layout
 
 \end_inset
@@ -2401,6 +1717,15 @@ BRANIN
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5888
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -2435,6 +1760,15 @@ CAMEL
 
 \begin_layout Plain Layout
 5162
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6403
 \end_layout
 
 \end_inset
@@ -2477,6 +1811,15 @@ CIGAR10
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13313
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -2511,6 +1854,15 @@ CM4
 
 \begin_layout Plain Layout
 11124
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9018
 \end_layout
 
 \end_inset
@@ -2553,6 +1905,15 @@ DISCUS10
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7797
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -2587,6 +1948,15 @@ EASOM
 
 \begin_layout Plain Layout
 2037
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7917
 \end_layout
 
 \end_inset
@@ -2629,6 +1999,15 @@ ELP10
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2863
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -2663,6 +2042,15 @@ EXP4
 
 \begin_layout Plain Layout
 9155
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5944
 \end_layout
 
 \end_inset
@@ -2705,6 +2093,15 @@ EXP16
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3653
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -2739,6 +2136,15 @@ EXP64
 
 \begin_layout Plain Layout
 8958
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3692
 \end_layout
 
 \end_inset
@@ -2781,6 +2187,15 @@ GRIEWANK10
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+16469(0.03)
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -2815,6 +2230,15 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 9936
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5452
 \end_layout
 
 \end_inset
@@ -2857,6 +2281,15 @@ POTENTIAL5
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3972
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -2891,6 +2324,15 @@ HANSEN
 
 \begin_layout Plain Layout
 9104
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+14016
 \end_layout
 
 \end_inset
@@ -2933,6 +2375,15 @@ HARTMAN3
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4677
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -2967,6 +2418,15 @@ HARTMAN6
 
 \begin_layout Plain Layout
 15174(0.57)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+14372(0.90)
 \end_layout
 
 \end_inset
@@ -3009,6 +2469,15 @@ RASTRIGIN
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6148
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3043,6 +2512,15 @@ ROSENBROCK4
 
 \begin_layout Plain Layout
 11526
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+16763
 \end_layout
 
 \end_inset
@@ -3085,6 +2563,15 @@ ROSENBROCK8
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+16631
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3119,6 +2606,15 @@ SHEKEL5
 
 \begin_layout Plain Layout
 15082(0.47)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13178
 \end_layout
 
 \end_inset
@@ -3161,6 +2657,15 @@ SHEKEL7
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12050
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3195,6 +2700,15 @@ SHEKEL10
 
 \begin_layout Plain Layout
 12628(0.53)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13107
 \end_layout
 
 \end_inset
@@ -3237,6 +2751,15 @@ SINU4
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9048
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3271,6 +2794,15 @@ SINU8
 
 \begin_layout Plain Layout
 13912
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+16210
 \end_layout
 
 \end_inset
@@ -3313,6 +2845,15 @@ TEST2N4
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10864
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3347,6 +2888,15 @@ TEST2N5
 
 \begin_layout Plain Layout
 13936(0.90)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+15259
 \end_layout
 
 \end_inset
@@ -3389,6 +2939,15 @@ TEST2N6
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12839
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3423,6 +2982,15 @@ TEST2N7
 
 \begin_layout Plain Layout
 16020(0.50)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8185(0.97)
 \end_layout
 
 \end_inset
@@ -3465,6 +3033,15 @@ TEST30N3
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4839
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3499,6 +3076,15 @@ TEST30N4
 
 \begin_layout Plain Layout
 8051
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5070
 \end_layout
 
 \end_inset
@@ -3547,6 +3133,17 @@ AVERAGE
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+296814(0.96)
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3569,7 +3166,56 @@ AVERAGE
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename boxplot.eps
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Statistical comparison between the global optimization methods.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Statistical"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float table
+placement H
 wide false
 sideways false
 status collapsed
@@ -3578,11 +3224,13 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Experimental results for different values of the parameter 
+Experimental results for the proposed method and for different values of
+ the critical parameter 
 \begin_inset Formula $N_{S}$
 \end_inset
 
- and the proposed method.
+ (50, 100, 200).
+ Numbers in cells represent averages of 30 runs.
 \begin_inset CommandInset label
 LatexCommand label
 name "tab:kexperiments"
@@ -4973,6 +4621,675 @@ In the future, the use of the RBF network to construct an approximation
  It would also be interesting to create a parallel implementation of the
  proposed method, in order to significantly speed up its execution and to
  be able to be used efficiently in optimization problems of higher dimensions.
+\end_layout
+
+\begin_layout Section*
+Appendix A.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Bent Cigar function
+\series default
+ 
+\emph default
+The function is 
+\begin_inset Formula 
+\[
+f(x)=x_{1}^{2}+10^{6}\sum_{i=2}^{n}x_{i}^{2}
+\]
+
+\end_inset
+
+ with the global minimum 
+\begin_inset Formula $f\left(x^{*}\right)=0$
+\end_inset
+
+.
+ For the conducted experiments the value 
+\begin_inset Formula $n=10$
+\end_inset
+
+ was used.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Bf1
+\series default
+ function.
+ The function Bohachevsky 1 is given by the equation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+f(x)=x_{1}^{2}+2x_{2}^{2}-\frac{3}{10}\cos\left(3\pi x_{1}\right)-\frac{4}{10}\cos\left(4\pi x_{2}\right)+\frac{7}{10}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[-100,100]^{2}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Bf2
+\series default
+ function.
+ The function Bohachevsky 2 is given by the equation 
+\begin_inset Formula 
+\[
+f(x)=x_{1}^{2}+2x_{2}^{2}-\frac{3}{10}\cos\left(3\pi x_{1}\right)\cos\left(4\pi x_{2}\right)+\frac{3}{10}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[-50,50]^{2}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Branin
+\series default
+ function.
+ The function is defined by 
+\begin_inset Formula $f(x)=\left(x_{2}-\frac{5.1}{4\pi^{2}}x_{1}^{2}+\frac{5}{\pi}x_{1}-6\right)^{2}+10\left(1-\frac{1}{8\pi}\right)\cos(x_{1})+10$
+\end_inset
+
+ with 
+\begin_inset Formula $-5\le x_{1}\le10,\ 0\le x_{2}\le15$
+\end_inset
+
+.
+ The value of global minimum is 0.397887.with 
+\begin_inset Formula $x\in[-10,10]^{2}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+CM
+\series default
+ function.
+ The Cosine Mixture function is given by the equation 
+\begin_inset Formula 
+\[
+f(x)=\sum_{i=1}^{n}x_{i}^{2}-\frac{1}{10}\sum_{i=1}^{n}\cos\left(5\pi x_{i}\right)
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[-1,1]^{n}$
+\end_inset
+
+.
+ For the conducted experiments the value 
+\begin_inset Formula $n=4$
+\end_inset
+
+ was used.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Camel
+\series default
+ function.
+ The function is given by 
+\begin_inset Formula 
+\[
+f(x)=4x_{1}^{2}-2.1x_{1}^{4}+\frac{1}{3}x_{1}^{6}+x_{1}x_{2}-4x_{2}^{2}+4x_{2}^{4},\quad x\in[-5,5]^{2}
+\]
+
+\end_inset
+
+The global minimum has the value of 
+\begin_inset Formula $f\left(x^{*}\right)=-1.0316$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Discus function
+\series default
+\emph on
+ 
+\emph default
+The function is defined as 
+\begin_inset Formula 
+\[
+f(x)=10^{6}x_{1}^{2}+\sum_{i=2}^{n}x_{i}^{2}
+\]
+
+\end_inset
+
+ with global minimum 
+\begin_inset Formula $f\left(x^{*}\right)=0.$
+\end_inset
+
+ For the conducted experiments the value 
+\begin_inset Formula $n=10$
+\end_inset
+
+ was used.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Easom
+\series default
+ function The function is given by the equation 
+\begin_inset Formula 
+\[
+f(x)=-\cos\left(x_{1}\right)\cos\left(x_{2}\right)\exp\left(\left(x_{2}-\pi\right)^{2}-\left(x_{1}-\pi\right)^{2}\right)
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[-100,100]^{2}$
+\end_inset
+
+ and global minimum -1.0
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Exponential
+\series default
+ function.
+ The function is given by 
+\begin_inset Formula 
+\[
+f(x)=-\exp\left(-0.5\sum_{i=1}^{n}x_{i}^{2}\right),\quad-1\le x_{i}\le1
+\]
+
+\end_inset
+
+The global minimum is located at 
+\begin_inset Formula $x^{*}=(0,0,...,0)$
+\end_inset
+
+ with value 
+\begin_inset Formula $-1$
+\end_inset
+
+.
+ In our experiments we used this function with 
+\begin_inset Formula $n=4,16,64$
+\end_inset
+
+ and the corresponding functions are denoted by the labels EXP4, EXP16,
+ EXP64.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Griewank10
+\series default
+ function.
+ The function is given by the equation 
+\begin_inset Formula 
+\[
+f(x)=\sum_{i=1}^{n}\frac{x_{i}^{2}}{4000}-\prod_{i=1}^{n}\cos\left(\frac{x_{i}}{\sqrt{i}}\right)+1
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $n=10$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Hansen
+\series default
+ function.
+ 
+\begin_inset Formula $f(x)=\sum_{i=1}^{5}i\cos\left[(i-1)x_{1}+i\right]\sum_{j=1}^{5}j\cos\left[(j+1)x_{2}+j\right]$
+\end_inset
+
+, 
+\begin_inset Formula $x\in[-10,10]^{2}$
+\end_inset
+
+ .
+ The global minimum of the function is -176.541793.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Hartman 3
+\series default
+ function.
+ The function is given by
+\begin_inset Formula 
+\[
+f(x)=-\sum_{i=1}^{4}c_{i}\exp\left(-\sum_{j=1}^{3}a_{ij}\left(x_{j}-p_{ij}\right)^{2}\right)
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[0,1]^{3}$
+\end_inset
+
+ and 
+\begin_inset Formula $a=\left(\begin{array}{ccc}
+3 & 10 & 30\\
+0.1 & 10 & 35\\
+3 & 10 & 30\\
+0.1 & 10 & 35
+\end{array}\right),\ c=\left(\begin{array}{c}
+1\\
+1.2\\
+3\\
+3.2
+\end{array}\right)$
+\end_inset
+
+ and
+\begin_inset Formula 
+\[
+p=\left(\begin{array}{ccc}
+0.3689 & 0.117 & 0.2673\\
+0.4699 & 0.4387 & 0.747\\
+0.1091 & 0.8732 & 0.5547\\
+0.03815 & 0.5743 & 0.8828
+\end{array}\right)
+\]
+
+\end_inset
+
+The value of global minimum is -3.862782.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Hartman 6
+\series default
+ function.
+\begin_inset Formula 
+\[
+f(x)=-\sum_{i=1}^{4}c_{i}\exp\left(-\sum_{j=1}^{6}a_{ij}\left(x_{j}-p_{ij}\right)^{2}\right)
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[0,1]^{6}$
+\end_inset
+
+ and 
+\begin_inset Formula $a=\left(\begin{array}{cccccc}
+10 & 3 & 17 & 3.5 & 1.7 & 8\\
+0.05 & 10 & 17 & 0.1 & 8 & 14\\
+3 & 3.5 & 1.7 & 10 & 17 & 8\\
+17 & 8 & 0.05 & 10 & 0.1 & 14
+\end{array}\right),\ c=\left(\begin{array}{c}
+1\\
+1.2\\
+3\\
+3.2
+\end{array}\right)$
+\end_inset
+
+ and
+\begin_inset Formula 
+\[
+p=\left(\begin{array}{cccccc}
+0.1312 & 0.1696 & 0.5569 & 0.0124 & 0.8283 & 0.5886\\
+0.2329 & 0.4135 & 0.8307 & 0.3736 & 0.1004 & 0.9991\\
+0.2348 & 0.1451 & 0.3522 & 0.2883 & 0.3047 & 0.6650\\
+0.4047 & 0.8828 & 0.8732 & 0.5743 & 0.1091 & 0.0381
+\end{array}\right)
+\]
+
+\end_inset
+
+the value of global minimum is -3.322368.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+High Conditioned Elliptic
+\series default
+ function, defined as 
+\begin_inset Formula 
+\[
+f(x)=\sum_{i=1}^{n}\left(10^{6}\right)^{\frac{i-1}{n-1}}x_{i}^{2}
+\]
+
+\end_inset
+
+with global minimum 
+\begin_inset Formula $f\left(x^{*}\right)=0$
+\end_inset
+
+ and the value 
+\begin_inset Formula $n=10$
+\end_inset
+
+ was used in the conducted experiments
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Potential
+\series default
+ function.
+ The molecular conformation corresponding to the global minimum of the energy
+ of N atoms interacting via the Lennard-Jones potential
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Jones"
+literal "true"
+
+\end_inset
+
+ is used as a test case here.
+ The function to be minimized is given by:
+\begin_inset Formula 
+\begin{equation}
+V_{LJ}(r)=4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^{6}\right]\label{eq:potential}
+\end{equation}
+
+\end_inset
+
+In the current experiments two different cases were studied: 
+\begin_inset Formula $N=3,\ 5$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Rastrigin
+\series default
+ function.
+ The function is given by 
+\begin_inset Formula 
+\[
+f(x)=x_{1}^{2}+x_{2}^{2}-\cos(18x_{1})-\cos(18x_{2}),\quad x\in[-1,1]^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Shekel 7
+\series default
+ function.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+f(x)=-\sum_{i=1}^{7}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+with 
+\begin_inset Formula $x\in[0,10]^{4}$
+\end_inset
+
+ and 
+\begin_inset Formula $a=\left(\begin{array}{cccc}
+4 & 4 & 4 & 4\\
+1 & 1 & 1 & 1\\
+8 & 8 & 8 & 8\\
+6 & 6 & 6 & 6\\
+3 & 7 & 3 & 7\\
+2 & 9 & 2 & 9\\
+5 & 3 & 5 & 3
+\end{array}\right),\ c=\left(\begin{array}{c}
+0.1\\
+0.2\\
+0.2\\
+0.4\\
+0.4\\
+0.6\\
+0.3
+\end{array}\right)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Shekel 5 
+\series default
+function.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+f(x)=-\sum_{i=1}^{5}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}
+\]
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+with 
+\begin_inset Formula $x\in[0,10]^{4}$
+\end_inset
+
+ and 
+\begin_inset Formula $a=\left(\begin{array}{cccc}
+4 & 4 & 4 & 4\\
+1 & 1 & 1 & 1\\
+8 & 8 & 8 & 8\\
+6 & 6 & 6 & 6\\
+3 & 7 & 3 & 7
+\end{array}\right),\ c=\left(\begin{array}{c}
+0.1\\
+0.2\\
+0.2\\
+0.4\\
+0.4
+\end{array}\right)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Shekel 10
+\series default
+ function.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+f(x)=-\sum_{i=1}^{10}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}
+\]
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+with 
+\begin_inset Formula $x\in[0,10]^{4}$
+\end_inset
+
+ and 
+\begin_inset Formula $a=\left(\begin{array}{cccc}
+4 & 4 & 4 & 4\\
+1 & 1 & 1 & 1\\
+8 & 8 & 8 & 8\\
+6 & 6 & 6 & 6\\
+3 & 7 & 3 & 7\\
+2 & 9 & 2 & 9\\
+5 & 5 & 3 & 3\\
+8 & 1 & 8 & 1\\
+6 & 2 & 6 & 2\\
+7 & 3.6 & 7 & 3.6
+\end{array}\right),\ c=\left(\begin{array}{c}
+0.1\\
+0.2\\
+0.2\\
+0.4\\
+0.4\\
+0.6\\
+0.3\\
+0.7\\
+0.5\\
+0.6
+\end{array}\right)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Sinusoidal
+\series default
+ function.
+ The function is given by 
+\begin_inset Formula 
+\[
+f(x)=-\left(2.5\prod_{i=1}^{n}\sin\left(x_{i}-z\right)+\prod_{i=1}^{n}\sin\left(5\left(x_{i}-z\right)\right)\right),\quad0\le x_{i}\le\pi.
+\]
+
+\end_inset
+
+The global minimum is located at 
+\begin_inset Formula $x^{*}=(2.09435,2.09435,...,2.09435)$
+\end_inset
+
+ with 
+\begin_inset Formula $f\left(x^{*}\right)=-3.5$
+\end_inset
+
+.
+ For the conducted experiments the cases of 
+\begin_inset Formula $n=4,8$
+\end_inset
+
+ and 
+\begin_inset Formula $z=\frac{\pi}{6}$
+\end_inset
+
+ were studied.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Test2N
+\series default
+ function.
+ This function is given by the equation 
+\begin_inset Formula 
+\[
+f(x)=\frac{1}{2}\sum_{i=1}^{n}x_{i}^{4}-16x_{i}^{2}+5x_{i},\quad x_{i}\in[-5,5].
+\]
+
+\end_inset
+
+The function has 
+\begin_inset Formula $2^{n}$
+\end_inset
+
+ in the specified range and in our experiments we used 
+\begin_inset Formula $n=4,5,6,7$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Test30N
+\series default
+ function.
+ This function is given by 
+\begin_inset Formula 
+\[
+f(x)=\frac{1}{10}\sin^{2}\left(3\pi x_{1}\right)\sum_{i=2}^{n-1}\left(\left(x_{i}-1\right)^{2}\left(1+\sin^{2}\left(3\pi x_{i+1}\right)\right)\right)+\left(x_{n}-1\right)^{2}\left(1+\sin^{2}\left(2\pi x_{n}\right)\right)
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x\in[-10,10]$
+\end_inset
+
+.
+ The function has 
+\begin_inset Formula $30^{n}$
+\end_inset
+
+ local minima in the specified range and we used 
+\begin_inset Formula $n=3,4$
+\end_inset
+
+ in the conducted experiments.
 \end_layout
 
 \begin_layout Bibliography

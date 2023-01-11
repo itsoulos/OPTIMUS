@@ -4,8 +4,8 @@ DE::DE(Problem *p)
     : Optimizer(p)
 {
     addParameter("population_count", "100", "Number of population");
-    addParameter("max_generations", "2000", "Maximum number of generations");
-    addParameter("de_method","delb","Available values: de,derl,delb");
+    addParameter("max_generations", "200", "Maximum number of generations");
+    addParameter("de_method","de","Available values: de,derl,delb");
 }
 
 int  DE::tournament(int tsize)
