@@ -135,18 +135,20 @@ University of Western Macedonia, Department of Engineering Informatics and
 \begin_layout Abstract
 The problem of finding the global minimum of multidimensional functions
  is often applied to a wide range of problems.
- An innovative technique for finding the global minimum is proposed in this
- paper.
- In this technique, an estimation of the objective function is constructed
- using an RBF network.
- The network constantly updates the estimation for the objective function
- with information it gathers from performing local minimizations.
+ An innovative method of finding the global minimum of multidimensional
+ functions is presented here.
+ This method first generates an approximation of the objective function
+ using only a few real samples from it.
+ These samples construct the approach using a machine learning model.
+ Next, the required sampling is performed by the approximation function.
+ Furthermore, the approach is improved on each sample by using found local
+ minima as samples for the training set of the machine learning model.
  In addition, the proposed technique uses as a termination criterion a widely
  used criterion from the relevant literature which in fact evaluates it
  after each execution of the local minimization.
  The proposed technique was applied to a number of well-known problems from
  the relevant literature, and the comparative results with respect to modern
- global minimization techniques are shown extremely promising.
+ global minimization techniques are shown to be extremely promising.
 \end_layout
 
 \begin_layout Section
@@ -334,6 +336,64 @@ literal "false"
 \end_inset
 
  etc.
+ 
+\end_layout
+
+\begin_layout Standard
+Also, during the past years, many metaheuristic algorithms have appeared
+ to tackle to global optimization problems such as Quantum-based avian navigatio
+n optimizer algorithm 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "qana"
+literal "false"
+
+\end_inset
+
+, a Tunicate Swarm Algorithm (TSA) inspired by simulating the lives of Tunicates
+ at sea and how food is obtained 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "tsa"
+literal "false"
+
+\end_inset
+
+, Starling murmuration optimizer 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "starling1,starling2"
+literal "false"
+
+\end_inset
+
+, the Diversity-maintained multi-trial vector differential evolution algorithm
+ (DMDE) algorithm used in large scale global optimization 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "dmde"
+literal "false"
+
+\end_inset
+
+, an improved moth-flame optimization algorithm with adaptation mechanism
+ to solve numerical and mechanical engineering problems 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "flame"
+literal "false"
+
+\end_inset
+
+, the dwarf mongoose optimization algorithm 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "dwarf"
+literal "false"
+
+\end_inset
+
+ etc.
 \end_layout
 
 \begin_layout Standard
@@ -419,9 +479,27 @@ literal "false"
 
 , but this termination method is applied after each execution of the local
  minimization procedure.
- The proposed technique was applied to a series of problems from the relevant
- literature and the results are extremely promising even compared to established
- global optimization techniques.
+ The mentioned method was applied to some test functions provided by the
+ relevant literature and the results are extremely promising as compared
+ with other global optimization techniques.
+\end_layout
+
+\begin_layout Standard
+The proposed method does not sample the actual function but an approximation
+ of it, which is generated incrementally.
+ The creation of the approximation is done by using an RBF neural network,
+ known for its reliability and its ability to efficiently approximate functions.
+ The initial approximation is created from a limited number of points and
+ then it will be improved through the local minimizers that will be found
+ during the execution of the method.
+ With the above procedure, the required number of function calls is drastically
+ reduced, since the actual function is not used to produce samples, but
+ an approximation of it.
+ Only samples with low function values are taken from the approximation
+ function, which means that finding the global minimum is likely to be performed
+ faster than other techniques and more efficiently.
+ Furthermore, the generation of the approximation function does not use
+ any prior knowledge about the objective problem.
 \end_layout
 
 \begin_layout Standard
@@ -595,12 +673,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Enumerate
-During the first phase, the 
-\begin_inset Formula $k$
-\end_inset
-
- centers and the corresponding variances are calculated using the K-Means
- algorithm 
+In the first phase, the K-Means algorithm 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "kmeans"
@@ -608,16 +681,19 @@ literal "false"
 
 \end_inset
 
-.
+ is used to approximate the 
+\begin_inset Formula $k$
+\end_inset
+
+ centers and the corresponding variances.
 \end_layout
 
 \begin_layout Enumerate
-During the second phase, the weights 
+In the second phase, the weight vector 
 \begin_inset Formula $\overrightarrow{w}=\left(w_{1},w_{2},\ldots,w_{k}\right)$
 \end_inset
 
- are calculated by solving a linear system of equations with the following
- procedure:
+ is calculated by solving a linear system of equations as follows:
 \end_layout
 
 \begin_deeper
@@ -1087,6 +1163,66 @@ Goto
  to Sampling step.
 \end_layout
 
+\begin_layout Standard
+The steps of the algorithm are illustrated graphically in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:steps"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename diagram.eps
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The steps of the proposed algorithm.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:steps"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Experiments 
 \begin_inset CommandInset label
@@ -1099,7 +1235,7 @@ name "sec:Experiments"
 \end_layout
 
 \begin_layout Standard
-To estimate the efficiency of the new technique a number of functions from
+To estimate the efficiency of the new technique, a number of functions from
  the relevant literature were used 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1110,11 +1246,24 @@ literal "true"
 
 .
  These functions are provided in the Appendix.
- The proposed technique was tested on the these test functions and the results
+ The proposed technique was tested on these test functions and the results
  produced were compared with those given by a simple genetic algorithm or
  a PSO method or differential evolution (DE) method.
+ The used genetic algorithm is based on the 
+\begin_inset Formula $\mbox{GA}\left(c_{r1},l\right)$
+\end_inset
+
+ algorithm from the work of Kaelo and Ali 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kaelo"
+literal "false"
+
+\end_inset
+
+.
  In order to have fairness in the comparison of the results, for all global
- optimizition techniques the same local minimization method has been used
+ optimization techniques the same local minimization method has been used
  as that of the proposed method.
  In addition, the number of chromosomes in the genetic algorithm and the
  number of particles in the PSO method are identical to the parameter 
@@ -1122,12 +1271,13 @@ literal "true"
 \end_inset
 
  of the proposed procedure.
- Also, for the DE method the number of agents was set to 
+ Also, for the DE method, the number of agents was set to 
 \begin_inset Formula $N_{T}$
 \end_inset
 
 .
- The values for the used parameters are listed in Table 
+ The values for the parameters used in the conducted experiments are shown
+ in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:Experimental-settings."
@@ -1138,9 +1288,8 @@ noprefix "false"
 \end_inset
 
 .
- The conducted experiments were executed 30 times for each test function
- and averages were taken.
- In each execution, different seed for the random generator was used.
+ For every function and for every global optimizer, 30 independent runs
+ were executed using a different seed for the random generator each time.
  The proposed method is implemented as the method with the name 
 \emph on
 NeuralMinimizer
@@ -1179,14 +1328,14 @@ noprefix "false"
 \end_inset
 
 .
- The number show in the cells denote average function calls.
- The fraction in parentheses represents the fraction of executions where
- the global optimum was successfully found.
- When this number is absent, then the global minimum is computed for every
- execution (100% success).
- At the end of the table, an additional row named AVERAGE indicates the
- total number of function calls and the average success rate in locating
- the global minimum.
+ The number in the cells represent average function calls.
+ The number in parentheses indicates the fraction of runs where the global
+ optimum was successfully discovered.
+ Absence of this fraction indicated that the global minimum is discovered
+ for every execution (100% success).
+ At the end of the table, an additional row named AVERAGE has been added
+ to show the total number of function calls and the average success rate
+ in locating the global minimum.
  In the experimental results, the superiority of the proposed technique
  over the other two methods in terms of the number of function calls is
  clear.
@@ -1230,6 +1379,25 @@ noprefix "false"
  in the total number of function calls, while at the same time it improves
  to some extent the ability of the proposed technique to find the global
  minimum.
+\end_layout
+
+\begin_layout Standard
+The efficiency of the method is also shown in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:potential"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, where the proposed method is compared against genetic algorithm and particle
+ swarm optimization for a range of number of atoms of the Potential problem.
+ As can be seen in the table, the proposed method requires a significantly
+ smaller number of function calls compared to the other techniques and its
+ reliability in finding the global minimum remains high even when the number
+ of people in the potential increases significantly.
 \end_layout
 
 \begin_layout Standard
@@ -1507,7 +1675,7 @@ Maximum number of iterations
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -3173,7 +3341,7 @@ AVERAGE
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -4583,6 +4751,635 @@ AVERAGE
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Optimizing the Potential problem for different number of atoms.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:potential"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="15" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ATOMS
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+GENETIC
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PSO
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PROPOSED
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18902
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9936
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1192
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17806
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12560
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1964
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18477
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12385
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2399
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+19069(0.20)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9683
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3198
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+16390(0.33)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10533(0.17)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3311(0.97)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+15924(0.50)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8053(0.50)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3526
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+15041(0.27)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9276(0.17)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4338
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+14817(0.03)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7548(0.17)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5517(0.87)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13885(0.03)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6864(0.13)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6588(0.80)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+14435(0.17)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12182(0.07)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7508(0.83)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+14457(0.07)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10748(0.03)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6717(0.77)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+14
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13906(0.07)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+14235(0.13)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6201(0.93)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12832(0.10)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12980(0.10)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7802(0.90)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+AVERAGE
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+205941(0.37)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+137134(0.42)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+60258(0.93)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Conclusions 
 \begin_inset CommandInset label
@@ -4833,21 +5630,11 @@ f(x)=-\exp\left(-0.5\sum_{i=1}^{n}x_{i}^{2}\right),\quad-1\le x_{i}\le1
 
 \end_inset
 
-The global minimum is located at 
-\begin_inset Formula $x^{*}=(0,0,...,0)$
-\end_inset
-
- with value 
-\begin_inset Formula $-1$
-\end_inset
-
-.
- In our experiments we used this function with 
+The values 
 \begin_inset Formula $n=4,16,64$
 \end_inset
 
- and the corresponding functions are denoted by the labels EXP4, EXP16,
- EXP64.
+ was used here and the corresponding functions names are EXP4, EXP16, EXP64.
 \end_layout
 
 \begin_layout Itemize
@@ -4855,8 +5642,7 @@ The global minimum is located at
 \series bold
 Griewank10
 \series default
- function.
- The function is given by the equation 
+ function, defined as:
 \begin_inset Formula 
 \[
 f(x)=\sum_{i=1}^{n}\frac{x_{i}^{2}}{4000}-\prod_{i=1}^{n}\cos\left(\frac{x_{i}}{\sqrt{i}}\right)+1
@@ -4997,15 +5783,11 @@ f(x)=\sum_{i=1}^{n}\left(10^{6}\right)^{\frac{i-1}{n-1}}x_{i}^{2}
 
 \end_inset
 
-with global minimum 
-\begin_inset Formula $f\left(x^{*}\right)=0$
-\end_inset
-
- and the value 
+with 
 \begin_inset Formula $n=10$
 \end_inset
 
- was used in the conducted experiments
+ for the conducted experiments.
 \end_layout
 
 \begin_layout Itemize
@@ -5013,9 +5795,8 @@ with global minimum
 \series bold
 Potential
 \series default
- function.
- The molecular conformation corresponding to the global minimum of the energy
- of N atoms interacting via the Lennard-Jones potential
+ function, used to represent the lowest energy for the molecular conformation
+ of N atoms via the Lennard-Jones potential
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Jones"
@@ -5023,8 +5804,8 @@ literal "true"
 
 \end_inset
 
- is used as a test case here.
- The function to be minimized is given by:
+.
+ The function is defined as:
 \begin_inset Formula 
 \begin{equation}
 V_{LJ}(r)=4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^{6}\right]\label{eq:potential}
@@ -6060,7 +6841,138 @@ Van Luong T., Melab N., Talbi EG.
  LION 2011.
  Lecture Notes in Computer Science, vol 6683.
  Springer, Berlin, Heidelberg.
- https://doi.org/10.1007/978-3-642-25566-3_24
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "qana"
+literal "false"
+
+\end_inset
+
+Z.
+ Hoda, M.H.
+ Nadimi-Shahraki, A.
+ H.
+ Gandomi, QANA: Quantum-based avian navigation optimizer algorithm, Engineering
+ Applications of Artificial Intelligence 
+\series bold
+104
+\series default
+, 104314, 2021.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "tsa"
+literal "false"
+
+\end_inset
+
+F.S.
+ Gharehchopogh, An Improved Tunicate Swarm Algorithm with Best-random Mutation
+ Strategy for Global Optimization Problems, J Bionic Eng 
+\series bold
+19
+\series default
+, pp.
+ 1177–1202, 2022.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "starling1"
+literal "false"
+
+\end_inset
+
+Z.
+ Hoda, M.H.
+ Nadimi-Shahraki, A.H.
+ Gandomi, Starling murmuration optimizer: A novel bio-inspired algorithm
+ for global and engineering optimization, Computer Methods in Applied Mechanics
+ and Engineering 
+\series bold
+392
+\series default
+, 114616, 2022.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "starling2"
+literal "false"
+
+\end_inset
+
+M.H.
+ Nadimi-Shahraki et al, Binary Starling Murmuration Optimizer Algorithm
+ to Select Effective Features from Medical Data, Applied Sciences 
+\series bold
+13.1
+\series default
+, 564, 2023.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "dmde"
+literal "false"
+
+\end_inset
+
+M.H.
+ Nadimi-Shahraki, Z.
+ Hoda, DMDE: Diversity-maintained multi-trial vector differential evolution
+ algorithm for non-decomposition large-scale global optimization, Expert
+ Systems with Applications 
+\series bold
+198
+\series default
+, 116895, 2022.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "flame"
+literal "false"
+
+\end_inset
+
+M.H.
+ Nadimi-Shahraki et al., An improved moth-flame optimization algorithm with
+ adaptation mechanism to solve numerical and mechanical engineering problems,
+ Entropy 
+\series bold
+23.12
+\series default
+, 1637, 2021.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "dwarf"
+literal "false"
+
+\end_inset
+
+J.O.
+ Agushaka, A.E.
+ Ezugwu, L.
+ Abualigah, Dwarf mongoose optimization algorithm, Computer methods in applied
+ mechanics and engineering 
+\series bold
+391
+\series default
+,114570, 2022.
 \end_layout
 
 \begin_layout Bibliography
@@ -6449,6 +7361,25 @@ s, S.
  Meyer, C.
  Schweiger, Handbook of Test Problems in Local and Global Optimization,
  Kluwer Academic Publishers, Dordrecht, 1999.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "kaelo"
+literal "true"
+
+\end_inset
+
+P.
+ Kaelo, M.M.
+ Ali, Integrated crossover rules in real coded genetic algorithms, European
+ Journal of Operational Research 
+\series bold
+176
+\series default
+, pp.
+ 60-76, 2007.
 \end_layout
 
 \begin_layout Bibliography
