@@ -12,8 +12,8 @@ ParallelDe::ParallelDe(Problem *p)
     addParameter("parde_weight_method", "random", "The differential weight method. Available values are: random, ali, constant");
     addParameter("parde_f", "0.8", "Differential Weight");
     addParameter("parde_propagate_rate", "5", "The number of generations before the propagation takes place");
-    addParameter("parde_selection_method", "random", "The selection method used. Available values are: tournament,random");
-    addParameter("parde_propagate_method", "NtoN", "The propagation method used. Available values: 1to1,1toN,Nto1,NtoN");    
+    addParameter("parde_selection_method", "tournament", "The selection method used. Available values are: tournament,random");
+    addParameter("parde_propagate_method", "1to1", "The propagation method used. Available values: 1to1,1toN,Nto1,NtoN");    
     addParameter("parde_similarityMax", "15", "Maximum allowed itearations for Similarity Stopping rule");
     addParameter("parde_islands", "10", "Number of thread islands");
     addParameter("parde_islands_enable", "2", "the number of islands that play a role in the termination rule: [1, islands. O for global check.");

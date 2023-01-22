@@ -1,4 +1,4 @@
-METHOD=NeuralMinimizer
+METHOD=ParallelDe
 METHODPARAMS=""
 ### Available local search methods: bfgs, gradient, adam, lbfgs
 if [ $METHOD = "Minfinder" ]
@@ -32,9 +32,9 @@ then
 elif [ $METHOD = "MinCenter" ]
 then
 	METHODPARAMS="--mincenter_samples=600 --mincenter_centers=100 --mincenter_iterations=100"
-elif [ $METHOD = "islandde" ]
+elif [ $METHOD = "ParallelDe" ]
 then
-	METHODPARAMS="--islandde_samples=100 --islandde_maxiterations=100 --islandde_islands=5 --stopping_rule=0 --tournament=1"
+	METHODPARAMS="--parde_agents=50 --parde_islands=10"
 fi
 
 PROBLEM=$1
