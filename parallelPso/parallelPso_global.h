@@ -1,0 +1,12 @@
+#ifndef PARALLELPSO_GLOBAL_H
+#define PARALLELPSO_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(PARALLELPSO_LIBRARY)
+#define PARALLELPSO_EXPORT Q_DECL_EXPORT
+#else
+#define PARALLELPSO_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // PARALLELPSO_GLOBAL_H

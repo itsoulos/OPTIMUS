@@ -16,7 +16,7 @@ ParallelDe::ParallelDe(Problem *p)
     addParameter("parde_propagate_method", "1to1", "The propagation method used. Available values: 1to1,1toN,Nto1,NtoN");    
     addParameter("parde_similarityMax", "15", "Maximum allowed itearations for Similarity Stopping rule");
     addParameter("parde_islands", "10", "Number of thread islands");
-    addParameter("parde_islands_enable", "2", "the number of islands that play a role in the termination rule: [1, islands. O for global check.");
+    addParameter("parde_islands_enable", "1", "the number of islands that play a role in the termination rule: [1, islands. O for global check.");
 }
 
 int ParallelDe::selectAtom(int islandIndex)

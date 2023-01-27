@@ -160,8 +160,8 @@ void  loadOptimizers()
     QStringList optimizerFile;
 
     optimizerFile<<"libGenetic.so"<<"libMultistart.so"<<"libiPso.so"<<"libPrice.so"<<"libgende.so"<<"libPso.so"<<"libBfgs.so"
-	    		<<"libde.so"
-		    <<"libTmlsl.so"<<"libgcrs.so"<<"libIntegerGenetic.so"<<"libDoubleGenetic.so"<<"libNeuralMinimizer.so"<<"libParallelDe.so";
+	    		<<"libde.so"<<"libTmlsl.so"<<"libgcrs.so"<<"libIntegerGenetic.so"
+			<<"libDoubleGenetic.so"<<"libNeuralMinimizer.so"<<"libParallelDe.so"<<"libparallelPso.so";
     for(int i=0;i<optimizerFile.size();i++)
     {
         QString name=optimizerFile[i];

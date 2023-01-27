@@ -1,4 +1,4 @@
-METHOD=ParallelDe
+METHOD=parallelPso
 METHODPARAMS=""
 ### Available local search methods: bfgs, gradient, adam, lbfgs
 if [ $METHOD = "Minfinder" ]
@@ -34,7 +34,7 @@ then
 	METHODPARAMS="--mincenter_samples=600 --mincenter_centers=100 --mincenter_iterations=100"
 elif [ $METHOD = "ParallelDe" ]
 then
-	METHODPARAMS="--parde_agents=50 --parde_islands=10"
+	METHODPARAMS="--parde_agents=20 --parde_islands=10"
 fi
 
 PROBLEM=$1
