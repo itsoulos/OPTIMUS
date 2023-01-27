@@ -348,7 +348,7 @@ void ParallelDe::step()
         bestIslandIndex[t] = 0;
         bestIslandValues[t] = 1e+100;
         int j;
-#pragma omp parallel for private(j) num_threads(islands)
+//#pragma omp parallel for private(j) num_threads(islands)
         for (j = islandStartPos(t); j <= islandEndPos(t); j++)
         {
             double differentialWeight = getDifferentialWeight();

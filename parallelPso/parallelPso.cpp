@@ -3,15 +3,15 @@
 parallelPso::parallelPso(Problem *p) : Optimizer(p)
 {
     before = std::chrono::system_clock::now();
-    addParameter("parallelPsoParticles", "50", "Number of pso particles");
-    addParameter("parallelPsoGenerations", "200", "Maximum number of pso generations");
+    addParameter("parallelPsoParticles", "200", "Number of pso particles");
+    addParameter("parallelPsoGenerations", "100", "Maximum number of pso generations");
     addParameter("parallelPsoC1", "0.5", "Pso c1 parameter");
     addParameter("parallelPsoC2", "0.5", "Pso c2 parameter");
-    addParameter("psoLocalsearchRate", "0.01", "Local search rate for pso");
+    addParameter("psoLocalsearchRate", "0.00", "Local search rate for pso");
     addParameter("similarityMaxCount", "15", "Maximum allowed itearations for Similarity Stopping rule");
-    addParameter("pardePropagateRate", "2", "The number of generations before the propagation takes place");
-    addParameter("parallelPropagateMethod", "1toN", "The propagation method used. Available values: 1to1,1toN,Nto1,NtoN");
-    addParameter("subCluster", "10", "number of subclusters for pso");
+    addParameter("pardePropagateRate", "1", "The number of generations before the propagation takes place");
+    addParameter("parallelPropagateMethod", "NtoN", "The propagation method used. Available values: 1to1,1toN,Nto1,NtoN");
+    addParameter("subCluster", "1", "number of subclusters for pso");
     addParameter("subClusterEnable", "1", "the number of subclusters that play a role in the termination rule: [1, islands");
 }
 
@@ -165,8 +165,9 @@ bool parallelPso::terminated()
 
 bool parallelPso::checkSubCluster(int subClusterName)
 {
-    //---------------------SIMILARITY CASE 1 QUANTITIES------------------------------
 
+    //---------------------SIMILARITY CASE 1 QUANTITIES------------------------------
+/*
         double difference = fabs(newSum.at(subClusterName) - sum.at(subClusterName));
         //printf("%d] neWsum.at(%d) : %f Sum.at(%d) : %f different  : %lf\n", generation, subClusterName, newSum.at(subClusterName), subClusterName, sum.at(subClusterName), subClusterName, difference );
         sum.at(subClusterName) = newSum.at(subClusterName);
@@ -187,7 +188,16 @@ bool parallelPso::checkSubCluster(int subClusterName)
         similarityCurrentCount.at(subClusterName)++;
     else
         similarityCurrentCount.at(subClusterName) = 0;
-    if (similarityCurrentCount.at(subClusterName) >= similarityMaxCount)
+    if (similarityCurrentCount.at(subClusterName) >= sidouble difference = fabs(newSum.at(subClusterName) - sum.at(subClusterName));
+        //printf("%d] neWsum.at(%d) : %f Sum.at(%d) : %f different  : %lf\n", generation, subClusterName, newSum.at(subClusterName), subClusterName, sum.at(subClusterName), subClusterName, difference );
+        sum.at(subClusterName) = newSum.at(subClusterName);
+
+        if (difference < 1e-10)
+            similarityCurrentCount.at(subClusterName)++;
+        else
+            similarityCurrentCount.at(subClusterName) = 0;
+        if (similarityCurrentCount.at(subClusterName) >= similarityMaxCount)
+            return true;milarityMaxCount)
         return true;
     //--------------------------------------------------------------------------------
     */
@@ -204,27 +214,33 @@ void parallelPso::step()
     QRandomGenerator gen3 = QRandomGenerator();
     QRandomGenerator gen4 = QRandomGenerator();
     int t, i, j;
-    double R, inertia;
-    double r1, r2, tj, part1, part2, part3, trialf, rr;
-    Data oldg, dg;
-    bool found;
+
+    int subCluster = params["subCluster"].toString().toInt();
 #pragma omp parallel for default(shared) private(t) num_threads(subCluster)
     for (t = 0; t < subCluster; t++)
     {
-        if (this->checkSubCluster(t))
-                continue;
-#pragma omp parallel for default(shared) private(gen1, gen2, gen3, t, i, j, R, tj, part1, part2, part3, trialf, distances, rr, dg, found, oldg) num_threads(subCluster)
+       // if (this->checkSubCluster(t))
+       //         continue;
+        bestSubClusterIndex[t] = 0;
+        bestSubClusterValues[t] = 1e+100;
+#pragma omp parallel for default(shared) private(j) num_threads(subCluster)
         for (i = subClusterStartPos(t); i <= subClusterEndPos(t); i++)
         {
+         double R, inertia;
+    double r1, r2, tj, part1, part2, part3, trialf, rr;
+    Data oldg, dg;
+    bool found;
             // printf("subClusterStartPos(%d)\tsubClusterEndPos(%d)\n",subClusterStartPos(t),subClusterEndPos(t-1));
             R = gen1.bounded(1.0);
+            //R = drand48();
             inertia = 0.5 + (R / 2.0);
             oldg = particles[i];
             for (j = 0; j < dimension; j++)
             {
                 r1 = gen2.bounded(1.0);
                 r2 = gen3.bounded(1.0);
-
+                //r1 = drand48();
+                //r2 = drand48();
                 tj = velocitys[i][j];
                 part1 = inertia * velocitys[i][j];
                 part2 = parallelPsoC1 * r1 * (bestParticle[i][j] - particles[i][j]);
@@ -241,19 +257,28 @@ void parallelPso::step()
                     particles[i][j] = trialf;
                 }
             }
-            distances.push_back(getDistance(particles[i], oldg));
+
+//            distances.push_back(getDistance(particles[i], oldg));
+/*
             if (distances[i] > 1e-6)
             {
+
                 if (psoLocalSearchRate > 0.0 && rr <= psoLocalSearchRate && !checkGradientCriterion(particles[i]))
                 {
+
                     rr = gen4.bounded(1.0);
+                    //rr = drand48();
                     dg = particles[i];
+
                     fitness_array[i] = localSearch(particles[i]);
+
                     RC += getDistance(dg, particles[i]);
                     localSearchCount++;
                     found = false;
+
                     for (int j = 0; j < minimax.size(); j++)
                     {
+
                         if (getDistance(minimax[j], particles[i]) < 1e-5)
                         {
                             found = true;
@@ -263,25 +288,17 @@ void parallelPso::step()
 
                     if (!found)
                     {
+
                         minimax.push_back(particles[i]);
                     }
                 }
                 else
                     fitness_array[i] = fitness(particles[i]);
-            }
-        }
-    }
 
-#pragma omp parallel for default(shared) private(t) num_threads(subCluster)
-    for (t = 0; t < subCluster; t++)
-    {
-        if (this->checkSubCluster(t))
-                continue;
-        bestSubClusterIndex[t] = 0;
-        bestSubClusterValues[t] = 1e+100;
-#pragma omp parallel for default(shared) private(i, t) num_threads(subCluster)
-        for (i = subClusterStartPos(t); i <= subClusterEndPos(t); i++)
-        {
+            }
+*/
+
+            fitness_array[i] = myProblem->funmin(particles[i]);
 
             if (fitness_array[i] < bestFitness_array[i])
             {
@@ -290,6 +307,7 @@ void parallelPso::step()
             }
             if (besty > bestFitness_array[i])
             {
+
                 bestx = bestParticle[i];
                 besty = bestFitness_array[i];
                 bestF2xInCluster.at(t) = bestFitness_array[i];
@@ -300,9 +318,11 @@ void parallelPso::step()
                 bestSubClusterIndex[t] = i;
                 bestSubClusterValues[t] = fitness_array[i];
             }
-        }
 
-    }
+        }
+     }
+
+
     for (int j = 0; j < subCluster; j++)
     {
         //printf("subClusterStartPos(%d)\tsubClusterEndPos(%d)",subClusterStartPos(j),subClusterEndPos(j));
