@@ -1,0 +1,1384 @@
+%% LyX 2.3.7 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[journal,article,submit,pdftex,moreauthors]{mdpi}
+\usepackage[utf8]{inputenc}
+\usepackage{array}
+\usepackage{float}
+\usepackage{url}
+\usepackage{graphicx}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+
+\Title{OPTIMUS: a multidimensional global optimization package}
+
+\TitleCitation{OPTIMUS : a multidimensional global optimization package}
+
+\Author{Ioannis G. Tsoulos$^{1,*}$, Vasileios Charilogis$^{2}$}
+
+\AuthorNames{Ioannis G. Tsoulos, Vasileios Charilogis }
+
+\AuthorCitation{Tsoulos, I.G.; Charilogis, V.}
+
+
+\address{$^{1}$\quad{}Department of Informatics and Telecommunications,
+University of Ioannina, Greece;itsoulos@uoi.gr\\
+$^{2}$\quad{}Department of Informatics and Telecommunications, University
+of Ioannina, Greece; v.charilogis@uoi.gr}
+
+
+\corres{Correspondence: itsoulos@uoi.gr; }
+
+
+\abstract{A variety of problems from many research areas can be modeled using
+global optimization, such as problems in the area of image processing,
+medical informatics, economic models, etc. This paper presents a programming
+tool written in ANSI C++, which researchers can use to formulate the
+problem to be solved and then make use of the local and global optimization
+methods provided by this tool to efficiently solve such problems.
+The main features of the proposed software are: a) Ability to code
+the objective problem in a high level language such as ANSI C++ b)
+Incorporation of many global optimization techniques to solve the
+objective problem c)Parameterization of global optimization methods
+using user-defined parameters.}
+
+
+\keyword{Global optimization; stochastic methods; termination rules.}
+
+\DeclareTextSymbolDefault{\textquotedbl}{T1}
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+%  LaTeX support: latex@mdpi.com 
+%  For support, please attach all files needed for compiling as well as the log file, and specify your operating system, LaTeX version, and LaTeX editor.
+
+%=================================================================
+
+
+% For posting an early version of this manuscript as a preprint, you may use "preprints" as the journal and change "submit" to "accept". The document class line would be, e.g., \documentclass[preprints,article,accept,moreauthors,pdftex]{mdpi}. This is especially recommended for submission to arXiv, where line numbers should be removed before posting. For preprints.org, the editorial staff will make this change immediately prior to posting.
+
+%--------------------
+% Class Options:
+%--------------------
+%----------
+% journal
+%----------
+% Choose between the following MDPI journals:
+% acoustics, actuators, addictions, admsci, adolescents, aerospace, agriculture, agriengineering, agronomy, ai, algorithms, allergies, alloys, analytica, animals, antibiotics, antibodies, antioxidants, applbiosci, appliedchem, appliedmath, applmech, applmicrobiol, applnano, applsci, aquacj, architecture, arts, asc, asi, astronomy, atmosphere, atoms, audiolres, automation, axioms, bacteria, batteries, bdcc, behavsci, beverages, biochem, bioengineering, biologics, biology, biomass, biomechanics, biomed, biomedicines, biomedinformatics, biomimetics, biomolecules, biophysica, biosensors, biotech, birds, bloods, blsf, brainsci, breath, buildings, businesses, cancers, carbon, cardiogenetics, catalysts, cells, ceramics, challenges, chemengineering, chemistry, chemosensors, chemproc, children, chips, cimb, civileng, cleantechnol, climate, clinpract, clockssleep, cmd, coasts, coatings, colloids, colorants, commodities, compounds, computation, computers, condensedmatter, conservation, constrmater, cosmetics, covid, crops, cryptography, crystals, csmf, ctn, curroncol, currophthalmol, cyber, dairy, data, dentistry, dermato, dermatopathology, designs, diabetology, diagnostics, dietetics, digital, disabilities, diseases, diversity, dna, drones, dynamics, earth, ebj, ecologies, econometrics, economies, education, ejihpe, electricity, electrochem, electronicmat, electronics, encyclopedia, endocrines, energies, eng, engproc, ent, entomology, entropy, environments, environsciproc, epidemiologia, epigenomes, est, fermentation, fibers, fintech, fire, fishes, fluids, foods, forecasting, forensicsci, forests, foundations, fractalfract, fuels, futureinternet, futureparasites, futurepharmacol, futurephys, futuretransp, galaxies, games, gases, gastroent, gastrointestdisord, gels, genealogy, genes, geographies, geohazards, geomatics, geosciences, geotechnics, geriatrics, hazardousmatters, healthcare, hearts, hemato, heritage, highthroughput, histories, horticulturae, humanities, humans, hydrobiology, hydrogen, hydrology, hygiene, idr, ijerph, ijfs, ijgi, ijms, ijns, ijtm, ijtpp, immuno, informatics, information, infrastructures, inorganics, insects, instruments, inventions, iot, j, jal, jcdd, jcm, jcp, jcs, jdb, jeta, jfb, jfmk, jimaging, jintelligence, jlpea, jmmp, jmp, jmse, jne, jnt, jof, joitmc, jor, journalmedia, jox, jpm, jrfm, jsan, jtaer, jzbg, kidney, kidneydial, knowledge, land, languages, laws, life, liquids, literature, livers, logics, logistics, lubricants, lymphatics, machines, macromol, magnetism, magnetochemistry, make, marinedrugs, materials, materproc, mathematics, mca, measurements, medicina, medicines, medsci, membranes, merits, metabolites, metals, meteorology, methane, metrology, micro, microarrays, microbiolres, micromachines, microorganisms, microplastics, minerals, mining, modelling, molbank, molecules, mps, msf, mti, muscles, nanoenergyadv, nanomanufacturing, nanomaterials, ncrna, network, neuroglia, neurolint, neurosci, nitrogen, notspecified, nri, nursrep, nutraceuticals, nutrients, obesities, oceans, ohbm, onco, oncopathology, optics, oral, organics, organoids, osteology, oxygen, parasites, parasitologia, particles, pathogens, pathophysiology, pediatrrep, pharmaceuticals, pharmaceutics, pharmacoepidemiology, pharmacy, philosophies, photochem, photonics, phycology, physchem, physics, physiologia, plants, plasma, pollutants, polymers, polysaccharides, poultry, powders, preprints, proceedings, processes, prosthesis, proteomes, psf, psych, psychiatryint, psychoactives, publications, quantumrep, quaternary, qubs, radiation, reactions, recycling, regeneration, religions, remotesensing, reports, reprodmed, resources, rheumato, risks, robotics, ruminants, safety, sci, scipharm, seeds, sensors, separations, sexes, signals, sinusitis, skins, smartcities, sna, societies, socsci, software, soilsystems, solar, solids, sports, standards, stats, stresses, surfaces, surgeries, suschem, sustainability, symmetry, synbio, systems, taxonomy, technologies, telecom, test, textiles, thalassrep, thermo, tomography, tourismhosp, toxics, toxins, transplantology, transportation, traumacare, traumas, tropicalmed, universe, urbansci, uro, vaccines, vehicles, venereology, vetsci, vibration, viruses, vision, waste, water, wem, wevj, wind, women, world, youth, zoonoticdis 
+
+%---------
+% article
+%---------
+% The default type of manuscript is "article", but can be replaced by: 
+% abstract, addendum, article, book, bookreview, briefreport, casereport, comment, commentary, communication, conferenceproceedings, correction, conferencereport, entry, expressionofconcern, extendedabstract, datadescriptor, editorial, essay, erratum, hypothesis, interestingimage, obituary, opinion, projectreport, reply, retraction, review, perspective, protocol, shortnote, studyprotocol, systematicreview, supfile, technicalnote, viewpoint, guidelines, registeredreport, tutorial
+% supfile = supplementary materials
+
+%----------
+% submit
+%----------
+% The class option "submit" will be changed to "accept" by the Editorial Office when the paper is accepted. This will only make changes to the frontpage (e.g., the logo of the journal will get visible), the headings, and the copyright information. Also, line numbering will be removed. Journal info and pagination for accepted papers will also be assigned by the Editorial Office.
+
+%------------------
+% moreauthors
+%------------------
+% If there is only one author the class option oneauthor should be used. Otherwise use the class option moreauthors.
+
+%---------
+% pdftex
+%---------
+% The option pdftex is for use with pdfLaTeX. If eps figures are used, remove the option pdftex and use LaTeX and dvi2pdf.
+
+%=================================================================
+% MDPI internal commands
+\firstpage{1} 
+ 
+\setcounter{page}{\@firstpage} 
+
+\pubvolume{1}
+\issuenum{1}
+\articlenumber{0}
+\pubyear{2022}
+\copyrightyear{2022}
+%\externaleditor{Academic Editor: Firstname Lastname} % For journal Automation, please change Academic Editor to "Communicated by"
+\datereceived{} 
+\dateaccepted{} 
+\datepublished{} 
+%\datecorrected{} % Corrected papers include a "Corrected: XXX" date in the original paper.
+%\dateretracted{} % Corrected papers include a "Retracted: XXX" date in the original paper.
+\hreflink{https://doi.org/} % If needed use \linebreak
+%\doinum{}
+%------------------------------------------------------------------
+% The following line should be uncommented if the LaTeX file is uploaded to arXiv.org
+%\pdfoutput=1
+
+%=================================================================
+% Add packages and commands here. The following packages are loaded in our class file: fontenc, inputenc, calc, indentfirst, fancyhdr, graphicx, epstopdf, lastpage, ifthen, lineno, float, amsmath, setspace, enumitem, mathpazo, booktabs, titlesec, etoolbox, tabto, xcolor, soul, multirow, microtype, tikz, totcount, changepage, attrib, upgreek, cleveref, amsthm, hyphenat, natbib, hyperref, footmisc, url, geometry, newfloat, caption
+
+%=================================================================
+%% Please use the following mathematics environments: Theorem, Lemma, Corollary, Proposition, Characterization, Property, Problem, Example, ExamplesandDefinitions, Hypothesis, Remark, Definition, Notation, Assumption
+%% For proofs, please use the proof environment (the amsthm package is loaded by the MDPI class).
+
+%=================================================================
+% The fields PACS, MSC, and JEL may be left empty or commented out if not applicable
+%\PACS{J0101}
+%\MSC{}
+%\JEL{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Diversity
+%\LSID{\url{http://}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Applied Sciences:
+%\featuredapplication{Authors are encouraged to provide a concise description of the specific application or a potential application of the work. This section is not mandatory.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Data:
+%\dataset{DOI number or link to the deposited data set in cases where the data set is published or set to be published separately. If the data set is submitted and will be published as a supplement to this paper in the journal Data, this field will be filled by the editors of the journal. In this case, please make sure to submit the data set as a supplement when entering your manuscript into our manuscript editorial system.}
+
+%\datasetlicense{license under which the data set is made available (CC0, CC-BY, CC-BY-SA, CC-BY-NC, etc.)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Toxins
+%\keycontribution{The breakthroughs or highlights of the manuscript. Authors can write one or two sentences to describe the most important part of the paper.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Encyclopedia
+%\encyclopediadef{Instead of the abstract}
+%\entrylink{The Link to this entry published on the encyclopedia platform.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makeatother
+
+\usepackage{listings}
+\renewcommand{\lstlistingname}{\inputencoding{latin9}Listing}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+The task of locating the global minimum of a continuous and differentiable
+function $f:S\rightarrow R,S\subset R^{n}$ is defined as
+\begin{equation}
+x^{*}=\mbox{arg}\min_{x\in S}f(x)\label{eq:eq1}
+\end{equation}
+with $S$: 
+\[
+S=\left[a_{1},b_{1}\right]\otimes\left[a_{2},b_{2}\right]\otimes\ldots\left[a_{n},b_{n}\right]
+\]
+Methods that aim to locate the global minimum finds application in
+economics \citep{globalecon1,globalecon2}, physics \citep{global_physics1,global_physics2},
+chemistry \citep{global_chemistry1,global_chemistry2}, medicine \citep{global_med1,global_med2}
+etc. Also, global optimization methods were used on some symmetry
+problems \citep{go_symmetry0,go_symmetry1,go_symmetry2} as well as
+on inverse problems \citep{global_nonlinear1,global_nonlinear2,global_nonlinear3}.
+In the relevant literature there are a number of global optimization
+techniques, such as Adaptive Random Search methods \citep{go_adaptive1,go_adaptive2},
+Controlled Random Search methods \citep{go_crs1,go_crs2}, Simulated
+Annealing \citep{go_sa1,go_sa2,go_sa3}, Genetic algorithms \citep{go_ga1,go_ga2},
+Ant Colony Optimization \citep{go_ant1,go_ant2}, Particle Swarm Optimization
+\citep{go_pso1,go_pso2} etc. Moreover, many hybrid techniques have
+been proposed to tackle the global optimization problem, such as methods
+that combine Particle Swarm Optimization and Genetic algorithms \citep{go_pso_genetic_hybrid1,go_pso_genetic_hybrid2},
+methods that combine the Simplex method and Inductive search \citep{hybrid1}
+etc. 
+
+Just a few recent application examples include an adaptive genetic
+algorithm for crystal structure prediction \citep{genetic_physics1},
+modeling of fusion plasma physics with genetic algorithms \citep{genetic_physics2},
+usage of genetic algorithms for astroparticle physics studies \citep{genetic_physics3},
+parameter extraction of solar cells using a Particle Swarm Optimization
+method \citep{pso_physics1}, a Particle swarm optimization method
+for the control of a fleet of Unmanned Aerial Vehicles \citep{pso_physics2}
+etc.
+
+Because of the large demands that global optimization methods have
+on computing power, several techniques have been proposed \citep{parallel-multistart,parallel-multistart2}
+and also some methods that take advantage of modern parallel gpu architectures
+\citep{gpu1,gpu2,gpu3}.
+
+In this work, an integrated computing environment is proposed for
+solving global optimization problems. In this the researcher can code
+the objective function in the C++ programming language and then formulate
+a strategy to solve the problem. In this strategy, the researcher
+can choose from a series of sampling methods, choose a global minimization
+method established in the relevant literature and possibly some local
+minimization method to improve the produced result. Similar software
+environments can be found, such as the BARON software package \citep{baron},
+the MERLIN optimization software \citep{merlin}, the DEoptim software
+\citep{deoptim} etc.
+
+The rest of this article is organized as follows: in section \ref{sec:Software}
+the software is described in detail, in section \ref{sec:Experiments}
+some experiments are conducted to show the effectiveness of the proposed
+software and finally in section \ref{sec:Conclusions} some conclusions
+and guidelines for future work are presented.
+
+\section{Software\label{sec:Software}}
+
+The software is entirely written in ANSI C++ using the freely available
+QT programming library, which can be downloaded from \url{https://qt.io}.
+The user can code the objective problem in C++ by defining some critical
+functions such as the dimension of the function or the objective function.
+Subsequently, the user can select a global optimization method to
+apply to the problem from a wide range of available methods. Also,
+the user can extend the series of methods by adding some new method.\textbf{
+}In the following subsections, the installation process of the proposed
+software will be analyzed and a complete example of running an objective
+problem will be given.
+
+\subsection{Installation }
+
+At the present time, the software package can only be installed on
+computers with the Linux operating system, but in the future it will
+be able to be installed on other systems as well. The instructions
+to install the package on a computer are as follows:
+\begin{enumerate}
+\item Download and install the QT programming library from \url{https://qt.io }
+\item Download the software from \url{https://github.com/itsoulos/OPTIMUS}
+\item Set the \emph{OPTIMUSPATH} environment variable pointing at the installation
+directory of OPTIMUS e.g. OPTIMUSPATH=/home/user/OPTIMUS/, where user
+is the user name in the Linux operating system.
+\item Set the \emph{LD\_LIBRAPY\_PATH} to include the OPTIMUS/lib subdirectory
+e.g. LD\_LIBRAPY\_PATH=\$LD\_LIBRAPY\_PATH:\$OPTIMUSPATH/lib/:
+\item Issue the command: cd \$OPTIMUSPATH 
+\item Execute the compilation script:\emph{ ./compile.sh }
+\end{enumerate}
+After the compilation is complete, the \emph{lib} folder will contain
+the supported global optimization methods in the form of shared libraries,
+the \emph{PROBLEMS} folder will contain a number of example optimization
+problems from the relevant literature, and the \emph{bin} folder will
+contain the main executable of the software named \emph{OptimusApp}.
+This executable can be used to apply global optimization techniques
+to objective problems.
+
+\subsection{Implemented global optimization methods }
+
+In the following, the global optimization methods present in the proposed
+software are presented. In most of them, a local optimization method
+is applied after their end in order to find the global minimum with
+greater reliability. In the proposed software, each implemented global
+optimization method has a set of parameters that can determine the
+global optimization path and the effectiveness of the method. For
+example, the genetic algorithm contains parameters such as the number
+of chromosomes or the maximum number of generations allowed. The implemented
+global optimization methods are:
+\begin{enumerate}
+\item Differential Evolution. The differential evolution method is included
+in the software as suggested by Storn\citep{de_main_paper} and denoted
+as \textbf{de}. This global optimization technique has been widely
+used in areas such as community detection \citep{de_symmetry1}, structure
+prediction of materials \citep{de_symmetry3}, motor fault diagnosis
+\citep{de_symmetry6}, automatic clustering techniques \citep{de_symmetry7}
+etc.
+\item Improved Differential Evolution. The modified Differential Evolution
+method as suggested by Charilogis et al \citep{gende} is implemented
+and denoted as \textbf{gende}.
+\item Parallel Differential Evolution. A parallel implementation of the
+Differential Evolution method as suggested in \citep{parallelDe}
+is considered with the name \textbf{ParallelDe}. The parallelization
+is performed using the OpenMP programming library \citep{openMp}.
+\item Double precision genetic algorithm. A modified genetic algorithm \citep{doublepop_tsoulos}
+is included in the software and it is denoted as \textbf{DoubleGenetic}.
+Genetic algorithms are typical representatives of evolutionary techniques
+with many applications such as scheduling problems \citep{genetic1},
+the vehicle routing problem \citep{genetic2}, combinatorial optimization
+\citep{genetic3}, architectural design etc \citep{genetic4}.
+\item Integer precision genetic algorithm. The method denoted as \textbf{IntegerGenetic}
+is a copy of the \textbf{DoubleGenetic} method, but with the usage
+of integer values as chromosomes. This global optimization method
+is ideal for problems such as the TSP problem \citep{tsp1,tsp2},
+path planning \citep{pathPlanning}, Grammatical Evolution applications
+\citep{ge} etc.
+\item Improved Controlled Random Search. An improved version of Controlled
+Random Search as suggested by Charilogis et al \citep{gcrs} is implemented
+and it is denoted as \textbf{CCRS}.
+\item Particle Swarm Optimization. A PSO variant denoted as \textbf{Pso}
+is also included in the software. The particle swarm optimization
+method was applied successfully in a vast number of problems such
+as parameter extraction of solar cells \citep{psoApp1}, crystal structure
+prediction \citep{psoApp2}, molecular simulations \citep{psoApp3}
+etc.
+\item Improved Particle Swarm Optimization. The improved Particle Swarm
+method as suggested by Charilogis and Tsoulos \citep{ipso}. The implemented
+method is denoted as \textbf{iPso}.
+\item Multistart. A simple method that initiates local searches from different
+initial points is also implemented in the software. Despite its simplicity,
+the multistart method has been applied on many problems, such as the
+TSP problem\textbf{ }\citep{multistart-tsp}, the vehicle routing
+problem \citep{multistart-vehicle}, the facility location problem
+\citep{multistart_fac}, the maximum clique problem \citep{multistart_clique},
+the maximum fire risk insured capital problem \citep{multistart_fire},
+aerodynamic shape problems \citep{multistart-aero} etc
+\item Topographical Multi level single linkage. This method is proposed
+by Ali et al \citep{tmlsl} and it is denoted as \textbf{Tmlsl} in
+the implementation. 
+\item The MinCenter method. In the software presented here, another multistart
+method has been included, which forms, with the use of the K-Means
+clustering algorithm, the regions of attraction for the local minima
+of the objective problem. This method is denoted as \textbf{MinCenter}
+and it was originally published by Charilogis and Tsoulos \citep{mincenter}.
+\item NeuralMinimizer. A novell method that incorporates Radial Basis Functions
+(RBF)\citep{rbf_main1} to create an estimation of the objective function
+introduced in \citep{neuralMinimizer} is implemented and denoted
+by the name \textbf{NeuralMinimizer}.
+\end{enumerate}
+
+\subsection{Implemented local optimization methods}
+
+The proposed software uses, in addition to global optimization methods
+and local optimization methods, which can be used in most global minimization
+techniques, with the $--$localsearch\_method parameter. The implemented
+local optimization methods are the following:
+\begin{enumerate}
+\item The \textbf{bfgs} method. The Broyden--Fletcher--Goldfarb--Shanno
+(BFGS) algorithm was implemented using a variant of Powell \citep{powell}.
+\item The \textbf{lbfgs} method. The limited memory BFGS method \citep{lbfgs}
+is implemented as an approximation of the BFGS method using a limited
+amount of computer memory. This local search procedure is ideal for
+objective functions of higher dimensions.
+\item The Gradient descent method. This method is denoted as \textbf{gradient}
+in the software and implements the Gradient Descent local optimization
+procedure. This local search procedure is used in various problems
+such as neural network training \citep{gradient1}, image registration
+\citep{gradient2} etc.
+\item The \textbf{adam} method. The adam local optimizer \citep{Adam} is
+implemented also.
+\item The Nelder Mead method. The Nelder - Mead simplex procedure for local
+optimization \citep{nelderMead} is also included in the software
+and it is denoted as \textbf{nelderMead}.
+\item Hill climbing. The hill climbing local search procedure denoted as
+\textbf{hill} is also implemented. The method has been used in various
+fields, such as design of photovoltaic power systems \citep{hill1},
+load balancing in cloud computing \citep{hill2} etc. 
+\end{enumerate}
+
+\subsection{Objective problem deployment }
+
+The objective problem must be coded in the C++ programming language.
+The programmer must provide the software with a series of functions
+that describe key components of the problem, such as the problem dimension,
+the objective function, and the derivative.
+
+\subsubsection{Objective function coding}
+
+Figure \ref{fig:A-typical-representation} shows an objective function
+written with the functions required by this software. This code is
+used for the minimization of the Rastrigin function defined as:
+\[
+f(x)=x_{1}^{2}+x_{2}^{2}-\cos\left(18x_{1}\right)-\cos\left(18x_{2}\right)
+\]
+with $x\in[-1,1]^{2}$. The functions shown in the figure \ref{fig:A-typical-representation}
+have the following meaning:
+\begin{enumerate}
+\item \textbf{void} init(QJsonObject data). The function init() is called
+before the objective function is executed and its purpose is to pass
+parameters from the execution environment to the objective function.
+For example in the optimization of the Lennard Jones potential \citep{Jones}
+the user can pass the number of individuals in the potential using
+an assignment as follows\\
+\inputencoding{latin9}\begin{lstlisting}
+        natoms=data["natoms"].toString().toInt(); 
+\end{lstlisting}
+\inputencoding{utf8}\item \textbf{int} getDimension(). This function returns the dimension of
+the objective problem.
+\item \textbf{void}    getmargins(vector\textless Interval\textgreater{}
+\&x). The getmargins() functions returns in the vector x the bounds
+of the objective problem. The class Interval is a simple class that
+represents double precision intervals eg $[2,4${]} is an interval
+with left bound the value 2 and right bound the value 4.
+\item \textbf{double}	funmin(vector\textless\textbf{double}\textgreater{}
+\&x). This function returns the objective problem $f(x)$ for a given
+point $x$.
+\item \textbf{void}    granal(vector\textless\textbf{double}\textgreater{}
+\&x,vector\textless\textbf{double}\textgreater{} \&g). This functions
+stores in vector g the gradient $\nabla f(x)$ for a given point x.
+\item QJsonObject  done(vector\textless\textbf{double}\textgreater{} \&x).
+This function is executed after the objective function optimization
+process is completed. The point x is the global minimum for the function
+$f(x)$. This function can be used in various cases, such as to generate
+a graph after the optimization is finished or even in the case of
+artificial neural networks \citep{nn1,nn2} to apply the resulting
+trained network to the test set of the problem.
+\end{enumerate}
+\begin{figure}
+\caption{A typical representation of an objective problem, suitable for the
+OPTIMUS programming tool.\label{fig:A-typical-representation}}
+
+\inputencoding{latin9}\begin{lstlisting}[language={C++}]
+# include <math.h> 
+# include <interval.h> 
+# include <vector> 
+# include <stdio.h> 
+# include <iostream> 
+# include <QJsonObject> 
+using namespace std;
+extern "C" {
+void    init(QJsonObject data) {
+}
+int	getdimension() { 	
+	return 2; 
+} 
+void    getmargins(vector<Interval> &x) {         
+  for(int i=0;i<x.size();i++)                 
+	x[i]=Interval(-1,1); 
+}
+double	funmin(vector<double> &x) {    
+	return (x[0]*x[0])+(x[1]*x[1])-cos(18.0*x[0])-cos(18.0*x[1]); 
+}
+void    granal(vector<double> &x,vector<double> &g) {       
+	g[0]=2.0*x[0]+18.0*sin(18.0*x[0]);       
+	g[1]=2.0*x[1]+18.0*sin(18.0*x[1]); 
+}
+QJsonObject    done(vector<double> &x) {     
+return QJsonObject(); 
+}
+} 
+\end{lstlisting}
+\inputencoding{utf8}\end{figure}
+
+
+\subsubsection{Objective function compilation }
+
+In order to build the objective function the user should create an
+accompaniment project file as demonstrated in Figure \ref{fig:proFile}.
+The software incorporates the utility qmake of the QT library to compile
+the objective function. The compilation is performed with the following
+series of commands in the terminal:
+\begin{enumerate}
+\item qmake \emph{file.pro}
+\item make
+\end{enumerate}
+where\emph{ file.pro }stands for the name of the project file. The
+final outcome of this compilation will be the shared library \emph{libfile.so}
+
+\begin{figure}
+\caption{The associated project file for the Rastrigin problem.\label{fig:proFile}}
+
+\inputencoding{latin9}\begin{lstlisting}
+TEMPLATE=lib 
+SOURCES+=rastrigin.cc interval.cpp
+HEADERS += interval.h
+\end{lstlisting}
+\inputencoding{utf8}\end{figure}
+
+
+\subsubsection{Objective function execution}
+
+A full working command for the Rastrigin problem using the utility
+program \emph{OptimusApp} is shown below
+
+\inputencoding{latin9}\begin{lstlisting}[language={C++},basicstyle={\normalsize},breaklines=true,literate={{-}{-}1}]
+./OptimusApp --filename=librastrigin.so --opt_method=Pso\ --pso_particles=100 --pso_generations=10\  
+    --localsearch_method=bfgs
+\end{lstlisting}
+\inputencoding{utf8}The command line arguments have as follows:
+\begin{enumerate}
+\item The argument $--$filename determines the objective problem in shared
+library format.
+\item The argument $--$opt\_method sets the used global optimization procedure.
+For this case, the Particle Swarm Optimizer was used. 
+\item The argument $--$pso\_particles sets the number of particles for
+the PSO optimizer 
+\item The argument $--$pso\_generations sets the maximum number of allowed
+generations
+\item The argument $--$localsearch\_method sets the used local optimization
+procedure, that will be applied on the best particle of the PSO procedure
+when it finishes.
+\end{enumerate}
+The output of the previous command is shown in figure \ref{fig:rastrigin_output}.
+As it is obvious, the global optimization method is quite close to
+the global minimum of the function, which is -2. However with the
+help of the local optimization method applied after its end, this
+minimum is found with greater numerical accuracy. The main steps of
+a typical usage of the software have been also shown in graphical
+format in Figure \ref{fig:optSteps}.
+
+\begin{figure}[H]
+\caption{Output for the minimization of the Rastrigin function using the PSO
+optimizer.\label{fig:rastrigin_output}}
+
+\inputencoding{latin9}\begin{lstlisting}
+Generation     1 value:   -1.7464048
+Generation     2 value:   -1.8619942
+Generation     3 value:   -1.8852439
+Generation     4 value:   -1.9490074
+Generation     5 value:   -1.9490074
+Generation     6 value:   -1.9490074
+Generation     7 value:   -1.9490074
+Generation     8 value:   -1.9775267
+Generation     9 value:   -1.9972928
+Generation    10 value:   -1.9977027
+Minimum:       -2.0000000000  Function calls:    1028
+\end{lstlisting}
+\inputencoding{utf8}\end{figure}
+\begin{figure}[H]
+\includegraphics[scale=0.2]{optimus_abstract}
+
+\caption{The steps of a typical optimization process using Optimus.\label{fig:optSteps}}
+\end{figure}
+
+
+\section{Experiments \label{sec:Experiments}}
+
+To assess the ability of the software package to adapt to different
+problems, a series of experiments were performed under different conditions.
+In the first series of experiments different global optimization techniques
+were applied to a series of objective functions that one can locate
+in the relevant literature. In the second series of experiments, the
+proposed software was applied to a difficult problem from the field
+of chemistry, that of finding the minimum potential energy of N interacting
+atoms of molecules. In the third set of experiments, the scaling of
+the required number of function calls was evaluated for a parallel
+technique applied to a difficult problem from the global optimization
+space, where the problem dimension was constantly increasing. In the
+last set of experiments, different global optimization techniques
+were applied to train artificial neural networks.
+
+\subsection{Test functions}
+
+Some of the proposed methods are tested on a series of well - known
+test problems from the relevant literature. These problems are used
+by many researchers in the field. The description of the test functions
+has as follows:
+\begin{itemize}
+\item \textbf{Griewank2} function. The function is defined as:
+\[
+f(x)=1+\frac{1}{200}\sum_{i=1}^{2}x_{i}^{2}-\prod_{i=1}^{2}\frac{\cos(x_{i})}{\sqrt{(i)}},\quad x\in[-100,100]^{2}
+\]
+\item \textbf{Rastrigin} function. The function is given by 
+\[
+f(x)=x_{1}^{2}+x_{2}^{2}-\cos(18x_{1})-\cos(18x_{2}),\quad x\in[-1,1]^{2}
+\]
+\item \textbf{Shekel 7} function.
+\end{itemize}
+\[
+f(x)=-\sum_{i=1}^{7}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}
+\]
+
+with $x\in[0,10]^{4}$ and $a=\left(\begin{array}{cccc}
+4 & 4 & 4 & 4\\
+1 & 1 & 1 & 1\\
+8 & 8 & 8 & 8\\
+6 & 6 & 6 & 6\\
+3 & 7 & 3 & 7\\
+2 & 9 & 2 & 9\\
+5 & 3 & 5 & 3
+\end{array}\right),\ c=\left(\begin{array}{c}
+0.1\\
+0.2\\
+0.2\\
+0.4\\
+0.4\\
+0.6\\
+0.3
+\end{array}\right)$
+\begin{itemize}
+\item \textbf{Shekel 5 }function.
+\end{itemize}
+\[
+f(x)=-\sum_{i=1}^{5}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}
+\]
+ 
+
+with $x\in[0,10]^{4}$ and $a=\left(\begin{array}{cccc}
+4 & 4 & 4 & 4\\
+1 & 1 & 1 & 1\\
+8 & 8 & 8 & 8\\
+6 & 6 & 6 & 6\\
+3 & 7 & 3 & 7
+\end{array}\right),\ c=\left(\begin{array}{c}
+0.1\\
+0.2\\
+0.2\\
+0.4\\
+0.4
+\end{array}\right)$. 
+\begin{itemize}
+\item \textbf{Shekel 10} function.
+\end{itemize}
+\[
+f(x)=-\sum_{i=1}^{10}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}
+\]
+ 
+
+with $x\in[0,10]^{4}$ and $a=\left(\begin{array}{cccc}
+4 & 4 & 4 & 4\\
+1 & 1 & 1 & 1\\
+8 & 8 & 8 & 8\\
+6 & 6 & 6 & 6\\
+3 & 7 & 3 & 7\\
+2 & 9 & 2 & 9\\
+5 & 5 & 3 & 3\\
+8 & 1 & 8 & 1\\
+6 & 2 & 6 & 2\\
+7 & 3.6 & 7 & 3.6
+\end{array}\right),\ c=\left(\begin{array}{c}
+0.1\\
+0.2\\
+0.2\\
+0.4\\
+0.4\\
+0.6\\
+0.3\\
+0.7\\
+0.5\\
+0.6
+\end{array}\right)$
+\begin{itemize}
+\item \textbf{Test2N} function. This function is given by the equation 
+\[
+f(x)=\frac{1}{2}\sum_{i=1}^{n}x_{i}^{4}-16x_{i}^{2}+5x_{i},\quad x_{i}\in[-5,5].
+\]
+The function has $2^{n}$ in the specified range and in our experiments
+we used $n=4,5,6,7$.
+\end{itemize}
+The experiments were performed using the above objective functions
+and ran 30 times using a different seed for the random number generator
+each time. In the execution of the experiments, the genetic algorithm
+(DoubleGenetic method) was used as a global optimizer in two versions:
+one without a local optimization method and one with periodic application
+of the bfgs method at a rate of 5\% on the chromosomes in each generation.
+The execution parameters for the genetic algorithm are listed in Table
+\ref{tab:Experimental-settings}. The experimental results for the
+two variants of the genetic algorithm are listed in Table \ref{tab:results}.
+The numbers in cells denote average function calls for the 30 independent
+runs. The numbers in parentheses show the percentage of finding the
+global minimum in the 30 runs. If this number is absent, it means
+that the algorithm discovered the global minimum in all 30 executions.
+In this table, the line SUM represents the sum of the function calls.
+The experimental results show that the usage of a local search method
+in combination with the genetic algorithm significantly reduces the
+required number of function calls and at the same time improves the
+reliability of the method in finding the global minimum.
+\begin{table}
+\caption{Experimental settings\label{tab:Experimental-settings}}
+
+\centering{}%
+\begin{tabular}{>{\centering}p{0.49\textwidth}>{\centering}p{0.49\textwidth}}
+\hline 
+\textbf{PARAMETER} & \textbf{VALUE}\tabularnewline
+\hline 
+CHROMOSOMES & 200\tabularnewline
+CROSSOVER RATE & 90\%\tabularnewline
+MUTATION RATE & 5\%\tabularnewline
+GENERATIONS & 200\tabularnewline
+LOCAL SEARCH METHOD & bfgs\tabularnewline
+\hline 
+\end{tabular}
+\end{table}
+
+\begin{table}
+\caption{Experimental results for some test functions using a series of global
+optimization methods.\label{tab:results}}
+
+\centering{}%
+\begin{tabular}{>{\centering}p{0.33\textwidth}>{\centering}p{0.33\textwidth}>{\centering}p{0.33\textwidth}}
+\hline 
+\textbf{FUNCTION} & \textbf{GENETIC} & \textbf{GENETIC WITH LOCAL}\tabularnewline
+\hline 
+GRIEWANK2 & 9298(0.97) & 10684\tabularnewline
+RASTRIGIN & 8967 & 11038\tabularnewline
+SHEKEl5 & 19403(0.70) & 9222\tabularnewline
+SHEKEL7 & 16376(0.80) & 8836\tabularnewline
+SHEKEL10 & 19829(0.77) & 8729\tabularnewline
+TEST2N4 & 17109 & 7786\tabularnewline
+TEST2N5 & 19464 & 8264\tabularnewline
+TEST2N6 & 24217 & 8868\tabularnewline
+TEST2N7 & 26824 & 9376\tabularnewline
+\textbf{SUM} & \textbf{161487(0.92)} & \textbf{82803}\tabularnewline
+\hline 
+\end{tabular}
+\end{table}
+
+
+\subsection{The Lennard Jones potential}
+
+The molecular conformation corresponding to the global minimum of
+the energy of N atoms interacting via the Lennard-Jones potential
+\citep{Jones,jonesNew} is used as a test case here. The function
+to be minimized is given by:
+\begin{equation}
+V_{LJ}(r)=4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^{6}\right]\label{eq:potential}
+\end{equation}
+
+\begin{table}[H]
+\caption{Optimizing the Potential problem for different number of atoms.\label{tab:potential}}
+
+\centering{}%
+\begin{tabular}{>{\centering}p{0.24\textwidth}>{\centering}p{0.24\textwidth}>{\centering}p{0.24\textwidth}>{\centering}p{0.24\textwidth}}
+\hline 
+\textbf{ATOMS} & \textbf{GENETIC} & \textbf{PSO} & \textbf{NEURALMINIMIZER}\tabularnewline
+\hline 
+3 & 18902 & 9936 & 1192\tabularnewline
+4 & 17806 & 12560 & 1964\tabularnewline
+5 & 18477 & 12385 & 2399\tabularnewline
+6 & 19069(0.20) & 9683 & 3198\tabularnewline
+7 & 16390(0.33) & 10533(0.17) & 3311(0.97)\tabularnewline
+8 & 15924(0.50) & 8053(0.50) & 3526\tabularnewline
+9 & 15041(0.27) & 9276(0.17) & 4338\tabularnewline
+10 & 14817(0.03) & 7548(0.17) & 5517(0.87)\tabularnewline
+11 & 13885(0.03) & 6864(0.13) & 6588(0.80)\tabularnewline
+12 & 14435(0.17) & 12182(0.07) & 7508(0.83)\tabularnewline
+13 & 14457(0.07) & 10748(0.03) & 6717(0.77)\tabularnewline
+14 & 13906(0.07) & 14235(0.13) & 6201(0.93)\tabularnewline
+15 & 12832(0.10) & 12980(0.10) & 7802(0.90)\tabularnewline
+\textbf{AVERAGE} & \textbf{205941(0.37)} & \textbf{137134(0.42)} & \textbf{60258(0.93)}\tabularnewline
+\hline 
+\end{tabular}
+\end{table}
+
+For testing purposes the method \textbf{NeuralMinimizer} of the package
+was applied to the above problem for a variety of number of atoms
+and the results are shown in Table \ref{tab:potential}. The method
+is compared against against genetic algorithm (method \textbf{DoubleGenetic}
+of Optimus package) and particle swarm optimization (method \textbf{Pso}
+of Optimus). In all cases the number of chromosomes (or particles)
+was set to 100 and the maximum number of allowed iterations was set
+to 200. As we can observe from the table, the method NeuralMinimizer
+requires a significantly lower number of function calls compared to
+the mentioned methods and its reliability in finding the global minimum
+remains high even for higher number of atoms.
+
+\subsection{Parallel optimization}
+
+The High Conditioned Elliptic function, defined as 
+\[
+f(x)=\sum_{i=1}^{n}\left(10^{6}\right)^{\frac{i-1}{n-1}}x_{i}^{2}
+\]
+ is used as a test case to measure the scalability of the parallel
+global optimization technique denoted as ParallelDe. This method was
+applied to the problem with the number of dimensions increasing from
+2 to 15 and for a different number of processing threads and the results
+are shown in diagram form in Figure \ref{fig:Scalability}. As one
+observes from the figure, the number of calls required to find the
+global minimum decreases as the total processing threads increase,
+although the problem becomes increasingly difficult with increasing
+dimension.
+
+\begin{figure}[H]
+\includegraphics[scale=0.7]{parallelde_scale}
+
+\caption{Scalabilty of the ParallelDe method.\label{fig:Scalability}}
+\end{figure}
+
+
+\subsection{Rbf training}
+
+An RBF network is machine learning model and it can be defined as:\textbf{
+\begin{equation}
+y\left(\overrightarrow{x}\right)=\sum_{i=1}^{k}w_{i}\phi\left(\left\Vert \overrightarrow{x}-\overrightarrow{c_{i}}\right\Vert \right)\label{eq:firstrbf}
+\end{equation}
+}These models have been used in various problems such as solutions
+of differential equations \citep{rbfde1,rbfde2},\textbf{ }digital
+communications \citep{rbfnetwork1,rbfnetwork2},\textbf{ }problems
+from physics \citep{rbfphysics1,rbfphysics2}, chemistry problems
+\citep{rbfchemistry1,rbfchemistry2},\textbf{ }economics \citep{rbfecon0,rbfecon1,rbfecon2},
+network security \citep{rbf_dos1,rbf_dos2} etc. The training error
+RBF networks is defined as: 
+\begin{equation}
+E(y(x,g))=\sum_{i=1}^{m}\left(y\left(x_{i},g\right)-t_{i}\right)^{2}\label{eq:eqrbf}
+\end{equation}
+The constant $m$ represents the number of input patterns and the
+values $t_{i}$ stand for the expeceted output for the input. The
+vector $g$ is the set of the parameters of the RBF network. Usually,
+the error of equation \ref{eq:eqrbf} is minimized through a two -
+phase procedure. During the first phase, a subset of the parameters
+of the network, called centers and variances, are estimated through
+the K-Means algorithm \citep{kmeans}. During the second phase, a
+linear system is solved to calculated the weight set $w_{i},\ i=1,..,k$.
+Here, in this series of experiments two methods of the OPTIMUS package,
+the genetic algorithm and the particle swarm optimization, was used
+to minimize the train error of equation \ref{eq:eqrbf} for a series
+of classification problems, described in various papers \citep{tsoulosAI,tsoulosQFC}.
+The comparative results are shown in Table \ref{tab:Experimental-results}.
+The RBF network was coded in ANSI C++ with the help of the freely
+available Armadillo library \citep{Armadillo}. In addition, in order
+to have greater reliability in the experimental results, a 10-fold
+validation technique was used. All the experiments were executed 30
+times using different seed for the random generator each time and
+the average classification error on test set is reported. The number
+of weights $k$ was set to $k=10.$ The table has the following organization:
+\begin{enumerate}
+\item The column DATASET defines the name of the experimental dataset.
+\item The column KRBF stands for classic training method for RBF networks
+using the previous mentioned method of two phases.
+\item The column GENETIC stands for the application of a genetic algorithm
+with 200 chromosomes.
+\item The column PSO represents the results for the application of the particle
+swarm optimization method with 200 particles.
+\item An extra line has been added, in which the mean error for each method
+is displayed with the symbolic name AVERAGE.
+\end{enumerate}
+As can be deduced from the experimental results, the global optimization
+methods of the proposed software package were applied with great success
+to such a difficult and complex problem as that of training a neural
+network.
+
+\begin{table}[h]
+\caption{Classification error for different datasets.\label{tab:Experimental-results}}
+
+\centering{}%
+\begin{tabular}{>{\centering}p{0.24\textwidth}>{\centering}p{0.24\textwidth}>{\centering}p{0.24\textwidth}>{\centering}p{0.24\textwidth}}
+\hline 
+\textbf{DATASET} & \textbf{KRBF} & \textbf{GENETIC} & \textbf{PSO}\tabularnewline
+\hline 
+Alcohol & 46.63\% & 25.08\% & 29.23\%\tabularnewline
+Appendicitis & 12.23\% & 16.00\% & 14.93\%\tabularnewline
+Australian & 34.89\% & 24.53\% & 23.63\%\tabularnewline
+Balance & 33.42\% & 14.98\% & 15.08\%\tabularnewline
+Dermatology & 62.34\% & 36.41\% & 35.39\%\tabularnewline
+Glass & 50.16\% & 49.76\% & 53.83\%\tabularnewline
+Hayes Roth & 64.36\% & 37.18\% & 37.87\%\tabularnewline
+Heart & 31.20\% & 18.60\% & 17.38\%\tabularnewline
+HouseVotes & 6.13\% & 3.77\% & 3.91\%\tabularnewline
+Ionosphere & 16.22\% & 10.49\% & 11.96\%\tabularnewline
+Liverdisorder & 30.84\% & 28.60\% & 29.25\%\tabularnewline
+Mammographic & 21.38\% & 17.34\% & 17.61\%\tabularnewline
+Parkinsons & 17.42\% & 16.63\% & 16.91\%\tabularnewline
+Pima & 25.78\% & 24.32\% & 23.87\%\tabularnewline
+Popfailures & 7.04\% & 5.51\% & 5.84\%\tabularnewline
+Saheart & 32.19\% & 29.33\% & 28.80\%\tabularnewline
+Sonar & 27.85\% & 20.78\% & 21.42\%\tabularnewline
+Spiral & 44.87\% & 17.18\% & 33.67\%\tabularnewline
+Tae & 60.07\% & 53.75\% & 52.69\%\tabularnewline
+Wdbc & 7.27\% & 5.45\% & 5.11\%\tabularnewline
+Wine & 31.41\% & 9.37\% & 8.02\%\tabularnewline
+Z\_F\_S & 13.16\% & 3.89\% & 3.74\%\tabularnewline
+ZOO & 21.93\% & 9.53\% & 11.10\%\tabularnewline
+\textbf{AVERAGE} & \textbf{30.38\%} & \textbf{20.80\%} & \textbf{21.79\%}\tabularnewline
+\hline 
+\end{tabular}
+\end{table}
+
+
+\section{Conclusions\label{sec:Conclusions}}
+
+In this work, an environment for executing global optimization problems
+was presented. In this environment, the user can code the objective
+problem using some predefined functions and then has the possibility
+to choose one among several global optimization methods to solve the
+mentioned problem. In addition, it is given the possibility to choose
+to use some local optimization method to enhance the reliability of
+the produced results. This programming environment is freely available
+and easy to extend to accommodate more global optimization techniques.
+It is subject to continuous improvements and some of those planned
+for the near future are:
+\begin{enumerate}
+\item Possibility to port the Optimus tool to other operating systems such
+as FreeBSD, Windows etc.
+\item Use of modern parallel techniques to speed up the generated results
+and implementation of efficient termination techniques.
+\item Implementing a GUI interface to control the optimization process.
+\item Ability to code the objective function in other programming languages
+such as Python, Ada, Fortran etc.
+\item Creating a scripting language to efficiently guide the optimization
+of objective functions.
+\end{enumerate}
+\vspace{6pt}
+
+
+\authorcontributions{I.G.T. and V.C. conceived of the idea and methodology and supervised
+the technical part regarding the software. I.G.T. conducted the experiments,
+employing datasets, and provided the comparative experiments. V.C.
+performed the statistical analysis and prepared the manuscript. All
+authors have read and agreed to the published version of the manuscript.}
+
+\funding{This research received no external funding.}
+
+\institutionalreview{Not applicable.}
+
+\informedconsent{Not applicable. }
+
+\institutionalreview{Not applicable.}
+
+\acknowledgments{The experiments of this research work were performed at the high
+performance computing system established at Knowledge and Intelligent
+Computing Laboratory, Department of Informatics and Telecommunications,
+University of Ioannina, acquired with the project “Educational Laboratory
+equipment of TEI of Epirus” with MIS 5007094 funded by the Operational
+Programme “Epirus” 2014--2020, by ERDF and national funds.}
+
+\conflictsofinterest{The authors declare no conflict of interest.}
+
+\sampleavailability{Not applicable.}
+
+\appendixtitles{no}
+
+\appendixstart{}
+
+\appendix
+
+\begin{adjustwidth}{-\extralength}{0cm}{}
+
+\reftitle{References}
+\begin{thebibliography}{999}
+\bibitem{globalecon1} Zwe-Lee Gaing, Particle swarm optimization
+to solving the economic dispatch considering the generator constraints,
+IEEE Transactions on \textbf{18} Power Systems, pp. 1187-1195, 2003.
+
+\bibitem{globalecon2}C. D. Maranas, I. P. Androulakis, C. A. Floudas,
+A. J. Berger, J. M. Mulvey, Solving long-term financial planning problems
+via global optimization, Journal of Economic Dynamics and Control
+\textbf{21}, pp. 1405-1425, 1997.
+
+\bibitem{global_physics1}Q. Duan, S. Sorooshian, V. Gupta, Effective
+and efficient global optimization for conceptual rainfall-runoff models,
+Water Resources Research \textbf{28}, pp. 1015-1031 , 1992.
+
+\bibitem{global_physics2}P. Charbonneau, Genetic Algorithms in Astronomy
+and Astrophysics, Astrophysical Journal Supplement \textbf{101}, p.
+309, 1995
+
+\bibitem{global_chemistry1}A. Liwo, J. Lee, D.R. Ripoll, J. Pillardy,
+H. A. Scheraga, Protein structure prediction by global optimization
+of a potential energy function, Biophysics \textbf{96}, pp. 5482-5485,
+1999.
+
+\bibitem{global_chemistry2}P.M. Pardalos, D. Shalloway, G. Xue, Optimization
+methods for computing global minima of nonconvex potential energy
+functions, Journal of Global Optimization \textbf{4}, pp. 117-133,
+1994.
+
+\bibitem{global_med1}Eva K. Lee, Large-Scale Optimization-Based Classification
+Models in Medicine and Biology, Annals of Biomedical Engineering \textbf{35},
+pp 1095-1109, 2007.
+
+\bibitem{global_med2}Y. Cherruault, Global optimization in biology
+and medicine, Mathematical and Computer Modelling \textbf{20}, pp.
+119-132, 1994.
+
+\bibitem{go_symmetry0}B. Freisleben and P. Merz, A genetic local
+search algorithm for solving symmetric and asymmetric traveling salesman
+problems, In: Proceedings of IEEE International Conference on Evolutionary
+Computation, pp. 616-621, 1996.
+
+\bibitem{go_symmetry1}R. Grbić, E.K. Nyarko and R. Scitovski, A modification
+of the DIRECT method for Lipschitz global optimization for a symmetric
+function, J Glob Optim \textbf{57}, pp. 1193--1212, 2013.
+
+\bibitem{go_symmetry2}R. Scitovski, A new global optimization method
+for a symmetric Lipschitz continuous function and the application
+to searching for a globally optimal partition of a one-dimensional
+set, J Glob Optim \textbf{68}, pp. 713--727, 2017.
+
+\bibitem{global_nonlinear1}Barbara Kaltenbacher and William Rundell,
+The inverse problem of reconstructing reaction--diffusion systems,
+Invese Problems \textbf{36}, 2020.
+
+\bibitem{global_nonlinear2}N. Levashova, A. Gorbachev, R. Argun,
+D. Lukyanenko, The Problem of the Non-Uniqueness of the Solution to
+the Inverse Problem of Recovering the Symmetric States of a Bistable
+Medium with Data on the Position of an Autowave Front., Symmetry \textbf{13},
+2021.
+
+\bibitem{global_nonlinear3}Larisa Beilina, Michael V. Klibanov, A
+Globally Convergent Numerical Method for a Coefficient Inverse Problem,
+SIAM Journal on Scientific Computing \textbf{31},pp. 478-509, 2008. 
+
+\bibitem{go_adaptive1}M. Brunato, R. Battiti, RASH: A Self-adaptive
+Random Search Method. In: Cotta, C., Sevaux, M., Sörensen, K. (eds)
+Adaptive and Multilevel Metaheuristics. Studies in Computational Intelligence,
+vol 136. Springer, Berlin, Heidelberg, 2008.
+
+\bibitem{go_adaptive2}S. Andradóttir, A.A. Prudius, A.A., Adaptive
+random search for continuous simulation optimization. Naval Research
+Logistics \textbf{57}, pp. 583-604, 2010.
+
+\bibitem{go_crs1}W.L. Price, Global optimization by controlled random
+search, J Optim Theory Appl \textbf{40}, pp. 333--348, 1983.
+
+\bibitem{go_crs2}P. Kaelo, M.M. Ali, Some Variants of the Controlled
+Random Search Algorithm for Global Optimization. J Optim Theory Appl
+\textbf{130}, pp. 253--264 (2006).
+
+\bibitem{go_sa1}S. Kirkpatrick, C.D. Gelatt, M.P. Vecchi, Optimization
+by simulated annealing, Science \textbf{220}, pp. 671-680, 1983.
+
+\bibitem{go_sa2}K.M.El-Naggar, M.R. AlRashidi, M.F. AlHajri, A.K.
+Al-Othman, Simulated Annealing algorithm for photovoltaic parameters
+identification, Solar Energy \textbf{86}, pp. 266-274, 2012.
+
+\bibitem{go_sa3}L.M. Rasdi Rere, M.I. Fanany, A.M. Arymurthy, Simulated
+Annealing Algorithm for Deep Learning, Procedia Computer Science \textbf{72},
+pp. 137-144, 2015.
+
+\bibitem{go_ga1}J. Mc Call, Genetic algorithms for modelling and
+optimisation, Journal of Computational and Applied Mathematics \textbf{184},
+pp. 205-222, 2005.
+
+\bibitem{go_ga2}C.K.H. Lee, A review of applications of genetic algorithms
+in operations management, Elsevier Engineering Applications of Artificial
+Intelligence \textbf{76}, pp. 1-12, 2018.
+
+\bibitem{go_ant1}B. Chandra Mohan, R. Baskaran, A survey: Ant Colony
+Optimization based recent research and implementation on several engineering
+domain, Expert Systems with Applications \textbf{39}, pp. 4618-4627,
+2012.
+
+\bibitem{go_ant2}T. Liao, T. Stützle, M.A. Montes de Oca, M. Dorigo,
+A unified ant colony optimization algorithm for continuous optimization,
+European Journal of Operational Research \textbf{234}, pp. 597-609,
+2014.
+
+\bibitem{go_pso1}D. Wang, D. Tan, L. Liu, Particle swarm optimization
+algorithm: an overview. Soft Comput \textbf{22}, pp. 387--408, 2018.
+
+\bibitem{go_pso2}N.K. Jain, U. Nangia, J. Jain, A Review of Particle
+Swarm Optimization. J. Inst. Eng. India Ser. B \textbf{99}, pp. 407--411,
+2018.
+
+\bibitem{go_pso_genetic_hybrid1}D.H. Kim, A. Abraham, J.H. Cho, A
+hybrid genetic algorithm and bacterial foraging approach for global
+optimization, Information Sciences \textbf{177}, pp. 3918-3937, 2007.
+
+\bibitem{go_pso_genetic_hybrid2}Y.T. Kao, E. Zahara, A hybrid genetic
+algorithm and particle swarm optimization for multimodal functions,
+Applied Soft Computing \textbf{8}, pp. 849-857, 2008.
+
+\bibitem{hybrid1}Offord C., Bajzer Ž. (2001) A Hybrid Global Optimization
+Algorithm Involving Simplex and Inductive Search. In: Alexandrov V.N.,
+Dongarra J.J., Juliano B.A., Renner R.S., Tan C.J.K. (eds) Computational
+Science - ICCS 2001. ICCS 2001. Lecture Notes in Computer Science,
+vol 2074. Springer, Berlin, Heidelberg.
+
+\bibitem{genetic_physics1}S.Q. Wu, M. Ji, C.Z. Wang, M.C. Nguyen,
+X. Zhao, K. Umemoto, R. M. Wentzcovitch, K. M. Ho, An adaptive genetic
+algorithm for crystal structure prediction, Journal of Physics: Condensed
+Matter \textbf{26}, 035402, 2013.
+
+\bibitem{genetic_physics2}M. Honda, Application of genetic algorithms
+to modelings of fusion plasma physics, Computer Physics Communications
+\textbf{231}, pp. 94-106, 2018.
+
+\bibitem{genetic_physics3}X.L. Luo, J. Feng, H.H. Zhang, A genetic
+algorithm for astroparticle physics studies, Computer Physics Communications
+\textbf{250}, 106818, 2020.
+
+\bibitem{pso_physics1}M. Ye, X. Wang, Y. Xu, Parameter extraction
+of solar cells using particle swarm optimization, Journal of Applied
+Physics \textbf{105}, 094502. 2009.
+
+\bibitem{pso_physics2}A. Belkadi, L. Ciarletta, D. Theilliol, Particle
+swarm optimization method for the control of a fleet of Unmanned Aerial
+Vehicles, Journal of Physics: Conference Series, Volume 659, 12th
+European Workshop on Advanced Control and Diagnosis (ACD 2015) 19--20
+November 2015, Pilsen, Czech Republic.
+
+\bibitem{parallel-multistart}J. Larson and S.M. Wild, Asynchronously
+parallel optimization solver for finding multiple minima, Mathematical
+Programming Computation \textbf{10}, pp. 303-332, 2018.
+
+\bibitem{parallel-multistart2}H.P.J. Bolton, J.F. Schutte, A.A. Groenwold,
+Multiple Parallel Local Searches in Global Optimization. In: Dongarra
+J., Kacsuk P., Podhorszki N. (eds) Recent Advances in Parallel Virtual
+Machine and Message Passing Interface. EuroPVM/MPI 2000. Lecture Notes
+in Computer Science, vol 1908. Springer, Berlin, Heidelberg, 2000.
+
+\bibitem{gpu1}Y. Zhou and Y. Tan, GPU-based parallel particle swarm
+optimization, In: 2009 IEEE Congress on Evolutionary Computation,
+2009, pp. 1493-1500.
+
+\bibitem{gpu2}L. Dawson and I. Stewart, Improving Ant Colony Optimization
+performance on the GPU using CUDA, In: 2013 IEEE Congress on Evolutionary
+Computation, 2013, pp. 1901-1908.
+
+\bibitem{gpu3}Barkalov, K., Gergel, V. Parallel global optimization
+on GPU. J Glob Optim \textbf{66}, pp. 3--20, 2016.
+
+\bibitem{baron}N.V. Sahinidis, BARON: A general purpose global optimization
+software package, J Glob Optim \textbf{8}, pp. 201--205, 1996.
+
+\bibitem{merlin}D.G. Papageorgiou, I.N. Demetropoulos, I.E. Lagaris,
+Computer Physics Communications \textbf{159}, pp. 70-71, 2004.
+
+\bibitem{deoptim}K. Mullen, D. Ardia, D.L. Gil, D. Windover, J. Cline,
+DEoptim: An R Package for Global Optimization by Differential Evolution,
+Journal of Statistical Software \textbf{40}, pp. 1-26, 2011.
+
+\bibitem{de_main_paper}R. Storn, On the usage of differential evolution
+for function optimization, In: Proceedings of North American Fuzzy
+Information Processing, pp. 519-523, 1996.
+
+\bibitem{de_symmetry1}Y.H. Li, J.Q. Wang, X.J. Wang, Y.L. Zhao, X.H.
+Lu, D.L. Liu, Community Detection Based on Differential Evolution
+Using Social Spider Optimization, Symmetry \textbf{9}, 2017.
+
+\bibitem{de_symmetry3}W. Yang, E.M. Dilanga Siriwardane, R. Dong,
+Y. Li, J. Hu, Crystal structure prediction of materials with high
+symmetry using differential evolution, J. Phys.: Condens. Matter \textbf{33}
+455902, 2021.
+
+\bibitem{de_symmetry6}C.Y. Lee, C.H. Hung, Feature Ranking and Differential
+Evolution for Feature Selection in Brushless DC Motor Fault Diagnosis
+, Symmetry \textbf{13}, 2021.
+
+\bibitem{de_symmetry7}S. Saha, R. Das, Exploring differential evolution
+and particle swarm optimization to develop some symmetry-based automatic
+clustering techniques: application to gene clustering, Neural Comput
+\& Applic \textbf{30}, pp. 735--757, 2018.
+
+\bibitem{gende}V. Charilogis, I.G. Tsoulos, A. Tzallas, E. Karvounis,
+Modifications for the Differential Evolution Algorithm, Symmetry \textbf{14},
+447, 2022. 
+
+\bibitem{parallelDe}V. Charilogis, I.G. Tsoulos, A Parallel Implementation
+of the Differential Evolution Method, Analytics \textbf{2}, pp. 17-30,
+2023.
+
+\bibitem{openMp}R. Chandra, L. Dagum, D. Kohr, D. Maydan,J. McDonald
+and R. Menon, Parallel Programming in OpenMP, Morgan Kaufmann Publishers
+Inc., 2001.
+
+\bibitem{doublepop_tsoulos}I.G. Tsoulos, Modifications of real code
+genetic algorithm for global optimization, Applied Mathematics and
+Computation \textbf{203}, pp. 598-607, 2008.
+
+\bibitem{genetic1}J.F.Gonçalves, J.J.M. Mendes, M.G.C. Resende, A
+genetic algorithm for the resource constrained multi-project scheduling
+problem, European Journal of Operational Research \textbf{189}, pp.
+1171-1190, 2008.
+
+\bibitem{genetic2}W.Ho, G.T.S. Ho, P. Ji, H.C.W. Lau, A hybrid genetic
+algorithm for the multi-depot vehicle routing problem, Engineering
+Applications of Artificial Intelligence \textbf{21}, pp. 548-557,
+2008.
+
+\bibitem{genetic3}J.F. Gonçalves, M.G.C. Resende, Biased random-key
+genetic algorithms for combinatorial optimization. J Heuristics \textbf{17},
+pp. 487--525, 2011.
+
+\bibitem{genetic4}M. Turrin, P. Buelow, R. Stouffs, Design explorations
+of performance driven geometry in architectural design using parametric
+modeling and genetic algorithms, Advanced Engineering Informatics
+\textbf{25}, pp. 656-675, 2011.
+
+\bibitem{tsp1}J. Kaabi, Y. Harrath, Permutation rules and genetic
+algorithm to solve the traveling salesman problem, Arab Journal of
+Basic and Applied Sciences \textbf{26}, pp. 283-291, 2019.
+
+\bibitem{tsp2}Q.M. Ha, Y. Deville, Q.D. Pham et al., A hybrid genetic
+algorithm for the traveling salesman problem with drone, J Heuristics
+\textbf{26}, pp. 219--247, 2020.
+
+\bibitem{pathPlanning}F. Ahmed, K. Deb, Multi-objective optimal path
+planning using elitist non-dominated sorting genetic algorithms, Soft
+Comput \textbf{17}, pp. 1283--1299, 2013.
+
+\bibitem{ge}M. O'Neill, C. Ryan, Grammatical Evolution, IEEE Trans.
+Evolutionary Computation \textbf{5}, pp. 349-358, 2001.
+
+\bibitem{gcrs}V. Charilogis, I.G. Tsoulos, A. Tzallas, N. Anastasopoulos,
+An Improved Controlled Random Search Method, Symmetry \textbf{13},
+1981, 2021. 
+
+\bibitem{psoApp1}M. Ye, X. Wang, Y. Xu, Parameter extraction of solar
+cells using particle swarm optimization, Journal of Applied Physics
+\textbf{105}, 094502, 2009.
+
+\bibitem{psoApp2}Y. Wang, J. Lv, L. Zhu, Y. Ma, Crystal structure
+prediction via particle-swarm optimization, Phys. Rev. B \textbf{82},
+094116, 2010.
+
+\bibitem{psoApp3}M. Weiel, M. Götz, A. Klein et al, Dynamic particle
+swarm optimization of biomolecular simulation parameters with flexible
+objective functions. Nat Mach Intell \textbf{3}, pp. 727--734, 2021.
+
+\bibitem{ipso}V. Charilogis, I.G. Tsoulos, Toward an Ideal Particle
+Swarm Optimizer for Multidimensional Functions, Information \textbf{13},
+217, 2022.
+
+\bibitem{multistart-tsp}Li W., A Parallel Multi-start Search Algorithm
+for Dynamic Traveling Salesman Problem. In: Pardalos P.M., Rebennack
+S. (eds) Experimental Algorithms. SEA 2011. Lecture Notes in Computer
+Science, vol 6630. Springer, Berlin, Heidelberg, 2011.
+
+\bibitem{multistart-vehicle}Olli Bräysy, Geir Hasle, Wout Dullaert,
+A multi-start local search algorithm for the vehicle routing problem
+with time windows, European Journal of Operational Research \textbf{159},
+pp. 586-605, 2004.
+
+\bibitem{multistart_fac}Mauricio G.C. Resende, Renato F. Werneck,A
+hybrid multistart heuristic for the uncapacitated facility location
+problem, European Journal of Operational Research \textbf{174}, pp.
+54-68, 2006.
+
+\bibitem{multistart_clique}E. Marchiori, Genetic, Iterated and Multistart
+Local Search for the Maximum Clique Problem. In: Cagnoni S., Gottlieb
+J., Hart E., Middendorf M., Raidl G.R. (eds) Applications of Evolutionary
+Computing. EvoWorkshops 2002. Lecture Notes in Computer Science, vol
+2279. Springer, Berlin, Heidelberg. 
+
+\bibitem{multistart_fire}Gomes M.I., Afonso L.B., Chibeles-Martins
+N., Fradinho J.M. (2018) Multi-start Local Search Procedure for the
+Maximum Fire Risk Insured Capital Problem. In: Lee J., Rinaldi G.,
+Mahjoub A. (eds) Combinatorial Optimization. ISCO 2018. Lecture Notes
+in Computer Science, vol 10856. Springer, Cham. https://doi.org/10.1007/978-3-319-96151-4\_19
+
+\bibitem{multistart-aero}Streuber, Gregg M. and Zingg, David. W.,
+Evaluating the Risk of Local Optima in Aerodynamic Shape Optimization,
+AIAA Journal 59, pp. 75-87, 2012.
+
+\bibitem{tmlsl}M.M. Ali, C. Storey, Topographical multilevel single
+linkage, J. Global Optimization \textbf{5}, pp. 349--358,1994
+
+\bibitem{mincenter}V. Charilogis, I.G. Tsoulos, MinCentre: using
+clustering in global optimisation, International Journal of Computational
+Intelligence Studies \textbf{11}, pp. 24-35, 2022.
+
+\bibitem{rbf_main1}J. Park, I.W. Sandberg, Approximation and Radial-Basis-Function
+Networks, Neural Computation \textbf{5}, pp. 305-316, 1993.
+
+\bibitem{neuralMinimizer}I.G. Tsoulos, A. Tzallas, E. Karvounis,
+D. Tsalikakis, NeuralMinimizer, a novel method for global optimization
+that incorporates machine learning accepted for publication in Information,
+2023.
+
+\bibitem{powell}M.J.D Powell, A Tolerant Algorithm for Linearly Constrained
+Optimization Calculations, Mathematical Programming \textbf{45}, pp.
+547-566, 1989. 
+
+\bibitem{lbfgs}D.C. Liu, J. Nocedal, On the Limited Memory Method
+for Large Scale Optimization, Mathematical Programming B \textbf{45},
+pp. 503-528, 1989.
+
+\bibitem{gradient1}S.I. Amari, Backpropagation and stochastic gradient
+descent method, Neurocomputing \textbf{5}, pp. 185-196, 1993.
+
+\bibitem{gradient2}S. Klein, J.P.W. Pluim, M. Staring, Adaptive Stochastic
+Gradient Descent Optimisation for Image Registration, Int J Comput
+Vis \textbf{81}, pp. 227--239, 2009.
+
+\bibitem{Adam}D.P. Kingma, J. Ba, Adam: A Method for Stochastic Optimization,
+ICLR (Poster), 2015.
+
+\bibitem{nelderMead}D.M. Olsson,L.S. Nelson, The Nelder-Mead Simplex
+Procedure for Function Minimization, Technometrics \textbf{17}, pp.
+45-51, 1975.
+
+\bibitem{hill1}W. Xiao, W. G. Dunford, A modified adaptive hill climbing
+MPPT method for photovoltaic power systems, In: 2004 IEEE 35th Annual
+Power Electronics Specialists Conference (IEEE Cat. No.04CH37551)
+pp. 1957-1963 Vol.3, 2004.
+
+\bibitem{hill2}B. Mondal, K. Dasgupta, P. Dutta, Load Balancing in
+Cloud Computing using Stochastic Hill Climbing-A Soft Computing Approach,
+Procedia Technology \textbf{4}, pp. 783-789, 2012.
+
+\bibitem{Jones-1}J.E. Lennard-Jones, On the Determination of Molecular
+Fields, Proc. R. Soc. Lond. A \textbf{ 106}, pp. 463--477, 1924.
+
+\bibitem{nn1}C. Bishop, Neural Networks for Pattern Recognition,
+Oxford University Press, 1995.
+
+\bibitem{nn2}G. Cybenko, Approximation by superpositions of a sigmoidal
+function, Mathematics of Control Signals and Systems \textbf{2}, pp.
+303-314, 1989.
+
+\bibitem{testfunctions1}M.M. Ali and P. Kaelo, Improved particle
+swarm algorithms for global optimization, Applied Mathematics and
+Computation \textbf{196}, pp. 578-593, 2008.
+
+\bibitem{testfunctions2}H. Koyuncu, R. Ceylan, A PSO based approach:
+Scout particle swarm algorithm for continuous global optimization
+problems, Journal of Computational Design and Engineering \textbf{6},
+pp. 129--142, 2019.
+
+\bibitem{testfunctions3}Patrick Siarry, Gérard Berthiau, François
+Durdin, Jacques Haussy, ACM Transactions on Mathematical Software
+\textbf{23}, pp 209--228, 1997.
+
+\bibitem{testfunctions4}I.G. Tsoulos, I.E. Lagaris, GenMin: An enhanced
+genetic algorithm for global optimization, Computer Physics Communications\textbf{
+178, }pp. 843-851, 2008.
+
+\bibitem{Jones}J.A. Northby, Structure and binding of Lennard-Jones
+clusters: 13 \ensuremath{\le} n \ensuremath{\le} 147, J. Chem. Phys.
+\textbf{87}, pp. 6166--6178, 1987.
+
+\bibitem{jonesNew}G.L. Xue, R.S. Maier, J.B. Rosen, Improvements
+on the Northby Algorithm for molecular conformation: Better solutions,
+J. Global. Optim. 4, pp. 425--440, 1994.
+
+\bibitem{rbfde1}Nam Mai-Duy, Thanh Tran-Cong, Numerical solution
+of differential equations using multiquadric radial basis function
+networks, Neural Networks 14, pp. 185-199, 2001.
+
+\bibitem{rbfde2}N. Mai‐Duy, Solving high order ordinary differential
+equations with radial basis function networks. Int. J. Numer. Meth.
+Engng. \textbf{62}, pp. 824-852, 2005.
+
+\bibitem{rbfnetwork1}C. Laoudias, P. Kemppi and C. G. Panayiotou,
+Localization Using Radial Basis Function Networks and Signal Strength
+Fingerprints in WLAN, GLOBECOM 2009 - 2009 IEEE Global Telecommunications
+Conference, Honolulu, HI, 2009, pp. 1-6, 2009.
+
+\bibitem{rbfnetwork2}M. Azarbad, S. Hakimi, A. Ebrahimzadeh, Automatic
+recognition of digital communication signal, International journal
+of energy, information and communications \textbf{3}, pp. 21-33, 2012.
+
+\bibitem{rbfphysics1}P. Teng, Machine-learning quantum mechanics:
+Solving quantum mechanics problems using radial basis function networks,
+Phys. Rev. E \textbf{98}, 033305, 2018.
+
+\bibitem{rbfphysics2}R. Jovanović, A. Sretenovic, Ensemble of radial
+basis neural networks with K-means clustering for heating energy consumption
+prediction, FME Transactions \textbf{45}, pp. 51-57, 2017.
+
+\bibitem{rbfchemistry1}D.L. Yu, J.B. Gomm, D. Williams, Sensor fault
+diagnosis in a chemical process via RBF neural networks, Control Engineering
+Practice \textbf{7}, pp. 49-55, 1999.
+
+\bibitem{rbfchemistry2}V. Shankar, G.B. Wright, A.L. Fogelson, R.M.
+Kirby, A radial basis function (RBF) finite difference method for
+the simulation of reaction--diffusion equations on stationary platelets
+within the augmented forcing method, Int. J. Numer. Meth. Fluids \textbf{75},
+pp. 1-22, 2014.
+
+\bibitem{rbfecon0}W. Shen, X. Guo, C. Wu, D. Wu, Forecasting stock
+indices using radial basis function neural networks optimized by artificial
+fish swarm algorithm, Knowledge-Based Systems 24, pp. 378-385, 2011.
+
+\bibitem{rbfecon1}J. A. Momoh, S. S. Reddy, Combined Economic and
+Emission Dispatch using Radial Basis Function, 2014 IEEE PES General
+Meeting \textbar{} Conference \& Exposition, National Harbor, MD,
+pp. 1-5, 2014.
+
+\bibitem{rbfecon2}P. Sohrabi, B. Jodeiri Shokri, H. Dehghani, Predicting
+coal price using time series methods and combination of radial basis
+function (RBF) neural network with time series. Miner Econ 2021.
+
+\bibitem{rbf_dos1}U. Ravale, N. Marathe, P. Padiya, Feature Selection
+Based Hybrid Anomaly Intrusion Detection System Using K Means and
+RBF Kernel Function, Procedia Computer Science \textbf{45}, pp. 428-435,
+2015.
+
+\bibitem{rbf_dos2}M. Lopez-Martin, A. Sanchez-Esguevillas, J. I.
+Arribas, B. Carro, Network Intrusion Detection Based on Extended RBF
+Neural Network With Offline Reinforcement Learning, IEEE Access \textbf{9},
+pp. 153153-153170, 2021.
+
+\bibitem{kmeans}J. MacQueen, Some methods for classification and
+analysis of multivariate observations, in: Proceedings of the fifth
+Berkeley symposium on mathematical statistics and probability, Vol.
+1, No. 14, pp. 281-297, 1967. 
+
+\bibitem{tsoulosAI}I.G. Tsoulos, Learning Functions and Classes Using
+Rules, AI \textbf{3}, pp. 751-763, 2022.
+
+\bibitem{tsoulosQFC}I.G. Tsoulos, QFC: A Parallel Software Tool for
+Feature Construction, Based on Grammatical Evolution, Algorithms \textbf{15},
+295, 2022.
+
+\bibitem{Armadillo}C. Sanderson, R. Curtin, Armadillo: a template-based
+C++ library for linear algebra, Journal of Open Source Software \textbf{1},
+pp. 26, 2016. 
+
+\end{thebibliography}
+
+\end{adjustwidth}{}
+\end{document}

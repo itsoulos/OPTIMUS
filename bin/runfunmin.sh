@@ -32,6 +32,9 @@ then
 elif [ $METHOD = "MinCenter" ]
 then
 	METHODPARAMS="--mincenter_samples=600 --mincenter_centers=100 --mincenter_iterations=100"
+elif [ $METHOD = "parallelPso" ]
+then
+	METHODPARAMS="--subCluster=1 --parallelPsoParticles=200 --parallelPsoGenerations=100"
 fi
 
 PROBLEM=$1
