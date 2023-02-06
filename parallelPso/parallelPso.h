@@ -6,6 +6,8 @@
 #include <Optimus/tolmin.h>
 #include <Optimus/rbfsampler.h>
 #include <QRandomGenerator>
+#include <iomanip>
+# include "omp.h"
 class parallelPsoInterface
 {
 public:
@@ -17,22 +19,23 @@ public:
 class PARALLELPSO_EXPORT parallelPso : public Optimizer, parallelPsoInterface
 {
 private:
-    int generation, parallelPsoParticles, similarityMaxCount, subCluster, parallelPsoGenerations, n, dimension, localSearchCount, subClusterEnable, pardePropagateRate;
+    int generation, parallelPsoParticles, similarityMaxCount, subCluster, parallelPsoGenerations, n, dimension, localSearchCount, subClusterEnable, pardePropagateRate, bestIndex;
 
-    double x1, x2, stopat, variance, besty, oldbesty, parallelPsoC1, parallelPsoC2, psoLocalSearchRate, RC;
+    double besty, parallelPsoC1, parallelPsoC2;
 
     QString parallelPropagateMethod;
 
-    vector<int> bestSubClusterIndex, similarityCurrentCount;
+    vector<int> similarityCurrentCount, bestF2xInClusterIndex;
 
-    vector<double> bestx, fitness_array, bestFitness_array, lmargin, rmargin, bestSubClusterValues, similarityBestValue, sum, newSum, MO, newMO, bestF2xInCluster;
+    vector<double> bestx, fitness_array, lmargin, rmargin, similarityBestValue, sum, newSum, MO, newMO, bestF2xInCluster, bestF2xInClusterOLD;
 
-    vector<Data> particles, bestParticle, velocitys, minimax, bestParticleInCluster;
+    vector<double> doublebox_xx1, doublebox_xx2, doublebox_best_value, doublebox_variance, doublebox_stopat;
+
+    vector<Data> particles, bestParticle, velocitys, bestParticleInCluster;
 
     std::chrono::time_point<std::chrono::system_clock> before, after;
 
     double fitness(Data &x);
-    bool checkGradientCriterion(Data &x);
     int subClusterStartPos(int subClusterIndex);
     int subClusterEndPos(int subClusterIndex);
     void propagateSubClusterValues();
