@@ -2291,7 +2291,7 @@ int Tolmin::conres_(integer *n, integer *m, double *a, integer *
 /*     Calculate and partition the residuals of the inactive constraints, */
 /*       and set the gradient vector when seeking feasibility. */
 
-    if ((real) idiff > (float)0.) {
+    if ( idiff > (float)0.) {
 	i__1 = *n;
 	for (i__ = 1; i__ <= i__1; ++i__) {
 /* L10: */
