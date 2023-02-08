@@ -263,21 +263,22 @@ Correspondence: itsoulos@uoi.gr;
 \end_layout
 
 \begin_layout Abstract
-A variety of problems from many research areas can be modeled using global
- optimization, such as problems in the area of image processing, medical
- informatics, economic models, etc.
+A significant number of applications from many research areas can be considered
+ global optimization problems, such as applications in the area of image
+ processing, medical informatics, economic models, etc.
  This paper presents a programming tool written in ANSI C++, which researchers
  can use to formulate the problem to be solved and then make use of the
  local and global optimization methods provided by this tool to efficiently
  solve such problems.
- The main features of the proposed software are: a) Ability to code the
- objective problem in a high level language such as ANSI C++ b) Incorporation
- of many global optimization techniques to solve the objective problem c)Paramet
-erization of global optimization methods using user-defined parameters.
+ The main features of the suggested software are: a) Coding of the objective
+ problem in a high level language such as ANSI C++ b) Incorporation of many
+ global optimization techniques to tackle the objective problem c)Parameterizati
+on of global optimization methods using user-defined parameters.
 \end_layout
 
 \begin_layout Keywords
-Global optimization; stochastic methods; termination rules.
+Global optimization; local optimization; stochastic methods; evolutionary
+ techniques; termination rules.
 \end_layout
 
 \begin_layout Section
@@ -285,12 +286,12 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-The task of locating the global minimum of a continuous and differentiable
- function 
+The location of the global minimum for a continuous and differentiable function
+ 
 \begin_inset Formula $f:S\rightarrow R,S\subset R^{n}$
 \end_inset
 
- is defined as
+ is formulated as
 \begin_inset Formula 
 \begin{equation}
 x^{*}=\mbox{arg}\min_{x\in S}f(x)\label{eq:eq1}
@@ -298,11 +299,11 @@ x^{*}=\mbox{arg}\min_{x\in S}f(x)\label{eq:eq1}
 
 \end_inset
 
-with 
+where the set 
 \begin_inset Formula $S$
 \end_inset
 
-: 
+ is defined as: 
 \begin_inset Formula 
 \[
 S=\left[a_{1},b_{1}\right]\otimes\left[a_{2},b_{2}\right]\otimes\ldots\left[a_{n},b_{n}\right]
@@ -310,8 +311,8 @@ S=\left[a_{1},b_{1}\right]\otimes\left[a_{2},b_{2}\right]\otimes\ldots\left[a_{n
 
 \end_inset
 
-Methods that aim to locate the global minimum finds application in economics
- 
+Methods that aim to locate the global minimum finds application in problems
+ from the area of economics 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "globalecon1,globalecon2"
@@ -319,7 +320,7 @@ literal "false"
 
 \end_inset
 
-, physics 
+, problems that appear very often in the area of physics 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "global_physics1,global_physics2"
@@ -335,10 +336,42 @@ literal "false"
 
 \end_inset
 
-, medicine 
+, common problems from medicine 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "global_med1,global_med2"
+literal "false"
+
+\end_inset
+
+, job scheduling problems 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "global_job1,global_job2"
+literal "false"
+
+\end_inset
+
+, water resources planning 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "global_water1,global_water2"
+literal "false"
+
+\end_inset
+
+, network security problems 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "global_network1,global_network2"
+literal "false"
+
+\end_inset
+
+, robotics 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "global_robot1,global_robot2"
 literal "false"
 
 \end_inset
@@ -411,12 +444,42 @@ literal "false"
 \end_inset
 
  etc.
- Moreover, many hybrid techniques have been proposed to tackle the global
+ 
+\end_layout
+
+\begin_layout Standard
+Due to the high importance of the global optimization problem, a variety
+ of hybrid optimization techniques have been proposed to handle the global
  optimization problem, such as methods that combine Particle Swarm Optimization
  and Genetic algorithms 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "go_pso_genetic_hybrid1,go_pso_genetic_hybrid2"
+literal "false"
+
+\end_inset
+
+, combination of genetic algorithms and fuzzy logic classifier 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "ga_fuzzy"
+literal "false"
+
+\end_inset
+
+, incorporation of genetic algorithm and the K-Means algorithm 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "ga_kmeans"
+literal "false"
+
+\end_inset
+
+, combination of Particle Swarm Optimization method with Ant Colony Optimization
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "pso_aco1,pso_aco2,pso_aco3"
 literal "false"
 
 \end_inset
@@ -430,7 +493,16 @@ literal "false"
 \end_inset
 
  etc.
- 
+ Also, many hybrid techniques combining local and global optimization have
+ been developed 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "go_local1,go_local2,go_local3"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -468,8 +540,8 @@ literal "false"
 
 \end_inset
 
-, a Particle swarm optimization method for the control of a fleet of Unmanned
- Aerial Vehicles 
+, a new control approach of a a fleet of Unmanned Aerial Vehicles using
+ the method of Particle Swarm Optimization
 \begin_inset CommandInset citation
 LatexCommand citep
 key "pso_physics2"
@@ -481,8 +553,19 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-Because of the large demands that global optimization methods have on computing
- power, several techniques have been proposed 
+However, in most cases global optimization methods require a lot of computing
+ resources to implement both in memory and computing time.
+ Because of the large demands that global optimization methods have on computing
+ power, several techniques have been proposed such as asynchronous methods
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "async1,async2,async3"
+literal "false"
+
+\end_inset
+
+, parallel approaches of the Multistart optimization method 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "parallel-multistart,parallel-multistart2"
@@ -490,7 +573,7 @@ literal "false"
 
 \end_inset
 
- and also some methods that take advantage of modern parallel gpu architectures
+ and also some methods that take advantage of modern parallel GPU architectures
  
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -503,10 +586,16 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-In this work, an integrated computing environment is proposed for solving
- global optimization problems.
- In this the researcher can code the objective function in the C++ programming
- language and then formulate a strategy to solve the problem.
+In this paper, a new integrated computing environment for performing global
+ optimization methods for multidimensional functions is presented and analyzed
+ in detail.
+ In this computing environment, the programmer can code the problem to be
+ solved using a high-level programming language such as C++.
+ In addition to the objective function, the programmer can also provide
+ information that the objective problem should have at the start of the
+ optimization process and in addition can formulate a series of actions
+ that will take place after the optimization process is finished.
+ Subsequently, the researcher can formulate a strategy to solve the problem.
  In this strategy, the researcher can choose from a series of sampling methods,
  choose a global minimization method established in the relevant literature
  and possibly some local minimization method to improve the produced result.
@@ -519,7 +608,8 @@ literal "false"
 
 \end_inset
 
-, the MERLIN optimization software 
+ for non convex optimization problems, the MERLIN optimization software
+ 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "merlin"
@@ -527,7 +617,8 @@ literal "false"
 
 \end_inset
 
-, the DEoptim software 
+ which is accompanied with the Merlin Control Language compiler to guide
+ the optimization course, the DEoptim software 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "deoptim"
@@ -535,11 +626,20 @@ literal "false"
 
 \end_inset
 
- etc.
+ which is an R package implementing the differential evolution algorithm,
+ the PDoublePop optimization software 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "pdoublepop"
+literal "false"
+
+\end_inset
+
+ that implements a parallel genetic algorithm for global optimization etc.
 \end_layout
 
 \begin_layout Standard
-The rest of this article is organized as follows: in section 
+The rest of this article is structured as follows: in section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Software"
@@ -549,7 +649,7 @@ noprefix "false"
 
 \end_inset
 
- the software is described in detail, in section 
+ the proposed software is outlined in detail, in section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Experiments"
@@ -585,7 +685,7 @@ name "sec:Software"
 \end_layout
 
 \begin_layout Standard
-The software is entirely written in ANSI C++ using the freely available
+The suggested software is entirely coded in ANSI C++, using the freely available
  QT programming library, which can be downloaded from 
 \begin_inset Flex URL
 status open
@@ -597,19 +697,32 @@ https://qt.io
 
 \end_inset
 
-.
- The user can code the objective problem in C++ by defining some critical
- functions such as the dimension of the function or the objective function.
+ (accessed on 8 February 2023).
+ The researcher should code the objective function and a number of other
+ mandatory functions in the C++ programming language.
+ Also, the researcher should provide the dimension of the objective function
+ as well as the bound of the function (equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eq1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
  Subsequently, the user can select a global optimization method to apply
  to the problem from a wide range of available methods.
- Also, the user can extend the series of methods by adding some new method.
+ Also, the user can extend the series of methods by adding any new method
+ that follows the guidelines of the software.
 
 \series bold
  
 \series default
-In the following subsections, the installation process of the proposed software
- will be analyzed and a complete example of running an objective problem
- will be given.
+In the following subsections, the installation process of the suggested
+ software will be analyzed and a complete example of running an objective
+ problem will be given.
 \end_layout
 
 \begin_layout Subsection
@@ -635,11 +748,13 @@ https://qt.io
 
 \end_inset
 
-
+.
+ In most Linux distributions this library can be made available from the
+ relevant distribution repositories.
 \end_layout
 
 \begin_layout Enumerate
-Download the software from 
+Download and unzip the software from 
 \begin_inset Flex URL
 status open
 
@@ -650,7 +765,7 @@ https://github.com/itsoulos/OPTIMUS
 
 \end_inset
 
-
+.
 \end_layout
 
 \begin_layout Enumerate
@@ -662,6 +777,8 @@ OPTIMUSPATH
  e.g.
  OPTIMUSPATH=/home/user/OPTIMUS/, where user is the user name in the Linux
  operating system.
+ This step is necessary so that the compiler can locate the necessary files
+ during compilation.
 \end_layout
 
 \begin_layout Enumerate
@@ -670,7 +787,11 @@ Set the
 LD_LIBRAPY_PATH
 \emph default
  to include the OPTIMUS/lib subdirectory e.g.
- LD_LIBRAPY_PATH=$LD_LIBRAPY_PATH:$OPTIMUSPATH/lib/:
+ 
+\begin_inset Newline newline
+\end_inset
+
+LD_LIBRAPY_PATH=$LD_LIBRAPY_PATH:$OPTIMUSPATH/lib/:
 \end_layout
 
 \begin_layout Enumerate
@@ -684,7 +805,8 @@ Execute the compilation script:
 \end_layout
 
 \begin_layout Standard
-After the compilation is complete, the 
+The compilation will take some minutes in most modern computer systems and
+ when the compilation is complete, the 
 \emph on
 lib
 \emph default
@@ -721,6 +843,8 @@ In the following, the global optimization methods present in the proposed
  the effectiveness of the method.
  For example, the genetic algorithm contains parameters such as the number
  of chromosomes or the maximum number of generations allowed.
+ In addition, to make the optimization process easier, each method has been
+ assigned a symbolic name, such as pso for particle swarm optimization.
  The implemented global optimization methods are:
 \end_layout
 
@@ -741,15 +865,15 @@ de
 \series default
 .
  This global optimization technique has been widely used in areas such as
- community detection 
+ data mining applications 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "de_symmetry1"
+key "de_datamining,de_symmetry1"
 literal "false"
 
 \end_inset
 
-, structure prediction of materials 
+, material design problems 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "de_symmetry3"
@@ -757,7 +881,7 @@ literal "false"
 
 \end_inset
 
-, motor fault diagnosis 
+, feature selection 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "de_symmetry6"
@@ -765,7 +889,7 @@ literal "false"
 
 \end_inset
 
-, automatic clustering techniques 
+, clustering methods 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "de_symmetry7"
@@ -792,6 +916,10 @@ literal "false"
 gende
 \series default
 .
+ This modification of the Differential Evolution method introduces two variation
+s: a new asymptotic stopping rule and a new scheme for a critical parameter
+ of the method.
+ 
 \end_layout
 
 \begin_layout Enumerate
@@ -810,6 +938,9 @@ literal "false"
 ParallelDe
 \series default
 .
+ This parallel technique divides the total work into a number of available
+ parallel computing units, and in each unit an independent Differential
+ Evolution method is executed.
  The parallelization is performed using the OpenMP programming library 
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -924,9 +1055,12 @@ literal "false"
 
  is implemented and it is denoted as 
 \series bold
-CCRS
+gcrs
 \series default
 .
+ This variation modifies the original method by adding a new sampling method,
+ a new stochastic termination rule and a periodical application of a local
+ optimization procedure.
 \end_layout
 
 \begin_layout Enumerate
@@ -981,6 +1115,8 @@ literal "false"
 iPso
 \series default
 .
+ The original Particle Swarm Optimization method is enhanced using a new
+ inertia calculation mechanism as well as a novel termination method.
 \end_layout
 
 \begin_layout Enumerate
@@ -1032,7 +1168,7 @@ literal "false"
 
 \end_inset
 
-, aerodynamic shape problems 
+, aerodynamic problems 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "multistart-aero"
@@ -1064,8 +1200,8 @@ Tmlsl
 \begin_layout Enumerate
 The MinCenter method.
  In the software presented here, another multistart method has been included,
- which forms, with the use of the K-Means clustering algorithm, the regions
- of attraction for the local minima of the objective problem.
+ which forms, with the use of the K-Means algorithm for clustering purposes,
+ the regions of attraction for the local minima of the objective problem.
  This method is denoted as 
 \series bold
 MinCenter
@@ -1083,7 +1219,7 @@ literal "false"
 
 \begin_layout Enumerate
 NeuralMinimizer.
- A novell method that incorporates Radial Basis Functions (RBF)
+ A novel method that incorporates Radial Basis Functions (RBF)
 \begin_inset CommandInset citation
 LatexCommand citep
 key "rbf_main1"
@@ -1111,9 +1247,10 @@ Implemented local optimization methods
 \end_layout
 
 \begin_layout Standard
-The proposed software uses, in addition to global optimization methods and
- local optimization methods, which can be used in most global minimization
- techniques, with the 
+All global optimization methods can be enhanced by applying a local minimization
+ method after they are terminated.
+ The parameter used to determine the used local optimization procedure is
+ the 
 \begin_inset Formula $--$
 \end_inset
 
@@ -1255,9 +1392,21 @@ Objective problem deployment
 
 \begin_layout Standard
 The objective problem must be coded in the C++ programming language.
- The programmer must provide the software with a series of functions that
- describe key components of the problem, such as the problem dimension,
- the objective function, and the derivative.
+ The programmer must describe in detail the problem to be solved and must
+ provide the software with detailed information about the dimension of the
+ problem, the value limits of the variables of the problem, the objective
+ function and also the derivative of the function.
+ If the analytical derivative is not available or difficult to calculate
+ then the programmer can program it using finite differences or use some
+ automatic differentiation software, such as the Adept software 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "adept"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1275,8 +1424,8 @@ noprefix "false"
 
 \end_inset
 
- shows an objective function written with the functions required by this
- software.
+ shows an example of objective function.
+ The figure show also the required functions by the proposed software.
  This code is used for the minimization of the Rastrigin function defined
  as:
 \begin_inset Formula 
@@ -1313,16 +1462,16 @@ void
  The function init() is called before the objective function is executed
  and its purpose is to pass parameters from the execution environment to
  the objective function.
- For example in the optimization of the Lennard Jones potential 
+ For example, for the Lennard Jones potential 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "Jones"
+key "originalJones"
 literal "false"
 
 \end_inset
 
- the user can pass the number of individuals in the potential using an assignmen
-t as follows
+, the user can pass the number of atoms in the potential using an assignment
+ as follows
 \begin_inset Newline newline
 \end_inset
 
@@ -1338,7 +1487,8 @@ status open
 
 \end_inset
 
-
+If the objective problem does not need a parameter, then this function can
+ be empty.
 \end_layout
 
 \begin_layout Enumerate
@@ -1358,8 +1508,12 @@ void
     getmargins(vector<Interval> &x).
  The getmargins() functions returns in the vector x the bounds of the objective
  problem.
- The class Interval is a simple class that represents double precision intervals
- eg 
+ The class Interval is a simple class located in the folder 
+\emph on
+PROBLEMS
+\emph default
+ of the distribution, that represents double precision intervals eg the
+ value 
 \begin_inset Formula $[2,4$
 \end_inset
 
@@ -1385,6 +1539,8 @@ double
 \end_inset
 
 .
+ The number of elements of the vector x must be the same in number as the
+ return value of the function getDimension().
 \end_layout
 
 \begin_layout Enumerate
@@ -1633,6 +1789,10 @@ noprefix "false"
 \end_inset
 
 .
+ The first line of this project file determines the a shared library will
+ be build by the compilation.
+ The second line lists the number of source files that will be compiled
+ and the last line contains the names of the header files.
  The software incorporates the utility qmake of the QT library to compile
  the objective function.
  The compilation is performed with the following series of commands in the
@@ -1750,11 +1910,11 @@ status open
 
 \end_inset
 
-The command line arguments have as follows:
+The parameters for the above command line are as follows:
 \end_layout
 
 \begin_layout Enumerate
-The argument 
+The argument of the option 
 \begin_inset Formula $--$
 \end_inset
 
@@ -1762,7 +1922,7 @@ filename determines the objective problem in shared library format.
 \end_layout
 
 \begin_layout Enumerate
-The argument 
+The argument of the command line option 
 \begin_inset Formula $--$
 \end_inset
 
@@ -1772,19 +1932,19 @@ opt_method sets the used global optimization procedure.
 \end_layout
 
 \begin_layout Enumerate
-The argument 
+The argument of the option 
 \begin_inset Formula $--$
 \end_inset
 
-pso_particles sets the number of particles for the PSO optimizer 
+pso_particles sets the number of particles of the PSO optimizer.
 \end_layout
 
 \begin_layout Enumerate
-The argument 
+The argument for the command line option 
 \begin_inset Formula $--$
 \end_inset
 
-pso_generations sets the maximum number of allowed generations
+pso_generations sets the maximum number of generations allowed.
 \end_layout
 
 \begin_layout Enumerate
@@ -1812,8 +1972,12 @@ noprefix "false"
  global minimum of the function, which is -2.
  However with the help of the local optimization method applied after its
  end, this minimum is found with greater numerical accuracy.
- The main steps of a typical usage of the software have been also shown
- in graphical format in Figure 
+ 
+\end_layout
+
+\begin_layout Standard
+The main steps of a typical usage of the software have been also shown in
+ graphical format in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:optSteps"
@@ -2005,7 +2169,7 @@ Some of the proposed methods are tested on a series of well - known test
 Griewank2
 \series default
  function.
- The function is defined as:
+ This objective function is defined as:
 \begin_inset Formula 
 \[
 f(x)=1+\frac{1}{200}\sum_{i=1}^{2}x_{i}^{2}-\prod_{i=1}^{2}\frac{\cos(x_{i})}{\sqrt{(i)}},\quad x\in[-100,100]^{2}
@@ -2022,7 +2186,7 @@ f(x)=1+\frac{1}{200}\sum_{i=1}^{2}x_{i}^{2}-\prod_{i=1}^{2}\frac{\cos(x_{i})}{\s
 Rastrigin
 \series default
  function.
- The function is given by 
+ The function is provided by
 \begin_inset Formula 
 \[
 f(x)=x_{1}^{2}+x_{2}^{2}-\cos(18x_{1})-\cos(18x_{2}),\quad x\in[-1,1]^{2}
@@ -2191,24 +2355,25 @@ f(x)=\frac{1}{2}\sum_{i=1}^{n}x_{i}^{4}-16x_{i}^{2}+5x_{i},\quad x_{i}\in[-5,5].
 
 \end_inset
 
-The function has 
+This objective function has 
 \begin_inset Formula $2^{n}$
 \end_inset
 
- in the specified range and in our experiments we used 
+ local minima in the specified range.
+ During the conducted experiments the values 
 \begin_inset Formula $n=4,5,6,7$
 \end_inset
 
-.
+ were used.
 \end_layout
 
 \begin_layout Standard
 The experiments were performed using the above objective functions and ran
  30 times using a different seed for the random number generator each time.
- In the execution of the experiments, the genetic algorithm (DoubleGenetic
+ During the execution of the experiments, the genetic algorithm (DoubleGenetic
  method) was used as a global optimizer in two versions: one without a local
  optimization method and one with periodic application of the bfgs method
- at a rate of 5% on the chromosomes in each generation.
+ at a rate of 5% on the chromosomes in every generation.
  The execution parameters for the genetic algorithm are listed in Table
  
 \begin_inset CommandInset ref
@@ -2240,10 +2405,14 @@ noprefix "false"
  If this number is absent, it means that the algorithm discovered the global
  minimum in all 30 executions.
  In this table, the line SUM represents the sum of the function calls.
- The experimental results show that the usage of a local search method in
- combination with the genetic algorithm significantly reduces the required
- number of function calls and at the same time improves the reliability
- of the method in finding the global minimum.
+ The experimental results indicate that the usage of a local search method
+ in combination with the genetic algorithm significantly reduces the required
+ number of average function calls and also improves the reliability of the
+ method in finding the global minimum.
+ Of course, periodically applying a local minimization method to some of
+ the chromosomes drastically increases the required execution time, but
+ the large reduction in the total number of calls required is a big advantage
+ of its application.
 \begin_inset Float table
 wide false
 sideways false
@@ -2811,15 +2980,36 @@ V_{LJ}(r)=4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{
 
 \end_inset
 
+For testing purposes the method 
+\series bold
+NeuralMinimizer
+\series default
+ of the package was applied to the above problem for a variety of number
+ of atoms and the results are shown in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:potential"
+plural "false"
+caps "false"
+noprefix "false"
 
-\end_layout
+\end_inset
 
-\begin_layout Standard
+.
+ This method was experimentally compared with two other techniques in the
+ software package, the method DoubleGenetic and the method Pso.
+ In all cases the number of chromosomes (or particles) was set to 100 and
+ the maximum number of allowed iterations was set to 200.
+ As can be seen from the experimental results, the method NeuralMinimizer
+ requires a significantly reduced number of function calls compared to the
+ other two, while its reliability in finding the global minimum for the
+ potential remains high even when the number of atoms participating in the
+ potential increases significantly.
 \begin_inset Float table
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -3447,40 +3637,6 @@ AVERAGE
 
 \end_layout
 
-\begin_layout Standard
-For testing purposes the method 
-\series bold
-NeuralMinimizer
-\series default
- of the package was applied to the above problem for a variety of number
- of atoms and the results are shown in Table 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:potential"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
- The method is compared against against genetic algorithm (method 
-\series bold
-DoubleGenetic
-\series default
- of Optimus package) and particle swarm optimization (method 
-\series bold
-Pso
-\series default
- of Optimus).
- In all cases the number of chromosomes (or particles) was set to 100 and
- the maximum number of allowed iterations was set to 200.
- As we can observe from the table, the method NeuralMinimizer requires a
- significantly lower number of function calls compared to the mentioned
- methods and its reliability in finding the global minimum remains high
- even for higher number of atoms.
-\end_layout
-
 \begin_layout Subsection
 Parallel optimization
 \end_layout
@@ -3496,9 +3652,9 @@ f(x)=\sum_{i=1}^{n}\left(10^{6}\right)^{\frac{i-1}{n-1}}x_{i}^{2}
 
  is used as a test case to measure the scalability of the parallel global
  optimization technique denoted as ParallelDe.
- This method was applied to the problem with the number of dimensions increasing
- from 2 to 15 and for a different number of processing threads and the results
- are shown in diagram form in Figure 
+ This method was applied to the problem with dimension increasing from 2
+ to 15 and for a different number of processing threads.
+ The experimental results are shown in diagram form in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Scalability"
@@ -3560,7 +3716,8 @@ Rbf training
 \end_layout
 
 \begin_layout Standard
-An RBF network is machine learning model and it can be defined as:
+An RBF network is machine learning model and in function form is defined
+ as:
 \series bold
 
 \begin_inset Formula 
@@ -3572,8 +3729,8 @@ y\left(\overrightarrow{x}\right)=\sum_{i=1}^{k}w_{i}\phi\left(\left\Vert \overri
 
 
 \series default
-These models have been used in various problems such as solutions of differentia
-l equations 
+These models have been used in a wide series of problems, such as solutions
+ of differential equations 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "rbfde1,rbfde2"
@@ -3581,11 +3738,7 @@ literal "false"
 
 \end_inset
 
-,
-\series bold
- 
-\series default
-digital communications 
+, issues of communication 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "rbfnetwork1,rbfnetwork2"
@@ -3642,21 +3795,25 @@ E(y(x,g))=\sum_{i=1}^{m}\left(y\left(x_{i},g\right)-t_{i}\right)^{2}\label{eq:eq
 
 \end_inset
 
-The constant 
+In the previous equation, the constant 
 \begin_inset Formula $m$
 \end_inset
 
- represents the number of input patterns and the values 
+ stands for the number of input patterns and the values 
 \begin_inset Formula $t_{i}$
 \end_inset
 
- stand for the expeceted output for the input.
+ represent the expected output for the every input vector 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+.
  The vector 
 \begin_inset Formula $g$
 \end_inset
 
- is the set of the parameters of the RBF network.
- Usually, the error of equation 
+ denotes the parameters of the RBF network.
+ In most cases, the equation 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:eqrbf"
@@ -3668,7 +3825,8 @@ noprefix "false"
 
  is minimized through a two - phase procedure.
  During the first phase, a subset of the parameters of the network, called
- centers and variances, are estimated through the K-Means algorithm 
+ centers and variances, are calculated using the well - known K-Means algorithm
+ 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "kmeans"
@@ -3677,15 +3835,19 @@ literal "false"
 \end_inset
 
 .
- During the second phase, a linear system is solved to calculated the weight
- set 
+ During the second phase, a linear system is solved for the calculation
+ of the weight set 
 \begin_inset Formula $w_{i},\ i=1,..,k$
 \end_inset
 
 .
- Here, in this series of experiments two methods of the OPTIMUS package,
+ 
+\end_layout
+
+\begin_layout Standard
+Here, in this series of experiments two methods of the OPTIMUS package,
  the genetic algorithm and the particle swarm optimization, was used to
- minimize the train error of equation 
+ minimize the equation 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:eqrbf"
@@ -3695,7 +3857,9 @@ noprefix "false"
 
 \end_inset
 
- for a series of classification problems, described in various papers 
+.
+ The RBF network was applied on a series of classification problems, described
+ in various papers 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "tsoulosAI,tsoulosQFC"
@@ -3715,7 +3879,7 @@ noprefix "false"
 \end_inset
 
 .
- The RBF network was coded in ANSI C++ with the help of the freely available
+ The RBF network was implemented in ANSI C++ using the freely available
  Armadillo library 
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -3725,12 +3889,12 @@ literal "false"
 \end_inset
 
 .
- In addition, in order to have greater reliability in the experimental results,
- a 10-fold validation technique was used.
- All the experiments were executed 30 times using different seed for the
- random generator each time and the average classification error on test
- set is reported.
- The number of weights 
+ The experiments were validated using the 10-fold validation technique.
+ Furthermore, all the experiments were conducted 30 times.
+ In each execution a different seed for the random number generator was
+ used.
+ The average classification error on test set is reported in the table with
+ the experimental results and the number of weights 
 \begin_inset Formula $k$
 \end_inset
 
@@ -3761,14 +3925,18 @@ The column PSO represents the results for the application of the particle
 \end_layout
 
 \begin_layout Enumerate
-An extra line has been added, in which the mean error for each method is
- displayed with the symbolic name AVERAGE.
+An additional line (with the symbolic name AVERAGE) has been added at the
+ end of the table, in which the average classification error for each method
+ is displayed.
+ 
 \end_layout
 
 \begin_layout Standard
 As can be deduced from the experimental results, the global optimization
  methods of the proposed software package were applied with great success
  to such a difficult and complex problem as that of training a neural network.
+ Furthermore, both genetic algorithm and particle swarm optimization significant
+ly outperform the traditional technique in terms of average test error.
 \end_layout
 
 \begin_layout Standard
@@ -4817,6 +4985,11 @@ Possibility to port the Optimus tool to other operating systems such as
 \begin_layout Enumerate
 Use of modern parallel techniques to speed up the generated results and
  implementation of efficient termination techniques.
+ At the present time, the ParallelDe has been implemented using parallel
+ techniques and it is expected that parallel implementations will be created
+ for other global minimization techniques as well.
+ In addition, new termination techniques specifically designed for parallel
+ techniques should be devised and implemented.
 \end_layout
 
 \begin_layout Enumerate
@@ -4843,8 +5016,7 @@ Creating a scripting language to efficiently guide the optimization of objective
 \begin_layout Author Contributions
 I.G.T.
  and V.C.
- conceived of the idea and methodology and supervised the technical part
- regarding the software.
+ conceived of the idea, the methodology implemented the software.
  I.G.T.
  conducted the experiments, employing datasets, and provided the comparative
  experiments.
@@ -5148,6 +5320,165 @@ Y.
 \series default
 , pp.
  119-132, 1994.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "global_job1"
+literal "false"
+
+\end_inset
+
+Y.
+ Gao, H.
+ Rong, J.Z.
+ Huang, Adaptive grid job scheduling with genetic algorithms, Future Generation
+ Computer Systems 
+\series bold
+21
+\series default
+, pp.
+ 151-161, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "global_job2"
+literal "false"
+
+\end_inset
+
+D.Y.
+ Sha, H.H.
+ Lin, A multi-objective PSO for job-shop scheduling problems, Expert Systems
+ with Applications 
+\series bold
+37
+\series default
+, pp.
+ 1065-1070, 2010.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "global_water1"
+literal "false"
+
+\end_inset
+
+X.
+ Cai, D.C.
+ McKinney, L.S.
+ Lasdon, Solving nonlinear water management models using a combined genetic
+ algorithm and linear programming approach, Advances in Water Resources
+ 
+\series bold
+24
+\series default
+, pp.
+ 667-676, 2001.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "global_water2"
+literal "false"
+
+\end_inset
+
+S.G.
+ Gino Sophia, V.
+ Ceronmani Sharmila, S.
+ Suchitra et al, Water management using genetic algorithm-based machine
+ learning, Soft Comput 
+\series bold
+24
+\series default
+, pp.
+ 17153–17165, 2020.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "global_network1"
+literal "false"
+
+\end_inset
+
+Z.
+ Bankovic, D.
+ Stepanovic, S.
+ Bojanic, O.
+ Nieto - Taladriz, Improving network security using genetic algorithm approach,
+ Computers & Electrical Engineering 
+\series bold
+33
+\series default
+, pp.
+ 438-451, 2007.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "global_network2"
+literal "false"
+
+\end_inset
+
+S.
+ Paul, I.
+ Dutt, S.N.
+ Choudhri, Design and implementation of network security using genetic algorithm.
+ Int J Res Eng Technol 
+\series bold
+2
+\series default
+, pp.
+ 172-177, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "global_robot1"
+literal "false"
+
+\end_inset
+
+A.
+ Tuncer, M.
+ Yildrim, Dynamic path planning of mobile robots with improved genetic algorithm
+, Computers & Electrical Engineering 
+\series bold
+38
+\series default
+, pp.
+ 1564-1572, 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "global_robot2"
+literal "false"
+
+\end_inset
+
+N.
+ Kherici, Y.M.
+ Ben Ali, Using PSO for a walk of a biped robot, Journal of Computational
+ Science 
+\series bold
+5
+\series default
+, pp.
+ 743-749, 2014.
 \end_layout
 
 \begin_layout Bibliography
@@ -5556,6 +5887,108 @@ Y.T.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "ga_fuzzy"
+literal "false"
+
+\end_inset
+
+G.T.
+ Reddy, M.P.K.
+ Reddy, K.
+ Lakshmanna et al, Hybrid genetic algorithm and a fuzzy logic classifier
+ for heart disease diagnosis, Evol.
+ Intel.
+ 
+\series bold
+13
+\series default
+, pp.
+ 185–196, 2020.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ga_kmeans"
+literal "false"
+
+\end_inset
+
+M.D.
+ Anisur Rahman, M.D.
+ Zahidul Islam, A hybrid clustering technique combining a novel genetic
+ algorithm with K-Means, Knowledge-Based Systems 
+\series bold
+71
+\series default
+, pp.
+ 345-365, 2014.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso_aco1"
+literal "false"
+
+\end_inset
+
+T.
+ Niknam, An efficient hybrid evolutionary algorithm based on PSO and ACO
+ for distribution feeder reconfiguration, European Transactions on Electrical
+ Power 
+\series bold
+20
+\series default
+, pp.
+ 575-590, 2010.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso_aco2"
+literal "false"
+
+\end_inset
+
+M.K.
+ Patel, M.R.
+ Kabat, C.R.
+ Tripathy, A hybrid ACO/PSO based algorithm for QoS multicast routing problem,
+ Ain Shams Engineering Journal 
+\series bold
+5
+\series default
+, pp.
+ 113-120, 2014.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso_aco3"
+literal "false"
+
+\end_inset
+
+A.K.
+ Dubey, A.
+ Kumar, R.
+ Agrawal, An efficient ACO-PSO-based framework for data classification and
+ preprocessing in big data, Evol.
+ Intel.
+ 
+\series bold
+14
+\series default
+, pp.
+ 909–922, 2021.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "hybrid1"
 literal "false"
 
@@ -5569,6 +6002,73 @@ Offord C., Bajzer Ž.
  ICCS 2001.
  Lecture Notes in Computer Science, vol 2074.
  Springer, Berlin, Heidelberg.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_local1"
+literal "false"
+
+\end_inset
+
+S.
+ Li, M.
+ Tan, I.
+ W.
+ Tsang, J.
+ T.
+ -Y.
+ Kwok, A Hybrid PSO-BFGS Strategy for Global Optimization of Multimodal
+ Functions, IEEE Transactions on Systems, Man, and Cybernetics, Part B (Cybernet
+ics) 
+\series bold
+41
+\series default
+, pp.
+ 1003-1014, 2011.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_local2"
+literal "false"
+
+\end_inset
+
+H.
+ Badem, A.
+ Basturk, A.
+ Caliskan, M.E.
+ Yuksel, A new hybrid optimization method combining artificial bee colony
+ and limited-memory BFGS algorithms for efficient numerical optimization,
+ Applied Soft Computing 
+\series bold
+70
+\series default
+, pp.
+ 826-844, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_local3"
+literal "false"
+
+\end_inset
+
+A.A.
+ Nagra, F.
+ Han, Q.H.
+ Ling, An improved hybrid self-inertia weight adaptive particle swarm optimizati
+on algorithm with local search, Engineering Optimization 
+\series bold
+51
+\series default
+, pp.
+ 1115-1132, 2018.
 \end_layout
 
 \begin_layout Bibliography
@@ -5669,6 +6169,61 @@ A.
  of Unmanned Aerial Vehicles, Journal of Physics: Conference Series, Volume
  659, 12th European Workshop on Advanced Control and Diagnosis (ACD 2015)
  19–20 November 2015, Pilsen, Czech Republic.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "async1"
+literal "false"
+
+\end_inset
+
+M.
+ Depolli, R.
+ Trobec, B.
+ Filipič, Asynchronous Master-Slave Parallelization of Differential Evolution
+ for Multi-Objective Optimization, Evolutionary Computation 
+\series bold
+21
+\series default
+, pp.
+ 261-291, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "async2"
+literal "false"
+
+\end_inset
+
+A.
+ P.
+ Engelbrecht, Asynchronous particle swarm optimization with discrete crossover,
+ In: 2014 IEEE Symposium on Swarm Intelligence, Orlando, FL, USA, 2014,
+ pp.
+ 1-8.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "async3"
+literal "false"
+
+\end_inset
+
+F.
+ Bourennani, Cooperative asynchronous parallel particle swarm optimization
+ for large dimensional problems, International Journal of Applied Metaheuristic
+ Computing (IJAMC) 
+\series bold
+10.3
+\series default
+, pp.
+ 19-38, 2019.
 \end_layout
 
 \begin_layout Bibliography
@@ -5819,6 +6374,26 @@ K.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "pdoublepop"
+literal "false"
+
+\end_inset
+
+I.G.
+ Tsoulos, A.
+ Tzallas, D.
+ Tsalikakis, PDoublePop: An implementation of parallel genetic algorithm
+ for function optimization, Computer Physics Communications 
+\series bold
+209
+\series default
+, pp.
+ 183-189, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "de_main_paper"
 literal "false"
 
@@ -5828,6 +6403,26 @@ R.
  Storn, On the usage of differential evolution for function optimization,
  In: Proceedings of North American Fuzzy Information Processing, pp.
  519-523, 1996.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_datamining"
+literal "false"
+
+\end_inset
+
+I.
+ Triguero, S.
+ Garcia, F.
+ Herrera, Differential evolution for optimizing the positioning of prototypes
+ in nearest neighbor classification, Pattern Recognition 
+\series bold
+44
+\series default
+, pp.
+ 901-916, 2011.
 \end_layout
 
 \begin_layout Bibliography
@@ -6421,8 +7016,11 @@ I.G.
  Tzallas, E.
  Karvounis, D.
  Tsalikakis, NeuralMinimizer, a novel method for global optimization that
- incorporates machine learning accepted for publication in Information,
- 2023.
+ incorporates machine learning, Information 
+\series bold
+14
+\series default
+, 2, 2023.
 \end_layout
 
 \begin_layout Bibliography
@@ -6573,7 +7171,29 @@ B.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
-key "Jones-1"
+key "adept"
+literal "false"
+
+\end_inset
+
+R.J.
+ Hogan, Fast reverse-mode automatic differentiation using expression templates
+ in C++.
+ ACM Trans.
+ Math.
+ Softw.
+ 
+\series bold
+40
+\series default
+, pp.
+ 1-26, 2014.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "originalJones"
 literal "true"
 
 \end_inset
