@@ -34,7 +34,7 @@ then
 	METHODPARAMS="--mincenter_samples=600 --mincenter_centers=100 --mincenter_iterations=100"
 elif [ $METHOD = "parallelPso" ]
 then
-	METHODPARAMS="--subCluster=1 --parallelPsoParticles=200 --parallelPsoGenerations=100"
+		METHODPARAMS="--parallelPsoParticles=100 --subCluster=5 --subClusterEnable=1 --pNumber=50 --parallelPropagateMethod=NtoN --similarityMaxCount=15"
 fi
 
 PROBLEM=$1

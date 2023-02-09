@@ -19,7 +19,8 @@ public:
 class PARALLELPSO_EXPORT parallelPso : public Optimizer, parallelPsoInterface
 {
 private:
-    int generation, parallelPsoParticles, similarityMaxCount, subCluster, parallelPsoGenerations, n, dimension, localSearchCount, subClusterEnable, pardePropagateRate, bestIndex;
+    int generation, parallelPsoParticles, similarityMaxCount, subCluster, parallelPsoGenerations,
+    n, dimension, localSearchCount, subClusterEnable, propagateRate, bestIndex, pNumber;
 
     double besty, parallelPsoC1, parallelPsoC2;
 
@@ -29,19 +30,20 @@ private:
 
     vector<double> bestx, fitness_array, lmargin, rmargin, similarityBestValue, sum, newSum, MO, newMO, bestF2xInCluster, bestF2xInClusterOLD;
 
-    vector<double> doublebox_xx1, doublebox_xx2, doublebox_best_value, doublebox_variance, doublebox_stopat;
+    vector<double> doublebox_xx1, doublebox_xx2, doublebox_best_value, doublebox_variance,
+    doublebox_stopat, pF2x;
 
-    vector<Data> particles, bestParticle, velocitys, bestParticleInCluster;
+    vector<Data> particles, bestParticle, velocitys, bestParticleInCluster, pParticles;
 
     std::chrono::time_point<std::chrono::system_clock> before, after;
 
     double fitness(Data &x);
     int subClusterStartPos(int subClusterIndex);
     int subClusterEndPos(int subClusterIndex);
-    void propagateSubClusterValues();
+    void propagate();
     void getBestValue(int &index, double &value);
     void getBestValue(int islandName, int &index, double &value);
-    void replaceValueInSubCluster(int subClusterIndex, Data &x, double &y);
+    void replace(int subClusterIndex, vector<pair<double,Data>> proParticles);
     bool checkSubCluster(int subClusterName);
 
     virtual bool terminated();

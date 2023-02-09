@@ -8,13 +8,13 @@ then
 	METHODPARAMS="--minfinder_samples=50"
 elif [ $METHOD = "IntegerGenetic" ]
 then
-        METHODPARAMS="--integer_chromosomes=500 --integer_generations=500 --sample_method=uniform --localsearch_method=random --integer_localsearchrate=0.05"
+        METHODPARAMS="--integer_chromosomes=500 --integer_generations=500 --sample_method=uniform --localsearch_method=grs --integer_localsearchrate=0.001"
 elif [ $METHOD = "gcrs" ]
 then
 	METHODPARAMS="--gcrs_samples=25 --gcrs_maxiterations=100000"	
 elif [ $METHOD = "DoubleGenetic" ]
 then
-	METHODPARAMS="--double_chromosomes=200 --sample_method=uniform --localsearch_method=nelderMead --double_localsearchrate=0.001 --double_debug=yes"	
+	METHODPARAMS="--double_chromosomes=200 --sample_method=uniform --localsearch_method=bfgs --double_localsearchrate=0.001 --double_debug=no"	
 elif [ $METHOD = "Genetic" ]
 then
 	METHODPARAMS="--localsearch_rate=0.01  --genetic_crossover_type=double --chromosomes=500 --localsearch_method=bfgs --generations=2000"

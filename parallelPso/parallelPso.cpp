@@ -1,5 +1,5 @@
 #include "parallelPso.h"
-
+#include <algorithm>
 parallelPso::parallelPso(Problem *p) : Optimizer(p)
 {
     before = std::chrono::system_clock::now();
@@ -8,10 +8,11 @@ parallelPso::parallelPso(Problem *p) : Optimizer(p)
     addParameter("parallelPsoC1", "0.5", "Pso c1 parameter");
     addParameter("parallelPsoC2", "0.5", "Pso c2 parameter");
     addParameter("similarityMaxCount", "15", "Maximum allowed itearations for Similarity Stopping rule");
-    addParameter("pardePropagateRate", "1", "The number of generations before the propagation takes place");
+    addParameter("propagateRate", "15", "The number of generations before the propagation takes place");
     addParameter("parallelPropagateMethod", "1to1", "The propagation method used. Available values: 1to1,1toN,Nto1,NtoN");
     addParameter("subCluster", "5", "number of subclusters for pso");
-    addParameter("subClusterEnable", "1", "the number of subclusters that play a role in the termination rule: [1, islands");
+    addParameter("subClusterEnable", "1", "the number of subclusters that play a role in the termination rule: [1, islands]");
+    addParameter("pNumber", "30", "the number of particles for propagation");
 }
 
 void parallelPso::getBestValue(int &index, double &value)
@@ -54,82 +55,168 @@ int parallelPso::subClusterEndPos(int subClusterIndex)
     return (subClusterIndex + 1) * particles.size() / subCluster -1;
 }
 
-void parallelPso::replaceValueInSubCluster(int subClusterIndex, Data &x, double &y)
+bool sortByFirstDesc(const pair<double,int> &a, const pair<double,int> &b)
 {
-    // find worst value
-    int minIndex = 0;
-    double minValue = -1e+100;
-    for (int pos = subClusterStartPos(subClusterIndex); pos <= subClusterEndPos(subClusterIndex); pos++)
+       return a.first<b.first;
+}
+void parallelPso::replace(int subClusterIndex, vector<pair<double,Data>> proParticles)
+{
+/*
+    std::cout<<"best"<<endl;
+    for (int i=0;i< proParticles.size();i++)
     {
-        if (fitness_array[pos] > minValue)
+        std::cout<<proParticles.at(i).first<<endl;
+    }
+*/
+    vector<pair<double,int>> tmp;
+    tmp.resize(parallelPsoParticles);
+    for (int i = 0; i < parallelPsoParticles; i++)
+    {
+        tmp.at(i).first = -1e+100;
+        tmp.at(i).second = 0;
+    }
+    for (int i = subClusterStartPos(subClusterIndex), j=0; i <= subClusterEndPos(subClusterIndex); i++,j++)
+    {
+        if (tmp.at(j).first < fitness_array[i] )
         {
-            minIndex = pos;
-            minValue = fitness_array[pos];
+            tmp.at(j).first = fitness_array[i];
+            tmp.at(j).second = i;
         }
     }
-    if (fitness_array[minIndex] > y)
+    sort(tmp.begin(), tmp.end(), sortByFirstDesc);
+    tmp.resize(pNumber);
+/*
+    std::cout<<"worst"<<endl;
+    for (int i=0;i< pNumber;i++)
     {
-        fitness_array[minIndex] = y;
-        particles[minIndex] = x;
+        std::cout<<tmp.at(i).first<<endl;
+    }
+*/
+    vector <int> tmp2;
+    for (int i = 0; i < pNumber; i++)
+    {
+        tmp2.push_back(tmp.at(i).second);
+    }
+    for (int i = subClusterStartPos(subClusterIndex); i <= subClusterEndPos(subClusterIndex); i++)
+    {
+        if ( find(tmp2.begin(), tmp2.end(), i) != tmp2.end() )
+        {
+            fitness_array[i] = proParticles.back().first;
+            particles[i] = proParticles.back().second;
+            proParticles.pop_back();
+        }
     }
 }
 
-void parallelPso::propagateSubClusterValues()
+void parallelPso::propagate()
 {
     if (parallelPropagateMethod == "1to1")
     {
-        int subCluster1 = rand() % subCluster;
-        int subCluster2 = rand() % subCluster;
-        if (subCluster1 == subCluster2)
-            return;
-        Data xx = bestParticleInCluster.at(subCluster1);
-        double yy = bestF2xInCluster.at(subCluster1);
-        replaceValueInSubCluster(subCluster2, xx, yy);
+        int subCluster1, subCluster2;
+        do
+        {
+            subCluster1 = rand() % subCluster;
+            subCluster2 = rand() % subCluster;
+        } while (subCluster1 == subCluster2);
+
+        vector<pair<double,Data>> tmp;
+        tmp.resize(parallelPsoParticles);
+
+        for (int i = 0; i < parallelPsoParticles; i++)
+            tmp.at(i).first = 1e+100;
+
+        for (int i = subClusterStartPos(subCluster1), j=0; i <= subClusterEndPos(subCluster1); i++,j++)
+        {
+            if (tmp.at(j).first > fitness_array[i] )
+            {
+                tmp.at(j).first = fitness_array[i];
+                tmp.at(j).second = particles[i];
+            }
+        }
+        sort(tmp.begin(), tmp.end());
+        tmp.resize(pNumber);
+        replace(subCluster2,tmp);
     }
     else if (parallelPropagateMethod == "1toN")
     {
         int subCluster1 = rand() % subCluster;
-        Data xx = bestParticleInCluster.at(subCluster1);
-        double yy = bestF2xInCluster.at(subCluster1);
+        vector<pair<double,Data>> tmp;
+
+
         for (int i = 0; i < subCluster; i++)
         {
+            tmp.resize(parallelPsoParticles);
+            for (int k = 0; k < parallelPsoParticles; k++)
+                tmp.at(k).first = 1e+100;
             if (i == subCluster1)
                 continue;
-            replaceValueInSubCluster(i, xx, yy);
+            for (int i = subClusterStartPos(subCluster1), j=0; i <= subClusterEndPos(subCluster1); i++,j++)
+            {
+                if (tmp.at(j).first > fitness_array[i] )
+                {
+                    tmp.at(j).first = fitness_array[i];
+                    tmp.at(j).second = particles[i];
+                }
+            }
+            sort(tmp.begin(), tmp.end());
+            tmp.resize(pNumber);
+            replace(i,tmp);
         }
     }
     else if (parallelPropagateMethod == "Nto1")
     {
         int subCluster2 = rand() % subCluster;
+        vector<pair<double,Data>> tmp;
         for (int i = 0; i < subCluster; i++)
         {
+            tmp.resize(parallelPsoParticles);
+            for (int k = 0; k < parallelPsoParticles; k++)
+                tmp.at(k).first = 1e+100;
             if (i == subCluster2)
                 continue;
             int subCluster1 = i;
-            Data xx = bestParticleInCluster.at(subCluster1);
-            double yy = bestF2xInCluster.at(subCluster1);
-            replaceValueInSubCluster(subCluster2, xx, yy);
+            for (int k = subClusterStartPos(subCluster1), j=0; k <= subClusterEndPos(subCluster1); k++,j++)
+            {
+                if (tmp.at(j).first > fitness_array[k] )
+                {
+                    tmp.at(j).first = fitness_array[k];
+                    tmp.at(j).second = particles[k];
+                }
+            }
+            sort(tmp.begin(), tmp.end());
+            tmp.resize(pNumber);
+            replace(subCluster2,tmp);
         }
     }
     else if (parallelPropagateMethod == "NtoN")
     {
+        vector<pair<double,Data>> tmp;
         for (int i = 0; i < subCluster; i++)
         {
             for (int j = 0; j < subCluster; j++)
             {
+                tmp.resize(parallelPsoParticles);
+                for (int k = 0; k < parallelPsoParticles; k++)
+                    tmp.at(k).first = 1e+100;
                 if (i == j)
                     continue;
                 int subCluster1 = i;
                 int subCluster2 = j;
-                Data xx = bestParticleInCluster.at(subCluster1);;
-                double yy = bestF2xInCluster.at(subCluster1);
-                replaceValueInSubCluster(subCluster2, xx, yy);
+                for (int k = subClusterStartPos(subCluster1), e=0; k <= subClusterEndPos(subCluster1); k++,e++)
+                {
+                    if (tmp.at(e).first > fitness_array[k] )
+                    {
+                        tmp.at(e).first = fitness_array[k];
+                        tmp.at(e).second = particles[k];
+                    }
+                }
+                sort(tmp.begin(), tmp.end());
+                tmp.resize(pNumber);
+                replace(subCluster2,tmp);
             }
         }
     }
 }
-
-
 
 bool parallelPso::terminated()
 {
@@ -269,14 +356,13 @@ void parallelPso::step()
         newMO.at(k) = (double)newSum.at(k) / subCluster;
     }
 
-    if (generation % pardePropagateRate)
-        propagateSubClusterValues();
-
+    if (generation % propagateRate)
+        propagate();
 }
 
 void parallelPso::init()
 {
-
+    pNumber = params["pNumber"].toString().toInt();
     subCluster = params["subCluster"].toString().toInt();
     subClusterEnable = params["subClusterEnable"].toString().toInt();
     parallelPsoParticles = params["parallelPsoParticles"].toString().toInt();
@@ -285,7 +371,7 @@ void parallelPso::init()
     parallelPsoC2 = params["parallelPsoC2"].toString().toDouble();
     parallelPropagateMethod = params["parallelPropagateMethod"].toString();
     similarityMaxCount = params["similarityMaxCount"].toString().toInt();
-    pardePropagateRate = params["pardePropagateRate"].toString().toInt();
+    propagateRate = params["propagateRate"].toString().toInt();
     dimension = myProblem->getDimension();
     bestParticle.resize(parallelPsoParticles * subCluster);
     velocitys.resize(parallelPsoParticles * subCluster);

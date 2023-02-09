@@ -8,7 +8,7 @@ IntegerGenetic::IntegerGenetic(Problem *p)
     addParameter("integer_generations","500","Number of generations");
     addParameter("integer_selectionrate","0.10","Selection rate");
     addParameter("integer_mutationrate","0.05","Mutation rate");
-    addParameter("integer_localsearchrate","0.01","Local search rate");
+    addParameter("integer_localsearchrate","0.00","Local search rate");
     addParameter("integer_stoprule","doublebox","Stopping rule (doublebox,generations,stoponzero)");
 
 }
