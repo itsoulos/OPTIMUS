@@ -28,12 +28,9 @@ private:
 
     vector<int> similarityCurrentCount, bestF2xInClusterIndex;
 
-    vector<double> bestx, fitness_array, lmargin, rmargin, similarityBestValue, sum, newSum, MO, newMO, bestF2xInCluster, bestF2xInClusterOLD;
+    vector<double> bestx, fitness_array, best_fitness_array, lmargin, rmargin, similarityBestValue, sum, newSum, MO, newMO, bestF2xInCluster, bestF2xInClusterOLD;
 
-    vector<double> doublebox_xx1, doublebox_xx2, doublebox_best_value, doublebox_variance,
-    doublebox_stopat, pF2x;
-
-    vector<Data> particles, bestParticle, velocitys, bestParticleInCluster, pParticles;
+    vector<Data> particles, bestParticle, velocitys, bestParticleInCluster;
 
     std::chrono::time_point<std::chrono::system_clock> before, after;
 
