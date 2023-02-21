@@ -639,6 +639,49 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
+Also recently, some other optimization tools have been appeared such as
+ the Paradiseo 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "paradiseo"
+literal "false"
+
+\end_inset
+
+ implemented in C++ that mainly contains evolutionary algorithms, the Pagmo
+ software 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "pagmo"
+literal "false"
+
+\end_inset
+
+ where a wide range of evolution algorithms are incorporated to solve optimizati
+on problems and finally another approach for evolutionary algorithms applied
+ to optimization problems is the HeuristicLab freely available from 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://dev.heuristiclab.com/trac.fcgi/
+\end_layout
+
+\end_inset
+
+, used mainly for online optimization.
+ In the proposed software, the user can write the required objective function
+ in simple C++ and then choose from a wide range of global optimization
+ methods the most suitable one for finding the global minimum.
+ Furthermore, in the proposed software the user can parameterize the local
+ minimization method to be used as well as the termination method to be
+ used for the successful termination of the technique.
+ In addition, it is possible for the user to create his own global minimization
+ method from scratch using the programming tools of the Optimums libraries.
+\end_layout
+
+\begin_layout Standard
 The rest of this article is structured as follows: in section 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1065,7 +1108,7 @@ gcrs
 
 \begin_layout Enumerate
 Particle Swarm Optimization.
- A PSO variant denoted as 
+ A PESO variant denoted as 
 \series bold
 Pso
 \series default
@@ -1936,7 +1979,7 @@ The argument of the option
 \begin_inset Formula $--$
 \end_inset
 
-pso_particles sets the number of particles of the PSO optimizer.
+pso_particles sets the number of particles of the PESO optimizer.
 \end_layout
 
 \begin_layout Enumerate
@@ -1953,7 +1996,7 @@ The argument
 \end_inset
 
 localsearch_method sets the used local optimization procedure, that will
- be applied on the best particle of the PSO procedure when it finishes.
+ be applied on the best particle of the PESO procedure when it finishes.
 \end_layout
 
 \begin_layout Standard
@@ -2001,7 +2044,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Output for the minimization of the Rastrigin function using the PSO optimizer.
+Output for the minimization of the Rastrigin function using the PESO optimizer.
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:rastrigin_output"
@@ -2104,7 +2147,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-The steps of a typical optimization process using Optimus.
+The steps of a typical optimization process using Optimums.
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:optSteps"
@@ -2150,6 +2193,9 @@ To assess the ability of the software package to adapt to different problems,
  was constantly increasing.
  In the last set of experiments, different global optimization techniques
  were applied to train artificial neural networks.
+ Finally, an additional set of experiments was executed where some of the
+ implemented global optimization techniques were applied to a series of
+ constrained optimization problems.
 \end_layout
 
 \begin_layout Subsection
@@ -2416,7 +2462,7 @@ noprefix "false"
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -2584,7 +2630,7 @@ bfgs
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -3068,7 +3114,7 @@ GENETIC
 \begin_layout Plain Layout
 
 \series bold
-PSO
+PESO
 \end_layout
 
 \end_inset
@@ -3803,7 +3849,7 @@ In the previous equation, the constant
 \begin_inset Formula $t_{i}$
 \end_inset
 
- represent the expeceted output for the every input vector 
+ represent the expected output for the every input vector 
 \begin_inset Formula $x_{i}$
 \end_inset
 
@@ -3889,7 +3935,7 @@ literal "false"
 \end_inset
 
 .
- The experiments were validated usingn the 10-fold validation technique.
+ The experiments were validated using the 10-fold validation technique.
  Furthermore, all the experiments were conducted 30 times.
  In each execution a different seed for the random number generator was
  used.
@@ -3920,7 +3966,7 @@ The column GENETIC stands for the application of a genetic algorithm with
 \end_layout
 
 \begin_layout Enumerate
-The column PSO represents the results for the application of the particle
+The column PESO represents the results for the application of the particle
  swarm optimization method with 200 particles.
 \end_layout
 
@@ -3944,7 +3990,7 @@ ly outperform the traditional technique in terms of average test error.
 placement h
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -4014,7 +4060,7 @@ GENETIC
 \begin_layout Plain Layout
 
 \series bold
-PSO
+PESO
 \end_layout
 
 \end_inset
@@ -4952,6 +4998,825 @@ AVERAGE
 
 \end_layout
 
+\begin_layout Subsection
+Application to constrained optimization problems
+\end_layout
+
+\begin_layout Standard
+The methods proposed in this software can be used even in constrained optimizati
+on problems.
+ Typically a constrained optimization problem can be formulated as:
+\begin_inset Formula 
+\begin{eqnarray}
+\min_{x} & f(x) & \mbox{subject to}\nonumber \\
+ & g_{i}(x)\le0 & \ i=1,\ldots,m\nonumber \\
+ & h_{j}(x)=0 & \ j=1,\ldots,p\label{eq:eq1-1}
+\end{eqnarray}
+
+\end_inset
+
+where 
+\begin_inset Formula $x_{i}\in\left[a_{i},b_{i}\right],\ i=1,\ldots,n$
+\end_inset
+
+, and this problem has many applications in areas such as as physics 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ConPhysics"
+literal "true"
+
+\end_inset
+
+, astronomy 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ConAstro"
+literal "true"
+
+\end_inset
+
+, chemistry 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ConChem"
+literal "true"
+
+\end_inset
+
+, biology 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ConBio"
+literal "true"
+
+\end_inset
+
+ etc.
+ Also, a variety of methods have been proposed for problems of this category,
+ such as as Lagrange multiplier methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "cons1"
+literal "true"
+
+\end_inset
+
+, Trust region methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "cons2"
+literal "false"
+
+\end_inset
+
+, interval methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "cons3"
+literal "false"
+
+\end_inset
+
+, differential evolution 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "cons4"
+literal "false"
+
+\end_inset
+
+ etc.
+
+\series bold
+ 
+\series default
+Constrained optimization problems can be reduced to unconstrained problems
+ through a series of operations that introduce penalty factors to ensure
+ that the resulting global minimum obeys the constraints of the original
+ problem.
+ The steps to produce the reduced unconstrained problem are the following:
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $v_{1}(x)=f(x)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $v_{2}(x)=\sum_{i=1}^{p}h_{i}^{2}(x)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Calculate 
+\series default
+the new quantity 
+\begin_inset Formula $v_{3}(x)$
+\end_inset
+
+ for the inequality constraints: 
+\begin_inset Formula 
+\begin{equation}
+v_{3}(x)=\sum_{i=1}^{m}G_{i}^{2}\left(g_{i}(x)\right)\label{eq:eq5-1}
+\end{equation}
+
+\end_inset
+
+The function 
+\begin_inset Formula $G(x)$
+\end_inset
+
+ has as follows:
+\begin_inset Formula 
+\begin{equation}
+G(x)=\begin{cases}
+0, & x\le0\\
+x, & x>0
+\end{cases}\label{eq:eq2-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Transform
+\series default
+ the function to 
+\begin_inset Formula $v(x)$
+\end_inset
+
+ using:
+\begin_inset Formula 
+\begin{equation}
+v(x)=v_{1}(x)+\lambda v_{2}(x)+\lambda v_{3}(x)\label{eq:fitness}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\lambda>0$
+\end_inset
+
+ is a penalty factor.
+\end_layout
+
+\begin_layout Standard
+The following test functions were used found in the the relevant literature.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Levy
+\series default
+ function
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Levy"
+literal "true"
+
+\end_inset
+
+.
+ The function is defined as: 
+\begin_inset Formula 
+\[
+\min_{x}f(x)=-x_{1}-x_{2}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $x\in[0,1]^{2}$
+\end_inset
+
+ and the associated constraints are: 
+\begin_inset Formula 
+\[
+g_{1}(x)=\left\lfloor \left(x_{1}-1\right)^{2}+\left(x_{2}-1\right)\right\rfloor \left(\frac{1}{2a^{2}}-\frac{1}{2b^{2}}\right)+\left(x_{1}-1\right)\left(x_{2}-1\right)\left(\frac{1}{a^{2}}-\frac{1}{b^{2}}\right)-1\ge0
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $a=2,\ b=0.25$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Salkin
+\series default
+ function
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Salkin"
+literal "true"
+
+\end_inset
+
+.
+ The objective function is defined as: 
+\begin_inset Formula 
+\[
+\max_{x}f(x)=3x_{1}+x_{2}+2x_{3}+x_{4}-x_{5}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $1\le x_{1}\le4,\ 80\le x_{2}\le88,\ 30\le x_{3}\le35,\ 145\le x_{4}\le150,\ 0\le x_{5}\le2$
+\end_inset
+
+ subject to 
+\begin_inset Formula 
+\begin{eqnarray*}
+g_{1}(x) & = & 25x_{1}-40x_{2}+16x_{3}+21x_{4}+x5\le300\\
+g_{2}(x) & = & x_{1}+20x_{2}-50x_{3}+x_{4}-x_{5}\le200\\
+g_{3}(x) & = & 60x_{1}+x_{2}-x_{3}+2x_{4}+x_{5}\le600\\
+g_{4}(x) & = & -7x_{1}+4x_{2}+15x_{3}-x_{4}+65x_{5}\le700
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Hess
+\series default
+ function
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Hess"
+literal "true"
+
+\end_inset
+
+.
+ The function is defined as:
+\begin_inset Formula 
+\[
+\max_{x}f(x)=25\left(x_{1}-2\right)^{2}+\left(x_{2}-2\right)^{2}+\left(x_{3}-1\right)^{2}+\left(x_{4}-4\right)^{2}+\left(x_{5}-1\right)^{2}+\left(x_{6}-4\right)^{2}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $0\le x_{1}\le5,\ 0\le x_{2}\le1,\ 1\le x_{3}\le5,\ 0\le x_{4}\le6,\ 0\le x_{5}\le5,\ 0\le x_{6}\le10$
+\end_inset
+
+ subject to:
+\begin_inset Formula 
+\begin{eqnarray*}
+g_{1}(x) & = & x_{1}+x_{2}-2\ge0\\
+g_{2}(x) & = & -x_{1}+x_{2}+6\ge0\\
+g_{3}(x) & = & x_{1}-x_{2}+2\ge0\\
+g_{4}(x) & = & -x_{1}+3x_{2}+2\ge0\\
+g_{5}(x) & = & \left(x_{3}-3\right)^{2}+x_{4}-4\ge0\\
+g_{6}(x) & = & \left(x_{5}-3\right)^{2}+x_{6}-4\ge0
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Chootinan1
+\series default
+ function
+\begin_inset CommandInset citation
+LatexCommand cite
+key "choot"
+literal "true"
+
+\end_inset
+
+.
+ The objective problem is defined as:
+\begin_inset Formula 
+\[
+\min_{x}f(x)=5\sum_{i=1}^{4}x_{i}-5\sum_{i=1}^{4}x_{i}^{2}-\sum_{i=1}^{13}x_{i}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $0\le x_{i}\le1$
+\end_inset
+
+ for 
+\begin_inset Formula $i=1,..,9,13$
+\end_inset
+
+, 
+\begin_inset Formula $0\le x_{i}\le100$
+\end_inset
+
+ for 
+\begin_inset Formula $i=10,11,12$
+\end_inset
+
+ subject to:
+\begin_inset Formula 
+\begin{eqnarray*}
+g_{1}(x) & = & 10-\left(2x_{1}+2x_{2}+x_{10}+x_{11}\right)\ge0\\
+g_{2}(x) & = & 10-\left(2x_{1}+2x_{3}+x_{10}+x_{12}\right)\ge0\\
+g_{3}(x) & = & 10-\left(2x_{2}+2x_{3}+x_{11}+x_{12}\right)\ge0\\
+g_{4}(x) & = & 8x_{1}-x_{10}\ge0\\
+g_{5}(x) & = & 8x_{2}-x_{11}\ge0\\
+g_{6}(x) & = & 8x_{3}-x_{12}\ge0\\
+g_{7}(x) & = & 2x_{4}+x_{5}-x_{10}\ge0\\
+g_{8}(x) & = & 2x_{6}+x_{7}-x_{11}\ge0\\
+g_{9}(x) & = & 2x_{8}+x_{9}-x_{12}\ge0
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+G15
+\series default
+ function
+\begin_inset CommandInset citation
+LatexCommand cite
+key "G15"
+literal "true"
+
+\end_inset
+
+.
+ The function is defined as:
+\begin_inset Formula 
+\[
+\min_{x}f(x)=1000-x_{1}^{2}-2x_{2}^{2}-x_{3}^{2}-x_{1}x_{2}-x_{1}x_{3}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $x\in[0,10]^{3}$
+\end_inset
+
+ and the associated constraints are:
+\begin_inset Formula 
+\begin{eqnarray*}
+h_{1}(x) & = & x_{1}^{2}+x_{2}^{2}+x_{3}^{2}-25=0\\
+h_{2}(x) & = & 8x_{1}+14x_{2}+7x_{3}-56=0
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Four global optimization methods implemented in the current software were
+ applied to the previous problems and the average function calls for 30
+ independent runs are shown in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tabCons"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Once again, techniques proposed here (NeuralMinimizer and the Improved
+ Pso) have a significantly lower number of function calls than other established
+ techniques in global optimization.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Average function calls for a variety of optimization methods when applied
+ to some Constrained Optimization problems.
+\begin_inset CommandInset label
+LatexCommand label
+name "tabCons"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="19line%">
+<column alignment="center" valignment="top" width="19line%">
+<column alignment="center" valignment="top" width="19line%">
+<column alignment="center" valignment="top" width="19line%">
+<column alignment="center" valignment="top" width="19line%">
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FUNCTION
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+NEURALMINIMIZER
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pso
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Genetic
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+IPSO
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Levy
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1339
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6901
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+14872
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4322
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Salkin
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4230
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7990
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20111
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4970
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Hess
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3653
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18137
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20138
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5344
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Chootinan1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7680
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18794
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20238
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6610
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+G15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+22476
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13498
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20169
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12253
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Average
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+7875.6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+13064.0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+19105.6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+6699.8
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Conclusions
 \begin_inset CommandInset label
@@ -4978,7 +5843,7 @@ on method to enhance the reliability of the produced results.
 \end_layout
 
 \begin_layout Enumerate
-Possibility to port the Optimus tool to other operating systems such as
+Possibility to port the Optimums tool to other operating systems such as
  FreeBSD, Windows etc.
 \end_layout
 
@@ -5016,8 +5881,7 @@ Creating a scripting language to efficiently guide the optimization of objective
 \begin_layout Author Contributions
 I.G.T.
  and V.C.
- conceived of the idea and methodology and supervised the technical part
- regarding the software.
+ conceived of the idea, the methodology implemented the software.
  I.G.T.
  conducted the experiments, employing datasets, and provided the comparative
  experiments.
@@ -5353,7 +6217,7 @@ literal "false"
 
 D.Y.
  Sha, H.H.
- Lin, A multi-objective PSO for job-shop scheduling problems, Expert Systems
+ Lin, A multi-objective PESO for job-shop scheduling problems, Expert Systems
  with Applications 
 \series bold
 37
@@ -5473,7 +6337,7 @@ literal "false"
 
 N.
  Kherici, Y.M.
- Ben Ali, Using PSO for a walk of a biped robot, Journal of Computational
+ Ben Ali, Using PESO for a walk of a biped robot, Journal of Computational
  Science 
 \series bold
 5
@@ -5935,7 +6799,7 @@ literal "false"
 \end_inset
 
 T.
- Niknam, An efficient hybrid evolutionary algorithm based on PSO and ACO
+ Niknam, An efficient hybrid evolutionary algorithm based on PESO and ACO
  for distribution feeder reconfiguration, European Transactions on Electrical
  Power 
 \series bold
@@ -5956,7 +6820,7 @@ literal "false"
 M.K.
  Patel, M.R.
  Kabat, C.R.
- Tripathy, A hybrid ACO/PSO based algorithm for QoS multicast routing problem,
+ Tripathy, A hybrid ACO/PESO based algorithm for QoS multicast routing problem,
  Ain Shams Engineering Journal 
 \series bold
 5
@@ -6390,6 +7254,46 @@ I.G.
 \series default
 , pp.
  183-189, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "paradiseo"
+literal "false"
+
+\end_inset
+
+J.
+ Dreo, A.
+ Liefooghe, S.
+ Verel, M.
+ Schoenauer, J.J.
+ Merelo, A.
+ Quemy, B.
+ Bouvier, J.
+ Gmys, Paradiseo: from a modular framework for evolutionary computation
+ to the automated design of metaheuristics —22 years of Paradiseo—, GECCO'21:
+ Proceedings of the Genetic and Evolutionary Computation Conference Companion,
+ 1522–1530, 2021.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pagmo"
+literal "false"
+
+\end_inset
+
+F.
+ Biscani, D.
+ Izzo, A parallel global multiobjective framework for optimization: pagmo,
+ Journal of Open Source Software 
+\series bold
+5
+\series default
+, 2338, 2020.
 \end_layout
 
 \begin_layout Bibliography
@@ -7272,7 +8176,7 @@ literal "false"
 
 H.
  Koyuncu, R.
- Ceylan, A PSO based approach: Scout particle swarm algorithm for continuous
+ Ceylan, A PESO based approach: Scout particle swarm algorithm for continuous
  global optimization problems, Journal of Computational Design and Engineering
  
 \series bold
@@ -7681,6 +8585,254 @@ C.
 , pp.
  26, 2016.
  
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ConPhysics"
+literal "true"
+
+\end_inset
+
+O.A.
+ Sauer, D.M.
+ Shepard, T.R.
+ Mackie, Application of constrained optimization to radiotherapy planning,
+ Medical Physics 
+\series bold
+26
+\series default
+, pp.
+ 2359-2366, 1999.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ConAstro"
+literal "true"
+
+\end_inset
+
+F.P.
+ Seelos, R.E.
+ Arvidson, Bounded variable least squares - application of a constrained
+ optimization algorithm to the analysis of TES Emissivity Spectra, in: 34th
+ Annual Lunar and Planetary Science Conference, March 17-21, 2003, League
+ City, Texas, abstract no.1817.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ConChem"
+literal "true"
+
+\end_inset
+
+M.J.
+ Field, Constrained optimization of ab initio and semiempirical Hartree-Fock
+ wave functions using direct minimization or simulated annealing , Journal
+ of physical chemistry 
+\series bold
+95
+\series default
+, pp.
+ 5104-5108, 1991.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ConBio"
+literal "true"
+
+\end_inset
+
+G.A.
+ Williams, J.M.
+ Dugan, R.B.
+ Altman, Constrained global optimization for estimating molecular structure
+ from atomic distances, Journal of Computational Biology 
+\series bold
+8
+\series default
+, pp.
+ 523-547, 2001.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "cons1"
+literal "true"
+
+\end_inset
+
+P.E.
+ Gill, W.
+ Murray, The computation of Lagrange-multiplier estimates for constrained
+ minimization, Mathematical Programming 
+\series bold
+17
+\series default
+, pp.
+ 32-60, 1979.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "cons2"
+literal "true"
+
+\end_inset
+
+M.J.D.
+ Powell, Y.
+ Yuan, A trust region algorithm for equality constrained optimization, Mathemati
+cal Programming 
+\series bold
+49
+\series default
+, pp.
+ 189-211, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "cons3"
+literal "true"
+
+\end_inset
+
+K.
+ Ichida, Constrained optimization using interval analysis, Computers and
+ Industrial Engineering 
+\series bold
+31
+\series default
+, pp.
+ 933-937, 1996.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "cons4"
+literal "true"
+
+\end_inset
+
+R.L.
+ Becerra, C.A.C.
+ Coello, Cultured differential evolution for constrained optimization, Computer
+ Methods in Applied Mechanics and Engineering 
+\series bold
+195
+\series default
+, pp.
+ 4303-4322, 2006.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Levy"
+literal "true"
+
+\end_inset
+
+A.V.
+ Levy, A.
+ Montalvo, The tunneling algorithm for global optimization of functions,
+ SIAM Journal of Scientific and Statistical Computing 
+\series bold
+6
+\series default
+, pp.
+ 15-29, 1985.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Salkin"
+literal "true"
+
+\end_inset
+
+H.M.
+ Salkin, Integer programming, Edison Wesley Publishing Com., Amsterdam, 1975.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Hess"
+literal "true"
+
+\end_inset
+
+R.
+ Hess, A heuristic search for estimating a global solution of non convex
+ programming problems, Operations Research 
+\series bold
+21
+\series default
+, pp.
+ 1267-1280, 1973.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "choot"
+literal "true"
+
+\end_inset
+
+P.
+ Chootinan, A.
+ Chen, Constraint handling in genetic algorithms using a gradient - based
+ repair method, Computer and Operations Research 
+\series bold
+33
+\series default
+, pp.
+ 2263-2281, 2006.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "G15"
+literal "true"
+
+\end_inset
+
+J.J.
+ Liang, T.P.
+ Runarsson, E.
+ Mezura-Montes, M.
+ Clerc, P.N.
+ Suganthan, C.A.C.
+ Coello, K.
+ Deb, Problem definitions and evaluation criteria for the CEC2006 special
+ session on constrained real-parameter optimization, 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.ntu.edu.sg/home/EPNSugan/index_files/CEC-06/CEC06.htm
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout End Whole Page

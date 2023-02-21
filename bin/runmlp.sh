@@ -1,5 +1,5 @@
 #!/bin/bash
-DATAPATH=/home/sheridan/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfolding/
+DATAPATH=/home/sheridan/Desktop/ERGASIES/FeatureConstruction2/datasets/constructed/
 NODES=10
 
 METHOD=DoubleGenetic
@@ -21,7 +21,7 @@ then
 	METHODPARAMS=="--Search_method=3"
 elif [ $METHOD = "Bfgs" ]
 then
-	METHODPARAMS="--localsearch_method=adam"
+	METHODPARAMS="--localsearch_method=bfgs"
 fi
 
 PROBLEM=nntest
