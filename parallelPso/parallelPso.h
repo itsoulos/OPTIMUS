@@ -20,7 +20,7 @@ class PARALLELPSO_EXPORT parallelPso : public Optimizer, parallelPsoInterface
 {
 private:
     int generation, parallelPsoParticles, similarityMaxCount, subCluster, parallelPsoGenerations,
-    n, dimension, localSearchCount, subClusterEnable, propagateRate, bestIndex, pNumber;
+    n, dimension, localSearchCount, subClusterEnable, propagateRate, bestIndex, pNumber, pRate;
 
     double besty, parallelPsoC1, parallelPsoC2;
 

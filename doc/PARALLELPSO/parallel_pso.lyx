@@ -1,0 +1,912 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+New ideas in parallel Particle Swarm Optimization
+\end_layout
+
+\begin_layout Author
+Vasileios Charilogis, Ioannis G.
+ Tsoulos
+\end_layout
+
+\begin_layout Date
+Department of Informatics and Telecommunications, University of Ioannina
+\end_layout
+
+\begin_layout Abstract
+In global optimization there are techniques where they find the optimal
+ solutions of the objective problems but waste a lot of computational time.
+ The PSO parallelization technique proposed in this article significantly
+ reduces the computation time and at the same time participates in the solution
+ finding algorithm with the iterative communication between the parallel
+ computing units.
+ In addition, a new and more appropriate termination rule is proposed here.
+ From the results of the experiments it appears that the overall parallelization
+ technique is more than an accelerator of the classical algorithm.
+ 
+\end_layout
+
+\begin_layout Paragraph*
+Keywords:
+\end_layout
+
+\begin_layout Standard
+Optimization, Parallel methods, Evolutionary techniques, Stochastic methods,
+ Termination rules
+\end_layout
+
+\begin_layout Section
+Introduction 
+\end_layout
+
+\begin_layout Standard
+The global optimization problem is usually defined as: 
+\begin_inset Formula 
+\begin{equation}
+x^{*}=\mbox{arg}\min_{x\in S}f(x)\label{eq:eq1}
+\end{equation}
+
+\end_inset
+
+with 
+\begin_inset Formula $S$
+\end_inset
+
+: 
+\begin_inset Formula 
+\[
+S=\left[a_{1},b_{1}\right]\otimes\left[a_{2},b_{2}\right]\otimes\ldots\left[a_{n},b_{n}\right]
+\]
+
+\end_inset
+
+where the function f is assumed to be continuous and differentiable.
+ Many problems faced by researchers can be formulated as global minimization
+ problems such as problems in physical science 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "go_physics1,go_physics2,go_physics3"
+literal "false"
+
+\end_inset
+
+, chemistry 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "go_chem1,go_chem2,go_chem3"
+literal "false"
+
+\end_inset
+
+, economics 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "go_econ1,go_econ2"
+literal "false"
+
+\end_inset
+
+ and medicine 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "go_med1,go_med2"
+literal "false"
+
+\end_inset
+
+.
+ Τhe optimization method consists of two major categories: deterministic
+ and stochastic methods.
+ In the deterministic category, the most common category is the so - called
+ interval methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "interval1,interval2"
+literal "true"
+
+\end_inset
+
+, where the set 
+\begin_inset Formula $S$
+\end_inset
+
+ is iteratively divided into subregions and those that do not contain a
+ global solution, are discarded using certain criteria.
+ In the case of the stochastic method, the finding of the global minimum
+ is based on randomness operations, while there is no guarantee of finding
+ the global minimum.
+ Nevertheless, it is the method that is often used due to the simplicity
+ of their application.
+ Several researchers have proposed stochastic methods such as: controlled
+ random search methods
+\begin_inset CommandInset citation
+LatexCommand cite
+key "crs1,crs2,crs3"
+literal "false"
+
+\end_inset
+
+, simulated annealing methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "simann_major,simann1,simann2"
+literal "false"
+
+\end_inset
+
+, differential evolution methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "diffe1,diffe2"
+literal "false"
+
+\end_inset
+
+, particle swarm optimization methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pso_major,pso1,pso2"
+literal "false"
+
+\end_inset
+
+, Ant Colony Optimization 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "aco1,aco2"
+literal "false"
+
+\end_inset
+
+, Genetic Algorithms 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ga1,ga2,ga3"
+literal "false"
+
+\end_inset
+
+, etc.
+ Ιn conclusion, many studies have used the modern GPU processing units 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "gpu1,gpu2,gpu3"
+literal "false"
+
+\end_inset
+
+.
+ Some research that one can study regarding metaheuristic algorithms is
+ presented in some recent papers 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "meta1,meta2,meta3"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Method description 
+\end_layout
+
+\begin_layout Section
+Experiments 
+\end_layout
+
+\begin_layout Section
+Conclusions
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_physics1"
+literal "false"
+
+\end_inset
+
+L.
+ Yang, D.
+ Robin, F.
+ Sannibale, C.
+ Steier, W.
+ Wan, Global optimization of an accelerator lattice using multiobjective
+ genetic algorithms, Nuclear Instruments and Methods in Physics Research
+ Section A: Accelerators, Spectrometers, Detectors and Associated Equipment
+ 
+\series bold
+609
+\series default
+, pp.
+ 50-57, 2009.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_physics2"
+literal "false"
+
+\end_inset
+
+E.
+ Iuliano, Global optimization of benchmark aerodynamic cases using physics-based
+ surrogate models, Aerospace Science and Technology 
+\series bold
+67
+\series default
+, pp.273-286, 2017.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_physics3"
+literal "false"
+
+\end_inset
+
+Q.
+ Duan, S.
+ Sorooshian, V.
+ Gupta, Effective and efficient global optimization for conceptual rainfall-runo
+ff models, Water Resources Research 
+\series bold
+28
+\series default
+, pp.
+ 1015-1031 , 1992.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_chem1"
+literal "false"
+
+\end_inset
+
+S.
+ Heiles, R.
+ L.
+ Johnston, Global optimization of clusters using electronic structure methods,
+ Int.
+ J.
+ Quantum Chem.
+ 
+\series bold
+113
+\series default
+, pp.
+ 2091– 2109, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_chem2"
+literal "false"
+
+\end_inset
+
+W.H.
+ Shin, J.K.
+ Kim, D.S.
+ Kim, C.
+ Seok, GalaxyDock2: Protein–ligand docking using beta-complex and global
+ optimization, J.
+ Comput.
+ Chem.
+ 
+\series bold
+34
+\series default
+, pp.
+ 2647– 2656, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_chem3"
+literal "true"
+
+\end_inset
+
+A.
+ Liwo, J.
+ Lee, D.R.
+ Ripoll, J.
+ Pillardy, H.
+ A.
+ Scheraga, Protein structure prediction by global optimization of a potential
+ energy function, Biophysics 
+\series bold
+96
+\series default
+, pp.
+ 5482-5485, 1999.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_econ1"
+literal "true"
+
+\end_inset
+
+Zwe-Lee Gaing, Particle swarm optimization to solving the economic dispatch
+ considering the generator constraints, IEEE Transactions on 
+\series bold
+18
+\series default
+ Power Systems, pp.
+ 1187-1195, 2003.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_econ2"
+literal "true"
+
+\end_inset
+
+C.
+ D.
+ Maranas, I.
+ P.
+ Androulakis, C.
+ A.
+ Floudas, A.
+ J.
+ Berger, J.
+ M.
+ Mulvey, Solving long-term financial planning problems via global optimization,
+ Journal of Economic Dynamics and Control 
+\series bold
+21
+\series default
+, pp.
+ 1405-1425, 1997.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_med1"
+literal "true"
+
+\end_inset
+
+Eva K.
+ Lee, Large-Scale Optimization-Based Classification Models in Medicine and
+ Biology, Annals of Biomedical Engineering 
+\series bold
+35
+\series default
+, pp 1095-1109, 2007.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_med2"
+literal "true"
+
+\end_inset
+
+Y.
+ Cherruault, Global optimization in biology and medicine, Mathematical and
+ Computer Modelling 
+\series bold
+20
+\series default
+, pp.
+ 119-132, 1994.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "interval1"
+literal "true"
+
+\end_inset
+
+M.A.
+ Wolfe, Interval methods for global optimization, Applied Mathematics and
+ Computation 
+\series bold
+75
+\series default
+, pp.
+ 179-206, 1996.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "interval2"
+literal "true"
+
+\end_inset
+
+T.
+ Csendes and D.
+ Ratz, Subdivision Direction Selection in Interval Methods for Global Optimizati
+on, SIAM J.
+ Numer.
+ Anal.
+ 
+\series bold
+34
+\series default
+, pp.
+ 922–938, 1997.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "crs1"
+literal "true"
+
+\end_inset
+
+W.
+ L.
+ Price, Global optimization by controlled random search, Journal of Optimization
+ Theory and Applications 
+\series bold
+40
+\series default
+, pp.
+ 333-348, 1983.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "crs2"
+literal "true"
+
+\end_inset
+
+Ivan Křivý, Josef Tvrdík, The controlled random search algorithm in optimizing
+ regression models, Computational Statistics & Data Analysis 
+\series bold
+20
+\series default
+, pp.
+ 229-234, 1995.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "crs3"
+literal "false"
+
+\end_inset
+
+M.M.
+ Ali, A.
+ Törn, and S.
+ Viitanen, A Numerical Comparison of Some Modified Controlled Random Search
+ Algorithms, Journal of Global Optimization 
+\series bold
+11
+\series default
+,pp.
+ 377–385,1997.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "simann_major"
+literal "false"
+
+\end_inset
+
+S.
+ Kirkpatrick, CD Gelatt, , MP Vecchi, Optimization by simulated annealing,
+ Science 
+\series bold
+220
+\series default
+, pp.
+ 671-680, 1983.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "simann1"
+literal "true"
+
+\end_inset
+
+L.
+ Ingber, Very fast simulated re-annealing, Mathematical and Computer Modelling
+ 
+\series bold
+12
+\series default
+, pp.
+ 967-973, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "simann2"
+literal "true"
+
+\end_inset
+
+R.W.
+ Eglese, Simulated annealing: A tool for operational research, Simulated
+ annealing: A tool for operational research 
+\series bold
+46
+\series default
+, pp.
+ 271-281, 1990.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "diffe1"
+literal "true"
+
+\end_inset
+
+R.
+ Storn, K.
+ Price, Differential Evolution - A Simple and Efficient Heuristic for Global
+ Optimization over Continuous Spaces, Journal of Global Optimization 
+\series bold
+11
+\series default
+, pp.
+ 341-359, 1997.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "diffe2"
+literal "false"
+
+\end_inset
+
+J.
+ Liu, J.
+ Lampinen, A Fuzzy Adaptive Differential Evolution Algorithm.
+ Soft Comput 
+\series bold
+9
+\series default
+, pp.448–462, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso_major"
+literal "false"
+
+\end_inset
+
+J.
+ Kennedy and R.
+ Eberhart, "Particle swarm optimization," Proceedings of ICNN'95 - International
+ Conference on Neural Networks, 1995, pp.
+ 1942-1948 vol.4, doi: 10.1109/ICNN.1995.488968.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso1"
+literal "true"
+
+\end_inset
+
+Riccardo Poli, James Kennedy kennedy, Tim Blackwell, Particle swarm optimization
+ An Overview, Swarm Intelligence 
+\series bold
+1
+\series default
+, pp 33-57, 2007.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso2"
+literal "true"
+
+\end_inset
+
+Ioan Cristian Trelea, The particle swarm optimization algorithm: convergence
+ analysis and parameter selection, Information Processing Letters 
+\series bold
+85
+\series default
+, pp.
+ 317-325, 2003.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "aco1"
+literal "false"
+
+\end_inset
+
+M.
+ Dorigo, M.
+ Birattari and T.
+ Stutzle, Ant colony optimization, IEEE Computational Intelligence Magazine
+ 
+\series bold
+1
+\series default
+, pp.
+ 28-39, 2006.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "aco2"
+literal "false"
+
+\end_inset
+
+K.
+ Socha, M.
+ Dorigo, Ant colony optimization for continuous domains, European Journal
+ of Operational Research 185, pp.
+ 1155-1173, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ga1"
+literal "true"
+
+\end_inset
+
+D.
+ Goldberg, Genetic Algorithms in Search, Optimization and Machine Learning,
+ Addison-Wesley Publishing Company, Reading, Massachussets, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ga2"
+literal "true"
+
+\end_inset
+
+Z.
+ Michaelewicz, Genetic Algorithms + Data Structures = Evolution Programs.
+ Springer - Verlag, Berlin, 1996.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ga3"
+literal "true"
+
+\end_inset
+
+S.A.
+ Grady, M.Y.
+ Hussaini, M.M.
+ Abdullah, Placement of wind turbines using genetic algorithms, Renewable
+ Energy 
+\series bold
+30
+\series default
+, pp.
+ 259-270, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gpu1"
+literal "false"
+
+\end_inset
+
+Y.
+ Zhou and Y.
+ Tan, "GPU-based parallel particle swarm optimization," 2009 IEEE Congress
+ on Evolutionary Computation, pp.
+ 1493-1500, 2009.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gpu2"
+literal "false"
+
+\end_inset
+
+L.
+ Dawson and I.
+ Stewart, "Improving Ant Colony Optimization performance on the GPU using
+ CUDA," 2013 IEEE Congress on Evolutionary Computation, 2013, pp.
+ 1901-1908, doi: 10.1109/CEC.2013.6557791.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gpu3"
+literal "false"
+
+\end_inset
+
+Barkalov, K., Gergel, V.
+ Parallel global optimization on GPU.
+ J Glob Optim 66, 3–20 (2016).
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "meta1"
+literal "false"
+
+\end_inset
+
+I.
+ BoussaïD, J.
+ Lepagnot, P.
+ Siarry, P., A survey on optimization metaheuristics.
+ Information sciences 
+\series bold
+237
+\series default
+, pp.
+ 82-117, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "meta2"
+literal "false"
+
+\end_inset
+
+T.
+ Dokeroglu, E.
+ Sevinc, T.
+ Kucukyilmaz, A.
+ Cosar, A survey on new generation metaheuristic algorithms.
+ Computers & Industrial Engineering 
+\series bold
+137
+\series default
+, 106040, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "meta3"
+literal "false"
+
+\end_inset
+
+K.
+ Hussain, M.N.M.
+ Salleh, S.
+ Cheng, Y.
+ Shi, Metaheuristic research: a comprehensive survey.Artificial Intelligence
+ Review 
+\series bold
+52
+\series default
+, pp.
+ 2191-2233, 2019.
+\end_layout
+
+\end_body
+\end_document

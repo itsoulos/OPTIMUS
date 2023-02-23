@@ -12,7 +12,8 @@ parallelPso::parallelPso(Problem *p) : Optimizer(p)
     addParameter("parallelPropagateMethod", "1to1", "The propagation method used. Available values: 1to1,1toN,Nto1,NtoN");
     addParameter("subCluster", "5", "number of subclusters for pso");
     addParameter("subClusterEnable", "1", "the number of subclusters that play a role in the termination rule: [1, islands]");
-    addParameter("pNumber", "0", "the number of particles for propagation");
+    //addParameter("pRate", "0", "the rate of particles for propagation");
+    addParameter("pNuber", "0", "the number of particles for propagation");
 }
 
 void parallelPso::getBestValue(int &index, double &value)
@@ -370,6 +371,7 @@ void parallelPso::step()
 
 void parallelPso::init()
 {
+    //pRate = params["pRate"].toString().toInt();
     pNumber = params["pNumber"].toString().toInt();
     subCluster = params["subCluster"].toString().toInt();
     subClusterEnable = params["subClusterEnable"].toString().toInt();
@@ -380,6 +382,10 @@ void parallelPso::init()
     parallelPropagateMethod = params["parallelPropagateMethod"].toString();
     similarityMaxCount = params["similarityMaxCount"].toString().toInt();
     propagateRate = params["propagateRate"].toString().toInt();
+
+    //pNumber = round((double) pRate * parallelPsoParticles / 100);
+
+
     dimension = myProblem->getDimension();
     bestParticle.resize(parallelPsoParticles * subCluster);
     velocitys.resize(parallelPsoParticles * subCluster);
@@ -451,6 +457,7 @@ void parallelPso::done()
     auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(after - before);
     auto ms = milliseconds.count();
     std::cout << "Douration: " << (double)ms / 1000.0 << " sec" << std::endl;
+    printf ("pRate=%d   pNumber=%d\n",pRate,pNumber);
 }
 
 double parallelPso::fitness(Data &x)
