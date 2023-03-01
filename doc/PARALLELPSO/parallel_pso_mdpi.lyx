@@ -264,15 +264,18 @@ Correspondence: itsoulos@uoi.gr;
 
 \begin_layout Abstract
 In global optimization there are techniques where they find the optimal
- solutions of the objective problems but waste a lot of computational time.
- The PSO parallelization technique proposed in this article significantly
+ solutions of the objective problems, but they waste a lot of computational
+ time.
+ The PSO parallelization technique proposed in this paper significantly
  reduces the computation time and at the same time participates in the solution
- finding algorithm with the iterative communication between the parallel
- computing units.
+ finding algorithm by iterative communication between the parallel computing
+ units.
+ Apart from the sequential algorithm, the communication strategies 1to1,
+ 1toN, Nto1 and NtoN are compared where each computing unit sends its knowledge
+ to the other clusters.
  In addition, a new and more appropriate termination rule is proposed here.
  From the results of the experiments it appears that the overall parallelization
  technique is more than an accelerator of the classical algorithm.
- 
 \end_layout
 
 \begin_layout Keywords
@@ -665,12 +668,11 @@ name "sec:The-proposed-method"
 \end_layout
 
 \begin_layout Standard
-The base algorithm of PSO and the proposed modifications are outlined in
- detail in the following subsections.
- The discussion starts with a new mechanism that calculates the velocity
- of the populations, continuous with a discarding procedure used to minimize
- the number of local searches performed, and ends with a discussion about
- the new stopping rule proposed here.
+In this section the discussion will begin with the steps of the serial method
+ as well as a general outline of the parallel technique followed.
+ Then the basic components of the proposed process, such as the calculation
+ of the speed, the proposed termination rule and the way of propagating
+ points between the parallel computing units will be thoroughly analyzed.
 \end_layout
 
 \begin_layout Subsection
@@ -685,29 +687,63 @@ name "subsec:The-base-algorithm"
 \end_layout
 
 \begin_layout Standard
+The base PSO algorithm executed in every parallel processing unit is listed
+ in Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:psoSerial"
+plural "false"
+caps "false"
+noprefix "false"
 
-\series bold
-The base parallel method ....
+\end_inset
+
+.
+ A periodic application of a local optimization method has been added to
+ the original algorithm with the aim of improving the generated results.
+ In the proposed algorithm a BFGS variation of Powell 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Powell"
+literal "false"
+
+\end_inset
+
+ was used a local search procedure.
 \end_layout
 
 \begin_layout Standard
-The base algorithm is listed below with the periodical application of the
- local search method in order to enhance the estimation of the global minimum,
- ie.
- at every iteration a decision with probability 
-\begin_inset Formula $p_{l}$
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The base PSO algorithm executed in one processing unit.
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:psoSerial"
+
 \end_inset
 
- is made in order to apply a local search procedure to some of the particles.
- Usually, this probability is small, for example 0.05 (5%).
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Enumerate
 
 \series bold
-Initialization
+Initialization Step
 \series default
-.
+ .
  
 \begin_inset Separator latexpar
 \end_inset
@@ -725,7 +761,7 @@ Set
 \begin_inset Formula $\text{\mbox{iter}}=0$
 \end_inset
 
- (iteration counter).
+.
 \end_layout
 
 \begin_layout Enumerate
@@ -733,23 +769,23 @@ Set
 \series bold
 Set
 \series default
- the number of particles 
+ 
 \begin_inset Formula $m$
 \end_inset
 
-.
+ as the total number of particles.
 \end_layout
 
 \begin_layout Enumerate
 
 \series bold
-Set
+Set 
 \series default
- the maximum number of iterations allowed 
+
 \begin_inset Formula $\mbox{iter}_{\mbox{max}}$
 \end_inset
 
-
+ as the maximum number of allowed generations.
 \end_layout
 
 \begin_layout Enumerate
@@ -757,19 +793,19 @@ Set
 \series bold
 Set
 \series default
- the local search rate 
+ 
 \begin_inset Formula $p_{l}\in[0,1]$
 \end_inset
 
-.
+, the rate for the local search procedure.
 \end_layout
 
 \begin_layout Enumerate
 
 \series bold
-Initialize
+Set
 \series default
- randomly the positions of the 
+ randomly, the initial positions of the 
 \begin_inset Formula $m$
 \end_inset
 
@@ -777,11 +813,7 @@ Initialize
 \begin_inset Formula $x_{1},x_{2},...,x_{m}$
 \end_inset
 
-, with 
-\begin_inset Formula $x_{i}\in S\subset R^{n}$
-\end_inset
-
-
+.
 \end_layout
 
 \begin_layout Enumerate
@@ -789,19 +821,11 @@ Initialize
 \series bold
 Initialize
 \series default
- randomly the velocities of the 
-\begin_inset Formula $m$
-\end_inset
-
- particles 
+ randomly the velocities 
 \begin_inset Formula $u_{1},u_{2},...,u_{m}$
 \end_inset
 
-, with 
-\begin_inset Formula $u_{i}\in S\subset R^{n}$
-\end_inset
-
-
+.
 \end_layout
 
 \begin_layout Enumerate
@@ -818,11 +842,11 @@ For
 \end_inset
 
 .
- The 
+ The vector 
 \begin_inset Formula $p_{i}$
 \end_inset
 
- vector are the best located values for every particle 
+ stands for the best located position of particle 
 \begin_inset Formula $i$
 \end_inset
 
@@ -845,17 +869,16 @@ Set
 \begin_layout Enumerate
 
 \series bold
-Termination Check
+Termination Check Step
 \series default
-.
+ .
 \begin_inset CommandInset label
 LatexCommand label
 name "enu:Check-Termination."
 
 \end_inset
 
- Check for termination.
- If termination criteria are met then stop.
+ If the termination criteria are hold, then terminate.
 \end_layout
 
 \begin_layout Enumerate
@@ -889,13 +912,13 @@ name "enu:For"
 \begin_layout Enumerate
 
 \series bold
-Update
+Compute 
 \series default
- the velocity 
+the velocity 
 \begin_inset Formula $u_{i}$
 \end_inset
 
- as a function of 
+ using 
 \begin_inset Formula $u_{i},\ p_{i}$
 \end_inset
 
@@ -909,9 +932,9 @@ Update
 \begin_layout Enumerate
 
 \series bold
-Update
+Set
 \series default
- the position 
+ the new position 
 \begin_inset Formula $x_{i}=x_{i}+u_{i}$
 \end_inset
 
@@ -928,13 +951,13 @@ name "enu:Update-the-position"
 \begin_layout Enumerate
 
 \series bold
-Set
+Select
 \series default
  
 \begin_inset Formula $r\in[0,1]$
 \end_inset
 
- a random number.
+ a random value.
  If 
 \begin_inset Formula $r\le p_{m}$
 \end_inset
@@ -947,7 +970,7 @@ Set
 \begin_inset Formula $\mbox{LS}(x)$
 \end_inset
 
- is a local search procedure.
+ is the used local search procedure.
 \begin_inset CommandInset label
 LatexCommand label
 name "enu:Set--a"
@@ -960,14 +983,14 @@ name "enu:Set--a"
 \begin_layout Enumerate
 
 \series bold
-Evaluate
+Calculate
 \series default
- the fitness of the particle 
-\begin_inset Formula $i$
+ the 
+\begin_inset Formula $f\left(x_{i}\right)$
 \end_inset
 
-, 
-\begin_inset Formula $f\left(x_{i}\right)$
+ for particle 
+\begin_inset Formula $x_{i}$
 \end_inset
 
 
@@ -1047,65 +1070,12 @@ reference "enu:Check-Termination."
 
 \end_layout
 
-\begin_layout Standard
-The current work modifies the above algorithm in three key points:
-\end_layout
-
-\begin_layout Enumerate
-In step 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "enu:Check-Termination."
-plural "false"
-caps "false"
-noprefix "false"
-
 \end_inset
 
-, where a new termination rule based on asymptotic considerations is introduced.
-\end_layout
-
-\begin_layout Enumerate
-In step 
+The base PSO algorithm described in Algorithm 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "enu:Update-the-position"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, where the the algorithm calculates the new position of the particles.
- The proposed methodology modifies the position of the particles based on
- the average speed of the algorithm to discover new minimums.
- 
-\end_layout
-
-\begin_layout Enumerate
-In step 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "enu:Set--a"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, where a method based on gradient calculations will be used to prevent
- the PSO method from executing unnecessary local searches.
-\end_layout
-
-\begin_layout Subsection
-Velocity calculation 
-\end_layout
-
-\begin_layout Standard
-The algorithm of subsection 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:The-base-algorithm"
+reference "alg:psoSerial"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1116,15 +1086,7 @@ noprefix "false"
 \begin_inset Formula $x_{i}$
 \end_inset
 
- is calculated using the old position 
-\begin_inset Formula $x_{i}$
-\end_inset
-
- and the associated velocity 
-\begin_inset Formula $u_{i}$
-\end_inset
-
- according to the scheme:
+ with the following operation:
 \begin_inset Formula 
 \begin{equation}
 x_{i}=x_{i}+u_{i}\label{eq:eq3}
@@ -1132,8 +1094,8 @@ x_{i}=x_{i}+u_{i}\label{eq:eq3}
 
 \end_inset
 
-Typically the velocity is calculated as a combination of the old velocity
- and the best located values 
+In most cases the new speed is a linear combination of the old speed and
+ the best values 
 \begin_inset Formula $p_{i}$
 \end_inset
 
@@ -1141,7 +1103,7 @@ Typically the velocity is calculated as a combination of the old velocity
 \begin_inset Formula $p_{\mbox{best}}$
 \end_inset
 
- and may be defined as:
+ and it is defined as:
 \begin_inset Formula 
 \begin{equation}
 u_{i}=\omega u_{i}+r_{1}c_{1}\left(p_{i}-x_{i}\right)+r_{2}c_{2}\left(p_{\mbox{best}}-x_{i}\right)\label{eq:eq4-1}
@@ -1153,19 +1115,15 @@ where
 \end_layout
 
 \begin_layout Enumerate
-The parameters 
+The variables 
 \begin_inset Formula $r_{1},\ r_{2}$
 \end_inset
 
- are random numbers with 
-\begin_inset Formula $r_{1}\in[0,1]$
+ are random numbers defined in 
+\begin_inset Formula $[0,1].$
 \end_inset
 
- and 
-\begin_inset Formula $r_{2}\in[0,1]$
-\end_inset
 
-.
 \end_layout
 
 \begin_layout Enumerate
@@ -1178,6 +1136,7 @@ The constant number
 \end_inset
 
 .
+ 
 \end_layout
 
 \begin_layout Enumerate
@@ -1185,16 +1144,12 @@ The variable
 \begin_inset Formula $\omega$
 \end_inset
 
- is called inertia, with 
+ is commonly called inertia and typically 
 \begin_inset Formula $\omega\in[0,1]$
 \end_inset
 
 .
- 
-\end_layout
-
-\begin_layout Standard
-The inertia was proposed by Shi and Eberhart 
+ The inertia was proposed by Shi and Eberhart 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "pso_major"
@@ -1203,31 +1158,19 @@ literal "false"
 \end_inset
 
 .
- They argued that high values of the inertia coefficient cause better exploratio
-n of the search area, while small values of this variable are used when
- we want to achieve better local research around promising areas for the
- global minimum.
- The value of the inertia factor generally starts with large values and
- decreases with repetition.
- This article proposes a new adaptive technique for the inertia parameter
- and this mechanism is compared against three others from the relevant literatur
-e.
-\end_layout
-
-\begin_layout Subsubsection
-Random inertia
-\end_layout
-
-\begin_layout Standard
-The inertia calculation is proposed in 
+ In the current article the same inertia calculation as proposed in 
 \begin_inset CommandInset citation
-LatexCommand cite
-key "random_inertia"
+LatexCommand citep
+key "ipso"
 literal "false"
 
 \end_inset
 
- and it is defined as
+ is used.
+ The inertia is calculated through the following equation:
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
 \omega_{\mbox{iter}}=0.5+\frac{r}{2}
@@ -1235,11 +1178,11 @@ literal "false"
 
 \end_inset
 
-where 
+with 
 \begin_inset Formula $r$
 \end_inset
 
- a random number with 
+ being a random number and 
 \begin_inset Formula $r\in[0,1]$
 \end_inset
 
@@ -1247,12 +1190,324 @@ where
  
 \end_layout
 
-\begin_layout Subsubsection
-Proposed technique
+\begin_layout Subsection
+The parallel algorithm
+\end_layout
+
+\begin_layout Standard
+The overall parallel algorithm, which runs on 
+\begin_inset Formula $N_{I}$
+\end_inset
+
+ independent computing units, is shown in algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:parallelPso"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The implemented parallel algorithm.
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:parallelPso"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ as 
+\begin_inset Formula $N_{I}$
+\end_inset
+
+ the total number of parallell processing units.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ as 
+\begin_inset Formula $N_{R}$
+\end_inset
+
+ as the number of iterations, after which each processing unit will send
+ its best particles to the remaining processing units.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $N_{P}$
+\end_inset
+
+ the number of migrated particles between the parallel processing units.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $K=0$
+\end_inset
+
+ the iteration number.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $j=1,..,N$
+\end_inset
+
+ do in parallel
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:For--do"
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Execute
+\series default
+ an iteration of the PSO algorithm described in algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:psoSerial"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ on processing unit 
+\begin_inset Formula $j$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+If 
+\begin_inset Formula $K\ \mbox{mod}\ N_{R}=0,$
+\end_inset
+
+then 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Get
+\series default
+ the best 
+\begin_inset Formula $N_{P}$
+\end_inset
+
+ particles from algorithm 
+\begin_inset Formula $j$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Propagate
+\series default
+ these 
+\begin_inset Formula $N_{P}$
+\end_inset
+
+ particles to the rest of processing units using some propagation scheme
+ that will be described subsequently.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+EndIf
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+End For
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Update
+\series default
+ 
+\begin_inset Formula $K=K+1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Check
+\series default
+ the termination rule.
+ If the termination rule holds then terminate else goto step 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:For--do"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+The main aspects of the parallel algorithm are the propagation mechanism
+ and the proposed termination rule, that is properly adjusted to the parallel
+ computation environment.
+ These aspects will be discussed in the following subsections.
+\end_layout
+
+\begin_layout Subsection
+Propagation mechanism 
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Propagation-mechanism"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+During the execution of the parallel algorithm and periodically, the processing
+ units propagate their best particles (those with the lowest value in the
+ objective function) to the remaining processing units.
+ This dissemination can be done in the following possible ways:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+1 to 1
+\series default
+.
+ In this propagation scheme, a randomly selected processing unit will send
+ to some othher randomly selected unit its 
+\begin_inset Formula $N_{P}$
+\end_inset
+
+ best particles.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+1 to N
+\series default
+.
+ During this scheme, a randomly selected unit will send its best 
+\begin_inset Formula $N_{P}$
+\end_inset
+
+ particles to the remaing units.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+N to 1
+\series default
+.
+ In this scheme, all processing units will send the corresponding 
+\begin_inset Formula $N_{P}$
+\end_inset
+
+ best particles of each unit to a randomly selected unit.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+N to N
+\series default
+.
+ For this scheme, all processing units will send the correspondig 
+\begin_inset Formula $N_{P}$
+\end_inset
+
+ best particles to all.
+\end_layout
+
+\begin_layout Standard
+All propagation schemes are demonstrated graphically in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:allSchemes"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float figure
+placement H
 wide false
 sideways false
 status open
@@ -1260,8 +1515,9 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /home/sheridan/Desktop/parallelPsoAll/image1.png
+	filename image2.png
 	lyxscale 60
+	scale 70
 
 \end_inset
 
@@ -1272,7 +1528,14 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-MPLA MPLA
+A graphic presentation of all propagation schemes.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:allSchemes"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1290,115 +1553,67 @@ Stopping rule
 \end_layout
 
 \begin_layout Standard
-In the proposed termination technique in each iteration 
-\begin_inset Formula $\mbox{k}$
-\end_inset
-
- the difference between the current best value and the previous best value
- is measured, ie the difference 
-\begin_inset Formula $\left|f_{\mbox{min}}^{(k)}-f_{\mbox{min}}^{(k-1)}\right|.$
-\end_inset
-
- If this difference is zero for a series of predefined number of iterations
- 
-\begin_inset Formula $k_{\mbox{max}}$
-\end_inset
-
-, then the method terminates.
- 
-\end_layout
-
-\begin_layout Subsection
-Propagation mechanism 
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:Propagation-mechanism"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 
 \series bold
 (REWRITE)
-\series default
-During the propagation mechanism, the best values of the islands are spread
- to the rest by replacing their worst values.
- In general, there are the following propagation cases:
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-1 to 1
-\series default
-.
- In this case, a random island will send to another randomly selected island
- its best value.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-One to N
-\series default
-.
- In this case, a random island will send its best value to all other islands.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-N to 1
-\series default
-.
- In this case, all islands will inform a randomly selected island about
- their best value.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-N to N
-\series default
-.
- All islands will inform all the other islands about their best value.
 \end_layout
 
 \begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
+In the proposed termination criterion, a simple criterion is checked separately
+ on each island.
+ For every island 
+\begin_inset Formula $i$
+\end_inset
 
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename /home/sheridan/Desktop/parallelPsoAll/image2.png
-	lyxscale 60
+ the difference
+\begin_inset Formula 
+\begin{equation}
+\delta_{i}^{(k)}=\left|f_{i,\mbox{min}}^{(k)}-f_{i,\mbox{min}}^{(k-1)}\right|,\label{eq:term}
+\end{equation}
 
 \end_inset
 
+ is measured in each iteration 
+\begin_inset Formula $k,$
+\end_inset
 
-\end_layout
+ where 
+\begin_inset Formula $f_{i,\mbox{min}}^{(k)}$
+\end_inset
 
-\begin_layout Plain Layout
-\begin_inset Caption Standard
+ is the best located function value for island 
+\begin_inset Formula $i$
+\end_inset
 
-\begin_layout Plain Layout
-MPLA MPLA
-\end_layout
+ at iteration 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\delta_{i}^{(k)}\le\epsilon$
+\end_inset
+
+ for at least M consecutive iterations, then most likely the island 
+\begin_inset Formula $i$
+\end_inset
+
+ should terminate population evolution.
+ In the proposed technique, if the quantity of equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:term"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-
-\end_layout
-
+ holds for more than 
+\begin_inset Formula $N_{I}$
 \end_inset
 
-
+ islands, then the overall algorithm terminates.
 \end_layout
 
 \begin_layout Section
@@ -4263,6 +4478,8 @@ yes
 \end_inset
 
 
+\series bold
+13
 \end_layout
 
 \begin_layout Start of Appendix
@@ -5483,6 +5700,42 @@ G.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "Powell"
+literal "true"
+
+\end_inset
+
+M.J.D Powell, A Tolerant Algorithm for Linearly Constrained Optimization Calculati
+ons, Mathematical Programming 
+\series bold
+45
+\series default
+, pp.
+ 547-566, 1989.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ipso"
+literal "false"
+
+\end_inset
+
+V.
+ Charilogis, I.G.
+ Tsoulos, Toward an Ideal Particle Swarm Optimizer for Multidimensional
+ Functions, Information 
+\series bold
+13
+\series default
+, 217, 2022.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "Ali1"
 literal "true"
 
@@ -5601,24 +5854,6 @@ I.G.
 \series default
 pp.
  843-851, 2008.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "Powell"
-literal "true"
-
-\end_inset
-
-M.J.D Powell, A Tolerant Algorithm for Linearly Constrained Optimization Calculati
-ons, Mathematical Programming 
-\series bold
-45
-\series default
-, pp.
- 547-566, 1989.
- 
 \end_layout
 
 \begin_layout Bibliography
