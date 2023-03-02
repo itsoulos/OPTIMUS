@@ -4,8 +4,8 @@
 DoubleGenetic::DoubleGenetic(Problem *p)
     :Optimizer(p)
 {
-    addParameter("double_chromosomes","200","Number of chromosomes");
-    addParameter("double_generations","100","Number of generations");
+    addParameter("double_chromosomes","100","Number of chromosomes");
+    addParameter("double_generations","200","Number of generations");
     addParameter("double_selectionrate","0.10","Selection rate");
     addParameter("double_mutationrate","0.05","Mutation rate");
     addParameter("double_localsearchrate","0.00","Local search rate");
