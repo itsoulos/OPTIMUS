@@ -3,6 +3,7 @@
 \documentclass[journal,article,submit,pdftex,moreauthors]{Definitions/mdpi}
 \usepackage[utf8]{inputenc}
 \usepackage{float}
+\usepackage{url}
 \usepackage{amstext}
 \usepackage{graphicx}
 
@@ -30,18 +31,25 @@ of Ioannina, Greece; v.charilogis@uoi.gr}
 \corres{Correspondence: itsoulos@uoi.gr; }
 
 
-\abstract{In global optimization there are techniques where they find the optimal
-solutions of the objective problems, but they waste a lot of computational
-time. The PSO parallelization technique proposed in this paper significantly
-reduces the computation time and at the same time participates in
-the solution finding algorithm by iterative communication between
-the parallel computing units. Apart from the sequential algorithm,
-the communication strategies 1to1, 1toN, Nto1 and NtoN are compared
-where each computing unit sends its knowledge to the other clusters.
-In addition, a new and more appropriate termination rule is proposed
-here. From the results of the experiments, it appears that the overall
-parallelization technique is more than an accelerator of the classical
-algorithm.}
+\abstract{In the area of global optimization, a variety of techniques have
+been developed to find the global minimum. These techniques, in most
+cases, require a significant amount of computational resources and
+time to complete and therefore there is a need to develop parallel
+techniques. In addition, the wide spread of parallel architectures
+in recent years greatly facilitates the implementation of such techniques.
+Among the most widely used global optimization techniques is the Particle
+Swarm Optimization technique. In this work, a series of modifications
+are proposed in the direction of the efficient parallelization for
+the Particle Swarm Optimization. These modifications include an innovative
+velocity calculation mechanism that has also been successfully used
+in the serial version of the method, mechanisms for propagating the
+best particles between parallel computing units, but also a process
+termination mechanism, which has been properly configured for efficient
+execution on parallel computing environments. The proposed technique
+was applied to a multitude of computational problems from the relevant
+literature and the results were more than promising, since it was
+found that increasing the computational threads can significantly
+reduce the required number of function calls to find the global minimum.}
 
 
 \keyword{Optimization, Parallel methods, Evolutionary techniques, Stochastic
@@ -171,78 +179,112 @@ with $S$:
 \[
 S=\left[a_{1},b_{1}\right]\otimes\left[a_{2},b_{2}\right]\otimes\ldots\left[a_{n},b_{n}\right]
 \]
-where the function f is assumed to be continuous and differentiable.
-Many problems faced by researchers can be formulated as global minimization
-problems such as problems in physical science \citep{go_physics1,go_physics2,go_physics3},
-chemistry \citep{go_chem1,go_chem2,go_chem3}, economics \citep{go_econ1,go_econ2}
-and medicine \citep{go_med1,go_med2}. The global optimization methods
-are usually divided into two major categories: deterministic and stochastic
-methods. In the deterministic category, the most common method is
-the so - called interval method \citep{interval1,interval2}, where
-the set $S$ is iteratively divided into subregions and those that
-do not contain a global solution are discarded using certain criteria.
-In the case of stochastic methods, the finding of the global minimum
-is based on randomness operations, although there is no guarantee
-of locating the global minimum. Nevertheless, it is the category of
-methods that is often used due to the simplicity and the effectiveness
-provided. Several researchers have proposed stochastic methods such
-as: controlled random search methods\citep{crs1,crs2,crs3}, simulated
-annealing methods \citep{simann_major,simann1,simann2}, differential
-evolution methods \citep{diffe1,diffe2}, particle swarm optimization
-methods \citep{pso_major,pso1,pso2}, Ant Colony Optimization \citep{aco1,aco2},
-Genetic Algorithms \citep{ga1,ga2,ga3}, etc. Also, recently, many
-studies have appeared that utilize the modern parallel processing
-units \citep{gpu1,gpu2,gpu3} to tackle the global optimization problem.
-Some research that one can study regarding metaheuristic algorithms
-is presented in some recent papers \citep{meta1,meta2,meta3}. This
-paper suggests a number of directions for efficient parallelization
-of particle swarm optimization (PSO) techniques.
+where the function f is assumed to be continuous and differentiable.There
+is a wide range of problems in the relevant literature that can be
+treated as global optimization problems such as problems in physical
+science \citep{go_physics1,go_physics2,go_physics3}, chemistry \citep{go_chem1,go_chem2,go_chem3},
+economics \citep{go_econ1,go_econ2} and medicine \citep{go_med1,go_med2}.
+There are several ways to categorize global optimization techniques,
+but most researchers suggest dividing them into two broad categories:
+deterministic and stochastic techniques. In the area of deterministic
+techniques, the one with the greatest spread among researchers is
+the Interval method\citep{interval1,interval2}, where the initial
+interval of values $S$ of the objective function is continuously
+divided into smaller parts. The segments that may not contain the
+total minimum are discarded and eventually a very narrow interval
+of values should be left which will contain the total minimum of the
+objective function. On the other hand, in the category of stochastic
+techniques, where the greatest research effort is made, techniques
+are presented that look for the total minimum using stochastic methods,
+which of course does not guarantee finding the total minimum. In this
+vast area of research endeavors one encounters methods such as controlled
+random search methods\citep{crs1,crs2,crs3} which can be considered
+as a direct search method, simulated annealing methods \citep{simann_major,simann1,simann2},
+differential evolution methods \citep{diffe1,diffe2}, particle swarm
+optimization methods \citep{pso_major,pso1,pso2}, Ant Colony Optimization
+\citep{aco1,aco2}, Genetic Algorithms \citep{ga1,ga2,ga3}, etc.
+In addition, since in recent years there has been an extremely wide
+spread of parallel computing units, many studies have appeared that
+utilize the modern parallel processing units \citep{gpu1,gpu2,gpu3}
+to tackle the global optimization problem. Some research that one
+can study regarding metaheuristic algorithms is presented in some
+recent papers \citep{meta1,meta2,meta3}. This paper suggests a number
+of directions for efficient parallelization of particle swarm optimization
+(PSO) techniques.
 
 The PSO method is inspired by the observations of Eberhart and Kennedy
-in the 1990s. The electrical engineer Russell C. Eberhart and social
-psychologist James Kennedy, observed the behavior of birds looking
-for food, presented a technique where the atoms or otherwise \textquotedbl particles\textquotedbl{}
-fly through the search space seeking for the best position that minimizes
-or maximizes a problem. These particles have two basic characteristics:
-their position at any instant of time, which is referred to as $\overrightarrow{x}$
-and the speed at which they are moving, which is referred to as $\overrightarrow{u}$.
-The purpose of this method is to move the particles iteratively and
-calculate their next position based on three elements: the current
-position, the best position they had in the past and the best position
-of the population. The PSO method was successfully used in a variety
-of scientific and practical problems in physics\textbf{ }\citep{psophysics1,psophysics2},
-chemistry \citep{psochem1,psochem2}, medicine \citep{psomed1,psomed2},
-economics \citep{psoecon} etc. Due to its high popularity, the method
-has received a number of interventions in recent years, such as combination
-with the mutation mechanism \citep{pso_mutation1,pso_mutation2,pso_mutation3},
-improved initialization of the velocity vector \citep{pso_initvelocity},\textbf{
-}hybrid techniques \citep{psohybrid1,psohybrid2,psohybrid3}, parallel
-techniques \citep{pso_parallel1,pso_parallel2,pso_parallel3}, methods
-aim to improve the velocity calculation \citep{pso_velocity1,pso_velocity2,pso_velocity3}
-etc. The method of PSO has been integrated into other optimization
-techniques like the work of Bogdanova et al \citep{ge_pso1} who combined
-Grammatical Evolution with swarm techniques like PSO \citep{ge_mainpaper},
-the work of Pan et al \citep{siman_pso} to create a hybrid PSO method
-with simulated annealing. Also, Mughal et al \citep{simman_pso_energy}
-used a hybrid technique of PSO and Simulated Annealing for photovoltaic
-cell parameter estimation. Similarly, the work of Lin et al \citep{pso_de}
-utilized a hybrid method of PSO and Differential Evolution for numerical
-optimization problems. Variations of PSO that aim at the global minimum
-in a shorter time may include the use of a local optimization method
-in each iteration of the algorithm \citep{pso_local1,pso_local2}.
-Of course, the above process can be extremely time consuming and,
-depending on the termination method used and the number of local searches
-performed, may require a long execution time. 
+in the 1990s. The two observed in detail the behavior of birds as
+they move through space looking for food and then formulated a technique
+that falls under the domain of global optimization, using the experience
+they gained from their observations. In the new technique they formulated,
+the atoms or particles move in the research space of the problem in
+search of the minimum of the objective function. These particles are
+directly related to two basic characteristics: the current position
+of each particle and the velocity with which it moves in search of
+the global minimum. The current position is denoted as $\overrightarrow{x}$
+and the velocity is referred to as $\overrightarrow{u}$. In addition,
+for each particle the best position in which it has been found in
+the past (the one with the smallest value for the objective function)
+is kept in memory, but also for the total population its best position
+is kept. The method moves the particles to search for the global minimum
+through an iterative process, in which the positions of the particles
+at each iteration are derived from each particle's current position,
+the best position it has found in previous iterations, and the overall
+best position of the population . 
+
+Due to the simplicity of the method and the small number of parameters
+that should be set, this method has been applied to many difficult
+problems from all areas of the sciences such as problems that appear
+in physics\textbf{ }\citep{psophysics1,psophysics2}, chemistry \citep{psochem1,psochem2},
+medicine \citep{psomed1,psomed2}, economics \citep{psoecon} etc.
+Also the PSO method was successfully applied recently in many practical
+problems such as flow shop scheduling \citep{psoApp1}, successful
+development of electric vehicle charging strategies \citep{psoApp2},
+emotion recognition \citep{psoApp3}, robotics \citep{psoApp4} etc.
+A extensive tutorial on PSO methods can be found in the work of Marini
+and Walczak \citep{psoReview}. Also a recent overview of PSO variants
+can be found in the work of Jain et al \citep{psoOverview}. Since
+the technique has gained a lot of popularity in recent years, many
+works have been developed based on it, such as combination with the
+mutation mechanism \citep{pso_mutation1,pso_mutation2,pso_mutation3},
+methods that propose new techniques to initialize the velocity vector
+\citep{pso_initvelocity},\textbf{ }hybrid techniques \citep{psohybrid1,psohybrid2,psohybrid3},
+parallel techniques \citep{pso_parallel1,pso_parallel2,pso_parallel3}.
+Also since the calculation of the velocity of the particles is a determining
+factor for the effectiveness of the method, several techniques were
+formulated for the calculation of the velocity \citep{pso_velocity1,pso_velocity2,pso_velocity3}.
+The method of particle swarm optimization has been successfully combined
+with other global optimization techniques, such as the work of Bogdanova
+et al \citep{ge_pso1} who suggested a combination of Grammatical
+Evolution with PSO \citep{ge_mainpaper}. Also Pan et al \citep{siman_pso}
+suggested a method that combines the PSO method with a variation of
+the simulated annealing. Likewise Mughal et al \citep{simman_pso_energy},
+proposed a hybrid technique that effectively combines PSO and simulated
+annealing for solar energy problems. In the same way, Lin et al \citep{pso_de}
+suggested a hybrid method of PSO and differential evolution for some
+optimization problems. Additionally, a number of techniques have been
+presented in which local minimization methods are applied to some
+iterations of Particle Swarm Optimization \citep{pso_local1,pso_local2}.
+Of course, these techniques significantly increase the computational
+time required by the method, but also significantly improve the performance
+of the method.
 
 The proposed method creates a number of sub-populations of particles
-that run independently on parallel computing units that will also
-be called islands. Also, a series of modifications to the original
-particle swarm optimization method are proposed in order to make it
-more efficient in parallel computing environments. These modifications
-include a new method of calculating particle velocity, a new termination
-rule specifically modified for parallel techniques, and a new way
-of propagating the best particles among the parallel computing units
-involved in the overall method.
+that run independently on parallel computing units. The same serial
+algorithm with the same set of parameters is applied to each computing
+unit. Also, a series of modifications to the original particle swarm
+optimization method are proposed in order to make it more efficient
+in parallel computing environments. These modifications include a
+new method of calculating particle velocity, a new termination rule
+specifically modified for parallel techniques, and a new way of propagating
+the best particles among the parallel computing units involved in
+the overall method. The proposed velocity calculation is proposed
+by Eberhart and Shi \citep{RandomInertia} and it is based in random
+values. Also, the proposed stopping rule is based on the work of Charilogis
+and Tsoulos \citep{ipso}, giving excellent results when applied on
+a series of well - known optimization problems. Although, the proposed
+termination technique is modified appropriately for parallel computing
+environments.
 
 The rest of this article is organized as follows: in section \ref{sec:The-proposed-method}
 the proposed method and the new approaches in Particle Swarm Optimization
@@ -253,16 +295,18 @@ future guidelines are listed.
 
 \section{The proposed method\label{sec:The-proposed-method}}
 
-In this section the discussion will begin with the steps of the serial
-method as well as a general outline of the parallel technique followed.
-Then the basic components of the proposed process, such as the calculation
-of the speed, the proposed termination rule and the method of propagating
+This section will begin with a detailed description of the serial
+method to be performed on each parallel processing unit as well as
+the overall parallel method proposed in this work. Subsequently, the
+basic components of the proposed process, such as the calculation
+of the velocity, the proposed termination rule and the method of propagating
 points between the parallel computing units will be thoroughly analyzed.
 
-\subsection{The base algorithm\label{subsec:The-base-algorithm}}
+\subsection{The main steps of the basic PSO algorithm\label{subsec:The-base-algorithm}}
 
-The base PSO algorithm executed in every parallel processing unit
-is listed in Algorithm \ref{alg:psoSerial}.
+In every parallel processing unit a PSO algorithm is executed to locate
+the global minimum of the objective function. The mains steps for
+this algorithm are outlined in detail in Algorithm \ref{alg:psoSerial}.
 
 \begin{algorithm}[H]
 \caption{The base PSO algorithm executed in one processing unit.\label{alg:psoSerial}}
@@ -274,23 +318,26 @@ is listed in Algorithm \ref{alg:psoSerial}.
 \item \textbf{Set} $\text{\mbox{iter}}=0$.
 \item \textbf{Set} $m$ as the total number of particles.
 \item \textbf{Set }$\mbox{iter}_{\mbox{max}}$ as the maximum number of
-allowed generations.
-\item \textbf{Set} randomly, the initial positions of the $m$ particles
-$x_{1},x_{2},...,x_{m}$.
+iterations allowed for the serial algorithm.
+\item \textbf{Initialize} randomly, the positions $x_{1},x_{2},...,x_{m}$
+for the particles. The initial positions must be within the domain
+of the objective function.
 \item \textbf{Initialize} randomly the velocities $u_{1},u_{2},...,u_{m}$.
-\item \textbf{For} $i=1..m$ do $p_{i}=x_{i}$. The vector $p_{i}$ stands
-for the best located position of particle $i$.
+\item \textbf{For} $i=1..m$ do $p_{i}=x_{i}$. The vector $p_{i}$ represents
+the best located position of particle $i$.
 \item \textbf{Set} $p_{\mbox{best}}=\arg\min_{i\in1..m}f\left(x_{i}\right)$
 \end{enumerate}
-\item \textbf{Termination Check Step} .\label{enu:Check-Termination.} If
-the termination criteria are hold, then terminate.
+\item \textbf{Termination Check Step} .\label{enu:Check-Termination.} The
+termination criterion for the serial algorithm is checked. If the
+termination criterion is true, then the method terminates.
 \item \textbf{For} $i=1..m$ \textbf{Do\label{enu:For}}
 
 \begin{enumerate}
-\item \textbf{Compute }the velocity $u_{i}$ using $u_{i},\ p_{i}$ and
-$p_{\mbox{best}}$
-\item \textbf{Set} the new position $x_{i}=x_{i}+u_{i}$\label{enu:Update-the-position}
+\item \textbf{Compute }the velocity $u_{i}$ as a combination of the vectors
+$u_{i},\ p_{i}$ and $p_{\mbox{best}}$
+\item \textbf{Set} the new position for the particle as: $x_{i}=x_{i}+u_{i}$\label{enu:Update-the-position}
 \item \textbf{Calculate} the $f\left(x_{i}\right)$ for particle $x_{i}$
+using the objective function $f(x)$.
 \item \textbf{If} $f\left(x_{i}\right)\le f\left(p_{i}\right)$ then $p_{i}=x_{i}$
 \end{enumerate}
 \item \textbf{End} \textbf{For}
@@ -299,31 +346,30 @@ $p_{\mbox{best}}$
 \item \textbf{Goto} Step \ref{enu:Check-Termination.}
 \end{enumerate}
 \end{algorithm}
-The base PSO algorithm described in Algorithm \ref{alg:psoSerial}
-calculates at every iteration the new position $x_{i}$ with the following
-operation:
+The base PSO algorithm as described in Algorithm \ref{alg:psoSerial},
+computes at every iteration the new position of the particle $i$
+using the following operation:
 \begin{equation}
 x_{i}=x_{i}+u_{i}\label{eq:eq3}
 \end{equation}
-In most cases the new speed is a linear combination of the old speed
-and the best values $p_{i}$ and $p_{\mbox{best}}$ and it is defined
-as:
+In most cases the new velocity could be a linear combination of the
+previously computed velocity and the best values $p_{i}$ and $p_{\mbox{best}}$.
+A typical computation of the new velocity is defined as:
 \begin{equation}
 u_{i}=\omega u_{i}+r_{1}c_{1}\left(p_{i}-x_{i}\right)+r_{2}c_{2}\left(p_{\mbox{best}}-x_{i}\right)\label{eq:eq4-1}
 \end{equation}
 where 
 \begin{enumerate}
 \item The variables $r_{1},\ r_{2}$ are random numbers defined in $[0,1].$
-\item The constant number $c_{1},\ c_{2}$ are in the range $[1,2]$. 
-\item The variable $\omega$ is commonly called inertia and typically $\omega\in[0,1]$.
-The inertia was proposed by Shi and Eberhart \citep{pso_major}. In
-the current article the same inertia calculation as proposed in \citep{ipso}
-is used. The inertia is calculated through the following equation:
+\item The constants $c_{1},\ c_{2}$ are defined in $[1,2]$. 
+\item The variable $\omega$ is called inertia and it was suggested by Shi
+and Eberhart \citep{pso_major}. In the current article a simple inertia
+calculation is used and calculated using:
 \end{enumerate}
 \begin{equation}
 \omega_{\mbox{iter}}=0.5+\frac{r}{2}
 \end{equation}
-with $r$ being a random number and $r\in[0,1]$. 
+The variable $r$ is a a random number with $r\in[0,1]$. 
 
 \subsection{The parallel algorithm}
 
@@ -355,12 +401,15 @@ units using some propagation scheme that will be described subsequently.
 \end{enumerate}
 \item \textbf{End For}
 \item \textbf{Update} $K=K+1$
-\item \textbf{Check} the termination rule. If the termination rule holds
-then goto step \ref{enu:Terminate-and-report} else goto step \ref{enu:For--do}.
+\item \textbf{Check} the proposed termination rule. If the termination rule
+is valid, then goto step \ref{enu:Terminate-and-report} else goto
+step \ref{enu:For--do}.
+\begin{enumerate}
 \item \textbf{Terminate} and report the best value from all processing units.\label{enu:Terminate-and-report}.
-Apply a local search procedure to this located value to enchance the
-located global minimum. . In the proposed algorithm a BFGS variation
+Apply a local search procedure to this located value to enhance the
+located global minimum. In the proposed algorithm a BFGS variation
 of Powell \citep{Powell} was used a local search procedure.
+\end{enumerate}
 \end{enumerate}
 \end{algorithm}
 The main aspects of the parallel algorithm are the propagation mechanism
@@ -372,8 +421,8 @@ in the following subsections.
 
 During the execution of the parallel algorithm and periodically, the
 processing units propagate their best particles (those with the lowest
-value in the objective function) to the remaining processing units.
-This dissemination can be done in the following possible ways:
+function value) to the remaining processing units. This propagation
+can be achieved in the following possible ways:
 \begin{enumerate}
 \item \textbf{1 to 1}. In this propagation scheme, a randomly selected processing
 unit will send to some other randomly selected unit its $N_{P}$ best
@@ -404,31 +453,35 @@ on each parallel processing unit. This rule is formulated as follows:
 \delta_{i}^{(k)}=\left|f_{i,\mbox{min}}^{(k)}-f_{i,\mbox{min}}^{(k-1)}\right|\label{eq:term}
 \end{equation}
 This quantity is calculated on every iteration $k$. The value $f_{i,\mbox{min}}^{(k)}$
-is the best located function value for unit $i$ at iteration $k$.
-If the above quantity is less than a predetermined limit $\epsilon$
-for $N_{M}$ continuous repetitions, then the algorithm executed on
-this unit is terminated. In present work, if a parallel processing
-unit is terminated, then the overall process is also terminated.
+is the best function value for unit $i$ at iteration $k$. If the
+above quantity is less than a predetermined limit $\epsilon$ for
+$N_{M}$ continuous repetitions, then the algorithm executed on this
+unit is terminated. In present work, if a parallel processing unit
+is terminated, then the overall process is also terminated.
 
 \section{Experiments \label{sec:Experiments}}
 
-To measure the reliability and efficiency of the proposed technique,
-experiments were performed on a wide range of objective functions
-from the relevant literature\citep{Ali1,Floudas1}, which have been
-studied by many researchers\citep{testfunctions1,testfunctions2,testfunctions3,testfunctions4}.
-In these experiments the ability of the method to find the global
-minimum was measured and also a study of the basic parameters of the
-proposed technique was made.
+In order to be able to establish the efficiency of the method in finding
+the total minimum of continuous functions, a series of experiments
+were performed in which objective functions from the relevant literature
+were used\citep{Ali1,Floudas1}. These objective functions have been
+extensively studied by many researchers in many publications\citep{testfunctions1,testfunctions2,testfunctions3,testfunctions4}.
+In this series of experiments, beyond the ability of the method to
+find the global minimum, the effect of changes in a number of critical
+parameters, such as propagation techniques, on the behavior of the
+proposed method was also evaluated.
 
 \subsection{Test functions}
 
-The definition of the test functions used are given below
+The mathematical formulas for the series of objective functions used
+are presented below: given below
 \begin{itemize}
 \item \textbf{\emph{Bent Cigar function}}\emph{ }The function is 
 \[
 f(x)=x_{1}^{2}+10^{6}\sum_{i=2}^{n}x_{i}^{2}
 \]
-The value $n=10$ was used in the conducted experiments.
+For the conducted experiments the value $n=10$ was used as test case
+and the function is denoted as CIGAR10 in the experimental tables.
 \item \textbf{Bf1} (Bohachevsky 1) function:
 \end{itemize}
 \[
@@ -440,15 +493,16 @@ where $x\in[-100,100]^{2}$.
 \[
 f(x)=x_{1}^{2}+2x_{2}^{2}-\frac{3}{10}\cos\left(3\pi x_{1}\right)\cos\left(4\pi x_{2}\right)+\frac{3}{10}
 \]
-where $x\in[-50,50]^{2}$. 
+with $x\in[-50,50]^{2}$. 
 \item \textbf{Branin} function: $f(x)=\left(x_{2}-\frac{5.1}{4\pi^{2}}x_{1}^{2}+\frac{5}{\pi}x_{1}-6\right)^{2}+10\left(1-\frac{1}{8\pi}\right)\cos(x_{1})+10$
 with $-5\le x_{1}\le10,\ 0\le x_{2}\le15$. 
 \item \textbf{CM} function: 
 \[
 f(x)=\sum_{i=1}^{n}x_{i}^{2}-\frac{1}{10}\sum_{i=1}^{n}\cos\left(5\pi x_{i}\right)
 \]
-where $x\in[-1,1]^{n}$. The value $n=4$ was used in the conducted
-experiments.
+with $x\in[-1,1]^{n}$. For the conducted experiments the value $n=4$
+was used and the corresponding name for the experimental tables is
+CM4.
 \item \textbf{Camel} function:
 \[
 f(x)=4x_{1}^{2}-2.1x_{1}^{4}+\frac{1}{3}x_{1}^{6}+x_{1}x_{2}-4x_{2}^{2}+4x_{2}^{4},\quad x\in[-5,5]^{2}
@@ -457,25 +511,32 @@ f(x)=4x_{1}^{2}-2.1x_{1}^{4}+\frac{1}{3}x_{1}^{6}+x_{1}x_{2}-4x_{2}^{2}+4x_{2}^{
 \[
 f(x)=10^{6}x_{1}^{2}+\sum_{i=2}^{n}x_{i}^{2}
 \]
-The value $n=10$ was used in the conducted experiments.
+For the conducted experiments the value $n=10$ was used and the name
+used in the experimental tables is DISCUS10.
 \item \textbf{Easom} function: 
 \[
 f(x)=-\cos\left(x_{1}\right)\cos\left(x_{2}\right)\exp\left(\left(x_{2}-\pi\right)^{2}-\left(x_{1}-\pi\right)^{2}\right)
 \]
-with $x\in[-100,100]^{2}.$ 
+where $x\in[-100,100]^{2}.$ 
 \item \textbf{Exponential} function, defined as: 
 \[
 f(x)=-\exp\left(-0.5\sum_{i=1}^{n}x_{i}^{2}\right),\quad-1\le x_{i}\le1
 \]
- The values $n=4,16,64$ were used in the executed experiments.
+ In the conducted experiments the values $n=4,16,64$ were used and
+the associated names in the experimental tables are EXP4, EXP16 and
+EXP64 correspondingly.
 \item \textbf{Griewank2} function:
 \[
-f(x)=1+\frac{1}{200}\sum_{i=1}^{2}x_{i}^{2}-\prod_{i=1}^{2}\frac{\cos(x_{i})}{\sqrt{(i)}},\quad x\in[-100,100]^{2}
+f(x)=1+\frac{1}{200}\sum_{i=1}^{2}x_{i}^{2}-\prod_{i=1}^{2}\frac{\cos(x_{i})}{\sqrt{(i)}}
 \]
-\item \textbf{Gkls} function. $f(x)=\mbox{Gkls}(x,n,w)$, is a function
-with $w$ local minima, described in \citep{gkls} with $x\in[-1,1]^{n}$
-and $n$ a positive integer between 2 and 100. The value of the global
-minimum is -1 and in our experiments we have used $n=2,3$ and $w=50,\ 100$. 
+where $x\in[-100,100]^{2}$.
+\item \textbf{Gkls} function. $f(x)=\mbox{Gkls}(x,n,w)$. This function
+has been proposed in \citep{gkls} and it is constructed in a way
+that it has $w$ local minima in the range $[-1,1]^{n}$. The value
+of $n$ is between 2 and 100. The global minimum for this function
+is -1 and in the conducted experiments we have used the values $n=2,3$
+and $w=50,\ 100$. The corresponding function names in the experimental
+tables are GKLS250 and GKLS350 respectively.
 \item \textbf{Hansen} function: $f(x)=\sum_{i=1}^{5}i\cos\left[(i-1)x_{1}+i\right]\sum_{j=1}^{5}j\cos\left[(j+1)x_{2}+j\right]$,
 $x\in[-10,10]^{2}$ .
 \item \textbf{Hartman 3} function:
@@ -524,14 +585,14 @@ p=\left(\begin{array}{cccccc}
 0.4047 & 0.8828 & 0.8732 & 0.5743 & 0.1091 & 0.0381
 \end{array}\right)
 \]
-\item \textbf{Potential} function. The molecular conformation corresponding
-to the global minimum of the energy of N atoms interacting via the
-Lennard-Jones potential\citep{Jones} is used a test function here
-and it is defined by:
+\item \textbf{Potential} function. This function represents the energy of
+N atoms interacting with each other using the Lennard - Jones potential
+\citep{Jones}. This potential is defined as
 \begin{equation}
 V_{LJ}(r)=4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^{6}\right]\label{eq:potential}
 \end{equation}
-For our experiments we used: $N=3,\ 5$
+In the conducted experiments the values $N=3,\ 5$ were used and the
+corresponding function names are POTENTIAL3 and POTENTIAL5.
 \item \textbf{Rastrigin} function. 
 \[
 f(x)=x_{1}^{2}+x_{2}^{2}-\cos(18x_{1})-\cos(18x_{2}),\quad x\in[-1,1]^{2}
@@ -540,7 +601,8 @@ f(x)=x_{1}^{2}+x_{2}^{2}-\cos(18x_{1})-\cos(18x_{2}),\quad x\in[-1,1]^{2}
 \[
 f(x)=\sum_{i=1}^{n-1}\left(100\left(x_{i+1}-x_{i}^{2}\right)^{2}+\left(x_{i}-1\right)^{2}\right),\quad-30\le x_{i}\le30.
 \]
-In our experiments we used the values $n=4,\ 8$.
+The values $n=4,\ 8$ were used in the conducted experiments and the
+associated function names are ROSENBROCK4 and ROSENBROCK8 respectively.
 \item \textbf{Shekel 7} function.
 \end{itemize}
 \[
@@ -621,28 +683,34 @@ with $x\in[0,10]^{4}$ and $a=\left(\begin{array}{cccc}
 \[
 f(x)=-\left(2.5\prod_{i=1}^{n}\sin\left(x_{i}-z\right)+\prod_{i=1}^{n}\sin\left(5\left(x_{i}-z\right)\right)\right),\quad0\le x_{i}\le\pi.
 \]
-The values of $n=4,8$ and $z=\frac{\pi}{6}$ was used in the experimental
-results.
+The values of $n=4,8$ were used in the experiments and the associated
+function names are SINU4 and SINU8 respectively. The value of parameter
+$z$ was set to $\frac{\pi}{6}$.
 \item \textbf{Test2N} function:
 \[
 f(x)=\frac{1}{2}\sum_{i=1}^{n}x_{i}^{4}-16x_{i}^{2}+5x_{i},\quad x_{i}\in[-5,5].
 \]
-The function has $2^{n}$ in the specified range and in our experiments
-we used $n=4,5,6,7$.
+The function has $2^{n}$ and the values $n=4,5,6,7$ were used and
+the associated function names are TEST2N4, TEST2N5, TEST2N6 and TEST2N7
+respectively.
 \item \textbf{Test30N} function:
 \[
 f(x)=\frac{1}{10}\sin^{2}\left(3\pi x_{1}\right)\sum_{i=2}^{n-1}\left(\left(x_{i}-1\right)^{2}\left(1+\sin^{2}\left(3\pi x_{i+1}\right)\right)\right)+\left(x_{n}-1\right)^{2}\left(1+\sin^{2}\left(2\pi x_{n}\right)\right)
 \]
-with $x\in[-10,10]$, with $30^{n}$ local minima in the search space.
-For our experiments we used $n=3,4$.
+with $x\in[-10,10]$, with $30^{n}$ local minima and the values $n=3,4$
+were used in the experiments.
 \end{itemize}
 
 \subsection{Experimental results}
 
-The proposed method was tested on the previously mentioned test functions.
-Every experiment mentioned was executed 30 times and the average number
-of function calls was reported. The most critical parameters of the
-proposed method are listed in table \ref{tab:values}.
+Experiments were performed on the objective functions presented previously.
+Each experiment was run 30 times using different random numbers each
+time and the averages of the experiments are plotted in the tables
+below. For the parallelization the freely available OpenMP library
+\citep{openmp} was utilized. The programming language used was ANSI
+C++ and the OPTIMUS optimization package freely available from \url{https://github.com/itsoulos/OPTIMUS}
+(accessed on 3 March 2023) was used. The most critical parameters
+of the proposed method are listed in table \ref{tab:values}.
 
 \begin{table}[H]
 \caption{The values for most critical parameters of the algorithm.\label{tab:values}}
@@ -669,9 +737,15 @@ $N_{M}$ & 15\tabularnewline
 \hline 
 \end{tabular}
 \end{table}
-The method was compared against a genetic algorithm and a simple PSO
-method with the same set of parameters (chromosomes and particles)
-and the results are reported in Table \ref{tab:Comparison}. 
+In the first set of experiments, the serial version of the proposed
+technique, i.e. running on a single processor, was compared with two
+widely used global optimization techniques: a genetic algorithm and
+a simple version of Particle Swarm Optimization. In all cases the
+same number of particles or chromosomes and the same maximum number
+of generations were used. In addition, after each method was executed,
+the local optimization method BFGS was used to improve the global
+minimum found. The results for this experiment are reported in Table
+\ref{tab:Comparison}. 
 
 \begin{table}[H]
 \caption{Comparison of the proposed method against two other global optimization
@@ -754,30 +828,32 @@ TEST30N4 & 17395 & 23519 & 8014\tabularnewline
 \end{tabular}
 \end{table}
 In the table, each number in each cell represents the average of the
-function values for 30 independent runs. Also, the numbers in parentheses
-represent the percentage of runs in which the global minimum was successfully
+function values for 30 runs. Also, the numbers in parentheses stand
+for the percentage of runs in which the global minimum was successfully
 found. If this percentage is not present, it implies 100\% success.
 In addition, a line has been added at the end of the table showing
-the total number of function calls for each method. From the experimental
-results, it is evident that the proposed technique significantly reduces
-the required number of function calls even if it is executed on a
-single processing unit.
+the total number of function calls for each method. The experimental
+results demonstrate that even running the proposed technique on a
+single computing unit can result to better results than the other
+techniques in terms of the required number of function calls and,
+by extension, the required time required to find the global minimum.
 
 In order to evaluate the effect of executing the method on parallel
 processing units, another experiment was done in which the number
 of parallel processing units was increased from 1 to 10 and the results
 are presented in Table \ref{tab:t1results}. Also, a box plot for
-this experiment is shown in Figure \ref{fig:boxplot1to1}. In order
-to have reliability in the measurements, the total number of particles
-remained constant as the number of units increased. So, for example,
-in the case of the two computing units, in each unit the particles
-were 100 while in 5 units the particles were 40. In this way, the
-total number of particles used remains constant at 200.
+this experiment is shown in Figure \ref{fig:boxplot1to1}.In addition,
+in order to give greater reliability to the experimental results,
+the total number of particles was in all runs constant and equal to
+200, as defined in the table \ref{tab:values}. This means, for example,
+that when the computing units are 4 each unit will run a serial version
+of PSO with 50 particles and when the computing units become 5 the
+number of particles in each unit will be reduced to 40.
 
 \begin{table}[H]
 \caption{Experimental results using the proposed method, the propagation scheme
 was set to 1to1 and the value of $N_{P}$ was set to 5. In the conducted
-experiments the number of parallel processing units was varyied from
+experiments the number of parallel processing units was varied from
 1 to 10.\label{tab:t1results}}
 
 \raggedright{}%
@@ -862,12 +938,13 @@ TEST30N4 & 8014 & 7683 & 6568 & 6317 & 5090\tabularnewline
 \caption{Box - plot for the comparison between different number of processing
 units. The propagation method was set to 1to1.\label{fig:boxplot1to1}}
 \end{figure}
-From this experiment, it is clear that the proposed technique drastically
-reduces the required number of function calls as the parallel processing
-units increase, while at the same time the average reliability of
-the method in finding the global minimum also increases.
+From the experimental results it is clear that increasing the number
+of parallel processing nodes further reduces the total number of function
+calls, since more units are used in the attempt to find the global
+minimum. In addition, a slight increase in the reliability of the
+method in finding the total minimum is also observed.
 
-In addition, to determine the effect of the propagation mechanism
+Furthermore, to determine the effect of the propagation mechanism
 on the reliability and speed of the method, another comparative experiment
 was performed, in which the number of parallel processing units was
 set to 5 ($N_{I}$ = 5) and all propagation mechanisms were used.
@@ -953,9 +1030,10 @@ TEST30N4 & 6317 & 6938 & 6473 & 6305\tabularnewline
 \hline 
 \end{tabular}
 \end{table}
-From the experimental results, it appears that the 1-to-N propagation
-method has slightly better performances than the rest of the best
-particle propagation techniques among the sub-populations.
+This time, the experimental results did not show any clear superiority
+of one of the propagation methods. However, it appears that the 1-to-N
+propagation method has slightly better performances than the rest
+of the best particle propagation techniques among the sub-populations.
 
 The last experiment had to do with the effect of the $N_{P}$ parameter
 on the speed of the method. In it, 5 parallel computing units were
@@ -1044,41 +1122,57 @@ TEST30N4 & 6518 & 6676 & 6509 & 6473 & 6756\tabularnewline
 \hline 
 \end{tabular}
 \end{table}
-Increasing the value of the parameter from 1 to 5 drastically reduces
-the required number of function calls, and this remains almost constant
-for increasing the value for that parameter.
+As is evident, increasing the value of the $N_{P}$ parameter significantly
+reduces the required number of function calls up to a value of 5.
+From then on, the total number of calls appears to be constant. Practically,
+this means that sending not only the best particle but also those
+with the immediately lower value further reduces the required number
+of function calls.
 
 \section{Conclusions\label{sec:Conclusions}}
 
-In this paper, a number of new ideas for parallel implementation of
-the well-established particle optimization method were presented.
-In the new method, a technique of propagating the best particles between
-computing units as well as a termination rule of the overall process
-were introduced. In the case of the propagation of the best particles
-from the experiments carried out, it appears that it is more efficient
-to send between the computing units more than the best particle. Furthermore,
-the propagation method between parallel computing units did not have
-a drastic effect on the efficiency and speed of the method, although
-the 1-to-N propagation method appeared to have slightly better results.
+In the present work a number of ideas were presented that can lead
+to an efficient parallel implementation of the PSO technique. The
+need for parallelization of the method is great, as it is an iterative
+process involving repeated operations on vectors and these operations
+for large problems may require significantly large computational time.
+In the current work, a technique of propagating the best particles
+between computing units as well as a termination rule of the overall
+process were introduced. In the case of the propagation of the best
+particles from the experiments carried out, it appears that it is
+more efficient to send between the computing units more than the best
+particle. Furthermore, the propagation method between parallel computing
+units did not have a drastic effect on the efficiency and speed of
+the method, although the 1-to-N propagation method appeared to have
+slightly better results. Furthermore, the increase of the parameter
+$N_{P}$ from 1 to 5 decreased the required number of function calls.
 However, the biggest gain from using the method lies in the increase
 in parallel processing units. From the experiments performed, it is
 evident that as parallel processing units increase, the total function
-calls required to find the global minimum decreases. In addition,
-the increase in parallel processing units improved to some extent
-the efficiency of the method in finding the global minimum.
+calls required to find the global minimum decreases almost for every
+objective function. In addition, the increase in parallel processing
+units improved to some extent the efficiency of the method in finding
+the global minimum. The effectiveness of the proposed method was also
+shown in the comparison between its serial version and two other widely
+available techniques in the relevant literature. In this comparison
+the serial version of the method required significantly fewer function
+calls to find each global minimum.
 
-In the future, more and more effective termination techniques than
-the proposed one should be developed and possibly better techniques
-for propagating the best particles among computing units.
+In the future, the important work done in the parallelization of the
+PSO technique can be continued with the use of new termination rules
+that will be suitable for execution in parallel computing environments
+but also a possible extension of the best particle propagation techniques
+between parallel computing units.
 
 \vspace{6pt}
 
 
-\authorcontributions{I.G.T. and V.C. conceived of the idea, the methodology implemented
-the software. I.G.T. conducted the experiments, employing datasets,
-and provided the comparative experiments. V.C. performed the statistical
-analysis and prepared the manuscript. All authors have read and agreed
-to the published version of the manuscript.}
+\authorcontributions{I.G.T. and V.C. conceived of the idea, the methodology and they have
+implemented the corresponding software. I.G.T. conducted the experiments,
+employing objective functions as test cases, and provided the comparative
+experiments. V.C. performed the statistical analysis and prepared
+the manuscript. All authors have read and agreed to the published
+version of the manuscript.}
 
 \funding{This research received no external funding.}
 
@@ -1277,6 +1371,32 @@ Y. Lee, An Improved Particle Swarm Optimization for Nonconvex Economic
 Dispatch Problems, IEEE Transactions on Power Systems \textbf{25},
 pp. 156-16\textbf{216}6, 2010.
 
+\bibitem{psoApp1}B. Liu, L. Wang, Y.H. Jin, An Effective PSO-Based
+Memetic Algorithm for Flow Shop Scheduling, IEEE Transactions on Systems,
+Man, and Cybernetics, Part B (Cybernetics) \textbf{37}, pp. 18-27,
+2007.
+
+\bibitem{psoApp2}J. Yang, L. He, S. Fu, An improved PSO-based charging
+strategy of electric vehicles in electrical distribution grid, Applied
+Energy \textbf{128}, pp. 82-92, 2014.
+
+\bibitem{psoApp3}K. Mistry, L. Zhang, S. C. Neoh, C. P. Lim, B. Fielding,
+A Micro-GA Embedded PSO Feature Selection Approach to Intelligent
+Facial Emotion Recognition, IEEE Transactions on Cybernetics. \textbf{47},
+pp. 1496-1509, 2017.
+
+\bibitem{psoApp4}S. Han, X. Shan, J. Fu, W. Xu, H. Mi, Industrial
+robot trajectory planning based on improved pso algorithm, J. Phys.:
+Conf. Ser. \textbf{1820}, 012185, 2021.
+
+\bibitem{psoReview}F. Marini, B. Walczak, Particle swarm optimization
+(PSO). A tutorial, Chemometrics and Intelligent Laboratory Systems
+\textbf{149}, pp. 153-165, 2015.
+
+\bibitem{psoOverview}M. Jain, V. Saihjpal, N. Singh, S.B. Singh,
+An Overview of Variants and Advancements of PSO Algorithm, Applied
+Sciences \textbf{12}, 8392, 2022. 
+
 \bibitem{pso_mutation1}A. Stacey, M. Jancic, I. Grundy, Particle
 swarm optimization with mutation, In: 2003 Congress on Evolutionary
 Computation, 2003. CEC '03., pp. 1425-1430, 2003.
@@ -1363,6 +1483,10 @@ Superior solution guided particle swarm optimization combined with
 local search techniques, Expert Systems with Applications \textbf{41},
 pp. 7536-7548, 2014.
 
+\bibitem{RandomInertia}R.C. Eberhart, Y.H. Shi, Tracking and optimizing
+dynamic systems with particle swarms, in: Congress on Evolutionary
+Computation, Korea, 2001.
+
 \bibitem{ipso}V. Charilogis, I.G. Tsoulos, Toward an Ideal Particle
 Swarm Optimizer for Multidimensional Functions, Information \textbf{13},
 217, 2022.
@@ -1405,6 +1529,10 @@ pp. 469-480, 2003.
 
 \bibitem{Jones}J.E. Lennard-Jones, On the Determination of Molecular
 Fields, Proc. R. Soc. Lond. A \textbf{ 106}, pp. 463--477, 1924.
+
+\bibitem{openmp}R. Chandra, L. Dagum, D. Kohr, D. Maydan,J. McDonald
+and R. Menon, Parallel Programming in OpenMP, Morgan Kaufmann Publishers
+Inc., 2001.
 
 \end{thebibliography}
 

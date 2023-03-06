@@ -263,19 +263,26 @@ Correspondence: itsoulos@uoi.gr;
 \end_layout
 
 \begin_layout Abstract
-In global optimization there are techniques where they find the optimal
- solutions of the objective problems, but they waste a lot of computational
- time.
- The PSO parallelization technique proposed in this paper significantly
- reduces the computation time and at the same time participates in the solution
- finding algorithm by iterative communication between the parallel computing
- units.
- Apart from the sequential algorithm, the communication strategies 1to1,
- 1toN, Nto1 and NtoN are compared where each computing unit sends its knowledge
- to the other clusters.
- In addition, a new and more appropriate termination rule is proposed here.
- From the results of the experiments, it appears that the overall parallelizatio
-n technique is more than an accelerator of the classical algorithm.
+In the area of global optimization, a variety of techniques have been developed
+ to find the global minimum.
+ These techniques, in most cases, require a significant amount of computational
+ resources and time to complete and therefore there is a need to develop
+ parallel techniques.
+ In addition, the wide spread of parallel architectures in recent years
+ greatly facilitates the implementation of such techniques.
+ Among the most widely used global optimization techniques is the Particle
+ Swarm Optimization technique.
+ In this work, a series of modifications are proposed in the direction of
+ the efficient parallelization for the Particle Swarm Optimization.
+ These modifications include an innovative velocity calculation mechanism
+ that has also been successfully used in the serial version of the method,
+ mechanisms for propagating the best particles between parallel computing
+ units, but also a process termination mechanism, which has been properly
+ configured for efficient execution on parallel computing environments.
+ The proposed technique was applied to a multitude of computational problems
+ from the relevant literature and the results were more than promising,
+ since it was found that increasing the computational threads can significantly
+ reduce the required number of function calls to find the global minimum.
 \end_layout
 
 \begin_layout Keywords
@@ -308,9 +315,9 @@ S=\left[a_{1},b_{1}\right]\otimes\left[a_{2},b_{2}\right]\otimes\ldots\left[a_{n
 
 \end_inset
 
-where the function f is assumed to be continuous and differentiable.
- Many problems faced by researchers can be formulated as global minimization
- problems such as problems in physical science 
+where the function f is assumed to be continuous and differentiable.There
+ is a wide range of problems in the relevant literature that can be treated
+ as global optimization problems such as problems in physical science 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "go_physics1,go_physics2,go_physics3"
@@ -343,10 +350,11 @@ literal "false"
 \end_inset
 
 .
- The global optimization methods are usually divided into two major categories:
- deterministic and stochastic methods.
- In the deterministic category, the most common method is the so - called
- interval method 
+ There are several ways to categorize global optimization techniques, but
+ most researchers suggest dividing them into two broad categories: deterministic
+ and stochastic techniques.
+ In the area of deterministic techniques, the one with the greatest spread
+ among researchers is the Interval method
 \begin_inset CommandInset citation
 LatexCommand cite
 key "interval1,interval2"
@@ -354,19 +362,20 @@ literal "true"
 
 \end_inset
 
-, where the set 
+, where the initial interval of values 
 \begin_inset Formula $S$
 \end_inset
 
- is iteratively divided into subregions and those that do not contain a
- global solution are discarded using certain criteria.
- In the case of stochastic methods, the finding of the global minimum is
- based on randomness operations, although there is no guarantee of locating
- the global minimum.
- Nevertheless, it is the category of methods that is often used due to the
- simplicity and the effectiveness provided.
- Several researchers have proposed stochastic methods such as: controlled
- random search methods
+ of the objective function is continuously divided into smaller parts.
+ The segments that may not contain the total minimum are discarded and eventuall
+y a very narrow interval of values should be left which will contain the
+ total minimum of the objective function.
+ On the other hand, in the category of stochastic techniques, where the
+ greatest research effort is made, techniques are presented that look for
+ the total minimum using stochastic methods, which of course does not guarantee
+ finding the total minimum.
+ In this vast area of research endeavors one encounters methods such as
+ controlled random search methods
 \begin_inset CommandInset citation
 LatexCommand cite
 key "crs1,crs2,crs3"
@@ -374,7 +383,8 @@ literal "false"
 
 \end_inset
 
-, simulated annealing methods 
+ which can be considered as a direct search method, simulated annealing
+ methods 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "simann_major,simann1,simann2"
@@ -415,8 +425,9 @@ literal "false"
 \end_inset
 
 , etc.
- Also, recently, many studies have appeared that utilize the modern parallel
- processing units 
+ In addition, since in recent years there has been an extremely wide spread
+ of parallel computing units, many studies have appeared that utilize the
+ modern parallel processing units 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "gpu1,gpu2,gpu3"
@@ -442,26 +453,41 @@ literal "false"
 \begin_layout Standard
 The PSO method is inspired by the observations of Eberhart and Kennedy in
  the 1990s.
- The electrical engineer Russell C.
- Eberhart and social psychologist James Kennedy, observed the behavior of
- birds looking for food, presented a technique where the atoms or otherwise
- "particles" fly through the search space seeking for the best position
- that minimizes or maximizes a problem.
- These particles have two basic characteristics: their position at any instant
- of time, which is referred to as 
+ The two observed in detail the behavior of birds as they move through space
+ looking for food and then formulated a technique that falls under the domain
+ of global optimization, using the experience they gained from their observation
+s.
+ In the new technique they formulated, the atoms or particles move in the
+ research space of the problem in search of the minimum of the objective
+ function.
+ These particles are directly related to two basic characteristics: the
+ current position of each particle and the velocity with which it moves
+ in search of the global minimum.
+ The current position is denoted as 
 \begin_inset Formula $\overrightarrow{x}$
 \end_inset
 
- and the speed at which they are moving, which is referred to as 
+ and the velocity is referred to as 
 \begin_inset Formula $\overrightarrow{u}$
 \end_inset
 
 .
- The purpose of this method is to move the particles iteratively and calculate
- their next position based on three elements: the current position, the
- best position they had in the past and the best position of the population.
- The PSO method was successfully used in a variety of scientific and practical
- problems in physics
+ In addition, for each particle the best position in which it has been found
+ in the past (the one with the smallest value for the objective function)
+ is kept in memory, but also for the total population its best position
+ is kept.
+ The method moves the particles to search for the global minimum through
+ an iterative process, in which the positions of the particles at each iteration
+ are derived from each particle's current position, the best position it
+ has found in previous iterations, and the overall best position of the
+ population .
+ 
+\end_layout
+
+\begin_layout Standard
+Due to the simplicity of the method and the small number of parameters that
+ should be set, this method has been applied to many difficult problems
+ from all areas of the sciences such as problems that appear in physics
 \series bold
  
 \series default
@@ -498,8 +524,63 @@ literal "true"
 \end_inset
 
  etc.
- Due to its high popularity, the method has received a number of interventions
- in recent years, such as combination with the mutation mechanism 
+ Also the PSO method was successfully applied recently in many practical
+ problems such as flow shop scheduling 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "psoApp1"
+literal "false"
+
+\end_inset
+
+, successful development of electric vehicle charging strategies 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "psoApp2"
+literal "false"
+
+\end_inset
+
+, emotion recognition 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "psoApp3"
+literal "false"
+
+\end_inset
+
+, robotics 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "psoApp4"
+literal "false"
+
+\end_inset
+
+ etc.
+ A extensive tutorial on PSO methods can be found in the work of Marini
+ and Walczak 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "psoReview"
+literal "false"
+
+\end_inset
+
+.
+ Also a recent overview of PSO variants can be found in the work of Jain
+ et al 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "psoOverview"
+literal "false"
+
+\end_inset
+
+.
+ Since the technique has gained a lot of popularity in recent years, many
+ works have been developed based on it, such as combination with the mutation
+ mechanism 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "pso_mutation1,pso_mutation2,pso_mutation3"
@@ -507,7 +588,8 @@ literal "false"
 
 \end_inset
 
-, improved initialization of the velocity vector 
+, methods that propose new techniques to initialize the velocity vector
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "pso_initvelocity"
@@ -535,7 +617,10 @@ literal "false"
 
 \end_inset
 
-, methods aim to improve the velocity calculation 
+.
+ Also since the calculation of the velocity of the particles is a determining
+ factor for the effectiveness of the method, several techniques were formulated
+ for the calculation of the velocity 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "pso_velocity1,pso_velocity2,pso_velocity3"
@@ -543,9 +628,10 @@ literal "false"
 
 \end_inset
 
- etc.
- The method of PSO has been integrated into other optimization techniques
- like the work of Bogdanova et al 
+.
+ The method of particle swarm optimization has been successfully combined
+ with other global optimization techniques, such as the work of Bogdanova
+ et al 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "ge_pso1"
@@ -553,7 +639,7 @@ literal "false"
 
 \end_inset
 
- who combined Grammatical Evolution with swarm techniques like PSO 
+ who suggested a combination of Grammatical Evolution with PSO 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "ge_mainpaper"
@@ -561,7 +647,8 @@ literal "false"
 
 \end_inset
 
-, the work of Pan et al 
+.
+ Also Pan et al 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "siman_pso"
@@ -569,8 +656,9 @@ literal "false"
 
 \end_inset
 
- to create a hybrid PSO method with simulated annealing.
- Also, Mughal et al 
+ suggested a method that combines the PSO method with a variation of the
+ simulated annealing.
+ Likewise Mughal et al 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "simman_pso_energy"
@@ -578,9 +666,9 @@ literal "false"
 
 \end_inset
 
- used a hybrid technique of PSO and Simulated Annealing for photovoltaic
- cell parameter estimation.
- Similarly, the work of Lin et al 
+, proposed a hybrid technique that effectively combines PSO and simulated
+ annealing for solar energy problems.
+ In the same way, Lin et al 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "pso_de"
@@ -588,11 +676,11 @@ literal "false"
 
 \end_inset
 
- utilized a hybrid method of PSO and Differential Evolution for numerical
- optimization problems.
- Variations of PSO that aim at the global minimum in a shorter time may
- include the use of a local optimization method in each iteration of the
- algorithm 
+ suggested a hybrid method of PSO and differential evolution for some optimizati
+on problems.
+ Additionally, a number of techniques have been presented in which local
+ minimization methods are applied to some iterations of Particle Swarm Optimizat
+ion 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "pso_local1,pso_local2"
@@ -601,16 +689,16 @@ literal "false"
 \end_inset
 
 .
- Of course, the above process can be extremely time consuming and, depending
- on the termination method used and the number of local searches performed,
- may require a long execution time.
- 
+ Of course, these techniques significantly increase the computational time
+ required by the method, but also significantly improve the performance
+ of the method.
 \end_layout
 
 \begin_layout Standard
 The proposed method creates a number of sub-populations of particles that
- run independently on parallel computing units that will also be called
- islands.
+ run independently on parallel computing units.
+ The same serial algorithm with the same set of parameters is applied to
+ each computing unit.
  Also, a series of modifications to the original particle swarm optimization
  method are proposed in order to make it more efficient in parallel computing
  environments.
@@ -618,6 +706,28 @@ The proposed method creates a number of sub-populations of particles that
  a new termination rule specifically modified for parallel techniques, and
  a new way of propagating the best particles among the parallel computing
  units involved in the overall method.
+ The proposed velocity calculation is proposed by Eberhart and Shi 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "RandomInertia"
+literal "false"
+
+\end_inset
+
+ and it is based in random values.
+ Also, the proposed stopping rule is based on the work of Charilogis and
+ Tsoulos 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "ipso"
+literal "false"
+
+\end_inset
+
+, giving excellent results when applied on a series of well - known optimization
+ problems.
+ Although, the proposed termination technique is modified appropriately
+ for parallel computing environments.
 \end_layout
 
 \begin_layout Standard
@@ -668,15 +778,17 @@ name "sec:The-proposed-method"
 \end_layout
 
 \begin_layout Standard
-In this section the discussion will begin with the steps of the serial method
- as well as a general outline of the parallel technique followed.
- Then the basic components of the proposed process, such as the calculation
- of the speed, the proposed termination rule and the method of propagating
- points between the parallel computing units will be thoroughly analyzed.
+This section will begin with a detailed description of the serial method
+ to be performed on each parallel processing unit as well as the overall
+ parallel method proposed in this work.
+ Subsequently, the basic components of the proposed process, such as the
+ calculation of the velocity, the proposed termination rule and the method
+ of propagating points between the parallel computing units will be thoroughly
+ analyzed.
 \end_layout
 
 \begin_layout Subsection
-The base algorithm
+The main steps of the basic PSO algorithm
 \begin_inset CommandInset label
 LatexCommand label
 name "subsec:The-base-algorithm"
@@ -687,8 +799,10 @@ name "subsec:The-base-algorithm"
 \end_layout
 
 \begin_layout Standard
-The base PSO algorithm executed in every parallel processing unit is listed
- in Algorithm 
+In every parallel processing unit a PSO algorithm is executed to locate
+ the global minimum of the objective function.
+ The mains steps for this algorithm are outlined in detail in Algorithm
+ 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "alg:psoSerial"
@@ -774,23 +888,20 @@ Set
 \begin_inset Formula $\mbox{iter}_{\mbox{max}}$
 \end_inset
 
- as the maximum number of allowed generations.
+ as the maximum number of iterations allowed for the serial algorithm.
 \end_layout
 
 \begin_layout Enumerate
 
 \series bold
-Set
+Initialize
 \series default
- randomly, the initial positions of the 
-\begin_inset Formula $m$
-\end_inset
-
- particles 
+ randomly, the positions 
 \begin_inset Formula $x_{1},x_{2},...,x_{m}$
 \end_inset
 
-.
+ for the particles.
+ The initial positions must be within the domain of the objective function.
 \end_layout
 
 \begin_layout Enumerate
@@ -823,7 +934,7 @@ For
 \begin_inset Formula $p_{i}$
 \end_inset
 
- stands for the best located position of particle 
+ represents the best located position of particle 
 \begin_inset Formula $i$
 \end_inset
 
@@ -855,7 +966,8 @@ name "enu:Check-Termination."
 
 \end_inset
 
- If the termination criteria are hold, then terminate.
+ The termination criterion for the serial algorithm is checked.
+ If the termination criterion is true, then the method terminates.
 \end_layout
 
 \begin_layout Enumerate
@@ -895,7 +1007,7 @@ the velocity
 \begin_inset Formula $u_{i}$
 \end_inset
 
- using 
+ as a combination of the vectors 
 \begin_inset Formula $u_{i},\ p_{i}$
 \end_inset
 
@@ -911,7 +1023,7 @@ the velocity
 \series bold
 Set
 \series default
- the new position 
+ the new position for the particle as: 
 \begin_inset Formula $x_{i}=x_{i}+u_{i}$
 \end_inset
 
@@ -938,7 +1050,11 @@ Calculate
 \begin_inset Formula $x_{i}$
 \end_inset
 
+ using the objective function 
+\begin_inset Formula $f(x)$
+\end_inset
 
+.
 \end_layout
 
 \begin_layout Enumerate
@@ -1017,7 +1133,7 @@ reference "enu:Check-Termination."
 
 \end_inset
 
-The base PSO algorithm described in Algorithm 
+The base PSO algorithm as described in Algorithm 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "alg:psoSerial"
@@ -1027,11 +1143,11 @@ noprefix "false"
 
 \end_inset
 
- calculates at every iteration the new position 
-\begin_inset Formula $x_{i}$
+, computes at every iteration the new position of the particle 
+\begin_inset Formula $i$
 \end_inset
 
- with the following operation:
+ using the following operation:
 \begin_inset Formula 
 \begin{equation}
 x_{i}=x_{i}+u_{i}\label{eq:eq3}
@@ -1039,8 +1155,8 @@ x_{i}=x_{i}+u_{i}\label{eq:eq3}
 
 \end_inset
 
-In most cases the new speed is a linear combination of the old speed and
- the best values 
+In most cases the new velocity could be a linear combination of the previously
+ computed velocity and the best values 
 \begin_inset Formula $p_{i}$
 \end_inset
 
@@ -1048,7 +1164,8 @@ In most cases the new speed is a linear combination of the old speed and
 \begin_inset Formula $p_{\mbox{best}}$
 \end_inset
 
- and it is defined as:
+.
+ A typical computation of the new velocity is defined as:
 \begin_inset Formula 
 \begin{equation}
 u_{i}=\omega u_{i}+r_{1}c_{1}\left(p_{i}-x_{i}\right)+r_{2}c_{2}\left(p_{\mbox{best}}-x_{i}\right)\label{eq:eq4-1}
@@ -1072,11 +1189,11 @@ The variables
 \end_layout
 
 \begin_layout Enumerate
-The constant number 
+The constants 
 \begin_inset Formula $c_{1},\ c_{2}$
 \end_inset
 
- are in the range 
+ are defined in 
 \begin_inset Formula $[1,2]$
 \end_inset
 
@@ -1089,12 +1206,7 @@ The variable
 \begin_inset Formula $\omega$
 \end_inset
 
- is commonly called inertia and typically 
-\begin_inset Formula $\omega\in[0,1]$
-\end_inset
-
-.
- The inertia was proposed by Shi and Eberhart 
+ is called inertia and it was suggested by Shi and Eberhart 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "pso_major"
@@ -1103,16 +1215,8 @@ literal "false"
 \end_inset
 
 .
- In the current article the same inertia calculation as proposed in 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "ipso"
-literal "false"
-
-\end_inset
-
- is used.
- The inertia is calculated through the following equation:
+ In the current article a simple inertia calculation is used and calculated
+ using:
 \end_layout
 
 \begin_layout Standard
@@ -1123,11 +1227,11 @@ literal "false"
 
 \end_inset
 
-with 
+The variable 
 \begin_inset Formula $r$
 \end_inset
 
- being a random number and 
+ is a a random number with 
 \begin_inset Formula $r\in[0,1]$
 \end_inset
 
@@ -1343,8 +1447,8 @@ Update
 \series bold
 Check
 \series default
- the termination rule.
- If the termination rule holds then goto step 
+ the proposed termination rule.
+ If the termination rule is valid, then goto step 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "enu:Terminate-and-report"
@@ -1367,6 +1471,7 @@ noprefix "false"
 .
 \end_layout
 
+\begin_deeper
 \begin_layout Enumerate
 
 \series bold
@@ -1380,9 +1485,8 @@ name "enu:Terminate-and-report"
 \end_inset
 
 .
- Apply a local search procedure to this located value to enchance the located
+ Apply a local search procedure to this located value to enhance the located
  global minimum.
- .
  In the proposed algorithm a BFGS variation of Powell 
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -1394,6 +1498,7 @@ literal "false"
  was used a local search procedure.
 \end_layout
 
+\end_deeper
 \end_inset
 
 The main aspects of the parallel algorithm are the propagation mechanism
@@ -1415,9 +1520,9 @@ name "subsec:Propagation-mechanism"
 
 \begin_layout Standard
 During the execution of the parallel algorithm and periodically, the processing
- units propagate their best particles (those with the lowest value in the
- objective function) to the remaining processing units.
- This dissemination can be done in the following possible ways:
+ units propagate their best particles (those with the lowest function value)
+ to the remaining processing units.
+ This propagation can be achieved in the following possible ways:
 \end_layout
 
 \begin_layout Enumerate
@@ -1554,7 +1659,7 @@ This quantity is calculated on every iteration
 \begin_inset Formula $f_{i,\mbox{min}}^{(k)}$
 \end_inset
 
- is the best located function value for unit 
+ is the best function value for unit 
 \begin_inset Formula $i$
 \end_inset
 
@@ -1588,9 +1693,10 @@ name "sec:Experiments"
 \end_layout
 
 \begin_layout Standard
-To measure the reliability and efficiency of the proposed technique, experiments
- were performed on a wide range of objective functions from the relevant
- literature
+In order to be able to establish the efficiency of the method in finding
+ the total minimum of continuous functions, a series of experiments were
+ performed in which objective functions from the relevant literature were
+ used
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Ali1,Floudas1"
@@ -1598,7 +1704,9 @@ literal "true"
 
 \end_inset
 
-, which have been studied by many researchers
+.
+ These objective functions have been extensively studied by many researchers
+ in many publications
 \begin_inset CommandInset citation
 LatexCommand cite
 key "testfunctions1,testfunctions2,testfunctions3,testfunctions4"
@@ -1607,9 +1715,10 @@ literal "false"
 \end_inset
 
 .
- In these experiments the ability of the method to find the global minimum
- was measured and also a study of the basic parameters of the proposed technique
- was made.
+ In this series of experiments, beyond the ability of the method to find
+ the global minimum, the effect of changes in a number of critical parameters,
+ such as propagation techniques, on the behavior of the proposed method
+ was also evaluated.
 \end_layout
 
 \begin_layout Subsection
@@ -1617,7 +1726,8 @@ Test functions
 \end_layout
 
 \begin_layout Standard
-The definition of the test functions used are given below
+The mathematical formulas for the series of objective functions used are
+ presented below: given below
 \end_layout
 
 \begin_layout Itemize
@@ -1636,11 +1746,12 @@ f(x)=x_{1}^{2}+10^{6}\sum_{i=2}^{n}x_{i}^{2}
 
 \end_inset
 
-The value 
+For the conducted experiments the value 
 \begin_inset Formula $n=10$
 \end_inset
 
- was used in the conducted experiments.
+ was used as test case and the function is denoted as CIGAR10 in the experimenta
+l tables.
 \end_layout
 
 \begin_layout Itemize
@@ -1680,7 +1791,7 @@ f(x)=x_{1}^{2}+2x_{2}^{2}-\frac{3}{10}\cos\left(3\pi x_{1}\right)\cos\left(4\pi 
 
 \end_inset
 
-where 
+with 
 \begin_inset Formula $x\in[-50,50]^{2}$
 \end_inset
 
@@ -1718,16 +1829,16 @@ f(x)=\sum_{i=1}^{n}x_{i}^{2}-\frac{1}{10}\sum_{i=1}^{n}\cos\left(5\pi x_{i}\righ
 
 \end_inset
 
-where 
+with 
 \begin_inset Formula $x\in[-1,1]^{n}$
 \end_inset
 
 .
- The value 
+ For the conducted experiments the value 
 \begin_inset Formula $n=4$
 \end_inset
 
- was used in the conducted experiments.
+ was used and the corresponding name for the experimental tables is CM4.
 \end_layout
 
 \begin_layout Itemize
@@ -1762,11 +1873,11 @@ f(x)=10^{6}x_{1}^{2}+\sum_{i=2}^{n}x_{i}^{2}
 
 \end_inset
 
-The value 
+For the conducted experiments the value 
 \begin_inset Formula $n=10$
 \end_inset
 
- was used in the conducted experiments.
+ was used and the name used in the experimental tables is DISCUS10.
 \end_layout
 
 \begin_layout Itemize
@@ -1782,7 +1893,7 @@ f(x)=-\cos\left(x_{1}\right)\cos\left(x_{2}\right)\exp\left(\left(x_{2}-\pi\righ
 
 \end_inset
 
-with 
+where 
 \begin_inset Formula $x\in[-100,100]^{2}.$
 \end_inset
 
@@ -1802,11 +1913,12 @@ f(x)=-\exp\left(-0.5\sum_{i=1}^{n}x_{i}^{2}\right),\quad-1\le x_{i}\le1
 
 \end_inset
 
- The values 
+ In the conducted experiments the values 
 \begin_inset Formula $n=4,16,64$
 \end_inset
 
- were used in the executed experiments.
+ were used and the associated names in the experimental tables are EXP4,
+ EXP16 and EXP64 correspondingly.
 \end_layout
 
 \begin_layout Itemize
@@ -1817,12 +1929,16 @@ Griewank2
  function:
 \begin_inset Formula 
 \[
-f(x)=1+\frac{1}{200}\sum_{i=1}^{2}x_{i}^{2}-\prod_{i=1}^{2}\frac{\cos(x_{i})}{\sqrt{(i)}},\quad x\in[-100,100]^{2}
+f(x)=1+\frac{1}{200}\sum_{i=1}^{2}x_{i}^{2}-\prod_{i=1}^{2}\frac{\cos(x_{i})}{\sqrt{(i)}}
 \]
 
 \end_inset
 
+where 
+\begin_inset Formula $x\in[-100,100]^{2}$
+\end_inset
 
+.
 \end_layout
 
 \begin_layout Itemize
@@ -1835,11 +1951,8 @@ Gkls
 \begin_inset Formula $f(x)=\mbox{Gkls}(x,n,w)$
 \end_inset
 
-, is a function with 
-\begin_inset Formula $w$
-\end_inset
-
- local minima, described in 
+.
+ This function has been proposed in 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "gkls"
@@ -1847,17 +1960,22 @@ literal "true"
 
 \end_inset
 
- with 
-\begin_inset Formula $x\in[-1,1]^{n}$
+ and it is constructed in a way that it has 
+\begin_inset Formula $w$
 \end_inset
 
- and 
+ local minima in the range 
+\begin_inset Formula $[-1,1]^{n}$
+\end_inset
+
+.
+ The value of 
 \begin_inset Formula $n$
 \end_inset
 
- a positive integer between 2 and 100.
- The value of the global minimum is -1 and in our experiments we have used
- 
+ is between 2 and 100.
+ The global minimum for this function is -1 and in the conducted experiments
+ we have used the values 
 \begin_inset Formula $n=2,3$
 \end_inset
 
@@ -1866,7 +1984,8 @@ literal "true"
 \end_inset
 
 .
- 
+ The corresponding function names in the experimental tables are GKLS250
+ and GKLS350 respectively.
 \end_layout
 
 \begin_layout Itemize
@@ -1985,8 +2104,8 @@ p=\left(\begin{array}{cccccc}
 Potential
 \series default
  function.
- The molecular conformation corresponding to the global minimum of the energy
- of N atoms interacting via the Lennard-Jones potential
+ This function represents the energy of N atoms interacting with each other
+ using the Lennard - Jones potential 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Jones"
@@ -1994,7 +2113,8 @@ literal "true"
 
 \end_inset
 
- is used a test function here and it is defined by:
+.
+ This potential is defined as
 \begin_inset Formula 
 \begin{equation}
 V_{LJ}(r)=4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^{6}\right]\label{eq:potential}
@@ -2002,11 +2122,11 @@ V_{LJ}(r)=4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{
 
 \end_inset
 
-For our experiments we used: 
+In the conducted experiments the values 
 \begin_inset Formula $N=3,\ 5$
 \end_inset
 
-
+ were used and the corresponding function names are POTENTIAL3 and POTENTIAL5.
 \end_layout
 
 \begin_layout Itemize
@@ -2046,11 +2166,12 @@ f(x)=\sum_{i=1}^{n-1}\left(100\left(x_{i+1}-x_{i}^{2}\right)^{2}+\left(x_{i}-1\r
 
 \end_inset
 
-In our experiments we used the values 
+The values 
 \begin_inset Formula $n=4,\ 8$
 \end_inset
 
-.
+ were used in the conducted experiments and the associated function names
+ are ROSENBROCK4 and ROSENBROCK8 respectively.
 \end_layout
 
 \begin_layout Itemize
@@ -2216,11 +2337,17 @@ The values of
 \begin_inset Formula $n=4,8$
 \end_inset
 
- and 
-\begin_inset Formula $z=\frac{\pi}{6}$
+ were used in the experiments and the associated function names are SINU4
+ and SINU8 respectively.
+ The value of parameter 
+\begin_inset Formula $z$
 \end_inset
 
- was used in the experimental results.
+ was set to 
+\begin_inset Formula $\frac{\pi}{6}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Itemize
@@ -2240,11 +2367,12 @@ The function has
 \begin_inset Formula $2^{n}$
 \end_inset
 
- in the specified range and in our experiments we used 
+ and the values 
 \begin_inset Formula $n=4,5,6,7$
 \end_inset
 
-.
+ were used and the associated function names are TEST2N4, TEST2N5, TEST2N6
+ and TEST2N7 respectively.
 \end_layout
 
 \begin_layout Itemize
@@ -2268,12 +2396,11 @@ with
 \begin_inset Formula $30^{n}$
 \end_inset
 
- local minima in the search space.
- For our experiments we used 
+ local minima and the values 
 \begin_inset Formula $n=3,4$
 \end_inset
 
-.
+ were used in the experiments.
 \end_layout
 
 \begin_layout Subsection
@@ -2281,9 +2408,31 @@ Experimental results
 \end_layout
 
 \begin_layout Standard
-The proposed method was tested on the previously mentioned test functions.
- Every experiment mentioned was executed 30 times and the average number
- of function calls was reported.
+Experiments were performed on the objective functions presented previously.
+ Each experiment was run 30 times using different random numbers each time
+ and the averages of the experiments are plotted in the tables below.
+ For the parallelization the freely available OpenMP library 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "openmp"
+literal "false"
+
+\end_inset
+
+ was utilized.
+ The programming language used was ANSI C++ and the OPTIMUS optimization
+ package freely available from 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://github.com/itsoulos/OPTIMUS
+\end_layout
+
+\end_inset
+
+ (accessed on 3 March 2023) was used.
  The most critical parameters of the proposed method are listed in table
  
 \begin_inset CommandInset ref
@@ -2524,9 +2673,16 @@ VALUE
 
 \end_inset
 
-The method was compared against a genetic algorithm and a simple PSO method
- with the same set of parameters (chromosomes and particles) and the results
- are reported in Table 
+In the first set of experiments, the serial version of the proposed technique,
+ i.e.
+ running on a single processor, was compared with two widely used global
+ optimization techniques: a genetic algorithm and a simple version of Particle
+ Swarm Optimization.
+ In all cases the same number of particles or chromosomes and the same maximum
+ number of generations were used.
+ In addition, after each method was executed, the local optimization method
+ BFGS was used to improve the global minimum found.
+ The results for this experiment are reported in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:Comparison"
@@ -3933,15 +4089,16 @@ TOTAL
 \end_inset
 
 In the table, each number in each cell represents the average of the function
- values for 30 independent runs.
- Also, the numbers in parentheses represent the percentage of runs in which
+ values for 30 runs.
+ Also, the numbers in parentheses stand for the percentage of runs in which
  the global minimum was successfully found.
  If this percentage is not present, it implies 100% success.
  In addition, a line has been added at the end of the table showing the
  total number of function calls for each method.
- From the experimental results, it is evident that the proposed technique
- significantly reduces the required number of function calls even if it
- is executed on a single processing unit.
+ The experimental results demonstrate that even running the proposed technique
+ on a single computing unit can result to better results than the other
+ techniques in terms of the required number of function calls and, by extension,
+ the required time required to find the global minimum.
 \end_layout
 
 \begin_layout Standard
@@ -3969,12 +4126,23 @@ noprefix "false"
 
 \end_inset
 
+.In addition, in order to give greater reliability to the experimental results,
+ the total number of particles was in all runs constant and equal to 200,
+ as defined in the table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:values"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
 .
- In order to have reliability in the measurements, the total number of particles
- remained constant as the number of units increased.
- So, for example, in the case of the two computing units, in each unit the
- particles were 100 while in 5 units the particles were 40.
- In this way, the total number of particles used remains constant at 200.
+ This means, for example, that when the computing units are 4 each unit
+ will run a serial version of PSO with 50 particles and when the computing
+ units become 5 the number of particles in each unit will be reduced to
+ 40.
 \end_layout
 
 \begin_layout Standard
@@ -3995,7 +4163,7 @@ Experimental results using the proposed method, the propagation scheme was
 
  was set to 5.
  In the conducted experiments the number of parallel processing units was
- varyied from 1 to 10.
+ varied from 1 to 10.
 \begin_inset CommandInset label
 LatexCommand label
 name "tab:t1results"
@@ -6056,14 +6224,15 @@ name "fig:boxplot1to1"
 
 \end_inset
 
-From this experiment, it is clear that the proposed technique drastically
- reduces the required number of function calls as the parallel processing
- units increase, while at the same time the average reliability of the method
- in finding the global minimum also increases.
+From the experimental results it is clear that increasing the number of
+ parallel processing nodes further reduces the total number of function
+ calls, since more units are used in the attempt to find the global minimum.
+ In addition, a slight increase in the reliability of the method in finding
+ the total minimum is also observed.
 \end_layout
 
 \begin_layout Standard
-In addition, to determine the effect of the propagation mechanism on the
+Furthermore, to determine the effect of the propagation mechanism on the
  reliability and speed of the method, another comparative experiment was
  performed, in which the number of parallel processing units was set to
  5 (
@@ -7785,9 +7954,11 @@ TOTAL
 
 \end_inset
 
-From the experimental results, it appears that the 1-to-N propagation method
- has slightly better performances than the rest of the best particle propagation
- techniques among the sub-populations.
+This time, the experimental results did not show any clear superiority of
+ one of the propagation methods.
+ However, it appears that the 1-to-N propagation method has slightly better
+ performances than the rest of the best particle propagation techniques
+ among the sub-populations.
 \end_layout
 
 \begin_layout Standard
@@ -9857,9 +10028,16 @@ TOTAL
 
 \end_inset
 
-Increasing the value of the parameter from 1 to 5 drastically reduces the
- required number of function calls, and this remains almost constant for
- increasing the value for that parameter.
+As is evident, increasing the value of the 
+\begin_inset Formula $N_{P}$
+\end_inset
+
+ parameter significantly reduces the required number of function calls up
+ to a value of 5.
+ From then on, the total number of calls appears to be constant.
+ Practically, this means that sending not only the best particle but also
+ those with the immediately lower value further reduces the required number
+ of function calls.
 \end_layout
 
 \begin_layout Section
@@ -9874,9 +10052,12 @@ name "sec:Conclusions"
 \end_layout
 
 \begin_layout Standard
-In this paper, a number of new ideas for parallel implementation of the
- well-established particle optimization method were presented.
- In the new method, a technique of propagating the best particles between
+In the present work a number of ideas were presented that can lead to an
+ efficient parallel implementation of the PSO technique.
+ The need for parallelization of the method is great, as it is an iterative
+ process involving repeated operations on vectors and these operations for
+ large problems may require significantly large computational time.
+ In the current work, a technique of propagating the best particles between
  computing units as well as a termination rule of the overall process were
  introduced.
  In the case of the propagation of the best particles from the experiments
@@ -9885,19 +10066,31 @@ In this paper, a number of new ideas for parallel implementation of the
  Furthermore, the propagation method between parallel computing units did
  not have a drastic effect on the efficiency and speed of the method, although
  the 1-to-N propagation method appeared to have slightly better results.
+ Futhermore, the increase of the parameter 
+\begin_inset Formula $N_{P}$
+\end_inset
+
+ from 1 to 5 decreased the required number of function calls.
  However, the biggest gain from using the method lies in the increase in
  parallel processing units.
  From the experiments performed, it is evident that as parallel processing
  units increase, the total function calls required to find the global minimum
- decreases.
- In addition, the increase of parallel processing units improved to some
+ decreases almost for every objective function.
+ In addition, the increase in parallel processing units improved to some
  extent the efficiency of the method in finding the global minimum.
+ The effectiveness of the proposed method was also shown in the comparison
+ between its serial version and two other widely available techniques in
+ the relevant literature.
+ In this comparison the serial version of the method required significantly
+ fewer function calls to find each global minimum.
 \end_layout
 
 \begin_layout Standard
-In the future, more and more effective termination techniques than the proposed
- one should be developed and possibly better techniques for propagating
- the best particles among computing units.
+In the future, the important work done in the parallelization of the PSO
+ technique can be continued with the use of new termination rules that will
+ be suitable for execution in parallel computing environments but also a
+ possible extension of the best particle propagation techniques between
+ parallel computing units.
 \end_layout
 
 \begin_layout Standard
@@ -9910,10 +10103,11 @@ In the future, more and more effective termination techniques than the proposed
 \begin_layout Author Contributions
 I.G.T.
  and V.C.
- conceived of the idea, the methodology implemented the software.
+ conceived of the idea, the methodology and they have implemented the correspond
+ing software.
  I.G.T.
- conducted the experiments, employing datasets, and provided the comparative
- experiments.
+ conducted the experiments, employing objective functions as test cases,
+ and provided the comparative experiments.
  V.C.
  performed the statistical analysis and prepared the manuscript.
  All authors have read and agreed to the published version of the manuscript.
@@ -10833,6 +11027,136 @@ Jong-Bae Park, Yun-Won Jeong, Joong-Rin Shin, Kwang Y.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "psoApp1"
+literal "false"
+
+\end_inset
+
+B.
+ Liu, L.
+ Wang, Y.H.
+ Jin, An Effective PSO-Based Memetic Algorithm for Flow Shop Scheduling,
+ IEEE Transactions on Systems, Man, and Cybernetics, Part B (Cybernetics)
+ 
+\series bold
+37
+\series default
+, pp.
+ 18-27, 2007.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psoApp2"
+literal "false"
+
+\end_inset
+
+J.
+ Yang, L.
+ He, S.
+ Fu, An improved PSO-based charging strategy of electric vehicles in electrical
+ distribution grid, Applied Energy 
+\series bold
+128
+\series default
+, pp.
+ 82-92, 2014.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psoApp3"
+literal "false"
+
+\end_inset
+
+K.
+ Mistry, L.
+ Zhang, S.
+ C.
+ Neoh, C.
+ P.
+ Lim, B.
+ Fielding, A Micro-GA Embedded PSO Feature Selection Approach to Intelligent
+ Facial Emotion Recognition, IEEE Transactions on Cybernetics.
+ 
+\series bold
+47
+\series default
+, pp.
+ 1496-1509, 2017.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psoApp4"
+literal "false"
+
+\end_inset
+
+S.
+ Han, X.
+ Shan, J.
+ Fu, W.
+ Xu, H.
+ Mi, Industrial robot trajectory planning based on improved pso algorithm,
+ J.
+ Phys.: Conf.
+ Ser.
+ 
+\series bold
+1820
+\series default
+, 012185, 2021.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psoReview"
+literal "false"
+
+\end_inset
+
+F.
+ Marini, B.
+ Walczak, Particle swarm optimization (PSO).
+ A tutorial, Chemometrics and Intelligent Laboratory Systems 
+\series bold
+149
+\series default
+, pp.
+ 153-165, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psoOverview"
+literal "false"
+
+\end_inset
+
+M.
+ Jain, V.
+ Saihjpal, N.
+ Singh, S.B.
+ Singh, An Overview of Variants and Advancements of PSO Algorithm, Applied
+ Sciences 
+\series bold
+12
+\series default
+, 8392, 2022.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "pso_mutation1"
 literal "false"
 
@@ -11241,6 +11565,20 @@ G.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "RandomInertia"
+literal "false"
+
+\end_inset
+
+R.C.
+ Eberhart, Y.H.
+ Shi, Tracking and optimizing dynamic systems with particle swarms, in:
+ Congress on Evolutionary Computation, Korea, 2001.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "ipso"
 literal "false"
 
@@ -11440,6 +11778,24 @@ J.E.
 \series default
 , pp.
  463–477, 1924.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "openmp"
+literal "false"
+
+\end_inset
+
+R.
+ Chandra, L.
+ Dagum, D.
+ Kohr, D.
+ Maydan,J.
+ McDonald and R.
+ Menon, Parallel Programming in OpenMP, Morgan Kaufmann Publishers Inc.,
+ 2001.
 \end_layout
 
 \begin_layout End Whole Page
