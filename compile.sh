@@ -18,6 +18,7 @@ else
 		done
 		(cd bin; qmake ;  make)
 		(cd bin/OptimusFIT; qmake; make)
+		(cd bin/NeuralTrain; qmake; make)
 	else
 		echo "qmake is not present;"
 	fi

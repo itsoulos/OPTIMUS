@@ -259,7 +259,8 @@ void	getGradient(Data &node,Data &g)
 }
 }
 
-adept::adouble afunmin(adept::aVector &Weights){
+adept::adouble afunmin(adept::aVector &Weights)
+{
     adept::adouble sum=0.0;
     adept::adouble per=0.0;
     int fcount=0;

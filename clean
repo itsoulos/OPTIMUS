@@ -6,6 +6,7 @@ else
 	then
 		(cd PROBLEMS; for file in *.pro; do  qmake $file; make clean;done)
 		(cd PROBLEMS; rm -f lib*so* ) 
+		(cd lib; rm -f lib*so* )
 		(cd PROBLEMS/DeRBF; qmake ; make clean)
 		(cd PROBLEMS/DGenClass; qmake; make clean)
 		(cd PROBLEMS/DiffEq; qmake; make clean)
@@ -34,6 +35,7 @@ else
 		(cd Minfinder; qmake; make clean)
 		(cd Search; qmake; make clean)
 		(cd bin/OptimusFIT; qmake; make clean)
+		(cd bin/NeuralTrain; qmake; make clean)
 		(cd bin;qmake; make clean; rm -f OptimusApp)
 	else
 		echo "qmake is not present;"
