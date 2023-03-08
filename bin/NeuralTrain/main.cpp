@@ -303,14 +303,20 @@ int main(int argc, char *argv[])
         for(int iter=1;iter<=iterations;iter++)
         {
 
+		srand(iter + randomSeed);
+		srand48(iter + randomSeed);
+      mainProblem->resetFunctionCalls(problemParams);
             optimizerList[trainMethod]->Solve();
-            bestx=mainProblem->getBestx();
+            Data xx=mainProblem->getBestx();
             double besty=mainProblem->getBesty();
-            QJsonObject result=mainProblem->done(bestx);
+            QJsonObject result=mainProblem->done(xx);
 
             averageTrainError+= result["trainError"].toDouble();
             averageTestError+=  result["testError"].toDouble();
             averageClassError+= result["classError"].toDouble();
+	    printf("Values[%4d]=%lf %lf %.2lf%%\n",iter,result["trainError"].toDouble(),
+			    result["testError"].toDouble(),
+			    result["classError"].toDouble());
         }
         unloadOptimizers();
         printf("Statistics====\n");

@@ -49,7 +49,9 @@ void        FitProblem::setPhase(int phase,Data &x)
         data.resize(k);
         for(int i=0;i<k;i++)
         {
-            data[i]=Interval(-2.0*fabs(x[i]),2.0*fabs(x[i]));
+		double left=0.9 *x[i];
+		double right=1.1*x[i];
+            data[i]=Interval(left,right);
         }
         setMargins(data);
         network->enableNormalTrain();

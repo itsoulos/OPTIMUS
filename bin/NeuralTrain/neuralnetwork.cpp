@@ -183,7 +183,7 @@ adept::adouble NeuralNetwork::afunmin(adept::aVector &Weights)
     }
     if(normalTrain==1) return sum;
 
-    return sum*(1.0+10.0*pow(fcount*1.0/(nodes * trainSet->getpatterns()),2.0));
+    return sum*(1.0+100.0*pow(fcount*1.0/(nodes * trainSet->getpatterns()),2.0));
 
 }
 double	NeuralNetwork::funmin(vector<double> &x)
@@ -199,7 +199,7 @@ double	NeuralNetwork::funmin(vector<double> &x)
         sum+=per * per;
     }
     if(normalTrain==1) return sum;
-    return sum*(1.0+10.0*pow(fcount*1.0/(nodes * trainSet->getpatterns()),2.0));
+    return sum*(1.0+100.0*pow(fcount*1.0/(nodes * trainSet->getpatterns()),2.0));
 }
 
 void    NeuralNetwork::granal(vector<double> &x,vector<double> &g)

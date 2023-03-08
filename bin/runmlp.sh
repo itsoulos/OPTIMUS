@@ -1,8 +1,8 @@
 #!/bin/bash
-DATAPATH=/home/sheridan/Desktop/ERGASIES/FeatureConstruction2/datasets/constructed/
+DATAPATH=/home/john/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfolding/
 NODES=10
 
-METHOD=DoubleGenetic
+METHOD=ParallelDe
 METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then
@@ -19,6 +19,9 @@ then
 elif [ $METHOD = "Search" ]
 then
 	METHODPARAMS=="--Search_method=3"
+elif [ $METHOD = "ParallelDe" ]
+then
+	METHODPARAMS="--parde_agents=100 --parde_islands=2"
 elif [ $METHOD = "Bfgs" ]
 then
 	METHODPARAMS="--localsearch_method=bfgs"

@@ -53,7 +53,6 @@ bool iPso::terminated()
     else if(t=="best_fitness") charilogis2=true;
     else if(t=="ali") aliflag=true;
 
-        printf("Generations %d value: %lf \n", generation, besty);
     if (charilogis)
     {
         double dd = fabs(newSum - sum);
@@ -408,10 +407,8 @@ void iPso::calcFitnessArray()
                 fitness_array[i] = fitness(particle[i]);
 	    }
 	    if(fitness_array[i]<oldMinValue) oldMinValue = fitness_array[i];
-	    if(i%10==0) {printf("%d:%lf ",i,oldMinValue);fflush(stdout);}
         }
     }
-    printf("\n");
 }
 void	iPso::updateCenter()
 {
