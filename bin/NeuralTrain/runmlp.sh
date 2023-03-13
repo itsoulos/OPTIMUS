@@ -1,6 +1,6 @@
 BOUNDMETHOD=DoubleGenetic
 TRAINMETHOD=ParallelDe
-DATAPATH=/home/john/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfolding/
+DATAPATH=/home/sheridan/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfolding/
 NODES=10
 METHODPARAMS=""
 ### Available local search methods: bfgs, gradient, adam, lbfgs
@@ -15,7 +15,7 @@ then
 	METHODPARAMS="--gcrs_samples=25 --gcrs_maxiterations=100000"	
 elif [ $BOUNDMETHOD = "DoubleGenetic" ]
 then
-	METHODPARAMS="--double_chromosomes=500 --localsearch_method=bfgs --double_localsearchrate=0.01 --double_debug=no --double_generations=500"	
+	METHODPARAMS="--double_chromosomes=500 --localsearch_method=bfgs --double_localsearchrate=0.00 --double_debug=no --double_generations=500"	
 elif [ $BOUNDMETHOD = "Genetic" ]
 then
 	METHODPARAMS="--localsearch_rate=0.01  --genetic_crossover_type=double --chromosomes=500 --localsearch_method=bfgs --generations=2000"

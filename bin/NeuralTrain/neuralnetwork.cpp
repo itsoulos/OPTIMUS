@@ -202,14 +202,32 @@ double	NeuralNetwork::funmin(vector<double> &x)
     return sum*(1.0+100.0*pow(fcount*1.0/(nodes * trainSet->getpatterns()),2.0));
 }
 
+static double dmax(double a,double b)
+{
+	return a>b?a:b;
+}
+
 void    NeuralNetwork::granal(vector<double> &x,vector<double> &g)
 {
+	weight = x;
+	for(int i=0;i<x.size();i++)
+	{
+		double eps=pow(1e-18,1.0/3.0)*dmax(1.0,fabs(x[i]));
+		x[i]+=eps;
+		double v1=funmin(x);
+		x[i]-=2.0 *eps;
+		double v2=funmin(x);
+		g[i]=(v1-v2)/(2.0 * eps);
+		x[i]+=eps;
+	}
+
+	/*
     if(normalTrain==1) getOriginalGranal(x,g);
     else
     {
             getGradient(x,g);
 
-    }
+    }*/
 }
 
 double NeuralNetwork::getTrainError()
