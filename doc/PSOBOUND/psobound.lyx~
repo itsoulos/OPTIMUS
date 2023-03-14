@@ -300,17 +300,522 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-The rest of this article is structured as follows: in section 
+Artificial neural networks (ANNs) are parametric machine learning models
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nn1,nn2"
+literal "false"
+
+\end_inset
+
+, which have been widely used during the last decades in a variety of practical
+ problems from many different fields such as physics problems 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nnphysics1,nnphysics2,nnphysics3"
+literal "false"
+
+\end_inset
+
+, chemistry problems 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nnchem1,nnchem2,nnchem3"
+literal "false"
+
+\end_inset
+
+, problems related to medicine 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nnmed1,nnmed2"
+literal "false"
+
+\end_inset
+
+, economic problems 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nnecon1,nnecon2,nnecon3"
+literal "false"
+
+\end_inset
+
+ etc.
+ Also, recently ANNs have been applied to models solving Differential Equations
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nnde1,nnde2"
+literal "false"
+
+\end_inset
+
+, agriculture problems 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nnagr1,nnagr2"
+literal "false"
+
+\end_inset
+
+, facial expression recognition 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nnfacial"
+literal "false"
+
+\end_inset
+
+, wind speed prediction 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nnwind"
+literal "false"
+
+\end_inset
+
+, the gas consumption problem 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nngas"
+literal "false"
+
+\end_inset
+
+, intrusion detection 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nnintrusion"
+literal "false"
+
+\end_inset
+
+ etc.
+ Usually, neural networks are defined as a function 
+\begin_inset Formula $N(\overrightarrow{x},\overrightarrow{w})$
+\end_inset
+
+, where the vector 
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+ is the input pattern to the networks and the vector 
+\begin_inset Formula $\overrightarrow{w}$
+\end_inset
+
+ is called the weight vector.
+ To estimate the weight vector, the so-called training error is minimized,
+ which is defined as the sum:
+\begin_inset Formula 
+\begin{equation}
+E\left(N\left(\overrightarrow{x},\overrightarrow{w}\right)\right)=\sum_{i=1}^{M}\left(N\left(\overrightarrow{x}_{i},\overrightarrow{w}\right)-y_{i}\right)^{2}\label{eq:eq1}
+\end{equation}
+
+\end_inset
+
+In equation 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "sec:Software"
+reference "eq:eq1"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- the proposed software is outlined in detail, in section 
+ the values t 
+\begin_inset Formula $\left(\overrightarrow{x_{i}},y_{i}\right),\ i=1,...,M$
+\end_inset
+
+ defined the training set for the neural network.
+ The values 
+\begin_inset Formula $y_{i}$
+\end_inset
+
+ denote the expected output for the pattern 
+\begin_inset Formula $\overrightarrow{x_{i}}$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Standard
+To minimize the quantity in equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eq1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, several techniques have been proposed in the relevant literature such
+ as: Back Propagation method 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "bpnn,bpnn2"
+literal "false"
+
+\end_inset
+
+, the RPROP method 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rpropnn,rpropnn3,rpropnn2"
+literal "false"
+
+\end_inset
+
+, Quasi Newton methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "quasinn,quasinn2"
+literal "false"
+
+\end_inset
+
+, Simulated Annealing 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nn_ann1,nn_ann2"
+literal "false"
+
+\end_inset
+
+, Genetic Algorithms 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "geneticnn,geneticnn2"
+literal "false"
+
+\end_inset
+
+, Particle Swarm Optimization 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "psonn,psonn2"
+literal "false"
+
+\end_inset
+
+,Differential Optimization methods 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nndem"
+literal "false"
+
+\end_inset
+
+, Evolutionary Computation 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nnevo"
+literal "false"
+
+\end_inset
+
+, the Whale optimization algorithm 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nnwhale"
+literal "false"
+
+\end_inset
+
+, the Butterfly optimization algorithm 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nnbutterfly"
+literal "false"
+
+\end_inset
+
+, etc.
+ In addition, many researchers have focused their attention on techniques
+ for initializing the parameters of artificial neural networks, such as
+ the usage of decsion trees to initialize neural networks 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nninit1"
+literal "false"
+
+\end_inset
+
+, a method based on Cachy's inequality 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nninit2"
+literal "false"
+
+\end_inset
+
+, usage of genetic algorithms 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nninit3"
+literal "false"
+
+\end_inset
+
+, initialization based on discriminant learning 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nninit4"
+literal "false"
+
+\end_inset
+
+ etc.
+ In addition, many researchers were also concerned with the construction
+ of artificial neural network architectures, such as usage of Cross Validation
+ to construct the architecture of neural networks 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nncross"
+literal "false"
+
+\end_inset
+
+, incorporation of the Grammatical Evolution technique 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "mainGe"
+literal "false"
+
+\end_inset
+
+ to construct the architecture of neural networks as well as to estimate
+ the values of the weights 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nnc"
+literal "false"
+
+\end_inset
+
+, evolution of neural networks using a method based on cellurar automata
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nncell"
+literal "false"
+
+\end_inset
+
+ etc.
+ Also, since in recent years there has been a leap forward in the development
+ of parallel architectures, a number of works have been presented that take
+ advantage of such computational techniques 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "weight_gpu1,weight_gpu2"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+However, in many cases the training methods of artificial neural networks
+ suffer from the problem of overfitting, i.e.
+ although they succeed in significantly reducing the training error of equation
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eq1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ they do not perform similarly on unknown data that was not present during
+ training.
+ These unknown data are commonly called test set.
+ The overfitting problem usually is tackled through a variety of methods,
+ such as weight sharing 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nnsharing1,nnsharing2"
+literal "true"
+
+\end_inset
+
+, pruning of parameters, i.e reducing the size of the network 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nnprunning1,nnprunning2,nnprunning3"
+literal "true"
+
+\end_inset
+
+, the dropout technique 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nndrop1,nndrop2"
+literal "false"
+
+\end_inset
+
+, weight decaying 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nndecay1,nndecay2"
+literal "false"
+
+\end_inset
+
+, the Sarporp method 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "sarprop"
+literal "false"
+
+\end_inset
+
+, positive correlation methods 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nnpositive"
+literal "false"
+
+\end_inset
+
+ etc.
+ The overfitting problem is thoroghly discussed in the Geman et all 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nngeman"
+literal "true"
+
+\end_inset
+
+ and in the artcile of Hawkins 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nnhawkins"
+literal "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+A key reason why the problem of overtraining in artificial neural networks
+ is present, is that there is no well-defined interval of values in which
+ the network parameters are initialized and trained by the optimization
+ methods.
+ This in practice means that the values of the parameters are changed indiscrimi
+nately in order to reduce the value of equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eq1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ In this work it is proposed to use the Particle Swarm Optimization (PSO)
+ technique 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "psoTutorial"
+literal "false"
+
+\end_inset
+
+ for the reliable calculation of the value interval of the parameters of
+ an artificial neural network.
+ The PSO method was chosen since it is a fairly fast global optimization
+ method, easily adaptable to any optimization problem, and does not require
+ many execution parameters to be defined by the user.
+ The PSO method was applied with success to many difficult problems such
+ as problems that appear in physics
+\series bold
+ 
+\series default
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "psophysics1,psophysics2"
+literal "true"
+
+\end_inset
+
+, chemistry 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "psochem1,psochem2"
+literal "false"
+
+\end_inset
+
+, medicine 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "psomed1,psomed2"
+literal "true"
+
+\end_inset
+
+, economics 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "psoecon"
+literal "true"
+
+\end_inset
+
+ etc.
+ In the proposed method, the PSO technique is used to minimize equation
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eq1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ to which a penalty factor has been added so as not to allow the parameters
+ of artificial neural networks to vary uncontrollably.
+ After the minimization of the modified function is done, the parameters
+ of the neural network are initialized in an interval of values around the
+ optimal value located by the PSO method, and then the original form of
+ equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eq1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is minimized without a penalty factor this time.
+\end_layout
+
+\begin_layout Standard
+The rest of this article is organized as follows: in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:The-proposed-method"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ the proposed method is fully analyzed and discussed, in section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Experiments"
@@ -320,8 +825,8 @@ noprefix "false"
 
 \end_inset
 
- some experiments are conducted to show the effectiveness of the proposed
- software and finally in section 
+ the experimental datasets as well as the experimental results are listed
+ and discussed and finally in section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Conclusions"
@@ -331,14 +836,569 @@ noprefix "false"
 
 \end_inset
 
- some conclusions and guidelines for future work are presented.
+ some conclusions are presented.
 \end_layout
 
 \begin_layout Section
 The proposed method
 \begin_inset CommandInset label
 LatexCommand label
-name "sec:Software"
+name "sec:The-proposed-method"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Preliminaries
+\end_layout
+
+\begin_layout Standard
+Consider a neural network wihe one processing level that uses the so - called
+ sigmoid function as activation function.
+ The sigmoid function is defined as:
+\begin_inset Formula 
+\begin{equation}
+\sigma(x)=\frac{1}{1+\exp(-x)}\label{eq:sig}
+\end{equation}
+
+\end_inset
+
+This function is graphically illustrated in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:sigPlot"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename sig.eps
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Plot of the sigmoid function.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:sigPlot"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+The equation for every hidden node of the neural network has as:
+\begin_inset Formula 
+\begin{equation}
+o_{i}(x)=\sigma\left(w_{i}^{T}x+\theta_{i}\right),\label{eq:eq1-1}
+\end{equation}
+
+\end_inset
+
+where the vector 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+ stands for the the weight vector and the value 
+\begin_inset Formula $\theta_{i}$
+\end_inset
+
+ denotes the bias the node 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ The equation for a neural network with 
+\begin_inset Formula $H$
+\end_inset
+
+ hidden is defined as:
+\begin_inset Formula 
+\begin{equation}
+N(x)=\sum_{i=1}^{H}v_{i}o_{i}(x),\label{eq:eq1-2}
+\end{equation}
+
+\end_inset
+
+The value 
+\begin_inset Formula $v_{i}$
+\end_inset
+
+ denotes the output weight for node 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ Therefore writing the overall equation of the artificial neural network
+ using equations 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eq1-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eq1-2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ has as:
+\begin_inset Formula 
+\begin{equation}
+N\left(\overrightarrow{x},\overrightarrow{w}\right)=\sum_{i=1}^{H}w_{(d+2)i-(d+1)}\sigma\left(\sum_{j=1}^{d}x_{j}w_{(d+2)i-(d+1)+j}+w_{(d+2)i}\right)\label{eq:nn}
+\end{equation}
+
+\end_inset
+
+The value 
+\begin_inset Formula $d$
+\end_inset
+
+ stands for the dimension of input vector 
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+.
+ Observing equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:nn"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ but also the shape of the sigmoid function in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:sigPlot"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, it is obvious that in many cases the sigmoid function is driven to 1 or
+ 0 and therefore the training error of the neural network can get trapped
+ in local minima and consequently the neural network it will lose its generaliza
+tion abilities.
+ Therefore, a technique should be devised by which the values of the sigmoid
+ will be restricted to some interval of values.
+ In the present work, the limitation of the neural network parameters to
+ a range of values is carried out using the Particle Swarm Optimization
+ method.
+\end_layout
+
+\begin_layout Subsection
+The PSO algorithm
+\end_layout
+
+\begin_layout Standard
+The Particle Swarm Optimization method is based on a population of vectors
+ that also called particles.
+ These particles are also possible global minima of the objective function.
+ Each particle is associated with two vectors: the current position denoted
+ as
+\series bold
+ 
+\begin_inset Formula $\overrightarrow{p}$
+\end_inset
+
+
+\series default
+ and the corresponding speed 
+\series bold
+
+\begin_inset Formula $\overrightarrow{u}$
+\end_inset
+
+
+\series default
+ at which they are moving towards to the global minimum.
+ In addition, each particle maintains in the vector 
+\begin_inset Formula $p_{i,b}$
+\end_inset
+
+ the best position in which it has been so far and the total population
+ maintains in the vector 
+\begin_inset Formula $p_{\mbox{best}}$
+\end_inset
+
+ the best position that any of the particles have found in the past.
+ The purpose of the method is to move the total population toward the global
+ minimum through a series of iterations.
+ In each iteration, the velocity of each particle is calculated based on
+ its current position, its best position in the past and the optimal position
+ of the population.
+ The main steps of a PSO algorithm are shown in Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:psoSerial"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The base PSO algorithm executed in one processing unit.
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:psoSerial"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initialization Step
+\series default
+ .
+ 
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $k=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $m$
+\end_inset
+
+ as the total number of particles.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set 
+\series default
+
+\begin_inset Formula $\mbox{k}_{\mbox{max}}$
+\end_inset
+
+ as the maximum number of iterations allowed for the serial algorithm.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initialize
+\series default
+ randomly, the positions 
+\begin_inset Formula $p_{1},p_{2},...,p_{m}$
+\end_inset
+
+ for the particles.
+ The initial positions must be within the domain of the objective function.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initialize
+\series default
+ randomly the velocities 
+\begin_inset Formula $u_{1},u_{2},...,u_{m}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1..m$
+\end_inset
+
+ do 
+\begin_inset Formula $p_{i,b}=p_{i}$
+\end_inset
+
+.
+ The vector 
+\begin_inset Formula $p_{i,b}$
+\end_inset
+
+ represents the best located position of particle 
+\begin_inset Formula $i$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $p_{\mbox{best}}=\arg\min_{i\in1..m}f\left(p_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Termination Check Step
+\series default
+ .
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:Check-Termination."
+
+\end_inset
+
+ The termination criterion for the serial algorithm is checked.
+ If the termination criterion is true, then the method terminates.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1..m$
+\end_inset
+
+ 
+\series bold
+Do
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:For"
+
+\end_inset
+
+
+\series default
+
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Compute 
+\series default
+the velocity 
+\begin_inset Formula $u_{i}$
+\end_inset
+
+ as a combination of the vectors 
+\begin_inset Formula $u_{i},\ p_{i.b}$
+\end_inset
+
+ and 
+\begin_inset Formula $p_{\mbox{best}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ the new position for the particle as: 
+\begin_inset Formula $p_{i}=p_{i}+u_{i}$
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:Update-the-position"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Calculate
+\series default
+ the 
+\begin_inset Formula $f\left(p_{i}\right)$
+\end_inset
+
+ for particle 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ using the objective function 
+\begin_inset Formula $f(x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+If
+\series default
+ 
+\begin_inset Formula $f\left(p_{i}\right)\le f\left(p_{i,b}\right)$
+\end_inset
+
+ then 
+\begin_inset Formula $p_{i,b}=x_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+End
+\series default
+ 
+\series bold
+For
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $p_{\mbox{best}}=\arg\min_{i\in1..m}f\left(x_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $\mbox{iter}=\mbox{iter}+1$
+\end_inset
+
+.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:update_k"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Goto
+\series default
+ Step 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:Check-Termination."
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -1052,6 +2112,7 @@ Experimental results
 
 \begin_layout Standard
 \begin_inset Float table
+placement H
 wide false
 sideways false
 status open
@@ -1399,7 +2460,7 @@ Bands
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+34.31%
 \end_layout
 
 \end_inset
@@ -1464,7 +2525,7 @@ Cleveland
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+49.52%
 \end_layout
 
 \end_inset
@@ -1910,7 +2971,7 @@ Lymography
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+26.91%
 \end_layout
 
 \end_inset
@@ -1919,7 +2980,7 @@ Lymography
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+26.40%
 \end_layout
 
 \end_inset
@@ -2040,7 +3101,7 @@ PageBlocks
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+7.05%
 \end_layout
 
 \end_inset
@@ -2049,7 +3110,7 @@ PageBlocks
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+6.88%
 \end_layout
 
 \end_inset
@@ -2300,7 +3361,7 @@ Regions2
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+28.30%
 \end_layout
 
 \end_inset
@@ -2309,7 +3370,7 @@ Regions2
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+28.86%
 \end_layout
 
 \end_inset
@@ -2430,7 +3491,7 @@ Segment
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+15.95%
 \end_layout
 
 \end_inset
@@ -2439,7 +3500,7 @@ Segment
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+15.61%
 \end_layout
 
 \end_inset
@@ -2690,7 +3751,7 @@ ZO_NF_S
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5.43%
 \end_layout
 
 \end_inset
@@ -2699,7 +3760,7 @@ ZO_NF_S
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5.47%
 \end_layout
 
 \end_inset
@@ -2755,7 +3816,7 @@ ZONF_S
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.44%
 \end_layout
 
 \end_inset
@@ -2764,7 +3825,7 @@ ZONF_S
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.51%
 \end_layout
 
 \end_inset
@@ -2896,6 +3957,8 @@ AVERAGE
 
 \begin_layout Plain Layout
 
+\series bold
+17.54%
 \end_layout
 
 \end_inset
@@ -2905,6 +3968,8 @@ AVERAGE
 
 \begin_layout Plain Layout
 
+\series bold
+17.50%
 \end_layout
 
 \end_inset
@@ -2924,6 +3989,7 @@ AVERAGE
 
 \begin_layout Standard
 \begin_inset Float table
+placement H
 wide false
 sideways false
 status open
@@ -4049,7 +5115,7 @@ WANKARA
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.0002
 \end_layout
 
 \end_inset
@@ -4058,7 +5124,7 @@ WANKARA
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.0002
 \end_layout
 
 \end_inset
@@ -4126,7 +5192,7 @@ AVERAGE
 \begin_layout Plain Layout
 
 \series bold
-4.74
+5.70
 \end_layout
 
 \end_inset
@@ -4137,7 +5203,7 @@ AVERAGE
 \begin_layout Plain Layout
 
 \series bold
-4.81
+4.87
 \end_layout
 
 \end_inset
@@ -4174,7 +5240,15 @@ name "sec:Conclusions"
 \end_layout
 
 \begin_layout Author Contributions
-xxx
+All authors have conceived of the idea and methodology.
+ A.T.
+ and I.G.T.
+ conducted the experiments, employing several datasets and provided the
+ comparative experiments.
+ D.T.
+ and E.K.
+ performed the statistical analysis and prepared the manuscript.
+ All authors have read and agreed to the published version of the manuscript.
 \end_layout
 
 \begin_layout Funding
@@ -4311,6 +5385,1336 @@ Keep empty!
 
 \begin_layout References Title
 References
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nn1"
+literal "true"
+
+\end_inset
+
+C.
+ Bishop, Neural Networks for Pattern Recognition, Oxford University Press,
+ 1995.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nn2"
+literal "true"
+
+\end_inset
+
+G.
+ Cybenko, Approximation by superpositions of a sigmoidal function, Mathematics
+ of Control Signals and Systems 
+\series bold
+2
+\series default
+, pp.
+ 303-314, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnphysics1"
+literal "false"
+
+\end_inset
+
+P.
+ Baldi, K.
+ Cranmer, T.
+ Faucett et al, Parameterized neural networks for high-energy physics, Eur.
+ Phys.
+ J.
+ C 
+\series bold
+76
+\series default
+, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnphysics2"
+literal "true"
+
+\end_inset
+
+J.
+ J.
+ Valdas and G.
+ Bonham-Carter, Time dependent neural network models for detecting changes
+ of state in complex processes: Applications in earth sciences and astronomy,
+ Neural Networks 
+\series bold
+19
+\series default
+, pp.
+ 196-207, 2006
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnphysics3"
+literal "false"
+
+\end_inset
+
+G.
+ Carleo,M.
+ Troyer, Solving the quantum many-body problem with artificial neural networks,
+ Science 
+\series bold
+355
+\series default
+, pp.
+ 602-606, 2017.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnchem1"
+literal "false"
+
+\end_inset
+
+Lin Shen, Jingheng Wu, and Weitao Yang, Multiscale Quantum Mechanics/Molecular
+ Mechanics Simulations with Neural Networks, Journal of Chemical Theory
+ and Computation 
+\series bold
+12
+\series default
+, pp.
+ 4934-4946, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnchem2"
+literal "false"
+
+\end_inset
+
+Sergei Manzhos, Richard Dawes, Tucker Carrington, Neural network‐based approache
+s for building high dimensional and quantum dynamics‐friendly potential
+ energy surfaces, Int.
+ J.
+ Quantum Chem.
+ 
+\series bold
+115
+\series default
+, pp.
+ 1012-1020, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnchem3"
+literal "false"
+
+\end_inset
+
+Jennifer N.
+ Wei, David Duvenaud, and Alán Aspuru-Guzik, Neural Networks for the Prediction
+ of Organic Chemistry Reactions, ACS Central Science 
+\series bold
+2
+\series default
+, pp.
+ 725-732, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnmed1"
+literal "false"
+
+\end_inset
+
+Igor I.
+ Baskin, David Winkler and Igor V.
+ Tetko, A renaissance of neural networks in drug discovery, Expert Opinion
+ on Drug Discovery 
+\series bold
+11
+\series default
+, pp.
+ 785-795, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnmed2"
+literal "false"
+
+\end_inset
+
+Ronadl Bartzatt, Prediction of Novel Anti-Ebola Virus Compounds Utilizing
+ Artificial Neural Network (ANN), Chemistry Faculty Publications 
+\series bold
+49
+\series default
+, pp.
+ 16-34, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnecon1"
+literal "false"
+
+\end_inset
+
+Lukas Falat and Lucia Pancikova, Quantitative Modelling in Economics with
+ Advanced Artificial Neural Networks, Procedia Economics and Finance 
+\series bold
+34
+\series default
+, pp.
+ 194-201, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnecon2"
+literal "false"
+
+\end_inset
+
+Mohammad Namazi, Ahmad Shokrolahi, Mohammad Sadeghzadeh Maharluie, Detecting
+ and ranking cash flow risk factors via artificial neural networks technique,
+ Journal of Business Research 
+\series bold
+69
+\series default
+, pp.
+ 1801-1806, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnecon3"
+literal "false"
+
+\end_inset
+
+G.
+ Tkacz, Neural network forecasting of Canadian GDP growth, International
+ Journal of Forecasting 
+\series bold
+17
+\series default
+, pp.
+ 57-69, 2001.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnde1"
+literal "false"
+
+\end_inset
+
+Y.
+ Shirvany, M.
+ Hayati, R.
+ Moradian, Multilayer perceptron neural networks with novel unsupervised
+ training method for numerical solution of the partial differential equations,
+ Applied Soft Computing 
+\series bold
+9
+\series default
+, pp.
+ 20-29, 2009.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnde2"
+literal "false"
+
+\end_inset
+
+A.
+ Malek, R.
+ Shekari Beidokhti, Numerical solution for high order differential equations
+ using a hybrid neural network—Optimization method, Applied Mathematics
+ and Computation 
+\series bold
+183
+\series default
+, pp.
+ 260-271, 2006.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnagr1"
+literal "false"
+
+\end_inset
+
+A.
+ Topuz, Predicting moisture content of agricultural products using artificial
+ neural networks, Advances in Engineering Software 
+\series bold
+41
+\series default
+, pp.
+ 464-470, 2010.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnagr2"
+literal "false"
+
+\end_inset
+
+A.
+ Escamilla-García, G.M.
+ Soto-Zarazúa, M.
+ Toledano-Ayala, E.
+ Rivas-Araiza, A.
+ Gastélum-Barrios, Abraham,Applications of Artificial Neural Networks in
+ Greenhouse Technology and Overview for Smart Agriculture Development, Applied
+ Sciences 
+\series bold
+10
+\series default
+, Article number 3835, 2020.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnfacial"
+literal "false"
+
+\end_inset
+
+H.
+ Boughrara, M.
+ Chtourou, C.
+ Ben Amar et al, Facial expression recognition based on a mlp neural network
+ using constructive training algorithm.
+ Multimed Tools Appl 
+\series bold
+75
+\series default
+, pp.
+ 709–731, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnwind"
+literal "false"
+
+\end_inset
+
+H.
+ Liu, H.Q Tian, Y.F.
+ Li, L.
+ Zhang, Comparison of four Adaboost algorithm based artificial neural networks
+ in wind speed predictions, Energy Conversion and Management 
+\series bold
+92
+\series default
+, pp.
+ 67-81, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nngas"
+literal "false"
+
+\end_inset
+
+J.
+ Szoplik, Forecasting of natural gas consumption with artificial neural
+ networks, Energy 
+\series bold
+85
+\series default
+, pp.
+ 208-220, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnintrusion"
+literal "false"
+
+\end_inset
+
+H.
+ Bahram, N.J.
+ Navimipour, Intrusion detection for cloud computing using neural networks
+ and artificial bee colony optimization algorithm, ICT Express 5, pp.
+ 56-59, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "bpnn"
+literal "false"
+
+\end_inset
+
+D.E.
+ Rumelhart, G.E.
+ Hinton and R.J.
+ Williams, Learning representations by back-propagating errors, Nature 
+\series bold
+323
+\series default
+, pp.
+ 533 - 536 , 1986.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "bpnn2"
+literal "false"
+
+\end_inset
+
+T.
+ Chen and S.
+ Zhong, Privacy-Preserving Backpropagation Neural Network Learning, IEEE
+ Transactions on Neural Networks 
+\series bold
+20
+\series default
+, , pp.
+ 1554-1564, 2009.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rpropnn"
+literal "false"
+
+\end_inset
+
+M.
+ Riedmiller and H.
+ Braun, A Direct Adaptive Method for Faster Backpropagation Learning: The
+ RPROP algorithm, Proc.
+ of the IEEE Intl.
+ Conf.
+ on Neural Networks, San Francisco, CA, pp.
+ 586–591, 1993.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rpropnn3"
+literal "false"
+
+\end_inset
+
+T.
+ Pajchrowski, K.
+ Zawirski and K.
+ Nowopolski, Neural Speed Controller Trained Online by Means of Modified
+ RPROP Algorithm, IEEE Transactions on Industrial Informatics 
+\series bold
+11
+\series default
+, pp.
+ 560-568, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rpropnn2"
+literal "false"
+
+\end_inset
+
+Rinda Parama Satya Hermanto, Suharjito, Diana, Ariadi Nugroho, Waiting-Time
+ Estimation in Bank Customer Queues using RPROP Neural Networks, Procedia
+ Computer Science 
+\series bold
+ 135
+\series default
+, pp.
+ 35-42, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-23"
+
+\end_inset
+
+Neural Networks, Procedia Computer Science 
+\series bold
+ 135
+\series default
+, pp.
+ 35-42, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "quasinn"
+literal "false"
+
+\end_inset
+
+B.
+ Robitaille and B.
+ Marcos and M.
+ Veillette and G.
+ Payre, Modified quasi-Newton methods for training neural networks, Computers
+ & Chemical Engineering 
+\series bold
+20
+\series default
+, pp.
+ 1133-1140, 1996.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "quasinn2"
+literal "false"
+
+\end_inset
+
+Q.
+ Liu, J.
+ Liu, R.
+ Sang, J.
+ Li, T.
+ Zhang and Q.
+ Zhang, Fast Neural Network Training on FPGA Using Quasi-Newton Optimization
+ Method,IEEE Transactions on Very Large Scale Integration (VLSI) Systems
+ 
+\series bold
+26
+\series default
+, pp.
+ 1575-1579, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nn_ann1"
+literal "false"
+
+\end_inset
+
+A.
+ Yamazaki, M.
+ C.
+ P.
+ de Souto,T.
+ B.
+ Ludermir, Optimization of neural network weights and architectures for
+ odor recognition using simulated annealing, In: Proceedings of the 2002
+ International Joint Conference on Neural Networks.
+ IJCNN'02 
+\series bold
+1
+\series default
+, pp.
+ 547-552 , 2002.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nn_ann2"
+literal "false"
+
+\end_inset
+
+Y.
+ Da, G.
+ Xiurun, An improved PSO-based ANN with simulated annealing technique, Neurocomp
+uting 
+\series bold
+63
+\series default
+, pp.
+ 527-533, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "geneticnn"
+literal "false"
+
+\end_inset
+
+F.
+ H.
+ F.
+ Leung, H.
+ K.
+ Lam, S.
+ H.
+ Ling and P.
+ K.
+ S.
+ Tam, Tuning of the structure and parameters of a neural network using an
+ improved genetic algorithm, IEEE Transactions on Neural Networks 
+\series bold
+14
+\series default
+, pp.
+ 79-88, 2003
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "geneticnn2"
+literal "false"
+
+\end_inset
+
+X.
+ Yao, Evolving artificial neural networks, Proceedings of the IEEE, 87(9),
+ pp.
+ 1423-1447, 1999.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psonn"
+literal "false"
+
+\end_inset
+
+C.
+ Zhang, H.
+ Shao and Y.
+ Li, Particle swarm optimisation for evolving artificial neural network,
+ IEEE International Conference on Systems, Man, and Cybernetics, , pp.
+ 2487-2490, 2000.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psonn2"
+literal "false"
+
+\end_inset
+
+Jianbo Yu, Shijin Wang, Lifeng Xi, Evolving artificial neural networks using
+ an improved PSO and DPSO 
+\series bold
+71
+\series default
+, pp.
+ 1054-1060, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nndem"
+literal "false"
+
+\end_inset
+
+J.
+ Ilonen, J.K.
+ Kamarainen, J.
+ Lampinen, Differential Evolution Training Algorithm for Feed-Forward Neural
+ Networks, Neural Processing Letters 
+\series bold
+17
+\series default
+, pp.
+ 93–105, 2003.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnevo"
+literal "false"
+
+\end_inset
+
+M.
+ Rocha, P.
+ Cortez, J.
+ Neves, Evolution of neural networks for classification and regression,
+ Neurocomputing 
+\series bold
+70
+\series default
+, pp.
+ 2809-2816, 2007.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnwhale"
+literal "false"
+
+\end_inset
+
+I.
+ Aljarah, H.
+ Faris, S.
+ Mirjalili, Optimizing connection weights in neural networks using the whale
+ optimization algorithm, Soft Comput 
+\series bold
+22
+\series default
+, pp.
+ 1–15, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnbutterfly"
+literal "false"
+
+\end_inset
+
+S.M.J.
+ Jalali, S.
+ Ahmadian, P.M.
+ Kebria, A.
+ Khosravi, C.P.
+ Lim, S.
+ Nahavandi, Evolving Artificial Neural Networks Using Butterfly Optimization
+ Algorithm for Data Classification.
+ In: Gedeon, T., Wong, K., Lee, M.
+ (eds) Neural Information Processing.
+ ICONIP 2019.
+ Lecture Notes in Computer Science(), vol 11953.
+ Springer, Cham, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nninit1"
+literal "false"
+
+\end_inset
+
+I.
+ Ivanova, M.
+ Kubat, Initialization of neural networks by means of decision trees, Knowledge-
+Based Systems 
+\series bold
+8
+\series default
+, pp.
+ 333-344, 1995.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nninit2"
+literal "false"
+
+\end_inset
+
+J.Y.F Yam, T.W.S.
+ Chow, A weight initialization method for improving training speed in feedforwar
+d neural network, Neurocomputing 
+\series bold
+30
+\series default
+, pp.
+ 219-232, 2000.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nninit3"
+literal "false"
+
+\end_inset
+
+F.
+ Itano, M.
+ A.
+ de Abreu de Sousa, E.
+ Del-Moral-Hernandez, Extending MLP ANN hyper-parameters Optimization by
+ using Genetic Algorithm, In: 2018 International Joint Conference on Neural
+ Networks (IJCNN), Rio de Janeiro, Brazil, 2018, pp.
+ 1-8, 2018.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nninit4"
+literal "false"
+
+\end_inset
+
+K.
+ Chumachenko, A.
+ Iosifidis, M.
+ Gabbouj, Feedforward neural networks initialization based on discriminant
+ learning, Neural Networks 
+\series bold
+146
+\series default
+, pp.
+ 220-229, 2022.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nncross"
+literal "false"
+
+\end_inset
+
+R.
+ Setiono, Feedforward Neural Network Construction Using Cross Validation,Neural
+ Computation 
+\series bold
+13
+\series default
+, pp.
+ 2865-2877, 2001.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnc"
+literal "false"
+
+\end_inset
+
+I.G.
+ Tsoulos, D.
+ Gavrilis, E.
+ Glavas, Neural network construction and training using grammatical evolution,
+ Neurocomputing 72, pp.
+ 269-277, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "mainGe"
+literal "true"
+
+\end_inset
+
+M.
+ O’Neill, C.
+ Ryan, Grammatical evolution, IEEE Trans.
+ Evol.
+ Comput.
+ 
+\series bold
+5
+\series default
+, pp.
+ 349–358, 2001.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nncell"
+literal "false"
+
+\end_inset
+
+K.J.
+ Kim, S.B.
+ Cho, Evolved neural networks based on cellular automata for sensory-motor
+ controller, Neurocomputing 
+\series bold
+69
+\series default
+, pp.
+ 2193-2207, 2006.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "weight_gpu1"
+literal "false"
+
+\end_inset
+
+M.
+ Martínez-Zarzuela, F.J.
+ Díaz Pernas, J.F.
+ Díez Higuera, M.A.
+ Rodríguez, Fuzzy ART Neural Network Parallel Computing on the GPU.
+ In: Sandoval, F., Prieto, A., Cabestany, J., Graña, M.
+ (eds) Computational and Ambient Intelligence.
+ IWANN 2007.
+ Lecture Notes in Computer Science, vol 4507.
+ Springer, Berlin, Heidelberg, 2007.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "weight_gpu2"
+literal "false"
+
+\end_inset
+
+A.A.
+ Huqqani, E.
+ Schikuta, S.
+ Ye Peng Chen, Multicore and GPU Parallelization of Neural Networks for
+ Face Recognition, Procedia Computer Science 
+\series bold
+18
+\series default
+, pp.
+ 349-358, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnsharing1"
+literal "true"
+
+\end_inset
+
+S.J.
+ Nowlan and G.E.
+ Hinton, Simplifying neural networks by soft weight sharing, Neural Computation
+ 4, pp.
+ 473-493, 1992.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnsharing2"
+literal "false"
+
+\end_inset
+
+J.K.
+ Kim, M.Y.
+ Lee, J.Y.
+ Kim, B.
+ J.
+ Kim, J.
+ H.
+ Lee, An efficient pruning and weight sharing method for neural network,
+ In: 2016 IEEE International Conference on Consumer Electronics-Asia (ICCE-Asia)
+, Seoul, Korea (South), pp.
+ 1-2, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnprunning1"
+literal "true"
+
+\end_inset
+
+S.J.
+ Hanson and L.Y.
+ Pratt, Comparing biases for minimal network construction with back propagation,
+ In D.S.
+ Touretzky (Ed.), Advances in Neural Information Processing Systems, Volume
+ 1, pp.
+ 177-185, San Mateo, CA: Morgan Kaufmann, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnprunning2"
+literal "true"
+
+\end_inset
+
+M.C.
+ Mozer and P.
+ Smolensky, Skeletonization: a technique for trimming the fat from a network
+ via relevance assesment.
+ In D.S.
+ Touretzky (Ed.), Advances in Neural Processing Systems, Volume 1, pp.
+ 107-115, San Mateo CA: Morgan Kaufmann, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnprunning3"
+literal "false"
+
+\end_inset
+
+M.
+ Augasta and T.
+ Kathirvalavakumar, Pruning algorithms of neural networks — a comparative
+ study, Central European Journal of Computer Science, 2003.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nndrop1"
+literal "false"
+
+\end_inset
+
+Nitish Srivastava, G E Hinton, Alex Krizhevsky, Ilya Sutskever, Ruslan R
+ Salakhutdinov, Dropout: a simple way to prevent neural networks from overfittin
+g, Journal of Machine Learning Research 
+\series bold
+15
+\series default
+, pp.
+ 1929-1958, 2014.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nndrop2"
+literal "false"
+
+\end_inset
+
+A.
+ Iosifidis, A.
+ Tefas, I.
+ Pitas, DropELM: Fast neural network regularization with Dropout and DropConnect
+, Neurocomputing 
+\series bold
+162
+\series default
+, pp.
+ 57-66, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nndecay1"
+literal "false"
+
+\end_inset
+
+A.
+ Gupta, S.M.
+ Lam, Weight decay backpropagation for noisy data, Neural Networks 
+\series bold
+11
+\series default
+, pp.
+ 1127-1138, 1998.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nndecay2"
+literal "false"
+
+\end_inset
+
+M.
+ Carvalho and T.
+ B.
+ Ludermir, Particle Swarm Optimization of Feed-Forward Neural Networks with
+ Weight Decay, 2006 Sixth International Conference on Hybrid Intelligent
+ Systems (HIS'06), Rio de Janeiro, Brazil, 2006, pp.
+ 5-5.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "sarprop"
+literal "false"
+
+\end_inset
+
+N.K.
+ Treadgold, T.D.
+ Gedeon, Simulated annealing and weight decay in adaptive learning: the
+ SARPROP algorithm, IEEE Trans.
+ on Neural Networks 9, pp.
+ 662-668, 1998.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnpositive"
+literal "true"
+
+\end_inset
+
+M.D.
+ Shahjahan, M.
+ Kazuyuki, Neural network training algorithm with possitive correlation,
+ IEEE Trans.
+ Inf & Syst.
+ 
+\series bold
+88
+\series default
+, pp.
+ 2399-2409, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nngeman"
+literal "true"
+
+\end_inset
+
+S.
+ Geman, E.
+ Bienenstock and R.
+ Doursat, Neural networks and the bias/variance dilemma, Neural Computation
+ 4 , pp.
+ 1 - 58, 1992.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnhawkins"
+literal "false"
+
+\end_inset
+
+Douglas M.
+ Hawkins, The Problem of Overfitting, J.
+ Chem.
+ Inf.
+ Comput.
+ Sci.
+ 
+\series bold
+44
+\series default
+, pp.
+ 1–12, 2004.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psoTutorial"
+literal "false"
+
+\end_inset
+
+F.
+ Marini, B.
+ Walczak, Particle swarm optimization (PSO).
+ A tutorial, Chemometrics and Intelligent Laboratory Systems 
+\series bold
+149
+\series default
+, pp.
+ 153-165, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psophysics1"
+literal "true"
+
+\end_inset
+
+Anderson Alvarenga de Moura Meneses, Marcelo Dornellas, Machado Roberto
+ Schirru, Particle Swarm Optimization applied to the nuclear reload problem
+ of a Pressurized Water Reactor, Progress in Nuclear Energy 
+\series bold
+51
+\series default
+, pp.
+ 319-326, 2009.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psophysics2"
+literal "true"
+
+\end_inset
+
+Ranjit Shaw, Shalivahan Srivastava, Particle swarm optimization: A new tool
+ to invert geophysical data, Geophysics 
+\series bold
+72
+\series default
+, 2007.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psochem1"
+literal "false"
+
+\end_inset
+
+C.
+ O.
+ Ourique, E.C.
+ Biscaia, J.C.
+ Pinto, The use of particle swarm optimization for dynamical analysis in
+ chemical processes, Computers & Chemical Engineering 
+\series bold
+26
+\series default
+, pp.
+ 1783-1793, 2002.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psochem2"
+literal "false"
+
+\end_inset
+
+H.
+ Fang, J.
+ Zhou, Z.
+ Wang et al, Hybrid method integrating machine learning and particle swarm
+ optimization for smart chemical process operations, Front.
+ Chem.
+ Sci.
+ Eng.
+ 
+\series bold
+16
+\series default
+, pp.
+ 274–287, 2022.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psomed1"
+literal "true"
+
+\end_inset
+
+M.P.
+ Wachowiak, R.
+ Smolikova, Yufeng Zheng, J.M.
+ Zurada, A.S.
+ Elmaghraby, An approach to multimodal biomedical image registration utilizing
+ particle swarm optimization, IEEE Transactions on Evolutionary Computation
+ 
+\series bold
+8
+\series default
+, pp.
+ 289-301, 2004.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psomed2"
+literal "true"
+
+\end_inset
+
+Yannis Marinakis.
+ Magdalene Marinaki, Georgios Dounias, Particle swarm optimization for pap-smear
+ diagnosis, Expert Systems with Applications 
+\series bold
+35
+\series default
+, pp.
+ 1645-1656, 2008.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psoecon"
+literal "true"
+
+\end_inset
+
+Jong-Bae Park, Yun-Won Jeong, Joong-Rin Shin, Kwang Y.
+ Lee, An Improved Particle Swarm Optimization for Nonconvex Economic Dispatch
+ Problems, IEEE Transactions on Power Systems 
+\series bold
+25
+\series default
+, pp.
+ 156-16
+\series bold
+216
+\series default
+6, 2010.
 \end_layout
 
 \begin_layout Bibliography
