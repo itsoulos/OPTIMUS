@@ -1719,6 +1719,10 @@ literal "false"
  the global minimum, the effect of changes in a number of critical parameters,
  such as propagation techniques, on the behavior of the proposed method
  was also evaluated.
+ In addition, experiments were conducted in which the actual execution time
+ was measured for various objective functions.
+ In these experiments, the actual reduction in execution time was also recorded
+ as the number of parallel processing units increases.
 \end_layout
 
 \begin_layout Subsection
@@ -2701,7 +2705,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -4150,7 +4154,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -6258,7 +6262,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -10040,6 +10044,173 @@ As is evident, increasing the value of the
  of function calls.
 \end_layout
 
+\begin_layout Subsection
+Experiments for the execution time 
+\end_layout
+
+\begin_layout Standard
+To understand the efficiency of the method with respect to execution time
+ two additional series of experiments were performed.
+ In all experiments the total number of particles in the particle swarm
+ optimization was fixed at 500 and from 1 to 20 parallel processing units
+ were used and the total execution time was measured for 30 different independen
+t runs.
+ The experiments were conducted on AMD Epyc 7552 equipped with 32GB of RA.
+ The operating system was the Ubuntu 20.04 operating system.
+\end_layout
+
+\begin_layout Standard
+During the first series of the additional experiements, the High Conditioned
+ Elliptic function, defined as 
+\begin_inset Formula 
+\[
+f(x)=\sum_{i=1}^{n}\left(10^{6}\right)^{\frac{i-1}{n-1}}x_{i}^{2}
+\]
+
+\end_inset
+
+was used as a test case.
+ In the experiments, the values n=10,20,30,40,50 were used and the experimental
+ results are displayed graphically in the figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:elpTime"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename elp_time.eps
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Total execution time for different number of parallel processing threads
+ for the objective function ELP.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:elpTime"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+From the experimental results it follows that doubling the parallel processing
+ units almost halves the required execution time in most cases.
+\end_layout
+
+\begin_layout Standard
+In the second series of additional experiments, a more difficult experiment
+ was used, but one that has multiple applications.
+ The proposed method was used to train an artificial neural network 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nn1,nn2"
+literal "false"
+
+\end_inset
+
+ with 10 processing nodes applied on two widely used classification problems
+ from the relevant literature: the Wine problem 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "wine1,wine2"
+literal "false"
+
+\end_inset
+
+ and the Parkinsons problem 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "parkinsons"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename mlp_time.eps.png
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Total execution time for different number of parallel processing threads
+ for neural network training for two classification datasets
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:mlpTime"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Again, the required training time decreases drastically with increasing
+ parallel processing units.
+\end_layout
+
 \begin_layout Section
 Conclusions
 \begin_inset CommandInset label
@@ -11796,6 +11967,104 @@ R.
  McDonald and R.
  Menon, Parallel Programming in OpenMP, Morgan Kaufmann Publishers Inc.,
  2001.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nn1"
+literal "true"
+
+\end_inset
+
+C.
+ Bishop, Neural Networks for Pattern Recognition, Oxford University Press,
+ 1995.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nn2"
+literal "true"
+
+\end_inset
+
+G.
+ Cybenko, Approximation by superpositions of a sigmoidal function, Mathematics
+ of Control Signals and Systems 
+\series bold
+2
+\series default
+, pp.
+ 303-314, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "wine1"
+literal "false"
+
+\end_inset
+
+M.
+ Raymer, T.E.
+ Doom, L.A.
+ Kuhn, W.F.
+ Punch, Knowledge discovery in medical and biological datasets using a hybrid
+ Bayes classifier/evolutionary algorithm.
+ IEEE transactions on systems, man, and cybernetics.
+ Part B, Cybernetics : a publication of the IEEE Systems, Man, and Cybernetics
+ Society, 
+\series bold
+33
+\series default
+ , pp.
+ 802-813, 2003.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "wine2"
+literal "false"
+
+\end_inset
+
+P.
+ Zhong, M.
+ Fukushima, Regularized nonsmooth Newton method for multi-class support
+ vector machines, Optimization Methods and Software 
+\series bold
+22
+\series default
+, pp.
+ 225-236, 2007.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "parkinsons"
+literal "false"
+
+\end_inset
+
+M.A.
+ Little, P.E.
+ McSharry, E.J.
+ Hunter, J.
+ Spielman, L.O.
+ Ramig, Suitability of dysphonia measurements for telemonitoring of Parkinson's
+ disease.
+ IEEE Trans Biomed Eng.
+ 
+\series bold
+56
+\series default
+, pp.
+ 1015-1022, 2009.
 \end_layout
 
 \begin_layout End Whole Page
