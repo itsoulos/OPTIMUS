@@ -831,8 +831,8 @@ literal "false"
 
 \end_inset
 
- proposed a Multi - swarm PSO algorithm where the swam is divided into a
- set of subswarms that are executed in parallel.
+ proposed a Multi - swarm PSO algorithm where the swarm is divided into
+ a set of subswarms that are executed in parallel.
  Also, Ouyang et al 
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -979,7 +979,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1425,7 +1425,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1660,10 +1660,23 @@ literal "false"
 \end_deeper
 \end_inset
 
-The main aspects of the parallel algorithm are the propagation mechanism
- and the proposed termination rule, that is properly adjusted to the parallel
- computation environment.
+ The two main components of the proposed parallel implementation are the
+ particle propagation mechanism between the parallel computing units and
+ the proposed termination rule.
+ In the first case, it must be decided which units will send the best particles
+ to other parallel units.
+ Units receiving particles replace their worst members with the ones they
+ receive.
+ In the second case, a termination rule based on asymptotic observations
+ is proposed for early termination of the parallel technique.
+ In the proposed termination technique, the overall algorithm is terminated
+ if it holds with some certainty if some asymptotic termination criterion
+ holds for at least one parallel computing unit.
  These aspects will be discussed in the following subsections.
+\end_layout
+
+\begin_layout Standard
+
 \end_layout
 
 \begin_layout Subsection
@@ -10867,6 +10880,19 @@ In the present work a number of ideas were presented that can lead to an
  the relevant literature.
  In this comparison the serial version of the method required significantly
  fewer function calls to find each global minimum.
+\end_layout
+
+\begin_layout Standard
+On a percentage basis, the proposed technique significantly outperforms
+ the other two compared global optimization techniques.
+ The serial version of the proposed technique reduces the required number
+ of function calls by 22%-28% compared to genetic algorithm and particle
+ swarm optimization technique respectively.
+ However, with the use of more processing units the reduction in the number
+ of function calls reaches approximately 70%.
+ Furthermore, from the relevant experiments done on the actual execution
+ time, it appears that any doubling of parallel processing threads halves
+ the required execution time required to find the global minimum.
 \end_layout
 
 \begin_layout Standard
