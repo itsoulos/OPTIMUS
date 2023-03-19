@@ -39,17 +39,23 @@ techniques. In addition, the wide spread of parallel architectures
 in recent years greatly facilitates the implementation of such techniques.
 Among the most widely used global optimization techniques is the Particle
 Swarm Optimization technique. In this work, a series of modifications
-are proposed in the direction of the efficient parallelization for
-the Particle Swarm Optimization. These modifications include an innovative
-velocity calculation mechanism that has also been successfully used
-in the serial version of the method, mechanisms for propagating the
-best particles between parallel computing units, but also a process
-termination mechanism, which has been properly configured for efficient
-execution on parallel computing environments. The proposed technique
-was applied to a multitude of computational problems from the relevant
-literature and the results were more than promising, since it was
-found that increasing the computational threads can significantly
-reduce the required number of function calls to find the global minimum.}
+are proposed in the direction of efficient parallelization for Particle
+Swarm Optimization. These modifications include an innovative velocity
+calculation mechanism that has also been successfully used in the
+serial version of the method, mechanisms for propagating the best
+particles between parallel computing units, but also a process termination
+mechanism, which has been properly configured for efficient execution
+in parallel computing environments. The proposed technique was applied
+to a multitude of computational problems from the relevant literature
+and the results were more than promising, since it was found that
+increasing the computational threads can significantly reduce the
+required number of function calls to find the global minimum. The
+proposed technique is at rate of 50-70\% of the required number of
+function calls compared to other optimization techniques. This reduction
+is visible even if 1-2 parallel processing units are used. In addition,
+with the increase in parallel processing units, a drastic reduction
+in the number of calls is observed and therefore a reduction in the
+required computing time, which can reach up to 70\%.}
 
 
 \keyword{Optimization, Parallel methods, Evolutionary techniques, Stochastic
@@ -58,6 +64,9 @@ methods, Termination rules.}
 \DeclareTextSymbolDefault{\textquotedbl}{T1}
 %% Because html converters don't know tabularnewline
 \providecommand{\tabularnewline}{\\}
+%% A simple dot to overcome graphicx limitations
+\newcommand{\lyxdot}{.}
+
 \floatstyle{ruled}
 \newfloat{algorithm}{tbp}{loa}
 \providecommand{\algorithmname}{Algorithm}
@@ -179,11 +188,28 @@ with $S$:
 \[
 S=\left[a_{1},b_{1}\right]\otimes\left[a_{2},b_{2}\right]\otimes\ldots\left[a_{n},b_{n}\right]
 \]
-where the function f is assumed to be continuous and differentiable.There
-is a wide range of problems in the relevant literature that can be
-treated as global optimization problems such as problems in physical
-science \citep{go_physics1,go_physics2,go_physics3}, chemistry \citep{go_chem1,go_chem2,go_chem3},
-economics \citep{go_econ1,go_econ2} and medicine \citep{go_med1,go_med2}.
+where the function f is assumed to be continuous and differentiable.
+There is a wide range of problems in the relevant literature that
+can be treated as global optimization problems. In the physical, for
+example, Yang et al proposed a multiobjective genetic algorithm on
+an accelerator lattice\citep{go_physics1}, Iuliano proposed global
+optimization techniques for benchmark aerodynamic cases and Duan et
+al used global optimization techniques for Conceptual Rainfall-Runoff
+Models\citep{go_physics3}. In the area of chemistry, Heils and Johnston
+provided a review on the usage of global optimization techniques on
+clusters\citep{go_chem1}, Shin et al proposed a software that utilizes
+global optimization methods for protein - ligand docking\citep{go_chem2}
+and Liwo et al proposed a global optimization algorithm for protein
+structure prediction by minimizing the potential energy function\citep{go_chem3}.
+In addition, in the area of economic sciences, Gaing proposed a Particle
+Swarm Optimization method to solve the economic dispatch\citep{go_econ1}
+and Maranas et al proposed global optimization methods for tackling
+long - term financial planning problems\citep{go_econ2}. Furthermore,
+in medicine, Lee proposed large - scale optimization - based classification
+models applied in medical problems\citep{go_med1} and Cherruault
+reviewed some global optimization methods that were applied to medicine
+problems\citep{go_med2}. 
+
 There are several ways to categorize global optimization techniques,
 but most researchers suggest dividing them into two broad categories:
 deterministic and stochastic techniques. In the area of deterministic
@@ -196,16 +222,16 @@ of values should be left which will contain the total minimum of the
 objective function. On the other hand, in the category of stochastic
 techniques, where the greatest research effort is made, techniques
 are presented that look for the total minimum using stochastic methods,
-which of course does not guarantee finding the total minimum. In this
-vast area of research endeavors one encounters methods such as controlled
-random search methods\citep{crs1,crs2,crs3} which can be considered
-as a direct search method, simulated annealing methods \citep{simann_major,simann1,simann2},
-differential evolution methods \citep{diffe1,diffe2}, particle swarm
-optimization methods \citep{pso_major,pso1,pso2}, Ant Colony Optimization
-\citep{aco1,aco2}, Genetic Algorithms \citep{ga1,ga2,ga3}, etc.
-In addition, since in recent years there has been an extremely wide
-spread of parallel computing units, many studies have appeared that
-utilize the modern parallel processing units \citep{gpu1,gpu2,gpu3}
+which, of course, does not guarantee finding the total minimum. In
+this vast area of research endeavors one encounters methods such as
+controlled random search methods\citep{crs1,crs2,crs3} which can
+be considered as a direct search method, simulated annealing methods
+\citep{simann_major,simann1,simann2}, differential evolution methods
+\citep{diffe1,diffe2}, particle swarm optimization methods \citep{pso_major,pso1,pso2},
+Ant Colony Optimization \citep{aco1,aco2}, Genetic Algorithms \citep{ga1,ga2,ga3},
+etc. In addition, since in recent years there has been an extremely
+wide spread of parallel computing units, many studies have appeared
+that utilize the modern parallel processing units \citep{gpu1,gpu2,gpu3}
 to tackle the global optimization problem. Some research that one
 can study regarding metaheuristic algorithms is presented in some
 recent papers \citep{meta1,meta2,meta3}. This paper suggests a number
@@ -220,45 +246,45 @@ they gained from their observations. In the new technique they formulated,
 the atoms or particles move in the research space of the problem in
 search of the minimum of the objective function. These particles are
 directly related to two basic characteristics: the current position
-of each particle and the velocity with which it moves in search of
-the global minimum. The current position is denoted as $\overrightarrow{x}$
+of each particle and the velocity at which it moves in search of the
+global minimum. The current position is denoted as $\overrightarrow{x}$
 and the velocity is referred to as $\overrightarrow{u}$. In addition,
-for each particle the best position in which it has been found in
+for each particle, the best position in which it has been found in
 the past (the one with the smallest value for the objective function)
-is kept in memory, but also for the total population its best position
+is kept in memory, but also, for the total population, its best position
 is kept. The method moves the particles to search for the global minimum
 through an iterative process, in which the positions of the particles
 at each iteration are derived from each particle's current position,
 the best position it has found in previous iterations, and the overall
-best position of the population . 
+best position of the population. 
 
 Due to the simplicity of the method and the small number of parameters
 that should be set, this method has been applied to many difficult
-problems from all areas of the sciences such as problems that appear
+problems from all areas of the sciences, such as problems that arise
 in physics\textbf{ }\citep{psophysics1,psophysics2}, chemistry \citep{psochem1,psochem2},
 medicine \citep{psomed1,psomed2}, economics \citep{psoecon} etc.
-Also the PSO method was successfully applied recently in many practical
+Also, the PSO method was successfully applied recently in many practical
 problems such as flow shop scheduling \citep{psoApp1}, successful
 development of electric vehicle charging strategies \citep{psoApp2},
 emotion recognition \citep{psoApp3}, robotics \citep{psoApp4} etc.
 A extensive tutorial on PSO methods can be found in the work of Marini
-and Walczak \citep{psoReview}. Also a recent overview of PSO variants
-can be found in the work of Jain et al \citep{psoOverview}. Since
-the technique has gained a lot of popularity in recent years, many
-works have been developed based on it, such as combination with the
-mutation mechanism \citep{pso_mutation1,pso_mutation2,pso_mutation3},
+and Walczak \citep{psoReview}. Moreover, a recent overview of PSO
+variants can be found in the work of Jain et al \citep{psoOverview}.
+Since the technique has gained a lot of popularity in recent years,
+many works have been developed based on it, such as combination with
+the mutation mechanism \citep{pso_mutation1,pso_mutation2,pso_mutation3},
 methods that propose new techniques to initialize the velocity vector
 \citep{pso_initvelocity},\textbf{ }hybrid techniques \citep{psohybrid1,psohybrid2,psohybrid3},
 parallel techniques \citep{pso_parallel1,pso_parallel2,pso_parallel3}.
-Also since the calculation of the velocity of the particles is a determining
-factor for the effectiveness of the method, several techniques were
-formulated for the calculation of the velocity \citep{pso_velocity1,pso_velocity2,pso_velocity3}.
+Also, since the calculation of the velocity of the particles is a
+determining factor for the effectiveness of the method, several techniques
+were formulated for the calculation of the velocity \citep{pso_velocity1,pso_velocity2,pso_velocity3}.
 The method of particle swarm optimization has been successfully combined
 with other global optimization techniques, such as the work of Bogdanova
 et al \citep{ge_pso1} who suggested a combination of Grammatical
 Evolution with PSO \citep{ge_mainpaper}. Also Pan et al \citep{siman_pso}
 suggested a method that combines the PSO method with a variation of
-the simulated annealing. Likewise Mughal et al \citep{simman_pso_energy},
+the simulated annealing. Likewise, Mughal et al \citep{simman_pso_energy},
 proposed a hybrid technique that effectively combines PSO and simulated
 annealing for solar energy problems. In the same way, Lin et al \citep{pso_de}
 suggested a hybrid method of PSO and differential evolution for some
@@ -269,20 +295,47 @@ Of course, these techniques significantly increase the computational
 time required by the method, but also significantly improve the performance
 of the method.
 
-The proposed method creates a number of sub-populations of particles
-that run independently on parallel computing units. The same serial
-algorithm with the same set of parameters is applied to each computing
-unit. Also, a series of modifications to the original particle swarm
-optimization method are proposed in order to make it more efficient
-in parallel computing environments. These modifications include a
-new method of calculating particle velocity, a new termination rule
+Since the topic of global optimization is very widely applied in many
+fields but also due to the fact that it requires significant computing
+resources, techniques that take advantage of parallel architectures
+have to be developed to reduce the required computing time. For example,
+Olenšek et al\citep{parallel_go1} proposed an asynchronous parallel
+global optimization method based on simulated annealing and differential
+evolution applied on a series of benchmark global optimization problems.
+Also, Regis and Shoemaker \citep{paralleGo2} employed Radial Basis
+Functions \citep{rbf1} for parallel global optimization. A systematic
+review of parallel metaheuristics can be found in the work of Alba
+et al \citep{parallelReview1}. Also, a review of metaheuristics that
+are implemented on modern GPU architectures can be found in the work
+of Essaid et al \citep{parallelReview2}. The Particle Swarm Optimization
+method is an excellent candidate method for parallelization, since
+it is based on a series of computational solutions that partially
+act independently of each other. For example, Koh et al proposed a
+parallel asynchronous implementation of the PSO algorithm \citep{ppso1},
+Tewolde et al \citep{ppso2} proposed a Multi - swarm PSO algorithm
+where the swarm is divided into a set of subswarms that are executed
+in parallel. Also, Ouyang et al \citep{ppso3} proposed a parallel
+implementation of the PSO algorithm using the CUDA programming library
+to solve the lD heat conduction equation. Furthermore, Campos et al
+\citep{ppso4} investigated the impact of communication strategies
+on a parallel PSO implementation used for solving many objective optimization
+problems. A survey of parallel PSO algorithms can be found in the
+work of Lalwani et al \citep{parallelPsoReview}.
+
+In the present work, the initial population of Particle Swarm Optimization
+is divided into independent populations running on different parallel
+computing units, which will also be called islands. In addition, a
+number of techniques are proposed, which aim at efficient communication
+between the independent islands on the one hand, and at the early
+termination of the overall method on the other. These techniques include
+a new method of calculating particle velocity, a new termination rule
 specifically modified for parallel techniques, and a new way of propagating
 the best particles among the parallel computing units involved in
 the overall method. The proposed velocity calculation is proposed
-by Eberhart and Shi \citep{RandomInertia} and it is based in random
+by Eberhart and Shi \citep{RandomInertia} and it is based on random
 values. Also, the proposed stopping rule is based on the work of Charilogis
 and Tsoulos \citep{ipso}, giving excellent results when applied on
-a series of well - known optimization problems. Although, the proposed
+a series of well - known optimization problems. However, the proposed
 termination technique is modified appropriately for parallel computing
 environments.
 
@@ -301,8 +354,6 @@ the overall parallel method proposed in this work. Subsequently, the
 basic components of the proposed process, such as the calculation
 of the velocity, the proposed termination rule and the method of propagating
 points between the parallel computing units will be thoroughly analyzed.
-
-\subsection{The main steps of the basic PSO algorithm\label{subsec:The-base-algorithm}}
 
 In every parallel processing unit a PSO algorithm is executed to locate
 the global minimum of the objective function. The mains steps for
@@ -350,7 +401,7 @@ The base PSO algorithm as described in Algorithm \ref{alg:psoSerial},
 computes at every iteration the new position of the particle $i$
 using the following operation:
 \begin{equation}
-x_{i}=x_{i}+u_{i}\label{eq:eq3}
+x_{i}=x_{i}+u_{i+1}\label{eq:eq3}
 \end{equation}
 In most cases the new velocity could be a linear combination of the
 previously computed velocity and the best values $p_{i}$ and $p_{\mbox{best}}$.
@@ -412,10 +463,17 @@ of Powell \citep{Powell} was used a local search procedure.
 \end{enumerate}
 \end{enumerate}
 \end{algorithm}
-The main aspects of the parallel algorithm are the propagation mechanism
-and the proposed termination rule, that is properly adjusted to the
-parallel computation environment. These aspects will be discussed
-in the following subsections.
+ The two main components of the proposed parallel implementation are
+the particle propagation mechanism between the parallel computing
+units and the proposed termination rule. In the first case, it must
+be decided which units will send the best particles to other parallel
+units. Units receiving particles replace their worst members with
+the ones they receive. In the second case, a termination rule based
+on asymptotic observations is proposed for early termination of the
+parallel technique. In the proposed termination technique, the overall
+algorithm is terminated if it holds with some certainty if some asymptotic
+termination criterion holds for at least one parallel computing unit.
+These components will be discussed in the following subsections.
 
 \subsection{Propagation mechanism \label{subsec:Propagation-mechanism}}
 
@@ -469,237 +527,74 @@ extensively studied by many researchers in many publications\citep{testfunctions
 In this series of experiments, beyond the ability of the method to
 find the global minimum, the effect of changes in a number of critical
 parameters, such as propagation techniques, on the behavior of the
-proposed method was also evaluated.
+proposed method was also evaluated. In addition, experiments were
+conducted in which the actual execution time was measured for various
+objective functions. In these experiments, the actual reduction in
+execution time was also recorded as the number of parallel processing
+units increased.
 
 \subsection{Test functions}
 
-The mathematical formulas for the series of objective functions used
-are presented below: given below
-\begin{itemize}
-\item \textbf{\emph{Bent Cigar function}}\emph{ }The function is 
-\[
-f(x)=x_{1}^{2}+10^{6}\sum_{i=2}^{n}x_{i}^{2}
-\]
-For the conducted experiments the value $n=10$ was used as test case
-and the function is denoted as CIGAR10 in the experimental tables.
-\item \textbf{Bf1} (Bohachevsky 1) function:
-\end{itemize}
-\[
-f(x)=x_{1}^{2}+2x_{2}^{2}-\frac{3}{10}\cos\left(3\pi x_{1}\right)-\frac{4}{10}\cos\left(4\pi x_{2}\right)+\frac{7}{10}
-\]
-where $x\in[-100,100]^{2}$. 
-\begin{itemize}
-\item \textbf{Bf2} (Bohachevsky 2) function: 
-\[
-f(x)=x_{1}^{2}+2x_{2}^{2}-\frac{3}{10}\cos\left(3\pi x_{1}\right)\cos\left(4\pi x_{2}\right)+\frac{3}{10}
-\]
-with $x\in[-50,50]^{2}$. 
-\item \textbf{Branin} function: $f(x)=\left(x_{2}-\frac{5.1}{4\pi^{2}}x_{1}^{2}+\frac{5}{\pi}x_{1}-6\right)^{2}+10\left(1-\frac{1}{8\pi}\right)\cos(x_{1})+10$
-with $-5\le x_{1}\le10,\ 0\le x_{2}\le15$. 
-\item \textbf{CM} function: 
-\[
-f(x)=\sum_{i=1}^{n}x_{i}^{2}-\frac{1}{10}\sum_{i=1}^{n}\cos\left(5\pi x_{i}\right)
-\]
-with $x\in[-1,1]^{n}$. For the conducted experiments the value $n=4$
-was used and the corresponding name for the experimental tables is
-CM4.
-\item \textbf{Camel} function:
-\[
-f(x)=4x_{1}^{2}-2.1x_{1}^{4}+\frac{1}{3}x_{1}^{6}+x_{1}x_{2}-4x_{2}^{2}+4x_{2}^{4},\quad x\in[-5,5]^{2}
-\]
-\item \textbf{Discus function}\emph{ }The function:
-\[
-f(x)=10^{6}x_{1}^{2}+\sum_{i=2}^{n}x_{i}^{2}
-\]
-For the conducted experiments the value $n=10$ was used and the name
-used in the experimental tables is DISCUS10.
-\item \textbf{Easom} function: 
-\[
-f(x)=-\cos\left(x_{1}\right)\cos\left(x_{2}\right)\exp\left(\left(x_{2}-\pi\right)^{2}-\left(x_{1}-\pi\right)^{2}\right)
-\]
-where $x\in[-100,100]^{2}.$ 
-\item \textbf{Exponential} function, defined as: 
-\[
-f(x)=-\exp\left(-0.5\sum_{i=1}^{n}x_{i}^{2}\right),\quad-1\le x_{i}\le1
-\]
- In the conducted experiments the values $n=4,16,64$ were used and
-the associated names in the experimental tables are EXP4, EXP16 and
-EXP64 correspondingly.
-\item \textbf{Griewank2} function:
-\[
-f(x)=1+\frac{1}{200}\sum_{i=1}^{2}x_{i}^{2}-\prod_{i=1}^{2}\frac{\cos(x_{i})}{\sqrt{(i)}}
-\]
-where $x\in[-100,100]^{2}$.
-\item \textbf{Gkls} function. $f(x)=\mbox{Gkls}(x,n,w)$. This function
-has been proposed in \citep{gkls} and it is constructed in a way
-that it has $w$ local minima in the range $[-1,1]^{n}$. The value
-of $n$ is between 2 and 100. The global minimum for this function
-is -1 and in the conducted experiments we have used the values $n=2,3$
-and $w=50,\ 100$. The corresponding function names in the experimental
-tables are GKLS250 and GKLS350 respectively.
-\item \textbf{Hansen} function: $f(x)=\sum_{i=1}^{5}i\cos\left[(i-1)x_{1}+i\right]\sum_{j=1}^{5}j\cos\left[(j+1)x_{2}+j\right]$,
-$x\in[-10,10]^{2}$ .
-\item \textbf{Hartman 3} function:
-\[
-f(x)=-\sum_{i=1}^{4}c_{i}\exp\left(-\sum_{j=1}^{3}a_{ij}\left(x_{j}-p_{ij}\right)^{2}\right)
-\]
-with $x\in[0,1]^{3}$ and $a=\left(\begin{array}{ccc}
-3 & 10 & 30\\
-0.1 & 10 & 35\\
-3 & 10 & 30\\
-0.1 & 10 & 35
-\end{array}\right),\ c=\left(\begin{array}{c}
-1\\
-1.2\\
-3\\
-3.2
-\end{array}\right)$ and
-\[
-p=\left(\begin{array}{ccc}
-0.3689 & 0.117 & 0.2673\\
-0.4699 & 0.4387 & 0.747\\
-0.1091 & 0.8732 & 0.5547\\
-0.03815 & 0.5743 & 0.8828
-\end{array}\right)
-\]
-\item \textbf{Hartman 6} function:
-\[
-f(x)=-\sum_{i=1}^{4}c_{i}\exp\left(-\sum_{j=1}^{6}a_{ij}\left(x_{j}-p_{ij}\right)^{2}\right)
-\]
-with $x\in[0,1]^{6}$ and $a=\left(\begin{array}{cccccc}
-10 & 3 & 17 & 3.5 & 1.7 & 8\\
-0.05 & 10 & 17 & 0.1 & 8 & 14\\
-3 & 3.5 & 1.7 & 10 & 17 & 8\\
-17 & 8 & 0.05 & 10 & 0.1 & 14
-\end{array}\right),\ c=\left(\begin{array}{c}
-1\\
-1.2\\
-3\\
-3.2
-\end{array}\right)$ and
-\[
-p=\left(\begin{array}{cccccc}
-0.1312 & 0.1696 & 0.5569 & 0.0124 & 0.8283 & 0.5886\\
-0.2329 & 0.4135 & 0.8307 & 0.3736 & 0.1004 & 0.9991\\
-0.2348 & 0.1451 & 0.3522 & 0.2883 & 0.3047 & 0.6650\\
-0.4047 & 0.8828 & 0.8732 & 0.5743 & 0.1091 & 0.0381
-\end{array}\right)
-\]
-\item \textbf{Potential} function. This function represents the energy of
-N atoms interacting with each other using the Lennard - Jones potential
-\citep{Jones}. This potential is defined as
-\begin{equation}
-V_{LJ}(r)=4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^{6}\right]\label{eq:potential}
-\end{equation}
-In the conducted experiments the values $N=3,\ 5$ were used and the
-corresponding function names are POTENTIAL3 and POTENTIAL5.
-\item \textbf{Rastrigin} function. 
-\[
-f(x)=x_{1}^{2}+x_{2}^{2}-\cos(18x_{1})-\cos(18x_{2}),\quad x\in[-1,1]^{2}
-\]
-\item \textbf{\emph{Rosenbrock}}\emph{ function}.\\
-\[
-f(x)=\sum_{i=1}^{n-1}\left(100\left(x_{i+1}-x_{i}^{2}\right)^{2}+\left(x_{i}-1\right)^{2}\right),\quad-30\le x_{i}\le30.
-\]
-The values $n=4,\ 8$ were used in the conducted experiments and the
-associated function names are ROSENBROCK4 and ROSENBROCK8 respectively.
-\item \textbf{Shekel 7} function.
-\end{itemize}
-\[
-f(x)=-\sum_{i=1}^{7}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}
-\]
+The test functions used in the conducted experiments are listed in
+Table \ref{tab:The-objective-functions}. 
 
-with $x\in[0,10]^{4}$ and $a=\left(\begin{array}{cccc}
-4 & 4 & 4 & 4\\
-1 & 1 & 1 & 1\\
-8 & 8 & 8 & 8\\
-6 & 6 & 6 & 6\\
-3 & 7 & 3 & 7\\
-2 & 9 & 2 & 9\\
-5 & 3 & 5 & 3
-\end{array}\right),\ c=\left(\begin{array}{c}
-0.1\\
-0.2\\
-0.2\\
-0.4\\
-0.4\\
-0.6\\
-0.3
-\end{array}\right)$. 
-\begin{itemize}
-\item \textbf{Shekel 5 }function.
-\end{itemize}
-\[
-f(x)=-\sum_{i=1}^{5}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}
-\]
- 
+\begin{table}[H]
+\caption{The objective functions used in the experiments\label{tab:The-objective-functions}}
 
-with $x\in[0,10]^{4}$ and $a=\left(\begin{array}{cccc}
-4 & 4 & 4 & 4\\
-1 & 1 & 1 & 1\\
-8 & 8 & 8 & 8\\
-6 & 6 & 6 & 6\\
-3 & 7 & 3 & 7
-\end{array}\right),\ c=\left(\begin{array}{c}
-0.1\\
-0.2\\
-0.2\\
-0.4\\
-0.4
-\end{array}\right)$. 
-\begin{itemize}
-\item \textbf{Shekel 10} function.
-\end{itemize}
-\[
-f(x)=-\sum_{i=1}^{10}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}
-\]
- 
+\begin{tabular}{|c|c|c|}
+\hline 
+NAME & FORMULA & {\footnotesize{}DIMENSION}\tabularnewline
+\hline 
+\hline 
+\textbf{\emph{Cigar function}} & {\footnotesize{}$f(x)=x_{1}^{2}+10^{6}\sum_{i=2}^{n}x_{i}^{2}$} & {\footnotesize{}$n=10$}\tabularnewline
+\hline 
+\textbf{Bf1}  & {\footnotesize{}$f(x)=x_{1}^{2}+2x_{2}^{2}-\frac{3}{10}\cos\left(3\pi x_{1}\right)-\frac{4}{10}\cos\left(4\pi x_{2}\right)+\frac{7}{10}$} & {\footnotesize{}$n=2$}\tabularnewline
+\hline 
+\textbf{Bf2} & {\footnotesize{}$f(x)=x_{1}^{2}+2x_{2}^{2}-\frac{3}{10}\cos\left(3\pi x_{1}\right)\cos\left(4\pi x_{2}\right)+\frac{3}{10}$} & {\footnotesize{}$n=2$}\tabularnewline
+\hline 
+\textbf{Branin} & {\footnotesize{}$f(x)=\sum_{i=1}^{n}x_{i}^{2}-\frac{1}{10}\sum_{i=1}^{n}\cos\left(5\pi x_{i}\right)$} & {\footnotesize{}$n=2$}\tabularnewline
+\hline 
+\textbf{CM4} & {\footnotesize{}$f(x)=\sum_{i=1}^{n}x_{i}^{2}-\frac{1}{10}\sum_{i=1}^{n}\cos\left(5\pi x_{i}\right)$} & {\footnotesize{}$n=4$}\tabularnewline
+\hline 
+\textbf{Camel} & {\footnotesize{}$f(x)=4x_{1}^{2}-2.1x_{1}^{4}+\frac{1}{3}x_{1}^{6}+x_{1}x_{2}-4x_{2}^{2}+4x_{2}^{4}$} & {\footnotesize{}$n=2$}\tabularnewline
+\hline 
+\textbf{Discus10} & {\footnotesize{}$f(x)=10^{6}x_{1}^{2}+\sum_{i=2}^{n}x_{i}^{2}$} & {\footnotesize{}$n=10$}\tabularnewline
+\hline 
+\textbf{Easom} & {\footnotesize{}$f(x)=-\cos\left(x_{1}\right)\cos\left(x_{2}\right)\exp\left(\left(x_{2}-\pi\right)^{2}-\left(x_{1}-\pi\right)^{2}\right)$} & {\footnotesize{}$n=2$}\tabularnewline
+\hline 
+\textbf{Exp} & {\footnotesize{}$f(x)=-\exp\left(-0.5\sum_{i=1}^{n}x_{i}^{2}\right),\quad-1\le x_{i}\le1$} & {\footnotesize{}$n=4,16,64$}\tabularnewline
+\hline 
+\textbf{Griewank2} & {\footnotesize{}$f(x)=1+\frac{1}{200}\sum_{i=1}^{2}x_{i}^{2}-\prod_{i=1}^{2}\frac{\cos(x_{i})}{\sqrt{(i)}}$} & {\footnotesize{}$n=2$}\tabularnewline
+\hline 
+\textbf{Gkls}\citep{gkls}  & {\footnotesize{}$f(x)=\mbox{Gkls}(x,n,w)$} & {\footnotesize{}$n=2,3$}\tabularnewline
+\hline 
+\textbf{Hansen} & {\footnotesize{}$f(x)=\sum_{i=1}^{5}i\cos\left[(i-1)x_{1}+i\right]\sum_{j=1}^{5}j\cos\left[(j+1)x_{2}+j\right]$} & {\footnotesize{}$n=2$}\tabularnewline
+\hline 
+\textbf{Hartman 3} & {\footnotesize{}$f(x)=-\sum_{i=1}^{4}c_{i}\exp\left(-\sum_{j=1}^{3}a_{ij}\left(x_{j}-p_{ij}\right)^{2}\right)$} & {\footnotesize{}$n=3$}\tabularnewline
+\hline 
+\textbf{Hartman 6} & {\footnotesize{}$f(x)=-\sum_{i=1}^{4}c_{i}\exp\left(-\sum_{j=1}^{6}a_{ij}\left(x_{j}-p_{ij}\right)^{2}\right)$} & {\footnotesize{}$n=6$}\tabularnewline
+\hline 
+\textbf{Potential}\citep{Jones} & {\footnotesize{}$V_{LJ}(r)=4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^{6}\right]$} & {\footnotesize{}$n=3,5$}\tabularnewline
+\hline 
+\textbf{Rastrigin} & {\footnotesize{}$f(x)=x_{1}^{2}+x_{2}^{2}-\cos(18x_{1})-\cos(18x_{2})$} & {\footnotesize{}$n=2$}\tabularnewline
+\hline 
+\textbf{\emph{Rosenbrock}} & {\footnotesize{}$f(x)=\sum_{i=1}^{n-1}\left(100\left(x_{i+1}-x_{i}^{2}\right)^{2}+\left(x_{i}-1\right)^{2}\right)$} & {\footnotesize{}$n=4,8$}\tabularnewline
+\hline 
+\textbf{Shekel 5} & {\footnotesize{}$f(x)=-\sum_{i=1}^{5}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}$} & {\footnotesize{}$n=4$}\tabularnewline
+\hline 
+\textbf{Shekel 7} & {\footnotesize{}$f(x)=-\sum_{i=1}^{7}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}$} & {\footnotesize{}$n=4$}\tabularnewline
+\hline 
+\textbf{Shekel 10} & {\footnotesize{}$f(x)=-\sum_{i=1}^{10}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}$} & {\footnotesize{}$n=4$}\tabularnewline
+\hline 
+\textbf{Sinu} & {\footnotesize{}$f(x)=-\left(2.5\prod_{i=1}^{n}\sin\left(x_{i}-z\right)+\prod_{i=1}^{n}\sin\left(5\left(x_{i}-z\right)\right)\right)$} & {\footnotesize{}$n=4,8$}\tabularnewline
+\hline 
+\textbf{Test2n} & {\footnotesize{}$f(x)=\frac{1}{2}\sum_{i=1}^{n}x_{i}^{4}-16x_{i}^{2}+5x_{i}$} & {\footnotesize{}$n=4,5,6,7$}\tabularnewline
+\hline 
+\textbf{Test30n} & {\footnotesize{}$\frac{1}{10}\sin^{2}\left(3\pi x_{1}\right)\sum_{i=2}^{n-1}\left(\left(x_{i}-1\right)^{2}\left(1+\sin^{2}\left(3\pi x_{i+1}\right)\right)\right)+\left(x_{n}-1\right)^{2}\left(1+\sin^{2}\left(2\pi x_{n}\right)\right)$} & {\footnotesize{}$n=3,4$}\tabularnewline
+\hline 
+\end{tabular}
+\end{table}
 
-with $x\in[0,10]^{4}$ and $a=\left(\begin{array}{cccc}
-4 & 4 & 4 & 4\\
-1 & 1 & 1 & 1\\
-8 & 8 & 8 & 8\\
-6 & 6 & 6 & 6\\
-3 & 7 & 3 & 7\\
-2 & 9 & 2 & 9\\
-5 & 5 & 3 & 3\\
-8 & 1 & 8 & 1\\
-6 & 2 & 6 & 2\\
-7 & 3.6 & 7 & 3.6
-\end{array}\right),\ c=\left(\begin{array}{c}
-0.1\\
-0.2\\
-0.2\\
-0.4\\
-0.4\\
-0.6\\
-0.3\\
-0.7\\
-0.5\\
-0.6
-\end{array}\right)$. 
-\begin{itemize}
-\item \textbf{Sinusoidal} function: 
-\[
-f(x)=-\left(2.5\prod_{i=1}^{n}\sin\left(x_{i}-z\right)+\prod_{i=1}^{n}\sin\left(5\left(x_{i}-z\right)\right)\right),\quad0\le x_{i}\le\pi.
-\]
-The values of $n=4,8$ were used in the experiments and the associated
-function names are SINU4 and SINU8 respectively. The value of parameter
-$z$ was set to $\frac{\pi}{6}$.
-\item \textbf{Test2N} function:
-\[
-f(x)=\frac{1}{2}\sum_{i=1}^{n}x_{i}^{4}-16x_{i}^{2}+5x_{i},\quad x_{i}\in[-5,5].
-\]
-The function has $2^{n}$ and the values $n=4,5,6,7$ were used and
-the associated function names are TEST2N4, TEST2N5, TEST2N6 and TEST2N7
-respectively.
-\item \textbf{Test30N} function:
-\[
-f(x)=\frac{1}{10}\sin^{2}\left(3\pi x_{1}\right)\sum_{i=2}^{n-1}\left(\left(x_{i}-1\right)^{2}\left(1+\sin^{2}\left(3\pi x_{i+1}\right)\right)\right)+\left(x_{n}-1\right)^{2}\left(1+\sin^{2}\left(2\pi x_{n}\right)\right)
-\]
-with $x\in[-10,10]$, with $30^{n}$ local minima and the values $n=3,4$
-were used in the experiments.
-\end{itemize}
 
 \subsection{Experimental results}
 
@@ -716,24 +611,24 @@ of the proposed method are listed in table \ref{tab:values}.
 \caption{The values for most critical parameters of the algorithm.\label{tab:values}}
 
 \centering{}%
-\begin{tabular}{|c|c|}
+\begin{tabular}{|c|c|c|}
 \hline 
-PARAMETER & VALUE\tabularnewline
+PARAMETER & MEANING & VALUE\tabularnewline
 \hline 
 \hline 
-$m$ & 200\tabularnewline
+$m$ & Number of particles & 200\tabularnewline
 \hline 
-$\mbox{iter}_{\mbox{max}}$ & 200\tabularnewline
+$\mbox{iter}_{\mbox{max}}$ & Maximum number of generations & 200\tabularnewline
 \hline 
-$c_{1}$ & 1.0\tabularnewline
+$c_{1}$ & Cognitive parameter for PSO & 1.0\tabularnewline
 \hline 
-$c_{2}$ & 1.0\tabularnewline
+$c_{2}$ & Social learning parameter for PSO & 1.0\tabularnewline
 \hline 
-$N_{R}$ & 15\tabularnewline
+$N_{R}$ & The particle exchange frequency & 15\tabularnewline
 \hline 
-$\epsilon$ & $10^{-6}$\tabularnewline
+$\epsilon$ & Small value used in termination rule & $10^{-6}$\tabularnewline
 \hline 
-$N_{M}$ & 15\tabularnewline
+$N_{M}$ & Number of repetitions used in termination rule & 15\tabularnewline
 \hline 
 \end{tabular}
 \end{table}
@@ -842,13 +737,17 @@ In order to evaluate the effect of executing the method on parallel
 processing units, another experiment was done in which the number
 of parallel processing units was increased from 1 to 10 and the results
 are presented in Table \ref{tab:t1results}. Also, a box plot for
-this experiment is shown in Figure \ref{fig:boxplot1to1}.In addition,
-in order to give greater reliability to the experimental results,
-the total number of particles was in all runs constant and equal to
-200, as defined in the table \ref{tab:values}. This means, for example,
-that when the computing units are 4 each unit will run a serial version
-of PSO with 50 particles and when the computing units become 5 the
-number of particles in each unit will be reduced to 40.
+this experiment is shown in Figure \ref{fig:boxplot1to1}. Additionally,
+a Friedman test was conducted to determine whether there were significant
+differences in the scores of function calls on five ($N_{I}$ =1,
+2, 4, 5, and 10) repeated number of units and the results are shown
+in Figure \ref{fig:nonPar}. In addition, in order to give greater
+reliability to the experimental results, the total number of particles
+was in all runs constant and equal to 200, as defined in the table
+\ref{tab:values}. This means, for example, that when the computing
+units are 4 each unit will run a serial version of PSO with 50 particles
+and when the computing units become 5 the number of particles in each
+unit will be reduced to 40.
 
 \begin{table}[H]
 \caption{Experimental results using the proposed method, the propagation scheme
@@ -938,6 +837,18 @@ TEST30N4 & 8014 & 7683 & 6568 & 6317 & 5090\tabularnewline
 \caption{Box - plot for the comparison between different number of processing
 units. The propagation method was set to 1to1.\label{fig:boxplot1to1}}
 \end{figure}
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.7]{nonparametric}
+\par\end{centering}
+\caption{We conducted a Friedman test to determine whether there were significant
+differences in the scores of function calls on five (N i =1, 2, 4,
+5, and 10) repeated number of units. The Friedman chi- square was
+94.38 with 4 degrees of freedom, indicating a significant difference
+between the groups ($p<0.0001$).\label{fig:nonPar}}
+
+\end{figure}
+
 From the experimental results it is clear that increasing the number
 of parallel processing nodes further reduces the total number of function
 calls, since more units are used in the attempt to find the global
@@ -1129,6 +1040,55 @@ this means that sending not only the best particle but also those
 with the immediately lower value further reduces the required number
 of function calls.
 
+\subsection{Experiments for the execution time }
+
+To understand the efficiency of the method with respect to execution
+time, two additional series of experiments were performed. In all
+experiments, the total number of particles in the particle swarm optimization
+was fixed at 500 and from 1 to 20 parallel processing units were used
+and the total execution time was measured for 30 different independent
+runs. The experiments were conducted on AMD Epyc 7552 equipped with
+32GB of RAM. The operating system was the Ubuntu 20.04 operating system.
+
+During the first series of the additional experiments, the High Conditioned
+Elliptic function, defined as 
+\[
+f(x)=\sum_{i=1}^{n}\left(10^{6}\right)^{\frac{i-1}{n-1}}x_{i}^{2}
+\]
+was used as a test case. In the experiments, the values n=10,20,30,40,50
+were used and the experimental results are displayed graphically in
+the figure \ref{fig:elpTime}.
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.7]{elp_time}
+\par\end{centering}
+\caption{Total execution time for different number of parallel processing threads
+for the objective function ELP.\label{fig:elpTime}}
+
+\end{figure}
+From the experimental results, it follows that doubling the parallel
+processing units almost halves the required execution time in most
+cases.
+
+In the second series of additional experiments, a more difficult experiment
+was used, but one that has multiple applications. The proposed method
+was used to train an artificial neural network \citep{nn1,nn2} with
+10 processing nodes applied on two widely used classification problems
+from the relevant literature: the Wine problem \citep{wine1,wine2}
+and the Parkinsons problem \citep{parkinsons}.
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.8]{mlp_time.eps.png}
+\par\end{centering}
+\caption{Total execution time for different number of parallel processing threads
+for neural network training for two classification datasets\label{fig:mlpTime}}
+
+\end{figure}
+Again, the required training time decreases drastically with increasing
+parallel processing units.
+
 \section{Conclusions\label{sec:Conclusions}}
 
 In the present work a number of ideas were presented that can lead
@@ -1157,6 +1117,17 @@ shown in the comparison between its serial version and two other widely
 available techniques in the relevant literature. In this comparison
 the serial version of the method required significantly fewer function
 calls to find each global minimum.
+
+On a percentage basis, the proposed technique significantly outperforms
+the other two compared global optimization techniques. The serial
+version of the proposed technique reduces the required number of function
+calls by 22\%-28\% compared to the genetic algorithm and the particle
+swarm optimization techniques respectively. However, with the use
+of more processing units, the reduction in the number of function
+calls reaches approximately 70\%. Furthermore, from the relevant experiments
+done on the actual execution time, it appears that any doubling of
+parallel processing threads halves the required execution time required
+to find the global minimum.
 
 In the future, the important work done in the parallelization of the
 PSO technique can be continued with the use of new termination rules
@@ -1483,6 +1454,49 @@ Superior solution guided particle swarm optimization combined with
 local search techniques, Expert Systems with Applications \textbf{41},
 pp. 7536-7548, 2014.
 
+\bibitem{parallel_go1}J. Olenšek, T. Tuma, J. Puhan, Á Bűrmen, A
+new asynchronous parallel global optimization method based on simulated
+annealing and differential evolution, Applied Soft Computing \textbf{11},
+pp. 1481-1489, 2011.
+
+\bibitem{paralleGo2}R.G. Regis, C.A. Shoemaker., Parallel stochastic
+global optimization using radial basis functions, INFORMS Journal
+on Computing \textbf{21}, pp. 411-426, 2009.
+
+\bibitem{rbf1}J. Park and I. W. Sandberg, Universal Approximation
+Using Radial-Basis-Function Networks, Neural Computation \textbf{3},
+pp. 246-257, 1991.
+
+\bibitem{parallelReview1}E. Alba, G. Luque, S. Nesmachnow, Parallel
+metaheuristics: recent advances and new trends. International Transactions
+in Operational Research \textbf{20}, pp. 1-4, 2013.
+
+\bibitem{parallelReview2}M. Essaid, L. Idoumghar, J. Lepagnot, M.
+Brévilliers, GPU parallelization strategies for metaheuristics: a
+survey. International Journal of Parallel, Emergent and Distributed
+Systems \textbf{34}, pp. 497-522, 2019.
+
+\bibitem{ppso1}B.I. Koh, A.D. George, R.T. Haftka, B.J. Fregly, Parallel
+asynchronous particle swarm optimization. Int. J. Numer. Meth. Engng.
+\textbf{67}, pp. 578-595, 2006.
+
+\bibitem{ppso2}G. S. Tewolde, D. M. Hanna, R. E. Haskell, Multi-swarm
+parallel PSO: Hardware implementation, In: 2009 IEEE Swarm Intelligence
+Symposium, Nashville, TN, USA, 2009, pp. 60-66, 2009.
+
+\bibitem{ppso3}A. Ouyang, Z. Tang, X. Zhou, Y. Xu, G. Pan, K. Li,
+Parallel hybrid PSO with CUDA for lD heat conduction equation, Computers
+\& Fluids \textbf{110}, pp. 198-210, 2015.
+
+\bibitem{ppso4}A. de Campos, A.T.R. Pozo, E.P. Duarte, Parallel multi-swarm
+PSO strategies for solving many objective optimization problems, Journal
+of Parallel and Distributed Computing \textbf{126}, pp. 13-33, 2019.
+
+\bibitem{parallelPsoReview}S. Lalwani, H. Sharma, S.C. Satapathy,
+K. Deep, J.C. Bansal, A survey on parallel particle swarm optimization
+algorithms. Arabian Journal for Science and Engineering \textbf{44},
+pp. 2899-2923, 2019.
+
 \bibitem{RandomInertia}R.C. Eberhart, Y.H. Shi, Tracking and optimizing
 dynamic systems with particle swarms, in: Congress on Evolutionary
 Computation, Korea, 2001.
@@ -1533,6 +1547,28 @@ Fields, Proc. R. Soc. Lond. A \textbf{ 106}, pp. 463--477, 1924.
 \bibitem{openmp}R. Chandra, L. Dagum, D. Kohr, D. Maydan,J. McDonald
 and R. Menon, Parallel Programming in OpenMP, Morgan Kaufmann Publishers
 Inc., 2001.
+
+\bibitem{nn1}C. Bishop, Neural Networks for Pattern Recognition,
+Oxford University Press, 1995.
+
+\bibitem{nn2}G. Cybenko, Approximation by superpositions of a sigmoidal
+function, Mathematics of Control Signals and Systems \textbf{2}, pp.
+303-314, 1989.
+
+\bibitem{wine1}M. Raymer, T.E. Doom, L.A. Kuhn, W.F. Punch, Knowledge
+discovery in medical and biological datasets using a hybrid Bayes
+classifier/evolutionary algorithm. IEEE transactions on systems, man,
+and cybernetics. Part B, Cybernetics : a publication of the IEEE Systems,
+Man, and Cybernetics Society, \textbf{33} , pp. 802-813, 2003.
+
+\bibitem{wine2}P. Zhong, M. Fukushima, Regularized nonsmooth Newton
+method for multi-class support vector machines, Optimization Methods
+and Software \textbf{22}, pp. 225-236, 2007.
+
+\bibitem{parkinsons}M.A. Little, P.E. McSharry, E.J. Hunter, J. Spielman,
+L.O. Ramig, Suitability of dysphonia measurements for telemonitoring
+of Parkinson's disease. IEEE Trans Biomed Eng. \textbf{56}, pp. 1015-1022,
+2009.
 
 \end{thebibliography}
 

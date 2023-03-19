@@ -273,17 +273,17 @@ In the area of global optimization, a variety of techniques have been developed
  Among the most widely used global optimization techniques is the Particle
  Swarm Optimization technique.
  In this work, a series of modifications are proposed in the direction of
- the efficient parallelization for the Particle Swarm Optimization.
+ efficient parallelization for Particle Swarm Optimization.
  These modifications include an innovative velocity calculation mechanism
  that has also been successfully used in the serial version of the method,
  mechanisms for propagating the best particles between parallel computing
  units, but also a process termination mechanism, which has been properly
- configured for efficient execution on parallel computing environments.
+ configured for efficient execution in parallel computing environments.
  The proposed technique was applied to a multitude of computational problems
  from the relevant literature and the results were more than promising,
  since it was found that increasing the computational threads can significantly
  reduce the required number of function calls to find the global minimum.
- The proposed technique at a rate of 50-70% of the required number of function
+ The proposed technique is at rate of 50-70% of the required number of function
  calls compared to other optimization techniques.
  This reduction is visible even if 1-2 parallel processing units are used.
  In addition, with the increase in parallel processing units, a drastic
@@ -325,7 +325,7 @@ where the function f is assumed to be continuous and differentiable.
  There is a wide range of problems in the relevant literature that can be
  treated as global optimization problems.
  In the physical, for example, Yang et al proposed a multiobjective genetic
- algorithm on an accelaror lattice
+ algorithm on an accelerator lattice
 \begin_inset CommandInset citation
 LatexCommand citep
 key "go_physics1"
@@ -344,7 +344,7 @@ literal "false"
 \end_inset
 
 .
- In the area of chemistry Heils and Johnston provided a review on the usage
+ In the area of chemistry, Heils and Johnston provided a review on the usage
  of global optimization techniques on clusters
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -372,7 +372,7 @@ literal "false"
 \end_inset
 
 .
- In addition, in the area of economic sciences Gaing proposed a Particle
+ In addition, in the area of economic sciences, Gaing proposed a Particle
  Swarm Optimization method to solve the economic dispatch
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -391,8 +391,8 @@ literal "false"
 \end_inset
 
 .
- Furthermore, in medicine Lee proposed large - scale optimization - based
- classification models applied in medine problems
+ Furthermore, in medicine, Lee proposed large - scale optimization - based
+ classification models applied in medical problems
 \begin_inset CommandInset citation
 LatexCommand citep
 key "go_med1"
@@ -400,7 +400,7 @@ literal "false"
 
 \end_inset
 
- and Cherruault reviewed some global optimization methods that was applied
+ and Cherruault reviewed some global optimization methods that were applied
  to medicine problems
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -436,8 +436,8 @@ y a very narrow interval of values should be left which will contain the
  total minimum of the objective function.
  On the other hand, in the category of stochastic techniques, where the
  greatest research effort is made, techniques are presented that look for
- the total minimum using stochastic methods, which of course does not guarantee
- finding the total minimum.
+ the total minimum using stochastic methods, which, of course, does not
+ guarantee finding the total minimum.
  In this vast area of research endeavors one encounters methods such as
  controlled random search methods
 \begin_inset CommandInset citation
@@ -525,8 +525,8 @@ s.
  research space of the problem in search of the minimum of the objective
  function.
  These particles are directly related to two basic characteristics: the
- current position of each particle and the velocity with which it moves
- in search of the global minimum.
+ current position of each particle and the velocity at which it moves in
+ search of the global minimum.
  The current position is denoted as 
 \begin_inset Formula $\overrightarrow{x}$
 \end_inset
@@ -536,22 +536,22 @@ s.
 \end_inset
 
 .
- In addition, for each particle the best position in which it has been found
- in the past (the one with the smallest value for the objective function)
- is kept in memory, but also for the total population its best position
+ In addition, for each particle, the best position in which it has been
+ found in the past (the one with the smallest value for the objective function)
+ is kept in memory, but also, for the total population, its best position
  is kept.
  The method moves the particles to search for the global minimum through
  an iterative process, in which the positions of the particles at each iteration
  are derived from each particle's current position, the best position it
  has found in previous iterations, and the overall best position of the
- population .
+ population.
  
 \end_layout
 
 \begin_layout Standard
 Due to the simplicity of the method and the small number of parameters that
  should be set, this method has been applied to many difficult problems
- from all areas of the sciences such as problems that appear in physics
+ from all areas of the sciences, such as problems that arise in physics
 \series bold
  
 \series default
@@ -588,7 +588,7 @@ literal "true"
 \end_inset
 
  etc.
- Also the PSO method was successfully applied recently in many practical
+ Also, the PSO method was successfully applied recently in many practical
  problems such as flow shop scheduling 
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -632,8 +632,8 @@ literal "false"
 \end_inset
 
 .
- Also a recent overview of PSO variants can be found in the work of Jain
- et al 
+ Moreover, a recent overview of PSO variants can be found in the work of
+ Jain et al 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "psoOverview"
@@ -682,7 +682,7 @@ literal "false"
 \end_inset
 
 .
- Also since the calculation of the velocity of the particles is a determining
+ Also, since the calculation of the velocity of the particles is a determining
  factor for the effectiveness of the method, several techniques were formulated
  for the calculation of the velocity 
 \begin_inset CommandInset citation
@@ -722,7 +722,7 @@ literal "false"
 
  suggested a method that combines the PSO method with a variation of the
  simulated annealing.
- Likewise Mughal et al 
+ Likewise, Mughal et al 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "simman_pso_energy"
@@ -761,7 +761,7 @@ literal "false"
 \begin_layout Standard
 Since the topic of global optimization is very widely applied in many fields
  but also due to the fact that it requires significant computing resources,
- techniques that take advantage of parallel architectures had to be developed
+ techniques that take advantage of parallel architectures have to be developed
  to reduce the required computing time.
  For example, Olenšek et al
 \begin_inset CommandInset citation
@@ -814,7 +814,7 @@ literal "false"
  The Particle Swarm Optimization method is an excellent candidate method
  for parallelization, since it is based on a series of computational solutions
  that partially act independently of each other.
- For example, Koh et al proposed a Parallel asynchronous implementation
+ For example, Koh et al proposed a parallel asynchronous implementation
  of the PSO algorithm 
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -852,7 +852,7 @@ literal "false"
 \end_inset
 
  investigated the impact of communication strategies on a parallel PSO implement
-ation used for for solving many objective optimization problems.
+ation used for solving many objective optimization problems.
  A survey of parallel PSO algorithms can be found in the work of Lalwani
  et al 
 \begin_inset CommandInset citation
@@ -867,8 +867,8 @@ literal "false"
 
 \begin_layout Standard
 In the present work, the initial population of Particle Swarm Optimization
- is divided into independent sub-populations running on different parallel
- computing units which will also be called islands.
+ is divided into independent populations running on different parallel computing
+ units, which will also be called islands.
  In addition, a number of techniques are proposed, which aim at efficient
  communication between the independent islands on the one hand, and at the
  early termination of the overall method on the other.
@@ -884,7 +884,7 @@ literal "false"
 
 \end_inset
 
- and it is based in random values.
+ and it is based on random values.
  Also, the proposed stopping rule is based on the work of Charilogis and
  Tsoulos 
 \begin_inset CommandInset citation
@@ -896,8 +896,8 @@ literal "false"
 
 , giving excellent results when applied on a series of well - known optimization
  problems.
- Although, the proposed termination technique is modified appropriately
- for parallel computing environments.
+ However, the proposed termination technique is modified appropriately for
+ parallel computing environments.
 \end_layout
 
 \begin_layout Standard
@@ -1672,11 +1672,7 @@ literal "false"
  In the proposed termination technique, the overall algorithm is terminated
  if it holds with some certainty if some asymptotic termination criterion
  holds for at least one parallel computing unit.
- These aspects will be discussed in the following subsections.
-\end_layout
-
-\begin_layout Standard
-
+ These components will be discussed in the following subsections.
 \end_layout
 
 \begin_layout Subsection
@@ -1894,7 +1890,7 @@ literal "false"
  In addition, experiments were conducted in which the actual execution time
  was measured for various objective functions.
  In these experiments, the actual reduction in execution time was also recorded
- as the number of parallel processing units increases.
+ as the number of parallel processing units increased.
 \end_layout
 
 \begin_layout Subsection
@@ -1902,7 +1898,7 @@ Test functions
 \end_layout
 
 \begin_layout Standard
-The test functiom used in the conducted experiments are listed in Table
+The test functions used in the conducted experiments are listed in Table
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -4756,7 +4752,25 @@ noprefix "false"
 
 \end_inset
 
-.In addition, in order to give greater reliability to the experimental results,
+.
+ Additionally, a Friedman test was conducted to determine whether there
+ were significant differences in the scores of function calls on five (
+\begin_inset Formula $N_{I}$
+\end_inset
+
+ =1, 2, 4, 5, and 10) repeated number of units and the results are shown
+ in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:nonPar"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ In addition, in order to give greater reliability to the experimental results,
  the total number of particles was in all runs constant and equal to 200,
  as defined in the table 
 \begin_inset CommandInset ref
@@ -4780,7 +4794,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -6854,6 +6868,61 @@ name "fig:boxplot1to1"
 
 \end_inset
 
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename nonparametric.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+We conducted a Friedman test to determine whether there were significant
+ differences in the scores of function calls on five (N i =1, 2, 4, 5, and
+ 10) repeated number of units.
+ The Friedman chi- square was 94.38 with 4 degrees of freedom, indicating
+ a significant difference between the groups (
+\begin_inset Formula $p<0.0001$
+\end_inset
+
+).
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:nonPar"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 From the experimental results it is clear that increasing the number of
  parallel processing nodes further reduces the total number of function
  calls, since more units are used in the attempt to find the global minimum.
@@ -6888,7 +6957,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -8621,7 +8690,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -10675,18 +10744,18 @@ Experiments for the execution time
 \end_layout
 
 \begin_layout Standard
-To understand the efficiency of the method with respect to execution time
+To understand the efficiency of the method with respect to execution time,
  two additional series of experiments were performed.
- In all experiments the total number of particles in the particle swarm
+ In all experiments, the total number of particles in the particle swarm
  optimization was fixed at 500 and from 1 to 20 parallel processing units
  were used and the total execution time was measured for 30 different independen
 t runs.
- The experiments were conducted on AMD Epyc 7552 equipped with 32GB of RA.
+ The experiments were conducted on AMD Epyc 7552 equipped with 32GB of RAM.
  The operating system was the Ubuntu 20.04 operating system.
 \end_layout
 
 \begin_layout Standard
-During the first series of the additional experiements, the High Conditioned
+During the first series of the additional experiments, the High Conditioned
  Elliptic function, defined as 
 \begin_inset Formula 
 \[
@@ -10754,7 +10823,7 @@ name "fig:elpTime"
 
 \end_inset
 
-From the experimental results it follows that doubling the parallel processing
+From the experimental results, it follows that doubling the parallel processing
  units almost halves the required execution time in most cases.
 \end_layout
 
@@ -10886,8 +10955,8 @@ In the present work a number of ideas were presented that can lead to an
 On a percentage basis, the proposed technique significantly outperforms
  the other two compared global optimization techniques.
  The serial version of the proposed technique reduces the required number
- of function calls by 22%-28% compared to genetic algorithm and particle
- swarm optimization technique respectively.
+ of function calls by 22%-28% compared to the genetic algorithm and the
+ particle swarm optimization technique respectively.
  However, with the use of more processing units the reduction in the number
  of function calls reaches approximately 70%.
  Furthermore, from the relevant experiments done on the actual execution
