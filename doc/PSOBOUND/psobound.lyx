@@ -283,9 +283,9 @@ Artificial Neural Networks are machine learning models widely used in many
  In this paper, a two-stage global optimization technique is presented for
  efficient training of artificial neural networks.
  In the first stage, the bounds for the neural network parameters are estimated
- using Particle Swarm Optimization and in the second phase the network parameter
-s are trained within the bounds of the first phase using global optimization
- techniques.
+ using Particle Swarm Optimization and, in the second phase, the network
+ parameters are trained within the bounds of the first phase using global
+ optimization techniques.
  The proposed technique was applied to a number of well-known problems in
  the literature and the experimental results were more than encouraging.
 \end_layout
@@ -352,7 +352,7 @@ literal "false"
 
 \end_inset
 
-, agriculture problems 
+, agricultural problems 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "nnagr1,nnagr2"
@@ -401,7 +401,7 @@ literal "false"
 \begin_inset Formula $\overrightarrow{x}$
 \end_inset
 
- is the input pattern to the networks and the vector 
+ is the input pattern to the network and the vector 
 \begin_inset Formula $\overrightarrow{w}$
 \end_inset
 
@@ -536,7 +536,7 @@ literal "false"
 , etc.
  In addition, many researchers have focused their attention on techniques
  for initializing the parameters of artificial neural networks, such as
- the usage of decsion trees to initialize neural networks 
+ the usage of decision trees to initialize neural networks 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "nninit1"
@@ -570,8 +570,8 @@ literal "false"
 
  etc.
  In addition, many researchers were also concerned with the construction
- of artificial neural network architectures, such as usage of Cross Validation
- to construct the architecture of neural networks 
+ of artificial neural network architectures, such as the usage of Cross
+ Validation to construct the architecture of neural networks 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "nncross"
@@ -596,7 +596,7 @@ literal "false"
 
 \end_inset
 
-, evolution of neural networks using a method based on cellurar automata
+, evolution of neural networks using a method based on cellular automata
  
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -620,7 +620,7 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-However, in many cases the training methods of artificial neural networks
+However, in many cases, the training methods of artificial neural networks
  suffer from the problem of overfitting, i.e.
  although they succeed in significantly reducing the training error of equation
  
@@ -633,10 +633,10 @@ noprefix "false"
 
 \end_inset
 
- they do not perform similarly on unknown data that was not present during
+, they do not perform similarly on unknown data that was not present during
  training.
- These unknown data are commonly called test set.
- The overfitting problem usually is tackled through a variety of methods,
+ These unknown data sets are commonly called test sets.
+ The overfitting problem is usually tackled through a variety of methods,
  such as weight sharing 
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -686,7 +686,7 @@ literal "false"
 \end_inset
 
  etc.
- The overfitting problem is thoroghly discussed in the Geman et all 
+ The overfitting problem is thoroughly discussed in Geman et all 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "nngeman"
@@ -694,7 +694,7 @@ literal "true"
 
 \end_inset
 
- and in the artcile of Hawkins 
+ and in the article by Hawkins 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "nnhawkins"
@@ -711,8 +711,8 @@ A key reason why the problem of overtraining in artificial neural networks
  is present, is that there is no well-defined interval of values in which
  the network parameters are initialized and trained by the optimization
  methods.
- This in practice means that the values of the parameters are changed indiscrimi
-nately in order to reduce the value of equation 
+ This, in practice, means that the values of the parameters are changed
+ indiscriminately in order to reduce the value of the equation 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:eq1"
@@ -737,8 +737,8 @@ literal "false"
  The PSO method was chosen since it is a fairly fast global optimization
  method, easily adaptable to any optimization problem, and does not require
  many execution parameters to be defined by the user.
- The PSO method was applied with success to many difficult problems such
- as problems that appear in physics
+ The PSO method was applied with success to many difficult problems, such
+ as problems that arise in physics
 \series bold
  
 \series default
@@ -775,7 +775,7 @@ literal "true"
 \end_inset
 
  etc.
- In the proposed method, the PSO technique is used to minimize equation
+ In the proposed method, the PSO technique is used to minimize the equation
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -786,7 +786,7 @@ noprefix "false"
 
 \end_inset
 
- to which a penalty factor has been added so as not to allow the parameters
+ to which a penalty factor has been added, so as not to allow the parameters
  of artificial neural networks to vary uncontrollably.
  After the minimization of the modified function is done, the parameters
  of the neural network are initialized in an interval of values around the
@@ -855,7 +855,7 @@ Preliminaries
 \end_layout
 
 \begin_layout Standard
-Consider a neural network wihe one processing level that uses the so - called
+Consider a neural network with one processing level that uses the so - called
  sigmoid function as activation function.
  The sigmoid function is defined as:
 \begin_inset Formula 
@@ -883,7 +883,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
@@ -994,12 +994,12 @@ The value
 \begin_inset Formula $d$
 \end_inset
 
- stands for the dimension of input vector 
+ stands for the dimension of the input vector 
 \begin_inset Formula $\overrightarrow{x}$
 \end_inset
 
 .
- Observing equation 
+ Observing the equation 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:nn"
@@ -1019,10 +1019,10 @@ noprefix "false"
 
 \end_inset
 
-, it is obvious that in many cases the sigmoid function is driven to 1 or
- 0 and therefore the training error of the neural network can get trapped
- in local minima and consequently the neural network it will lose its generaliza
-tion abilities.
+, it is obvious that in many cases, the sigmoid function is driven to 1
+ or 0 and as a consequence the training error of the neural network can
+ get trapped in local minima and finally, the neural network it will lose
+ its generalization abilities.
  Therefore, a technique should be devised by which the values of the sigmoid
  will be restricted to some interval of values.
  In the present work, the limitation of the neural network parameters to
@@ -1031,12 +1031,217 @@ tion abilities.
 \end_layout
 
 \begin_layout Subsection
+The bounding algorithm
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:The-bounding-algorithm"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the case of the sigmoid function of equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:sig"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ , if the parameter 
+\begin_inset Formula $x$
+\end_inset
+
+ is large, then the function will very quickly tend to 1 and if it is very
+ small, it will very quickly tend to 0.
+ This means that the function will very quickly lose any generalizing abilities
+ it has.
+ Therefore, the parameter 
+\begin_inset Formula $x$
+\end_inset
+
+ should somehow be in some interval of values, so that there are no generalizati
+on problems.
+ For this reason, the quantity 
+\begin_inset Formula $B(L)$
+\end_inset
+
+ is estimated, where 
+\begin_inset Formula $L$
+\end_inset
+
+ is a limit for the absolute value of the parameter x of the sigmoid function.
+ The steps for this calculation are shown in Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:CalculationBound"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ This function will eventually return the average of the overruns made for
+ the 
+\begin_inset Formula $x$
+\end_inset
+
+ parameter of the sigmoid function.
+ The higher this average is, the more likely it is that the artificial neural
+ network will not be able to generalize satisfactorily.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\series bold
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Calculation of the quantity 
+\begin_inset Formula $B(L)$
+\end_inset
+
+ for a given parameter 
+\begin_inset Formula $L.$
+\end_inset
+
+ The parameter 
+\begin_inset Formula $M$
+\end_inset
+
+ stands for the number of patterns for the neural network 
+\begin_inset Formula $N(x,w).$
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:CalculationBound"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Function
+\series default
+ 
+\begin_inset Formula $B(L)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Define 
+\begin_inset Formula $v=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For 
+\begin_inset Formula $i=1..H$
+\end_inset
+
+ Do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+For 
+\begin_inset Formula $j=1..M$
+\end_inset
+
+ Do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+If 
+\begin_inset Formula $\left|\sum_{k=1}^{d}\left(w_{(d+2)i-(d+i)+k}x_{jk}\right)+w_{(d+2)i}\right|>L$
+\end_inset
+
+ then 
+\begin_inset Formula $v=v+1$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Return 
+\begin_inset Formula $\frac{v}{H\star M}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+End Function
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 The PSO algorithm
 \end_layout
 
 \begin_layout Standard
 The Particle Swarm Optimization method is based on a population of vectors
- that also called particles.
+ that are also called particles.
  These particles are also possible global minima of the objective function.
  Each particle is associated with two vectors: the current position denoted
  as
@@ -1055,12 +1260,12 @@ The Particle Swarm Optimization method is based on a population of vectors
 
 
 \series default
- at which they are moving towards to the global minimum.
+ at which they are moving towards the global minimum.
  In addition, each particle maintains in the vector 
 \begin_inset Formula $p_{i,b}$
 \end_inset
 
- the best position in which it has been so far and the total population
+ the best position in which it has been so far and the total population,
  maintains in the vector 
 \begin_inset Formula $p_{\mbox{best}}$
 \end_inset
@@ -1071,7 +1276,54 @@ The Particle Swarm Optimization method is based on a population of vectors
  In each iteration, the velocity of each particle is calculated based on
  its current position, its best position in the past and the optimal position
  of the population.
- The main steps of a PSO algorithm are shown in Algorithm 
+ 
+\end_layout
+
+\begin_layout Standard
+In the present work, the PSO technique is used to train artificial neural
+ networks by minimizing the error function as defined in the equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eq1-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ along with a penalty factor depending on the function 
+\begin_inset Formula $B(L)$
+\end_inset
+
+ defined in subsection 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:The-bounding-algorithm"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Hence, the PSO technique will minimize the equation:
+\begin_inset Formula 
+\begin{equation}
+E_{T}\left(N\left(x,w\right),L\right)=\sum_{i=1}^{M}\left(N\left(\overrightarrow{x}_{i},\overrightarrow{w}\right)-y_{i}\right)^{2}\times\left(1+\alpha B(L)\right)\label{eq:etotal}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ is a penalty factor with 
+\begin_inset Formula $\alpha>1$
+\end_inset
+
+.
+ Hence, the main steps of a PSO algorithm are shown in Algorithm 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "alg:psoSerial"
@@ -1133,7 +1385,19 @@ Set
 \begin_inset Formula $k=0$
 \end_inset
 
-.
+, as the iteration number.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $H$
+\end_inset
+
+ the number of hidden nodes for the neural network.
 \end_layout
 
 \begin_layout Enumerate
@@ -1146,6 +1410,8 @@ Set
 \end_inset
 
  as the total number of particles.
+ Each particle corresponds to a randomly selected set of parameters for
+ the neural network
 \end_layout
 
 \begin_layout Enumerate
@@ -1157,20 +1423,7 @@ Set
 \begin_inset Formula $\mbox{k}_{\mbox{max}}$
 \end_inset
 
- as the maximum number of iterations allowed for the serial algorithm.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Initialize
-\series default
- randomly, the positions 
-\begin_inset Formula $p_{1},p_{2},...,p_{m}$
-\end_inset
-
- for the particles.
- The initial positions must be within the domain of the objective function.
+ as the maximum number of iterations allowed.
 \end_layout
 
 \begin_layout Enumerate
@@ -1203,7 +1456,7 @@ For
 \begin_inset Formula $p_{i,b}$
 \end_inset
 
- represents the best located position of particle 
+ corresponds to the best located position of particle 
 \begin_inset Formula $i$
 \end_inset
 
@@ -1226,17 +1479,24 @@ Set
 \begin_layout Enumerate
 
 \series bold
-Termination Check Step
+If
 \series default
- .
+ 
+\begin_inset Formula $k\ge k_{\mbox{max}}$
+\end_inset
+
+, then 
+\series bold
+terminate
+\series default
+.
 \begin_inset CommandInset label
 LatexCommand label
-name "enu:Check-Termination."
+name "enu:termCheck"
 
 \end_inset
 
- The termination criterion for the serial algorithm is checked.
- If the termination criterion is true, then the method terminates.
+
 \end_layout
 
 \begin_layout Enumerate
@@ -1276,7 +1536,7 @@ the velocity
 \begin_inset Formula $u_{i}$
 \end_inset
 
- as a combination of the vectors 
+ using the vectors 
 \begin_inset Formula $u_{i},\ p_{i.b}$
 \end_inset
 
@@ -1292,7 +1552,7 @@ the velocity
 \series bold
 Set
 \series default
- the new position for the particle as: 
+ the new position 
 \begin_inset Formula $p_{i}=p_{i}+u_{i}$
 \end_inset
 
@@ -1319,11 +1579,21 @@ Calculate
 \begin_inset Formula $p_{i}$
 \end_inset
 
- using the objective function 
-\begin_inset Formula $f(x)$
+ using the equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:etotal"
+plural "false"
+caps "false"
+noprefix "false"
+
 \end_inset
 
-.
+ as 
+\begin_inset Formula $f\left(p_{i}\right)=E_{T}\left(N\left(x,p_{i}\right),L\right)$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Enumerate
@@ -1393,7 +1663,10 @@ Goto
  Step 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "enu:Check-Termination."
+reference "enu:termCheck"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
@@ -1403,8 +1676,206 @@ reference "enu:Check-Termination."
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+The velocity of each particle 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ usually is calculated as:
+\begin_inset Formula 
+\begin{equation}
+u_{i}=\omega u_{i}+r_{1}c_{1}\left(p_{i}-x_{i}\right)+r_{2}c_{2}\left(p_{\mbox{best}}-x_{i}\right)\label{eq:eq4-1}
+\end{equation}
+
+\end_inset
+
+where 
+\end_layout
+
+\begin_layout Enumerate
+The variables 
+\begin_inset Formula $r_{1},\ r_{2}$
+\end_inset
+
+ are random numbers defined in 
+\begin_inset Formula $[0,1].$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+The constants 
+\begin_inset Formula $c_{1},\ c_{2}$
+\end_inset
+
+ are defined in 
+\begin_inset Formula $[1,2]$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+The variable 
+\begin_inset Formula $\omega$
+\end_inset
+
+ is called inertia, proposed in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "pso_major"
+literal "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+For the proposed algorithm, the inertia calculation used in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "random_inertia,inertia1,inertia2"
+literal "false"
+
+\end_inset
+
+ was used and it is defined as:
+\begin_inset Formula 
+\begin{equation}
+\omega_{k}=\frac{k_{\mbox{max}}-\mbox{k}}{\mbox{k}_{\mbox{max}}}\left(\omega_{\mbox{max}}-\omega_{\mbox{min}}\right)+\omega_{\mbox{min}}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\omega_{min}$
+\end_inset
+
+ and 
+\begin_inset Formula $\omega_{\mbox{max}}$
+\end_inset
+
+ are the minimum and the maximum value for inertia respectively.
+ 
+\end_layout
+
+\begin_layout Subsection
+Application of local optimization
+\end_layout
+
+\begin_layout Standard
+After the Particle Swarm Optimization is completed in the vector 
+\begin_inset Formula $p_{\mbox{best}}$
+\end_inset
+
+ is the optimal set of parameters for the artificial neural network.
+ From this set, a local optimization method can be started in order to achieve
+ an even lower value for the neural network error.
+ In addition, the optimal set of weights can be used to calculate an interval
+ for the parameters of the neural network.
+ The error function of the equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eq1-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ will be minimized inside this interval.
+ The interval 
+\begin_inset Formula $\left[LW,RW\right]$
+\end_inset
+
+ for the parameter vector 
+\begin_inset Formula $w$
+\end_inset
+
+ of the neural network is calculated through the following procedure:
+\end_layout
+
+\begin_layout Enumerate
+
 \series bold
-(STOPPED HERE)
+For
+\series default
+ 
+\begin_inset Formula $i=1..n$
+\end_inset
+
+ 
+\series bold
+do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $LW_{i}=-F\times\left|p_{\mbox{best},i}\right|$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $RW_{i}=F\times\left|p_{\mbox{best},i}\right|$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\begin_layout Standard
+The value 
+\begin_inset Formula $F$
+\end_inset
+
+ will be called margin factor with 
+\begin_inset Formula $F>1$
+\end_inset
+
+.
+ In the proposed algorithm, the BFGS variant of Powell 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Powell"
+literal "false"
+
+\end_inset
+
+ was used as the local search procedure, which is a version of the BFGS
+ local optimization procedure 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "bfgs2"
+literal "false"
+
+\end_inset
+
+, that utilizes bounds for the objective function.
+ 
 \end_layout
 
 \begin_layout Section
@@ -1707,7 +2178,7 @@ literal "false"
 
 \end_inset
 
-, a medical dataset related to Parkinsons desease.
+, a medical dataset related to Parkinson's decease.
 \end_layout
 
 \begin_layout Enumerate
@@ -1862,7 +2333,7 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-The regression datasets used in the conducted expreriements have as follows:
+The regression datasets used in the conducted experiments have as follows:
 \end_layout
 
 \begin_layout Enumerate
@@ -2064,8 +2535,8 @@ Experimental results
 
 \begin_layout Standard
 In order to validate the efficiency of the proposed method, the ten - fold
- validation method was used and each experiment was conducted 30 experiments
- using different seed for the random generator each time.
+ validation method was used and and 30 experiments were conducted using
+ different seeds for the random generator each time.
  The average classification or regression error on the test set is reported
  in the experimental tables.
  The parameters used in the experiments are shown in Table 
@@ -2088,7 +2559,7 @@ A simple genetic algorithm using
 \begin_inset Formula $m$
 \end_inset
 
- chromosomes, denotes by GENETIC in the experiemental tables.
+ chromosomes, denotes by GENETIC in the experimental tables.
  Also, in order to achieve a better solution, the local optimization method
  BFGS is applied to the best chromosome of the population when the genetic
  algorithm terminates.
@@ -2167,20 +2638,17 @@ https://github.com/BiagioFesta/EvolutionNet
 \end_layout
 
 \begin_layout Standard
-
-\series bold
-The experimental results for classification datasets are shown in Table
- 
+The results for the classification datasets are listed in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "tab:Experiments-for-classification"
+reference "tab:exp1"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- and the results for the regression datasets are outlined in Table 
+ and the results for the regression datasets in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:exp2"
@@ -2191,17 +2659,11 @@ noprefix "false"
 \end_inset
 
 .
- For classification problems, the average classification error on the test
- set is shown and for regression datasets the average mean squared error
- on the test set is displayed.
- In both tables, an additional row was added at the end showing the average
- classification or regression error for all datasets and it is denoted by
- the name AVERAGE.
-\end_layout
-
-\begin_layout Standard
-All the experiments were conducted on AMD Epyc 7552 equipped with 32GB of
- RAM.
+ For every table, an additional row was added with the title AVERAGE indicating
+ at the end showing the average classification or regression error for all
+ datasets.
+ All the experiments were conducted on AMD Epyc 7552 equipped with 32GB
+ of RAM.
  The operating system was the Ubuntu 20.04 operating system.
 \end_layout
 
@@ -2210,11 +2672,7 @@ All the experiments were conducted on AMD Epyc 7552 equipped with 32GB of
 placement H
 wide false
 sideways false
-status collapsed
-
-\begin_layout Plain Layout
-
-\end_layout
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -2238,7 +2696,7 @@ name "tab:values"
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="6" columns="3">
+<lyxtabular version="3" rows="9" columns="3">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -2341,6 +2799,70 @@ Maximum number of iterations
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $\omega_{\mbox{min}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Minimum value for inertia
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.4
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\omega_{\mbox{max}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Maximum value for inertia
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.9
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 \begin_inset Formula $H$
 \end_inset
 
@@ -2373,6 +2895,38 @@ Number of weights
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $\alpha$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Penalty factor
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+100.0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 \begin_inset Formula $L$
 \end_inset
 
@@ -2385,7 +2939,11 @@ Number of weights
 \begin_inset Text
 
 \begin_layout Plain Layout
-The limit for the weight value
+The limit for the function 
+\begin_inset Formula $B(L)$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2446,13 +3004,20 @@ The margin factor
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Experimental results for the classification datasets.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:exp1"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -4068,7 +4633,7 @@ AVERAGE
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -5129,7 +5694,165 @@ AVERAGE
 
 \end_inset
 
+In both cases, the superiority of the proposed technique over other artificial
+ neural network training methods is evident, especially in the case of regressio
+n.
+ The average gain from the next best method is 22% for the classification
+ case and 54% for the regression case.
+ In fact, in many cases the profit exceeds 50% compared to the immediate
+ best technique.
+\end_layout
 
+\begin_layout Standard
+In addition, in order to see if there is a dependence of the results on
+ the critical parameters 
+\begin_inset Formula $L$
+\end_inset
+
+ and 
+\begin_inset Formula $F$
+\end_inset
+
+ of the proposed method, a series of additional experiments were carried
+ out in which these parameters were varied.
+ In the first phase, the proposed technique was applied to the regression
+ datasets for different values of the coefficient 
+\begin_inset Formula $L$
+\end_inset
+
+ varying from 2.5 to 20.0 and the average regression error is graphically
+ shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:lfactor"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename lfactor.eps
+	scale 85
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Experiments with the 
+\begin_inset Formula $L$
+\end_inset
+
+ parameter for the regression datasets.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:lfactor"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+From the results, it is obvious that increasing the value of this parameter
+ also reduces the average error, but this reduction is not extremely large
+ to radically change the behavior of this technique.
+\end_layout
+
+\begin_layout Standard
+In addition, corresponding experiments were performed with the value of
+ the coefficient 
+\begin_inset Formula $F$
+\end_inset
+
+ increasing from 2 to 15 and these are graphically illustrated in figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ffactor"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename ffactor.eps
+	scale 85
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Experiments with the value of parameter 
+\begin_inset Formula $F$
+\end_inset
+
+ for the regression datasets.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ffactor"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+From these results it follows that the proposed method achieves the best
+ results for the value of the parameter to be equal to 5, although again
+ there is no significant difference in the effectiveness of the method for
+ large changes in the value of this parameter.
 \end_layout
 
 \begin_layout Section
@@ -5141,6 +5864,48 @@ name "sec:Conclusions"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+In this paper, a two-stage technique for efficient training of artificial
+ neural networks for classification and regression problems was presented.
+ In the first phase, a widely used global optimization technique such as
+ the Particle Swarm Optimization was used to minimize the training error
+ of the artificial neural network to which a penalty factor had been added.
+ This penalty factor is used in order to maintain the effectiveness of the
+ artificial neural network to generalize to unknown data as well.
+ The calculation of the penalty factor is based on the observation that
+ the artificial neural network can lose its generalization abilities when
+ the input values in the sigmoid activation function exceed some predetermined
+ threshold.
+ After the particle optimization technique is performed in the second phase,
+ the best particle is used both as an initializer of a local optimization
+ method and as a basis for calculating bounds on the parameters of the artificia
+l neural network.
+\end_layout
+
+\begin_layout Standard
+The proposed method was applied to a wide range of classification and regression
+ problems from the relevant literature and the experimental results were
+ more than encouraging.
+ In addition, when comparing the proposed technique with other widely used
+ methods from the relevant literature, it appears that the proposed technique
+ significantly outperforms, especially in the case of regression
+\begin_inset space ~
+\end_inset
+
+problems.
+ In relevant experiments carried out regarding the sensitivity of the proposed
+ technique on its critical parameters, it was found to be quite robust without
+ large error fluctuations.
+\end_layout
+
+\begin_layout Standard
+Future extensions of the technique may include its application to other
+ network cases such as Radial Basis Function artificial neural networks
+ (RBFs), as well as the use of global optimization methods in the second
+ stage of the proposed technique or even the creation of appropriate termination
+ techniques.
 \end_layout
 
 \begin_layout Standard
@@ -5282,15 +6047,6 @@ Keep empty!
 
 \begin_layout Begin Whole Page
 \start_of_appendix
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Keep empty!
-\end_layout
-
-\end_inset
-
 
 \end_layout
 
@@ -6626,6 +7382,101 @@ Jong-Bae Park, Yun-Won Jeong, Joong-Rin Shin, Kwang Y.
 216
 \series default
 6, 2010.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pso_major"
+literal "false"
+
+\end_inset
+
+J.
+ Kennedy and R.
+ Eberhart, "Particle swarm optimization," Proceedings of ICNN'95 - International
+ Conference on Neural Networks, 1995, pp.
+ 1942-1948 vol.4, doi: 10.1109/ICNN.1995.488968.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "random_inertia"
+literal "false"
+
+\end_inset
+
+R.C.
+ Eberhart, Y.H.
+ Shi, Tracking and optimizing dynamic systems with particle swarms, in:
+ Congress on Evolutionary Computation, Korea, 2001.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "inertia1"
+literal "false"
+
+\end_inset
+
+ Y.H.
+ Shi, R.C.
+ Eberhart, Empirical study of particle swarm optimization, in: Congress
+ on Evolutionary Computation, Washington DC, USA, 1999.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "inertia2"
+literal "false"
+
+\end_inset
+
+Y.H.
+ Shi, R.C.
+ Eberhart, Experimental study of particle swarm optimization, in: SCI2000
+ Conference, Orlando, 2000.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Powell"
+literal "true"
+
+\end_inset
+
+M.J.D Powell, A Tolerant Algorithm for Linearly Constrained Optimization Calculati
+ons, Mathematical Programming 
+\series bold
+45
+\series default
+, pp.
+ 547-566, 1989.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "bfgs2"
+literal "true"
+
+\end_inset
+
+R.
+ Fletcher, A new approach to variable metric algorithms, Computer Journal
+ 
+\series bold
+13
+\series default
+, pp.
+ 317-322, 1970.
+ 
 \end_layout
 
 \begin_layout Bibliography
