@@ -82,6 +82,21 @@ return QJsonObject();
 
 6. QJsonObject  done(vector<double> &x). This function is executed after the objective function optimization process is completed. The point x is the global minimum for the function f(x).
 ## Compile an optimization function
+In order to build the objective function the user should create an accompaniment project file as shown below
+
+<pre>
+TEMPLATE=lib
+SOURCES+=rastrigin.cc interval.cpp
+HEADERS += interval.h
+</pre>
+
+The software incorporates the utility qmake of the QT library to compile the objective function. The compilation is performed with the following series of commands in the terminal:
+
+1. qmake file.pro
+
+2. make
+
+where file.pro stands for the name of the project file. The final outcome of this compilation will be the shared library libfile.so
 ## A typical run ##
 A full working command for the Rastrigin problem using the utility program OptimusApp is shown below
 
