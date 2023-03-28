@@ -19,17 +19,69 @@ After the compilation the executable OptimusApp will be placed under bin subdire
 
 ## Contents ##
 The software has the following subdirectories
+
     - bin: After compilation of the package, it will contain the executable OptimusApp
     - Bfgs: the source code of the Bfgs optimization method
     - De: the source code for the Differential Evolution optimization method
-
+    - DoubleGenetic: the source code of double precision genetic algorithm
+    - GCRS: the source code of the improved Controlled Random Search method
+    - IntegerGenetic: the source code of the Integer genetic algorithm
+    - iPso: the source code for the Improved Particle Swarm Optimization method
+    - lib: the directory holding the compiled optimization methods
+    - MANUAL: the Doxygen manual of the software
+    - MinCenter: the source code of the MinCenter global optimization method
+    - Minfinder: the source code of the MinFinder global optimization method
+    - Multistart: the source code of the Multistart global optimization method
+    - NeuralMinimizer: the source code of the NeuralMinimizer global optimization method
+    - Optimus: the base class for the implemented optimizers
+    - ParallelDe: the source code of the Parallel Differential Evolution method
+    - Pso: the source code of the Particle Swarm Optimization method
+    - Tmlsl: the source code of the Topographical Multi Livel Single Linkage optimization method
     - doc: This directory contains the documentation of the package
     - PROBLEMS: A directory that contains some test functions.
     - compile.sh: The main compilation script.
 
-## Example of optimization function
+## Example of an optimization function
+An example for the implementation of the Rastrigin function has as follows:
+
+<pre>
+extern "C" {
+void    init(QJsonObject data) {
+}
+int	getdimension() {
+	return 2;
+}
+void    getmargins(vector<Interval> &x) {
+  for(int i=0;i<x.size();i++)
+	x[i]=Interval(-1,1);
+}
+double	funmin(vector<double> &x) {
+	return (x[0]*x[0])+(x[1]*x[1])-cos(18.0*x[0])-cos(18.0*x[1]);
+}
+void    granal(vector<double> &x,vector<double> &g) {
+	g[0]=2.0*x[0]+18.0*sin(18.0*x[0]);
+	g[1]=2.0*x[1]+18.0*sin(18.0*x[1]);
+}
+QJsonObject    done(vector<double> &x) {
+return QJsonObject();
+}
+}
+</pre>
+
+ The implemented functions are:
+
+1. void init(QJsonObject data). The function init() is called before the objective function is executed and its purpose is to pass parameters from the execution environment to the objective function.
+
+2. int getDimension(), the dimension of the objective problem.
+
+3. void    getmargins(vector<Interval> &x). The getmargins() functions returns in the vector x the bounds of the objective problem. The class Interval is a simple class located in the folder PROBLEMS of the distribution, that represents double precision intervals.
+
+4. double	funmin(vector<double> &x). This function returns the objective problem f(x) for a given point x.
+
+5. void    granal(vector<double> &x,vector<double> &g). This functions stores in vector g the gradient f(x) for a given point x.
+
+6. QJsonObject  done(vector<double> &x). This function is executed after the objective function optimization process is completed. The point x is the global minimum for the function f(x).
 ## Compile an optimization function
-## The executable OptimusApp ##
 ## A typical run ##
 A full working command for the Rastrigin problem using the utility program OptimusApp is shown below
 
