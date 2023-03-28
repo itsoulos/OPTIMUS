@@ -271,14 +271,6 @@ is defined as:
 \begin{equation}
 \sigma(x)=\frac{1}{1+\exp(-x)}\label{eq:sig}
 \end{equation}
-This function is graphically illustrated in Figure \ref{fig:sigPlot}.
-
-\begin{figure}[H]
-\includegraphics{sig}
-
-\caption{Plot of the sigmoid function.\label{fig:sigPlot}}
-
-\end{figure}
 The equation for every hidden node of the neural network has as:
 \begin{equation}
 o_{i}(x)=\sigma\left(w_{i}^{T}x+\theta_{i}\right),\label{eq:eq1-1}
@@ -296,16 +288,14 @@ equations \ref{eq:eq1-1} and \ref{eq:eq1-2} has as:
 N\left(\overrightarrow{x},\overrightarrow{w}\right)=\sum_{i=1}^{H}w_{(d+2)i-(d+1)}\sigma\left(\sum_{j=1}^{d}x_{j}w_{(d+2)i-(d+1)+j}+w_{(d+2)i}\right)\label{eq:nn}
 \end{equation}
 The value $d$ stands for the dimension of the input vector $\overrightarrow{x}$.
-Observing the equation \ref{eq:nn} but also the shape of the sigmoid
-function in figure \ref{fig:sigPlot}, it is obvious that in many
-cases, the sigmoid function is driven to 1 or 0 and as a consequence
-the training error of the neural network can get trapped in local
-minima and finally, the neural network it will lose its generalization
-abilities. Therefore, a technique should be devised by which the values
-of the sigmoid will be restricted to some interval of values. In the
-present work, the limitation of the neural network parameters to a
-range of values is carried out using the Particle Swarm Optimization
-method.
+Observing the equation \ref{eq:nn} it is obvious that in many cases,
+the sigmoid function is driven to 1 or 0 and as a consequence the
+training error of the neural network can get trapped in local minima
+and finally, the neural network it will lose its generalization abilities.
+Therefore, a technique should be devised by which the values of the
+sigmoid will be restricted to some interval of values. In the present
+work, the limitation of the neural network parameters to a range of
+values is carried out using the Particle Swarm Optimization method.
 
 \subsection{The bounding algorithm\label{subsec:The-bounding-algorithm}}
 
@@ -562,9 +552,12 @@ The results for the classification datasets are listed in Table \ref{tab:exp1}
 and the results for the regression datasets in Table \ref{tab:exp2}.
 For every table, an additional row was added with the title AVERAGE
 indicating at the end showing the average classification or regression
-error for all datasets. All the experiments were conducted on AMD
-Epyc 7552 equipped with 32GB of RAM. The operating system was the
-Ubuntu 20.04 operating system.
+error for all datasets. Also, the column CLASSES in Table \ref{tab:exp1}
+denotes the number of classes for every dataset. All the experiments
+were conducted on AMD Epyc 7552 equipped with 32GB of RAM. The operating
+system was the Ubuntu 20.04 operating system. For the conducted experiments
+the Optimus programming library available from \url{https://github.com/itsoulos/OPTIMUS}
+was used.
 
 \begin{table}[H]
 \caption{The values for the parameters of the proposed method.\label{tab:values}}
@@ -597,64 +590,64 @@ $F$ & The margin factor & 5.0\tabularnewline
 \caption{Experimental results for the classification datasets.\label{tab:exp1}}
 
 \centering{}%
-\begin{tabular}{|c|c|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|c|c|}
 \hline 
-DATASET & GENETIC & ADAM & RPROP & NEAT & PROPOSED\tabularnewline
+DATASET & CLASSES & GENETIC & ADAM & RPROP & NEAT & PROPOSED\tabularnewline
 \hline 
 \hline 
-Appendicitis & 18.10\% & 16.50\% & 16.30\% & 17.20\% & 16.97\%\tabularnewline
+Appendicitis & 2 & 18.10\% & 16.50\% & 16.30\% & 17.20\% & 16.97\%\tabularnewline
 \hline 
-Australian & 32.21\% & 35.65\% & 36.12\% & 31.98\% & 26.96\%\tabularnewline
+Australian & 2 & 32.21\% & 35.65\% & 36.12\% & 31.98\% & 26.96\%\tabularnewline
 \hline 
-Balance & 8.97\% & 7.87\% & 8.81\% & 23.14\% & 7.52\%\tabularnewline
+Balance & 3 & 8.97\% & 7.87\% & 8.81\% & 23.14\% & 7.52\%\tabularnewline
 \hline 
-Bands & 35.75\% & 36.25\% & 36.32\% & 34.30\% & 35.77\%\tabularnewline
+Bands & 2 & 35.75\% & 36.25\% & 36.32\% & 34.30\% & 35.77\%\tabularnewline
 \hline 
-Cleveland & 51.60\% & 67.55\% & 61.41\% & 53.44\% & 48.40\%\tabularnewline
+Cleveland & 5 & 51.60\% & 67.55\% & 61.41\% & 53.44\% & 48.40\%\tabularnewline
 \hline 
-Dermatology & 30.58\% & 26.14\% & 15.12\% & 32.43\% & 14.30\%\tabularnewline
+Dermatology & 6 & 30.58\% & 26.14\% & 15.12\% & 32.43\% & 14.30\%\tabularnewline
 \hline 
-Hayes Roth & 56.18\% & 59.70\% & 37.46\% & 50.15\% & 36.33\%\tabularnewline
+Hayes Roth & 3 & 56.18\% & 59.70\% & 37.46\% & 50.15\% & 36.33\%\tabularnewline
 \hline 
-Heart & 28.34\% & 38.53\% & 30.51\% & 39.27\% & 18.99\%\tabularnewline
+Heart & 2 & 28.34\% & 38.53\% & 30.51\% & 39.27\% & 18.99\%\tabularnewline
 \hline 
-HouseVotes & 6.62\% & 7.48\% & 6.04\% & 10.89\% & 7.10\%\tabularnewline
+HouseVotes & 2 & 6.62\% & 7.48\% & 6.04\% & 10.89\% & 7.10\%\tabularnewline
 \hline 
-Ionosphere & 15.14\% & 16.64\% & 13.65\% & 19.67\% & 13.15\%\tabularnewline
+Ionosphere & 2 & 15.14\% & 16.64\% & 13.65\% & 19.67\% & 13.15\%\tabularnewline
 \hline 
-Liverdisorder & 31.11\% & 41.53\% & 40.26\% & 30.67\% & 32.07\%\tabularnewline
+Liverdisorder & 2 & 31.11\% & 41.53\% & 40.26\% & 30.67\% & 32.07\%\tabularnewline
 \hline 
-Lymography & 23.26\% & 29.26\% & 24.67\% & 33.70\% & 27.05\%\tabularnewline
+Lymography & 4 & 23.26\% & 29.26\% & 24.67\% & 33.70\% & 27.05\%\tabularnewline
 \hline 
-Mammographic & 19.88\% & 46.25\% & 18.46\% & 22.85\% & 17.37\%\tabularnewline
+Mammographic & 2 & 19.88\% & 46.25\% & 18.46\% & 22.85\% & 17.37\%\tabularnewline
 \hline 
-PageBlocks & 8.06\% & 7.93\% & 7.82\% & 10.22\% & 6.47\%\tabularnewline
+PageBlocks & 5 & 8.06\% & 7.93\% & 7.82\% & 10.22\% & 6.47\%\tabularnewline
 \hline 
-Parkinsons & 18.05\% & 24.06\% & 22.28\% & 18.56\% & 14.60\%\tabularnewline
+Parkinsons & 2 & 18.05\% & 24.06\% & 22.28\% & 18.56\% & 14.60\%\tabularnewline
 \hline 
-Pima & 32.19\% & 34.85\% & 34.27\% & 34.51\% & 26.34\%\tabularnewline
+Pima & 2 & 32.19\% & 34.85\% & 34.27\% & 34.51\% & 26.34\%\tabularnewline
 \hline 
-Popfailures & 5.94\% & 5.18\% & 4.81\% & 7.05\% & 5.27\%\tabularnewline
+Popfailures & 2 & 5.94\% & 5.18\% & 4.81\% & 7.05\% & 5.27\%\tabularnewline
 \hline 
-Regions2 & 29.39\% & 29.85\% & 27.53\% & 33.23\% & 26.29\%\tabularnewline
+Regions2 & 5 & 29.39\% & 29.85\% & 27.53\% & 33.23\% & 26.29\%\tabularnewline
 \hline 
-Saheart & 34.86\% & 34.04\% & 34.90\% & 34.51\% & 32.49\%\tabularnewline
+Saheart & 2 & 34.86\% & 34.04\% & 34.90\% & 34.51\% & 32.49\%\tabularnewline
 \hline 
-Segment & 57.72\% & 49.75\% & 52.14\% & 66.72\% & 18.99\%\tabularnewline
+Segment & 7 & 57.72\% & 49.75\% & 52.14\% & 66.72\% & 18.99\%\tabularnewline
 \hline 
-Wdbc & 8.56\% & 35.35\% & 21.57\% & 12.88\% & 6.01\%\tabularnewline
+Wdbc & 2 & 8.56\% & 35.35\% & 21.57\% & 12.88\% & 6.01\%\tabularnewline
 \hline 
-Wine & 19.20\% & 29.40\% & 30.73\% & 25.43\% & 10.92\%\tabularnewline
+Wine & 3 & 19.20\% & 29.40\% & 30.73\% & 25.43\% & 10.92\%\tabularnewline
 \hline 
-Z\_F\_S & 10.73\% & 47.81\% & 29.28\% & 38.41\% & 8.55\%\tabularnewline
+Z\_F\_S & 3 & 10.73\% & 47.81\% & 29.28\% & 38.41\% & 8.55\%\tabularnewline
 \hline 
-ZO\_NF\_S & 8.41\% & 47.43\% & 6.43\% & 43.75\% & 7.11\%\tabularnewline
+ZO\_NF\_S & 3 & 8.41\% & 47.43\% & 6.43\% & 43.75\% & 7.11\%\tabularnewline
 \hline 
-ZONF\_S & 2.60\% & 11.99\% & 27.27\% & 5.44\% & 2.61\%\tabularnewline
+ZONF\_S & 2 & 2.60\% & 11.99\% & 27.27\% & 5.44\% & 2.61\%\tabularnewline
 \hline 
-ZOO & 16.67\% & 14.13\% & 15.47\% & 20.27\% & 5.80\%\tabularnewline
+ZOO & 7 & 16.67\% & 14.13\% & 15.47\% & 20.27\% & 5.80\%\tabularnewline
 \hline 
-\textbf{AVERAGE} & \textbf{23.47\%} & \textbf{30.81\%} & \textbf{25.37\%} & \textbf{28.87\%} & \textbf{18.21\%}\tabularnewline
+\textbf{AVERAGE} &  & \textbf{23.47\%} & \textbf{30.81\%} & \textbf{25.37\%} & \textbf{28.87\%} & \textbf{18.21\%}\tabularnewline
 \hline 
 \end{tabular}
 \end{table}
@@ -704,12 +697,32 @@ WANKARA & 0.012 & 0.02 & 0.0003 & 0.005 & 0.0002\tabularnewline
 \hline 
 \end{tabular}
 \end{table}
+\begin{table}[H]
+\caption{Comparison for precision and recall between the proposed method and
+the Genetic Algorithm for a series of classification datasets.\label{tab:precision}}
+
+\raggedright{}%
+\begin{tabular}{|c|c|c|c|c|}
+\hline 
+{\footnotesize{}DATASET} & {\footnotesize{}PRECISION GENETIC} & {\footnotesize{}RECALL GENETIC} & {\footnotesize{}PRECISION PROPOSED} & {\footnotesize{}RECALL PROPOSED}\tabularnewline
+\hline 
+\hline 
+{\footnotesize{}PARKINSONS} & 0.77 & 0.68 & 0.82 & 0.77\tabularnewline
+\hline 
+{\footnotesize{}WINE} & 0.75 & 0.79 & 0.90 & 0.89\tabularnewline
+\hline 
+{\footnotesize{}HEART} & 0.73 & 0.72 & 0.81 & 0.80\tabularnewline
+\hline 
+\end{tabular}
+\end{table}
 In both cases, the superiority of the proposed technique over other
 artificial neural network training methods is evident, especially
 in the case of regression. The average gain from the next best method
 is 22\% for the classification case and 54\% for the regression case.
 In fact, in many cases the profit exceeds 50\% compared to the immediate
-best technique.
+best technique. Also, e comparison between in terms of precision and
+recall between the proposed method and the genetic algorithm is shown
+in Table \ref{tab:precision} for some classification datasets.
 
 In addition, in order to see if there is a dependence of the results
 on the critical parameters $L$ and $F$ of the proposed method, a
