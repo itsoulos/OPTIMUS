@@ -219,19 +219,32 @@ interval of values $S$ of the objective function is continuously
 divided into smaller parts. The segments that may not contain the
 total minimum are discarded and eventually a very narrow interval
 of values should be left which will contain the total minimum of the
-objective function. On the other hand, in the category of stochastic
-techniques, where the greatest research effort is made, techniques
-are presented that look for the total minimum using stochastic methods,
-which, of course, does not guarantee finding the total minimum. In
-this vast area of research endeavors one encounters methods such as
-controlled random search methods\citep{crs1,crs2,crs3} which can
-be considered as a direct search method, simulated annealing methods
-\citep{simann_major,simann1,simann2}, differential evolution methods
-\citep{diffe1,diffe2}, particle swarm optimization methods \citep{pso_major,pso1,pso2},
-Ant Colony Optimization \citep{aco1,aco2}, Genetic Algorithms \citep{ga1,ga2,ga3},
-etc. In addition, since in recent years there has been an extremely
-wide spread of parallel computing units, many studies have appeared
-that utilize the modern parallel processing units \citep{gpu1,gpu2,gpu3}
+objective function. Also, in the area of deterministic methods, many
+related works with various applications, such as the work of Maranas
+and Floudas that proposed a deterministic method for molecular structure
+determination \citep{determ1}, the TRUST method for global optimization
+\citep{determ2}, the method of Evtushenko and Posypkin for global
+box - constrained optimization \citep{determ3}, a method that uses
+smooth diagonal auxiliary functions to approximate the global minimum
+\citep{determ4} etc. Also, Kunde et al \citep{determ5} suggested
+the usage of deterministic global optimization methods for chemical
+problems. Furthermore, recently, Sergeyev et al \citep{Sergeyev}
+proposed a systematic comparison between deterministic and stochastic
+methods used to handle the global optimization problem.
+
+On the other hand, in the category of stochastic techniques, where
+the greatest research effort is made, techniques are presented that
+look for the total minimum using stochastic methods, which, of course,
+does not guarantee finding the total minimum. In this vast area of
+research endeavors one encounters methods such as controlled random
+search methods\citep{crs1,crs2,crs3} which can be considered as a
+direct search method, simulated annealing methods \citep{simann_major,simann1,simann2},
+differential evolution methods \citep{diffe1,diffe2}, particle swarm
+optimization methods \citep{pso_major,pso1,pso2}, Ant Colony Optimization
+\citep{aco1,aco2}, Genetic Algorithms \citep{ga1,ga2,ga3}, etc.
+In addition, since in recent years there has been an extremely wide
+spread of parallel computing units, many studies have appeared that
+utilize the modern parallel processing units \citep{gpu1,gpu2,gpu3}
 to tackle the global optimization problem. Some research that one
 can study regarding metaheuristic algorithms is presented in some
 recent papers \citep{meta1,meta2,meta3}. This paper suggests a number
@@ -723,7 +736,7 @@ TEST30N4 & 17395 & 23519 & 8014\tabularnewline
 \end{tabular}
 \end{table}
 In the table, each number in each cell represents the average of the
-function values for 30 runs. Also, the numbers in parentheses stand
+function calls for 30 runs. Also, the numbers in parentheses stand
 for the percentage of runs in which the global minimum was successfully
 found. If this percentage is not present, it implies 100\% success.
 In addition, a line has been added at the end of the table showing
@@ -1043,7 +1056,7 @@ of function calls.
 \subsection{Experiments for the execution time }
 
 To understand the efficiency of the method with respect to execution
-time, two additional series of experiments were performed. In all
+time, three additional series of experiments were performed. In all
 experiments, the total number of particles in the particle swarm optimization
 was fixed at 500 and from 1 to 20 parallel processing units were used
 and the total execution time was measured for 30 different independent
@@ -1057,7 +1070,7 @@ f(x)=\sum_{i=1}^{n}\left(10^{6}\right)^{\frac{i-1}{n-1}}x_{i}^{2}
 \]
 was used as a test case. In the experiments, the values n=10,20,30,40,50
 were used and the experimental results are displayed graphically in
-the figure \ref{fig:elpTime}.
+the figure \ref{fig:elpTime}. 
 
 \begin{figure}[H]
 \begin{centering}
@@ -1071,7 +1084,50 @@ From the experimental results, it follows that doubling the parallel
 processing units almost halves the required execution time in most
 cases.
 
-In the second series of additional experiments, a more difficult experiment
+During the second series of experiments, different versions of the
+GKLS function were used for dimensions from 2 to 5. This function
+was thoroughly tested also in the work of Sergeyev et al \citep{Sergeyev}.
+In each dimension, 10 different instances of the function were used
+to have a safe estimate of both the performance of the method and
+the possible decrease in execution time as the parallel processing
+units.\textbf{ }The average execution time for different dimensions
+of the GKLS function and for different numbers of processing units
+is graphically shown in Figure \ref{fig:gklsTime}. 
+\begin{figure}[H]
+\includegraphics[scale=0.8]{gklstime}
+
+\caption{Average time execution for the GKLS function. The dimension of the
+function varies from 2 to 5.\label{fig:gklsTime}}
+
+\end{figure}
+As is shown, the execution time decreases rapidly with increasing
+parallel processing units in all instances of the function. Furthermore,
+the average number of function calls for every case is also measured
+and the results are plotted in Figure \ref{fig:gklsCalls}. 
+\begin{figure}[H]
+\includegraphics[scale=0.8]{gklscalls}
+
+\caption{Average function calls for different cases of the GKLS function. \label{fig:gklsCalls}}
+
+\end{figure}
+Increasing the number of parallel processing units also reduces the
+number of required function calls, especially for the low-dimensional
+cases (Gkls2 and Gkls3). However, the most interesting point of this
+series of experiments is the ability of the proposed technique to
+locate the global minimum as the number of parallel computing units
+increases. This capability is graphically represented in Figure \ref{fig:gklsRate}.
+\begin{figure}[H]
+\includegraphics[scale=0.8]{gklsrate}
+
+\caption{Average success rate in finding the global minimum for different cases
+of the Gkls function.\label{fig:gklsRate}}
+
+\end{figure}
+ From this graph it can be concluded that the increase in parallel
+processing units significantly improves the efficiency of the technique
+in finding the global minimum.
+
+In the third series of additional experiments, a more difficult experiment
 was used, but one that has multiple applications. The proposed method
 was used to train an artificial neural network \citep{nn1,nn2} with
 10 processing nodes applied on two widely used classification problems
@@ -1224,6 +1280,33 @@ Applied Mathematics and Computation \textbf{75}, pp. 179-206, 1996.
 \bibitem{interval2}T. Csendes and D. Ratz, Subdivision Direction
 Selection in Interval Methods for Global Optimization, SIAM J. Numer.
 Anal. \textbf{34}, pp. 922--938, 1997. 
+
+\bibitem{determ1}C.D Maranas, C.A. Floudas, A deterministic global
+optimization approach for molecular structure determination, J. Chem.
+Phys. \textbf{100}, 1247, 1994.
+
+\bibitem{determ2}J. Barhen, V. Protopopescu, D. Reister, TRUST: A
+Deterministic Algorithm for Global Optimization, Science \textbf{276},
+pp. 1094-1097, 1997.
+
+\bibitem{determ3}Y. Evtushenko, M.A. Posypkin, deterministic approach
+to global box-constrained optimization, Optim Lett \textbf{7}, pp.
+819--829, 2013.
+
+\bibitem{determ4}Y.D. Sergeyev, D.E. Kvasov, A deterministic global
+optimization using smooth diagonal auxiliary functions, Communications
+in Nonlinear Science and Numerical Simulation \textbf{21}, pp. 99-111,
+2015.
+
+\bibitem{determ5}C. Kunde, D. Michaels, J. Micovic, P. Lutze, A.
+Górak, A. Kienle, Deterministic global optimization in conceptual
+process design of distillation and melt crystallization, Chemical
+Engineering and Processing: Process Intensification \textbf{99}, pp.
+132-142, 2016.
+
+\bibitem{Sergeyev}Y.D. Sergeyev, D.E. Kvasov, M.S. Mukhametzhanov,
+On the efficiency of nature-inspired metaheuristics in expensive global
+optimization with limited budget. Sci Rep \textbf{8}, 453, 2018.
 
 \bibitem{crs1}W. L. Price, Global optimization by controlled random
 search, Journal of Optimization Theory and Applications \textbf{40},

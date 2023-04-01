@@ -434,10 +434,70 @@ literal "true"
  The segments that may not contain the total minimum are discarded and eventuall
 y a very narrow interval of values should be left which will contain the
  total minimum of the objective function.
- On the other hand, in the category of stochastic techniques, where the
- greatest research effort is made, techniques are presented that look for
- the total minimum using stochastic methods, which, of course, does not
- guarantee finding the total minimum.
+ Also, in the area of deterministic methods, many related works with various
+ applications, such as the work of Maranas and Floudas that proposed a determini
+stic method for molecular structure determination 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "determ1"
+literal "false"
+
+\end_inset
+
+, the TRUST method for global optimization 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "determ2"
+literal "false"
+
+\end_inset
+
+, the method of Evtushenko and Posypkin for global box - constrained optimizatio
+n 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "determ3"
+literal "false"
+
+\end_inset
+
+, a method that uses smooth diagonal auxiliary functions to approximate
+ the global minimum 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "determ4"
+literal "false"
+
+\end_inset
+
+ etc.
+ Also, Kunde et al 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "determ5"
+literal "false"
+
+\end_inset
+
+ suggested the usage of deterministic global optimization methods for chemical
+ problems.
+ Furthermore, recently, Sergeyev et al 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Sergeyev"
+literal "false"
+
+\end_inset
+
+ proposed a systematic comparison between deterministic and stochastic methods
+ used to handle the global optimization problem.
+\end_layout
+
+\begin_layout Standard
+On the other hand, in the category of stochastic techniques, where the greatest
+ research effort is made, techniques are presented that look for the total
+ minimum using stochastic methods, which, of course, does not guarantee
+ finding the total minimum.
  In this vast area of research endeavors one encounters methods such as
  controlled random search methods
 \begin_inset CommandInset citation
@@ -4715,7 +4775,7 @@ TOTAL
 \end_inset
 
 In the table, each number in each cell represents the average of the function
- values for 30 runs.
+ calls for 30 runs.
  Also, the numbers in parentheses stand for the percentage of runs in which
  the global minimum was successfully found.
  If this percentage is not present, it implies 100% success.
@@ -10745,7 +10805,7 @@ Experiments for the execution time
 
 \begin_layout Standard
 To understand the efficiency of the method with respect to execution time,
- two additional series of experiments were performed.
+ three additional series of experiments were performed.
  In all experiments, the total number of particles in the particle swarm
  optimization was fixed at 500 and from 1 to 20 parallel processing units
  were used and the total execution time was measured for 30 different independen
@@ -10777,6 +10837,7 @@ noprefix "false"
 \end_inset
 
 .
+ 
 \end_layout
 
 \begin_layout Standard
@@ -10828,7 +10889,205 @@ From the experimental results, it follows that doubling the parallel processing
 \end_layout
 
 \begin_layout Standard
-In the second series of additional experiments, a more difficult experiment
+During the second series of experiments, different versions of the GKLS
+ function were used for dimensions from 2 to 5.
+ This function was thoroughly tested also in the work of Sergeyev et al
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Sergeyev"
+literal "false"
+
+\end_inset
+
+.
+ In each dimension, 10 different instances of the function were used to
+ have a safe estimate of both the performance of the method and the possible
+ decrease in execution time as the parallel processing units.
+
+\series bold
+ 
+\series default
+The average execution time for different dimensions of the GKLS function
+ and for different numbers of processing units is graphically shown in Figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:gklsTime"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename gklstime.eps
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Average time execution for the GKLS function.
+ The dimension of the function varies from 2 to 5.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:gklsTime"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+As is shown, the execution time decreases rapidly with increasing parallel
+ processing units in all instances of the function.
+ Furthermore, the average number of function calls for every case is also
+ measured and the results are plotted in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:gklsCalls"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename gklscalls.eps
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Average function calls for different cases of the GKLS function.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:gklsCalls"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Increasing the number of parallel processing units also reduces the number
+ of required function calls, especially for the low-dimensional cases (Gkls2
+ and Gkls3).
+ However, the most interesting point of this series of experiments is the
+ ability of the proposed technique to locate the global minimum as the number
+ of parallel computing units increases.
+ This capability is graphically represented in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:gklsRate"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename gklsrate.eps
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Average success rate in finding the global minimum for different cases of
+ the Gkls function.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:gklsRate"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+ From this graph it can be concluded that the increase of parallel processing
+ units significantly improves the efficiency of the technique in finding
+ the global minimum.
+\end_layout
+
+\begin_layout Standard
+In the third series of additional experiments, a more difficult experiment
  was used, but one that has multiple applications.
  The proposed method was used to train an artificial neural network 
 \begin_inset CommandInset citation
@@ -10956,8 +11215,8 @@ On a percentage basis, the proposed technique significantly outperforms
  the other two compared global optimization techniques.
  The serial version of the proposed technique reduces the required number
  of function calls by 22%-28% compared to the genetic algorithm and the
- particle swarm optimization technique respectively.
- However, with the use of more processing units the reduction in the number
+ particle swarm optimization techniques respectively.
+ However, with the use of more processing units, the reduction in the number
  of function calls reaches approximately 70%.
  Furthermore, from the relevant experiments done on the actual execution
  time, it appears that any doubling of parallel processing threads halves
@@ -11377,6 +11636,129 @@ on, SIAM J.
 , pp.
  922–938, 1997.
  
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "determ1"
+literal "false"
+
+\end_inset
+
+C.D Maranas, C.A.
+ Floudas, A deterministic global optimization approach for molecular structure
+ determination, J.
+ Chem.
+ Phys.
+ 
+\series bold
+100
+\series default
+, 1247, 1994.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "determ2"
+literal "false"
+
+\end_inset
+
+J.
+ Barhen, V.
+ Protopopescu, D.
+ Reister, TRUST: A Deterministic Algorithm for Global Optimization, Science
+ 
+\series bold
+276
+\series default
+, pp.
+ 1094-1097, 1997.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "determ3"
+literal "false"
+
+\end_inset
+
+Y.
+ Evtushenko, M.A.
+ Posypkin, deterministic approach to global box-constrained optimization,
+ Optim Lett 
+\series bold
+7
+\series default
+, pp.
+ 819–829, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "determ4"
+literal "false"
+
+\end_inset
+
+Y.D.
+ Sergeyev, D.E.
+ Kvasov, A deterministic global optimization using smooth diagonal auxiliary
+ functions, Communications in Nonlinear Science and Numerical Simulation
+ 
+\series bold
+21
+\series default
+, pp.
+ 99-111, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "determ5"
+literal "false"
+
+\end_inset
+
+C.
+ Kunde, D.
+ Michaels, J.
+ Micovic, P.
+ Lutze, A.
+ Górak, A.
+ Kienle, Deterministic global optimization in conceptual process design
+ of distillation and melt crystallization, Chemical Engineering and Processing:
+ Process Intensification 
+\series bold
+99
+\series default
+, pp.
+ 132-142, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Sergeyev"
+literal "false"
+
+\end_inset
+
+Y.D.
+ Sergeyev, D.E.
+ Kvasov, M.S.
+ Mukhametzhanov, On the efficiency of nature-inspired metaheuristics in
+ expensive global optimization with limited budget.
+ Sci Rep 
+\series bold
+8
+\series default
+, 453, 2018.
 \end_layout
 
 \begin_layout Bibliography
