@@ -14,7 +14,7 @@ else
 		(cd PROBLEMS/RbfTest; for file in *.pro; do  qmake $file;  make; done)
 		(cd PROBLEMS/DataFitting; for file in *.pro; do  qmake $file;  make; done)
 		for str in ${methods[@]}; do
-			(cd $str; qmake;  make install )
+			(cd src/$str; qmake;  make install )
 		done
 		(cd bin; qmake ;  make)
 		(cd bin/OptimusFIT; qmake; make)

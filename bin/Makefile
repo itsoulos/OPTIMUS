@@ -17,7 +17,7 @@ CXX           = g++
 DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_CORE_LIB
 CFLAGS        = -pipe -O3 -march=native -fopenmp -unroll-loops -omit-frame-pointer -Winline -unsafe-math-optimizations -mtune=native -mno-vzeroupper -pthread -fopt-info-optimized-vec-loop-omp -O2 -O3 -march=native -fopenmp -unroll-loops -omit-frame-pointer -Winline -unsafe-math-optimizations -mtune=native -mno-vzeroupper -pthread -fopt-info-optimized-vec-loop-omp -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -O3 -march=native -fopenmp -unroll-loops -omit-frame-pointer -Winline -unsafe-math-optimizations -mtune=native -mno-vzeroupper -pthread -fopt-info-optimized-vec-loop-omp -O2 -O3 -march=native -fopenmp -unroll-loops -omit-frame-pointer -Winline -unsafe-math-optimizations -mtune=native -mno-vzeroupper -pthread -fopt-info-optimized-vec-loop-omp -std=gnu++11 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -I../../OPTIMUS -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+INCPATH       = -I. -I../include -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
 QMAKE         = /usr/lib/qt5/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -394,36 +394,36 @@ compiler_clean: compiler_moc_predefs_clean
 getoptions.o: getoptions.cpp getoptions.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o getoptions.o getoptions.cpp
 
-main.o: main.cpp ../../OPTIMUS/Optimus/dllproblem.h \
-		../Optimus/intervalproblem.h \
-		../Optimus/interval.h \
-		../../OPTIMUS/Optimus/optimizer.h \
-		../Optimus/problem.h \
-		../Optimus/tolmin.h \
-		../Optimus/gradientdescent.h \
-		../Optimus/adam.h \
-		../Optimus/lbfgs.h \
-		../Optimus/nelderMead.h \
-		../Optimus/nelderMead_global.h \
-		../Optimus/uniformsampler.h \
-		../Optimus/problemsampler.h \
-		../Optimus/rbfsampler.h \
-		../Optimus/dataset.h \
-		../Optimus/neuralsampler.h \
-		../Optimus/maxwellsampler.h \
-		../Optimus/triangularsampler.h \
-		../Optimus/nncsampler.h \
-		../Optimus/nncneuralprogram.h \
-		../Optimus/neuralprogram.h \
-		../Optimus/program.h \
-		../Optimus/symbol.h \
-		../Optimus/rule.h \
-		../Optimus/doublestack.h \
-		../Optimus/sigprogram.h \
-		../Optimus/cprogram.h \
-		../Optimus/fparser.hh \
-		../Optimus/neuralparser.h \
-		../Optimus/simplexmethod.h \
+main.o: main.cpp ../include/Optimus/dllproblem.h \
+		../include/Optimus/intervalproblem.h \
+		../include/Optimus/interval.h \
+		../include/Optimus/optimizer.h \
+		../include/Optimus/problem.h \
+		../include/Optimus/tolmin.h \
+		../include/Optimus/gradientdescent.h \
+		../include/Optimus/adam.h \
+		../include/Optimus/lbfgs.h \
+		../include/Optimus/nelderMead.h \
+		../include/Optimus/nelderMead_global.h \
+		../include/Optimus/uniformsampler.h \
+		../include/Optimus/problemsampler.h \
+		../include/Optimus/rbfsampler.h \
+		../include/Optimus/dataset.h \
+		../include/Optimus/neuralsampler.h \
+		../include/Optimus/maxwellsampler.h \
+		../include/Optimus/triangularsampler.h \
+		../include/Optimus/nncsampler.h \
+		../include/Optimus/nncneuralprogram.h \
+		../include/Optimus/neuralprogram.h \
+		../include/Optimus/program.h \
+		../include/Optimus/symbol.h \
+		../include/Optimus/rule.h \
+		../include/Optimus/doublestack.h \
+		../include/Optimus/sigprogram.h \
+		../include/Optimus/cprogram.h \
+		../include/Optimus/fparser.hh \
+		../include/Optimus/neuralparser.h \
+		../include/Optimus/simplexmethod.h \
 		getoptions.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 

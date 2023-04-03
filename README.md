@@ -21,22 +21,24 @@ After the compilation the executable OptimusApp will be placed under bin subdire
 The software has the following subdirectories
 
     - bin: After compilation of the package, it will contain the executable OptimusApp
-    - Bfgs: the source code of the Bfgs optimization method
-    - De: the source code for the Differential Evolution optimization method
-    - DoubleGenetic: the source code of double precision genetic algorithm
-    - GCRS: the source code of the improved Controlled Random Search method
-    - IntegerGenetic: the source code of the Integer genetic algorithm
-    - iPso: the source code for the Improved Particle Swarm Optimization method
+    - include: with the header files needed for compilation
+    - src: the subdirecotry containing the following functions
+     - Bfgs: the source code of the Bfgs optimization method
+     - De: the source code for the Differential Evolution optimization method
+     - DoubleGenetic: the source code of double precision genetic algorithm
+     - GCRS: the source code of the improved Controlled Random Search method
+     - IntegerGenetic: the source code of the Integer genetic algorithm
+     - iPso: the source code for the Improved Particle Swarm Optimization method
+     - MinCenter: the source code of the MinCenter global optimization method
+     - Minfinder: the source code of the MinFinder global optimization method
+     - Multistart: the source code of the Multistart global optimization method
+     - NeuralMinimizer: the source code of the NeuralMinimizer global optimization method
+     - Optimus: the base class for the implemented optimizers
+     - ParallelDe: the source code of the Parallel Differential Evolution method
+     - Tmlsl: the source code of the Topographical Multi Livel Single Linkage optimization method
+     - Pso: the source code of the Particle Swarm Optimization method
     - lib: the directory holding the compiled optimization methods
     - MANUAL: the Doxygen manual of the software
-    - MinCenter: the source code of the MinCenter global optimization method
-    - Minfinder: the source code of the MinFinder global optimization method
-    - Multistart: the source code of the Multistart global optimization method
-    - NeuralMinimizer: the source code of the NeuralMinimizer global optimization method
-    - Optimus: the base class for the implemented optimizers
-    - ParallelDe: the source code of the Parallel Differential Evolution method
-    - Pso: the source code of the Particle Swarm Optimization method
-    - Tmlsl: the source code of the Topographical Multi Livel Single Linkage optimization method
     - doc: This directory contains the documentation of the package
     - PROBLEMS: A directory that contains some test functions.
     - compile.sh: The main compilation script.
