@@ -539,6 +539,8 @@ against some other methods from the relevant literature:
 in the experimental tables. Also, in order to achieve a better solution,
 the local optimization method BFGS is applied to the best chromosome
 of the population when the genetic algorithm terminates. 
+\item The Radial Basis Function (RBF) neural network \citep{rbf1}, where
+the number of weights was set to 10.
 \item The optimization method Adam \citep{Adam} as provided by the OptimLib.
 This library can be downloaded freely from \url{https://github.com/kthohr/optim}
 (accessed on 4 April 2023). 
@@ -553,12 +555,11 @@ The experimental results for the classification data are shown in
 the tablee \ref{tab:exp1} and the corresponing results for the regression
 datasets are shown in table \ref{tab:exp2}. In both tables the last
 row, denoted as AVERAGE, indicates the average classification or regression
-error for the associated datasets. Also, the column CLASSES in Table
-\ref{tab:exp1} denotes the number of classes for every dataset. All
-the experiments were conducted on AMD Epyc 7552 equipped with 32GB
-of RAM. The operating system was the Ubuntu 20.04 operating system.
-For the conducted experiments the Optimus programming library available
-from \url{https://github.com/itsoulos/OPTIMUS} was used.
+error for the associated datasets. All the experiments were conducted
+on AMD Epyc 7552 equipped with 32GB of RAM. The operating system was
+the Ubuntu 20.04 operating system. For the conducted experiments the
+Optimus programming library available from \url{https://github.com/itsoulos/OPTIMUS}(accessed
+on 4 April 2023) was used.
 
 \begin{table}[H]
 \caption{This table presents the values of the parameters used during the execution
@@ -592,65 +593,65 @@ $F$ & The margin factor & 5.0\tabularnewline
 \caption{Average classification error for the classification datasets for all
 mentioned methods.\label{tab:exp1}}
 
-\centering{}%
+\raggedright{}%
 \begin{tabular}{|c|c|c|c|c|c|c|}
 \hline 
-DATASET & CLASSES & GENETIC & ADAM & RPROP & NEAT & PROPOSED\tabularnewline
+DATASET & GENETIC & RBF & ADAM & RPROP & NEAT & PROPOSED\tabularnewline
 \hline 
 \hline 
-Appendicitis & 2 & 18.10\% & 16.50\% & 16.30\% & 17.20\% & 16.97\%\tabularnewline
+Appendicitis & 18.10\% & 12.23\% & 16.50\% & 16.30\% & 17.20\% & 16.97\%\tabularnewline
 \hline 
-Australian & 2 & 32.21\% & 35.65\% & 36.12\% & 31.98\% & 26.96\%\tabularnewline
+Australian & 32.21\% & 34.89\% & 35.65\% & 36.12\% & 31.98\% & 26.96\%\tabularnewline
 \hline 
-Balance & 3 & 8.97\% & 7.87\% & 8.81\% & 23.14\% & 7.52\%\tabularnewline
+Balance & 8.97\% & 33.42\% & 7.87\% & 8.81\% & 23.14\% & 7.52\%\tabularnewline
 \hline 
-Bands & 2 & 35.75\% & 36.25\% & 36.32\% & 34.30\% & 35.77\%\tabularnewline
+Bands & 35.75\% & 37.22\% & 36.25\% & 36.32\% & 34.30\% & 35.77\%\tabularnewline
 \hline 
-Cleveland & 5 & 51.60\% & 67.55\% & 61.41\% & 53.44\% & 48.40\%\tabularnewline
+Cleveland & 51.60\% & 67.10\% & 67.55\% & 61.41\% & 53.44\% & 48.40\%\tabularnewline
 \hline 
-Dermatology & 6 & 30.58\% & 26.14\% & 15.12\% & 32.43\% & 14.30\%\tabularnewline
+Dermatology & 30.58\% & 62.34\% & 26.14\% & 15.12\% & 32.43\% & 14.30\%\tabularnewline
 \hline 
-Hayes Roth & 3 & 56.18\% & 59.70\% & 37.46\% & 50.15\% & 36.33\%\tabularnewline
+Hayes Roth & 56.18\% & 64.36\% & 59.70\% & 37.46\% & 50.15\% & 36.33\%\tabularnewline
 \hline 
-Heart & 2 & 28.34\% & 38.53\% & 30.51\% & 39.27\% & 18.99\%\tabularnewline
+Heart & 28.34\% & 31.20\% & 38.53\% & 30.51\% & 39.27\% & 18.99\%\tabularnewline
 \hline 
-HouseVotes & 2 & 6.62\% & 7.48\% & 6.04\% & 10.89\% & 7.10\%\tabularnewline
+HouseVotes & 6.62\% & 6.13\% & 7.48\% & 6.04\% & 10.89\% & 7.10\%\tabularnewline
 \hline 
-Ionosphere & 2 & 15.14\% & 16.64\% & 13.65\% & 19.67\% & 13.15\%\tabularnewline
+Ionosphere & 15.14\% & 16.22\% & 16.64\% & 13.65\% & 19.67\% & 13.15\%\tabularnewline
 \hline 
-Liverdisorder & 2 & 31.11\% & 41.53\% & 40.26\% & 30.67\% & 32.07\%\tabularnewline
+Liverdisorder & 31.11\% & 30.84\% & 41.53\% & 40.26\% & 30.67\% & 32.07\%\tabularnewline
 \hline 
-Lymography & 4 & 23.26\% & 29.26\% & 24.67\% & 33.70\% & 27.05\%\tabularnewline
+Lymography & 23.26\% & 25.31\% & 29.26\% & 24.67\% & 33.70\% & 27.05\%\tabularnewline
 \hline 
-Mammographic & 2 & 19.88\% & 46.25\% & 18.46\% & 22.85\% & 17.37\%\tabularnewline
+Mammographic & 19.88\% & 21.38\% & 46.25\% & 18.46\% & 22.85\% & 17.37\%\tabularnewline
 \hline 
-PageBlocks & 5 & 8.06\% & 7.93\% & 7.82\% & 10.22\% & 6.47\%\tabularnewline
+PageBlocks & 8.06\% & 10.09\% & 7.93\% & 7.82\% & 10.22\% & 6.47\%\tabularnewline
 \hline 
-Parkinsons & 2 & 18.05\% & 24.06\% & 22.28\% & 18.56\% & 14.60\%\tabularnewline
+Parkinsons & 18.05\% & 17.42\% & 24.06\% & 22.28\% & 18.56\% & 14.60\%\tabularnewline
 \hline 
-Pima & 2 & 32.19\% & 34.85\% & 34.27\% & 34.51\% & 26.34\%\tabularnewline
+Pima & 32.19\% & 25.78\% & 34.85\% & 34.27\% & 34.51\% & 26.34\%\tabularnewline
 \hline 
-Popfailures & 2 & 5.94\% & 5.18\% & 4.81\% & 7.05\% & 5.27\%\tabularnewline
+Popfailures & 5.94\% & 7.04\% & 5.18\% & 4.81\% & 7.05\% & 5.27\%\tabularnewline
 \hline 
-Regions2 & 5 & 29.39\% & 29.85\% & 27.53\% & 33.23\% & 26.29\%\tabularnewline
+Regions2 & 29.39\% & 38.29\% & 29.85\% & 27.53\% & 33.23\% & 26.29\%\tabularnewline
 \hline 
-Saheart & 2 & 34.86\% & 34.04\% & 34.90\% & 34.51\% & 32.49\%\tabularnewline
+Saheart & 34.86\% & 32.19\% & 34.04\% & 34.90\% & 34.51\% & 32.49\%\tabularnewline
 \hline 
-Segment & 7 & 57.72\% & 49.75\% & 52.14\% & 66.72\% & 18.99\%\tabularnewline
+Segment & 57.72\% & 59.68\% & 49.75\% & 52.14\% & 66.72\% & 18.99\%\tabularnewline
 \hline 
-Wdbc & 2 & 8.56\% & 35.35\% & 21.57\% & 12.88\% & 6.01\%\tabularnewline
+Wdbc & 8.56\% & 7.27\% & 35.35\% & 21.57\% & 12.88\% & 6.01\%\tabularnewline
 \hline 
-Wine & 3 & 19.20\% & 29.40\% & 30.73\% & 25.43\% & 10.92\%\tabularnewline
+Wine & 19.20\% & 31.41\% & 29.40\% & 30.73\% & 25.43\% & 10.92\%\tabularnewline
 \hline 
-Z\_F\_S & 3 & 10.73\% & 47.81\% & 29.28\% & 38.41\% & 8.55\%\tabularnewline
+Z\_F\_S & 10.73\% & 13.16\% & 47.81\% & 29.28\% & 38.41\% & 8.55\%\tabularnewline
 \hline 
-ZO\_NF\_S & 3 & 8.41\% & 47.43\% & 6.43\% & 43.75\% & 7.11\%\tabularnewline
+ZO\_NF\_S & 8.41\% & 9.02\% & 47.43\% & 6.43\% & 43.75\% & 7.11\%\tabularnewline
 \hline 
-ZONF\_S & 2 & 2.60\% & 11.99\% & 27.27\% & 5.44\% & 2.61\%\tabularnewline
+ZONF\_S & 2.60\% & 4.03\% & 11.99\% & 27.27\% & 5.44\% & 2.61\%\tabularnewline
 \hline 
-ZOO & 7 & 16.67\% & 14.13\% & 15.47\% & 20.27\% & 5.80\%\tabularnewline
+ZOO & 16.67\% & 21.93\% & 14.13\% & 15.47\% & 20.27\% & 5.80\%\tabularnewline
 \hline 
-\textbf{AVERAGE} &  & \textbf{23.47\%} & \textbf{30.81\%} & \textbf{25.37\%} & \textbf{28.87\%} & \textbf{18.21\%}\tabularnewline
+\textbf{AVERAGE} & \textbf{23.47\%} & \textbf{27.69\%} & \textbf{30.81\%} & \textbf{25.37\%} & \textbf{28.87\%} & \textbf{18.21\%}\tabularnewline
 \hline 
 \end{tabular}
 \end{table}
@@ -660,44 +661,44 @@ ZOO & 7 & 16.67\% & 14.13\% & 15.47\% & 20.27\% & 5.80\%\tabularnewline
 datasets.\label{tab:exp2}}
 
 \centering{}%
-\begin{tabular}{|c|c|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|c|c|}
 \hline 
-DATASET & GENETIC & ADAM & RPROP & NEAT & PROPOSED\tabularnewline
+DATASET & GENETIC & RBF & ADAM & RPROP & NEAT & PROPOSED\tabularnewline
 \hline 
 \hline 
-ABALONE & 7.17 & 4.30 & 4.55 & 9.88 & 4.34\tabularnewline
+ABALONE & 7.17 & 7.37 & 4.30 & 4.55 & 9.88 & 4.34\tabularnewline
 \hline 
-AIRFOIL & 0.003 & 0.005 & 0.002 & 0.067 & 0.002\tabularnewline
+AIRFOIL & 0.003 & 0.27 & 0.005 & 0.002 & 0.067 & 0.002\tabularnewline
 \hline 
-BASEBALL & 103.60 & 77.90 & 92.05 & 100.39 & 58.78\tabularnewline
+BASEBALL & 103.60 & 93.02 & 77.90 & 92.05 & 100.39 & 58.78\tabularnewline
 \hline 
-BK & 0.027 & 0.03 & 1.599 & 0.15 & 0.03\tabularnewline
+BK & 0.027 & 0.02 & 0.03 & 1.599 & 0.15 & 0.03\tabularnewline
 \hline 
-BL & 5.74 & 0.28 & 4.38 & 0.05 & 0.02\tabularnewline
+BL & 5.74 & 0.01 & 0.28 & 4.38 & 0.05 & 0.02\tabularnewline
 \hline 
-CONCRETE & 0.0099 & 0.078 & 0.0086 & 0.081 & 0.003\tabularnewline
+CONCRETE & 0.0099 & 0.011 & 0.078 & 0.0086 & 0.081 & 0.003\tabularnewline
 \hline 
-DEE & 1.013 & 0.63 & 0.608 & 1.512 & 0.23\tabularnewline
+DEE & 1.013 & 0.17 & 0.63 & 0.608 & 1.512 & 0.23\tabularnewline
 \hline 
-DIABETES & 19.86 & 3.03 & 1.11 & 4.25 & 0.65\tabularnewline
+DIABETES & 19.86 & 0.49 & 3.03 & 1.11 & 4.25 & 0.65\tabularnewline
 \hline 
-HOUSING & 43.26 & 80.20 & 74.38 & 56.49 & 21.85\tabularnewline
+HOUSING & 43.26 & 57.68 & 80.20 & 74.38 & 56.49 & 21.85\tabularnewline
 \hline 
-FA & 1.95 & 0.11 & 0.14 & 0.19 & 0.02\tabularnewline
+FA & 1.95 & 0.02 & 0.11 & 0.14 & 0.19 & 0.02\tabularnewline
 \hline 
-MB & 3.39 & 0.06 & 0.055 & 0.061 & 0.051\tabularnewline
+MB & 3.39 & 2.16 & 0.06 & 0.055 & 0.061 & 0.051\tabularnewline
 \hline 
-MORTGAGE & 2.41 & 9.24 & 9.19 & 14.11 & 0.31\tabularnewline
+MORTGAGE & 2.41 & 1.45 & 9.24 & 9.19 & 14.11 & 0.31\tabularnewline
 \hline 
-PY & 105.41 & 0.09 & 0.039 & 0.075 & 0.08\tabularnewline
+PY & 105.41 & 0.02 & 0.09 & 0.039 & 0.075 & 0.08\tabularnewline
 \hline 
-QUAKE & 0.04 & 0.06 & 0.041 & 0.298 & 0.044\tabularnewline
+QUAKE & 0.04 & 0.071 & 0.06 & 0.041 & 0.298 & 0.044\tabularnewline
 \hline 
-TREASURY & 2.929 & 11.16 & 10.88 & 15.52 & 0.34\tabularnewline
+TREASURY & 2.929 & 2.02 & 11.16 & 10.88 & 15.52 & 0.34\tabularnewline
 \hline 
-WANKARA & 0.012 & 0.02 & 0.0003 & 0.005 & 0.0002\tabularnewline
+WANKARA & 0.012 & 0.001 & 0.02 & 0.0003 & 0.005 & 0.0002\tabularnewline
 \hline 
-\textbf{AVERAGE} & \textbf{18.55} & \textbf{11.70} & \textbf{12.44} & \textbf{12.70} & \textbf{5.42}\tabularnewline
+\textbf{AVERAGE} & \textbf{18.55} & \textbf{10.30} & \textbf{11.70} & \textbf{12.44} & \textbf{12.70} & \textbf{5.42}\tabularnewline
 \hline 
 \end{tabular}
 \end{table}
@@ -727,6 +728,132 @@ In fact, in many cases the profit exceeds 50\% compared to the immediate
 best technique. Also, e comparison between in terms of precision and
 recall between the proposed method and the genetic algorithm is shown
 in Table \ref{tab:precision} for some classification datasets.
+
+Also, the effectiveness of the usage of the BFGS local search method
+is measure on an additional experiment, where the local search method
+for the proposed technique is replace by the ADAM optimizer. The results
+for the classification datasets are shown in Table \ref{tab:exp1Adam}
+and the corresponding results for the regression datasets in Table
+\ref{tab:exp2Adam}. In both tables, the column PROPOSED\_BFGS denotes
+the application of the proposed method using the BFGS local search
+as the procedure of the second phase and the column PROPOSED\_ADAM
+denotes the incorporation of the ADAM optimizer during the second
+phase instead of the BFGS.
+\begin{table}[H]
+\caption{Experimental results for the classification datasets using the BFGS
+and the Adam local optimization methods during the second phase.\label{tab:exp1Adam}}
+
+\centering{}%
+\begin{tabular}{|c|c|c|c|}
+\hline 
+DATASET & ADAM & PROPOSED\_BFGS & PROPOSED\_ADAM\tabularnewline
+\hline 
+\hline 
+Appendicitis & 16.50\% & 16.97\% & 16.03\%\tabularnewline
+\hline 
+Australian & 35.65\% & 26.96\% & 32.45\%\tabularnewline
+\hline 
+Balance & 7.87\% & 7.52\% & 7.59\%\tabularnewline
+\hline 
+Bands & 36.25\% & 35.77\% & 35.72\%\tabularnewline
+\hline 
+Cleveland & 67.55\% & 48.40\% & 47.62\%\tabularnewline
+\hline 
+Dermatology & 26.14\% & 14.30\% & 19.78\%\tabularnewline
+\hline 
+Hayes Roth & 59.70\% & 36.33\% & 36.87\%\tabularnewline
+\hline 
+Heart & 38.53\% & 18.99\% & 18.86\%\tabularnewline
+\hline 
+HouseVotes & 7.48\% & 7.10\% & 4.20\%\tabularnewline
+\hline 
+Ionosphere & 16.64\% & 13.15\% & 9.32\%\tabularnewline
+\hline 
+Liverdisorder & 41.53\% & 32.07\% & 32.24\%\tabularnewline
+\hline 
+Lymography & 29.26\% & 27.05\% & 27.64\%\tabularnewline
+\hline 
+Mammographic & 46.25\% & 17.37\% & 21.38\%\tabularnewline
+\hline 
+PageBlocks & 7.93\% & 6.47\% & 7.33\%\tabularnewline
+\hline 
+Parkinsons & 24.06\% & 14.60\% & 16.77\%\tabularnewline
+\hline 
+Pima & 34.85\% & 26.34\% & 30.19\%\tabularnewline
+\hline 
+Popfailures & 5.18\% & 5.27\% & 4.56\%\tabularnewline
+\hline 
+Regions2 & 29.85\% & 26.29\% & 26.14\%\tabularnewline
+\hline 
+Saheart & 34.04\% & 32.49\% & 32.55\%\tabularnewline
+\hline 
+Segment & 49.75\% & 18.99\% & 37.51\%\tabularnewline
+\hline 
+Wdbc & 35.35\% & 6.01\% & 7.40\%\tabularnewline
+\hline 
+Wine & 29.40\% & 10.92\% & 12.80\%\tabularnewline
+\hline 
+Z\_F\_S & 47.81\% & 8.55\% & 9.76\%\tabularnewline
+\hline 
+ZO\_NF\_S & 47.43\% & 7.11\% & 8.87\%\tabularnewline
+\hline 
+ZONF\_S & 11.99\% & 2.61\% & 2.68\%\tabularnewline
+\hline 
+ZOO & 14.13\% & 5.80\% & 6.47\%\tabularnewline
+\hline 
+\textbf{AVERAGE} & \textbf{30.81\%} & \textbf{18.21\%} & \textbf{19.72\%}\tabularnewline
+\hline 
+\end{tabular}
+\end{table}
+\begin{table}[H]
+\caption{Experimental results for the regression datasets using the BFGS and
+the Adam local optimization methods during the second phase.\label{tab:exp2Adam}}
+
+\centering{}%
+\begin{tabular}{|c|c|c|c|}
+\hline 
+DATASET & ADAM & PROPOSED\_BFGS & PROPOSED\_ADAM\tabularnewline
+\hline 
+\hline 
+ABALONE & 4.30 & 4.34 & 4.49\tabularnewline
+\hline 
+AIRFOIL & 0.005 & 0.002 & 0.003\tabularnewline
+\hline 
+BASEBALL & 77.90 & 58.78 & 72.43\tabularnewline
+\hline 
+BK & 0.03 & 0.03 & 0.02\tabularnewline
+\hline 
+BL & 0.28 & 0.02 & 0.01\tabularnewline
+\hline 
+CONCRETE & 0.078 & 0.003 & 0.004\tabularnewline
+\hline 
+DEE & 0.63 & 0.23 & 0.25\tabularnewline
+\hline 
+DIABETES & 3.03 & 0.65 & 0.44\tabularnewline
+\hline 
+HOUSING & 80.20 & 21.85 & 34.22\tabularnewline
+\hline 
+FA & 0.11 & 0.02 & 0.02\tabularnewline
+\hline 
+MB & 0.06 & 0.051 & 0.047\tabularnewline
+\hline 
+MORTGAGE & 9.24 & 0.31 & 1.83\tabularnewline
+\hline 
+PY & 0.09 & 0.08 & 0.02\tabularnewline
+\hline 
+QUAKE & 0.06 & 0.044 & 0.039\tabularnewline
+\hline 
+TREASURY & 11.16 & 0.34 & 2.36\tabularnewline
+\hline 
+WANKARA & 0.02 & 0.0002 & 0.0002\tabularnewline
+\hline 
+\textbf{AVERAGE} & \textbf{11.70} & \textbf{5.42} & \textbf{7.26}\tabularnewline
+\hline 
+\end{tabular}
+\end{table}
+The experimental results demonstrate that the proposed methodology
+can give excellent results in learning categories or in learning functions
+even if the Adam method is used as a local minimization method. 
 
 In addition, in order to see if there is a dependence of the results
 on the critical parameters $L$ and $F$ of the proposed method, a
@@ -1304,6 +1431,10 @@ pp. 81-102, 1978.
 
 \bibitem{pydataset}R.D. King, S. Muggleton, R. Lewis, M.J.E. Sternberg,
 Proc. Nat. Acad. Sci. USA \textbf{89}, pp. 11322--11326, 1992. 
+
+\bibitem{rbf1}J. Park and I. W. Sandberg, Universal Approximation
+Using Radial-Basis-Function Networks, Neural Computation \textbf{3},
+pp. 246-257, 1991.
 
 \bibitem{Adam}D. P. Kingma, J. L. Ba, ADAM: a method for stochastic
 optimization, in: Proceedings of the 3rd International Conference
