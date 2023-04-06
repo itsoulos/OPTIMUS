@@ -186,7 +186,7 @@ network and the vector $\overrightarrow{w}$ stands for the weight
 vector. To estimate the weight vector, the so-called training error
 is minimized, which is defined as the sum:
 \begin{equation}
-E\left(N\left(\overrightarrow{x},\overrightarrow{w}\right)\right)=\sum_{i=1}^{M}\left(N\left(\overrightarrow{x}_{i},\overrightarrow{w}\right)-y_{i}\right)^{2}\label{eq:eq1}
+E(\overrightarrow{w})=\sum_{i=1}^{M}\left(N\left(\overrightarrow{x}_{i},\overrightarrow{w}\right)-y_{i}\right)^{2}\label{eq:eq1}
 \end{equation}
 In equation \ref{eq:eq1} the values t $\left(\overrightarrow{x_{i}},y_{i}\right),\ i=1,...,M$
 defined the training set for the neural network. The values $y_{i}$
@@ -255,6 +255,16 @@ of values around the optimal value located by the PSO method, and
 then the original form of equation \ref{eq:eq1} is minimized without
 a penalty factor this time.
 
+Other tasks in a similar direction include for example the work of
+Hwang and Ding \citep{neuralInterval1} that suggest prediction intervals
+for the weights of neural networks, the work of Kasiviswanathan et
+al \citep{neuralInterval2} that constructs prediction interval for
+neural networks applied on rainfall runoff models, the work of Sodhi
+and Chandra \citep{neuralInterval3} that propose an interval based
+method for weight initialization of neural networks etc. Also, a review
+for weight initialization strategies can be found in the paper of
+Narkhede et al \citep{weightInitReview}.
+
 The following sections are organized as follows: in section \ref{sec:The-proposed-method}
 the suggested technique is fully analyzed and discussed, in section
 \ref{sec:Experiments} the experimental datasets as well as the experimental
@@ -273,9 +283,9 @@ The sigmoid function is defined as:
 \end{equation}
 The equation for every hidden node of the neural network has as:
 \begin{equation}
-o_{i}(x)=\sigma\left(w_{i}^{T}x+\theta_{i}\right),\label{eq:eq1-1}
+o_{i}(x)=\sigma\left(p_{i}^{T}x+\theta_{i}\right),\label{eq:eq1-1}
 \end{equation}
-The vector $w_{i}$ represents the weight vector and the value $\theta_{i}$
+The vector $p_{i}$ represents the weight vector and the value $\theta_{i}$
 denotes the bias the node $i$. Hence, the total equation for a neural
 network with $H$ hidden has as follows:
 \begin{equation}
@@ -283,8 +293,8 @@ N(x)=\sum_{i=1}^{H}v_{i}o_{i}(x),\label{eq:eq1-2}
 \end{equation}
 The value $v_{i}$ denotes the output weight for node $i$. Therefore
 writing the overall equation by using one vector to hold both the
-weights $w_{i},\ v_{i}$ and the biases of the networks and using
-the previous equations equations \ref{eq:eq1-1} and \ref{eq:eq1-2}
+weights $p_{i},\ v_{i}$ and the biases $\theta_{i}$ of the networks
+and using the previous equations equations \ref{eq:eq1-1} and \ref{eq:eq1-2}
 has as follows:
 \begin{equation}
 N\left(\overrightarrow{x},\overrightarrow{w}\right)=\sum_{i=1}^{H}w_{(d+2)i-(d+1)}\sigma\left(\sum_{j=1}^{d}x_{j}w_{(d+2)i-(d+1)+j}+w_{(d+2)i}\right)\label{eq:nn}
@@ -529,7 +539,9 @@ of USA.
 
 To make a reliable estimate of the efficiency of the method, the ten
 - fold validation method was used and and 30 experiments were conducted.
-In every experiment different random values were used. The average
+In every experiment different random values were used. The neural
+network used in the experiments has one hidden layers with 10 neurons.
+The selected activation function is the sigmoid function. The average
 classification or regression error on the test set is reported in
 the experimental tables. The parameters used in the experiments are
 shown in Table \ref{tab:values}. The proposed method is compared
@@ -551,14 +563,16 @@ The method is implemented in the EvolutionNet programming package
 downloaded from \url{https://github.com/BiagioFesta/EvolutionNet}(accessed
 on 4 April 2023). 
 \end{enumerate}
-The experimental results for the classification data are shown in
-the tablee \ref{tab:exp1} and the corresponing results for the regression
-datasets are shown in table \ref{tab:exp2}. In both tables the last
-row, denoted as AVERAGE, indicates the average classification or regression
-error for the associated datasets. All the experiments were conducted
-on AMD Epyc 7552 equipped with 32GB of RAM. The operating system was
-the Ubuntu 20.04 operating system. For the conducted experiments the
-Optimus programming library available from \url{https://github.com/itsoulos/OPTIMUS}(accessed
+The experimental parameters for the methods Adam, Rprop and NEAT are
+proposed in the corresponding software. The experimental results for
+the classification data are shown in the tablee \ref{tab:exp1} and
+the corresponing results for the regression datasets are shown in
+table \ref{tab:exp2}. In both tables the last row, denoted as AVERAGE,
+indicates the average classification or regression error for the associated
+datasets. All the experiments were conducted on AMD Epyc 7552 equipped
+with 32GB of RAM. The operating system was the Ubuntu 20.04 operating
+system. For the conducted experiments the Optimus programming library
+available from \url{https://github.com/itsoulos/OPTIMUS}(accessed
 on 4 April 2023) was used.
 
 \begin{table}[H]
@@ -720,14 +734,22 @@ the Genetic Algorithm for a series of classification datasets.\label{tab:precisi
 \hline 
 \end{tabular}
 \end{table}
-In both cases, the superiority of the proposed technique over other
-artificial neural network training methods is evident, especially
-in the case of regression. The average gain from the next best method
-is 22\% for the classification case and 54\% for the regression case.
-In fact, in many cases the profit exceeds 50\% compared to the immediate
-best technique. Also, e comparison between in terms of precision and
-recall between the proposed method and the genetic algorithm is shown
-in Table \ref{tab:precision} for some classification datasets.
+The proposed two-phase technique is shown to outperform the others
+in both classification and regression problems in terms of accuracy
+on the test set. In many data sets the difference in accuracy provided
+by the proposed technique can reach or even exceed 70\% and this is
+more evident in regresion dataset, where the average gain from the
+next best is 54\%. In the case of the classification data, the most
+effective method before the proposed one appears to be the genetic
+algorithm and the difference in accuracy between them is of the order
+of 23\%. On the other hand, for the regression datasets, the radial
+basis network is the next most effective after the proposed technique
+and the average difference in accuracy between them is of the order
+of 47\%.Also, a comparison in terms of precision and recall between
+the proposed method and the genetic algorithm is shown in Table \ref{tab:precision}
+for a series of select classification datasets. And in this table,
+the proposed technique shows higher accuracy than the genetic algorithm
+method.
 
 Also, the effectiveness of the usage of the BFGS local search method
 is measure on an additional experiment, where the local search method
@@ -853,7 +875,43 @@ WANKARA & 0.02 & 0.0002 & 0.0002\tabularnewline
 \end{table}
 The experimental results demonstrate that the proposed methodology
 can give excellent results in learning categories or in learning functions
-even if the Adam method is used as a local minimization method. 
+even if the Adam method is used as a local minimization method. However,
+the Adam method requires a much longer execution time than the Bfgs
+method and this is shown graphically in Figure \ref{fig:abaloneTime}.
+\begin{figure}[H]
+\includegraphics[scale=0.8]{time_abalone}
+
+\caption{Average execution time for the Abalone dataset for three different
+methods: The simple Genetic method, the proposed method with the incorporation
+of BFGS and the proposed method with the usage of the Adam optimizer
+during the second phase of execution.\label{fig:abaloneTime}}
+
+\end{figure}
+This graph shows the running time for the Abalone dataset, which is
+a time-consuming problem. The first column shows the execution time
+for the simple genetic algorithm, in the second column is the execution
+time for the proposed method using the Bfgs local optimization method
+in the second phase and in the third column is the execution time
+for the proposed method using the Adam method in the second stage.
+Although, as shown in the previous tables, the Adam method can have
+similar levels of success as the Bfgs method, it nevertheless requires
+significant computing time for its completion.
+
+Also, the average regression error for the proposed method when then
+number of particles increases from 50 to 400 is graphically outlined
+in Figure \ref{fig:particlesGraph}.
+\begin{figure}[H]
+\includegraphics[scale=0.8]{particles_graph}
+
+\caption{Average regression error for the proposed method using different number
+of particles in each experiment.\label{fig:particlesGraph}}
+
+\end{figure}
+ The proposed technique achieves the best results when the number
+of particles in the particle swarm optimization exceeds 100. However,
+the average error is about the same for 200 and 400 particles, and
+therefore choosing 200 particles to run experiments appears to be
+more effective, since it will require less computing time.
 
 In addition, in order to see if there is a dependence of the results
 on the critical parameters $L$ and $F$ of the proposed method, a
@@ -869,9 +927,14 @@ graphically shown in Figure \ref{fig:lfactor}.
 \caption{Experiments with the $L$ parameter for the regression datasets. \label{fig:lfactor}}
 
 \end{figure}
-From the results, it is obvious that increasing the value of this
-parameter also reduces the average error, but this reduction is not
-extremely large to radically change the behavior of this technique.
+
+If one judges from the experimental results, it is clear that the
+increase in the value of the coefficient $\lambda$ positively affects
+the performance of the method, but after the value $\lambda=10$ this
+effect decreases drastically. For low values of this coefficient,
+there is a limitation of the parameters of the artificial neural network
+to low values and therefore a lag in the accuracy of the neural network
+is expected.
 
 In addition, corresponding experiments were performed with the value
 of the coefficient $F$ increasing from 2 to 15 and these are graphically
@@ -880,12 +943,11 @@ illustrated in figure \ref{fig:ffactor}.
 \includegraphics[scale=0.85]{ffactor}
 
 \caption{Experiments with the value of parameter $F$ for the regression datasets.\label{fig:ffactor}}
-
 \end{figure}
-From these results it follows that the proposed method achieves the
-best results for the value of the parameter to be equal to 5, although
-again there is no significant difference in the effectiveness of the
-method for large changes in the value of this parameter.
+For the experiments with the coefficient $F$ one can see that the
+gain from any variation of this coefficient is limited, although the
+lowest values of the average error are achieved when the coefficient
+has a value close to 5.
 
 \section{Conclusions\label{sec:Conclusions}}
 
@@ -1263,6 +1325,23 @@ with Applications \textbf{35}, pp. 1645-1656, 2008.
 Y. Lee, An Improved Particle Swarm Optimization for Nonconvex Economic
 Dispatch Problems, IEEE Transactions on Power Systems \textbf{25},
 pp. 156-16\textbf{216}6, 2010.
+
+\bibitem{neuralInterval1}J.T.G. Hwang, A.A. Ding, Prediction Intervals
+for Artificial Neural Networks, Journal of the American Statistical
+Association \textbf{92}, pp. 748-757, 1997.
+
+\bibitem{neuralInterval2}K.S. Kasiviswanathan, R. Cibin, K.P. Sudheer,
+I. Chaubey, Constructing prediction interval for artificial neural
+network rainfall runoff models based on ensemble simulations, Journal
+of Hydrology \textbf{499}, pp. 275-288, 2013.
+
+\bibitem{neuralInterval3}S.S. Sodhi, P. Chandra, Interval based Weight
+Initialization Method for Sigmoidal Feedforward Artificial Neural
+Networks, AASRI Procedia \textbf{6}, pp. 19-25, 2014.
+
+\bibitem{weightInitReview}M.V. Narkhede, P.P. Bartakke, M.S. Sutaone,
+A review on weight initialization strategies for neural networks.
+Artif Intell Rev \textbf{55}, pp. 291--322, 2022.
 
 \bibitem{pso_major}J. Kennedy and R. Eberhart, \textquotedbl Particle
 swarm optimization,\textquotedbl{} Proceedings of ICNN'95 - International

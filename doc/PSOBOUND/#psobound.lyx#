@@ -805,6 +805,20 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
+Other tasks in a similar direction include for example the work of Hwang
+ and Ding 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "neuralInterval1"
+literal "false"
+
+\end_inset
+
+that suggest prediction intervals for the weights of neural networks, the
+ work of 
+\end_layout
+
+\begin_layout Standard
 The following sections are organized as follows: in section 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2504,6 +2518,18 @@ A simple genetic algorithm using
 \end_layout
 
 \begin_layout Enumerate
+The Radial Basis Function (RBF) neural network 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "rbf1"
+literal "false"
+
+\end_inset
+
+, where the number of weights was set to 10.
+\end_layout
+
+\begin_layout Enumerate
 The optimization method Adam 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -2578,7 +2604,9 @@ https://github.com/BiagioFesta/EvolutionNet
 \end_layout
 
 \begin_layout Standard
-The experimental results for the classification data are shown in the tablee
+The experimental parameters for the methods Adam, Rprop and NEAT are proposed
+ in the corresponding software.
+ The experimental results for the classification data are shown in the tablee
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2603,17 +2631,6 @@ noprefix "false"
 .
  In both tables the last row, denoted as AVERAGE, indicates the average
  classification or regression error for the associated datasets.
- Also, the column CLASSES in Table 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:exp1"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- denotes the number of classes for every dataset.
  All the experiments were conducted on AMD Epyc 7552 equipped with 32GB
  of RAM.
  The operating system was the Ubuntu 20.04 operating system.
@@ -2629,7 +2646,7 @@ https://github.com/itsoulos/OPTIMUS
 
 \end_inset
 
- was used.
+(accessed on 4 April 2023) was used.
 \end_layout
 
 \begin_layout Standard
@@ -2637,7 +2654,7 @@ https://github.com/itsoulos/OPTIMUS
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -2970,7 +2987,7 @@ The margin factor
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -2993,7 +3010,7 @@ name "tab:exp1"
 \end_layout
 
 \begin_layout Plain Layout
-\align center
+\align left
 \begin_inset Tabular
 <lyxtabular version="3" rows="28" columns="7">
 <features tabularvalignment="middle">
@@ -3018,7 +3035,7 @@ DATASET
 \begin_inset Text
 
 \begin_layout Plain Layout
-CLASSES
+GENETIC
 \end_layout
 
 \end_inset
@@ -3027,7 +3044,7 @@ CLASSES
 \begin_inset Text
 
 \begin_layout Plain Layout
-GENETIC
+RBF
 \end_layout
 
 \end_inset
@@ -3083,7 +3100,7 @@ Appendicitis
 \begin_inset Text
 
 \begin_layout Plain Layout
-2
+18.10%
 \end_layout
 
 \end_inset
@@ -3092,7 +3109,7 @@ Appendicitis
 \begin_inset Text
 
 \begin_layout Plain Layout
-18.10%
+12.23%
 \end_layout
 
 \end_inset
@@ -3148,7 +3165,7 @@ Australian
 \begin_inset Text
 
 \begin_layout Plain Layout
-2
+32.21%
 \end_layout
 
 \end_inset
@@ -3157,7 +3174,7 @@ Australian
 \begin_inset Text
 
 \begin_layout Plain Layout
-32.21%
+34.89%
 \end_layout
 
 \end_inset
@@ -3213,7 +3230,7 @@ Balance
 \begin_inset Text
 
 \begin_layout Plain Layout
-3
+8.97%
 \end_layout
 
 \end_inset
@@ -3222,7 +3239,7 @@ Balance
 \begin_inset Text
 
 \begin_layout Plain Layout
-8.97%
+33.42%
 \end_layout
 
 \end_inset
@@ -3278,7 +3295,7 @@ Bands
 \begin_inset Text
 
 \begin_layout Plain Layout
-2
+35.75%
 \end_layout
 
 \end_inset
@@ -3287,7 +3304,7 @@ Bands
 \begin_inset Text
 
 \begin_layout Plain Layout
-35.75%
+37.22%
 \end_layout
 
 \end_inset
@@ -3343,7 +3360,7 @@ Cleveland
 \begin_inset Text
 
 \begin_layout Plain Layout
-5
+51.60%
 \end_layout
 
 \end_inset
@@ -3352,7 +3369,7 @@ Cleveland
 \begin_inset Text
 
 \begin_layout Plain Layout
-51.60%
+67.10%
 \end_layout
 
 \end_inset
@@ -3408,7 +3425,7 @@ Dermatology
 \begin_inset Text
 
 \begin_layout Plain Layout
-6
+30.58%
 \end_layout
 
 \end_inset
@@ -3417,7 +3434,7 @@ Dermatology
 \begin_inset Text
 
 \begin_layout Plain Layout
-30.58%
+62.34%
 \end_layout
 
 \end_inset
@@ -3473,7 +3490,7 @@ Hayes Roth
 \begin_inset Text
 
 \begin_layout Plain Layout
-3
+56.18%
 \end_layout
 
 \end_inset
@@ -3482,7 +3499,7 @@ Hayes Roth
 \begin_inset Text
 
 \begin_layout Plain Layout
-56.18%
+64.36%
 \end_layout
 
 \end_inset
@@ -3538,7 +3555,7 @@ Heart
 \begin_inset Text
 
 \begin_layout Plain Layout
-2
+28.34%
 \end_layout
 
 \end_inset
@@ -3547,7 +3564,7 @@ Heart
 \begin_inset Text
 
 \begin_layout Plain Layout
-28.34%
+31.20%
 \end_layout
 
 \end_inset
@@ -3603,7 +3620,7 @@ HouseVotes
 \begin_inset Text
 
 \begin_layout Plain Layout
-2
+6.62%
 \end_layout
 
 \end_inset
@@ -3612,7 +3629,7 @@ HouseVotes
 \begin_inset Text
 
 \begin_layout Plain Layout
-6.62%
+6.13%
 \end_layout
 
 \end_inset
@@ -3668,7 +3685,7 @@ Ionosphere
 \begin_inset Text
 
 \begin_layout Plain Layout
-2
+15.14%
 \end_layout
 
 \end_inset
@@ -3677,7 +3694,7 @@ Ionosphere
 \begin_inset Text
 
 \begin_layout Plain Layout
-15.14%
+16.22%
 \end_layout
 
 \end_inset
@@ -3733,7 +3750,7 @@ Liverdisorder
 \begin_inset Text
 
 \begin_layout Plain Layout
-2
+31.11%
 \end_layout
 
 \end_inset
@@ -3742,7 +3759,7 @@ Liverdisorder
 \begin_inset Text
 
 \begin_layout Plain Layout
-31.11%
+30.84%
 \end_layout
 
 \end_inset
@@ -3798,7 +3815,7 @@ Lymography
 \begin_inset Text
 
 \begin_layout Plain Layout
-4
+23.26%
 \end_layout
 
 \end_inset
@@ -3807,7 +3824,7 @@ Lymography
 \begin_inset Text
 
 \begin_layout Plain Layout
-23.26%
+25.31%
 \end_layout
 
 \end_inset
@@ -3863,7 +3880,7 @@ Mammographic
 \begin_inset Text
 
 \begin_layout Plain Layout
-2
+19.88%
 \end_layout
 
 \end_inset
@@ -3872,7 +3889,7 @@ Mammographic
 \begin_inset Text
 
 \begin_layout Plain Layout
-19.88%
+21.38%
 \end_layout
 
 \end_inset
@@ -3928,7 +3945,7 @@ PageBlocks
 \begin_inset Text
 
 \begin_layout Plain Layout
-5
+8.06%
 \end_layout
 
 \end_inset
@@ -3937,7 +3954,7 @@ PageBlocks
 \begin_inset Text
 
 \begin_layout Plain Layout
-8.06%
+10.09%
 \end_layout
 
 \end_inset
@@ -3993,7 +4010,7 @@ Parkinsons
 \begin_inset Text
 
 \begin_layout Plain Layout
-2
+18.05%
 \end_layout
 
 \end_inset
@@ -4002,7 +4019,7 @@ Parkinsons
 \begin_inset Text
 
 \begin_layout Plain Layout
-18.05%
+17.42%
 \end_layout
 
 \end_inset
@@ -4058,7 +4075,7 @@ Pima
 \begin_inset Text
 
 \begin_layout Plain Layout
-2
+32.19%
 \end_layout
 
 \end_inset
@@ -4067,7 +4084,7 @@ Pima
 \begin_inset Text
 
 \begin_layout Plain Layout
-32.19%
+25.78%
 \end_layout
 
 \end_inset
@@ -4123,7 +4140,7 @@ Popfailures
 \begin_inset Text
 
 \begin_layout Plain Layout
-2
+5.94%
 \end_layout
 
 \end_inset
@@ -4132,7 +4149,7 @@ Popfailures
 \begin_inset Text
 
 \begin_layout Plain Layout
-5.94%
+7.04%
 \end_layout
 
 \end_inset
@@ -4188,7 +4205,7 @@ Regions2
 \begin_inset Text
 
 \begin_layout Plain Layout
-5
+29.39%
 \end_layout
 
 \end_inset
@@ -4197,7 +4214,7 @@ Regions2
 \begin_inset Text
 
 \begin_layout Plain Layout
-29.39%
+38.29%
 \end_layout
 
 \end_inset
@@ -4253,7 +4270,7 @@ Saheart
 \begin_inset Text
 
 \begin_layout Plain Layout
-2
+34.86%
 \end_layout
 
 \end_inset
@@ -4262,7 +4279,7 @@ Saheart
 \begin_inset Text
 
 \begin_layout Plain Layout
-34.86%
+32.19%
 \end_layout
 
 \end_inset
@@ -4318,7 +4335,7 @@ Segment
 \begin_inset Text
 
 \begin_layout Plain Layout
-7
+57.72%
 \end_layout
 
 \end_inset
@@ -4327,7 +4344,7 @@ Segment
 \begin_inset Text
 
 \begin_layout Plain Layout
-57.72%
+59.68%
 \end_layout
 
 \end_inset
@@ -4383,7 +4400,7 @@ Wdbc
 \begin_inset Text
 
 \begin_layout Plain Layout
-2
+8.56%
 \end_layout
 
 \end_inset
@@ -4392,7 +4409,7 @@ Wdbc
 \begin_inset Text
 
 \begin_layout Plain Layout
-8.56%
+7.27%
 \end_layout
 
 \end_inset
@@ -4448,7 +4465,7 @@ Wine
 \begin_inset Text
 
 \begin_layout Plain Layout
-3
+19.20%
 \end_layout
 
 \end_inset
@@ -4457,7 +4474,7 @@ Wine
 \begin_inset Text
 
 \begin_layout Plain Layout
-19.20%
+31.41%
 \end_layout
 
 \end_inset
@@ -4513,7 +4530,7 @@ Z_F_S
 \begin_inset Text
 
 \begin_layout Plain Layout
-3
+10.73%
 \end_layout
 
 \end_inset
@@ -4522,7 +4539,7 @@ Z_F_S
 \begin_inset Text
 
 \begin_layout Plain Layout
-10.73%
+13.16%
 \end_layout
 
 \end_inset
@@ -4578,7 +4595,7 @@ ZO_NF_S
 \begin_inset Text
 
 \begin_layout Plain Layout
-3
+8.41%
 \end_layout
 
 \end_inset
@@ -4587,7 +4604,7 @@ ZO_NF_S
 \begin_inset Text
 
 \begin_layout Plain Layout
-8.41%
+9.02%
 \end_layout
 
 \end_inset
@@ -4643,7 +4660,7 @@ ZONF_S
 \begin_inset Text
 
 \begin_layout Plain Layout
-2
+2.60%
 \end_layout
 
 \end_inset
@@ -4652,7 +4669,7 @@ ZONF_S
 \begin_inset Text
 
 \begin_layout Plain Layout
-2.60%
+4.03%
 \end_layout
 
 \end_inset
@@ -4708,7 +4725,7 @@ ZOO
 \begin_inset Text
 
 \begin_layout Plain Layout
-7
+16.67%
 \end_layout
 
 \end_inset
@@ -4717,7 +4734,7 @@ ZOO
 \begin_inset Text
 
 \begin_layout Plain Layout
-16.67%
+21.93%
 \end_layout
 
 \end_inset
@@ -4776,6 +4793,8 @@ AVERAGE
 
 \begin_layout Plain Layout
 
+\series bold
+23.47%
 \end_layout
 
 \end_inset
@@ -4786,7 +4805,7 @@ AVERAGE
 \begin_layout Plain Layout
 
 \series bold
-23.47%
+27.69%
 \end_layout
 
 \end_inset
@@ -4877,8 +4896,9 @@ name "tab:exp2"
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="18" columns="6">
+<lyxtabular version="3" rows="18" columns="7">
 <features tabularvalignment="middle">
+<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -4900,6 +4920,15 @@ DATASET
 
 \begin_layout Plain Layout
 GENETIC
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+RBF
 \end_layout
 
 \end_inset
@@ -4964,6 +4993,15 @@ ABALONE
 \begin_inset Text
 
 \begin_layout Plain Layout
+7.37
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 4.30
 \end_layout
 
@@ -5012,6 +5050,15 @@ AIRFOIL
 
 \begin_layout Plain Layout
 0.003
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.27
 \end_layout
 
 \end_inset
@@ -5076,6 +5123,15 @@ BASEBALL
 \begin_inset Text
 
 \begin_layout Plain Layout
+93.02
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 77.90
 \end_layout
 
@@ -5124,6 +5180,15 @@ BK
 
 \begin_layout Plain Layout
 0.027
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.02
 \end_layout
 
 \end_inset
@@ -5188,6 +5253,15 @@ BL
 \begin_inset Text
 
 \begin_layout Plain Layout
+0.01
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 0.28
 \end_layout
 
@@ -5236,6 +5310,15 @@ CONCRETE
 
 \begin_layout Plain Layout
 0.0099
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.011
 \end_layout
 
 \end_inset
@@ -5300,6 +5383,15 @@ DEE
 \begin_inset Text
 
 \begin_layout Plain Layout
+0.17
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 0.63
 \end_layout
 
@@ -5348,6 +5440,15 @@ DIABETES
 
 \begin_layout Plain Layout
 19.86
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.49
 \end_layout
 
 \end_inset
@@ -5412,6 +5513,15 @@ HOUSING
 \begin_inset Text
 
 \begin_layout Plain Layout
+57.68
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 80.20
 \end_layout
 
@@ -5460,6 +5570,15 @@ FA
 
 \begin_layout Plain Layout
 1.95
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.02
 \end_layout
 
 \end_inset
@@ -5524,6 +5643,15 @@ MB
 \begin_inset Text
 
 \begin_layout Plain Layout
+2.16
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 0.06
 \end_layout
 
@@ -5572,6 +5700,15 @@ MORTGAGE
 
 \begin_layout Plain Layout
 2.41
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.45
 \end_layout
 
 \end_inset
@@ -5636,6 +5773,15 @@ PY
 \begin_inset Text
 
 \begin_layout Plain Layout
+0.02
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 0.09
 \end_layout
 
@@ -5684,6 +5830,15 @@ QUAKE
 
 \begin_layout Plain Layout
 0.04
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.071
 \end_layout
 
 \end_inset
@@ -5748,6 +5903,15 @@ TREASURY
 \begin_inset Text
 
 \begin_layout Plain Layout
+2.02
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 11.16
 \end_layout
 
@@ -5796,6 +5960,15 @@ WANKARA
 
 \begin_layout Plain Layout
 0.012
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.001
 \end_layout
 
 \end_inset
@@ -5866,6 +6039,17 @@ AVERAGE
 \begin_layout Plain Layout
 
 \series bold
+10.30
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
 11.70
 \end_layout
 
@@ -5919,7 +6103,7 @@ AVERAGE
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -8070,7 +8254,72 @@ AVERAGE
 The experimental results demonstrate that the proposed methodology can give
  excellent results in learning categories or in learning functions even
  if the Adam method is used as a local minimization method.
- 
+ However, the Adam method requires a much longer execution time than the
+ Bfgs method and this is shown graphically in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:abaloneTime"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename time_abalone.eps
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Average execution time for the Abalone dataset for three different methods:
+ The simple Genetic method, the proposed method with the incorporation of
+ BFGS and the proposed method with the usage of the Adam optimizer during
+ the second phase of execution.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:abaloneTime"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+This graph shows the running time for the Abalone dataset, which is a time-consu
+ming problem.
+ The first column shows the execution time for the simple genetic algorithm,
+ in the second column is the execution time for the proposed method using
+ the Bfgs local optimization method in the second phase and in the third
+ column is the execution time for the proposed method using the Adam method
+ in the second stage.
+ Although, as shown in the previous tables, the Adam method can have similar
+ levels of success as the Bfgs method, it nevertheless requires significant
+ computing time for its completion.
 \end_layout
 
 \begin_layout Standard
@@ -9752,6 +10001,25 @@ Jong-Bae Park, Yun-Won Jeong, Joong-Rin Shin, Kwang Y.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "neuralInterval1"
+literal "false"
+
+\end_inset
+
+J.T.G.
+ Hwang, A.A.
+ Ding, Prediction Intervals for Artificial Neural Networks, Journal of the
+ American Statistical Association 
+\series bold
+92
+\series default
+, pp.
+ 748-757, 1997.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "pso_major"
 literal "false"
 
@@ -10504,6 +10772,26 @@ R.D.
 , pp.
  11322–11326, 1992.
  
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbf1"
+literal "false"
+
+\end_inset
+
+J.
+ Park and I.
+ W.
+ Sandberg, Universal Approximation Using Radial-Basis-Function Networks,
+ Neural Computation 
+\series bold
+3
+\series default
+, pp.
+ 246-257, 1991.
 \end_layout
 
 \begin_layout Bibliography

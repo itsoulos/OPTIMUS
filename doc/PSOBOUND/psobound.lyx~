@@ -410,7 +410,7 @@ literal "false"
  which is defined as the sum:
 \begin_inset Formula 
 \begin{equation}
-E\left(N\left(\overrightarrow{x},\overrightarrow{w}\right)\right)=\sum_{i=1}^{M}\left(N\left(\overrightarrow{x}_{i},\overrightarrow{w}\right)-y_{i}\right)^{2}\label{eq:eq1}
+E(\overrightarrow{w})=\sum_{i=1}^{M}\left(N\left(\overrightarrow{x}_{i},\overrightarrow{w}\right)-y_{i}\right)^{2}\label{eq:eq1}
 \end{equation}
 
 \end_inset
@@ -805,6 +805,48 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
+Other tasks in a similar direction include for example the work of Hwang
+ and Ding 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "neuralInterval1"
+literal "false"
+
+\end_inset
+
+ that suggest prediction intervals for the weights of neural networks, the
+ work of Kasiviswanathan et al 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "neuralInterval2"
+literal "false"
+
+\end_inset
+
+ that constructs prediction interval for neural networks applied on rainfall
+ runoff models, the work of Sodhi and Chandra 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "neuralInterval3"
+literal "false"
+
+\end_inset
+
+ that propose an interval based method for weight initialization of neural
+ networks etc.
+ Also, a review for weight initialization strategies can be found in the
+ paper of Narkhede et al 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "weightInitReview"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
 The following sections are organized as follows: in section 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -868,13 +910,13 @@ Suppose a neural network with a hidden processing layer is available that
 The equation for every hidden node of the neural network has as:
 \begin_inset Formula 
 \begin{equation}
-o_{i}(x)=\sigma\left(w_{i}^{T}x+\theta_{i}\right),\label{eq:eq1-1}
+o_{i}(x)=\sigma\left(p_{i}^{T}x+\theta_{i}\right),\label{eq:eq1-1}
 \end{equation}
 
 \end_inset
 
 The vector 
-\begin_inset Formula $w_{i}$
+\begin_inset Formula $p_{i}$
 \end_inset
 
  represents the weight vector and the value 
@@ -909,11 +951,14 @@ The value
 .
  Therefore writing the overall equation by using one vector to hold both
  the weights 
-\begin_inset Formula $w_{i},\ v_{i}$
+\begin_inset Formula $p_{i},\ v_{i}$
 \end_inset
 
- and the biases of the networks and using the previous equations equations
- 
+ and the biases 
+\begin_inset Formula $\theta_{i}$
+\end_inset
+
+ of the networks and using the previous equations equations 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:eq1-1"
@@ -2474,6 +2519,9 @@ Experimental results
 To make a reliable estimate of the efficiency of the method, the ten - fold
  validation method was used and and 30 experiments were conducted.
  In every experiment different random values were used.
+ The neural network used in the experiments has one hidden layers with 10
+ neurons.
+ The selected activation function is the sigmoid function.
  The average classification or regression error on the test set is reported
  in the experimental tables.
  The parameters used in the experiments are shown in Table 
@@ -2590,7 +2638,9 @@ https://github.com/BiagioFesta/EvolutionNet
 \end_layout
 
 \begin_layout Standard
-The experimental results for the classification data are shown in the tablee
+The experimental parameters for the methods Adam, Rprop and NEAT are proposed
+ in the corresponding software.
+ The experimental results for the classification data are shown in the tablee
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2630,7 +2680,7 @@ https://github.com/itsoulos/OPTIMUS
 
 \end_inset
 
- was used.
+(accessed on 4 April 2023) was used.
 \end_layout
 
 \begin_layout Standard
@@ -2638,7 +2688,7 @@ https://github.com/itsoulos/OPTIMUS
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -2971,7 +3021,7 @@ The margin factor
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -6087,7 +6137,7 @@ AVERAGE
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -6332,15 +6382,20 @@ HEART
 
 \end_inset
 
-In both cases, the superiority of the proposed technique over other artificial
- neural network training methods is evident, especially in the case of regressio
-n.
- The average gain from the next best method is 22% for the classification
- case and 54% for the regression case.
- In fact, in many cases the profit exceeds 50% compared to the immediate
- best technique.
- Also, e comparison between in terms of precision and recall between the
- proposed method and the genetic algorithm is shown in Table 
+The proposed two-phase technique is shown to outperform the others in both
+ classification and regression problems in terms of accuracy on the test
+ set.
+ In many data sets the difference in accuracy provided by the proposed technique
+ can reach or even exceed 70% and this is more evident in regresion dataset,
+ where the average gain from the next best is 54%.
+ In the case of the classification data, the most effective method before
+ the proposed one appears to be the genetic algorithm and the difference
+ in accuracy between them is of the order of 23%.
+ On the other hand, for the regression datasets, the radial basis network
+ is the next most effective after the proposed technique and the average
+ difference in accuracy between them is of the order of 47%.Also, a comparison
+ in terms of precision and recall between the proposed method and the genetic
+ algorithm is shown in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:precision"
@@ -6350,7 +6405,9 @@ noprefix "false"
 
 \end_inset
 
- for some classification datasets.
+ for a series of select classification datasets.
+ And in this table, the proposed technique shows higher accuracy than the
+ genetic algorithm method.
 \end_layout
 
 \begin_layout Standard
@@ -8238,7 +8295,135 @@ AVERAGE
 The experimental results demonstrate that the proposed methodology can give
  excellent results in learning categories or in learning functions even
  if the Adam method is used as a local minimization method.
+ However, the Adam method requires a much longer execution time than the
+ Bfgs method and this is shown graphically in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:abaloneTime"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename time_abalone.eps
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Average execution time for the Abalone dataset for three different methods:
+ The simple Genetic method, the proposed method with the incorporation of
+ BFGS and the proposed method with the usage of the Adam optimizer during
+ the second phase of execution.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:abaloneTime"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+This graph shows the running time for the Abalone dataset, which is a time-consu
+ming problem.
+ The first column shows the execution time for the simple genetic algorithm,
+ in the second column is the execution time for the proposed method using
+ the Bfgs local optimization method in the second phase and in the third
+ column is the execution time for the proposed method using the Adam method
+ in the second stage.
+ Although, as shown in the previous tables, the Adam method can have similar
+ levels of success as the Bfgs method, it nevertheless requires significant
+ computing time for its completion.
+\end_layout
+
+\begin_layout Standard
+Also, the average regression error for the proposed method when then number
+ of particles increases from 50 to 400 is graphically outlined in Figure
  
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:particlesGraph"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename particles_graph.eps
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Average regression error for the proposed method using different number
+ of particles in each experiment.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:particlesGraph"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+ The proposed technique achieves the best results when the number of particles
+ in the particle swarm optimization exceeds 100.
+ However, the average error is about the same for 200 and 400 particles,
+ and therefore choosing 200 particles to run experiments appears to be more
+ effective, since it will require less computing time.
 \end_layout
 
 \begin_layout Standard
@@ -8277,7 +8462,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
@@ -8319,9 +8504,23 @@ name "fig:lfactor"
 
 \end_inset
 
-From the results, it is obvious that increasing the value of this parameter
- also reduces the average error, but this reduction is not extremely large
- to radically change the behavior of this technique.
+
+\end_layout
+
+\begin_layout Standard
+If one judges from the experimental results, it is clear that the increase
+ in the value of the coefficient 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ positively affects the performance of the method, but after the value 
+\begin_inset Formula $\lambda=10$
+\end_inset
+
+ this effect decreases drastically.
+ For low values of this coefficient, there is a limitation of the parameters
+ of the artificial neural network to low values and therefore a lag in the
+ accuracy of the neural network is expected.
 \end_layout
 
 \begin_layout Standard
@@ -8346,7 +8545,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
@@ -8381,16 +8580,12 @@ name "fig:ffactor"
 
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
 \end_inset
 
-From these results it follows that the proposed method achieves the best
- results for the value of the parameter to be equal to 5, although again
- there is no significant difference in the effectiveness of the method for
- large changes in the value of this parameter.
+For the experiments with the coefficient φ one can see that the gain from
+ any variation of this coefficient is limited, although the lowest values
+ of the average error are achieved when the coefficient has a value close
+ to 5.
 \end_layout
 
 \begin_layout Section
@@ -9915,6 +10110,86 @@ Jong-Bae Park, Yun-Won Jeong, Joong-Rin Shin, Kwang Y.
 216
 \series default
 6, 2010.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "neuralInterval1"
+literal "false"
+
+\end_inset
+
+J.T.G.
+ Hwang, A.A.
+ Ding, Prediction Intervals for Artificial Neural Networks, Journal of the
+ American Statistical Association 
+\series bold
+92
+\series default
+, pp.
+ 748-757, 1997.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "neuralInterval2"
+literal "false"
+
+\end_inset
+
+K.S.
+ Kasiviswanathan, R.
+ Cibin, K.P.
+ Sudheer, I.
+ Chaubey, Constructing prediction interval for artificial neural network
+ rainfall runoff models based on ensemble simulations, Journal of Hydrology
+ 
+\series bold
+499
+\series default
+, pp.
+ 275-288, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "neuralInterval3"
+literal "false"
+
+\end_inset
+
+S.S.
+ Sodhi, P.
+ Chandra, Interval based Weight Initialization Method for Sigmoidal Feedforward
+ Artificial Neural Networks, AASRI Procedia 
+\series bold
+6
+\series default
+, pp.
+ 19-25, 2014.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "weightInitReview"
+literal "false"
+
+\end_inset
+
+M.V.
+ Narkhede, P.P.
+ Bartakke, M.S.
+ Sutaone, A review on weight initialization strategies for neural networks.
+ Artif Intell Rev 
+\series bold
+55
+\series default
+, pp.
+ 291–322, 2022.
 \end_layout
 
 \begin_layout Bibliography
