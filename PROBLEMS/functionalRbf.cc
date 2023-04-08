@@ -746,7 +746,6 @@ void    init(QJsonObject data)
            redo=true;
            posRedo=i;
         }
-        printf("members[%d]=%.2lf%%\n",i,num_of_cluster_members[i]*100.0/trainx.size());
     }
     for(int i=0;i<nodes;i++)
     {
@@ -775,8 +774,6 @@ void    init(QJsonObject data)
             if(dist<minDist) minDist=dist;
 
         }
-        if(i)
-         printf("Dist[%d]=%10.2lf\n",i,minDist);
         //if(minDist<0.1) redo=true;
         if(redo)
         {
@@ -856,7 +853,7 @@ void 	getmargins(vector<Interval> &x)
      //   if(maxvx<0.1) maxvx=1.0;
 	//if(fabs(maxvx)>100) maxvx = 100;
         //x[icount++]=Interval(-f * maxvx,f * maxvx);
-	x[icount++]=Interval(-f * maxvx,f * maxvx);
+	x[icount++]=Interval(0.01,f * maxvx);
 //		    x[icount++]=Interval(-f * fabs(maxvx),f*fabs(maxvx));
 		   
 	    }
@@ -872,12 +869,13 @@ double neuronOutput( vector<double> &x, vector<double> &patt, unsigned pattDim, 
         out += (patt[i] - x[offset*pattDim + i]) * (patt[i] - x[offset*pattDim + i]);
     }
     double df=(-out / (x[nodes*pattDim+offset] * x[nodes*pattDim+offset]) );
-    if(fabs(df)>100) return 1e+8;
+//    if(fabs(df)>100) return 1e+8;
   //  if(fabs(df)>100)return 1.0;// return 1000;
     return exp(df);
 }
 
-arma::vec train( vector<double> &x ){
+arma::vec train( vector<double> &x,bool &ok ){
+	ok = true;
     arma::mat A = arma::zeros(trainx.size(),nodes);
     arma::vec B(trainy.size());
     for(unsigned i = 0; i < trainy.size(); i++){
@@ -889,13 +887,15 @@ arma::vec train( vector<double> &x ){
     }
     
     arma::vec RetVal;
-   // try{
-    RetVal=arma::vec(arma::pinv(A)*B);
-    //RetVal=arma::vec(arma::pinv(A,1e-10,"dc")*B);
-    //}catch(std::runtime_error & e)
-    //{
-     //   RetVal = arma::zeros(arma::size(RetVal));
-    //}
+    try{
+    //RetVal=arma::vec(arma::pinv(A)*B);
+    RetVal=arma::vec(arma::pinv(A,1e-10,"dc")*B);
+    }
+    catch(std::runtime_error & e)
+    {
+        RetVal = arma::zeros(arma::size(RetVal));
+	ok = false;
+    }
     if(RetVal.has_nan() || RetVal.has_inf()) {
         RetVal = arma::zeros(arma::size(RetVal));
         }
@@ -941,7 +941,9 @@ double	funmin(vector<double> &x)
     return sum*1.0+1.0 * penalty;
 #else
     double errorSum=0.0;  
-    arma::vec Linear = train(x);
+    bool ok;
+    arma::vec Linear = train(x,ok);
+    if(!ok) return 1e+10;
     double norm = 0.0;
     for(int j=0;j<nodes;j++)
 
@@ -970,14 +972,16 @@ adept::adouble aneuronOutput( vector<adept::adouble> &x, vector<double> &patt, u
         out += (patt[i] - x[offset*pattDim + i]) * (patt[i] - x[offset*pattDim + i]);
     }
     adept::adouble darg = out / (x[nodes*pattDim + offset] * x[nodes*pattDim + offset]);
-    if(fabs(darg)>100) return 1e+8;
+//    if(fabs(darg)>100) return 1e+8;
     return exp(-out / (x[nodes*pattDim + offset] * x[nodes*pattDim + offset]) );
 }
 
 adept::adouble afunmin( vector<adept::adouble> &x, vector<double> &x1 ){
     adept::adouble errorSum=0.0;
     
-    arma::vec Linear = train(x1);
+    bool ok;
+    arma::vec Linear = train(x1,ok);
+    if(!ok) return 1e+10;
 
     for(unsigned i = 0; i < trainx.size(); i++){
         Data pattern = trainx[i];
@@ -1088,7 +1092,8 @@ QJsonObject    done(Data &x)
     }
     delete[] weights;
 #else
-    arma::vec Linear = train(x);
+    bool ok;
+    arma::vec Linear = train(x,ok);
 
     for(int i=0;i<testx.size();i++)
     {
