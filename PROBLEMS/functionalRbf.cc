@@ -871,6 +871,7 @@ double neuronOutput( vector<double> &x, vector<double> &patt, unsigned pattDim, 
     double df=(-out / (x[nodes*pattDim+offset] * x[nodes*pattDim+offset]) );
 //    if(fabs(df)>100) return 1e+8;
   //  if(fabs(df)>100)return 1.0;// return 1000;
+  if(exp(df)<1e-15) return 1e-15;
     return exp(df);
 }
 
@@ -888,8 +889,9 @@ arma::vec train( vector<double> &x,bool &ok ){
     
     arma::vec RetVal;
     try{
-    //RetVal=arma::vec(arma::pinv(A)*B);
-    RetVal=arma::vec(arma::pinv(A,1e-10,"dc")*B);
+   RetVal=arma::vec(arma::pinv(A)*B);
+   
+   // RetVal=arma::vec(arma::pinv(A,1e-10,"dc")*B);
     }
     catch(std::runtime_error & e)
     {
@@ -899,6 +901,11 @@ arma::vec train( vector<double> &x,bool &ok ){
     if(RetVal.has_nan() || RetVal.has_inf()) {
         RetVal = arma::zeros(arma::size(RetVal));
         }
+    for(int i=0;i<nodes;i++)
+    {
+	    if(RetVal[i]<initialLeft) RetVal[i]=initialLeft;
+	    if(RetVal[i]>initialRight) RetVal[i]=initialRight;
+    }
     return RetVal;
 }
 
@@ -972,6 +979,7 @@ adept::adouble aneuronOutput( vector<adept::adouble> &x, vector<double> &patt, u
         out += (patt[i] - x[offset*pattDim + i]) * (patt[i] - x[offset*pattDim + i]);
     }
     adept::adouble darg = out / (x[nodes*pattDim + offset] * x[nodes*pattDim + offset]);
+    if(exp(-darg)<1e-15) return 1e-15;
 //    if(fabs(darg)>100) return 1e+8;
     return exp(-out / (x[nodes*pattDim + offset] * x[nodes*pattDim + offset]) );
 }
