@@ -30,6 +30,7 @@ else
 		(cd src/Genetic; qmake; make clean)
 		(cd src/Pso; qmake; make clean)
 		(cd src/iPso; qmake; make clean)
+		(cd src/ParallelGenetic; qmake; make clean)
 		(cd src/DE; qmake ; make clean )
 		(cd src/PSearch; qmake; make clean)
 		(cd src/Minfinder; qmake; make clean)

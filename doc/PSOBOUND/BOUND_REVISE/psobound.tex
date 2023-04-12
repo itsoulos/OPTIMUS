@@ -47,7 +47,9 @@ Optimization and, in the following phase, the parameters of the network
 are optimized within the bounds of the first phase using global optimization
 techniques. The suggested method was used on a series of well-known
 problems in the literature and the experimental results were more
-than encouraging.}
+than encouraging. For the conducted experiments, the Optimus programming
+library available from \url{https://github.com/itsoulos/OPTIMUS}(accessed
+on 4 April 2023) was used. }
 
 
 \keyword{Global optimization; local optimization; stochastic methods; evolutionary
@@ -573,7 +575,8 @@ datasets. All the experiments were conducted on AMD Epyc 7552 equipped
 with 32GB of RAM. The operating system was the Ubuntu 20.04 operating
 system. For the conducted experiments, the Optimus programming library
 available from \url{https://github.com/itsoulos/OPTIMUS}(accessed
-on 4 April 2023) was used.
+on 4 April 2023) was used. For the regression datasets the range of
+targets for every dataset is shown in Table \ref{tab:Range-of-targets}.
 
 \begin{table}[H]
 \caption{This table presents the values of the parameters used during the execution
@@ -734,6 +737,50 @@ the Genetic Algorithm for a series of classification datasets.\label{tab:precisi
 \hline 
 \end{tabular}
 \end{table}
+\begin{table}[H]
+
+\caption{Range of targets for regression datasets.\label{tab:Range-of-targets}}
+
+\centering{}%
+\begin{tabular}{|c|c|}
+\hline 
+DATASET & RANGE\tabularnewline
+\hline 
+\hline 
+ABALONE & 19.0\tabularnewline
+\hline 
+AIRFOIL & 0.41\tabularnewline
+\hline 
+BASEBALL & 42.50\tabularnewline
+\hline 
+BK & 0.32\tabularnewline
+\hline 
+BL & 0.68\tabularnewline
+\hline 
+CONCRETE & 0.77\tabularnewline
+\hline 
+DEE & 4.12\tabularnewline
+\hline 
+DIABETES & 0.90\tabularnewline
+\hline 
+HOUSING & 43.0\tabularnewline
+\hline 
+FA & 0.51\tabularnewline
+\hline 
+MB & 0.10\tabularnewline
+\hline 
+MORTGAGE & 12.74\tabularnewline
+\hline 
+PY & 0.84\tabularnewline
+\hline 
+QUAKE & 0.60\tabularnewline
+\hline 
+TREASURY & 15.54\tabularnewline
+\hline 
+WANKARA & 0.605\tabularnewline
+\hline 
+\end{tabular}
+\end{table}
 The proposed two-phase technique is shown to outperform the others
 in both classification and regression problems in terms of accuracy
 on the test set. In many data sets, the difference in accuracy provided
@@ -791,7 +838,9 @@ denotes the incorporation of the ADAM optimizer during the second
 phase instead of the BFGS.
 \begin{table}[H]
 \caption{Experimental results for the classification datasets using the BFGS
-and the Adam local optimization methods during the second phase.\label{tab:exp1Adam}}
+and the Adam local optimization methods during the second phase. The
+numbers in tables represent average classification error as measured
+in the test set for every dataset.\label{tab:exp1Adam}}
 
 \centering{}%
 \begin{tabular}{|c|c|c|c|}
@@ -857,7 +906,9 @@ ZOO & 14.13\% & 5.80\% & 6.47\%\tabularnewline
 \end{table}
 \begin{table}[H]
 \caption{Experimental results for the regression datasets using the BFGS and
-the Adam local optimization methods during the second phase.\label{tab:exp2Adam}}
+the Adam local optimization methods during the second phase. The numbers
+in tables represent average regression error as measured in the test
+set for every dataset.\label{tab:exp2Adam}}
 
 \centering{}%
 \begin{tabular}{|c|c|c|c|}

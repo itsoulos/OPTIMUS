@@ -1,4 +1,4 @@
-METHOD=Pso
+METHOD=ParallelGenetic
 METHODPARAMS=""
 ### Available local search methods: bfgs, gradient, adam, lbfgs
 if [ $METHOD = "Minfinder" ]
@@ -35,6 +35,9 @@ then
 elif [ $METHOD = "parallelPso" ]
 then
 	METHODPARAMS="--parallelPsoParticles=40 --subCluster=5 --subClusterEnable=1 --pNumber=1 --parallelPropagateMethod=Nto1 --similarityMaxCount=15"
+elif [ $METHOD = "ParallelGenetic" ]
+then
+	METHODPARAMS="--pargen_count=50 --pargen_islands=4 --pargen_migratecount=5 --pargen_migrationmethod=NtoN --pargen_termination=one --pargen_termmethod=similarity --pargen_debug=no"
 fi
 
 PROBLEM=$1
