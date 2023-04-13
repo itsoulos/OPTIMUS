@@ -8,13 +8,13 @@ ParallelGenetic::ParallelGenetic(Problem *p)
     addParameter("pargen_srate","0.10","Selection rate");
     addParameter("pargen_mrate","0.05","Mutation rate");
     addParameter("pargen_migratecount","1","Number of migrated items");
-    addParameter("pargen_tournamentsize","8","Size of tournament");
+    addParameter("pargen_tournamentsize","4","Size of tournament");
     addParameter("pargen_mutationpercent","0.05","The change percent in mutation");
     addParameter("pargen_migrategeneration","5","The number of iterations before migration");
     addParameter("pargen_termination","master","Parallel termination rule. Available values: master,one,majority");
     addParameter("pargen_migrationmethod","1to1","Migration method");
     addParameter("pargen_termmethod","doublebox","The termination method.");
-    addParameter("pargen_similaritycount","10","The number of generations for similarity stopping rule");
+    addParameter("pargen_similaritycount","5","The number of generations for similarity stopping rule");
     addParameter("pargen_debug","yes","Display pargen messages");
 }
 
@@ -24,7 +24,11 @@ void    ParallelGenetic::calcFitnessArray(int islandIndex)
   int epos = subClusterEndPos(islandIndex);
   for(int i=spos;i<=epos;i++)
   {
-    fitnessArray[i]=myProblem->funmin(chromosome[i]);
+	  double r = myProblem->randomDouble();
+	  if(r<0.01)
+		  fitnessArray[i]=localSearch(chromosome[i]);
+	  else
+    	fitnessArray[i]=myProblem->funmin(chromosome[i]);
   }
 }
 
@@ -176,7 +180,14 @@ bool    ParallelGenetic::terminated()
    {
         int countTrue = 0;
         for(int t=0;t<pargen_islands;t++)
-            countTrue+=updateTerminationRule(t);
+        {
+            int t1 = updateTerminationRule(t);
+            printf("true for island %d = > %d \n",t,t1);
+            countTrue+=t1;
+        }
+        printf("generation: %d total true: %d \n",
+               generation,
+               countTrue);
         if(pargen_termination=="one")
             return countTrue>=1;
         else
@@ -188,17 +199,23 @@ bool    ParallelGenetic::terminated()
 
 void    ParallelGenetic::migrateFromIslandtoIsland(int from,int to)
 {
+    select(from);
+    select(to);
     int spos1 = subClusterStartPos(from);
     int epos2 = subClusterEndPos(to);
     for(int i=0;i<pargen_migratecount;i++)
     {
-        chromosome[epos2-i]=chromosome[spos1+i];
-        fitnessArray[epos2-i]=fitnessArray[spos1+i];
+        if(fitnessArray[epos2-i]>fitnessArray[spos1+i])
+        {
+            chromosome[epos2-i]=chromosome[spos1+i];
+            fitnessArray[epos2-i]=fitnessArray[spos1+i];
+        }
     }
 }
 
 void    ParallelGenetic::migrate()
 {
+
     if(pargen_islands<=1) return;
 
     if(pargen_migrationmethod=="1to1")
@@ -249,6 +266,7 @@ void    ParallelGenetic::step()
         if(generation) mutate(t);
         calcFitnessArray(t);
         select(t);
+
         crossover(t);
     }
     ++generation;
@@ -256,6 +274,7 @@ void    ParallelGenetic::step()
     if(generation % pargen_migrategeneration==0)
     {
         migrate();
+
     }
 
 }
@@ -279,6 +298,8 @@ void ParallelGenetic::init()
     pargen_similaritycount=params["pargen_similaritycount"].toString().toInt();
     pargen_debug=params["pargen_debug"].toString();
 
+    printf("migrate is %d \n",pargen_migratecount);
+    printf("migration %s \n",pargen_migrationmethod.toStdString().c_str());
     chromosome.resize(pargen_count * pargen_islands);
     children.resize(pargen_count * pargen_islands);
     fitnessArray.resize(chromosome.size());
@@ -333,7 +354,11 @@ bool    ParallelGenetic::updateTerminationRule(int islandIndex)
     if(pargen_termmethod=="doublebox")
     {
 
-    double fmin=fabs(1.0+fabs(fitnessArray[spos]));
+	    
+    double fmin=fabs(fitnessArray[spos]-oldBesty[islandIndex]);
+	if(generation<=1) fmin =fabs(fitnessArray[spos]);
+	if(generation<=1) fmin=1;
+	else fmin = fabs(fitnessArray[spos]-oldBesty[islandIndex])>1e-5;
 
     xx1[islandIndex]=xx1[islandIndex]+fmin;
     xx2[islandIndex]=xx2[islandIndex]+fmin * fmin;
@@ -349,7 +374,7 @@ bool    ParallelGenetic::updateTerminationRule(int islandIndex)
 
         stopat[islandIndex]=variance[islandIndex]/2.0;
     }
-    return (variance[islandIndex]<=stopat[islandIndex]&&generation>=10)
+    return (variance[islandIndex]<=stopat[islandIndex]&&generation>=5)
               || generation>=pargen_iters;
     }
     else
@@ -377,6 +402,8 @@ bool    ParallelGenetic::updateMasterTerminationRule()
     if(pargen_termmethod=="doublebox")
     {
     double fmin=fabs(1.0+fabs(fitnessArray[spos]));
+    if(generation<=1) fmin=1;
+    else fmin=fabs(fitnessArray[spos]-oldBesty_master)>1e-5;
 
     xx1_master=xx1_master+fmin;
     xx2_master=xx2_master+fmin * fmin;
@@ -393,7 +420,7 @@ bool    ParallelGenetic::updateMasterTerminationRule()
         stopat_master=variance_master/2.0;
     }
 
-    return (variance_master<=stopat_master &&generation>=10) ||
+    return (variance_master<=stopat_master &&generation>=5) ||
             generation >= pargen_iters;
     }
     else
@@ -408,8 +435,6 @@ bool    ParallelGenetic::updateMasterTerminationRule()
             similarityCount_master=0;
             similarityValue_master = fitnessArray[spos];
         }
-        printf("simresults. Value: %20.10lg count: %d\n",
-               fitnessArray[spos],similarityCount_master);
         return (similarityCount_master>=pargen_similaritycount)
             || (generation>=pargen_iters);
     }

@@ -37,10 +37,10 @@ then
 	METHODPARAMS="--parallelPsoParticles=40 --subCluster=5 --subClusterEnable=1 --pNumber=1 --parallelPropagateMethod=Nto1 --similarityMaxCount=15"
 elif [ $METHOD = "ParallelGenetic" ]
 then
-	METHODPARAMS="--pargen_count=50 --pargen_islands=4 --pargen_migratecount=5 --pargen_migrationmethod=NtoN --pargen_termination=one --pargen_termmethod=similarity --pargen_debug=no"
+	METHODPARAMS="--pargen_count=40 --pargen_islands=5 --pargen_migratecount=1 --pargen_migrationmethod=1to1 --pargen_termination=one --pargen_termmethod=similarity --pargen_debug=no"
 fi
 
 PROBLEM=$1
 NATOMS=$2
 echo ./OptimusApp --filename=../PROBLEMS/lib$PROBLEM.so  --opt_method=$METHOD  --natoms=$NATOMS  $METHODPARAMS --iterations=30 --threads=10
-./OptimusApp --filename=../PROBLEMS/lib$PROBLEM.so  --opt_method=$METHOD  --natoms=$NATOMS  $METHODPARAMS --iterations=30 --threads=5
+./OptimusApp --filename=../PROBLEMS/lib$PROBLEM.so  --opt_method=$METHOD  --natoms=$NATOMS  $METHODPARAMS --iterations=30
