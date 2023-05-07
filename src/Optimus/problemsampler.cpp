@@ -16,7 +16,7 @@ QString ProblemSampler::getName() const
     return name;
 }
 
-void    ProblemSampler::trainModel()
+void    ProblemSampler::trainModel(QString m)
 {
     //nothing to be done. It is a virtual class.
 }

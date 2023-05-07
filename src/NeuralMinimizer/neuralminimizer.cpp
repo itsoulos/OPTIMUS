@@ -9,6 +9,7 @@ NeuralMinimizer::NeuralMinimizer(Problem *p)
     addParameter("neural_start_samples","50","Number of start samples for Neural Minimizer");
     addParameter("neural_termination","doublebox","The used stopping rule. Available values: similarity, doublebox");
     addParameter("neural_similarityMaxValue","20","The maximum number of iterations for the similarity stopping rule");
+    addParameter("neural_trainmethod","bfgs","The method used to train the neural network model. Default: bfgs");
     sampler= NULL;
 }
 
@@ -58,6 +59,13 @@ void NeuralMinimizer::step()
 
 
     int neural_samples=params["neural_samples"].toString().toInt();
+    QString neural_model = params["neural_model"].toString();
+    if(neural_model == "neural")
+    {
+    	QString method=params["neural_trainmethod"].toString();
+	    ((NeuralSampler *)sampler)->trainModel(method);
+    }
+    else
     sampler->trainModel();
     xsample.clear();
     ysample.clear();

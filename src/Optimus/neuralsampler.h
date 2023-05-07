@@ -23,7 +23,7 @@ public:
     //Total derivative for all dataset
     Data    evalDeriv();
     void    sampleFromProblem(int N,Matrix &xsample,Data &ysample);
-    void    trainModel();
+    void    trainModel(QString method="bfgs");
     double  getTrainError();
     void    addSampleFromProblem(Data &x,double y);
 

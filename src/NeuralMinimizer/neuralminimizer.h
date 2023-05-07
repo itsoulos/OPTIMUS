@@ -28,6 +28,7 @@ public:
  * 5)neural_start_samples: The number of starts samples for the neural minimizer.
  * 6)neural_termination: The used termination rule. Available values are: similarity, doublebox.
  * 7)neural_similarityMaxValue: The maximum number of iterations for the similarity stopping rule.
+ * 8)neural_trainmethod: The method used to train neural network model (bfgs,lbfgs). Default: bfgs.
  */
 class NEURALMINIMIZER_EXPORT NeuralMinimizer :public
           Optimizer, NeuralMinimizerInterface

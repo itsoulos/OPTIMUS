@@ -1,4 +1,4 @@
-METHOD=ParallelGenetic
+METHOD=NeuralMinimizer
 METHODPARAMS=""
 ### Available local search methods: bfgs, gradient, adam, lbfgs
 if [ $METHOD = "Minfinder" ]
@@ -38,6 +38,9 @@ then
 elif [ $METHOD = "ParallelGenetic" ]
 then
 	METHODPARAMS="--pargen_count=40 --pargen_islands=5 --pargen_migratecount=1 --pargen_migrationmethod=1to1 --pargen_termination=one --pargen_termmethod=similarity --pargen_debug=no"
+elif [ $METHOD = "NeuralMinimizer" ]
+then
+	METHODPARAMS="--neural_model=neural --neural_trainmethod=lbfgs"
 fi
 
 PROBLEM=$1

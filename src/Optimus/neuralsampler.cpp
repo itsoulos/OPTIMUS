@@ -1,5 +1,6 @@
 #include "neuralsampler.h"
 # include "tolmin.h"
+# include "lbfgs.h"
 NeuralSampler::NeuralSampler(Problem *p,int w)
     :ProblemSampler("neural_sampler",p)
 {
@@ -196,16 +197,25 @@ double  NeuralSampler::getTrainError()
     return sum;
 }
 
-void    NeuralSampler::trainModel()
+void    NeuralSampler::trainModel(QString method)
 {
     NeuralProblem *problem = new NeuralProblem(this);
     Problem *np=new Problem(problem);
-    Tolmin tol(np);
     for(int i=0;i<weight.size();i++)
     {
         weight[i]=0.1*(2.0*drand48()-1.0);
     }
-    double value = tol.Solve(weight,false);
+
+    if(method=="lbfgs")
+    {
+    Lbfgs lt(np);
+    double value = lt.Solve(weight);
+    }
+    else
+    {
+    	Tolmin tol(np);
+    	double value = tol.Solve(weight,false);
+    }
     delete np;
     delete  problem;
 }

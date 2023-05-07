@@ -34,7 +34,7 @@ public:
      * @brief trainModel, this method will train the sample models if
      *                    it is needed.
      */
-    virtual void    trainModel();
+    virtual void    trainModel(QString method="");
 
     /**
      * @brief sampleFromModel, this method will sample from the sample model

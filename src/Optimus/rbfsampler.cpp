@@ -415,7 +415,7 @@ RbfProblem::~RbfProblem()
 
 
 
-void    RbfSampler::trainModel()
+void    RbfSampler::trainModel(QString m)
 {
 
 
