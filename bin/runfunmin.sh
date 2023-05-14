@@ -26,9 +26,9 @@ elif [ $METHOD = "Multistart" ]
 then
 	METHODPARAMS="--multistart_samples=50 --rbf_samples=100 --rbf_sampler_weights=10 --mlp_samples=500 --sample_method=uniform --multistart_maxiterations=100"
 
-elif [ $METHOD = "Tmlsl" ]
+elif [ $METHOD = "Bfgs" ]
 then
-	METHODPARAMS="--multistart_samples=50 --rbf_samples=100 --rbf_sampler_weights=10 --mlp_samples=500 --sample_method=rbf --multistart_maxiterations=100"
+	METHODPARAMS="--localsearch_method=lbfgs"
 elif [ $METHOD = "MinCenter" ]
 then
 	METHODPARAMS="--mincenter_samples=600 --mincenter_centers=100 --mincenter_iterations=100"
@@ -42,6 +42,7 @@ elif [ $METHOD = "NeuralMinimizer" ]
 then
 	METHODPARAMS="--neural_model=neural --neural_trainmethod=lbfgs"
 fi
+
 
 PROBLEM=$1
 NATOMS=$2
