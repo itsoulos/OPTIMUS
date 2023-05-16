@@ -646,13 +646,70 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-The current work proposes ....
+In this paper, the use of a recent global minimization technique 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nmin"
+literal "false"
+
+\end_inset
+
+ called NeuralMinimizer, is proposed to find the optimal set of parameters
+ for artificial neural networks.
+ This innovative global minimization technique constructs an approximation
+ of the objective function to be minimized using a limited number of its
+ samples.
+ These limited samples form the training set of an artificial neural network
+ that can be trained with any optimization method.
+ Subsequently, the sampling for the continuation of the global optimization
+ method is not done by the objective function but by the already trained
+ artificial neural network.
+ The samples obtained by artificial neural network before being fed to the
+ global minimization method they are classified and those with the smallest
+ functional value will finally be input to the global minimization method.
+ From the experimental results, it was shown that this global minimization
+ method requires a limited number of samples from the objective function
+ to find the global minimum and is also more efficient than other techniques
+ to discover the global minimum.
+ Therefore, this paper proposes to use artificial neural networks to train
+ other artificial neural networks.
+ This new procedure will be tested on a series of known problems in the
+ relevant literature, in order to evaluate its effectiveness.
 \end_layout
 
 \begin_layout Standard
-The rest of this article is organized as follows: 
-\series bold
-....
+The rest of this article is organized as follows: the section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:The-proposed-method"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ described the proposed method, the section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Experiments"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ list the experimental datasets and the results obtained by the incorporation
+ of various methods and finally the section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Conclusions"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ discusses some conclusions.
 \end_layout
 
 \begin_layout Section
@@ -664,6 +721,680 @@ name "sec:The-proposed-method"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+In this section, some basic principles for artificial neural networks are
+ presented and then new training method that incrorporates a modified version
+ of the NeuralMinimizer global optimization technique is outlined.
+\end_layout
+
+\begin_layout Subsection
+Preliminaries
+\end_layout
+
+\begin_layout Standard
+Let us consider that we have an artificial neural network with a processing
+ layer, in which the sigmoid function is used as an activation function.
+ The output value for every node in this layer is calculated as:
+\begin_inset Formula 
+\begin{equation}
+o_{i}(x)=\sigma\left(p_{i}^{T}x+\theta_{i}\right),\label{eq:eq1-1}
+\end{equation}
+
+\end_inset
+
+where the value 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ is the weight vector and 
+\begin_inset Formula $\theta_{i}$
+\end_inset
+
+ denotes the bias for the node 
+\begin_inset Formula $i.$
+\end_inset
+
+ The sigmoid function is defined as:
+\begin_inset Formula 
+\begin{equation}
+\sigma(x)=\frac{1}{1+\exp\left(-x\right)}
+\end{equation}
+
+\end_inset
+
+ and it is graphically illustrated in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:sigx"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename sig.eps
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The sigmoid function 
+\begin_inset Formula $\sigma(x)$
+\end_inset
+
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:sigx"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+When the neural network has 
+\begin_inset Formula $H$
+\end_inset
+
+ processing nodes, then output can be formulated as:
+\begin_inset Formula 
+\begin{equation}
+N(x)=\sum_{i=1}^{H}v_{i}o_{i}(x),\label{eq:eq1-2}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $v_{i}$
+\end_inset
+
+ stands for the output weight for node 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ Hence, by using one vector for all the parameters (weights and biases)
+ the neural network can be written in fthe following form:
+\begin_inset Formula 
+\begin{equation}
+N\left(\overrightarrow{x},\overrightarrow{w}\right)=\sum_{i=1}^{H}w_{(d+2)i-(d+1)}\sigma\left(\sum_{j=1}^{d}x_{j}w_{(d+2)i-(d+1)+j}+w_{(d+2)i}\right)\label{eq:nn}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $d$
+\end_inset
+
+ is the dimension of vector 
+\begin_inset Formula $\overrightarrow{x}$
+\end_inset
+
+.
+ From the equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:nn"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ we can conclude that the dimension of the weight vector 
+\begin_inset Formula $w$
+\end_inset
+
+ is calculated as:
+\begin_inset Formula 
+\begin{equation}
+d_{w}=(d+2)H\label{eq:wdimension}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+The modified NeuralMinimizer method 
+\end_layout
+
+\begin_layout Standard
+In its original version, the method NeuralMinimizer emloyeed RBF neural
+ networks 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "rbf1"
+literal "false"
+
+\end_inset
+
+ to build a model of the objective function.
+ Even though RBF networks have been used with success in a variety of problems
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "rbfde1,rbfde2,rbfnetwork1,rbfnetwork2"
+literal "false"
+
+\end_inset
+
+, it is not possible to apply them to the training of the parameters of
+ an artificial neural network due to the large dimension of the problem,
+ as shown in Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:wdimension"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Hence, in the current work the RBF network was replaced by an artificial
+ neural network that implements the equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:nn"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The training of the artificial neural network was done using a local minimizati
+on technique that is not particularly demanding in calculations and storage
+ space, such as Limited Memory BFGS (LBFGS)
+\begin_inset CommandInset citation
+LatexCommand citep
+key "LBFGS"
+literal "false"
+
+\end_inset
+
+.
+ This neural network will be called 
+\begin_inset Formula $N_{N}(x,w)$
+\end_inset
+
+ in the following variation of the NeuralMinimizer method:
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initialization
+\series default
+ step.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set 
+\begin_inset Formula $H$
+\end_inset
+
+ 
+\series default
+the number of weights used in the neural network.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $N_{S}$
+\end_inset
+
+ as the inital samples drawn from 
+\begin_inset Formula $N(x,w)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $N_{T}$
+\end_inset
+
+ as the the number of points that will be used as local minimization method
+ starters in every iteration.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $N_{R}$
+\end_inset
+
+ the number of samples that will be taken from the 
+\begin_inset Formula $N_{N}(x,w)$
+\end_inset
+
+ network in each iteration.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $N_{G}$
+\end_inset
+
+ as the number of iterations allowed.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ Iter=0, the current iteration number.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $\left(w^{*},y^{*}\right)$
+\end_inset
+
+ as the global minimum discovered by the method.
+ Initially 
+\begin_inset Formula $y^{*}=\infty$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Creation 
+\series default
+Step.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $T=\emptyset$
+\end_inset
+
+, the training set for the 
+\begin_inset Formula $N_{N}(x,w)$
+\end_inset
+
+ neural network.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1,..,N_{S}$
+\end_inset
+
+ do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Draw
+\series default
+ a new sample 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+ from 
+\begin_inset Formula $N(x,w)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Calculate
+\series default
+ 
+\begin_inset Formula $y_{i}=f\left(w_{i}\right)$
+\end_inset
+
+ using equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eq1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $T=T\cup\left(w_{i},y_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Train
+\series default
+ the 
+\begin_inset Formula $N_{N}(x,w)$
+\end_inset
+
+ neural network on set 
+\begin_inset Formula $T$
+\end_inset
+
+ using the LBFGS method.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Sampling 
+\series default
+Step
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $T_{R}=\emptyset$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1,..,N_{R}$
+\end_inset
+
+ 
+\series bold
+do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Get
+\series default
+ a new random sample 
+\begin_inset Formula $\left(w_{i},y_{i}\right)$
+\end_inset
+
+ from 
+\begin_inset Formula $N_{N}(w,x)$
+\end_inset
+
+ neural network
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $T_{R}=T_{R}\cup\left(x_{i,}y_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Sort
+\series default
+ 
+\begin_inset Formula $T_{R}$
+\end_inset
+
+ in asceding order according to the values 
+\begin_inset Formula $y_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Optimization
+\series default
+ Step.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1,..,N_{T}$
+\end_inset
+
+ do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Get
+\series default
+ the sample 
+\begin_inset Formula $\left(w_{i},y_{i}\right)$
+\end_inset
+
+ from 
+\begin_inset Formula $T_{R}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Train
+\series default
+ the neural network 
+\begin_inset Formula $N\left(w_{i},x\right)$
+\end_inset
+
+ on the train set of the objective problem, using the LBGS method and get
+ the training error 
+\begin_inset Formula $y_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $T=T\cup\left(w_{i},y_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Train
+\series default
+ again the network 
+\begin_inset Formula $N_{N}(w,x)$
+\end_inset
+
+ on the modified set 
+\begin_inset Formula $T$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+If
+\series default
+ 
+\begin_inset Formula $y_{i}\le y^{*}$
+\end_inset
+
+ then 
+\begin_inset Formula $w^{*}=w_{i},y^{*}=y_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+If 
+\series default
+the termination rule proposed in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Tsoulos1"
+literal "false"
+
+\end_inset
+
+ then apply the neural network 
+\begin_inset Formula $N\left(w^{*},x\right)$
+\end_inset
+
+ on the test set of the objective problem, report the test error and 
+\series bold
+terminate
+\series default
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ iter=iter+1
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Goto
+\series default
+ to Sampling step.
 \end_layout
 
 \begin_layout Section
@@ -678,22 +1409,13 @@ name "sec:Experiments"
 \end_layout
 
 \begin_layout Standard
-
-\series bold
-The efficiency of the suggested method was measured using a set of well-known
- problems from the relevant literature.
- The experimental results from the application of the proposed method was
- compared with other artificial neural network training techniques.
- In addition, experiments were carried out to show the dependence of the
- method on its basic parameters.
- The classification datasets incorporated in the relevant experiments can
- be found at:
+The efficiency of the proposed artificial neural network training technique
+ was evaluated using a series of data sets from the relevant literature
+ which are freely available from the following websites:
 \end_layout
 
 \begin_layout Enumerate
-
-\series bold
-UCI dataset repository, 
+The UCI repository, 
 \begin_inset Flex URL
 status open
 
@@ -708,9 +1430,7 @@ https://archive.ics.uci.edu/ml/index.php
 \end_layout
 
 \begin_layout Enumerate
-
-\series bold
-Keel repository, 
+The Keel repository, 
 \begin_inset Flex URL
 status open
 
@@ -732,10 +1452,10 @@ literal "false"
 .
 \end_layout
 
-\begin_layout Standard
-
+\begin_layout Enumerate
+The Statlib URL
 \series bold
-The majority of regression datasets was found in the Statlib URL 
+ 
 \begin_inset Flex URL
 status open
 
@@ -746,8 +1466,9 @@ ftp://lib.stat.cmu.edu/datasets/index.html
 
 \end_inset
 
+
+\series default
 .
- 
 \end_layout
 
 \begin_layout Subsection
@@ -1391,12 +2112,15 @@ https://github.com/itsoulos/OPTIMUS/
 .
  For the cases of classification datasets the average classification error
  is measured for every method and for regression datasets the average regression
- error as measured in the test set.
+ error is measured in the test set.
  The number of hidden nodes for the neural networks was set to 
 \begin_inset Formula $H=10$
 \end_inset
 
  for every method.
+ All the experiments were performed using an AMD Ryzen 5950X with 128GB
+ of RAM.
+ The running operating system was Debian Linux.
  The methods used in the experimental results are the following:
 \end_layout
 
@@ -1407,7 +2131,7 @@ A genetic algorithm with 200 chromosomes used to train a neural network
 \end_inset
 
  hidden nodes.
- This method was denoted as GENETIC in the tables hoding the experimental
+ This method was denoted as GENETIC in the tables holding the experimental
  results.
  
 \end_layout
@@ -1475,6 +2199,255 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
+The values used for every parameter are listed in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Experimental-settings."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and they are similar to the values used in the original publication of
+ the NeuralMinimizer method.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Experimental settings.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Experimental-settings."
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PARAMETER
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MEANING
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+VALUE
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $H$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Number of weights
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{S}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Start samples
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+50
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{T}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Starting points
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+100
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{R}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Samples drawn from the first network
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10\times N_{T}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{G}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Maximum number of iterations
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+200
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
 The experimental results for the classification datasets are shown in Table
  
 \begin_inset CommandInset ref
@@ -1505,6 +2478,29 @@ noprefix "false"
  hidden nodes.
  In both tables the last row (denoted as AVERAGE) represents the mean error
  for each method.
+ Also, the average classification error for every used method is graphically
+ displayed in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:averageClass"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and a similar graph is shown for the average regression error of each method
+ in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:averageRegression"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -1512,7 +2508,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -3395,7 +4391,7 @@ AVERAGE
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -4666,11 +5662,18 @@ name "fig:averageClass"
 
 
 \begin_inset Float figure
+placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
+\begin_inset Graphics
+	filename average_regression.eps
+	scale 50
+
+\end_inset
+
 
 \end_layout
 
@@ -4679,6 +5682,13 @@ status open
 
 \begin_layout Plain Layout
 Average regression error for all mentioned methods.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:averageRegression"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -4692,7 +5702,26 @@ Average regression error for all mentioned methods.
 
 \end_inset
 
+The experimental results and their graphical representation demonstrate
+ the superiority of the proposed technique over the others in terms of the
+ average error, as measured in the test set.
+ In fact, in several cases the percentage reduction in error exceeds 50%.
+ For the classification problems the immediate most effective training method
+ after the proposed one is the genetic algorithm and on average the proposed
+ technique improves the genetic algorithm error by 24%.
+ Moreover, in data fitting problems, the next most effective method after
+ the proposed one is the RBF neural network with small difference from the
+ ADAM optimizer.
+ However, in the case of data fitting problems the improvement in average
+ error by using the proposed technique exceeds 49%.
+ Of course, the proposed technique is quite time-consuming since it requires
+ a continuous training of an artificial neural network.
+\end_layout
 
+\begin_layout Standard
+
+\series bold
+(STOPPED HERE LBFGS?)
 \end_layout
 
 \begin_layout Section
@@ -4704,6 +5733,12 @@ name "sec:Conclusions"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+(Write some conclusions here)
 \end_layout
 
 \begin_layout Standard
@@ -5947,6 +6982,160 @@ A.A.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "nmin"
+literal "false"
+
+\end_inset
+
+I.G.
+ Tsoulos, A.
+ Tzallas, E.
+ Karvounis, D.
+ Tsalikakis, NeuralMinimizer: A Novel Method for Global Optimization, Informatio
+n 
+\series bold
+14
+\series default
+, 66, 2023.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbf1"
+literal "false"
+
+\end_inset
+
+J.
+ Park and I.
+ W.
+ Sandberg, Universal Approximation Using Radial-Basis-Function Networks,
+ Neural Computation 
+\series bold
+3
+\series default
+, pp.
+ 246-257, 1991.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfde1"
+literal "false"
+
+\end_inset
+
+Nam Mai-Duy, Thanh Tran-Cong, Numerical solution of differential equations
+ using multiquadric radial basis function networks, Neural Networks 14,
+ pp.
+ 185-199, 2001.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfde2"
+literal "false"
+
+\end_inset
+
+N.
+ Mai‐Duy, Solving high order ordinary differential equations with radial
+ basis function networks.
+ Int.
+ J.
+ Numer.
+ Meth.
+ Engng.
+ 
+\series bold
+62
+\series default
+, pp.
+ 824-852, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfnetwork1"
+literal "false"
+
+\end_inset
+
+C.
+ Laoudias, P.
+ Kemppi and C.
+ G.
+ Panayiotou, Localization Using Radial Basis Function Networks and Signal
+ Strength Fingerprints in WLAN, GLOBECOM 2009 - 2009 IEEE Global Telecommunicati
+ons Conference, Honolulu, HI, 2009, pp.
+ 1-6, 2009.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "rbfnetwork2"
+literal "false"
+
+\end_inset
+
+M.
+ Azarbad, S.
+ Hakimi, A.
+ Ebrahimzadeh, Automatic recognition of digital communication signal, Internatio
+nal journal of energy, information and communications 
+\series bold
+3
+\series default
+, pp.
+ 21-33, 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "LBFGS"
+literal "false"
+
+\end_inset
+
+D.C.
+ Liu, J.
+ Nocedal, On the Limited Memory Method for Large Scale Optimization, Mathematica
+l Programming B.
+ 
+\series bold
+45
+\series default
+, pp.
+ 503–528, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Tsoulos1"
+literal "false"
+
+\end_inset
+
+I.G.
+ Tsoulos, Modifications of real code genetic algorithm for global optimization,
+ Applied Mathematics and Computation 
+\series bold
+203
+\series default
+, pp.
+ 598-607, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "Keel"
 literal "false"
 
@@ -6743,26 +7932,6 @@ R.D.
 , pp.
  11322–11326, 1992.
  
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "rbf1"
-literal "false"
-
-\end_inset
-
-J.
- Park and I.
- W.
- Sandberg, Universal Approximation Using Radial-Basis-Function Networks,
- Neural Computation 
-\series bold
-3
-\series default
-, pp.
- 246-257, 1991.
 \end_layout
 
 \begin_layout Bibliography

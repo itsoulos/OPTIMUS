@@ -725,8 +725,8 @@ name "sec:The-proposed-method"
 
 \begin_layout Standard
 In this section, some basic principles for artificial neural networks are
- presented and then new training method that incrorporates a modified version
- of the NeuralMinimizer global optimization technique is outlined.
+ presented, then the global minimization method to be used is presented,
+ and finally, the overall training algorithm is presented.
 \end_layout
 
 \begin_layout Subsection
@@ -888,7 +888,7 @@ d_{w}=(d+2)H\label{eq:wdimension}
 \end_layout
 
 \begin_layout Subsection
-The modified NeuralMinimizer method 
+The NeuralMinimizer method 
 \end_layout
 
 \begin_layout Standard
@@ -947,11 +947,12 @@ literal "false"
 \end_inset
 
 .
- This neural network will be called 
-\begin_inset Formula $N_{N}(x,w)$
+ This neural network will be called  The neural network used to construct
+ a model of the objective function will be called 
+\begin_inset Formula $N_{T}(x,w)$
 \end_inset
 
- in the following variation of the NeuralMinimizer method:
+ andThe modified NeuralMinimizer method has as follows:
 \end_layout
 
 \begin_layout Enumerate
@@ -966,30 +967,20 @@ Initialization
 \begin_layout Enumerate
 
 \series bold
-Set 
-\begin_inset Formula $H$
-\end_inset
-
- 
-\series default
-the number of weights used in the neural network.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
 Set
 \series default
  
 \begin_inset Formula $N_{S}$
 \end_inset
 
- as the inital samples drawn from 
-\begin_inset Formula $N(x,w)$
+ as the inital samples that will be taken from 
+\begin_inset Formula $f(x)$
 \end_inset
 
 .
  
+\series bold
+(STOPPED HERE)
 \end_layout
 
 \begin_layout Enumerate
@@ -1001,8 +992,8 @@ Set
 \begin_inset Formula $N_{T}$
 \end_inset
 
- as the the number of points that will be used as local minimization method
- starters in every iteration.
+ the number of samples, that will used in every iteration as starting points
+ for the local optimization procedure.
 \end_layout
 
 \begin_layout Enumerate
@@ -1014,12 +1005,12 @@ Set
 \begin_inset Formula $N_{R}$
 \end_inset
 
- the number of samples that will be taken from the 
-\begin_inset Formula $N_{N}(x,w)$
+ the number of samples that will be drawn from the RBF network at every
+ iteration with 
+\begin_inset Formula $N_{R}>N_{T}$
 \end_inset
 
- network in each iteration.
- 
+
 \end_layout
 
 \begin_layout Enumerate
@@ -1031,7 +1022,7 @@ Set
 \begin_inset Formula $N_{G}$
 \end_inset
 
- as the number of iterations allowed.
+ the maximum number of allowed iterations.
 \end_layout
 
 \begin_layout Enumerate
@@ -1039,7 +1030,7 @@ Set
 \series bold
 Set
 \series default
- Iter=0, the current iteration number.
+ Iter=0, the iteration number.
 \end_layout
 
 \begin_layout Enumerate
@@ -1048,10 +1039,10 @@ Set
 Set
 \series default
  
-\begin_inset Formula $\left(w^{*},y^{*}\right)$
+\begin_inset Formula $\left(x^{*},y^{*}\right)$
 \end_inset
 
- as the global minimum discovered by the method.
+ as the global minimum.
  Initially 
 \begin_inset Formula $y^{*}=\infty$
 \end_inset
@@ -1078,11 +1069,7 @@ Set
 \begin_inset Formula $T=\emptyset$
 \end_inset
 
-, the training set for the 
-\begin_inset Formula $N_{N}(x,w)$
-\end_inset
-
- neural network.
+, the training set for the RBF network.
 \end_layout
 
 \begin_layout Enumerate
@@ -1101,17 +1088,13 @@ For
 \begin_layout Enumerate
 
 \series bold
-Draw
+Take
 \series default
  a new sample 
-\begin_inset Formula $w_{i}$
+\begin_inset Formula $x_{i}\in S$
 \end_inset
 
- from 
-\begin_inset Formula $N(x,w)$
-\end_inset
 
-.
 \end_layout
 
 \begin_layout Enumerate
@@ -1120,24 +1103,14 @@ Draw
 Calculate
 \series default
  
-\begin_inset Formula $y_{i}=f\left(w_{i}\right)$
-\end_inset
-
- using equation 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:eq1"
-plural "false"
-caps "false"
-noprefix "false"
-
+\begin_inset Formula $y_{i}=f\left(x_{i}\right)$
 \end_inset
 
 
 \end_layout
 
 \begin_layout Enumerate
-\begin_inset Formula $T=T\cup\left(w_{i},y_{i}\right)$
+\begin_inset Formula $T=T\cup\left(x_{i},y_{i}\right)$
 \end_inset
 
 
@@ -1155,15 +1128,11 @@ EndFor
 \series bold
 Train
 \series default
- the 
-\begin_inset Formula $N_{N}(x,w)$
-\end_inset
-
- neural network on set 
+ the RBF network on the training set 
 \begin_inset Formula $T$
 \end_inset
 
- using the LBFGS method.
+.
 \end_layout
 
 \end_deeper
@@ -1206,17 +1175,13 @@ do
 \begin_layout Enumerate
 
 \series bold
-Get
+Take
 \series default
- a new random sample 
-\begin_inset Formula $\left(w_{i},y_{i}\right)$
+ a random sample 
+\begin_inset Formula $\left(x_{i},y_{i}\right)$
 \end_inset
 
- from 
-\begin_inset Formula $N_{N}(w,x)$
-\end_inset
-
- neural network
+ from the RBF network.
 \end_layout
 
 \begin_layout Enumerate
@@ -1247,11 +1212,7 @@ Sort
 \begin_inset Formula $T_{R}$
 \end_inset
 
- in asceding order according to the values 
-\begin_inset Formula $y_{i}$
-\end_inset
-
-
+ according to the y values in ascending order.
 \end_layout
 
 \end_deeper
@@ -1280,10 +1241,10 @@ For
 \begin_layout Enumerate
 
 \series bold
-Get
+Take
 \series default
- the sample 
-\begin_inset Formula $\left(w_{i},y_{i}\right)$
+ the next sample 
+\begin_inset Formula $\left(x_{i},y_{i}\right)$
 \end_inset
 
  from 
@@ -1294,27 +1255,18 @@ Get
 \end_layout
 
 \begin_layout Enumerate
-
-\series bold
-Train
-\series default
- the neural network 
-\begin_inset Formula $N\left(w_{i},x\right)$
-\end_inset
-
- on the train set of the objective problem, using the LBGS method and get
- the training error 
-\begin_inset Formula $y_{i}$
+\begin_inset Formula $y_{i}=\mbox{LS}\left(x_{i}\right)$
 \end_inset
 
 .
+ Where LS(x) is a predefined local search method.
 \end_layout
 
 \begin_layout Enumerate
-\begin_inset Formula $T=T\cup\left(w_{i},y_{i}\right)$
+\begin_inset Formula $T=T\cup\left(x_{i},y_{i}\right)$
 \end_inset
 
-
+, this step updates the training set of the RBF network.
 \end_layout
 
 \begin_layout Enumerate
@@ -1322,11 +1274,7 @@ Train
 \series bold
 Train
 \series default
- again the network 
-\begin_inset Formula $N_{N}(w,x)$
-\end_inset
-
- on the modified set 
+ the RBF network on set 
 \begin_inset Formula $T$
 \end_inset
 
@@ -1343,7 +1291,7 @@ If
 \end_inset
 
  then 
-\begin_inset Formula $w^{*}=w_{i},y^{*}=y_{i}$
+\begin_inset Formula $x^{*}=x_{i},y^{*}=y_{i}$
 \end_inset
 
 
@@ -1352,9 +1300,9 @@ If
 \begin_layout Enumerate
 
 \series bold
-If 
+Check
 \series default
-the termination rule proposed in 
+ the termination rule as suggested in 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Tsoulos1"
@@ -1362,15 +1310,12 @@ literal "false"
 
 \end_inset
 
- then apply the neural network 
-\begin_inset Formula $N\left(w^{*},x\right)$
+.
+ If it holds report 
+\begin_inset Formula $\left(x^{*},y^{*}\right)$
 \end_inset
 
- on the test set of the objective problem, report the test error and 
-\series bold
-terminate
-\series default
-.
+ as the located global minimum and terminate.
 \end_layout
 
 \end_deeper
@@ -1397,6 +1342,10 @@ Goto
  to Sampling step.
 \end_layout
 
+\begin_layout Subsection
+The new training algorithm
+\end_layout
+
 \begin_layout Section
 Experiments 
 \begin_inset CommandInset label
@@ -1409,13 +1358,22 @@ name "sec:Experiments"
 \end_layout
 
 \begin_layout Standard
-The efficiency of the proposed artificial neural network training technique
- was evaluated using a series of data sets from the relevant literature
- which are freely available from the following websites:
+
+\series bold
+The efficiency of the suggested method was measured using a set of well-known
+ problems from the relevant literature.
+ The experimental results from the application of the proposed method was
+ compared with other artificial neural network training techniques.
+ In addition, experiments were carried out to show the dependence of the
+ method on its basic parameters.
+ The classification datasets incorporated in the relevant experiments can
+ be found at:
 \end_layout
 
 \begin_layout Enumerate
-The UCI repository, 
+
+\series bold
+UCI dataset repository, 
 \begin_inset Flex URL
 status open
 
@@ -1430,7 +1388,9 @@ https://archive.ics.uci.edu/ml/index.php
 \end_layout
 
 \begin_layout Enumerate
-The Keel repository, 
+
+\series bold
+Keel repository, 
 \begin_inset Flex URL
 status open
 
@@ -1452,10 +1412,10 @@ literal "false"
 .
 \end_layout
 
-\begin_layout Enumerate
-The Statlib URL
+\begin_layout Standard
+
 \series bold
- 
+The majority of regression datasets was found in the Statlib URL 
 \begin_inset Flex URL
 status open
 
@@ -1466,9 +1426,8 @@ ftp://lib.stat.cmu.edu/datasets/index.html
 
 \end_inset
 
-
-\series default
 .
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -2112,7 +2071,7 @@ https://github.com/itsoulos/OPTIMUS/
 .
  For the cases of classification datasets the average classification error
  is measured for every method and for regression datasets the average regression
- error is measured in the test set.
+ error as measured in the test set.
  The number of hidden nodes for the neural networks was set to 
 \begin_inset Formula $H=10$
 \end_inset
@@ -2131,7 +2090,7 @@ A genetic algorithm with 200 chromosomes used to train a neural network
 \end_inset
 
  hidden nodes.
- This method was denoted as GENETIC in the tables holding the experimental
+ This method was denoted as GENETIC in the tables hoding the experimental
  results.
  
 \end_layout
@@ -2209,8 +2168,7 @@ noprefix "false"
 
 \end_inset
 
- and they are similar to the values used in the original publication of
- the NeuralMinimizer method.
+.
 \end_layout
 
 \begin_layout Standard
@@ -2218,7 +2176,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -2508,7 +2466,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -4391,7 +4349,7 @@ AVERAGE
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -5706,16 +5664,18 @@ The experimental results and their graphical representation demonstrate
  the superiority of the proposed technique over the others in terms of the
  average error, as measured in the test set.
  In fact, in several cases the percentage reduction in error exceeds 50%.
- For the classification problems the immediate most effective training method
- after the proposed one is the genetic algorithm and on average the proposed
- technique improves the genetic algorithm error by 24%.
- Moreover, in data fitting problems, the next most effective method after
- the proposed one is the RBF neural network with small difference from the
- ADAM optimizer.
- However, in the case of data fitting problems the improvement in average
- error by using the proposed technique exceeds 49%.
- Of course, the proposed technique is quite time-consuming since it requires
- a continuous training of an artificial neural network.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+(TABLE WITH PARAMETER SETTINGS)
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+(LBFGS?)
 \end_layout
 
 \begin_layout Section
@@ -7107,24 +7067,6 @@ l Programming B.
 \series default
 , pp.
  503–528, 1989.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "Tsoulos1"
-literal "false"
-
-\end_inset
-
-I.G.
- Tsoulos, Modifications of real code genetic algorithm for global optimization,
- Applied Mathematics and Computation 
-\series bold
-203
-\series default
-, pp.
- 598-607, 2008.
 \end_layout
 
 \begin_layout Bibliography
