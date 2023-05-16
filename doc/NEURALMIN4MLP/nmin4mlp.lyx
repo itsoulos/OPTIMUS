@@ -5716,6 +5716,7 @@ The experimental results and their graphical representation demonstrate
  error by using the proposed technique exceeds 49%.
  Of course, the proposed technique is quite time-consuming since it requires
  a continuous training of an artificial neural network.
+ 
 \end_layout
 
 \begin_layout Section
@@ -5730,9 +5731,41 @@ name "sec:Conclusions"
 \end_layout
 
 \begin_layout Standard
+In this work, the application of a recent global minimization method for
+ the training of artificial neural networks was proposed.
+ The application of this method was used in artificial neural networks both
+ for classification problems and for data fitting problems.
+ This new global minimization method constructs an approximation of the
+ objective function using neural networks.
+ This construction is done with a limited number of samples from the objective
+ function, however each time a local minimization takes place this approximation
+ is readjusted.
+ Subsequently, the sampling for the minimization is done from the approximate
+ function and not from the objective one, even taking samples from the approxima
+tion with the smallest function value, in order to speed up the finding
+ of the global minimum.
+ In this particular case, the artificial neural network of the global minimizati
+on method is used to train the artificial neural network.
+ However, due to the large time and storage requirements of artificial neural
+ networks, the RBF network of the original NeuralMinimizer method was replaced
+ with an artificial neural network that was trained using the local minimization
+ method LBFGS.
+ The new artificial neural network training technique is tested on a wide
+ collection of classification and data fitting problems from the relevant
+ literature and is shown to significantly improve the learning error over
+ other established artificial neural network training techniques.
+ This improvement is 25% on average for the case of classification problems
+ and rises significantly to 50% for data fitting problems.
+\end_layout
 
-\series bold
-(Write some conclusions here)
+\begin_layout Standard
+However, the proposed procedure can be extremely slow, especially as the
+ size of the artificial neural network increases.
+ The size of the artificial neural network directly depends on the dimension
+ of the input dataset.
+ Future improvements of the methodology could include the use of parallel
+ programming techniques in order to accelerate the training of artificial
+ neural networks by taking advantage of modern computing structures.
 \end_layout
 
 \begin_layout Standard
