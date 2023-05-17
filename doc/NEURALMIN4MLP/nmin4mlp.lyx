@@ -204,11 +204,11 @@ End
 \begin_body
 
 \begin_layout Title
-Optimizing neural networks using neural networks
+Training neural networks using neural networks
 \end_layout
 
 \begin_layout Title Citation
-Optimizing neural networks using neural networks
+Training neural networks using neural networks
 \end_layout
 
 \begin_layout Author
@@ -247,8 +247,8 @@ Correspondence: itsoulos@uoi.gr;
 
 \begin_layout Abstract
 Artificial neural networks are parametric machine learning models, which
- have been used in recent decades in a number of practical problems from
- various scientific fields, such as Physics, Chemistry, Medicine, etc.
+ have been used in recent decades in a number of practical problems in various
+ scientific fields, such as Physics, Chemistry, Medicine, etc.
  Such problems can be reduced to pattern recognition problems and then modeled
  from artificial neural networks, whether these problems are classification
  problems or data fitting problems.
@@ -260,7 +260,7 @@ Artificial neural networks are parametric machine learning models, which
  In this technique, an approximation of the objective function to be minimized
  is created using artificial neural networks and then sampling is done from
  the approximation function and not the original one.
- Therefore, in the present work learning of the parameters of artificial
+ Therefore, in the present work, learning of the parameters of artificial
  neural networks is done using other neural networks.
  The new training method was tested on a series of well-known problems from
  the relevant literature and a comparative study was made against other
@@ -277,7 +277,7 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Artificial Neural networks (ANNs) are parameteric machine learning models
+Artificial Neural networks (ANNs) are parametric machine learning models
  
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -352,7 +352,70 @@ literal "false"
 \end_inset
 
  etc.
- A neural network can be denoted as a function 
+ Moreover, variations of artificial neural networks have been employed to
+ solve agricultural problems 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nnagr1,nnagr2"
+literal "false"
+
+\end_inset
+
+, facial expression recognition 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nnfacial"
+literal "false"
+
+\end_inset
+
+, prediction of the speed of wind 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nnwind"
+literal "false"
+
+\end_inset
+
+, the gas consumption problem 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nngas"
+literal "false"
+
+\end_inset
+
+, intrusion detection 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nnintrusion"
+literal "false"
+
+\end_inset
+
+, hydrological systems 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nnhydro1"
+literal "false"
+
+\end_inset
+
+ etc.
+ Also, Swales and Yoon discuss the application of artificial neural networks
+ to investment analysis in their work 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nninvest"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+A neural network can be denoted as a function 
 \series bold
 
 \begin_inset Formula $N(\overrightarrow{x},\overrightarrow{w})$
@@ -364,7 +427,7 @@ where the vector
 \begin_inset Formula $\overrightarrow{x}$
 \end_inset
 
- stands for the input vector (pattern) and the vector 
+ stands for the input vector and the vector 
 \series bold
 
 \begin_inset Formula $\overrightarrow{w}$
@@ -373,7 +436,8 @@ where the vector
  
 \series default
 is the set of the parameters of the neural network that should be estimated.
- The vector 
+ The input vector is usually called pattern in the relevant literature and
+ the vector 
 \series bold
 
 \begin_inset Formula $\overrightarrow{w}$
@@ -381,9 +445,9 @@ is the set of the parameters of the neural network that should be estimated.
 
  
 \series default
-is usually called weight vector.
- The methods used to adapt the weight vector minimize the so - called error
- function denoted as:
+is usually called the weight vector.
+ Artificial neural network training methods adjust the vector of weights
+ in order to minimize the following quantity:
 \begin_inset Formula 
 \begin{equation}
 E\left(N\left(\overrightarrow{x},\overrightarrow{w}\right)\right)=\sum_{i=1}^{M}\left(N\left(\overrightarrow{x}_{i},\overrightarrow{w}\right)-y_{i}\right)^{2}\label{eq:eq1}
@@ -391,11 +455,11 @@ E\left(N\left(\overrightarrow{x},\overrightarrow{w}\right)\right)=\sum_{i=1}^{M}
 
 \end_inset
 
-Where the set set 
+In the previous equation, that will be called training error, the set 
 \begin_inset Formula $\left(\overrightarrow{x_{i}},y_{i}\right),\ i=1,...,M$
 \end_inset
 
- is the train dataset for the neural network with 
+ is the input train dataset for the neural network with 
 \begin_inset Formula $M$
 \end_inset
 
@@ -409,11 +473,7 @@ Where the set set
 \end_inset
 
  .
- 
-\end_layout
-
-\begin_layout Standard
-The equation 
+ The equation 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:eq1"
@@ -505,7 +565,10 @@ literal "false"
 
 \end_inset
 
-, the Bird Mating Optimizer 
+ etc.
+ Furthermore, Cui et al suggested the usage of a new stochastic optimization
+ algorithm that simulates the plant growing process for neural network training.
+ Also recently, the Bird Mating Optimizer 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "nnbird"
@@ -513,9 +576,17 @@ literal "false"
 
 \end_inset
 
- etc.
+ was suggested as a training method for artificial neural networks 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nnplant"
+literal "false"
+
+\end_inset
+
+.
  Also, hybrid methods have been developed by various researchers to optimize
- the weight vector such as the work of Yaghini et al 
+ the weight vector, such as the work of Yaghini et al 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "nnhybrid1"
@@ -557,6 +628,22 @@ literal "false"
 
 \end_inset
 
+, an initialization method using the Cauchy's inequality 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "weight_init2"
+literal "false"
+
+\end_inset
+
+, incorporation of discriminant learning 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "weight_init3"
+literal "false"
+
+\end_inset
+
 , methods based on genetic algorithms 
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -567,7 +654,7 @@ literal "false"
 
  etc.
  A systematic review of weight initialization strategies can be found in
- the paper of Narkhede et al 
+ the paper by Narkhede et al 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "nninitreview"
@@ -579,9 +666,9 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-In addition, various groups of researchers are dealing with the issue of
- constructing the structure of artificial neural networks, such as the incorpora
-tion of genetic algorithms 
+Moreover, various groups of researchers are dealing with the issue of constructi
+ng the structure of artificial neural networks, such as the incorporation
+ of genetic algorithms 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "nngencon"
@@ -609,7 +696,7 @@ literal "false"
 \series bold
  
 \series default
-a constructing and prunning approach to optimise the structure of ANNs 
+a constructing and pruning approach to optimize the structure of ANNs 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "nnprunncon"
@@ -617,7 +704,7 @@ literal "false"
 
 \end_inset
 
-, usage of cellurar automata
+, usage of cellular automata
 \series bold
  
 \series default
@@ -631,7 +718,7 @@ literal "false"
 
  etc.
  In addition, since the training of artificial neural networks by optimization
- methods requires significantly large computing time, parallel techniques
+ methods requires significantly larger computing time, parallel techniques
  have been developed that take advantage of modern parallel computing units
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -643,6 +730,68 @@ literal "false"
 
 \series bold
 .
+\end_layout
+
+\begin_layout Standard
+Another field of research in the field of artificial neural networks that
+ attracts a multitude of researchers is that of dealing with the problem
+ of overfitting that occurs in many cases.
+ In this problem, although the artificial neural network has achieved a
+ satisfactory level of training this is not reflected in unknown patterns
+ that were not present during training.
+ This set of patterns will be called as test set in the remaining of this
+ work.
+ Commonly used methods that tackle the overfitting problem are weight sharing
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nnsharing1,nnsharing2"
+literal "true"
+
+\end_inset
+
+, methods that reduce the number of parameters (weight pruning) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nnprunning1,nnprunning2,nnprunning3"
+literal "true"
+
+\end_inset
+
+, the method of dropout 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nndrop1,nndrop2"
+literal "false"
+
+\end_inset
+
+, weight decaying methods 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nndecay1,nndecay2"
+literal "false"
+
+\end_inset
+
+, the Sarporp method 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "sarprop"
+literal "false"
+
+\end_inset
+
+, positive correlation methods 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "nnpositive"
+literal "false"
+
+\end_inset
+
+ etc.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -664,14 +813,14 @@ literal "false"
  Subsequently, the sampling for the continuation of the global optimization
  method is not done by the objective function but by the already trained
  artificial neural network.
- The samples obtained by artificial neural network before being fed to the
- global minimization method they are classified and those with the smallest
+ The samples obtained by artificial neural networks before being fed to
+ the global minimization method into are classified and those with the smallest
  functional value will finally be input to the global minimization method.
  From the experimental results, it was shown that this global minimization
  method requires a limited number of samples from the objective function
  to find the global minimum and is also more efficient than other techniques
  to discover the global minimum.
- Therefore, this paper proposes to use artificial neural networks to train
+ Therefore, this paper proposes using artificial neural networks to train
  other artificial neural networks.
  This new procedure will be tested on a series of known problems in the
  relevant literature, in order to evaluate its effectiveness.
@@ -725,7 +874,7 @@ name "sec:The-proposed-method"
 
 \begin_layout Standard
 In this section, some basic principles for artificial neural networks are
- presented and then new training method that incrorporates a modified version
+ presented and then a new training method that incorporates a modified version
  of the NeuralMinimizer global optimization technique is outlined.
 \end_layout
 
@@ -845,7 +994,7 @@ where
 
 .
  Hence, by using one vector for all the parameters (weights and biases)
- the neural network can be written in fthe following form:
+ the neural network can be written in the following form:
 \begin_inset Formula 
 \begin{equation}
 N\left(\overrightarrow{x},\overrightarrow{w}\right)=\sum_{i=1}^{H}w_{(d+2)i-(d+1)}\sigma\left(\sum_{j=1}^{d}x_{j}w_{(d+2)i-(d+1)+j}+w_{(d+2)i}\right)\label{eq:nn}
@@ -892,7 +1041,7 @@ The modified NeuralMinimizer method
 \end_layout
 
 \begin_layout Standard
-In its original version, the method NeuralMinimizer emloyeed RBF neural
+In its original version, the method NeuralMinimizer employed RBF neural
  networks 
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -924,7 +1073,7 @@ noprefix "false"
 \end_inset
 
 .
- Hence, in the current work the RBF network was replaced by an artificial
+ Hence, in current work, the RBF network has been replaced by an artificial
  neural network that implements the equation 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -938,7 +1087,7 @@ noprefix "false"
 .
  The training of the artificial neural network was done using a local minimizati
 on technique that is not particularly demanding in calculations and storage
- space, such as Limited Memory BFGS (LBFGS)
+ space, such as Limited Memory BFGS (L-BFGS)
 \begin_inset CommandInset citation
 LatexCommand citep
 key "LBFGS"
@@ -947,11 +1096,74 @@ literal "false"
 \end_inset
 
 .
- This neural network will be called 
+ The L-BFGS method is variation of BFGS method 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "bfgs2"
+literal "false"
+
+\end_inset
+
+ using a limited amount of computer memory.
+ This local minimization method has found wide application in difficult
+ and memory-intensive optimization problems such as image reconstruction
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "lbfgs_image"
+literal "false"
+
+\end_inset
+
+, inverse eigenvalue problems 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "lbfgs_inverse"
+literal "false"
+
+\end_inset
+
+, seismic waveform tomography 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "lbfgs_seismic"
+literal "false"
+
+\end_inset
+
+ etc.
+ Because of the application of this technique to large-dimensional problems,
+ a number of modifications have been proposed that make use of modern parallel
+ computing systems 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "lbfgs_par1,lbfgs_par2,lbfgs_par3"
+literal "false"
+
+\end_inset
+
+.
+ A numerical study on the limited memory BFGS methods is provided in the
+ work of Morales 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "lbfgs_study"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In the following the main steps of the modified NeuralMinimizer method for
+ the training of neural networks are listed.
+ In this steps the neural network used by the NeuralMinimizer method will
+ be called 
 \begin_inset Formula $N_{N}(x,w)$
 \end_inset
 
- in the following variation of the NeuralMinimizer method:
+.
 \end_layout
 
 \begin_layout Enumerate
@@ -973,6 +1185,15 @@ Set
  
 \series default
 the number of weights used in the neural network.
+ In the current method the same number of weights was used for both 
+\begin_inset Formula $N(x,w)$
+\end_inset
+
+ and 
+\begin_inset Formula $N_{N}(x,w)$
+\end_inset
+
+ artificial neural networks.
 \end_layout
 
 \begin_layout Enumerate
@@ -984,12 +1205,13 @@ Set
 \begin_inset Formula $N_{S}$
 \end_inset
 
- as the inital samples drawn from 
+ as the initial samples drawn from 
 \begin_inset Formula $N(x,w)$
 \end_inset
 
 .
- 
+ At this stage, the training error for the artificial neural network will
+ be used as an objective function to minimize
 \end_layout
 
 \begin_layout Enumerate
@@ -1003,6 +1225,7 @@ Set
 
  as the the number of points that will be used as local minimization method
  starters in every iteration.
+ 
 \end_layout
 
 \begin_layout Enumerate
@@ -1163,7 +1386,7 @@ Train
 \begin_inset Formula $T$
 \end_inset
 
- using the LBFGS method.
+ using the L-BFGS method.
 \end_layout
 
 \end_deeper
@@ -1247,7 +1470,7 @@ Sort
 \begin_inset Formula $T_{R}$
 \end_inset
 
- in asceding order according to the values 
+ in ascending order according to the values 
 \begin_inset Formula $y_{i}$
 \end_inset
 
@@ -1261,6 +1484,13 @@ Sort
 Optimization
 \series default
  Step.
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:Optimization-Step."
+
+\end_inset
+
+
 \end_layout
 
 \begin_deeper
@@ -1302,8 +1532,8 @@ Train
 \begin_inset Formula $N\left(w_{i},x\right)$
 \end_inset
 
- on the train set of the objective problem, using the LBGS method and get
- the training error 
+ on the train set of the objective problem, using the L-BFGS method and
+ get the corresponding training error 
 \begin_inset Formula $y_{i}$
 \end_inset
 
@@ -1311,6 +1541,11 @@ Train
 \end_layout
 
 \begin_layout Enumerate
+
+\series bold
+Update
+\series default
+ 
 \begin_inset Formula $T=T\cup\left(w_{i},y_{i}\right)$
 \end_inset
 
@@ -1331,6 +1566,13 @@ Train
 \end_inset
 
 .
+ In this step the original train set used by 
+\begin_inset Formula $N_{N}(x,w)$
+\end_inset
+
+ is updated to include the new discovered local minimum.
+ This operation is used in order to construct a more accurate approximation
+ of the real objective function.
 \end_layout
 
 \begin_layout Enumerate
@@ -1469,6 +1711,7 @@ ftp://lib.stat.cmu.edu/datasets/index.html
 
 \series default
 .
+ This repository is used mainly for the regression datasets.
 \end_layout
 
 \begin_layout Subsection
@@ -1550,7 +1793,7 @@ literal "false"
 \series bold
 Bands
 \series default
- dataset, a dataset ralated to printing problems 
+ dataset, a dataset related to printing problems 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "bands"
@@ -1631,7 +1874,7 @@ literal "false"
 \series bold
 Ionosphere
 \series default
- dataset, related to measuruments from the ionosphere an thoroughly studied
+ dataset, related to measurements from the ionosphere an thoroughly studied
  in a series of research papers 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1886,7 +2129,7 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-The followin regression datasets were used:
+The following regression datasets were used:
 \end_layout
 
 \begin_layout Enumerate
@@ -1926,7 +2169,7 @@ literal "false"
 \series bold
 Baseball
 \series default
- dataset, a dataset used to predict the amoun of salary for some baseball
+ dataset, a dataset used to predict the amount of salary for some baseball
  players.
 \end_layout
 
@@ -2090,9 +2333,10 @@ Experimental results
 
 \begin_layout Standard
 The proposed method was compared against five other approaches found in
- the relevant literature.
- For greater reliability of the experimental results, the validation technique
- 10 - fold was employed for every classification or regression dataset.
+ the relevant literature on the previous mentioned classification and regression
+ datasets.
+ For greater reliability of the experimental results, the 10 - fold validation
+ technique was employed for every classification or regression dataset.
  Every experiment was executed 30 times, with different initialization for
  the random generator each time.
  Also, the srand48() random generator of the C - programming language was
@@ -2110,7 +2354,7 @@ https://github.com/itsoulos/OPTIMUS/
 \end_inset
 
 .
- For the cases of classification datasets the average classification error
+ For the case of classification datasets, the average classification error
  is measured for every method and for regression datasets the average regression
  error is measured in the test set.
  The number of hidden nodes for the neural networks was set to 
@@ -2171,7 +2415,7 @@ literal "false"
 \end_layout
 
 \begin_layout Enumerate
-The resilient backpropagation (RPROP) optimization method
+The resilient back propagation (RPROP) optimization method
 \begin_inset CommandInset citation
 LatexCommand citep
 key "rpropnn,rpropnn2,rpropnn3"
@@ -2476,10 +2720,10 @@ noprefix "false"
 \end_inset
 
  hidden nodes.
- In both tables the last row (denoted as AVERAGE) represents the mean error
+ In both tables, the last row (denoted as AVERAGE) represents the mean error
  for each method.
- Also, the average classification error for every used method is graphically
- displayed in Figure 
+ Furthermore, the average classification error for every used method is
+ graphically displayed in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:averageClass"
@@ -2515,7 +2759,7 @@ status open
 
 \begin_layout Plain Layout
 Experimental results for the classification datasets.
- The numbers in cells denote average classification error of 30 independed
+ The numbers in cells denote average classification error of 30 independent
  runs.
 \begin_inset CommandInset label
 LatexCommand label
@@ -5705,17 +5949,21 @@ name "fig:averageRegression"
 The experimental results and their graphical representation demonstrate
  the superiority of the proposed technique over the others in terms of the
  average error, as measured in the test set.
- In fact, in several cases the percentage reduction in error exceeds 50%.
- For the classification problems the immediate most effective training method
- after the proposed one is the genetic algorithm and on average the proposed
- technique improves the genetic algorithm error by 24%.
+ For example, in the case of datasets used for classification, the proposed
+ method outperforms the remaining techniques in 19 out of 26 datasets (73%
+ percent).
+ Also, in several cases, the percentage reduction in error exceeds 50%.
+ For the classification problems, the immediate most effective training
+ method after the proposed one is the genetic algorithm and on average,
+ the proposed technique achieves lower classification error than the genetic
+ algorithm error by 24%.
  Moreover, in data fitting problems, the next most effective method after
- the proposed one is the RBF neural network with small difference from the
- ADAM optimizer.
+ the proposed one is the RBF neural network with small differences from
+ the ADAM optimizer.
  However, in the case of data fitting problems the improvement in average
  error by using the proposed technique exceeds 49%.
  Of course, the proposed technique is quite time-consuming since it requires
- a continuous training of an artificial neural network.
+ continuous training of an artificial neural network.
  
 \end_layout
 
@@ -5738,7 +5986,8 @@ In this work, the application of a recent global minimization method for
  This new global minimization method constructs an approximation of the
  objective function using neural networks.
  This construction is done with a limited number of samples from the objective
- function, however each time a local minimization takes place this approximation
+ function.
+ However each time a local minimization takes place, this approximation
  is readjusted.
  Subsequently, the sampling for the minimization is done from the approximate
  function and not from the objective one, even taking samples from the approxima
@@ -5749,7 +5998,7 @@ on method is used to train the artificial neural network.
  However, due to the large time and storage requirements of artificial neural
  networks, the RBF network of the original NeuralMinimizer method was replaced
  with an artificial neural network that was trained using the local minimization
- method LBFGS.
+ method L-BFGS.
  The new artificial neural network training technique is tested on a wide
  collection of classification and data fitting problems from the relevant
  literature and is shown to significantly improve the learning error over
@@ -5759,13 +6008,28 @@ on method is used to train the artificial neural network.
 \end_layout
 
 \begin_layout Standard
-However, the proposed procedure can be extremely slow, especially as the
- size of the artificial neural network increases.
+Nevertheless, the proposed procedure can be extremely slow, especially as
+ the size of the artificial neural network increases.
  The size of the artificial neural network directly depends on the dimension
  of the input dataset.
- Future improvements of the methodology could include the use of parallel
- programming techniques in order to accelerate the training of artificial
+ Future improvements to the methodology may include the use of parallel
+ programming techniques, such as parallel implementations of the L-BFGS
+ optimization method, in order to accelerate the training of artificial
  neural networks by taking advantage of modern computing structures.
+ Also, in the present phase as a minimization method in step 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:Optimization-Step."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ of the proposed training method, a local minimization method is used.
+ Future extensions could explore the possibility of also using global minimizati
+on techniques in this step, although care should be taken to make use of
+ parallel computing techniques to avoid long execution times.
 \end_layout
 
 \begin_layout Standard
@@ -6329,6 +6593,157 @@ S.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "nnagr1"
+literal "false"
+
+\end_inset
+
+A.
+ Topuz, Predicting moisture content of agricultural products using artificial
+ neural networks, Advances in Engineering Software 
+\series bold
+41
+\series default
+, pp.
+ 464-470, 2010.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnagr2"
+literal "false"
+
+\end_inset
+
+A.
+ Escamilla-García, G.M.
+ Soto-Zarazúa, M.
+ Toledano-Ayala, E.
+ Rivas-Araiza, A.
+ Gastélum-Barrios, Abraham,Applications of Artificial Neural Networks in
+ Greenhouse Technology and Overview for Smart Agriculture Development, Applied
+ Sciences 
+\series bold
+10
+\series default
+, Article number 3835, 2020.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnfacial"
+literal "false"
+
+\end_inset
+
+H.
+ Boughrara, M.
+ Chtourou, C.
+ Ben Amar et al, Facial expression recognition based on a mlp neural network
+ using constructive training algorithm.
+ Multimed Tools Appl 
+\series bold
+75
+\series default
+, pp.
+ 709–731, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnwind"
+literal "false"
+
+\end_inset
+
+H.
+ Liu, H.Q Tian, Y.F.
+ Li, L.
+ Zhang, Comparison of four Adaboost algorithm based artificial neural networks
+ in wind speed predictions, Energy Conversion and Management 
+\series bold
+92
+\series default
+, pp.
+ 67-81, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nngas"
+literal "false"
+
+\end_inset
+
+J.
+ Szoplik, Forecasting of natural gas consumption with artificial neural
+ networks, Energy 
+\series bold
+85
+\series default
+, pp.
+ 208-220, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnintrusion"
+literal "false"
+
+\end_inset
+
+H.
+ Bahram, N.J.
+ Navimipour, Intrusion detection for cloud computing using neural networks
+ and artificial bee colony optimization algorithm, ICT Express 5, pp.
+ 56-59, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnhydro1"
+literal "false"
+
+\end_inset
+
+Y.S.
+ Chen, F.J.
+ Chang, Evolutionary artificial neural networks for hydrological systems
+ forecasting, Journal of Hydrology 
+\series bold
+367
+\series default
+, pp.
+ 125-137, 2009.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nninvest"
+literal "false"
+
+\end_inset
+
+G.S.
+ Swales, Y.Yoon, Applying Artificial Neural Networks to Investment Analysis,
+ Financial Analysts Journal 
+\series bold
+48
+\series default
+, pp.
+ 78-80, 1992.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "bpnn"
 literal "false"
 
@@ -6696,6 +7111,26 @@ I.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "nnplant"
+literal "false"
+
+\end_inset
+
+Z.
+ Cui , C.
+ Yang, S.
+ Sanyal, Training artificial neural networks using APPM, International Journal
+ of Wireless and Mobile Computing 
+\series bold
+ 5
+\series default
+, pp.
+ 168-174, 2012.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "nnbird"
 literal "false"
 
@@ -6790,6 +7225,45 @@ Based Systems
 \series default
 , pp.
  333-344, 1995.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "weight_init2"
+literal "false"
+
+\end_inset
+
+J.Y.F.
+ Yam, T.W.S.
+ Chow, A weight initialization method for improving training speed in feedforwar
+d neural network, Neurocomputing 
+\series bold
+30
+\series default
+, pp.
+ 219-232, 2000.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "weight_init3"
+literal "false"
+
+\end_inset
+
+K.
+ Chumachenko, A.
+ Iosifidis, M.
+ Gabbouj, Feedforward neural networks initialization based on discriminant
+ learning, Neural Networks 
+\series bold
+146
+\series default
+, pp.
+ 220-229, 2022.
 \end_layout
 
 \begin_layout Bibliography
@@ -7009,6 +7483,200 @@ A.A.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "nnsharing1"
+literal "true"
+
+\end_inset
+
+S.J.
+ Nowlan and G.E.
+ Hinton, Simplifying neural networks by soft weight sharing, Neural Computation
+ 4, pp.
+ 473-493, 1992.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnsharing2"
+literal "false"
+
+\end_inset
+
+J.K.
+ Kim, M.Y.
+ Lee, J.Y.
+ Kim, B.
+ J.
+ Kim, J.
+ H.
+ Lee, An efficient pruning and weight sharing method for neural network,
+ In: 2016 IEEE International Conference on Consumer Electronics-Asia (ICCE-Asia)
+, Seoul, Korea (South), pp.
+ 1-2, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnprunning1"
+literal "true"
+
+\end_inset
+
+S.J.
+ Hanson and L.Y.
+ Pratt, Comparing biases for minimal network construction with back propagation,
+ In D.S.
+ Touretzky (Ed.), Advances in Neural Information Processing Systems, Volume
+ 1, pp.
+ 177-185, San Mateo, CA: Morgan Kaufmann, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnprunning2"
+literal "true"
+
+\end_inset
+
+M.C.
+ Mozer and P.
+ Smolensky, Skeletonization: a technique for trimming the fat from a network
+ via relevance assesment.
+ In D.S.
+ Touretzky (Ed.), Advances in Neural Processing Systems, Volume 1, pp.
+ 107-115, San Mateo CA: Morgan Kaufmann, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnprunning3"
+literal "false"
+
+\end_inset
+
+M.
+ Augasta and T.
+ Kathirvalavakumar, Pruning algorithms of neural networks — a comparative
+ study, Central European Journal of Computer Science, 2003.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nndrop1"
+literal "false"
+
+\end_inset
+
+Nitish Srivastava, G E Hinton, Alex Krizhevsky, Ilya Sutskever, Ruslan R
+ Salakhutdinov, Dropout: a simple way to prevent neural networks from overfittin
+g, Journal of Machine Learning Research 
+\series bold
+15
+\series default
+, pp.
+ 1929-1958, 2014.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nndrop2"
+literal "false"
+
+\end_inset
+
+A.
+ Iosifidis, A.
+ Tefas, I.
+ Pitas, DropELM: Fast neural network regularization with Dropout and DropConnect
+, Neurocomputing 
+\series bold
+162
+\series default
+, pp.
+ 57-66, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nndecay1"
+literal "false"
+
+\end_inset
+
+A.
+ Gupta, S.M.
+ Lam, Weight decay backpropagation for noisy data, Neural Networks 
+\series bold
+11
+\series default
+, pp.
+ 1127-1138, 1998.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nndecay2"
+literal "false"
+
+\end_inset
+
+M.
+ Carvalho and T.
+ B.
+ Ludermir, Particle Swarm Optimization of Feed-Forward Neural Networks with
+ Weight Decay, 2006 Sixth International Conference on Hybrid Intelligent
+ Systems (HIS'06), Rio de Janeiro, Brazil, 2006, pp.
+ 5-5.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "sarprop"
+literal "false"
+
+\end_inset
+
+N.K.
+ Treadgold, T.D.
+ Gedeon, Simulated annealing and weight decay in adaptive learning: the
+ SARPROP algorithm, IEEE Trans.
+ on Neural Networks 9, pp.
+ 662-668, 1998.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "nnpositive"
+literal "true"
+
+\end_inset
+
+M.D.
+ Shahjahan, M.
+ Kazuyuki, Neural network training algorithm with possitive correlation,
+ IEEE Trans.
+ Inf & Syst.
+ 
+\series bold
+88
+\series default
+, pp.
+ 2399-2409, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "nmin"
 literal "false"
 
@@ -7140,6 +7808,156 @@ l Programming B.
 \series default
 , pp.
  503–528, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "bfgs2"
+literal "false"
+
+\end_inset
+
+R.
+ Fletcher, A new approach to variable metric algorithms, Computer Journal
+ 13, pp.
+ 317-322, 1970.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "lbfgs_image"
+literal "false"
+
+\end_inset
+
+H.
+ Wang, H.
+ Gemmeke, T.
+ Hopp, J.
+ Hesser, Accelerating image reconstruction in ultrasound transmission tomography
+ using L-BFGS algorithm, In: Medical Imaging 2019: Ultrasonic Imaging and
+ Tomography; 109550B (2019) https://doi.org/10.1117/12.2512654 Event: SPIE
+ Medical Imaging, 2019, San Diego, California, United States.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "lbfgs_inverse"
+literal "false"
+
+\end_inset
+
+Z.
+ Dalvand, M.
+ Hajarian, Solving generalized inverse eigenvalue problems via L-BFGS-B
+ method, Inverse Problems in Science and Engineering 
+\series bold
+28
+\series default
+, pp.
+ 1719-1746, 2020.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "lbfgs_seismic"
+literal "false"
+
+\end_inset
+
+Y.
+ Rao, Y.
+ Wang, Seismic waveform tomography with shot-encoding using a restarted
+ L-BFGS algorithm, Scientific Reports 
+\series bold
+7
+\series default
+, pp.
+ 1-9, 2017.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "lbfgs_par1"
+literal "false"
+
+\end_inset
+
+Y.
+ Fei, G.
+ Rong, B.
+ Wang, W.
+ Wang, Parallel L-BFGS-B algorithm on GPU, Computers & Graphics 
+\series bold
+40
+\series default
+, pp.
+ 1-9, 2014.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "lbfgs_par2"
+literal "false"
+
+\end_inset
+
+L.
+ D'Amore, G.
+ Laccetti, D.
+ Romano, G.
+ Scotti, A.
+ Murli, Towards a parallel component in a GPU–CUDA environment: a case study
+ with the L-BFGS Harwell routine, International Journal of Computer Mathematics
+ 
+\series bold
+92
+\series default
+, pp.
+ 59-76, 2015.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "lbfgs_par3"
+literal "false"
+
+\end_inset
+
+M.M.
+ Najafabadi, T.M.
+ Khoshgoftaar, F.
+ Villanustre et al, Large-scale distributed L-BFGS, J Big Data 
+\series bold
+4
+\series default
+, 22, 2017.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "lbfgs_study"
+literal "false"
+
+\end_inset
+
+J.L.
+ Morales, A numerical study of limited memory BFGS methods, Applied Mathematics
+ Letters 
+\series bold
+15
+\series default
+, pp.
+ 481-487, 2002.
 \end_layout
 
 \begin_layout Bibliography
