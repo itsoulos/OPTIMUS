@@ -1,4 +1,4 @@
-METHOD=NeuralMinimizer
+METHOD=ParallelGenetic
 METHODPARAMS=""
 ### Available local search methods: bfgs, gradient, adam, lbfgs
 if [ $METHOD = "Minfinder" ]
@@ -37,7 +37,7 @@ then
 	METHODPARAMS="--parallelPsoParticles=40 --subCluster=5 --subClusterEnable=1 --pNumber=1 --parallelPropagateMethod=Nto1 --similarityMaxCount=15"
 elif [ $METHOD = "ParallelGenetic" ]
 then
-	METHODPARAMS="--pargen_count=40 --pargen_islands=5 --pargen_migratecount=1 --pargen_migrationmethod=1to1 --pargen_termination=one --pargen_termmethod=similarity --pargen_debug=no"
+	METHODPARAMS="--pargen_count=400 --pargen_islands=1 --pargen_migratecount=1 --pargen_migrationmethod=1to1 --pargen_termination=one --pargen_termmethod=doublebox --pargen_debug=no --pargen_gradientcriterion=yes"
 elif [ $METHOD = "NeuralMinimizer" ]
 then
 	METHODPARAMS="--neural_model=neural --neural_trainmethod=lbfgs"

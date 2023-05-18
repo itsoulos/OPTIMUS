@@ -16,6 +16,7 @@ ParallelGenetic::ParallelGenetic(Problem *p)
     addParameter("pargen_termmethod","doublebox","The termination method.");
     addParameter("pargen_similaritycount","5","The number of generations for similarity stopping rule");
     addParameter("pargen_debug","yes","Display pargen messages");
+    addParameter("pargen_gradientcriterion","no","If it is yes, then the gradient criterion will be used");
 }
 
 void    ParallelGenetic::calcFitnessArray(int islandIndex)
@@ -26,7 +27,18 @@ void    ParallelGenetic::calcFitnessArray(int islandIndex)
   {
 	  double r = myProblem->randomDouble();
 	  if(r<0.01)
+      {
+          if(pargen_gradientcriterion)
+          {
+              bool t = checkForGradientCriterion(islandIndex,chromosome[i]);
+              if(t)
+                 fitnessArray[i]=myProblem->funmin(chromosome[i]);
+              else
+                 fitnessArray[i]=localSearch(chromosome[i]);
+          }
+          else
 		  fitnessArray[i]=localSearch(chromosome[i]);
+      }
 	  else
     	fitnessArray[i]=myProblem->funmin(chromosome[i]);
   }
@@ -297,9 +309,20 @@ void ParallelGenetic::init()
     pargen_termmethod=params["pargen_termmethod"].toString();
     pargen_similaritycount=params["pargen_similaritycount"].toString().toInt();
     pargen_debug=params["pargen_debug"].toString();
+    pargen_gradientcriterion=params["pargen_gradientcriterion"].toString()=="yes"?true:false;
 
-    printf("migrate is %d \n",pargen_migratecount);
-    printf("migration %s \n",pargen_migrationmethod.toStdString().c_str());
+    if(pargen_gradientcriterion)
+    {
+        localSearchCount.resize(pargen_islands);
+        RC.resize(pargen_islands);
+        minimax.resize(pargen_islands);
+        for(int i=0;i<pargen_islands;i++)
+        {
+            RC[i]=0.0;
+            localSearchCount[i]=0;
+        }
+    }
+
     chromosome.resize(pargen_count * pargen_islands);
     children.resize(pargen_count * pargen_islands);
     fitnessArray.resize(chromosome.size());
@@ -463,7 +486,27 @@ void ParallelGenetic::done()
 
 }
 
-
+bool  ParallelGenetic::checkForGradientCriterion(int islandIndex,Data &x)
+{
+    double eps=1e-6;
+    double dmin=1e+100;
+    int imin=0;
+    if(minimax[islandIndex].size()==0) return false;
+    dmin=getDistance(minimax[islandIndex][0],x);
+    for(int j=0;j<(int)minimax[islandIndex].size();j++)
+    {
+        double d=getDistance(minimax[islandIndex][j],x);
+        if(d<dmin)
+        {
+            imin=j;
+            dmin=d;
+        }
+    }
+    if(dmin<eps || (dmin<RC[islandIndex]/localSearchCount[islandIndex]
+                    && myProblem->getGradientCriterion(x,minimax[islandIndex][imin])))
+        return true;
+    return false;
+}
 
 ParallelGenetic::~ParallelGenetic()
 {

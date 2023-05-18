@@ -47,6 +47,7 @@ public:
  * 12. pargen_termmethod,  Available values: doublebox, similarity
  * 13. pargen_similaritycount, Number of generations for similarity check
  * 14. pargen_debug, If it is yes the messages will be appear.
+ * 15. pargen_gradientcriterion, If it is yes, then the gradient criterion will be used.
  */
 class PARALLELGENETIC_EXPORT ParallelGenetic: public
                    Optimizer, ParallelGeneticInterface
@@ -62,6 +63,7 @@ private:
     int pargen_migratecount;
     int pargen_tournamentsize;//the size of the tournament
     int pargen_migrategeneration;
+    bool pargen_gradientcriterion;
     QString pargen_termination;
     QString pargen_migrationmethod;
     QString pargen_termmethod;
@@ -74,7 +76,9 @@ private:
     int         generation;
     Data        lmargin,rmargin;
     int         islands;
-
+    vector<Matrix>      minimax;
+    vector<double>       RC;
+    vector<int>          localSearchCount;
 
     //for termination rule doublebox
     Data xx1,xx2,stopat,variance,oldBesty;
@@ -101,6 +105,7 @@ private:
     bool    updateMasterTerminationRule();
     int     getBestIndex();
     void    migrateFromIslandtoIsland(int from,int to);
+    bool  checkForGradientCriterion(int islandIndex,Data &x);
     virtual bool terminated();
     virtual void step();
     virtual void init();
