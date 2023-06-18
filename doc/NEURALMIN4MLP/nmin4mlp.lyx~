@@ -254,10 +254,9 @@ Perhaps one of the best-known machine learning models is that of artificial
  Medicine, etc.
  Such problems can be reduced to pattern recognition problems and then modeled
  from artificial neural networks, whether these problems are classification
- problems or data fitting problems.
- To achieve the goal of neural networks, their parameters should be adjusted
- appropriately and this process is often achieved by using global optimization
- methods.
+ problems or regression problems.
+ To achieve the goal of neural networks, they must be trained by appropriately
+ adjusting their parameters using some global optimization methods.
  In this work, the application of a recent global minimization technique
  is suggested for the adjustment of neural network parameters.
  In this technique, an approximation of the objective function to be minimized
@@ -1093,7 +1092,8 @@ literal "false"
 \end_inset
 
 .
- The L-BFGS method is variation of BFGS method 
+ The L-BFGS method is variation of Broyden–Fletcher–Goldfarb–Shanno (BFGS)
+ method 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "bfgs2"
@@ -1273,7 +1273,7 @@ Set
 
  as the global minimum discovered by the method.
  Initially 
-\begin_inset Formula $y^{*}=\infty,w^{*}=\left(0,0,\ldots,0\right)$
+\begin_inset Formula $y^{*}=\infty,\ w^{*}=\left(0,0,\ldots,0\right)$
 \end_inset
 
 
@@ -1660,12 +1660,20 @@ status open
 
 \begin_layout Plain Layout
 
-https://archive.ics.uci.edu/ml/index.php
+https://archive.ics.uci.edu/
 \end_layout
 
 \end_inset
 
 (accessed on 17 June 2023)
+\begin_inset CommandInset citation
+LatexCommand citep
+key "uci"
+literal "false"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Enumerate
@@ -2320,6 +2328,10 @@ Treasure
 Wankara
 \series default
  dataset, a weather dataset.
+\end_layout
+
+\begin_layout Subsection
+Experimental setup
 \end_layout
 
 \begin_layout Subsection
@@ -5952,10 +5964,10 @@ The experimental results and their graphical representation demonstrate
  method after the proposed one is the genetic algorithm and on average,
  the proposed technique achieves lower classification error than the genetic
  algorithm error by 24%.
- Moreover, in data fitting problems, the next most effective method after
+ Moreover, in regression problems, the next most effective method after
  the proposed one is the RBF neural network with small differences from
  the ADAM optimizer.
- However, in the case of data fitting problems the improvement in average
+ However, in the case of regression problems the improvement in average
  error by using the proposed technique exceeds 49%.
  Of course, the proposed technique is quite time-consuming since it requires
  continuous training of an artificial neural network.
@@ -5977,7 +5989,7 @@ name "sec:Conclusions"
 In this work, the application of a recent global minimization method for
  the training of artificial neural networks was proposed.
  The application of this method was used in artificial neural networks both
- for classification problems and for data fitting problems.
+ for classification problems and for regression problems.
  This new global minimization method constructs an approximation of the
  objective function using neural networks.
  This construction is done with a limited number of samples from the objective
@@ -5995,11 +6007,11 @@ on method is used to train the artificial neural network.
  with an artificial neural network that was trained using the local minimization
  method L-BFGS.
  The new artificial neural network training technique is tested on a wide
- collection of classification and data fitting problems from the relevant
+ collection of classification and regression problems from the relevant
  literature and is shown to significantly improve the learning error over
  other established artificial neural network training techniques.
  This improvement is 25% on average for the case of classification problems
- and rises significantly to 50% for data fitting problems.
+ and rises significantly to 50% for regression problems.
 \end_layout
 
 \begin_layout Standard
@@ -7971,6 +7983,20 @@ I.G.
 \series default
 , pp.
  598-607, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "uci"
+literal "false"
+
+\end_inset
+
+M.
+ Kelly, R.
+ Longjohn, K.
+ Nottingham, The UCI Machine Learning Repository, https://archive.ics.uci.edu.
 \end_layout
 
 \begin_layout Bibliography
