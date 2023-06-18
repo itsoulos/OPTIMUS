@@ -204,11 +204,13 @@ End
 \begin_body
 
 \begin_layout Title
-Training neural networks using neural networks
+Training artificial neural networks using a global optimization method that
+ utilizes neural networks
 \end_layout
 
 \begin_layout Title Citation
-Training neural networks using neural networks
+Training artificial neural networks using a global optimization method that
+ utilizes neural networks
 \end_layout
 
 \begin_layout Author
@@ -246,9 +248,10 @@ Correspondence: itsoulos@uoi.gr;
 \end_layout
 
 \begin_layout Abstract
-Artificial neural networks are parametric machine learning models, which
- have been used in recent decades in a number of practical problems in various
- scientific fields, such as Physics, Chemistry, Medicine, etc.
+Perhaps one of the best-known machine learning models is that of artificial
+ neural networks, where a number of parameters must be adjusted to learn
+ a wide range of practical problems from areas such as as Physics, Chemistry,
+ Medicine, etc.
  Such problems can be reduced to pattern recognition problems and then modeled
  from artificial neural networks, whether these problems are classification
  problems or data fitting problems.
@@ -256,16 +259,15 @@ Artificial neural networks are parametric machine learning models, which
  appropriately and this process is often achieved by using global optimization
  methods.
  In this work, the application of a recent global minimization technique
- is proposed for the adjustment of neural network parameters.
+ is suggested for the adjustment of neural network parameters.
  In this technique, an approximation of the objective function to be minimized
  is created using artificial neural networks and then sampling is done from
  the approximation function and not the original one.
  Therefore, in the present work, learning of the parameters of artificial
  neural networks is done using other neural networks.
- The new training method was tested on a series of well-known problems from
- the relevant literature and a comparative study was made against other
- neural network parameter tuning techniques and the results were more than
- promising.
+ The new training method was tested on a series of well-known problems and
+ a comparative study was made against other neural network parameter tuning
+ techniques and the results were more than promising.
 \end_layout
 
 \begin_layout Keywords
@@ -277,8 +279,7 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Artificial Neural networks (ANNs) are parametric machine learning models
- 
+Artificial Neural Networks (ANNs) are parametric models 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "nn1,nn2,nnreview"
@@ -286,8 +287,9 @@ literal "true"
 
 \end_inset
 
- widely used in pattern recognition problems.
- Many practical problems from the fields of physics 
+ appeared in machine learning and they are widely used in pattern recognition
+ problems.
+ A series of practical problems from the fields of physics 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "nnphysics1,nnphysics2,nnphysics3"
@@ -473,7 +475,7 @@ In the previous equation, that will be called training error, the set
 \end_inset
 
  .
- The equation 
+ The Equation 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:eq1"
@@ -484,8 +486,7 @@ noprefix "false"
 \end_inset
 
  can be minimized with respect to the weight vector using any local or global
- optimization method from the relevant literature such as the Back Propagation
- method 
+ optimization method as the Back Propagation method 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "bpnn,bpnn2"
@@ -618,9 +619,9 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-In addition to the training of artificial neural networks, many researchers
- also employ techniques for initializing the parameters of neural networks,
- such as the incorporation of decision trees 
+In addition, many researchers have addressed the issue of initial values
+ for the weights of neural networks, such as the incorporation of decision
+ trees 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "nninit1"
@@ -653,8 +654,8 @@ literal "false"
 \end_inset
 
  etc.
- A systematic review of weight initialization strategies can be found in
- the paper by Narkhede et al 
+ A paper discussing all the aspects of weight initialization strategies
+ can be found is proposed by by Narkhede et al 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "nninitreview"
@@ -717,7 +718,7 @@ literal "false"
 \end_inset
 
  etc.
- In addition, since the training of artificial neural networks by optimization
+ Also, since the training of artificial neural networks by optimization
  methods requires significantly larger computing time, parallel techniques
  have been developed that take advantage of modern parallel computing units
 \begin_inset CommandInset citation
@@ -774,7 +775,7 @@ literal "false"
 
 \end_inset
 
-, the Sarporp method 
+, the Sarprop method 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "sarprop"
@@ -803,8 +804,8 @@ literal "false"
 
 \end_inset
 
- called NeuralMinimizer, is proposed to find the optimal set of parameters
- for artificial neural networks.
+ called NeuralMinimizer, is proposed to find the optimal set for the weights
+ of artificial neural networks.
  This innovative global minimization technique constructs an approximation
  of the objective function to be minimized using a limited number of its
  samples.
@@ -822,8 +823,8 @@ literal "false"
  to discover the global minimum.
  Therefore, this paper proposes using artificial neural networks to train
  other artificial neural networks.
- This new procedure will be tested on a series of known problems in the
- relevant literature, in order to evaluate its effectiveness.
+ This new procedure will be tested on a series of known problems, in order
+ to evaluate its effectiveness.
 \end_layout
 
 \begin_layout Standard
@@ -883,12 +884,12 @@ Preliminaries
 \end_layout
 
 \begin_layout Standard
-Let us consider that we have an artificial neural network with a processing
- layer, in which the sigmoid function is used as an activation function.
+Let us consider that we have an artificial neural network with just one
+ hidden layer, in which the sigmoid function is used as an activation function.
  The output value for every node in this layer is calculated as:
 \begin_inset Formula 
 \begin{equation}
-o_{i}(x)=\sigma\left(p_{i}^{T}x+\theta_{i}\right),\label{eq:eq1-1}
+o_{i}(x)=\sigma\left(p_{i}x+\theta_{i}\right),\label{eq:eq1-1}
 \end{equation}
 
 \end_inset
@@ -1011,7 +1012,7 @@ where
 \end_inset
 
 .
- From the equation 
+ From the Equation 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:nn"
@@ -1021,11 +1022,7 @@ noprefix "false"
 
 \end_inset
 
- we can conclude that the dimension of the weight vector 
-\begin_inset Formula $w$
-\end_inset
-
- is calculated as:
+ we can conclude that number of elements in the weight vector have as:
 \begin_inset Formula 
 \begin{equation}
 d_{w}=(d+2)H\label{eq:wdimension}
@@ -1051,8 +1048,8 @@ literal "false"
 \end_inset
 
  to build a model of the objective function.
- Even though RBF networks have been used with success in a variety of problems
- 
+ Even though Radial Basis Function (RBF) networks have been used with success
+ in a variety of problems 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "rbfde1,rbfde2,rbfnetwork1,rbfnetwork2"
@@ -1074,7 +1071,7 @@ noprefix "false"
 
 .
  Hence, in current work, the RBF network has been replaced by an artificial
- neural network that implements the equation 
+ neural network that implements the Equation 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:nn"
@@ -1184,7 +1181,7 @@ Set
 
  
 \series default
-the number of weights used in the neural network.
+the number of weights of the neural network.
  In the current method the same number of weights was used for both 
 \begin_inset Formula $N(x,w)$
 \end_inset
@@ -1205,7 +1202,7 @@ Set
 \begin_inset Formula $N_{S}$
 \end_inset
 
- as the initial samples drawn from 
+ as the samples that will be initially drawn from 
 \begin_inset Formula $N(x,w)$
 \end_inset
 
@@ -1223,8 +1220,8 @@ Set
 \begin_inset Formula $N_{T}$
 \end_inset
 
- as the the number of points that will be used as local minimization method
- starters in every iteration.
+ as the the number of points that will be utilized as local minimization
+ method starters in every iteration.
  
 \end_layout
 
@@ -1237,7 +1234,7 @@ Set
 \begin_inset Formula $N_{R}$
 \end_inset
 
- the number of samples that will be taken from the 
+ the number of samples that will be drawn from the 
 \begin_inset Formula $N_{N}(x,w)$
 \end_inset
 
@@ -1254,7 +1251,7 @@ Set
 \begin_inset Formula $N_{G}$
 \end_inset
 
- as the number of iterations allowed.
+ as the maximum number of iterations allowed.
 \end_layout
 
 \begin_layout Enumerate
@@ -1276,7 +1273,7 @@ Set
 
  as the global minimum discovered by the method.
  Initially 
-\begin_inset Formula $y^{*}=\infty$
+\begin_inset Formula $y^{*}=\infty,w^{*}=\left(0,0,\ldots,0\right)$
 \end_inset
 
 
@@ -1301,7 +1298,7 @@ Set
 \begin_inset Formula $T=\emptyset$
 \end_inset
 
-, the training set for the 
+, the used training set for the 
 \begin_inset Formula $N_{N}(x,w)$
 \end_inset
 
@@ -1346,7 +1343,7 @@ Calculate
 \begin_inset Formula $y_{i}=f\left(w_{i}\right)$
 \end_inset
 
- using equation 
+ using Equation 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:eq1"
@@ -1429,9 +1426,9 @@ do
 \begin_layout Enumerate
 
 \series bold
-Get
+Produce randomly
 \series default
- a new random sample 
+ a sample 
 \begin_inset Formula $\left(w_{i},y_{i}\right)$
 \end_inset
 
@@ -1470,7 +1467,7 @@ Sort
 \begin_inset Formula $T_{R}$
 \end_inset
 
- in ascending order according to the values 
+ in ascending with respect to the values 
 \begin_inset Formula $y_{i}$
 \end_inset
 
@@ -1512,7 +1509,7 @@ For
 \series bold
 Get
 \series default
- the sample 
+ the next item 
 \begin_inset Formula $\left(w_{i},y_{i}\right)$
 \end_inset
 
@@ -1604,7 +1601,7 @@ literal "false"
 
 \end_inset
 
- then apply the neural network 
+ then apply the produced network 
 \begin_inset Formula $N\left(w^{*},x\right)$
 \end_inset
 
@@ -1668,7 +1665,7 @@ https://archive.ics.uci.edu/ml/index.php
 
 \end_inset
 
-
+(accessed on 17 June 2023)
 \end_layout
 
 \begin_layout Enumerate
@@ -1683,7 +1680,7 @@ https://sci2s.ugr.es/keel/datasets.php
 
 \end_inset
 
-
+(accessed on 17 June 2023)
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Keel"
@@ -1710,7 +1707,7 @@ ftp://lib.stat.cmu.edu/datasets/index.html
 
 
 \series default
-.
+(accessed on 17 June 2023).
  This repository is used mainly for the regression datasets.
 \end_layout
 
@@ -1726,9 +1723,9 @@ The following classification datasets from the relevant literature were
 \begin_layout Enumerate
 
 \series bold
-Appendictis
+Appendictis, 
 \series default
- which is a medical dataset found in 
+a dataset used for medical purposes and it was found in 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "appendicitis,appendicitis2"
@@ -1753,7 +1750,7 @@ literal "false"
 
 \end_inset
 
-, which is related to economical transactions in banks.
+, an economic dataset, related to bank transactions.
 \end_layout
 
 \begin_layout Enumerate
@@ -1777,7 +1774,7 @@ literal "false"
 \series bold
 Cleveland
 \series default
- dataset, a medical dataset, used in a variety of research papers
+ dataset, a medical dataset found in the following research papers
 \begin_inset CommandInset citation
 LatexCommand cite
 key "cleveland1,cleveland2"
@@ -1793,7 +1790,7 @@ literal "false"
 \series bold
 Bands
 \series default
- dataset, a dataset related to printing problems 
+ dataset, related to printing problems 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "bands"
@@ -1947,7 +1944,7 @@ literal "false"
 
 \end_inset
 
-, related to documents.
+.
 \end_layout
 
 \begin_layout Enumerate
@@ -1963,7 +1960,7 @@ literal "false"
 
 \end_inset
 
-, a dataset related to Parkinson's decease.
+, a medical dataset applied to the Parkinson's decease.
 \end_layout
 
 \begin_layout Enumerate
@@ -2125,7 +2122,7 @@ literal "false"
 
 \end_inset
 
-, suggested for classification of animals into seven categories.
+, suggested for to detect to propert class of animals.
 \end_layout
 
 \begin_layout Standard
@@ -2169,8 +2166,7 @@ literal "false"
 \series bold
 Baseball
 \series default
- dataset, a dataset used to predict the amount of salary for some baseball
- players.
+ dataset, a dataset used to baseball games.
 \end_layout
 
 \begin_layout Enumerate
@@ -2219,8 +2215,7 @@ literal "false"
 \series bold
 Dee
 \series default
- dataset, used to estimate the daily average price of TkWhe electricity
- energy in Spain.
+ dataset, used to detecte the electricity energy prices.
 \end_layout
 
 \begin_layout Enumerate
@@ -2314,8 +2309,8 @@ Quake
 \series bold
 Treasure
 \series default
- dataset, which contains Economic data information of USA, where the the
- goal is to predict 1-Month CD Rate.
+ dataset, which contains Economic data information of USA, where the goal
+ is to predict 1-Month CD Rate.
  
 \end_layout
 
@@ -2332,9 +2327,9 @@ Experimental results
 \end_layout
 
 \begin_layout Standard
-The proposed method was compared against five other approaches found in
- the relevant literature on the previous mentioned classification and regression
- datasets.
+The proposed method was tested on the regression and classification problems
+ mentioned previously, and it was compared against the results of several
+ other well - known approaches of the the relevant literature.
  For greater reliability of the experimental results, the 10 - fold validation
  technique was employed for every classification or regression dataset.
  Every experiment was executed 30 times, with different initialization for
@@ -2393,7 +2388,7 @@ literal "false"
 \begin_inset Formula $H$
 \end_inset
 
- weights.
+ hidden nodes.
 \end_layout
 
 \begin_layout Enumerate
@@ -2462,7 +2457,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -5909,7 +5904,7 @@ name "fig:averageClass"
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
@@ -6008,12 +6003,12 @@ on method is used to train the artificial neural network.
 \end_layout
 
 \begin_layout Standard
-Neverthless, the proposed procedure can be extremely slow, especially as
+Nevertheless, the proposed procedure can be extremely slow, especially as
  the size of the artificial neural network increases.
  The size of the artificial neural network directly depends on the dimension
  of the input dataset.
  Future improvements to the methodology may include the use of parallel
- programming techniques, such as paralell implementations of the L-BFGS
+ programming techniques, such as parallel implementations of the L-BFGS
  optimization method, in order to accelerate the training of artificial
  neural networks by taking advantage of modern computing structures.
  Also, in the present phase as a minimization method in step 
