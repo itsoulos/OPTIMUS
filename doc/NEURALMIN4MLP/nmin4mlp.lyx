@@ -477,7 +477,7 @@ E\left(N\left(\overrightarrow{x},\overrightarrow{w}\right)\right)=\sum_{i=1}^{M}
 
 \end_inset
 
-In the previous equation, that will be called training error, the set 
+In the previous equation, what will be called training error, the set 
 \begin_inset Formula $\left(\overrightarrow{x_{i}},y_{i}\right),\ i=1,...,M$
 \end_inset
 
@@ -675,7 +675,7 @@ literal "false"
 
  etc.
  A paper discussing all the aspects of weight initialization strategies
- can be found is proposed by Narkhede et al 
+ is proposed by Narkhede et al 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "nninitreview"
@@ -748,8 +748,6 @@ literal "false"
 
 \end_inset
 
-
-\series bold
 .
 \end_layout
 
@@ -760,7 +758,7 @@ Another field of research in the field of artificial neural networks that
  In this problem, although the artificial neural network has achieved a
  satisfactory level of training, this is not reflected in unknown patterns
  that were not present during training.
- This set of patterns will be called test set in the remaining of this work.
+ This set of patterns will be called as test set in the following.
  Commonly used methods that tackle the overfitting problem are weight sharing
  
 \begin_inset CommandInset citation
@@ -847,7 +845,7 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-The rest of this article is organized as follows: the section 
+The rest of this article is organized as follows: section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:The-proposed-method"
@@ -857,7 +855,7 @@ noprefix "false"
 
 \end_inset
 
- described the proposed method, the section 
+ describes the proposed method, section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Experiments"
@@ -867,8 +865,8 @@ noprefix "false"
 
 \end_inset
 
- list the experimental datasets and the results obtained by the incorporation
- of various methods and finally the section 
+ lists the experimental datasets and the results obtained by the incorporation
+ of various methods and finally section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Conclusions"
@@ -1198,6 +1196,15 @@ literal "false"
  since an artificial neural network usually has a large number of parameters
  and this would require an extremely large storage space for training the
  global minimization method's RBF neural network.
+ Of course, in some cases of small artificial neural network, an RBF neural
+ network could be used as the training model in the global optimization
+ method NeuralMinimizer.
+ However, when an artificial neural network is used to approach large and
+ complex problems (something extremely common) then a relatively under powered
+ RBF neural network should be used.
+ In those cases, the RBF network will not be able to be an efficient approximati
+on of the artificial neural network, which is, of course, the original aim
+ of the NeuralMinimizer method.
 \end_layout
 
 \begin_layout Standard
@@ -1481,7 +1488,7 @@ Produce randomly
 \end_inset
 
  from 
-\begin_inset Formula $N_{N}(w,x)$
+\begin_inset Formula $N_{N}(x,w)$
 \end_inset
 
  neural network
@@ -1574,7 +1581,7 @@ Get
 Train
 \series default
  the neural network 
-\begin_inset Formula $N\left(w_{i},x\right)$
+\begin_inset Formula $N\left(x,w_{i}\right)$
 \end_inset
 
  on the train set of the objective problem, using the L-BFGS method and
@@ -1603,7 +1610,7 @@ Update
 Train
 \series default
  again the network 
-\begin_inset Formula $N_{N}(w,x)$
+\begin_inset Formula $N_{N}(x,w)$
 \end_inset
 
  on the modified set 
@@ -1650,7 +1657,7 @@ literal "false"
 \end_inset
 
  then apply the produced network 
-\begin_inset Formula $N\left(w^{*},x\right)$
+\begin_inset Formula $N\left(x,w^{*}\right)$
 \end_inset
 
  on the test set of the objective problem, report the test error and 
@@ -1756,11 +1763,11 @@ name "sec:Experiments"
 \end_layout
 
 \begin_layout Standard
-The efficiency of the proposed artificial neural network training technique
+The effectiveness of the proposed artificial neural network training technique
  was evaluated using a series of data sets from the relevant literature.
  These datasets have been studied by various researchers in the relevant
  literature and cover a wide range of research areas from Physics to Economics.
- These datasets are are freely available from the following websites:
+ These datasets are freely available from the following websites:
 \end_layout
 
 \begin_layout Enumerate
@@ -1775,7 +1782,7 @@ https://archive.ics.uci.edu/
 
 \end_inset
 
-(accessed on 17 June 2023)
+(accessed on 12 July 2023)
 \begin_inset CommandInset citation
 LatexCommand citep
 key "uci"
@@ -1841,7 +1848,7 @@ The following classification datasets from the relevant literature were
 \begin_layout Enumerate
 
 \series bold
-Appendictis, 
+Appendicitis, 
 \series default
 a dataset used for medical purposes and it was found in 
 \begin_inset CommandInset citation
@@ -2320,7 +2327,7 @@ CLASSES
 \begin_inset Text
 
 \begin_layout Plain Layout
-Appendictis
+Appendicitis
 \end_layout
 
 \end_inset
@@ -3051,7 +3058,7 @@ Experimental setup
 \begin_layout Standard
 The proposed method was tested on the regression and classification problems
  mentioned previously, and it was compared against the results of several
- other well - known approaches of the relevant literature.
+ other well - known optimization methods in the relevant literature.
  For greater reliability of the experimental results, the 10 - fold validation
  technique was employed for every classification or regression dataset.
  Every experiment was executed 30 times, with different initialization for
@@ -3086,7 +3093,7 @@ https://github.com/itsoulos/OPTIMUS/
 \end_layout
 
 \begin_layout Enumerate
-A genetic algorithm with 200 chromosomes used to train a neural network
+A genetic algorithm with 200 chromosomes is used to train a neural network
  with 
 \begin_inset Formula $H$
 \end_inset
@@ -3106,7 +3113,7 @@ literal "false"
 
 \end_inset
 
- having 
+ with 
 \begin_inset Formula $H$
 \end_inset
 
@@ -3140,7 +3147,7 @@ literal "false"
 
 \end_inset
 
- was employed also to train a neural network with 
+ was also employed to train a neural network with 
 \begin_inset Formula $H$
 \end_inset
 
@@ -3445,9 +3452,7 @@ noprefix "false"
 \end_inset
 
  hidden nodes.
- In both tables, the last row (denoted as AVERAGE) represents the mean error
- for each method.
- Also, the figure 
+ Also, the Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:ScatterClass"
@@ -3459,7 +3464,7 @@ noprefix "false"
 
  shows a scatter plot and the Wilcoxon signed-rank test for the classification
  datasets.
- In the same direction, the figure 
+ In the same direction, Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:ScatterRegression"
@@ -3503,7 +3508,7 @@ name "tab:tabClass"
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="28" columns="7">
+<lyxtabular version="3" rows="27" columns="7">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -5203,7 +5208,7 @@ ZONF_S
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -5212,7 +5217,7 @@ ZOO
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -5221,7 +5226,7 @@ ZOO
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -5230,7 +5235,7 @@ ZOO
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -5239,7 +5244,7 @@ ZOO
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -5248,7 +5253,7 @@ ZOO
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -5257,90 +5262,11 @@ ZOO
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-4.20%
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\series bold
-AVERAGE
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\series bold
-23.47%
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\series bold
-27.69%
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\series bold
-30.81%
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\series bold
-25.37%
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\series bold
-28.87%
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-17.63%
+4.20%
 \end_layout
 
 \end_inset
@@ -5385,7 +5311,7 @@ name "tab:exp2"
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="18" columns="7">
+<lyxtabular version="3" rows="17" columns="7">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -6435,7 +6361,7 @@ TREASURY
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -6444,7 +6370,7 @@ WANKARA
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -6453,7 +6379,7 @@ WANKARA
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -6462,7 +6388,7 @@ WANKARA
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -6471,7 +6397,7 @@ WANKARA
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -6480,7 +6406,7 @@ WANKARA
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -6489,90 +6415,11 @@ WANKARA
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.002
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\series bold
-AVERAGE
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\series bold
-18.55
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\series bold
-10.30
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\series bold
-11.70
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\series bold
-12.44
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\series bold
-12.70
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-5.49
+0.002
 \end_layout
 
 \end_inset
@@ -6608,12 +6455,16 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Scatter plot representation and the Wilcoxon signed-rank test results of
- the comparison for each of the five (5) classification methods (GENETIC,
- RBF, ADAM, RPROP, NEAT) with the PROPOSED method regarding the classification
- error in twenty-six (26) different public available classification datasets.
- Star links join significantly different values; three stars (***) stand
- for p<0.001.
+Scatter plot representation and the two-sample paired (Wilcoxon) signed
+ rank test results of the comparison for each of the five (5) classification
+ methods (GENETIC, RBF, ADAM, RPROP, NEAT) with the PROPOSED method regarding
+ the classification error in twenty-six (26) different public available
+ classification datasets.
+ The stars only intend to flag significance levels for three of the most
+ used groups.
+ A p-value of less than 0.05 is flagged with one star (*) .
+ A p-value of less than 0.01 is flagged with two stars (**).
+ A p-value of less than 0.001 is flagged with three stars (***).
  
 \begin_inset CommandInset label
 LatexCommand label
@@ -6656,12 +6507,16 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Scatter plot representation and the Wilcoxon signed-rank test results of
- the comparison for each of the five (5) regression methods (GENETIC, RBF,
- ADAM, RPROP, NEAT) with the PROPOSED method regarding the regression error
- in sixteen (16) different publicly available classification datasets.
- Star links join significantly different values; three stars (***) stand
- for p<0.001.
+Scatter plot representation and the two-sample paired (Wilcoxon) signed
+ rank test of the comparison for each of the five (5) regression methods
+ (GENETIC, RBF, ADAM, RPROP, NEAT) with the PROPOSED method regarding the
+ regression error in sixteen (16) different publicly available classification
+ datasets.
+ The stars only intend to flag significance levels for three of the most
+ used groups.
+ A p-value of less than 0.05 is flagged with one star (*) .
+ A p-value of less than 0.01 is flagged with two stars (**).
+ A p-value of less than 0.001 is flagged with three stars (***).
  The notation "ns" denotes "not significant".
 \begin_inset CommandInset label
 LatexCommand label
@@ -6698,7 +6553,7 @@ The experimental results and their graphical representation demonstrate
  the proposed one is the RBF neural network with small differences from
  the ADAM optimizer.
  However, in the case of regression problems, the improvement in average
- error by using the proposed technique exceeds 49%.
+ error using the proposed technique exceeds 49%.
  Of course, the proposed technique is quite time-consuming since it requires
  continuous training of an artificial neural network.
  
@@ -6742,6 +6597,12 @@ on method is used to train the artificial neural network.
  other established artificial neural network training techniques.
  This improvement is 25% on average for the case of classification problems
  and rises significantly to 50% for regression problems.
+ The proposed method outperforms the other methods and models in the majority
+ of cases.
+ For example, in the classification datasets, the proposed method outperforms
+ the genetic algorithm in 22 datasets, the RBF model in 21 datasets, the
+ ADAM optimizer in 23 cases, the RPROP optimizer in 22 cases and finally,
+ the NEAT method in 25 datasets.
 \end_layout
 
 \begin_layout Standard

@@ -1,4 +1,4 @@
-%% LyX 2.3.6 created this file.  For more info, see http://www.lyx.org/.
+%% LyX 2.3.7 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
 \documentclass[journal,article,submit,pdftex,moreauthors]{mdpi}
 \usepackage[utf8]{inputenc}
@@ -203,7 +203,7 @@ quantity:
 \begin{equation}
 E\left(N\left(\overrightarrow{x},\overrightarrow{w}\right)\right)=\sum_{i=1}^{M}\left(N\left(\overrightarrow{x}_{i},\overrightarrow{w}\right)-y_{i}\right)^{2}\label{eq:eq1}
 \end{equation}
-In the previous equation, that will be called training error, the
+In the previous equation, what will be called training error, the
 set $\left(\overrightarrow{x_{i}},y_{i}\right),\ i=1,...,M$ is the
 input train dataset for the neural network with $M$ patterns. The
 value $y_{i}$ is the expected output for the pattern $\overrightarrow{x_{i}}$
@@ -234,8 +234,7 @@ of decision trees \citep{nninit1}, an initialization method using
 the Cauchy's inequality \citep{weight_init2}, incorporation of discriminant
 learning \citep{weight_init3}, methods based on genetic algorithms
 \citep{nninit2,nninit3} etc. A paper discussing all the aspects of
-weight initialization strategies can be found is proposed by Narkhede
-et al \citep{nninitreview}.
+weight initialization strategies is proposed by Narkhede et al \citep{nninitreview}.
 
 Moreover, various groups of researchers are dealing with the issue
 of constructing the structure of artificial neural networks, such
@@ -247,7 +246,7 @@ usage of cellular automata\textbf{ }\citep{nncell} etc. Also, since
 the training of artificial neural networks by optimization methods
 requires significantly longer computing time, parallel techniques
 have been developed that take advantage of modern parallel computing
-units\citep{weight_gpu1,weight_gpu2,weight_gpu3}\textbf{.}
+units\citep{weight_gpu1,weight_gpu2,weight_gpu3}.
 
 Another field of research in the field of artificial neural networks
 that attracts a multitude of researchers is that of dealing with the
@@ -255,8 +254,8 @@ problem of overfitting that occurs in many cases. In this problem,
 although the artificial neural network has achieved a satisfactory
 level of training, this is not reflected in unknown patterns that
 were not present during training. This set of patterns will be called
-test set in the remaining of this work. Commonly used methods that
-tackle the overfitting problem are weight sharing \citep{nnsharing1,nnsharing2},
+as test set in the following. Commonly used methods that tackle the
+overfitting problem are weight sharing \citep{nnsharing1,nnsharing2},
 methods that reduce the number of parameters (weight pruning) \citep{nnprunning1,nnprunning2,nnprunning3},
 the method of dropout \citep{nndrop1,nndrop2}, weight decaying methods
 \citep{nndecay1,nndecay2}, the Sarprop method \citep{sarprop}, positive
@@ -283,11 +282,11 @@ to train other artificial neural networks. This new procedure will
 be tested on a series of known problems, in order to evaluate its
 effectiveness.
 
-The rest of this article is organized as follows: the section \ref{sec:The-proposed-method}
-described the proposed method, the section \ref{sec:Experiments}
-list the experimental datasets and the results obtained by the incorporation
-of various methods and finally the section \ref{sec:Conclusions}
-discusses some conclusions.
+The rest of this article is organized as follows: section \ref{sec:The-proposed-method}
+describes the proposed method, section \ref{sec:Experiments} lists
+the experimental datasets and the results obtained by the incorporation
+of various methods and finally section \ref{sec:Conclusions} discusses
+some conclusions.
 
 \section{The proposed method\label{sec:The-proposed-method}}
 
@@ -371,7 +370,15 @@ However, this would not always be possible in the case where the objective
 function to be minimized is the error of an artificial neural network,
 since an artificial neural network usually has a large number of parameters
 and this would require an extremely large storage space for training
-the global minimization method's RBF neural network.
+the global minimization method's RBF neural network. Of course, in
+some cases of small artificial neural network, an RBF neural network
+could be used as the training model in the global optimization method
+NeuralMinimizer. However, when an artificial neural network is used
+to approach large and complex problems (something extremely common)
+then a relatively under powered RBF neural network should be used.
+In those cases, the RBF network will not be able to be an efficient
+approximation of the artificial neural network, which is, of course,
+the original aim of the NeuralMinimizer method.
 
 In the following the main steps of the modified NeuralMinimizer method
 for the training of neural networks are listed. In this steps the
@@ -414,7 +421,7 @@ the L-BFGS method.
 \item \textbf{For} $i=1,..,N_{R}$ \textbf{do}
 \begin{enumerate}
 \item \textbf{Produce randomly} a sample $\left(w_{i},y_{i}\right)$ from
-$N_{N}(w,x)$ neural network
+$N_{N}(x,w)$ neural network
 \item \textbf{Set} $T_{R}=T_{R}\cup\left(x_{i,}y_{i}\right)$
 \end{enumerate}
 \item \textbf{EndFor}
@@ -425,18 +432,18 @@ $N_{N}(w,x)$ neural network
 \item \textbf{For} $i=1,..,N_{T}$ do
 \begin{enumerate}
 \item \textbf{Get} the next item $\left(w_{i},y_{i}\right)$ from $T_{R}$.
-\item \textbf{Train} the neural network $N\left(w_{i},x\right)$ on the
+\item \textbf{Train} the neural network $N\left(x,w_{i}\right)$ on the
 train set of the objective problem, using the L-BFGS method and get
 the corresponding training error $y_{i}$.
 \item \textbf{Update} $T=T\cup\left(w_{i},y_{i}\right)$
-\item \textbf{Train} again the network $N_{N}(w,x)$ on the modified set
+\item \textbf{Train} again the network $N_{N}(x,w)$ on the modified set
 $T$. In this step the original train set used by $N_{N}(x,w)$ is
 updated to include the new discovered local minimum. This operation
 is used in order to construct a more accurate approximation of the
 real objective function.
 \item \textbf{If} $y_{i}\le y^{*}$ then $w^{*}=w_{i},y^{*}=y_{i}$
 \item \textbf{If }the termination rule proposed in \citep{Tsoulos1} then
-apply the produced network $N\left(w^{*},x\right)$ on the test set
+apply the produced network $N\left(x,w^{*}\right)$ on the test set
 of the objective problem, report the test error and \textbf{terminate}.
 \end{enumerate}
 \item \textbf{EndFor}
@@ -458,15 +465,15 @@ A flowchart of the proposed method is graphically outlined in Figure
 
 \section{Experiments \label{sec:Experiments}}
 
-The efficiency of the proposed artificial neural network training
+The effectiveness of the proposed artificial neural network training
 technique was evaluated using a series of data sets from the relevant
 literature. These datasets have been studied by various researchers
 in the relevant literature and cover a wide range of research areas
-from Physics to Economics. These datasets are are freely available
-from the following websites:
+from Physics to Economics. These datasets are freely available from
+the following websites:
 \begin{enumerate}
 \item The UCI repository, \url{https://archive.ics.uci.edu/}(accessed on
-17 June 2023)\citep{uci}
+12 July 2023)\citep{uci}
 \item The Keel repository, \url{https://sci2s.ugr.es/keel/datasets.php}(accessed
 on 17 June 2023)\citep{Keel}.
 \item The Statlib URL\textbf{ \url{ftp://lib.stat.cmu.edu/datasets/index.html }}(accessed
@@ -479,8 +486,8 @@ datasets.
 The following classification datasets from the relevant literature
 were used in the experiments:
 \begin{enumerate}
-\item \textbf{Appendictis, }a dataset used for medical purposes and it was
-found in \citep{appendicitis,appendicitis2}. 
+\item \textbf{Appendicitis, }a dataset used for medical purposes and it
+was found in \citep{appendicitis,appendicitis2}. 
 \item \textbf{Australian} dataset \citep{australian}, an economic dataset,
 related to bank transactions.
 \item \textbf{Balance} dataset \citep{balance}, which is related to psychological
@@ -539,7 +546,7 @@ is shown in Table \ref{tab:classTable}.
 DATASET & CLASSES\tabularnewline
 \hline 
 \hline 
-Appendictis & 2\tabularnewline
+Appendicitis & 2\tabularnewline
 \hline 
 Australian & 2\tabularnewline
 \hline 
@@ -625,31 +632,31 @@ of USA, where the goal is to predict 1-Month CD Rate.
 
 The proposed method was tested on the regression and classification
 problems mentioned previously, and it was compared against the results
-of several other well - known approaches of the relevant literature.
-For greater reliability of the experimental results, the 10 - fold
-validation technique was employed for every classification or regression
-dataset. Every experiment was executed 30 times, with different initialization
-for the random generator each time. Also, the srand48() random generator
-of the C - programming language was utilized. The used code was implemented
-in ANSI C++ using the freely available OPTIMUS optimization library
-available from  \url{https://github.com/itsoulos/OPTIMUS/}. For the
-case of classification datasets, the average classification error
-is measured for every method and for regression datasets the average
-mean squared error is measured in the test set. The number of hidden
-nodes for the neural networks was set to $H=10$ for every method.
-All the experiments were performed using an AMD Ryzen 5950X with 128GB
-of RAM. The running operating system was Debian Linux. The methods
-used in the experimental results are the following:
+of several other well - known optimization methods in the relevant
+literature. For greater reliability of the experimental results, the
+10 - fold validation technique was employed for every classification
+or regression dataset. Every experiment was executed 30 times, with
+different initialization for the random generator each time. Also,
+the srand48() random generator of the C - programming language was
+utilized. The used code was implemented in ANSI C++ using the freely
+available OPTIMUS optimization library available from  \url{https://github.com/itsoulos/OPTIMUS/}.
+For the case of classification datasets, the average classification
+error is measured for every method and for regression datasets the
+average mean squared error is measured in the test set. The number
+of hidden nodes for the neural networks was set to $H=10$ for every
+method. All the experiments were performed using an AMD Ryzen 5950X
+with 128GB of RAM. The running operating system was Debian Linux.
+The methods used in the experimental results are the following:
 \begin{enumerate}
-\item A genetic algorithm with 200 chromosomes used to train a neural network
-with $H$ hidden nodes. This method was denoted as GENETIC in the
-tables holding the experimental results. 
-\item A Radial Basis Function (RBF) network \citep{rbf1} having $H$ hidden
+\item A genetic algorithm with 200 chromosomes is used to train a neural
+network with $H$ hidden nodes. This method was denoted as GENETIC
+in the tables holding the experimental results. 
+\item A Radial Basis Function (RBF) network \citep{rbf1} with $H$ hidden
 nodes.
 \item The Adam optimization method\citep{Adam}. Here the method is used
 to minimize the train error of a neural network with $H$ hidden nodes.
 \item The resilient back propagation (RPROP) optimization method\citep{rpropnn,rpropnn2,rpropnn3}
-was employed also to train a neural network with $H$ hidden nodes.
+was also employed to train a neural network with $H$ hidden nodes.
 \item The NEAT method (NeuroEvolution of Augmenting Topologies ) \citep{neat}.
 \end{enumerate}
 The values used for every parameter are listed in Table \ref{tab:Experimental-settings.}
@@ -684,12 +691,11 @@ $N_{G}$ & Maximum number of iterations & 200\tabularnewline
 The experimental results for the classification datasets are shown
 in Table \ref{tab:tabClass} and for the regression datasets in Table
 \ref{tab:exp2}. The column PROPOSED stands for the usage of the proposed
-method to train a neural network with $H$ hidden nodes. In both tables,
-the last row (denoted as AVERAGE) represents the mean error for each
-method. Also, the figure \ref{fig:ScatterClass} shows a scatter plot
-and the Wilcoxon signed-rank test for the classification datasets.
-In the same direction, the figure \ref{fig:ScatterRegression} shows
-the scatter plot for the regression datasets.
+method to train a neural network with $H$ hidden nodes. Also, the
+Figure \ref{fig:ScatterClass} shows a scatter plot and the Wilcoxon
+signed-rank test for the classification datasets. In the same direction,
+Figure \ref{fig:ScatterRegression} shows the scatter plot for the
+regression datasets.
 
 \begin{table}[H]
 \caption{Experimental results for the classification datasets. The numbers
@@ -753,8 +759,6 @@ ZONF\_S & 2.60\% & 4.03\% & 11.99\% & 27.27\% & 5.44\% & 2.35\%\tabularnewline
 \hline 
 ZOO & 16.67\% & 21.93\% & 14.13\% & 15.47\% & 20.27\% & 4.20\%\tabularnewline
 \hline 
-\textbf{AVERAGE} & \textbf{23.47\%} & \textbf{27.69\%} & \textbf{30.81\%} & \textbf{25.37\%} & \textbf{28.87\%} & \textbf{17.63\%}\tabularnewline
-\hline 
 \end{tabular}
 \end{table}
 \begin{table}[H]
@@ -798,30 +802,34 @@ TREASURY & 2.929 & 2.02 & 11.16 & 10.88 & 15.52 & 3.72\tabularnewline
 \hline 
 WANKARA & 0.012 & 0.001 & 0.02 & 0.0003 & 0.005 & 0.002\tabularnewline
 \hline 
-\textbf{AVERAGE} & \textbf{18.55} & \textbf{10.30} & \textbf{11.70} & \textbf{12.44} & \textbf{12.70} & \textbf{5.49}\tabularnewline
-\hline 
 \end{tabular}
 \end{table}
 \begin{figure}[H]
 \includegraphics[scale=0.45]{nmin_class}
 
-\caption{Scatter plot representation and the Wilcoxon signed-rank test results
-of the comparison for each of the five (5) classification methods
-(GENETIC, RBF, ADAM, RPROP, NEAT) with the PROPOSED method regarding
-the classification error in twenty-six (26) different public available
-classification datasets. Star links join significantly different values;
-three stars ({*}{*}{*}) stand for p\textless 0.001. \label{fig:ScatterClass}}
+\caption{Scatter plot representation and the two-sample paired (Wilcoxon) signed
+rank test results of the comparison for each of the five (5) classification
+methods (GENETIC, RBF, ADAM, RPROP, NEAT) with the PROPOSED method
+regarding the classification error in twenty-six (26) different public
+available classification datasets. The stars only intend to flag significance
+levels for three of the most used groups. A p-value of less than 0.05
+is flagged with one star ({*}) . A p-value of less than 0.01 is flagged
+with two stars ({*}{*}). A p-value of less than 0.001 is flagged with
+three stars ({*}{*}{*}). \label{fig:ScatterClass}}
 
 \end{figure}
 \begin{figure}[H]
 \includegraphics[scale=0.45]{nmin_regression}
 
-\caption{Scatter plot representation and the Wilcoxon signed-rank test results
-of the comparison for each of the five (5) regression methods (GENETIC,
-RBF, ADAM, RPROP, NEAT) with the PROPOSED method regarding the regression
-error in sixteen (16) different publicly available classification
-datasets. Star links join significantly different values; three stars
-({*}{*}{*}) stand for p\textless 0.001. The notation \textquotedbl ns\textquotedbl{}
+\caption{Scatter plot representation and the two-sample paired (Wilcoxon) signed
+rank test of the comparison for each of the five (5) regression methods
+(GENETIC, RBF, ADAM, RPROP, NEAT) with the PROPOSED method regarding
+the regression error in sixteen (16) different publicly available
+classification datasets. The stars only intend to flag significance
+levels for three of the most used groups. A p-value of less than 0.05
+is flagged with one star ({*}) . A p-value of less than 0.01 is flagged
+with two stars ({*}{*}). A p-value of less than 0.001 is flagged with
+three stars ({*}{*}{*}). The notation \textquotedbl ns\textquotedbl{}
 denotes \textquotedbl not significant\textquotedbl .\label{fig:ScatterRegression}}
 
 \end{figure}
@@ -838,9 +846,9 @@ error than the genetic algorithm error by 24\%. Moreover, in regression
 problems, the next most effective method after the proposed one is
 the RBF neural network with small differences from the ADAM optimizer.
 However, in the case of regression problems, the improvement in average
-error by using the proposed technique exceeds 49\%. Of course, the
-proposed technique is quite time-consuming since it requires continuous
-training of an artificial neural network. 
+error using the proposed technique exceeds 49\%. Of course, the proposed
+technique is quite time-consuming since it requires continuous training
+of an artificial neural network. 
 
 \section{Conclusions\label{sec:Conclusions}}
 
@@ -866,7 +874,12 @@ and regression problems from the relevant literature and is shown
 to significantly improve the learning error over other established
 artificial neural network training techniques. This improvement is
 25\% on average for the case of classification problems and rises
-significantly to 50\% for regression problems.
+significantly to 50\% for regression problems. The proposed method
+outperforms the other methods and models in the majority of cases.
+For example, in the classification datasets, the proposed method outperforms
+the genetic algorithm in 22 datasets, the RBF model in 21 datasets,
+the ADAM optimizer in 23 cases, the RPROP optimizer in 22 cases and
+finally, the NEAT method in 25 datasets.
 
 Nevertheless, the proposed procedure can be extremely slow, especially
 as the size of the artificial neural network increases. The size of
@@ -1519,6 +1532,7 @@ on Learning Representations (ICLR 2015), pp. 1--15, 2015.
 \bibitem{neat}K. O. Stanley, R. Miikkulainen, Evolving Neural Networks
 through Augmenting Topologies, Evolutionary Computation \textbf{10},
 pp. 99-127, 2002.
+
 \end{thebibliography}
 
 \end{adjustwidth}{}
