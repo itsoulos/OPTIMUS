@@ -1,4 +1,4 @@
-METHOD=ParallelGenetic
+METHOD=pDoubleGenetic
 METHODPARAMS=""
 ### Available local search methods: bfgs, gradient, adam, lbfgs
 if [ $METHOD = "Minfinder" ]
@@ -41,10 +41,13 @@ then
 elif [ $METHOD = "NeuralMinimizer" ]
 then
 	METHODPARAMS="--neural_model=neural --neural_trainmethod=lbfgs"
+elif [ $METHOD = "pDoubleGenetic" ]
+then
+METHODPARAMS="--double_chromosomes=200 --double_generations=200  --sample_method=uniform --localsearch_method=bfgs --double_localsearchrate=0.01 --subCluster=1 --subClusterEnable=1 --centers=20"
 fi
 
 
 PROBLEM=$1
 NATOMS=$2
-echo ./OptimusApp --filename=../PROBLEMS/lib$PROBLEM.so  --opt_method=$METHOD  --natoms=$NATOMS  $METHODPARAMS --iterations=30 --threads=10
+echo ./OptimusApp --filename=../PROBLEMS/lib$PROBLEM.so  --opt_method=$METHOD  --natoms=$NATOMS  $METHODPARAMS --iterations=30
 ./OptimusApp --filename=../PROBLEMS/lib$PROBLEM.so  --opt_method=$METHOD  --natoms=$NATOMS  $METHODPARAMS --iterations=30

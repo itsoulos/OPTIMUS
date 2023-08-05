@@ -35,6 +35,7 @@ else
 		(cd src/PSearch; qmake; make clean)
 		(cd src/Minfinder; qmake; make clean)
 		(cd src/Search; qmake; make clean)
+		(cd src/pDoubleGenetic; qmake ; make clean )
 		(cd bin/OptimusFIT; qmake; make clean)
 		(cd bin/NeuralTrain; qmake; make clean)
 		(cd bin;qmake; make clean; rm -f OptimusApp)
