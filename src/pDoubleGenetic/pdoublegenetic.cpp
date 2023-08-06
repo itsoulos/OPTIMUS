@@ -15,11 +15,178 @@ pDoubleGenetic::pDoubleGenetic(Problem *p)
     addParameter("subCluster", "5", "number of subclusters for pDoubleGenetic");
     addParameter("similarityMaxCount", "15", "Maximum allowed itearations for Similarity Stopping rule");
     addParameter("centers", "20", "centers");
+    addParameter("pNumber", "10", "the number of samples for propagation");
+    addParameter("parallelPropagateMethod", "1to1", "The propagation method used. Available values: 1to1,1toN,Nto1,NtoN");
+    addParameter("propagateRate", "1", "The number of generations before the propagation takes place");
+}
+bool sortByFirstDesc(const pair<double, int> &a, const pair<double, int> &b)
+{
+    return a.first < b.first;
+}
+void pDoubleGenetic::replace(int subClusterIndex, vector<pair<double, Data>> chrom)
+{
+    /*
+        std::cout<<"best"<<endl;
+        for (int i=0;i< proParticles.size();i++)
+        {
+            std::cout<<proParticles.at(i).first<<endl;
+        }
+    */
+    vector<pair<double, int>> tmp;
+    tmp.resize(double_chromosomes);
+    for (int i = 0; i < double_chromosomes; i++)
+    {
+        tmp.at(i).first = -1e+100;
+        tmp.at(i).second = 0;
+    }
+    for (int i = subClusterStartPos(subClusterIndex), j = 0; i <= subClusterEndPos(subClusterIndex); i++, j++)
+    {
+        if (tmp.at(j).first < fitnessArray[i])
+        {
+            tmp.at(j).first = fitnessArray[i];
+            tmp.at(j).second = i;
+        }
+    }
+    sort(tmp.begin(), tmp.end(), sortByFirstDesc);
+    tmp.resize(pNumber);
+    /*
+        std::cout<<"worst"<<endl;
+        for (int i=0;i< pNumber;i++)
+        {
+            std::cout<<tmp.at(i).first<<endl;
+        }
+    */
+    vector<int> tmp2;
+    for (int i = 0; i < pNumber; i++)
+    {
+        tmp2.push_back(tmp.at(i).second);
+    }
+    for (int i = subClusterStartPos(subClusterIndex); i <= subClusterEndPos(subClusterIndex); i++)
+    {
+        if (find(tmp2.begin(), tmp2.end(), i) != tmp2.end())
+        {
+            fitnessArray[i] = chrom.back().first;
+            chromosome[i] = chrom.back().second;
+            chrom.pop_back();
+        }
+    }
+}
+
+void pDoubleGenetic::propagate()
+{
+    if (pNumber > 0 && subCluster > 1)
+    {
+        if (parallelPropagateMethod == "1to1")
+        {
+            int subCluster1, subCluster2;
+            do
+            {
+                subCluster1 = rand() % subCluster;
+                subCluster2 = rand() % subCluster;
+            } while (subCluster1 == subCluster2);
+
+            vector<pair<double, Data>> tmp;
+            tmp.resize(double_chromosomes);
+
+            for (int i = 0; i < double_chromosomes; i++)
+                tmp.at(i).first = 1e+100;
+
+            for (int i = subClusterStartPos(subCluster1), j = 0; i <= subClusterEndPos(subCluster1); i++, j++)
+            {
+                if (tmp.at(j).first > fitnessArray[i])
+                {
+                    tmp.at(j).first = fitnessArray[i];
+                    tmp.at(j).second = chromosome[i];
+                }
+            }
+            sort(tmp.begin(), tmp.end());
+            tmp.resize(pNumber);
+            replace(subCluster2, tmp);
+        }
+        else if (parallelPropagateMethod == "1toN")
+        {
+            int subCluster1 = rand() % subCluster;
+            vector<pair<double, Data>> tmp;
+
+            for (int i = 0; i < subCluster; i++)
+            {
+                tmp.resize(double_chromosomes);
+                for (int k = 0; k < double_chromosomes; k++)
+                    tmp.at(k).first = 1e+100;
+                if (i == subCluster1)
+                    continue;
+                for (int i = subClusterStartPos(subCluster1), j = 0; i <= subClusterEndPos(subCluster1); i++, j++)
+                {
+                    if (tmp.at(j).first > fitnessArray[i])
+                    {
+                        tmp.at(j).first = fitnessArray[i];
+                        tmp.at(j).second = chromosome[i];
+                    }
+                }
+                sort(tmp.begin(), tmp.end());
+                tmp.resize(pNumber);
+                replace(i, tmp);
+            }
+        }
+        else if (parallelPropagateMethod == "Nto1")
+        {
+            int subCluster2 = rand() % subCluster;
+            vector<pair<double, Data>> tmp;
+            for (int i = 0; i < subCluster; i++)
+            {
+                tmp.resize(double_chromosomes);
+                for (int k = 0; k < double_chromosomes; k++)
+                    tmp.at(k).first = 1e+100;
+                if (i == subCluster2)
+                    continue;
+                int subCluster1 = i;
+                for (int k = subClusterStartPos(subCluster1), j = 0; k <= subClusterEndPos(subCluster1); k++, j++)
+                {
+                    if (tmp.at(j).first > fitnessArray[k])
+                    {
+                        tmp.at(j).first = fitnessArray[k];
+                        tmp.at(j).second = chromosome[k];
+                    }
+                }
+                sort(tmp.begin(), tmp.end());
+                tmp.resize(pNumber);
+                replace(subCluster2, tmp);
+            }
+        }
+        else if (parallelPropagateMethod == "NtoN")
+        {
+            vector<pair<double, Data>> tmp;
+            for (int i = 0; i < subCluster; i++)
+            {
+                for (int j = 0; j < subCluster; j++)
+                {
+                    tmp.resize(double_chromosomes);
+                    for (int k = 0; k < double_chromosomes; k++)
+                        tmp.at(k).first = 1e+100;
+                    if (i == j)
+                        continue;
+                    int subCluster1 = i;
+                    int subCluster2 = j;
+                    for (int k = subClusterStartPos(subCluster1), e = 0; k <= subClusterEndPos(subCluster1); k++, e++)
+                    {
+                        if (tmp.at(e).first > fitnessArray[k])
+                        {
+                            tmp.at(e).first = fitnessArray[k];
+                            tmp.at(e).second = chromosome[k];
+                        }
+                    }
+                    sort(tmp.begin(), tmp.end());
+                    tmp.resize(pNumber);
+                    replace(subCluster2, tmp);
+                }
+            }
+        }
+    }
 }
 double pDoubleGenetic::randMToN(double M, double N)
 {
-	double r = rand() *1.0/RAND_MAX;
-	return M + r*(N-M);
+    double r = rand() * 1.0 / RAND_MAX;
+    return M + r * (N - M);
 }
 int pDoubleGenetic::subClusterStartPos(int subClusterIndex)
 {
@@ -77,7 +244,7 @@ void pDoubleGenetic::tournament(int subCluster, Data &p1, Data &p2)
 int pDoubleGenetic::randomChromosome(int subCluster)
 {
     double r = randMToN(subClusterStartPos(subCluster), subClusterEndPos(subCluster));
-    int pos = (int)r;//r * subClusterEndPos(subCluster);
+    int pos = (int)r; // r * subClusterEndPos(subCluster);
     if (pos == subClusterEndPos(subCluster))
         pos--;
     return pos;
@@ -97,8 +264,8 @@ bool pDoubleGenetic::checkSubCluster(int subClusterName)
 {
 
     double difference = fabs(bestF2xInClusterOLD.at(subClusterName) - bestF2xInCluster.at(subClusterName));
-    //printf("%d] F2x(%d) : %f F2xOLD.at(%d) : %f different  : %f\n", generation, subClusterName, bestF2xInCluster.at(subClusterName), subClusterName, bestF2xInClusterOLD.at(subClusterName), subClusterName, difference);
-    //if (bestF2xInClusterOLD.at(subClusterName) == bestF2xInCluster.at(subClusterName))
+    // printf("%d] F2x(%d) : %f F2xOLD.at(%d) : %f different  : %f\n", generation, subClusterName, bestF2xInCluster.at(subClusterName), subClusterName, bestF2xInClusterOLD.at(subClusterName), subClusterName, difference);
+    // if (bestF2xInClusterOLD.at(subClusterName) == bestF2xInCluster.at(subClusterName))
     if (difference < 1e-8)
         similarityCurrentCount.at(subClusterName)++;
     else
@@ -114,7 +281,7 @@ void pDoubleGenetic::step()
     if (generation)
     {
         int t, i;
-        #pragma omp parallel for private(i, t) num_threads(subCluster)
+#pragma omp parallel for private(i, t) num_threads(subCluster)
         for (t = 0; t < subCluster; t++)
         {
             for (i = subClusterStartPos(t) + 1; i <= subClusterEndPos(t); i++)
@@ -135,7 +302,7 @@ void pDoubleGenetic::step()
     dmin = 1e+100;
     QString debug = params["double_debug"].toString();
     int t, i;
-    #pragma omp parallel for private(i, t) num_threads(subCluster)
+#pragma omp parallel for private(i, t) num_threads(subCluster)
     for (t = 0; t < subCluster; t++)
     {
 
@@ -178,13 +345,13 @@ void pDoubleGenetic::step()
     itemp.resize(myProblem->getDimension());
 
     int j;
-    #pragma omp parallel for private(i, t, j) num_threads(subCluster)
+#pragma omp parallel for private(i, t, j) num_threads(subCluster)
     for (t = 0; t < subCluster; t++)
     {
 
         for (i = subClusterStartPos(t); i <= subClusterEndPos(t); i++)
         {
-            for (j = subClusterStartPos(t); j <= subClusterEndPos(t)-1; j++)
+            for (j = subClusterStartPos(t); j <= subClusterEndPos(t) - 1; j++)
             {
 
                 if (fitnessArray[j + 1] < fitnessArray[j])
@@ -201,28 +368,27 @@ void pDoubleGenetic::step()
     }
 
     int nchildren = (int)((1.0 - selection_rate) * population);
-    if (!(nchildren % 2 == 0))
-        nchildren++;
-    int count_children = 0;
+     if (!(nchildren % 2 == 0))
+         nchildren++;
+
     Data parent0, parent1;
     parent0.resize(myProblem->getDimension());
     parent1.resize(myProblem->getDimension());
-    //#pragma omp parallel for private(t, parent0, parent1, count_children) num_threads(subCluster)
+//#pragma omp parallel for private(t, parent0, parent1) num_threads(subCluster)
     for (t = 0; t < subCluster; t++)
     {
-
-    for (; count_children < nchildren;)
-    {
-//#pragma omp critical
+        int count_children = 0;
+        for (; count_children < nchildren;)
         {
-        tournament(t, parent0, parent1);
-
-        doubleCrossover(parent0, parent1, children[count_children], children[count_children + 1]);
-        count_children += 2;
+//#pragma omp critical
+            {
+                tournament(t, parent0, parent1);
+                doubleCrossover(parent0, parent1, children[count_children], children[count_children + 1]);
+                count_children += 2;
+            }
         }
     }
-    }
-    #pragma omp critical
+
     for (int i = 0; i < nchildren; i++)
     {
         chromosome[population - i - 1] = children[i];
@@ -237,10 +403,18 @@ void pDoubleGenetic::step()
     }
 
     ++generation;
+    if (pNumber > 0 && propagateRate > 0 && subCluster > 1)
+    {
+        if (generation % propagateRate)
+            propagate();
+    }
 }
 
 void pDoubleGenetic::init()
 {
+    propagateRate = params["propagateRate"].toString().toInt();
+    parallelPropagateMethod = params["parallelPropagateMethod"].toString();
+    pNumber = params["pNumber"].toString().toInt();
     mutation_rate = params["double_mutationrate"].toString().toDouble();
     selection_rate = params["double_selectionrate"].toString().toDouble();
     centers = params["centers"].toString().toInt();
@@ -290,7 +464,7 @@ void pDoubleGenetic::init()
             if (bestF2xInCluster.at(i) > fitnessArray[j])
             {
                 bestF2xInCluster.at(i) = fitnessArray[j];
-                // bestChromosomeInCluster.at(i) = chromosome[j];
+
             }
         }
     }
@@ -310,10 +484,8 @@ void pDoubleGenetic::done()
     auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(after - before);
     auto ms = milliseconds.count();
     // std::cout << "Douration: " << (double)ms / 1000.0 << " sec" << std::endl;
-
     this->allmeans.clear();
-  //  if (kmeans != 0)
-  //      delete kmeans;
+
 }
 
 void pDoubleGenetic::Solve()

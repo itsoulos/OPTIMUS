@@ -47,15 +47,17 @@ private:
 
     std::chrono::time_point<std::chrono::system_clock> before, after;
     bool checkSubCluster(int subClusterName);
-    int subClusterEnable, similarityMaxCount, double_generations, subCluster, double_chromosomes, population, centers, minK;
+    int subClusterEnable, similarityMaxCount, double_generations, subCluster, double_chromosomes, population, centers, minK, pNumber, propagateRate;
     vector<int> similarityCurrentCount;
     vector<double> sum, newSum, MO, newMO, bestF2xInCluster, bestF2xInClusterOLD, bestx,doublebox_xx1 ,doublebox_xx2,doublebox_variance,doublebox_stopat, oldBesty;
     double dmin, selection_rate, mutation_rate;
-
     KMeans *kmeans;
     vector<Point> allSamples;
     vector<Point> allmeans;
+    QString parallelPropagateMethod;
 
+    void replace(int subClusterIndex, vector<pair<double, Data>> chrom);
+    void propagate();
     int subClusterStartPos(int subClusterIndex);
     int subClusterEndPos(int subClusterIndex);
     virtual bool terminated();
