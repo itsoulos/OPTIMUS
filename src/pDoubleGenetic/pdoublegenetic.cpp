@@ -15,7 +15,7 @@ pDoubleGenetic::pDoubleGenetic(Problem *p)
     addParameter("subCluster", "5", "number of subclusters for pDoubleGenetic");
     addParameter("similarityMaxCount", "15", "Maximum allowed itearations for Similarity Stopping rule");
     addParameter("centers", "20", "centers");
-    addParameter("pNumber", "10", "the number of samples for propagation");
+    addParameter("pNumber", "5", "the number of samples for propagation");
     addParameter("parallelPropagateMethod", "1to1", "The propagation method used. Available values: 1to1,1toN,Nto1,NtoN");
     addParameter("propagateRate", "1", "The number of generations before the propagation takes place");
 }
@@ -341,14 +341,12 @@ void pDoubleGenetic::step()
     if (debug == "yes")
         printf("\n");
 
-    Data itemp;
-    itemp.resize(myProblem->getDimension());
-
-    int j;
-#pragma omp parallel for private(i, t, j) num_threads(subCluster)
+#pragma omp parallel for private(i, t) num_threads(subCluster)
     for (t = 0; t < subCluster; t++)
     {
-
+        Data itemp;
+        int j;
+        itemp.resize(myProblem->getDimension());
         for (i = subClusterStartPos(t); i <= subClusterEndPos(t); i++)
         {
             for (j = subClusterStartPos(t); j <= subClusterEndPos(t) - 1; j++)
@@ -356,18 +354,21 @@ void pDoubleGenetic::step()
 
                 if (fitnessArray[j + 1] < fitnessArray[j])
                 {
+#pragma omp critical
                     itemp = chromosome[j];
                     chromosome[j] = chromosome[j + 1];
                     chromosome[j + 1] = itemp;
                     double dtemp = fitnessArray[j];
                     fitnessArray[j] = fitnessArray[j + 1];
+#pragma omp critical
                     fitnessArray[j + 1] = dtemp;
+
                 }
             }
         }
     }
 
-    int nchildren = (int)((1.0 - selection_rate) * population);
+    int nchildren = (int)((1.0 - selection_rate) * double_chromosomes  );
      if (!(nchildren % 2 == 0))
          nchildren++;
 
@@ -380,18 +381,13 @@ void pDoubleGenetic::step()
         int count_children = 0;
         for (; count_children < nchildren;)
         {
+            tournament(t, parent0, parent1);
+            doubleCrossover(parent0, parent1, children[count_children], children[count_children + 1]);
+            chromosome[subClusterEndPos(t)  - i] = children[i];
 //#pragma omp critical
-            {
-                tournament(t, parent0, parent1);
-                doubleCrossover(parent0, parent1, children[count_children], children[count_children + 1]);
-                count_children += 2;
-            }
+            count_children += 2;
         }
-    }
 
-    for (int i = 0; i < nchildren; i++)
-    {
-        chromosome[population - i - 1] = children[i];
     }
 
     for (int k = 0; k < subCluster; k++)
@@ -403,7 +399,7 @@ void pDoubleGenetic::step()
     }
 
     ++generation;
-    if (pNumber > 0 && propagateRate > 0 && subCluster > 1)
+   if (pNumber > 0 && propagateRate > 0 && subCluster > 1)
     {
         if (generation % propagateRate)
             propagate();
@@ -441,13 +437,55 @@ void pDoubleGenetic::init()
     bestF2xInCluster.resize(subCluster);
     bestF2xInClusterOLD.resize(subCluster);
 
-    for (int i = 0; i < population; i++)
+    if (0)//1: kmeans 0:uniform (ρυθμιζοντας το runfunmin σε ίδιο πληθος κατανομής)
+    {
+        int pop = double_chromosomes * subCluster;
+
+        population = centers * subCluster;
+
+        kmeans = new KMeans(population, 30, 5);
+
+        allSamples.clear();
+        for (int i = 0; i < pop; i++)
+        {
+            Point point(i, myProblem->getRandomPoint());
+            allSamples.push_back(point);
+        }
+
+        kmeans->run(allSamples);
+
+        vector<Point> tmp =  kmeans->getMeans();
+
+        allmeans.clear();
+
+        copy(tmp.begin(), tmp.end(), back_inserter(allmeans));
+
+        double_chromosomes = centers;
+
+        printf("population = %d\n",population);
+        fitnessArray.resize(population);
+        chromosome.resize(population);
+
+        for (int i = 0; i<population; i++)
+        {
+
+            Point p = allmeans[i];
+            chromosome[i] = (Data)p.getData();
+            fitnessArray[i] = myProblem->funmin(chromosome[i]);
+        }
+    }else
     {
 
-        chromosome[i] = myProblem->getRandomPoint();
-        fitnessArray[i] = myProblem->funmin(chromosome[i]);
-    }
+        population = double_chromosomes * subCluster;
+        fitnessArray.resize(population);
+        chromosome.resize(population);
+        for (int i = 0; i<population; i++)
+        {
 
+            chromosome[i] = myProblem->getRandomPoint();
+            fitnessArray[i] = myProblem->funmin(chromosome[i]);
+        }
+    }
     for (int i = 0; i < subCluster; i++)
     {
 
