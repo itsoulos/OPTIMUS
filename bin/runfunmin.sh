@@ -35,15 +35,12 @@ then
 elif [ $METHOD = "parallelPso" ]
 then
 	METHODPARAMS="--parallelPsoParticles=40 --subCluster=5 --subClusterEnable=1 --pNumber=1 --parallelPropagateMethod=Nto1 --similarityMaxCount=15"
-elif [ $METHOD = "ParallelGenetic" ]
+elif [ $METHOD = "pDoubleGenetic" ]
 then
-	METHODPARAMS="--pargen_count=400 --pargen_islands=1 --pargen_migratecount=1 --pargen_migrationmethod=1to1 --pargen_termination=one --pargen_termmethod=doublebox --pargen_debug=no --pargen_gradientcriterion=yes"
+	METHODPARAMS="--double_chromosomes=200 --double_generations=200  --sample_method=uniform --localsearch_method=bfgs --double_localsearchrate=0.01 --subCluster=1 --subClusterEnable=1 --centers=1 --parallelPropagateMethod=1toN --pNumber=0"
 elif [ $METHOD = "NeuralMinimizer" ]
 then
 	METHODPARAMS="--neural_model=neural --neural_trainmethod=lbfgs"
-elif [ $METHOD = "pDoubleGenetic" ]
-then
-METHODPARAMS="--double_chromosomes=200 --double_generations=200  --sample_method=uniform --localsearch_method=bfgs --double_localsearchrate=0.01 --subCluster=1 --subClusterEnable=1 --centers=20"
 fi
 
 

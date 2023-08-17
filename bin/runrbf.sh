@@ -1,9 +1,9 @@
 #!/bin/bash
-DATAPATH=/home/john/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfolding/
+DATAPATH=~/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfolding/
 #DATAPATH=/home/sheridan/Desktop/ERGASIES/SECDATA/
 NODES=10
 
-METHOD=ParallelDe
+METHOD=NeuralMinimizer
 METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then
@@ -17,6 +17,9 @@ then
 elif [ $METHOD = "Pso" ]
 then
 	METHODPARAMS="--pso_localsearch_rate=0.01"
+elif [ $METHOD = "NeuralMinimizer" ]
+then
+	METHODPARAMS="--neural_model=neural --neural_trainmethod=lbfgs"
 elif [ $METHOD = "ParallelDe" ]
 then
 	METHODPARAMS="--parde_agents=100 --parde_islands=2"
@@ -29,6 +32,6 @@ PROBLEM=RbfTest
 NODES=$2
 
 MLPARAMS="--trainName=$DATAPATH/$1.train --testName=$DATAPATH/$1.test --nodes=$NODES --natoms=$2"
-echo ./OptimusApp --filename=../PROBLEMS/RbfTest/libRbfTest.so  --opt_method=$METHOD   $METHODPARAMS  $MLPARAMS --interval_generations=50 --threads=12  --iterations=30
-./OptimusApp --filename=../PROBLEMS/libfunctionalRbf.so  --opt_method=$METHOD   $METHODPARAMS  $MLPARAMS --interval_generations=50 --threads=12  --iterations=30
+echo ./OptimusApp --filename=../PROBLEMS/RbfTest/libRbfTest.so  --opt_method=$METHOD   $METHODPARAMS  $MLPARAMS --threads=12  --iterations=30
+./OptimusApp --filename=../PROBLEMS/libfunctionalRbf.so  --opt_method=$METHOD   $METHODPARAMS  $MLPARAMS --threads=12  --iterations=30
 

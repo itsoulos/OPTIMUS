@@ -1,8 +1,8 @@
 #!/bin/bash
-DATAPATH=/home/sheridan/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfolding/
+DATAPATH=~/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfolding/
 NODES=10
 
-METHOD=DoubleGenetic
+METHOD=NeuralMinimizer
 METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then
@@ -10,6 +10,9 @@ then
 elif [ $METHOD = "Genetic" ]
 then
 	METHODPARAMS="--chromosome_count=500 --max_generations=200 --localsearch_method=grs --localsearch_rate=0.001"
+elif [ $METHOD = "NeuralMinimizer" ]
+then
+	METHODPARAMS="--neural_model=neural --neural_trainmethod=lbfgs"
 
 elif [ $METHOD = "Pso" ]
 then

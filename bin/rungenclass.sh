@@ -3,7 +3,7 @@ DATAPATH=/home/sheridan/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfoldin
 #DATAPATH=/home/sheridan/Desktop/ERGASIES/SECDATA/
 NODES=10
 
-METHOD=IntegerGenetic
+METHOD=NeuralMinimizer
 METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then
@@ -14,9 +14,12 @@ then
 elif [ $METHOD = "Pso" ]
 then
 	METHODPARAMS="--pso_localsearch_rate=0.05 --localsearch_method=hill"
+elif [ $METHOD = "NeuralMinimizer" ]
+then
+	METHODPARAMS="--neural_model=neural --neural_trainmethod=lbfgs"
 elif [ $METHOD = "Multistart" ]
 then
-	METHODPARAMS=="--multistart_samples=25"
+	METHODPARAMS="--multistart_samples=25"
 fi
 
 PROBLEM=GenClass/libGenClass.so

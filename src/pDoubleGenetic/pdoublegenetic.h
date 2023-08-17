@@ -11,6 +11,7 @@
 #include <Optimus/point.h>
 # include "omp.h"
 #include <time.h>
+#include <QRandomGenerator>
 class pDoubleGeneticInterface
 {
 public:
@@ -44,17 +45,20 @@ private:
     int		randomChromosome(int subCluster);
     void    doubleCrossover(Data &parent1, Data &parent2, Data &children1, Data &children2);
     double randMToN(double M, double N);
+    int randMToN(int M, int N);
 
     std::chrono::time_point<std::chrono::system_clock> before, after;
     bool checkSubCluster(int subClusterName);
-    int subClusterEnable, similarityMaxCount, double_generations, subCluster, double_chromosomes, population, centers, minK, pNumber, propagateRate;
+    int subClusterEnable, similarityMaxCount, double_generations, subCluster, double_chromosomes, population, centers, minK, pNumber, propagateRate,endPos;
     vector<int> similarityCurrentCount;
     vector<double> sum, newSum, MO, newMO, bestF2xInCluster, bestF2xInClusterOLD, bestx,doublebox_xx1 ,doublebox_xx2,doublebox_variance,doublebox_stopat, oldBesty;
-    double dmin, selection_rate, mutation_rate;
+    double dmin, selection_rate, mutation_rate, rate;
     KMeans *kmeans;
     vector<Point> allSamples;
     vector<Point> allmeans;
     QString parallelPropagateMethod;
+    QString sample_method, debug;
+    QRandomGenerator gen1 =  QRandomGenerator();
 
     void replace(int subClusterIndex, vector<pair<double, Data>> chrom);
     void propagate();
