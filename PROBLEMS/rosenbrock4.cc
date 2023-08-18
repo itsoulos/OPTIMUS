@@ -27,8 +27,11 @@ int	getdimension()
 
 void    init(QJsonObject data)
 {
-    //if(data.contains("natoms"))
-    //    dimension=data["natoms"].toString().toInt();
+    if(data.contains("natoms"))
+    {
+        dimension=data["natoms"].toString().toInt();
+	N=dimension;
+    }
 }
 void 	getmargins(vector<Interval> &x)
 {

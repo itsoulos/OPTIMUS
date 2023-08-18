@@ -37,7 +37,7 @@ then
 	METHODPARAMS="--parallelPsoParticles=40 --subCluster=5 --subClusterEnable=1 --pNumber=1 --parallelPropagateMethod=Nto1 --similarityMaxCount=15"
 elif [ $METHOD = "pDoubleGenetic" ]
 then
-	METHODPARAMS="--double_chromosomes=200 --double_generations=200  --sample_method=uniform --localsearch_method=bfgs --double_localsearchrate=0.01 --subCluster=1 --subClusterEnable=1 --centers=1 --parallelPropagateMethod=1toN --pNumber=0"
+	METHODPARAMS="--double_chromosomes=1000 --double_generations=200  --sample_method=kmeans --localsearch_method=bfgs --double_localsearchrate=0.01 --subCluster=1 --subClusterEnable=1 --centers=200 --parallelPropagateMethod=NtoN --pNumber=5"
 elif [ $METHOD = "NeuralMinimizer" ]
 then
 	METHODPARAMS="--neural_model=neural --neural_trainmethod=lbfgs"

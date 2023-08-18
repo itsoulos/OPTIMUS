@@ -70,6 +70,11 @@ private:
     virtual void done();
 
 
+    void         select(int subClusterIndex);
+    void         mutate(int subClusterIndex);
+    void         crossover(int subClusterIndex);
+    void         sendIslandToIsland(int from,int to);
+    vector<Data> runKmeans(int pop,int K);
 public:
     /**
      * @brief DoubleGenetic the constructor of the class.
