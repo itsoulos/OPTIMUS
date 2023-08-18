@@ -1,4 +1,4 @@
-METHOD=Pso
+METHOD=pDoubleGenetic
 METHODPARAMS=""
 ### Available local search methods: bfgs, gradient, adam, lbfgs
 if [ $METHOD = "Minfinder" ]
@@ -32,6 +32,9 @@ then
 elif [ $METHOD = "MinCenter" ]
 then
 	METHODPARAMS="--mincenter_samples=600 --mincenter_centers=100 --mincenter_iterations=100"
+elif [ $METHOD = "pDoubleGenetic" ]
+then
+	METHODPARAMS="--double_chromosomes=200 --double_generations=200  --sample_method=uniform --localsearch_method=bfgs --double_localsearchrate=0.01 --subCluster=1 --subClusterEnable=1 --centers=200 --parallelPropagateMethod=NtoN --pNumber=5"
 elif [ $METHOD = "parallelPso" ]
 then
 	METHODPARAMS="--parallelPsoParticles=40 --subCluster=5 --subClusterEnable=1 --pNumber=1 --parallelPropagateMethod=Nto1 --similarityMaxCount=15"

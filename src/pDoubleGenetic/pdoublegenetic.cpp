@@ -294,11 +294,12 @@ bool pDoubleGenetic::checkSubCluster(int subClusterName)
     else
         similarityCurrentCount.at(subClusterName) = 0;
     if (similarityCurrentCount.at(subClusterName) >= similarityMaxCount)
-        return true;
-    /*
+	    ;
+   //     return true;
+    
 
-           double bestValue = fabs(bestF2xInCluster.at(subClusterName));
            //double bestValue = fabs(dmin);
+           double bestValue = fabs(bestF2xInCluster.at(subClusterName));
            doublebox_xx1.at(subClusterName) += bestValue;
            doublebox_xx2.at(subClusterName) += bestValue * bestValue;
            doublebox_variance.at(subClusterName) = doublebox_xx2.at(subClusterName) / (generation + 1) - (doublebox_xx1.at(subClusterName) / (generation + 1)) * (doublebox_xx1.at(subClusterName) / (generation + 1));
@@ -307,9 +308,11 @@ bool pDoubleGenetic::checkSubCluster(int subClusterName)
                bestF2xInClusterOLD.at(subClusterName) = bestF2xInCluster.at(subClusterName);
                doublebox_stopat.at(subClusterName) = doublebox_variance.at(subClusterName) / 2.0;
            }
-           //printf("%4d] doublebox_variance.at(%d) : %f doublebox_stopat.at(%d) : %f different  : %lf\n", generation, subClusterName, doublebox_variance.at(subClusterName), subClusterName, doublebox_stopat.at(subClusterName), subClusterName, fabs(doublebox_variance.at(subClusterName) - doublebox_stopat.at(subClusterName)));
+	   if(doublebox_stopat.at(subClusterName)<1e-9)
+		   doublebox_stopat.at(subClusterName)=doublebox_variance.at(subClusterName)/2.0;
+           printf("%4d] doublebox_variance.at(%d) : %f doublebox_stopat.at(%d) : %f different  : %lf\n", generation, subClusterName, doublebox_variance.at(subClusterName), subClusterName, doublebox_stopat.at(subClusterName), subClusterName, fabs(doublebox_variance.at(subClusterName) - doublebox_stopat.at(subClusterName)));
            return generation >= double_generations || (doublebox_variance.at(subClusterName) <= doublebox_stopat.at(subClusterName) && generation>=20);
-   */
+   
     return false;
 }
 void pDoubleGenetic::step()
