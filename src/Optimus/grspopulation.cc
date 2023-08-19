@@ -38,10 +38,11 @@ int     GrsPopulation::randint()
 void	GrsPopulation::reset()
 {
 	generation = 0;
-	for(int i=0;i<genome_count;i++)
-		for(int j=0;j<genome_size;j++)
+	int i,j;
+	for( i=0;i<genome_count;i++)
+		for( j=0;j<genome_size;j++)
                 genome[i][j]=randint()%MAX_RULE;
-	for(int i=0;i<genome_count;i++)
+	for( i=0;i<genome_count;i++)
 			fitness_array[i]=-1e+100;
 }
 
