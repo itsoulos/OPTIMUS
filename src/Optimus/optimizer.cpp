@@ -159,9 +159,7 @@ double  Optimizer::localSearch(Data &x)
         {
             n.step();
         }
-	printf("Entering done \n");
         n.done();
-	printf("Finishing done \n");
         x = n.getBestX();
         y = myProblem->funmin(x);
 	return y;
