@@ -286,6 +286,9 @@ bool pDoubleGenetic::terminated()
 bool pDoubleGenetic::checkSubCluster(int subClusterName)
 {
 
+	QString stop_method=params["double_stoprule"].toString();
+	if(stop_method == "similarity")
+	{
     double difference = fabs(bestF2xInClusterOLD.at(subClusterName) - bestF2xInCluster.at(subClusterName));
     // printf("%d] F2x(%d) : %f F2xOLD.at(%d) : %f different  : %f\n", generation, subClusterName, bestF2xInCluster.at(subClusterName), subClusterName, bestF2xInClusterOLD.at(subClusterName), subClusterName, difference);
     //  if (bestF2xInClusterOLD.at(subClusterName) == bestF2xInCluster.at(subClusterName))
@@ -294,16 +297,16 @@ bool pDoubleGenetic::checkSubCluster(int subClusterName)
     else
         similarityCurrentCount.at(subClusterName) = 0;
     if (similarityCurrentCount.at(subClusterName) >= similarityMaxCount)
-	    ;
-   //     return true;
-    
+        return true;
+    else return false;
+	}
 
            //double bestValue = fabs(dmin);
            double bestValue = fabs(1.0+bestF2xInCluster.at(subClusterName));
            doublebox_xx1.at(subClusterName) += bestValue;
            doublebox_xx2.at(subClusterName) += bestValue * bestValue;
            doublebox_variance.at(subClusterName) = doublebox_xx2.at(subClusterName) / (generation + 1) - (doublebox_xx1.at(subClusterName) / (generation + 1)) * (doublebox_xx1.at(subClusterName) / (generation + 1));
-           if (bestF2xInCluster.at(subClusterName) < bestF2xInClusterOLD.at(subClusterName))
+           if (bestF2xInCluster.at(subClusterName) < bestF2xInClusterOLD.at(subClusterName) ||  generation<=1)
            {
                bestF2xInClusterOLD.at(subClusterName) = bestF2xInCluster.at(subClusterName);
                doublebox_stopat.at(subClusterName) = doublebox_variance.at(subClusterName) / 2.0;
@@ -629,14 +632,35 @@ void pDoubleGenetic::init()
 
         vector<Data> centerValues = runKmeans(double_chromosomes * subCluster,
                                               centers * subCluster);
+	int currentCenters = 0;
+	vector<Data> finalCenterValues;
+	for(int i=0;i<centers;i++)
+	{
+		double dmin = 1e+100;
+		int imin = -1;
+		for(int j=0;j<i;j++)
+		{
+			if(i==j) continue;
+			if(getDistance(centerValues[i],centerValues[j])<dmin)
+			{
+				dmin = getDistance(centerValues[i],centerValues[j]);
+				imin = j;
+			}
+		}
+		if(dmin>1e-8){
+			finalCenterValues.push_back(centerValues[i]);
+			currentCenters++;
+		}
+	}
 
+	centers  = finalCenterValues.size();
         double_chromosomes = centers;
         population = double_chromosomes * subCluster;
         fitnessArray.resize(population);
         chromosome.resize(population);
         for(int i=0;i<population;i++)
         {
-             chromosome[i]=centerValues[i];
+             chromosome[i]=finalCenterValues[i];
              fitnessArray[i]=myProblem->funmin(chromosome[i]);
         }
         /*
