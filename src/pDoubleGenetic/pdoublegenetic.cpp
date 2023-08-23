@@ -287,10 +287,11 @@ bool pDoubleGenetic::checkSubCluster(int subClusterName)
 {
 
 	QString stop_method=params["double_stoprule"].toString();
+    double difference = fabs(bestF2xInClusterOLD.at(subClusterName) - bestF2xInCluster.at(subClusterName));
+     printf("%d] F2x(%d) : %f F2xOLD.at(%d) : %f different  : %f\n", generation, subClusterName, bestF2xInCluster.at(subClusterName), subClusterName, bestF2xInClusterOLD.at(subClusterName), subClusterName, difference);
+
 	if(stop_method == "similarity")
 	{
-    double difference = fabs(bestF2xInClusterOLD.at(subClusterName) - bestF2xInCluster.at(subClusterName));
-    // printf("%d] F2x(%d) : %f F2xOLD.at(%d) : %f different  : %f\n", generation, subClusterName, bestF2xInCluster.at(subClusterName), subClusterName, bestF2xInClusterOLD.at(subClusterName), subClusterName, difference);
     //  if (bestF2xInClusterOLD.at(subClusterName) == bestF2xInCluster.at(subClusterName))
     if (difference < 1e-8)
         similarityCurrentCount.at(subClusterName)++;
@@ -318,7 +319,7 @@ bool pDoubleGenetic::checkSubCluster(int subClusterName)
        }
 
 
-               printf("%4d] doublebox_variance.at(%d) : %f doublebox_stopat.at(%d) : %f different  : %lf\n", generation, subClusterName, doublebox_variance.at(subClusterName), subClusterName, doublebox_stopat.at(subClusterName), subClusterName, fabs(doublebox_variance.at(subClusterName) - doublebox_stopat.at(subClusterName)));
+             //  printf("%4d] doublebox_variance.at(%d) : %f doublebox_stopat.at(%d) : %f different  : %lf\n", generation, subClusterName, doublebox_variance.at(subClusterName), subClusterName, doublebox_stopat.at(subClusterName), subClusterName, fabs(doublebox_variance.at(subClusterName) - doublebox_stopat.at(subClusterName)));
            return generation >= double_generations || (doublebox_variance.at(subClusterName) <= doublebox_stopat.at(subClusterName) && generation>=20);
    
     return false;

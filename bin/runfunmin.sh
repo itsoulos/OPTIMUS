@@ -1,4 +1,4 @@
-METHOD=pDoubleGenetic
+METHOD=DoubleGenetic
 METHODPARAMS=""
 ### Available local search methods: bfgs, gradient, adam, lbfgs
 if [ $METHOD = "Minfinder" ]
@@ -37,7 +37,7 @@ then
 	METHODPARAMS="--parallelPsoParticles=40 --subCluster=5 --subClusterEnable=1 --pNumber=1 --parallelPropagateMethod=Nto1 --similarityMaxCount=15"
 elif [ $METHOD = "pDoubleGenetic" ]
 then
-	METHODPARAMS="--double_chromosomes=200 --double_generations=200  --localsearch_method=bfgs --double_localsearchrate=0.01 --subCluster=1 --subClusterEnable=1 --centers=200 --parallelPropagateMethod=NtoN --pNumber=5  --rbf_samples=100 --rbf_sampler_weights=10 --mlp_samples=1000 --sample_method=uniform double_stoprule=doublebox"
+	METHODPARAMS="--double_chromosomes=200 --double_generations=200  --localsearch_method=bfgs --double_localsearchrate=0.01 --subCluster=1 --subClusterEnable=1 --centers=200 --parallelPropagateMethod=NtoN --pNumber=5  --rbf_samples=100 --rbf_sampler_weights=10 --mlp_samples=1000 --sample_method=triangular double_stoprule=doublebox"
 elif [ $METHOD = "NeuralMinimizer" ]
 then
 	METHODPARAMS="--neural_model=neural --neural_trainmethod=lbfgs"
