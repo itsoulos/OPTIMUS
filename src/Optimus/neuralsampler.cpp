@@ -206,6 +206,7 @@ void    NeuralSampler::trainModel(QString method)
         weight[i]=0.1*(2.0*drand48()-1.0);
     }
 
+    method = "lbfgs";
     if(method=="lbfgs")
     {
     Lbfgs lt(np);

@@ -3,11 +3,14 @@ DATAPATH=~/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfolding/
 #DATAPATH=/home/sheridan/Desktop/ERGASIES/SECDATA/
 NODES=10
 
-METHOD=pDoubleGenetic
+METHOD=DoubleGenetic
 METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then
 	METHODPARAMS="--minfinder_samples=25 --minfinder_sampling=repulsion"
+elif [ $METHOD = "DoubleGenetic" ]
+then
+	METHODPARAMS="--double_chromosomes=200 --double_generations=200  --localsearch_method=bfgs --double_localsearchrate=0.001 --sample_method=mlp --mlp_samples=2000"
 elif [ $METHOD = "iPso" ]
 then
 	METHODPARAMS="--ipso_particles=100 --ipso_localsearch_rate=0.05 --ipso_stoppingrule=best_fitness --ipso_gradientcheck=true --ipso_inertiatype=1 --localsearch_method=adam"
@@ -36,6 +39,6 @@ PROBLEM=RbfTest
 NODES=$2
 
 MLPARAMS="--trainName=$DATAPATH/$1.train --testName=$DATAPATH/$1.test --nodes=$NODES --natoms=$2"
-echo ./OptimusApp --filename=../PROBLEMS/libdynamicRbf.so  --opt_method=$METHOD   $METHODPARAMS  $MLPARAMS --iterations=30
-./OptimusApp --filename=../PROBLEMS/libdynamicRbf.so  --opt_method=$METHOD   $METHODPARAMS  $MLPARAMS  --iterations=30
+echo ./OptimusApp --filename=../PROBLEMS/libfunctionalRbf.so  --opt_method=$METHOD   $METHODPARAMS  $MLPARAMS --iterations=30
+./OptimusApp --filename=../PROBLEMS/libfunctionalRbf.so  --opt_method=$METHOD   $METHODPARAMS  $MLPARAMS  --iterations=30
 
