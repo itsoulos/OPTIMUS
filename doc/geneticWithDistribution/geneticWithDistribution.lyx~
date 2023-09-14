@@ -516,111 +516,11 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-
-\series bold
-Genetic algorithms are methods based on biological observations such as
- reproduction and mutation 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "genetic1,genetic2"
-literal "false"
-
-\end_inset
-
-.
- The genetic algorithms work by creating and maintaining a population of
- candidate solutions (chromosomes).
- This population is altered iteratively though operations such as crossover
- and mutation until some stopping criteria are met.
- They have many advantages, such as simplicity in the implementation, endurance
- in noise, they can be easily parallelized etc.
- Also, they have been applied to many problems, such as aerodynamic optimization
- 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "par1"
-literal "true"
-
-\end_inset
-
-, steel structure optimization 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "par2"
-literal "true"
-
-\end_inset
-
-, brain images 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "par3"
-literal "true"
-
-\end_inset
-
- etc.
- They have been used to train neural networks in various research papers,
- such as the work of Leung et al 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "geneticnn1"
-literal "false"
-
-\end_inset
-
- which estimates the structure and the weights of a neural network through
- a genetic algorithm, the evolution of a neural networks for daily rainfall–runo
-ff forecasting 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "geneticnn2"
-literal "false"
-
-\end_inset
-
-, the evolution of neural networks to predict the deformation modulus of
- rock masses 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "geneticnn3"
-literal "false"
-
-\end_inset
-
- etc.
- 
-\end_layout
-
-\begin_layout Standard
-The inventor of genetic algorithms is John Holland, an American scientist
- and professor of laboratory science and mechanical engineering.
- He was born on February 2, 1929, in Fort Wayne, Indiana, and passed away
- on August 9, 2015 
+One of the basic techniques included in the area of stochastic techniques
+ are Genetic Algorithms, initially proposed by John Holland 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Holland1"
-literal "false"
-
-\end_inset
-
-.
- Holland was a professor at the University of Michigan and a pioneer in
- the fields of mechanical engineering and artificial intelligence 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Holland1"
-literal "false"
-
-\end_inset
-
-.
- He was the first to introduce the fundamental concepts of genetic algorithms
- in the book "Adaptation in Natural and Artificial Systems", marking the
- birth of the genetic algorithms field 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Holland2"
 literal "false"
 
 \end_inset
@@ -631,22 +531,13 @@ literal "false"
  selection, and crossover 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "Stender"
+key "Stender,genetic1,genetic2"
 literal "false"
 
 \end_inset
 
 .
- Following the presentation of these ideas by Holland in his book on genetic
- algorithms
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Stender"
-literal "false"
-
-\end_inset
-
-, genetic algorithms have evolved in various domains.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -777,7 +668,7 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-Finally, genetic algorithms are extremely useful in the field of medicine,
+Moreover, genetic algorithms are extremely useful in the field of medicine,
  as they are employed in therapy optimization, medical personnel training,
  genetic diagnosis, and genomic research.
  More specifically, in the study by Doewes, Nair & Sharma 
@@ -849,43 +740,22 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-The reason it is called a "genetic algorithm" is because its operation resembles
- the process of natural evolution that occurs in the biological world.
- Just as parents pass down their genes to their offspring, genetic algorithms
- create new solutions from existing ones by combining genes and introducing
- small random changes.
- Solutions that are "better adapted" are more likely to be selected for
- the creation of new generations
+The current work aims to improve the efficiency of the genetic algorithm
+ in global optimization problems, by introducing a new way of initializing
+ the population's chromosomes.
+ In the new initialization technique, the k-means 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "Goldberg"
+key "kmeansNew"
 literal "false"
 
 \end_inset
 
-.
- Genetic algorithms belong to a category of evolutionary algorithms that
- draw inspiration from biological evolution and natural selection.
- They provide an effective approach for solving optimization problems and
- addressing complex issues
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Holland1"
-literal "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-The purpose of this research focuses on the efficiency of the algorithm
- by examining the initial parameters before the initiation of the genetic
- algorithm.
- The proposed initial distribution enhances the method's performance compared
- to the classical genetic algorithm, and furthermore, the rejection rule
- for similar chromosomes is suggested, resulting in the optimal speed of
- the process.
+ method is used to find initial values of the chromosomes that will lead
+ to finding the global minimum faster and more efficient than chromosomes
+ generated by some random distribution.
+ Also, the proposed technique discards chromosomes which after applying
+ the k-means technique are close to each other.
 \end_layout
 
 \begin_layout Standard
@@ -899,9 +769,7 @@ noprefix "false"
 
 \end_inset
 
- the proposed a distribution is proposed based on the k-means clustering
- algorithm, in combination with a sampling rejection algorithm are discussed
- in detail, in section 
+ the proposed method is discussed in detail, in section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Experiments"
@@ -925,50 +793,6 @@ noprefix "false"
  some conclusions and future guidelines are listed.
 \end_layout
 
-\begin_layout Standard
-\begin_inset Float figure
-placement H
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename cross.png
-	lyxscale 50
-	scale 60
-
-\end_inset
-
-
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Two-point crossover
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Two-point-crossover"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Section
 The proposed method
 \begin_inset CommandInset label
@@ -983,103 +807,337 @@ name "sec:The-proposed-method"
 \begin_layout Standard
 The fundamental operation of a genetic algorithm mimics the process of natural
  evolution.
- The algorithm begins by creating an initial population of solutions that
- represents potential answers to a problem.
- Each solution is symbolized as a "gene," which represents a code describing
- the characteristics of that solution.
+ The algorithm begins by creating an initial population of solutions, called
+ chromosomes that represents potential solution of the objective problem.
  The genetic algorithm operates by reproducing and evolving populations
  of solutions through iterative steps.
  Following the analogy to natural evolution, the genetic algorithm allows
- optimal solutions to "evolve" through successive generations 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Goldberg"
-literal "false"
+ optimal solutions to "evolve" through successive generations.
+ The main steps of the used genetic algorithm are described below:
+\end_layout
 
+\begin_layout Enumerate
+
+\series bold
+Initialization Step
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $N_{c}$
+\end_inset
+
+ as the number of chromosomes.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $N_{g}$
+\end_inset
+
+ the maximum number of allowed generations.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Initialize
+\series default
+ nandomly the 
+\begin_inset Formula $N_{C}$
+\end_inset
+
+ chromosomes in in 
+\begin_inset Formula $S$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ as 
+\begin_inset Formula $p_{s}$
+\end_inset
+
+ the selection rate of the algorithm, with 
+\begin_inset Formula $p_{s}\le1$
 \end_inset
 
 .
 \end_layout
 
-\begin_layout Standard
-The genetic algorithm operates by reproducing and evolving populations of
- solutions through iterative steps.
- The operational process is described as follows
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ as 
+\begin_inset Formula $p_{m}$
+\end_inset
+
+ the mutation rate, with 
+\begin_inset Formula $p_{m}\le1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ iter=0.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Fitness calculation Step 
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:Fitness-calculation-Step"
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1,\ldots,N_{g}$
+\end_inset
+
+ 
+\series bold
+do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Calculate
+\series default
+ the fitness 
+\begin_inset Formula $f_{i}=f\left(g_{i}\right)$
+\end_inset
+
+ of chromosome 
+\begin_inset Formula $g_{i}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Genetic operations step
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Selection procedure.
+
+\series default
+ The chromosomes are sorted according to their fitness values.
+ The 
+\begin_inset Formula $\left(1-p_{s}\right)\times N_{c}$
+\end_inset
+
+ chromosomes with the lowest fitness values are transferred intact to the
+ next generation.
+ The remain chromosomes are substituted by offspings created in the crossover
+ procedure.
+ During the selection process for each offspring two parents are selected
+ from the population using the tournament selection.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Crossover procedure
+\series default
+: For every pair 
+\begin_inset Formula $(z,w)$
+\end_inset
+
+ of selected parents two additional chromosomes 
+\begin_inset Formula $\tilde{z}$
+\end_inset
+
+ and 
+\begin_inset Formula $\tilde{w}$
+\end_inset
+
+ are produced using the following equations:
+\begin_inset Formula 
+\begin{eqnarray}
+\tilde{z_{i}} & = & a_{i}z_{i}+\left(1-a_{i}\right)w_{i}\nonumber \\
+\tilde{w_{i}} & = & a_{i}w_{i}+\left(1-a_{i}\right)z_{i}\label{eq:crossover_ali-1}
+\end{eqnarray}
+
+\end_inset
+
+The value 
+\begin_inset Formula $a_{i}$
+\end_inset
+
+ is a randomly selected number with 
+\begin_inset Formula $a_{i}\in[-0.5,1.5]$
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kaelo"
+literal "true"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Mutation procedure
+\series default
+:
+\series bold
+ 
+\series default
+For each element of every chromosome, a random number 
+\begin_inset Formula $r\in\left[0,1\right]$
+\end_inset
+
+ is drawn.
+ The corresponding element is altered randomly if 
+\begin_inset Formula $r\le p_{m}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Termination Check Step
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $iter=iter+1$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+If
+\series default
+ 
+\begin_inset Formula $\mbox{iter}\ge N_{g}$
+\end_inset
+
+ or the proposed stopping rule of Tsoulos 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "Yu,Lawrence"
+key "Tsoulos1"
 literal "false"
 
 \end_inset
 
-:
-\end_layout
-
-\begin_layout Itemize
-Initialization: We start by creating an initial population of solutions
- that represent potential answers to the problem.
- Each solution is represented as a set of parameters or "genes."
-\end_layout
-
-\begin_layout Itemize
-Selection: A subset of the current solutions is chosen based on their quality,
- which is measured by a cost function or fitness.
- More adapted solutions have a higher chance of being selected.
-\end_layout
-
-\begin_layout Itemize
-Crossover: Two selected solutions (parents) are combined to create new solutions
- (offspring).
- During crossover, genes are exchanged between parents, introducing diversity.
- In this study, the technique of two-point crossover
+ is hold, then goto Local Search Step, else goto 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:Two-point-crossover"
+reference "enu:Fitness-calculation-Step"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- was employed for chromosome recombination.
+.
 \end_layout
 
-\begin_layout Itemize
-Mutation: Some genes in the offspring are randomly modified.
- This introduces more diversity into the population and helps identify new
- solutions.
-\end_layout
+\end_deeper
+\begin_layout Enumerate
 
-\begin_layout Itemize
-Evaluation: The new offspring are evaluated based on the fitness function
- to determine how well they solve the problem.
-\end_layout
+\series bold
+Local Search Step.
+ 
+\series default
+Apply a local search procedure to chromosome of the population with the
+ lowest fitness value and report the obtained minimum.
+ In the current work the BFGS variant of Powell 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Powell"
+literal "false"
 
-\begin_layout Itemize
-Replacement: The best solutions from the offspring and the current population
- are chosen to form the next generation of the population.
-\end_layout
+\end_inset
 
-\begin_layout Itemize
-Iteration: The above steps are repeated for multiple generations or until
- a termination criterion is met (such as a maximum number of generations
- or achieving a desired level of fitness).
+ was used as a local search procedure.
 \end_layout
 
 \begin_layout Standard
 
 \series bold
-(termination rule ? and reference to BFGS)
-\end_layout
-
-\begin_layout Standard
 In each generation, the selected solutions undergoing crossover are influenced
- by their quality, and diversity is introduced through mutation.
+ by their quality, and diversity is introduced through 
+\emph on
+mutation
+\emph default
+.
  As generations progress, the population converges towards solutions that
  exhibit higher adaptation to the problem.
 \end_layout
 
 \begin_layout Standard
+
+\series bold
 The combined application of selection, crossover, and mutation gradually
  enhances the adaptation of solutions to the problem, allowing them to converge
  towards optimal solutions.
@@ -1093,17 +1151,8 @@ The combined application of selection, crossover, and mutation gradually
 \end_layout
 
 \begin_layout Standard
-In each generation, the selected solutions that undergo crossover are influenced
- by their quality and the diversity introduced through mutation.
- As generations pass, the population converges towards solutions that exhibit
- higher adaptation to the problem.
- This is the operational mechanism of a genetic algorithm, combining concepts
- from biological evolution with the science of computation to solve optimization
- and solution search problems.
- 
-\end_layout
 
-\begin_layout Standard
+\series bold
 The significance of the initial distribution in solution finding within
  optimization is essential across various domains and techniques.
  Apart from genetic algorithms, the initial distribution impacts other optimizat
@@ -1745,29 +1794,6 @@ f(x)=4x_{1}^{2}-2.1x_{1}^{4}+\frac{1}{3}x_{1}^{6}+x_{1}x_{2}-4x_{2}^{2}+4x_{2}^{
 \begin_layout Itemize
 
 \series bold
-Discus function
-\series default
-\emph on
- 
-\emph default
-The function:
-\begin_inset Formula 
-\[
-f(x)=10^{6}x_{1}^{2}+\sum_{i=2}^{n}x_{i}^{2}
-\]
-
-\end_inset
-
-The value 
-\begin_inset Formula $n=10$
-\end_inset
-
- was used in the conducted experiments.
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
 Easom
 \series default
  function: 
@@ -1799,7 +1825,7 @@ f(x)=-\exp\left(-0.5\sum_{i=1}^{n}x_{i}^{2}\right),\quad-1\le x_{i}\le1
 \end_inset
 
  The values 
-\begin_inset Formula $n=4,16,64$
+\begin_inset Formula $n=4,8,16,32$
 \end_inset
 
  were used in the executed experiments.
@@ -1819,6 +1845,28 @@ f(x)=1+\frac{1}{200}\sum_{i=1}^{2}x_{i}^{2}-\prod_{i=1}^{2}\frac{\cos(x_{i})}{\s
 \end_inset
 
 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Griewank10
+\series default
+ function.
+ The function is given by the equation 
+\begin_inset Formula 
+\[
+f(x)=\sum_{i=1}^{n}\frac{x_{i}^{2}}{4000}-\prod_{i=1}^{n}\cos\left(\frac{x_{i}}{\sqrt{i}}\right)+1
+\]
+
+\end_inset
+
+In our experiments we have used 
+\begin_inset Formula $n=10$
+\end_inset
+
+ and the global minimum is 0.0 The function has several local minima in the
+ specified range.
 \end_layout
 
 \begin_layout Itemize
@@ -1858,7 +1906,35 @@ literal "true"
 \end_inset
 
  and 
-\begin_inset Formula $w=50,\ 100$
+\begin_inset Formula $w=50$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Goldstein and Price function 
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+
+\begin_inset Formula 
+\begin{eqnarray*}
+f(x) & = & \left[1+\left(x_{1}+x_{2}+1\right)^{2}\right.\\
+ &  & \left(19-14x_{1}+3x_{1}^{2}-14x_{2}+6x_{1}x_{2}+3x_{2}^{2}\right)]\times\\
+ &  & [30+\left(2x_{1}-3x_{2}\right)^{2}\\
+ &  & \left(18-32x_{1}+12x_{1}^{2}+48x_{2}-36x_{1}x_{2}+27x_{2}^{2}\right)]
+\end{eqnarray*}
+
+\end_inset
+
+With 
+\begin_inset Formula $x\in[-2,2]^{2}$
 \end_inset
 
 .
@@ -2043,10 +2119,53 @@ f(x)=\sum_{i=1}^{n-1}\left(100\left(x_{i+1}-x_{i}^{2}\right)^{2}+\left(x_{i}-1\r
 \end_inset
 
 In our experiments we used the values 
-\begin_inset Formula $n=4,\ 8$
+\begin_inset Formula $n=4,\ 8,\ 16$
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Shekel 5 
+\series default
+function.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+f(x)=-\sum_{i=1}^{5}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}
+\]
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+with 
+\begin_inset Formula $x\in[0,10]^{4}$
+\end_inset
+
+ and 
+\begin_inset Formula $a=\left(\begin{array}{cccc}
+4 & 4 & 4 & 4\\
+1 & 1 & 1 & 1\\
+8 & 8 & 8 & 8\\
+6 & 6 & 6 & 6\\
+3 & 7 & 3 & 7
+\end{array}\right),\ c=\left(\begin{array}{c}
+0.1\\
+0.2\\
+0.2\\
+0.4\\
+0.4
+\end{array}\right)$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
@@ -2094,51 +2213,6 @@ with
 \end_inset
 
 .
- 
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Shekel 5 
-\series default
-function.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-f(x)=-\sum_{i=1}^{5}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}
-\]
-
-\end_inset
-
- 
-\end_layout
-
-\begin_layout Standard
-with 
-\begin_inset Formula $x\in[0,10]^{4}$
-\end_inset
-
- and 
-\begin_inset Formula $a=\left(\begin{array}{cccc}
-4 & 4 & 4 & 4\\
-1 & 1 & 1 & 1\\
-8 & 8 & 8 & 8\\
-6 & 6 & 6 & 6\\
-3 & 7 & 3 & 7
-\end{array}\right),\ c=\left(\begin{array}{c}
-0.1\\
-0.2\\
-0.2\\
-0.4\\
-0.4
-\end{array}\right)$
-\end_inset
-
-.
- 
 \end_layout
 
 \begin_layout Itemize
@@ -2209,7 +2283,7 @@ f(x)=-\left(2.5\prod_{i=1}^{n}\sin\left(x_{i}-z\right)+\prod_{i=1}^{n}\sin\left(
 \end_inset
 
 The values of 
-\begin_inset Formula $n=4,8$
+\begin_inset Formula $n=4,8,16$
 \end_inset
 
  and 
@@ -2330,6 +2404,8 @@ In every table, an additional line was added under the name TOTAL, representing
 \end_layout
 
 \begin_layout Standard
+
+\series bold
 Table 1
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2527,20 +2603,7 @@ KMEANS
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-bf1
+BF1
 \end_layout
 
 \end_inset
@@ -2617,20 +2680,7 @@ bf1
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-bf2
+BF2
 \end_layout
 
 \end_inset
@@ -2707,20 +2757,7 @@ bf2
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-branin
+BRANIN
 \end_layout
 
 \end_inset
@@ -2900,7 +2937,7 @@ CM4
 \uwave off
 \noun off
 \color none
-Camel
+CAMEL
 \end_layout
 
 \end_inset
@@ -2990,7 +3027,7 @@ Camel
 \uwave off
 \noun off
 \color none
-Easom
+EASOM
 \end_layout
 
 \end_inset
@@ -3067,20 +3104,7 @@ Easom
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-exp4
+EXP4
 \end_layout
 
 \end_inset
@@ -3170,7 +3194,7 @@ exp4
 \uwave off
 \noun off
 \color none
-Exp8
+EXP8
 \end_layout
 
 \end_inset
@@ -3247,20 +3271,7 @@ Exp8
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-exp16
+EXP16
 \end_layout
 
 \end_inset
@@ -3350,7 +3361,7 @@ exp16
 \uwave off
 \noun off
 \color none
-Exp32
+EXP32
 \end_layout
 
 \end_inset
@@ -3440,7 +3451,7 @@ Exp32
 \uwave off
 \noun off
 \color none
-Gkls250
+GKLS250
 \end_layout
 
 \end_inset
@@ -3530,7 +3541,7 @@ Gkls250
 \uwave off
 \noun off
 \color none
-Gkls350
+GKLS350
 \end_layout
 
 \end_inset
@@ -3620,7 +3631,7 @@ Gkls350
 \uwave off
 \noun off
 \color none
-goldstein
+GOLDSTEIN
 \end_layout
 
 \end_inset
@@ -3710,7 +3721,7 @@ goldstein
 \uwave off
 \noun off
 \color none
-Griewank2
+GRIEWANK2
 \end_layout
 
 \end_inset
@@ -3800,7 +3811,7 @@ Griewank2
 \uwave off
 \noun off
 \color none
-Griewank10
+GRIEWANK10
 \end_layout
 
 \end_inset
@@ -3890,7 +3901,7 @@ Griewank10
 \uwave off
 \noun off
 \color none
-Hansen
+HANSEN
 \end_layout
 
 \end_inset
@@ -3980,7 +3991,7 @@ Hansen
 \uwave off
 \noun off
 \color none
-Hartman3
+HARTMAN3
 \end_layout
 
 \end_inset
@@ -4070,7 +4081,7 @@ Hartman3
 \uwave off
 \noun off
 \color none
-Hartman6
+HARTMAN6
 \end_layout
 
 \end_inset
@@ -4160,7 +4171,7 @@ Hartman6
 \uwave off
 \noun off
 \color none
-potential3
+POTENTIAL3
 \end_layout
 
 \end_inset
@@ -4250,7 +4261,7 @@ potential3
 \uwave off
 \noun off
 \color none
-Potential5
+POTENTIAL5
 \end_layout
 
 \end_inset
@@ -4327,20 +4338,7 @@ Potential5
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-Rastrigin
+RASTRIGIN
 \end_layout
 
 \end_inset
@@ -4430,7 +4428,7 @@ Rastrigin
 \uwave off
 \noun off
 \color none
-rosenbrock4
+ROSENBROCK4
 \end_layout
 
 \end_inset
@@ -4520,7 +4518,7 @@ rosenbrock4
 \uwave off
 \noun off
 \color none
-rosenbrock8
+ROSENBROCK8
 \end_layout
 
 \end_inset
@@ -4610,7 +4608,7 @@ rosenbrock8
 \uwave off
 \noun off
 \color none
-rosenbrock16
+ROSENBROCK16
 \end_layout
 
 \end_inset
@@ -4700,7 +4698,7 @@ rosenbrock16
 \uwave off
 \noun off
 \color none
-Shekel5
+SHEKEL5
 \end_layout
 
 \end_inset
@@ -4790,7 +4788,7 @@ Shekel5
 \uwave off
 \noun off
 \color none
-Shekel7
+SHEKEL7
 \end_layout
 
 \end_inset
@@ -4880,7 +4878,7 @@ Shekel7
 \uwave off
 \noun off
 \color none
-Shekel10
+SHEKEL10
 \end_layout
 
 \end_inset
@@ -4970,7 +4968,7 @@ Shekel10
 \uwave off
 \noun off
 \color none
-Test2n4
+TEST2N4
 \end_layout
 
 \end_inset
@@ -5060,7 +5058,7 @@ Test2n4
 \uwave off
 \noun off
 \color none
-Test2n5
+TEST2N5
 \end_layout
 
 \end_inset
@@ -5150,7 +5148,7 @@ Test2n5
 \uwave off
 \noun off
 \color none
-Test2n6
+TEST2N6
 \end_layout
 
 \end_inset
@@ -5240,7 +5238,7 @@ Test2n6
 \uwave off
 \noun off
 \color none
-Test2n7
+TEST2N7
 \end_layout
 
 \end_inset
@@ -5317,20 +5315,7 @@ Test2n7
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-sinu4
+SINU4
 \end_layout
 
 \end_inset
@@ -5420,7 +5405,7 @@ sinu4
 \uwave off
 \noun off
 \color none
-Sinu8
+SINU8
 \end_layout
 
 \end_inset
@@ -5497,20 +5482,7 @@ Sinu8
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-sinu16
+SINU16
 \end_layout
 
 \end_inset
@@ -5600,7 +5572,7 @@ sinu16
 \uwave off
 \noun off
 \color none
-Test30n3
+TEST30N3
 \end_layout
 
 \end_inset
@@ -5690,7 +5662,7 @@ Test30n3
 \uwave off
 \noun off
 \color none
-Test30n4
+TEST30N4
 \end_layout
 
 \end_inset
@@ -9542,36 +9514,6 @@ Van Luong T., Melab N., Talbi EG.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
-key "Holland1"
-literal "false"
-
-\end_inset
-
-J.
- Holland, Genetic Algorithms.
- Scientific American, Inc.: Vol.
- 267, No.
- 1 (July 1992), pp.
- 66-73, 1992.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "Holland2"
-literal "false"
-
-\end_inset
-
- J.
- Holland, Adaptation in Natural and Artificial Systems.
- The MIT Press, April 29, 1992.
- ISBN:9780262581110, 1992.
-\end_layout
-
-\begin_layout Bibliography
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
 key "Stender"
 literal "false"
 
@@ -9581,6 +9523,32 @@ J.
  Stender, Parallel Genetic Algorithms:Theory & Applications.
  Edition: IOS Press, 1993.
  
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "genetic1"
+literal "true"
+
+\end_inset
+
+D.
+ Goldberg, Genetic Algorithms in Search, Optimization and Machine Learning,
+ Addison-Wesley Publishing Company, Reading, Massachussets, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "genetic2"
+literal "true"
+
+\end_inset
+
+Z.
+ Michaelewicz, Genetic Algorithms + Data Structures = Evolution Programs.
+ Springer - Verlag, Berlin, 1996.
 \end_layout
 
 \begin_layout Bibliography
@@ -9925,42 +9893,75 @@ B.
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
-key "Goldberg"
+key "kmeansNew"
 literal "false"
 
 \end_inset
 
-D.E.
- Goldberg, Genetic Algorithms in Search, Optimization and Machine Learning.
- Publisher: Addison-Wesley Professional.
- 1989.
+M.
+ Ahmed, R.
+ Seraj, S.M.S.
+ Islam, The k-means algorithm: A comprehensive survey and performance evaluation
+, Electronics 
+\series bold
+9
+\series default
+, 1295, 2020.
 \end_layout
 
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
-key "Yu"
-literal "false"
+key "kaelo"
+literal "true"
 
 \end_inset
 
-X.
- Yu, M.
- Gen, Introduction to Evolutionary Algorithms.
- Springer London Dordrecht Heidelberg New York, 2010.
+P.
+ Kaelo, M.M.
+ Ali, Integrated crossover rules in real coded genetic algorithms, European
+ Journal of Operational Research 
+\series bold
+176
+\series default
+, pp.
+ 60-76, 2007.
 \end_layout
 
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
-key "Lawrence"
+key "Tsoulos1"
 literal "false"
 
 \end_inset
 
-D.
- Lawrence, Handbook Of Genetic Algorithms.
- Publisher: Thomson Publishing Group (First Edition), 1991.
+I.G.
+ Tsoulos, Modifications of real code genetic algorithm for global optimization,
+ Applied Mathematics and Computation 
+\series bold
+203
+\series default
+, pp.
+ 598-607, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Powell"
+literal "true"
+
+\end_inset
+
+M.J.D Powell, A Tolerant Algorithm for Linearly Constrained Optimization Calculati
+ons, Mathematical Programming 
+\series bold
+45
+\series default
+, pp.
+ 547-566, 1989.
+ 
 \end_layout
 
 \begin_layout Bibliography
