@@ -15,52 +15,21 @@ pdg::pdg(Problem *p)
     addParameter("subClusterEnable", "1", "the number of subclusters that play a role in the termination rule: [1, islands]");
     addParameter("subCluster", "5", "number of subclusters for pDoubleGenetic");
     addParameter("propagateMethod", "1to1", "The propagation method used. Available values: 1to1,1toN,Nto1,NtoN");
-    addParameter("propagateRate", "1", "The number of generations before the propagation takes place");
+    addParameter("propagateRate", "5", "The number of generations before the propagation takes place");
     addParameter("similarityMaxCount", "15", "Maximum allowed itearations for Similarity Stopping rule");
 }
-bool sortByFirstDesc(const pair<double, int> &a, const pair<double, int> &b)
+bool sortByFirstDesc(const pair<double, Data> &a, const pair<double, Data> &b)
 {
-    return a.first < b.first;
-}
-bool sortByFirstDesc2(const pair<double, Data> &a, const pair<double, Data> &b)
-{
-    return a.first < b.first;
+    return a.first > b.first;
 }
 void pdg::replace(int subClusterIndex, vector<pair<double, Data>> chrom)
 {
-    vector<pair<double, int>> tmp;
-    tmp.resize(populationOfCluster);
-    for (int i = 0; i < populationOfCluster; i++)
-    {
-        tmp.at(i).first = -1e+100;
-        tmp.at(i).second = 0;
-    }
-    for (int i = 0; i < populationOfCluster; i++)
-    {
-        if (tmp.at(i).first < fitnessArray.at(subClusterIndex).at(i))
-        {
-            tmp.at(i).first = fitnessArray.at(subClusterIndex).at(i);
-            tmp.at(i).second = i;
-        }
-    }
-    sort(tmp.begin(), tmp.end(), sortByFirstDesc);
-    tmp.resize(pNumber);
-    vector<int> tmp2;
     for (int i = 0; i < pNumber; i++)
     {
-        tmp2.push_back(tmp.at(i).second);
-    }
-    for (int i = 0; i < populationOfCluster; i++)
-    {
-        if (find(tmp2.begin(), tmp2.end(), i) != tmp2.end())
-        {
-            fitnessArray.at(subClusterIndex).at(i) = chrom.back().first;
-            chromosome.at(subClusterIndex).at(i) = chrom.back().second;
-            chrom.pop_back();
-        }
+        fitnessArray.at(subClusterIndex).at(populationOfCluster - 1 - i) = chrom.at(i).first;
+        chromosome.at(subClusterIndex).at(populationOfCluster - 1 - i) = chrom.at(i).second;
     }
 }
-
 
 void pdg::propagate()
 {
@@ -75,24 +44,13 @@ void pdg::propagate()
                 subCluster2 = rand() % subCluster;
             } while (subCluster1 == subCluster2);
 
-
             vector<pair<double, Data>> tmp;
-            tmp.resize(populationOfCluster);
-
-            for (int i = 0; i < populationOfCluster; i++)
-                tmp.at(i).first = 1e+100;
-
-            for (int i = 0; i < populationOfCluster; i++)
-            {
-                if (tmp.at(i).first > fitnessArray.at(subCluster1).at(i))
-                {
-                    tmp.at(i).first = fitnessArray.at(subCluster1).at(i);
-                    tmp.at(i).second = chromosome.at(subCluster1).at(i);
-                }
-            }
-            sort(tmp.begin(), tmp.end());
-            //sort(tmp.begin(), tmp.end(), sortByFirstDesc);
             tmp.resize(pNumber);
+            for (int i = 0; i < pNumber; i++)
+            {
+                tmp.at(i).first = fitnessArray.at(subCluster1).at(i);
+                tmp.at(i).second = chromosome.at(subCluster1).at(i);
+            }
             replace(subCluster2, tmp);
         }
         else if (propagateMethod == "1toN")
@@ -102,22 +60,14 @@ void pdg::propagate()
 
             for (int i = 0; i < subCluster; i++)
             {
-                tmp.resize(populationOfCluster);
-                for (int k = 0; k < populationOfCluster; k++)
-                    tmp.at(k).first = 1e+100;
+                tmp.resize(pNumber);
                 if (i == subCluster1)
                     continue;
-
-                for (int i = 0; i < populationOfCluster; i++)
+                for (int j = 0; j < pNumber; j++)
                 {
-                    if (tmp.at(i).first > fitnessArray.at(subCluster1).at(i))
-                    {
-                        tmp.at(i).first = fitnessArray.at(subCluster1).at(i);
-                        tmp.at(i).second = chromosome.at(subCluster1).at(i);
-                    }
+                    tmp.at(j).first = fitnessArray.at(subCluster1).at(j);
+                    tmp.at(j).second = chromosome.at(subCluster1).at(j);
                 }
-                sort(tmp.begin(), tmp.end());
-                tmp.resize(pNumber);
                 replace(i, tmp);
             }
         }
@@ -125,24 +75,17 @@ void pdg::propagate()
         {
             int subCluster2 = rand() % subCluster;
             vector<pair<double, Data>> tmp;
-            for (int e = 0; e < subCluster; e++)
+            for (int i = 0; i < subCluster; i++)
             {
-                tmp.resize(populationOfCluster);
-                for (int k = 0; k < populationOfCluster; k++)
-                    tmp.at(k).first = 1e+100;
-                if (e == subCluster2)
-                    continue;
-                int subCluster1 = e;
-                for (int i = 0; i < populationOfCluster; i++)
-                {
-                    if (tmp.at(i).first > populationOfCluster)
-                    {
-                        tmp.at(i).first = fitnessArray.at(subCluster1).at(i);
-                        tmp.at(i).second = chromosome.at(subCluster1).at(i);
-                    }
-                }
-                sort(tmp.begin(), tmp.end());
                 tmp.resize(pNumber);
+                if (i == subCluster2)
+                    continue;
+                int subCluster1 = i;
+                for (int j = 0; j < pNumber; j++)
+                {
+                    tmp.at(j).first = fitnessArray.at(subCluster1).at(j);
+                    tmp.at(j).second = chromosome.at(subCluster1).at(j);
+                }
                 replace(subCluster2, tmp);
             }
         }
@@ -153,24 +96,16 @@ void pdg::propagate()
             {
                 for (int j = 0; j < subCluster; j++)
                 {
-                    tmp.resize(populationOfCluster);
-                    for (int k = 0; k < populationOfCluster; k++)
-                        tmp.at(k).first = 1e+100;
+                    tmp.resize(pNumber);
                     if (i == j)
                         continue;
                     int subCluster1 = i;
                     int subCluster2 = j;
-
-                    for (int k = 0; k < populationOfCluster; k++)
+                    for (int j = 0; j < pNumber; j++)
                     {
-                        if (tmp.at(k).first > fitnessArray.at(subCluster1).at(i))
-                        {
-                            tmp.at(k).first = fitnessArray.at(subCluster1).at(i);
-                            tmp.at(k).second = chromosome.at(subCluster1).at(i);
-                        }
+                        tmp.at(j).first = fitnessArray.at(subCluster1).at(j);
+                        tmp.at(j).second = chromosome.at(subCluster1).at(j);
                     }
-                    sort(tmp.begin(), tmp.end());
-                    tmp.resize(pNumber);
                     replace(subCluster2, tmp);
                 }
             }
@@ -182,7 +117,6 @@ void pdg::calcFitnessArray(int subClusterIndex)
     bestF2xInClusterOLD.at(subClusterIndex) = bestF2xInCluster.at(subClusterIndex);
     double dmin = 1e+100;
 
-
     for (int j = 0; j < populationOfCluster; j++)
     {
         fitnessArray.at(subClusterIndex).at(j) = myProblem->funmin(chromosome.at(subClusterIndex).at(j));
@@ -190,10 +124,18 @@ void pdg::calcFitnessArray(int subClusterIndex)
         {
             fitnessArray.at(subClusterIndex).at(j) = localSearch(chromosome.at(subClusterIndex).at(j));
         }
-        if (fitnessArray.at(subClusterIndex).at(j) < dmin)
+#pragma omp critical
         {
-            dmin = fitnessArray.at(subClusterIndex).at(j);
-            chrom =chromosome.at(subClusterIndex).at(j);
+            if (fitnessArray.at(subClusterIndex).at(j) < dmin)
+            {
+                dmin = fitnessArray.at(subClusterIndex).at(j);
+                chrom = chromosome.at(subClusterIndex).at(j);
+            }
+            if (fitnessArray.at(subClusterIndex).at(j) < bestF2xInCluster.at(subClusterIndex))
+            {
+                bestF2xInCluster.at(subClusterIndex) = fitnessArray.at(subClusterIndex).at(j);
+                // chrom =chromosome.at(subClusterIndex).at(j);
+            }
         }
         if (debug == "yes" && j % 10 == 0)
         {
@@ -254,22 +196,23 @@ void pdg::crossover(int subClusterIndex)
     Data parent0, parent1;
     parent0.resize(myProblem->getDimension());
     parent1.resize(myProblem->getDimension());
-    while (populationOfCluster < nchildren )
+    while (populationOfCluster < nchildren)
     {
         tournament(subClusterIndex, parent0, parent1);
 
         doubleCrossover(parent0, parent1, children.at(subClusterIndex).at(populationOfCluster_children), children.at(subClusterIndex).at(populationOfCluster_children + 1));
 
         populationOfCluster_children += 2;
-
     }
     for (int i = 0; i < nchildren; i++)
     {
         chromosome.at(subClusterIndex).at(populationOfCluster - i - 1) = children.at(subClusterIndex).at(i);
     }
-
-    generation.at(subClusterIndex)++;
-    //printf("generation.at(%d)=%d\n", subClusterIndex, generation.at(subClusterIndex));
+#pragma omp critical
+    {
+        generation.at(subClusterIndex)++;
+        printf("generation.at(%d)=%d\n", subClusterIndex, generation.at(subClusterIndex));
+    }
 }
 
 void pdg::mutate(int subClusterIndex)
@@ -287,7 +230,6 @@ void pdg::mutate(int subClusterIndex)
             }
         }
     }
-
 }
 
 void pdg::getTournamentElement(int subClusterIndex, Data &x)
@@ -326,14 +268,13 @@ int pdg::randomChromosome()
 
 bool pdg::terminated()
 {
-    //printf("subEnable=%d subClusterEnable=%d\n", subEnable, subClusterEnable);
-    if ( subEnable >= subClusterEnable)
+    // printf("subEnable=%d subClusterEnable=%d\n", subEnable, subClusterEnable);
+    if (subEnable >= subClusterEnable)
         return true;
     return false;
 }
 bool pdg::checkSubCluster(int subClusterName)
 {
-
 
     if (stopRule == "similarity")
     {
@@ -348,27 +289,29 @@ bool pdg::checkSubCluster(int subClusterName)
             return true;
         else
             return false;
-    }else if (stopRule == "doubleBox")
+    }
+    else if (stopRule == "doubleBox")
     {
 
-    // double bestValue = fabs(dmin);
-    double bestValue = fabs(1.0 + bestF2xInCluster.at(subClusterName));
-    doublebox_xx1.at(subClusterName) += bestValue;
-    doublebox_xx2.at(subClusterName) += bestValue * bestValue;
-    doublebox_variance.at(subClusterName) = doublebox_xx2.at(subClusterName) / (generation.at(subClusterName) + 1) - (doublebox_xx1.at(subClusterName) / (generation.at(subClusterName) + 1)) * (doublebox_xx1.at(subClusterName) / (generation.at(subClusterName) + 1));
-    if (bestF2xInCluster.at(subClusterName) < bestF2xInClusterOLD.at(subClusterName) || generation.at(subClusterName) <= 1)
-    {
-        bestF2xInClusterOLD.at(subClusterName) = bestF2xInCluster.at(subClusterName);
-        doublebox_stopat.at(subClusterName) = doublebox_variance.at(subClusterName) / 2.0;
-    }
-    if (doublebox_stopat.at(subClusterName) < 1e-5)
-    {
-        doublebox_stopat.at(subClusterName) = doublebox_variance.at(subClusterName) / 2.0;
-    }
+        // double bestValue = fabs(dmin);
+        double bestValue = fabs(1.0 + bestF2xInCluster.at(subClusterName));
+        doublebox_xx1.at(subClusterName) += bestValue;
+        doublebox_xx2.at(subClusterName) += bestValue * bestValue;
+        doublebox_variance.at(subClusterName) = doublebox_xx2.at(subClusterName) / (generation.at(subClusterName) + 1) - (doublebox_xx1.at(subClusterName) / (generation.at(subClusterName) + 1)) * (doublebox_xx1.at(subClusterName) / (generation.at(subClusterName) + 1));
+        if (bestF2xInCluster.at(subClusterName) < bestF2xInClusterOLD.at(subClusterName) || generation.at(subClusterName) <= 1)
+        {
+            bestF2xInClusterOLD.at(subClusterName) = bestF2xInCluster.at(subClusterName);
+            doublebox_stopat.at(subClusterName) = doublebox_variance.at(subClusterName) / 2.0;
+        }
+        if (doublebox_stopat.at(subClusterName) < 1e-5)
+        {
+            doublebox_stopat.at(subClusterName) = doublebox_variance.at(subClusterName) / 2.0;
+        }
 
-    // printf("%4d] doublebox_variance.at(%d) : %f doublebox_stopat.at(%d) : %f different  : %lf\n", generation, subClusterName, doublebox_variance.at(subClusterName), subClusterName, doublebox_stopat.at(subClusterName), subClusterName, fabs(doublebox_variance.at(subClusterName) - doublebox_stopat.at(subClusterName)));
-    return generation.at(subClusterName) >= generations || (doublebox_variance.at(subClusterName) <= doublebox_stopat.at(subClusterName) && generation.at(subClusterName) >= 20);
-}else
+        // printf("%4d] doublebox_variance.at(%d) : %f doublebox_stopat.at(%d) : %f different  : %lf\n", generation, subClusterName, doublebox_variance.at(subClusterName), subClusterName, doublebox_stopat.at(subClusterName), subClusterName, fabs(doublebox_variance.at(subClusterName) - doublebox_stopat.at(subClusterName)));
+        return generation.at(subClusterName) >= generations || (doublebox_variance.at(subClusterName) <= doublebox_stopat.at(subClusterName) && generation.at(subClusterName) >= 20);
+    }
+    else
     {
         return generation.at(subClusterName) >= generations;
     }
@@ -384,22 +327,21 @@ void pdg::step()
         if (checkSubCluster(i))
         {
             subEnable++;
-            //terminated();
+            // if (pNumber > 0)
+            //     propagate();
+
+            terminated();
             continue;
         }
 
-            if (generation.at(i))
-                mutate(i);
-            calcFitnessArray(i);
-            select(i);
-            crossover(i);
+        if (generation.at(i))
+            mutate(i);
+        calcFitnessArray(i);
+        select(i);
+        crossover(i);
     }
 
-    if (pNumber > 0)
-    {
-        propagate();
-    }
-
+    propagate();
 }
 
 void pdg::init()
@@ -434,8 +376,8 @@ void pdg::init()
     oldBesty.resize(subCluster);
     bestF2xInCluster.resize(subCluster);
     bestF2xInClusterOLD.resize(subCluster);
-    //if (subClusterEnable > subCluster)
-    //    subClusterEnable = subCluster;
+    // if (subClusterEnable > subCluster)
+    //     subClusterEnable = subCluster;
 
     chromosome.resize(subCluster);
     fitnessArray.resize(subCluster);
@@ -477,7 +419,6 @@ void pdg::init()
         }
     }
     subEnable = 0;
-
 }
 
 void pdg::done()
