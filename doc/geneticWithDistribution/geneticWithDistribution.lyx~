@@ -204,13 +204,11 @@ End
 \begin_body
 
 \begin_layout Title
-An intelligent technique for initial distribution in stochastic optimization
- methods
+An intelligent technique for initial distribution of genetic algorithms
 \end_layout
 
 \begin_layout Title Citation
-An intelligent technique for initial distribution in stochastic optimization
- methods
+An intelligent technique for initial distribution of genetic algorithms
 \end_layout
 
 \begin_layout Author Orcid ID
@@ -331,8 +329,8 @@ These authors contributed equally to this work.
 \end_layout
 
 \begin_layout Abstract
-The need to find the global minimum in multi-dimensional functions is a
- critical problem in many fields of science and technology.
+The need to find the global minimum in multivariable functions is a critical
+ problem in many fields of science and technology.
  Effectively solving this problem requires the creation of initial solution
  estimates, which are subsequently used by the optimization algorithm to
  search for the best solution in the solution space.
@@ -363,8 +361,7 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-The task of locating the global minimum of a continuous and differentiable
- function 
+The task of locating the global minimum of a function 
 \begin_inset Formula $f$
 \end_inset
 
@@ -383,7 +380,7 @@ with
 : 
 \begin_inset Formula 
 \[
-S=\left[a_{1},b_{1}\right]\otimes\left[a_{2},b_{2}\right]\otimes\ldots\left[a_{n},b_{n}\right]
+S=\left[a_{1},b_{1}\right]\times\left[a_{2},b_{2}\right]\times\ldots\left[a_{n},b_{n}\right]
 \]
 
 \end_inset
@@ -504,7 +501,7 @@ literal "false"
 \end_inset
 
  have appeared during the past years or methods that take advantage of the
- modern GPU processing units 
+ modern graphics processing units (GPU) 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "msgpu1,msgpu2"
@@ -853,7 +850,7 @@ Initialize
 \begin_inset Formula $N_{C}$
 \end_inset
 
- chromosomes in in 
+ chromosomes in 
 \begin_inset Formula $S$
 \end_inset
 
@@ -905,34 +902,17 @@ Set
 \begin_layout Enumerate
 
 \series bold
-Fitness calculation Step 
-\begin_inset CommandInset label
-LatexCommand label
-name "enu:Fitness-calculation-Step"
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-
-\series bold
 For
 \series default
+ every chromosome
+\series bold
  
-\begin_inset Formula $i=1,\ldots,N_{g}$
+\series default
+
+\begin_inset Formula $g_{i},\ i=1,\ldots,N_{c}$
 \end_inset
 
  
-\series bold
-do
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-
 \series bold
 Calculate
 \series default
@@ -945,16 +925,17 @@ Calculate
 \end_inset
 
 .
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-
 \series bold
-EndFor
+
+\begin_inset CommandInset label
+LatexCommand label
+name "enu:Fitness-calculation-Step"
+
+\end_inset
+
+
 \end_layout
 
-\end_deeper
 \begin_layout Enumerate
 
 \series bold
@@ -999,7 +980,7 @@ Crossover procedure
 \begin_inset Formula $\tilde{w}$
 \end_inset
 
- are produced using the following equations:
+ are produced using the following equations
 \begin_inset Formula 
 \begin{eqnarray}
 \tilde{z_{i}} & = & a_{i}z_{i}+\left(1-a_{i}\right)w_{i}\nonumber \\
@@ -1008,11 +989,16 @@ Crossover procedure
 
 \end_inset
 
-The value 
+where 
+\begin_inset Formula $i=1,\ldots,n$
+\end_inset
+
+.
+ The values 
 \begin_inset Formula $a_{i}$
 \end_inset
 
- is a randomly selected number with 
+ are randomly selected numbers, with 
 \begin_inset Formula $a_{i}\in[-0.5,1.5]$
 \end_inset
 
@@ -1310,7 +1296,15 @@ do
 Set
 \series default
  
-\begin_inset Formula $j^{*}=\min_{i=1}^{k}\left\{ D\left(x_{i},c_{j}\right)\right\} $
+\begin_inset Formula $j^{*}=\min_{m=1}^{k}\left\{ D\left(x_{i},c_{m}\right)\right\} $
+\end_inset
+
+, where 
+\begin_inset Formula $D(x,y)$
+\end_inset
+
+ is the Euclidean distance of 
+\begin_inset Formula $(x,y)$
 \end_inset
 
 .
@@ -1391,7 +1385,7 @@ Compute
 
 \begin_inset Formula 
 \[
-c_{j}=\frac{1}{M_{j}}\sum_{i=1}^{M_{j}}x_{i}
+c_{j}=\frac{1}{M_{j}}\sum_{x_{i}\in S_{j}}x_{i}
 \]
 
 \end_inset
@@ -1445,9 +1439,9 @@ the algorithm, if there is no change in centers
 \end_layout
 
 \begin_layout Standard
-The algorithm terminates when cluster centers don't change significantly
- between consecutive iterations, implying that the clusters have stabilized
- in their final form
+The algorithm terminates when there is no change in cluster centers between
+ consecutive iterations, implying that the clusters have stabilized in their
+ final form
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Bishop,Hastie"
@@ -1529,7 +1523,7 @@ Do
 For
 \series default
  every center 
-\begin_inset Formula $c_{j},\ i\ne j$
+\begin_inset Formula $c_{j},\ j=1,\ldots,i-1$
 \end_inset
 
  
@@ -1563,16 +1557,6 @@ remove
 
 \series bold
 EndFor
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-If
-\series default
- 
-\series bold
-then
 \end_layout
 
 \end_deeper
@@ -2114,6 +2098,11 @@ The values
 \end_inset
 
  were used in the conducted experiments.
+ Also, for the conducted experiments the values 
+\begin_inset Formula $\epsilon=1,\ \sigma=$
+\end_inset
+
+1 were used.
 \end_layout
 
 \begin_layout Itemize
@@ -2399,6 +2388,9 @@ https://github.com/itsoulos/OPTIMUS
 \end_inset
 
 (accessed on 9 September 2023).
+ The genetic algorithm variant of OPTIMUS package used in the conducted
+ experiments was the pDoubleGenetic algorithm, that can utilize different
+ methods for the initialization of chromosomes.
  The machine used in the experiments was an AMD Ryzen 5950X with 128GB of
  RAM, running the Debian Linux operating system.
  To ensure research reliability, the experiments were executed 30 times
@@ -2416,6 +2408,8 @@ noprefix "false"
 \end_inset
 
 .
+ The values in the experimental tables denote average number of function
+ calls.
  For the experimental tables, the following notation is used:
 \end_layout
 
@@ -2431,8 +2425,15 @@ The column UNIFORM indicates the incorporation of uniform sampling in the
 \end_layout
 
 \begin_layout Enumerate
-The column TRIANGULAR defines the usage of triangular distribution for the
- initial samples of the genetic algorithm.
+The column TRIANGULAR defines the usage of triangular distribution 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "triangular"
+literal "false"
+
+\end_inset
+
+ for the initial samples of the genetic algorithm.
  For this case, 
 \begin_inset Formula $N_{c}$
 \end_inset
@@ -2455,7 +2456,7 @@ The column KMEANS denotes the application of k - means sampling as proposed
  centers were produced using the k - means algorithm.
  In order to have a reliable comparison with the above distributions, the
  number of centers equals the number of randomly generated chromosomes 
-\begin_inset Formula $N_{g}$
+\begin_inset Formula $N_{c}$
 \end_inset
 
 .
@@ -2481,7 +2482,7 @@ In every table, an additional line was added under the name TOTAL, representing
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -9009,7 +9010,7 @@ l functions.
  from being genetic algorithm chromosomes.
  The above procedure significantly reduced the required number of function
  calls compared to random distributions and furthermore, in difficult high-dimen
-sional functions, it appears to be a more efficient technique in finding
+sional functions, it appears to be a more efficient technique at finding
  the global minimum than random distributions.
  Future research may include incorporation of parallel techniques such as
  MPI 
@@ -10497,6 +10498,25 @@ J.E.
 \series default
 , pp.
  463–477, 1924.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "triangular"
+literal "false"
+
+\end_inset
+
+W.E.
+ Stein, M.F.
+ Keblis, A new method to simulate the triangular distribution, Mathematical
+ and Computer Modelling Volume 
+\series bold
+49
+\series default
+, pp.
+ 1143-1147, 2009.
 \end_layout
 
 \begin_layout Bibliography
