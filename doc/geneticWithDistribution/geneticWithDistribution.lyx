@@ -753,6 +753,44 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
+During the past years, many researchers have proposed variations for the
+ initialization of genetic algorithms, such as the work of Maaranen et al
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "gainit1"
+literal "false"
+
+\end_inset
+
+, where they discuss the usage of quasi-random sequences in the initial
+ population of a genetic algorithm.
+ Similarly, Paul et al 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "gainit2"
+literal "false"
+
+\end_inset
+
+ proposed initializing the population of genetic algorithm using a Vari-begin
+ and Vari-diversity (VV) population seeding technique.
+ Also, in the same direction of research, Li et al proposed 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "gainit3"
+literal "false"
+
+\end_inset
+
+ a knowledge-based technique to initialize genetic algorithms used mainly
+ in discrete problems.
+ Recently, Hassanat et al suggested the incorporation of regression techniques
+ for the initialization of genetic algorithms.
+ 
+\end_layout
+
+\begin_layout Standard
 The rest of this article is organized as follows: in section 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -839,6 +877,7 @@ Set
 \end_inset
 
  the maximum number of allowed generations.
+ 
 \end_layout
 
 \begin_layout Enumerate
@@ -855,7 +894,20 @@ Initialize
 \end_inset
 
 .
- 
+ In most implementations of genetic algorithms, the chromosomes will be
+ selected using some random number distribution.
+ In the present work, the chromosomes will be selected using the sampling
+ technique described in subsection 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:The-proposed-sampling"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Enumerate
@@ -950,7 +1002,7 @@ Selection procedure.
 
 \series default
  The chromosomes are sorted according to their fitness values.
- The 
+ The first 
 \begin_inset Formula $\left(1-p_{s}\right)\times N_{c}$
 \end_inset
 
@@ -1017,24 +1069,107 @@ literal "true"
 \begin_layout Enumerate
 
 \series bold
+Replacement procedure
+\series default
+.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=\left(1-p_{s}\right)\times N_{c}+1$
+\end_inset
+
+ to 
+\begin_inset Formula $N_{c}$
+\end_inset
+
+ 
+\series bold
+do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Replace
+\series default
+ 
+\begin_inset Formula $g_{i}$
+\end_inset
+
+ using the next offspring created in the crossover procedure.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
 Mutation procedure
 \series default
 :
 \series bold
  
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+For
 \series default
-For each element of every chromosome, a random number 
+ every chromosome 
+\begin_inset Formula $g_{i},\ i=1,\ldots,N_{C}$
+\end_inset
+
+ do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ each element 
+\begin_inset Formula $g_{ij},\ j=1,\ldots,n$
+\end_inset
+
+ a random number 
 \begin_inset Formula $r\in\left[0,1\right]$
 \end_inset
 
  is drawn.
- The corresponding element is altered randomly if 
+ The element is altered randomly if 
 \begin_inset Formula $r\le p_{m}$
 \end_inset
 
 .
 \end_layout
 
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\series default
+ 
+\end_layout
+
+\end_deeper
 \end_deeper
 \begin_layout Enumerate
 
@@ -1160,7 +1295,7 @@ literal "false"
 \end_layout
 
 \begin_layout Subsection
-Proposed initialization Distribution
+Proposed initialization distribution
 \end_layout
 
 \begin_layout Standard
@@ -1588,6 +1723,13 @@ name "alg:Chromosome-rejection-rule"
 
 \begin_layout Subsection
 The proposed sampling procedure
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:The-proposed-sampling"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2434,12 +2576,25 @@ The column KMEANS denotes the application of k - means sampling as proposed
 \end_inset
 
  centers were produced using the k - means algorithm.
- In order to have a reliable comparison with the above distributions, the
- number of centers equals the number of randomly generated chromosomes 
+ In order to have a fair comparison between the results produced between
+ the proposed technique and the rest, the number of centers produced by
+ the k-means method was set to be equal to the number of chromosomes 
 \begin_inset Formula $N_{c}$
 \end_inset
 
-.
+ of the rest of the techniques.
+ Ten times the number of initial points were used to produce the centers.
+ In addition, through the discard process of Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:Chromosome-rejection-rule"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, some centers will be eliminated.
 \end_layout
 
 \begin_layout Enumerate
@@ -10148,6 +10303,86 @@ M.
 9
 \series default
 , 1295, 2020.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gainit1"
+literal "false"
+
+\end_inset
+
+H.
+ Maaranen, K.
+ Miettinen, M.M.
+ Makela, Quasi-random initial population for genetic algorithms.
+ Computers & Mathematics with Applications 
+\series bold
+47
+\series default
+, pp.
+ 1885-1895, 2004.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gainit2"
+literal "false"
+
+\end_inset
+
+P.V.
+ Paul, P.
+ Dhavachelvan, R.
+ Baskaran, A novel population initialization technique for Genetic Algorithm,
+ In: 2013 International Conference on Circuits, Power and Computing Technologies
+ (ICCPCT), Nagercoil, India, pp.
+ 1235-1238, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gainit3"
+literal "false"
+
+\end_inset
+
+C.
+ Li, X.
+ Chu, Y.
+ Chen, L.
+ Xing, A knowledge-based technique for initializing a genetic algorithm.
+ Journal of Intelligent & Fuzzy Systems 
+\series bold
+31
+\series default
+, pp.
+ 1145-1152, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "gainit4"
+literal "false"
+
+\end_inset
+
+A.B.
+ Hassanat, V.S.
+ Prasath, M.A.
+ Abbadi, S.A.
+ Abu-Qdari, H.
+ Faris, An improved genetic algorithm with a new initialization mechanism
+ based on regression techniques.
+ Information 
+\series bold
+9
+\series default
+, 167, 2018.
 \end_layout
 
 \begin_layout Bibliography
