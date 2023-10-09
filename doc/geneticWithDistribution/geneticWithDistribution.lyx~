@@ -212,7 +212,6 @@ An intelligent technique for initial distribution of genetic algorithms
 \end_layout
 
 \begin_layout Author Orcid ID
-
 \begin_inset Argument 1
 status collapsed
 
@@ -229,7 +228,6 @@ orcidauthorA
 \end_layout
 
 \begin_layout Author Orcid ID
-
 \begin_inset Argument 1
 status collapsed
 
@@ -886,7 +884,7 @@ Set
 Initialize
 \series default
  randomly the 
-\begin_inset Formula $N_{C}$
+\begin_inset Formula $N_{c}$
 \end_inset
 
  chromosomes in 
@@ -897,7 +895,17 @@ Initialize
  In most implementations of genetic algorithms, the chromosomes will be
  selected using some random number distribution.
  In the present work, the chromosomes will be selected using the sampling
- technique described in subsection .
+ technique described in subsection 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:The-proposed-sampling"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Enumerate
@@ -992,7 +1000,11 @@ Selection procedure.
 
 \series default
  The chromosomes are sorted according to their fitness values.
- The first 
+ Denote as 
+\begin_inset Formula $N_{b}$
+\end_inset
+
+ the integer part of 
 \begin_inset Formula $\left(1-p_{s}\right)\times N_{c}$
 \end_inset
 
@@ -1040,7 +1052,7 @@ where
 \begin_inset Formula $a_{i}$
 \end_inset
 
- are randomly selected numbers, with 
+ are uniformly distributed random numbers, with 
 \begin_inset Formula $a_{i}\in[-0.5,1.5]$
 \end_inset
 
@@ -1072,7 +1084,7 @@ Replacement procedure
 For
 \series default
  
-\begin_inset Formula $i=\left(1-p_{s}\right)\times N_{c}+1$
+\begin_inset Formula $i=N_{b}+1$
 \end_inset
 
  to 
@@ -1122,7 +1134,7 @@ Mutation procedure
 For
 \series default
  every chromosome 
-\begin_inset Formula $g_{i},\ i=1,\ldots,N_{C}$
+\begin_inset Formula $g_{i},\ i=1,\ldots,N_{c}$
 \end_inset
 
  do
@@ -1135,10 +1147,14 @@ For
 For
 \series default
  each element 
-\begin_inset Formula $g_{ij},\ j=1,\ldots,n$
+\begin_inset Formula $\ j=1,\ldots,n$
 \end_inset
 
- a random number 
+ of 
+\begin_inset Formula $g_{i}$
+\end_inset
+
+ a uniformly distributed random number 
 \begin_inset Formula $r\in\left[0,1\right]$
 \end_inset
 
@@ -1386,6 +1402,23 @@ Set
 \end_layout
 
 \begin_layout Enumerate
+The input of the algorithm is the 
+\begin_inset Formula $N_{m}$
+\end_inset
+
+ initial points 
+\begin_inset Formula $x_{i},\ i=1,\ldots,N_{m}$
+\end_inset
+
+.
+ For the current algorithm 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ are randomly 
+\end_layout
+
+\begin_layout Enumerate
 
 \series bold
 Repeat
@@ -1421,7 +1454,7 @@ do
 Set
 \series default
  
-\begin_inset Formula $j^{*}=\min_{m=1}^{k}\left\{ D\left(x_{i},c_{m}\right)\right\} $
+\begin_inset Formula $j^{*}=\mbox{argmin}_{m=1}^{k}\left\{ D\left(x_{i},c_{m}\right)\right\} $
 \end_inset
 
 , where 
