@@ -442,8 +442,19 @@ in algorithm \ref{alg:The-K-Means-algorithm.}
 \begin{enumerate}
 \item \textbf{Set} the number of clusters $k$
 \item The input of the algorithm is the $N_{m}$ initial points $x_{i},\ i=1,\ldots,N_{m}$.
-For the current algorithm $x_{i}$ are randomly selected samples in
-$S$.
+For the current algorithm the points $x_{i}$ are randomly selected
+samples in $S$.
+\item \textbf{For }every point $x_{i},\ i=1,...,N_{m}$ \textbf{do} Assign
+randomly the point $x_{i}$ in a cluster $S_{j}$
+\item \textbf{For} every center $c_{j},\ j=1..k$ \textbf{do}
+\begin{enumerate}
+\item \textbf{Set} as $M_{j}$ the number of points in $S_{j}$
+\item \textbf{Compute }$c_{j}$ as
+\[
+c_{j}=\frac{1}{M_{j}}\sum_{x_{i}\in S_{j}}x_{i}
+\]
+\end{enumerate}
+\item \textbf{EndFor}
 \item \textbf{Repeat}
 \begin{enumerate}
 \item Set $S_{j}=\left\{ \right\} ,\ j=1..k$
