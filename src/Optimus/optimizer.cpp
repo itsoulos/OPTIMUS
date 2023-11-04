@@ -53,6 +53,23 @@ void    Optimizer::sampleFromProblem(int &N,Matrix &xsample,Data &ysample)
     defaultSampler->sampleFromModel(N,xsample,ysample);
 }
 
+static double dmin(double a,double b)
+{
+	return a<b?a:b;
+}
+
+static double dmax(double a,double b)
+{
+	return a>b?a:b;
+}
+
+static double dsign(double x)
+{
+	if(x>0) return 1;
+	if(x<0) return -1;
+	return 0;
+}
+
 double  Optimizer::localSearch(Data &x)
 {
     QString method=params["localsearch_method"].toString();
@@ -114,6 +131,71 @@ double  Optimizer::localSearch(Data &x)
         Lbfgs lt(myProblem);
         return lt.Solve(x);
     }
+    else
+    if(method == "rprop")
+    {
+        const double delta0=0.1;
+	const double deltamin=1e-6;
+	const double deltamax=50.0;
+	const double nplus=1.2;
+	const double nminus=0.5;
+	const int maxiters=2000;
+	const double target=1e-8;
+
+	Data w,wold,g,oldg,delta;
+	Data lmargin,rmargin;
+	w = x;
+	g.resize(w.size());
+	oldg.resize(w.size());
+	delta.resize(w.size());
+	wold.resize(w.size());
+	for(int i=0;i<delta.size();i++) delta[i]=delta0;
+	for(int i=0;i<oldg.size();i++)  oldg[i]=0.0;
+
+	double vold=myProblem->funmin(x);
+	double v=vold;
+	int iters=1;
+	wold=w;
+	while(1)
+	{
+		myProblem->granal(w,g);
+		for(int i=0;i<g.size();i++)
+		{
+			if(oldg[i]*g[i]>0)
+			{
+				delta[i]=dmin(delta[i]*nplus,deltamax);
+				w[i]=w[i]-dsign(g[i])*delta[i];
+				oldg[i]=g[i];
+			}
+			else
+			if(oldg[i]*g[i]<0)
+			{
+				delta[i]=dmax(delta[i]*nminus,deltamin);
+				oldg[i]=0.0;
+			}
+			else
+			{
+				w[i]=w[i]-dsign(g[i])*delta[i];
+				oldg[i]=g[i];
+			}
+		}
+		iters++;
+		v=myProblem->funmin(w);
+		if(v<vold)
+		{
+			wold=w;
+			vold=v;
+		}
+		else
+		{
+			w=wold;
+		}
+		if(iters>50 && fabs(v-vold)<target) break;
+		if(iters>=maxiters) break;
+	}
+	x = w;
+    return myProblem->funmin(x);
+    }    
     else
     if(method=="gslbfgs")
     {
