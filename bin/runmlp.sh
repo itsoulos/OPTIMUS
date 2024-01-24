@@ -1,5 +1,5 @@
 #!/bin/bash
-DATAPATH=/home/john/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfolding/
+DATAPATH=~/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfolding/
 NODES=10
 
 METHOD=ParallelDe

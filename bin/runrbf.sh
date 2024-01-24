@@ -3,7 +3,7 @@ DATAPATH=~/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfolding/
 #DATAPATH=/home/sheridan/Desktop/ERGASIES/SECDATA/
 NODES=10
 
-METHOD=DoubleGenetic
+METHOD=NeuralMinimizer
 METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then
