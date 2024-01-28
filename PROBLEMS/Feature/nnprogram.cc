@@ -104,6 +104,7 @@ double 	NNprogram::fitness(vector<int> &genome)
 	mapper->setExpr(pstring);
 	model->setPatternDimension(pattern_dimension);
 	if(model_type==MODEL_NEURAL) model->randomizeWeights();
+	else srand48(1);
 	value=model->train1();
 	if(isnan(value) || isinf(value)) return -1e+8;
 	return -value;
