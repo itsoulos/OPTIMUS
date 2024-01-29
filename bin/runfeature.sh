@@ -2,7 +2,7 @@
 DATAPATH=~/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfolding/
 NODES=10
 
-METHOD=NeuralMinimizer
+METHOD=IntegerGenetic
 METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then

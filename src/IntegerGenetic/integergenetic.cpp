@@ -9,6 +9,7 @@ IntegerGenetic::IntegerGenetic(Problem *p)
     addParameter("integer_selectionrate","0.10","Selection rate");
     addParameter("integer_mutationrate","0.05","Mutation rate");
     addParameter("integer_localsearchrate","0.00","Local search rate");
+    addParameter("integer_localmethod","random","Accepted values: crossover, random, siman");
     addParameter("integer_stoprule","doublebox","Stopping rule (doublebox,generations,stoponzero)");
 
 }
@@ -55,12 +56,12 @@ void    IntegerGenetic::step()
     calcFitnessArray();
     select();
     crossover();
- /*  if(generation %10==0)
+   if(generation %20==0)
     {
         for(int i=0;i<50;i++)
             randomSearch(rand() % chromosome.size());
         select();
-    }*/
+    }
     ++generation;
 }
 
@@ -92,6 +93,7 @@ void    IntegerGenetic::init()
     chromosome.resize(count);
     children.resize(count);
     fitness_array.resize(count);
+    localMethod = params["integer_localmethod"].toString();
     for(int i=0;i<count;i++)
     {
         chromosome[i].resize(myProblem->getDimension());
@@ -236,6 +238,8 @@ void    IntegerGenetic::randomSearch(int pos)
         int count=chromosome.size();
         vector<int> tempx;
         tempx.resize(size);
+	if(localMethod == "crossover")
+	{
         for(int iters=1;iters<=100;iters++)
         {
            int gpos=rand() % count;
@@ -264,6 +268,35 @@ void    IntegerGenetic::randomSearch(int pos)
                 }
              }
             }
+	}
+	else
+	if(localMethod == "random")
+	{
+
+	for(int i=0;i<size;i++)
+	{
+		int ipos = rand() % size;
+		int new_value;
+		for(int k=0;k<20;k++)
+		{
+		int old_value = chromosome[pos][ipos];
+		int range = 10;
+		int direction = rand() % 2==1?1:-1;
+		new_value =  old_value + direction * (rand() % range);
+		chromosome[pos][ipos]=new_value;
+		for(int j=0;j<size;j++) tempx[j]=chromosome[pos][j];
+              	Data tx = fromIDATA(tempx);
+              	double trial_fitness=myProblem->funmin(tx);
+		if(fabs(trial_fitness)<fabs(fitness_array[pos]))
+		{
+			fitness_array[pos]=trial_fitness;
+			printf("NEW BEST VALUE[%4d] = %20.10lg \n",pos,fitness_array[pos]);
+			return;
+		}
+		else	chromosome[pos][ipos]=old_value;
+		}
+	}
+	}
 }
 
 void	IntegerGenetic::getTournamentElement(IDATA &x)

@@ -60,6 +60,7 @@ private:
     void    randomSearch(int pos);
     int		randomChromosome();
     void    onepointCrossover(IDATA &parent1, IDATA &parent2, IDATA &children1, IDATA &children2);
+    QString localMethod;
 
 public:
     IntegerGenetic(Problem *p);
