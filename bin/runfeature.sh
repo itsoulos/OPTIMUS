@@ -14,12 +14,12 @@ elif [ $METHOD = "NeuralMinimizer" ]
 then
 	METHODPARAMS="--neural_model=neural --neural_trainmethod=lbfgs"
 
-elif [ $METHOD = "Pso" ]
+elif [ $METHOD = "IntegerGenetic" ]
 then
-	METHODPARAMS="--pso_localsearch_rate=0.00"
+	METHODPARAMS="--integer_localsearchrate=0.001 --integer_localmethod=crossover"
 elif [ $METHOD = "Multistart" ]
 then
-	METHODPARAMS=="--multistart_samples=25"
+	METHODPARAMS="--multistart_samples=25"
 fi
 
 PROBLEM=Feature/libFeature.so

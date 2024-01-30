@@ -5,12 +5,12 @@ IntegerGenetic::IntegerGenetic(Problem *p)
     :Optimizer(p)
 {
     addParameter("integer_chromosomes","500","Number of chromosomes");
-    addParameter("integer_generations","500","Number of generations");
+    addParameter("integer_generations","200","Number of generations");
     addParameter("integer_selectionrate","0.10","Selection rate");
     addParameter("integer_mutationrate","0.05","Mutation rate");
     addParameter("integer_localsearchrate","0.00","Local search rate");
-    addParameter("integer_localmethod","random","Accepted values: crossover, random, siman");
-    addParameter("integer_stoprule","doublebox","Stopping rule (doublebox,generations,stoponzero)");
+    addParameter("integer_localmethod","xxx","Accepted values: crossover, random, siman, bfgs");
+    addParameter("integer_stoprule","generations","Stopping rule (doublebox,generations,stoponzero)");
 
 }
 
@@ -37,6 +37,7 @@ bool    IntegerGenetic::terminated()
      QString rule = params["integer_stoprule"].toString();
 
      if(rule=="doublebox" && stopat<1e-8 && generation>=10) return true;
+     if(generation%50==0)
      printf("Genetic. Generation: %4d Fitness: %10.5lf Variance: %10.5lf Stopat: %10.5lf \n",
             generation,fitness_array[0],variance,stopat);
     if(rule == "doublebox")
@@ -56,12 +57,13 @@ void    IntegerGenetic::step()
     calcFitnessArray();
     select();
     crossover();
+    /*
    if(generation %20==0)
     {
         for(int i=0;i<50;i++)
             randomSearch(rand() % chromosome.size());
         select();
-    }
+    }*/
     ++generation;
 }
 
@@ -131,12 +133,17 @@ void    IntegerGenetic::calcFitnessArray()
         if(rate>0 && myProblem->randomDouble()<rate)
         {
 
-            double df=localSearch(tx);
-            if(df<=fitness_array[i])
-            {
-                fitness_array[i]=myProblem->funmin(tx);
-                chromosome[i]=toIDATA(tx);
-            }
+		if(localMethod == "bfgs")
+		{
+            		double df=localSearch(tx);
+            		if(df<=fitness_array[i])
+            		{
+                		fitness_array[i]=myProblem->funmin(tx);
+                		chromosome[i]=toIDATA(tx);
+            		}
+		}
+		else
+			randomSearch(i);
 		
         }
 	if(fabs(fitness_array[i])<dmin) dmin = fabs(fitness_array[i]);
@@ -252,7 +259,7 @@ void    IntegerGenetic::randomSearch(int pos)
            {
                for(int j=0;j<size;j++) chromosome[pos][j]=tempx[j];
                fitness_array[pos]=f;
-               break;
+               //break;
             }
             else
             {
@@ -264,7 +271,7 @@ void    IntegerGenetic::randomSearch(int pos)
               {
                  for(int j=0;j<size;j++) chromosome[pos][j]=tempx[j];
                  fitness_array[pos]=f;
-                 break;
+                // break;
                 }
              }
             }
@@ -290,8 +297,8 @@ void    IntegerGenetic::randomSearch(int pos)
 		if(fabs(trial_fitness)<fabs(fitness_array[pos]))
 		{
 			fitness_array[pos]=trial_fitness;
-			printf("NEW BEST VALUE[%4d] = %20.10lg \n",pos,fitness_array[pos]);
-			return;
+		//	printf("NEW BEST VALUE[%4d] = %20.10lg \n",pos,fitness_array[pos]);
+		//	return;
 		}
 		else	chromosome[pos][ipos]=old_value;
 		}
