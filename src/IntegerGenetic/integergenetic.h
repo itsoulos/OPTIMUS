@@ -55,6 +55,8 @@ private:
     void    mutate();
     void	getTournamentElement(IDATA &x);
     void	tournament(IDATA &p1,IDATA &p2);
+    void	fromidata(IDATA &x,Data &xx);
+    void	toidata(Data &x,IDATA &xx);
     Data    fromIDATA(IDATA x);
     IDATA   toIDATA(Data x);
     void    randomSearch(int pos);

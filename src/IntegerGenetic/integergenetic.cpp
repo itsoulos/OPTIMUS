@@ -67,6 +67,17 @@ void    IntegerGenetic::step()
     ++generation;
 }
 
+void	IntegerGenetic::fromidata(IDATA &x,Data &xx)
+{
+	if(xx.size()!=x.size()) xx.resize(x.size());
+	for(int i=0;i<(int)x.size();i++) xx[i]=x[i];
+}
+
+void	IntegerGenetic::toidata(Data &x,IDATA &xx)
+{
+	if(xx.size()!=x.size()) xx.resize(x.size());
+	for(int i=0;i<(int)x.size();i++) xx[i]=(int)x[i];
+}
 Data    IntegerGenetic::fromIDATA(IDATA x)
 {
     Data tx;
@@ -126,9 +137,12 @@ void    IntegerGenetic::calcFitnessArray()
 
     double rate = params["integer_localsearchrate"].toString().toDouble();
     double dmin = 1e+100;
+    Data tx;
+    tx.resize(chromosome[i].size());
     for(int i=0;i<count;i++)
     {
-        Data tx = fromIDATA(chromosome[i]);
+//        Data tx = fromIDATA(chromosome[i]);
+	fromidata(chromosome[i],tx);
         fitness_array[i]=myProblem->funmin(tx);
         if(rate>0 && myProblem->randomDouble()<rate)
         {
@@ -139,7 +153,8 @@ void    IntegerGenetic::calcFitnessArray()
             		if(df<=fitness_array[i])
             		{
                 		fitness_array[i]=myProblem->funmin(tx);
-                		chromosome[i]=toIDATA(tx);
+				toidate(tx,chromosome[i]);
+                		//chromosome[i]=toIDATA(tx);
             		}
 		}
 		else
@@ -245,6 +260,8 @@ void    IntegerGenetic::randomSearch(int pos)
         int count=chromosome.size();
         vector<int> tempx;
         tempx.resize(size);
+	Data tx;
+	tx.resize(size);
 	if(localMethod == "crossover")
 	{
         for(int iters=1;iters<=100;iters++)
@@ -253,7 +270,8 @@ void    IntegerGenetic::randomSearch(int pos)
            int cutpoint=rand() % size;
            for(int j=0;j<cutpoint;j++)    tempx[j]=chromosome[pos][j];
            for(int j=cutpoint;j<size;j++) tempx[j]=chromosome[gpos][j];
-           Data tx = fromIDATA(tempx);
+	   fromidata(tempx,tx);
+           //tx = fromIDATA(tempx);
            double f=myProblem->funmin(tx);
            if(fabs(f)<fabs(fitness_array[pos]))
            {
@@ -265,7 +283,8 @@ void    IntegerGenetic::randomSearch(int pos)
             {
               for(int j=0;j<cutpoint;j++) tempx[j]=chromosome[gpos][j];
               for(int j=cutpoint;j<size;j++) tempx[j]=chromosome[pos][j];
-              Data tx = fromIDATA(tempx);
+	   	fromidata(tempx,tx);
+              //Data tx = fromIDATA(tempx);
               double f=myProblem->funmin(tx);
               if(fabs(f)<fabs(fitness_array[pos]))
               {
@@ -292,7 +311,8 @@ void    IntegerGenetic::randomSearch(int pos)
 		new_value =  old_value + direction * (rand() % range);
 		chromosome[pos][ipos]=new_value;
 		for(int j=0;j<size;j++) tempx[j]=chromosome[pos][j];
-              	Data tx = fromIDATA(tempx);
+	   	fromidata(tempx,tx);
+              	//Data tx = fromIDATA(tempx);
               	double trial_fitness=myProblem->funmin(tx);
 		if(fabs(trial_fitness)<fabs(fitness_array[pos]))
 		{
