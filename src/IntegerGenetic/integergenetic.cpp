@@ -138,7 +138,7 @@ void    IntegerGenetic::calcFitnessArray()
     double rate = params["integer_localsearchrate"].toString().toDouble();
     double dmin = 1e+100;
     Data tx;
-    tx.resize(chromosome[i].size());
+    tx.resize(chromosome[0].size());
     for(int i=0;i<count;i++)
     {
 //        Data tx = fromIDATA(chromosome[i]);
@@ -153,7 +153,7 @@ void    IntegerGenetic::calcFitnessArray()
             		if(df<=fitness_array[i])
             		{
                 		fitness_array[i]=myProblem->funmin(tx);
-				toidate(tx,chromosome[i]);
+				toidata(tx,chromosome[i]);
                 		//chromosome[i]=toIDATA(tx);
             		}
 		}
