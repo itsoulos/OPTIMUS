@@ -16,7 +16,7 @@ then
 
 elif [ $METHOD = "IntegerGenetic" ]
 then
-	METHODPARAMS="--integer_localsearchrate=0.001 --integer_localmethod=crossover"
+	METHODPARAMS="--integer_localmethod=bfgs --localsearch_method=hill"
 elif [ $METHOD = "Multistart" ]
 then
 	METHODPARAMS="--multistart_samples=25"

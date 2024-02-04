@@ -26,6 +26,7 @@ DEFINES += ADEPT_RECORDING_PAUSABLE ADEPTSTORAGETHREADSAFE
 
 SOURCES += feature.cpp \
     doublestack.cc \
+    lbfgs.cpp \
     symbol.cc \
     rule.cc \
     program.cc \
@@ -50,6 +51,7 @@ HEADERS += feature.h\
         feature_global.h \
     doublestack.h \
     interval.h \
+    lbfgs.h \
     symbol.h \
     rule.h \
     interval.h \

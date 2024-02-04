@@ -2,7 +2,7 @@
 # include <math.h>
 # include <gensolver.h>
 # include <tolmin.h>
-
+# include <lbfgs.h>
 //# define CLASSERROR
 int pass=0;
 double maxx=-1e+100;
@@ -82,18 +82,20 @@ double Neural::train2()
 	Info.iters=2001;
 	randomizeWeights();
 	
-	//GenSolve(this,weight,v,1,0);
+    GenSolve(this,weight,v,1,0);
 	lmargin.resize(weight.size());
 	rmargin.resize(weight.size());
 	for(int i=0;i<weight.size();i++)
 	{
-		lmargin[i]=-100;//-5.0*fabs(weight[i]);
-		rmargin[i]= 100;//5.0*fabs(weight[i]);
+        lmargin[i]=-5.0*fabs(weight[i]);
+        rmargin[i]= 5.0*fabs(weight[i]);
 	}
 	setLeftMargin(lmargin);
 	setRightMargin(rmargin);
+    Lbfgs lt(this);
+    v = lt.Solve(weight);
 	//GenSolve(this,weight,v,0,1);
-	v=tolmin(weight,Info);
+    //v=tolmin(weight,Info);
 	return v;
 }
 

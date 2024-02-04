@@ -37,7 +37,7 @@ bool    IntegerGenetic::terminated()
      QString rule = params["integer_stoprule"].toString();
 
      if(rule=="doublebox" && stopat<1e-8 && generation>=10) return true;
-     if(generation%50==0)
+     if(generation%20==0)
      printf("Genetic. Generation: %4d Fitness: %10.5lf Variance: %10.5lf Stopat: %10.5lf \n",
             generation,fitness_array[0],variance,stopat);
     if(rule == "doublebox")
@@ -57,13 +57,13 @@ void    IntegerGenetic::step()
     calcFitnessArray();
     select();
     crossover();
-    /*
-   if(generation %20==0)
+    
+   if(generation && generation %50==0 && localMethod!="none")
     {
-        for(int i=0;i<50;i++)
+        for(int i=0;i<20;i++)
             randomSearch(rand() % chromosome.size());
         select();
-    }*/
+    }
     ++generation;
 }
 
@@ -144,7 +144,7 @@ void    IntegerGenetic::calcFitnessArray()
 //        Data tx = fromIDATA(chromosome[i]);
 	fromidata(chromosome[i],tx);
         fitness_array[i]=myProblem->funmin(tx);
-        if(rate>0 && myProblem->randomDouble()<rate)
+        /*if(rate>0 && myProblem->randomDouble()<rate)
         {
 
 		if(localMethod == "bfgs")
@@ -160,7 +160,7 @@ void    IntegerGenetic::calcFitnessArray()
 		else
 			randomSearch(i);
 		
-        }
+        }*/
 	if(fabs(fitness_array[i])<dmin) dmin = fabs(fitness_array[i]);
 //	if(i%20==0){ printf("%d:%lf ",i,dmin); fflush(stdout);}
     }
@@ -262,6 +262,7 @@ void    IntegerGenetic::randomSearch(int pos)
         tempx.resize(size);
 	Data tx;
 	tx.resize(size);
+	double tf = fitness_array[pos];
 	if(localMethod == "crossover")
 	{
         for(int iters=1;iters<=100;iters++)
@@ -270,27 +271,25 @@ void    IntegerGenetic::randomSearch(int pos)
            int cutpoint=rand() % size;
            for(int j=0;j<cutpoint;j++)    tempx[j]=chromosome[pos][j];
            for(int j=cutpoint;j<size;j++) tempx[j]=chromosome[gpos][j];
-	   fromidata(tempx,tx);
-           //tx = fromIDATA(tempx);
+            fromidata(tempx,tx);
            double f=myProblem->funmin(tx);
            if(fabs(f)<fabs(fitness_array[pos]))
            {
                for(int j=0;j<size;j++) chromosome[pos][j]=tempx[j];
                fitness_array[pos]=f;
-               //break;
             }
             else
             {
               for(int j=0;j<cutpoint;j++) tempx[j]=chromosome[gpos][j];
               for(int j=cutpoint;j<size;j++) tempx[j]=chromosome[pos][j];
-	   	fromidata(tempx,tx);
-              //Data tx = fromIDATA(tempx);
+                fromidata(tempx,tx);
+
               double f=myProblem->funmin(tx);
               if(fabs(f)<fabs(fitness_array[pos]))
               {
                  for(int j=0;j<size;j++) chromosome[pos][j]=tempx[j];
                  fitness_array[pos]=f;
-                // break;
+
                 }
              }
             }
@@ -308,22 +307,31 @@ void    IntegerGenetic::randomSearch(int pos)
 		int old_value = chromosome[pos][ipos];
 		int range = 10;
 		int direction = rand() % 2==1?1:-1;
-		new_value =  old_value + direction * (rand() % range);
+		new_value =  rand() % 256;//old_value + direction * (rand() % range);
 		chromosome[pos][ipos]=new_value;
 		for(int j=0;j<size;j++) tempx[j]=chromosome[pos][j];
-	   	fromidata(tempx,tx);
-              	//Data tx = fromIDATA(tempx);
-              	double trial_fitness=myProblem->funmin(tx);
+        fromidata(tempx,tx);
+        double trial_fitness=myProblem->funmin(tx);
 		if(fabs(trial_fitness)<fabs(fitness_array[pos]))
 		{
 			fitness_array[pos]=trial_fitness;
-		//	printf("NEW BEST VALUE[%4d] = %20.10lg \n",pos,fitness_array[pos]);
-		//	return;
-		}
+        }
 		else	chromosome[pos][ipos]=old_value;
 		}
 	}
 	}
+	else
+	{
+                fromidata(chromosome[pos],tx);
+           	double df=localSearch(tx);
+            	if(df<=fitness_array[pos])
+            	{
+               		fitness_array[pos]=myProblem->funmin(tx);
+			toidata(tx,chromosome[pos]);
+               		//chromosome[i]=toIDATA(tx);
+            	}
+	}
+	printf("RANDOM[%d] %lf=>%lf\n",pos,tf,fitness_array[pos]);
 }
 
 void	IntegerGenetic::getTournamentElement(IDATA &x)

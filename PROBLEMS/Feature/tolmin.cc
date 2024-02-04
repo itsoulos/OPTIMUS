@@ -3,8 +3,7 @@
 # include <math.h>
 # include <tolmin.h>
 # include <omp.h>
-int ifail=0;
-#pragma omp threadprivate(ifail)
+
 long iabs(long x)
 {
     return x>0?x:-x;
