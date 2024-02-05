@@ -23,6 +23,12 @@ int	Problem::getFunctionCalls()
 	return functionCalls;
 }
 
+double Problem::randomElement(int pos)
+{
+    double r = randomDouble();
+    return lmargin[pos]+r * (rmargin[pos]-lmargin[pos]);
+}
+
 Data   Problem::getBestx()
 {
     return bestx;

@@ -1,5 +1,5 @@
 #include "integergenetic.h"
-
+#include "integeranneal.h"
 
 IntegerGenetic::IntegerGenetic(Problem *p)
     :Optimizer(p)
@@ -60,7 +60,7 @@ void    IntegerGenetic::step()
     
    if(generation && generation %50==0 && localMethod!="none")
     {
-        for(int i=0;i<20;i++)
+        for(int i=0;i<50;i++)
             randomSearch(rand() % chromosome.size());
         select();
     }
@@ -320,7 +320,15 @@ void    IntegerGenetic::randomSearch(int pos)
 		}
 	}
 	}
-	else
+    else
+    if(localMethod=="siman")
+    {
+        IntegerAnneal lt(myProblem);
+        lt.setPoint(chromosome[pos],fitness_array[pos]);
+        lt.Solve();
+        lt.getPoint(chromosome[pos],fitness_array[pos]);
+    }
+    else
 	{
                 fromidata(chromosome[pos],tx);
            	double df=localSearch(tx);

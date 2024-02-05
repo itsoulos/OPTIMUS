@@ -141,6 +141,8 @@ public:
      * @return value.
      */
     double getVolume();
+
+    double randomElement(int pos);
 };
 
 extern double getDistance(Data &x1, Data &x2);
