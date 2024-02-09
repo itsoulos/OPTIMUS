@@ -92,10 +92,10 @@ double Neural::train2()
 	}
 	setLeftMargin(lmargin);
 	setRightMargin(rmargin);
-    Lbfgs lt(this);
-    v = lt.Solve(weight);
+    //Lbfgs lt(this);
+    //v = lt.Solve(weight);
 	//GenSolve(this,weight,v,0,1);
-    //v=tolmin(weight,Info);
+    v=tolmin(weight,Info);
 	return v;
 }
 

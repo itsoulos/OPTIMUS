@@ -55,7 +55,10 @@ void    IntegerAnneal::Solve()
 	for(int j=0;j<10;j++)
 	{
 	int randPos = rand() % bestx.size();
-	yy[randPos]=rand() % 256;
+		int range = 10;
+		int direction = rand() % 2==1?1:-1;
+		int newValue =  yy[randPos] + direction * (rand() % range);
+	yy[randPos]=newValue;
 	}
         fy = myProblem->funmin(yy);
         for(int j=0;j<bestx.size();j++)
@@ -90,9 +93,9 @@ void    IntegerAnneal::Solve()
         }
         }
         updateTemp();
-        if(T0<=1e-5) break;
-        printf("Iteration: %4d Temperature: %20.10lg Value: %20.10lg\n",
-               k,T0,besty);
+        if(T0<=1e-6) break;
+        //printf("Iteration: %4d Temperature: %20.10lg Value: %20.10lg\n",
+          //     k,T0,besty);
 
     }
 }

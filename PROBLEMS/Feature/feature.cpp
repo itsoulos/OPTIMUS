@@ -221,17 +221,22 @@ extern "C"
 
         //Rbf *neural = new Rbf(program[thread()].getMapper());
         const int threads = 12;
+	int maxtries = 30;
 //#pragma omp parallel for num_threads(threads)
         for (int i = 1; i <= ntimes; i++)
         {
-            //Rbf *neural = new Rbf(program[0].getMapper());
-            Neural *neural = new Neural(program[0].getMapper());
+            Rbf *neural = new Rbf(program[0].getMapper());
+            //Neural *neural = new Neural(program[0].getMapper());
             neural->readPatterns(trainx, trainy);
             neural->setPatternDimension(features);
             neural->setNumOfWeights(10);
             double d = neural->train2();
             double testError = neural->testError(testx, testy);
-            //if(testError>1e+4) continue;
+
+            if(testError>1e+4) {
+		    maxtries--;
+		    continue;
+	    }
 //#pragma omp critical
             {
                 double classTestError = neural->classTestError(testx, testy);
@@ -242,8 +247,8 @@ extern "C"
             }
             delete neural;
         }
-        avg_test_error /= ntimes;
-        avg_class_error /= ntimes;
+        avg_test_error /= maxtries;
+        avg_class_error /= maxtries;
         printf("Average test is %lf \n", avg_class_error);
         /*
      QEventLoop loop;

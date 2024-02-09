@@ -307,7 +307,7 @@ void    IntegerGenetic::randomSearch(int pos)
 		int old_value = chromosome[pos][ipos];
 		int range = 10;
 		int direction = rand() % 2==1?1:-1;
-		new_value =  rand() % 256;//old_value + direction * (rand() % range);
+		new_value =  old_value + direction * (rand() % range);
 		chromosome[pos][ipos]=new_value;
 		for(int j=0;j<size;j++) tempx[j]=chromosome[pos][j];
         fromidata(tempx,tx);
