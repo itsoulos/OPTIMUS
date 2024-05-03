@@ -329,7 +329,7 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Global optimization 
+Typically the task of locating the global minimum 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "go1"
@@ -337,15 +337,7 @@ literal "false"
 
 \end_inset
 
- refers to an approach where solving an optimization problem aims to explore
- the entire search space.
- The main issue is that this approach can demand excessive time and computationa
-l resources, especially when the search space is large.
- To address this, techniques such as local optimization, parallelization,
- or advanced optimization methods that consider the problem's structures
- are often employed.
- The typical form of a continuous optimization problem, aiming to find the
- minimum, is formulated through the following function 
+ of a function 
 \begin_inset Formula $f:S\rightarrow R,S\subset R^{n}$
 \end_inset
 
@@ -353,7 +345,7 @@ l resources, especially when the search space is large.
 \series bold
  
 \series default
-is defined as
+is defined as:
 \begin_inset Formula 
 \begin{equation}
 x^{*}=\mbox{arg}\min_{x\in S}f(x).\label{eq:eq1}
@@ -361,11 +353,11 @@ x^{*}=\mbox{arg}\min_{x\in S}f(x).\label{eq:eq1}
 
 \end_inset
 
-The set 
+where the set 
 \begin_inset Formula $S$
 \end_inset
 
- is defined as:
+ has as follows:
 \series bold
  
 \begin_inset Formula 
@@ -376,10 +368,8 @@ S=\left[a_{1},b_{1}\right]\otimes\left[a_{2},b_{2}\right]\otimes\ldots\left[a_{n
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-The 
+\series default
+The values 
 \begin_inset Formula $a_{i}$
 \end_inset
 
@@ -392,28 +382,25 @@ The
 \end_inset
 
 .
- Each point 
-\begin_inset Formula $x_{i}$
+ A systematic review of the optimization procedure can be found in the work
+ of Fouskakis 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "go_review"
+literal "false"
+
 \end_inset
 
- must take values within the interval [
-\begin_inset Formula $a_{i}$
-\end_inset
-
-, 
-\begin_inset Formula $b_{i}$
-\end_inset
-
-].
+.
 \end_layout
 
 \begin_layout Standard
-For the resolution of the problem, various methods of global optimization
- have been developed, which have been successfully applied to a wide range
- of problems in various fields, such as Medicine 
+The previous defined problem has been tackled using a variety of methods,
+ which have been successfully applied to a wide range of problems in various
+ fields, such as Medicine 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "Eva K. Lee,Y. Cherruault"
+key "go_med1,go_med2"
 literal "false"
 
 \end_inset
@@ -421,7 +408,7 @@ literal "false"
 , Chemistry 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "S. Heiles,W.H. Shin,A. Liwo"
+key "go_chem1,go_chem2"
 literal "false"
 
 \end_inset
@@ -429,7 +416,7 @@ literal "false"
 , Physics 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "L. Yang,E. Iuliano,Q. Duan"
+key "go_physics1,go_physics2,go_physics3"
 literal "false"
 
 \end_inset
@@ -437,18 +424,26 @@ literal "false"
 , Economics 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "Zwe-Lee Gaing,C. D. Maranas"
+key "go_econ1,go_econ2"
 literal "false"
 
 \end_inset
 
 , etc.
  Global optimization methods are divided into two main categories: deterministic
- and stochastic methods.
+ and stochastic methods 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "go_comparison"
+literal "false"
+
+\end_inset
+
+.
  In the first category belong the interval methods 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "M.A. Wolfe,T. Csendes and D"
+key "go_interval1,go_interval2"
 literal "false"
 
 \end_inset
@@ -459,13 +454,54 @@ literal "false"
 
  is iteratively divided into subregions and those that do not contain the
  global solution are discarded based on predefined criteria.
- In the second category, the search for the global minimum is based on randomnes
-s.
+ Many related works have been published in the area of deterministic methods,
+ such as the work of Maranas and Floudas that proposed a deterministic method
+ for chemical problems 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "go_determ1"
+literal "false"
+
+\end_inset
+
+,
+\series bold
+ 
+\series default
+the TRUST method 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "go_determ2"
+literal "false"
+
+\end_inset
+
+,
+\series bold
+ 
+\series default
+the method suggested by Evtushenko and Posypkin
+\begin_inset CommandInset citation
+LatexCommand citep
+key "go_determ3"
+literal "false"
+
+\end_inset
+
+ etc.
+
+\series bold
+ 
+\series default
+In the second category, the search for the global minimum is based on randomness.
+ Also, stochastic optimization methods are used in most cases, since they
+ can be programmed more easily and they do depend on any priory information
+ about the objective problem.
  Some stochastic optimization methods that have been used by researchers
  include Ant Colony Optimization 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "M. Dorigo,K. Socha"
+key "go_aco1,go_aco2"
 literal "false"
 
 \end_inset
@@ -473,7 +509,7 @@ literal "false"
 , Controlled Random Search 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "W. L. Price,Ivan Křivý,M.M. Ali"
+key "go_crs1,go_crs2,go_crs3"
 literal "false"
 
 \end_inset
@@ -481,7 +517,7 @@ literal "false"
 , Particle Swarm Optimization 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "J. Kennedy and R. Eberhart,Riccardo Poli,Ioan Cristian Trelea"
+key "go_pso1,go_pso2,go_pso3"
 literal "false"
 
 \end_inset
@@ -489,7 +525,7 @@ literal "false"
 , Simulated Annealing 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "S. Kirkpatrick,L. Ingber,R.W. Eglese"
+key "go_anneal1,go_anneal2,go_anneal3"
 literal "false"
 
 \end_inset
@@ -497,7 +533,7 @@ literal "false"
 , Differential Evolution 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "R. Storn,J. Liu"
+key "go_de1,go_de2"
 literal "false"
 
 \end_inset
@@ -505,7 +541,7 @@ literal "false"
 , and genetic algorithms 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "D. Goldberg,Z. Michaelewicz,S.A. Grady"
+key "ga1,ga2,ga3"
 literal "false"
 
 \end_inset
@@ -515,7 +551,7 @@ literal "false"
  
 \begin_inset CommandInset citation
 LatexCommand citep
-key "I. BoussaïD,T. Dokeroglu,K. Hussain"
+key "go_meta1,go_meta2,go_meta3"
 literal "false"
 
 \end_inset
@@ -524,7 +560,9 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-In this article, a widely adopted method for solving the equation 
+The current work proposes a series of modifications in order to effectively
+ parallelize the widely adopted method of Genetic Algorithms for solving
+ the equation 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:eq1"
@@ -534,11 +572,13 @@ noprefix "false"
 
 \end_inset
 
- is utilized, which is the use of genetic algorithms (GA), a choice that
- has gained ground due to its exceptional effectiveness in identifying efficient
- solutions.
- Genetic algorithms, initially proposed by John Holland, constitute a fundamenta
-l technique in the field of stochastic methods
+.
+
+\series bold
+ 
+\series default
+Genetic algorithms, initially proposed by John Holland, constitute a fundamental
+ technique in the field of stochastic methods
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Holland"
@@ -547,12 +587,16 @@ literal "false"
 \end_inset
 
 .
- Inspired by biology, these algorithms simulate the principles of evolution,
+
+\series bold
+ 
+\series default
+Inspired by biology, these algorithms simulate the principles of evolution,
  including genetic mutation, natural selection, and exchange of genetic
  material 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "Stender,Michaelewicz"
+key "Stender,Goldberg,Michaelewicz"
 literal "false"
 
 \end_inset
@@ -630,12 +674,19 @@ literal "false"
 \end_inset
 
 .
- Although genetic algorithms have proven to be effective, the optimization
+ 
+\end_layout
+
+\begin_layout Standard
+Although genetic algorithms have proven to be effective, the optimization
  process requires significant computational resources and time.
  This emphasizes the necessity of implementing parallel techniques, as the
  execution of algorithms is significantly accelerated by the combined use
  of multiple computational resources.
- For this reason, we employ the parallel genetic algorithm.
+ 
+\series bold
+(OTHER PARALLEL GA HERE?)For this reason, we employ the parallel genetic
+ algorithm.
  The parallel genetic algorithm refers to a variation of the genetic algorithm
  that utilizes parallel computations to achieve its objective.
  In the parallel genetic algorithm, various computational resources work
@@ -784,6 +835,11 @@ name "sec:Method-description"
 
 \end_layout
 
+\begin_layout Standard
+This section initiates with a detailed description of the base genetic algorithm
+ and continues providing the details of the suggested modifications.
+\end_layout
+
 \begin_layout Subsection
 The Genetic Algorithm
 \end_layout
@@ -798,15 +854,7 @@ Genetic algorithms are inspired by natural selection and the process of
  The algorithm processes these solutions through iterative steps, replicating
  and evolving the population of solutions.
  At each generation, the selected solutions are crossed and mutated to improve
- their fit to the problem
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Goldberg"
-literal "false"
-
-\end_inset
-
-.
+ their fit to the problem.
  As generations progress, the population converges toward solutions with
  improved fit to the problem.
  Important factors affecting genetic algorithm performance include population
@@ -833,10 +881,13 @@ name "The-genetic-algorithm"
 :
 \end_layout
 
-\begin_layout Itemize
-Initialization: We start by creating an initial population of solutions
- that represent potential answers to the problem.
- Each solution is represented as a set of parameters or "genes."
+\begin_layout Enumerate
+
+\series bold
+Initialization step
+\series default
+.
+ 
 \end_layout
 
 \begin_deeper
@@ -870,12 +921,24 @@ Set
 \series bold
 Initialize
 \series default
- randomly the 
+ randomly 
 \begin_inset Formula $N_{c}$
 \end_inset
 
  chromosomes in 
 \begin_inset Formula $S$
+\end_inset
+
+.
+ Each chromosome denotes a potential solution to the problem of Equation
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:eq1"
+plural "false"
+caps "false"
+noprefix "false"
+
 \end_inset
 
 .
@@ -918,9 +981,22 @@ Set
 \series bold
 Set
 \series default
- generation=0.
+ 
+\begin_inset Formula $k$
+\end_inset
+
+=0 as the generation counter.
 \end_layout
 
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Fitness calculation step.
+ 
+\end_layout
+
+\begin_deeper
 \begin_layout Enumerate
 
 \series bold
@@ -959,9 +1035,13 @@ name "enu:Fitness-calculation-Step"
 \end_layout
 
 \end_deeper
-\begin_layout Itemize
+\begin_layout Enumerate
+
+\series bold
+(STOPPED HERE)
+\series default
 Selection: A subset of the current solutions is selected based on their
- quality, measured by a cost or fitness function.
+ fitness function.
  The most adapted solutions have higher chances of being selected.
  Chromosomes are sorted in an order of fitness contribution.
  Denote as 
@@ -982,44 +1062,9 @@ Selection: A subset of the current solutions is selected based on their
 \end_inset
 
 .
- The population selected for the tournament process is determined by the
- following condition.
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-
-\series bold
-If 
-\begin_inset Formula $N_{c}\geq100$
-\end_inset
-
- then Set 
-\series default
-
-\begin_inset Formula $N_{t}=10$
-\end_inset
-
  
-\series bold
-Else Set
-\series default
-: 
-\begin_inset Formula $N_{t}=4$
-\end_inset
-
-
 \end_layout
 
-\begin_layout Enumerate
-
-\series bold
-End if
-\series default
-.
-\end_layout
-
-\end_deeper
 \begin_layout Itemize
 Crossover: Two selected solutions (parents) are combined to create new solutions
  (offspring).
@@ -1180,7 +1225,7 @@ Generation:
 Set
 \series default
  
-\begin_inset Formula $generation=generation+1$
+\begin_inset Formula $k=k+1$
 \end_inset
 
 .
@@ -1918,47 +1963,59 @@ literal "false"
 
 \end_inset
 
-
+ and it is formulated as follows:
 \end_layout
 
 \begin_layout Itemize
-Set 
-\begin_inset Formula $generation=generation$
+In each generation 
+\begin_inset Formula $k$
 \end_inset
 
-+1
+, the chromosome 
+\begin_inset Formula $g^{*}$
+\end_inset
+
+ with the best functional value 
+\begin_inset Formula $f\left(g^{*}\right)$
+\end_inset
+
+ is retrieved from the population.
+ If this value does not change for a number of generations, then the algorithm
+ should probably terminate.
+ 
 \end_layout
 
 \begin_layout Itemize
-In each generation, the chromosome with the best functional value 
-\begin_inset Formula $f(g_{best})$
+Consider 
+\begin_inset Formula $σ^{(k)}$
 \end_inset
 
-is identified from the entire population.
- If this value remains the best for a specific number of generations, then
- the algorithm terminates.
- Consider 
-\begin_inset Formula $σ^{(generation)}$
+ as the associated variance of the quantity 
+\begin_inset Formula $f\left(g^{*}\right)$
 \end_inset
 
-as the associated variance at generation iter.
- The termination rule is formulated as:
+ at generation 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ The algorithm terminates when:
 \begin_inset Formula 
 \[
-generation\geq N_{g}\,or\,σ^{(generation)}\leq\frac{σ^{(klast)}}{2}
+k\geq N_{g}\,\mbox{or}\,σ^{(k)}\leq\frac{σ^{\left(k_{\mbox{last}}\right)}}{2}
 \]
 
 \end_inset
 
 where 
-\begin_inset Formula $Klast$
+\begin_inset Formula $k_{\mbox{last}}$
 \end_inset
 
- is the last generation where a new functional value was found.
-\end_layout
+ is the last generation where a lower value for 
+\begin_inset Formula $f\left(g^{*}\right)$
+\end_inset
 
-\begin_layout Itemize
-In case the above conditions are not met, proceed to step 2.
+ was discovered.
 \end_layout
 
 \begin_layout Section
@@ -1972,14 +2029,21 @@ name "sec:Experiments"
 
 \end_layout
 
+\begin_layout Standard
+A series of bechmark functions, found in the relevant literature is introduced
+ here as well as the conducted experiments and some discussion on the experiment
+al results.
+ 
+\end_layout
+
 \begin_layout Subsection
 Test functions
 \end_layout
 
 \begin_layout Standard
 To assess the effectiveness of the proposed method in locating the overall
- minimum of functions, a set of test functions sourced from pertinent literature
- 
+ minimum of functions, a set of well - known test functions, found in the
+ relevent literature 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Floudas,Montaz Ali"
@@ -1987,31 +2051,8 @@ literal "false"
 
 \end_inset
 
- were employed and are outlined below.
- The test functions, apart from their dimensionality, minima, and scalable
- nature, possess an additional characteristic: symmetry.
- According to Z.-M.
- Gao et al.
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Gao"
-literal "false"
-
-\end_inset
-
-, non-symmetric test functions present more challenges with classical optimizati
-on methods in terms of the success rate in finding the minimum.
- However, with the proposed addition, namely, periodic local optimization,
- it appears that the success rate tends to become almost 100% in all these
- functions.
- Of course, the classification of these functions as symmetric or asymmetric
- may be a challenging task, as it depends largely on how they are defined
- and utilized in the literature or source material.
- 
-\end_layout
-
-\begin_layout Standard
-The following is the list of test functions: 
+ was employed.
+ The functions used here are:
 \end_layout
 
 \begin_layout Itemize
@@ -2022,7 +2063,7 @@ Bent Cigar function
 \emph on
  
 \emph default
-The function is 
+defined as: 
 \begin_inset Formula 
 \[
 f(x)=x_{1}^{2}+10^{6}\sum_{i=2}^{n}x_{i}^{2}
@@ -2047,8 +2088,7 @@ f(x)=x_{1}^{2}+10^{6}\sum_{i=2}^{n}x_{i}^{2}
 \series bold
 Bf1
 \series default
- function.
- The function Bohachevsky 1 is given by the equation
+ function (Bohachevsky 1), defined as:
 \end_layout
 
 \begin_layout Standard
@@ -2072,8 +2112,7 @@ with
 \series bold
 Bf2
 \series default
- function.
- The function Bohachevsky 2 is given by the equation 
+ function (Bohachevsky 2), defined as: 
 \begin_inset Formula 
 \[
 f(x)=x_{1}^{2}+2x_{2}^{2}-\frac{3}{10}\cos\left(3\pi x_{1}\right)\cos\left(4\pi x_{2}\right)+\frac{3}{10}
@@ -2094,8 +2133,7 @@ with
 \series bold
 Branin
 \series default
- function.
- The function is defined by 
+ function, given by 
 \begin_inset Formula $f(x)=\left(x_{2}-\frac{5.1}{4\pi^{2}}x_{1}^{2}+\frac{5}{\pi}x_{1}-6\right)^{2}+10\left(1-\frac{1}{8\pi}\right)\cos(x_{1})+10$
 \end_inset
 
@@ -2103,8 +2141,7 @@ Branin
 \begin_inset Formula $-5\le x_{1}\le10,\ 0\le x_{2}\le15$
 \end_inset
 
-.
- The value of global minimum is 0.397887.with 
+, with 
 \begin_inset Formula $x\in[-10,10]^{2}$
 \end_inset
 
@@ -2118,7 +2155,7 @@ Branin
 CM
 \series default
  function.
- The Cosine Mixture function is given by the equation 
+ The Cosine Mixture function is given by 
 \begin_inset Formula 
 \[
 f(x)=\sum_{i=1}^{n}x_{i}^{2}-\frac{1}{10}\sum_{i=1}^{n}\cos\left(5\pi x_{i}\right)
@@ -2131,11 +2168,11 @@ with
 \end_inset
 
 .
- For the conducted experiments the value 
+ The value 
 \begin_inset Formula $n=4$
 \end_inset
 
- was used.
+ was used in the conducted experiments.
 \end_layout
 
 \begin_layout Itemize
@@ -2182,7 +2219,7 @@ with
 \begin_inset Formula $x\in[-100,100]^{2}$
 \end_inset
 
- and global minimum -1.0
+ .
 \end_layout
 
 \begin_layout Itemize
@@ -2756,10 +2793,7 @@ noprefix "false"
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-The Table 
+ The Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:Comparison1"
@@ -18240,7 +18274,11 @@ Not applicable.
 \end_layout
 
 \begin_layout Acknowledgments
-Not applicable.
+This research has been financed by the European Union : Next Generation
+ EU through the Program Greece 2.0 National Recovery and Resilience Plan
+ , under the call RESEARCH – CREATE – INNOVATE, project name “iCREW: Intelligent
+ small craft simulator for advanced crew training using Virtual Reality
+ techniques" (project code:TAEDK-06195).
 \end_layout
 
 \begin_layout Conflicts of Interest
@@ -18328,7 +18366,7 @@ Keep empty!
 
 \end_inset
 
-Different variations of the ELP problem
+
 \end_layout
 
 \begin_layout Begin Whole Page
@@ -18399,6 +18437,703 @@ A.
  350, pp.
  1-255).
  Berlin: Springer-Verlag, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_review"
+literal "false"
+
+\end_inset
+
+D.
+ Fouskakis, D.
+ Draper, Stochastic optimization: a review.
+ International Statistical Review 
+\series bold
+70
+\series default
+, pp.
+ 315-349, 2002.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_med1"
+literal "false"
+
+\end_inset
+
+Y.
+ Cherruault, Global optimization in biology and medicine, Mathematical and
+ Computer Modelling 
+\series bold
+20
+\series default
+, pp.
+ 119-132, 1994.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_med2"
+literal "false"
+
+\end_inset
+
+Eva K.
+ Lee, Large-Scale Optimization-Based Classification Models in Medicine and
+ Biology, Annals of Biomedical Engineering 
+\series bold
+35
+\series default
+, pp 1095-1109, 2007.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_chem1"
+literal "false"
+
+\end_inset
+
+A.
+ Liwo, J.
+ Lee, D.R.
+ Ripoll, J.
+ Pillardy, H.
+ A.
+ Scheraga, Protein structure prediction by global optimization of a potential
+ energy function, Biophysics 
+\series bold
+96
+\series default
+, pp.
+ 5482-5485, 1999.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_chem2"
+literal "false"
+
+\end_inset
+
+W.H.
+ Shin, J.K.
+ Kim, D.S.
+ Kim, C.
+ Seok, GalaxyDock2: Protein–ligand docking using beta-complex and global
+ optimization, J.
+ Comput.
+ Chem.
+ 
+\series bold
+34
+\series default
+, pp.
+ 2647– 2656, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_physics1"
+literal "false"
+
+\end_inset
+
+Q.
+ Duan, S.
+ Sorooshian, V.
+ Gupta, Effective and efficient global optimization for conceptual rainfall-runo
+ff models, Water Resources Research 
+\series bold
+28
+\series default
+, pp.
+ 1015-1031 , 1992.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_physics2"
+literal "false"
+
+\end_inset
+
+L.
+ Yang, D.
+ Robin, F.
+ Sannibale, C.
+ Steier, W.
+ Wan, Global optimization of an accelerator lattice using multiobjective
+ genetic algorithms, Nuclear Instruments and Methods in Physics Research
+ Section A: Accelerators, Spectrometers, Detectors and Associated Equipment
+ 
+\series bold
+609
+\series default
+, pp.
+ 50-57, 2009.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_physics3"
+literal "false"
+
+\end_inset
+
+E.
+ Iuliano, Global optimization of benchmark aerodynamic cases using physics-based
+ surrogate models, Aerospace Science and Technology 
+\series bold
+67
+\series default
+, pp.273-286, 2017.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_econ1"
+literal "false"
+
+\end_inset
+
+C.
+ D.
+ Maranas, I.
+ P.
+ Androulakis, C.
+ A.
+ Floudas, A.
+ J.
+ Berger, J.
+ M.
+ Mulvey, Solving long-term financial planning problems via global optimization,
+ Journal of Economic Dynamics and Control 
+\series bold
+21
+\series default
+, pp.
+ 1405-1425, 1997.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_econ2"
+literal "false"
+
+\end_inset
+
+Zwe-Lee Gaing, Particle swarm optimization to solving the economic dispatch
+ considering the generator constraints, IEEE Transactions on 
+\series bold
+18
+\series default
+ Power Systems, pp.
+ 1187-1195, 2003.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_comparison"
+literal "false"
+
+\end_inset
+
+L.
+ Liberti, S.
+ Kucherenko, Comparison of deterministic and stochastic approaches to global
+ optimization.
+ International Transactions in Operational Research 
+\series bold
+12
+\series default
+, pp.
+ 263-285, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_interval1"
+literal "false"
+
+\end_inset
+
+M.A.
+ Wolfe, Interval methods for global optimization, Applied Mathematics and
+ Computation 
+\series bold
+75
+\series default
+, pp.
+ 179-206, 1996.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_interval2"
+literal "false"
+
+\end_inset
+
+T.
+ Csendes and D.
+ Ratz, Subdivision Direction Selection in Interval Methods for Global Optimizati
+on, SIAM J.
+ Numer.
+ Anal.
+ 
+\series bold
+34
+\series default
+, pp.
+ 922–938, 1997.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_determ1"
+literal "false"
+
+\end_inset
+
+C.D Maranas, C.A.
+ Floudas, A deterministic global optimization approach for molecular structure
+ determination, J.
+ Chem.
+ Phys.
+ 
+\series bold
+100
+\series default
+, 1247, 1994.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_determ2"
+literal "false"
+
+\end_inset
+
+J.
+ Barhen, V.
+ Protopopescu, D.
+ Reister, TRUST: A Deterministic Algorithm for Global Optimization, Science
+ 
+\series bold
+276
+\series default
+, pp.
+ 1094-1097, 1997.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_determ3"
+literal "false"
+
+\end_inset
+
+Y.
+ Evtushenko, M.A.
+ Posypkin, deterministic approach to global box-constrained optimization,
+ Optim Lett 
+\series bold
+7
+\series default
+, pp.
+ 819–829, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_aco1"
+literal "false"
+
+\end_inset
+
+M.
+ Dorigo, M.
+ Birattari and T.
+ Stutzle, Ant colony optimization, IEEE Computational Intelligence Magazine
+ 
+\series bold
+1
+\series default
+, pp.
+ 28-39, 2006.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_aco2"
+literal "false"
+
+\end_inset
+
+K.
+ Socha, M.
+ Dorigo, Ant colony optimization for continuous domains, European Journal
+ of Operational Research 185, pp.
+ 1155-1173, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_crs1"
+literal "false"
+
+\end_inset
+
+W.
+ L.
+ Price, Global optimization by controlled random search, Journal of Optimization
+ Theory and Applications 
+\series bold
+40
+\series default
+, pp.
+ 333-348, 1983.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_crs2"
+literal "false"
+
+\end_inset
+
+Ivan Křivý, Josef Tvrdík, The controlled random search algorithm in optimizing
+ regression models, Computational Statistics & Data Analysis 
+\series bold
+20
+\series default
+, pp.
+ 229-234, 1995.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_crs3"
+literal "false"
+
+\end_inset
+
+M.M.
+ Ali, A.
+ Törn, and S.
+ Viitanen, A Numerical Comparison of Some Modified Controlled Random Search
+ Algorithms, Journal of Global Optimization 
+\series bold
+11
+\series default
+,pp.
+ 377–385, 1997.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_pso1"
+literal "false"
+
+\end_inset
+
+J.
+ Kennedy and R.
+ Eberhart, "Particle swarm optimization," Proceedings of ICNN'95 - International
+ Conference on Neural Networks, 1995, pp.
+ 1942-1948 vol.4, doi: 10.1109/ICNN.1995.488968.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_pso2"
+literal "false"
+
+\end_inset
+
+Ioan Cristian Trelea, The particle swarm optimization algorithm: convergence
+ analysis and parameter selection, Information Processing Letters 
+\series bold
+85
+\series default
+, pp.
+ 317-325, 2003.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_pso3"
+literal "false"
+
+\end_inset
+
+Riccardo Poli, James Kennedy kennedy, Tim Blackwell, Particle swarm optimization
+ An Overview, Swarm Intelligence 
+\series bold
+1
+\series default
+, pp 33-57, 2007.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_anneal1"
+literal "false"
+
+\end_inset
+
+S.
+ Kirkpatrick, CD Gelatt, , MP Vecchi, Optimization by simulated annealing,
+ Science 
+\series bold
+220
+\series default
+, pp.
+ 671-680, 1983.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_anneal2"
+literal "false"
+
+\end_inset
+
+L.
+ Ingber, Very fast simulated re-annealing, Mathematical and Computer Modelling
+ 
+\series bold
+12
+\series default
+, pp.
+ 967-973, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_anneal3"
+literal "false"
+
+\end_inset
+
+R.W.
+ Eglese, Simulated annealing: A tool for operational research, Simulated
+ annealing: A tool for operational research 
+\series bold
+46
+\series default
+, pp.
+ 271-281, 1990.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_de1"
+literal "false"
+
+\end_inset
+
+R.
+ Storn, K.
+ Price, Differential Evolution - A Simple and Efficient Heuristic for Global
+ Optimization over Continuous Spaces, Journal of Global Optimization 
+\series bold
+11
+\series default
+, pp.
+ 341-359, 1997.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_de2"
+literal "false"
+
+\end_inset
+
+J.
+ Liu, J.
+ Lampinen, A Fuzzy Adaptive Differential Evolution Algorithm.
+ Soft Comput 
+\series bold
+9
+\series default
+, pp.448–462, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ga1"
+literal "false"
+
+\end_inset
+
+D.
+ Goldberg, Genetic Algorithms in Search, Optimization and Machine Learning,
+ Addison-Wesley Publishing Company, Reading, Massachussets, 1989.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ga2"
+literal "false"
+
+\end_inset
+
+Z.
+ Michaelewicz, Genetic Algorithms + Data Structures = Evolution Programs.
+ Springer - Verlag, Berlin, 1996.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ga3"
+literal "false"
+
+\end_inset
+
+S.A.
+ Grady, M.Y.
+ Hussaini, M.M.
+ Abdullah, Placement of wind turbines using genetic algorithms, Renewable
+ Energy 
+\series bold
+30
+\series default
+, pp.
+ 259-270, 2005.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_meta1"
+literal "false"
+
+\end_inset
+
+I.
+ BoussaïD, J.
+ Lepagnot, P.
+ Siarry, P., A survey on optimization metaheuristics.
+ Information sciences 
+\series bold
+237
+\series default
+, pp.
+ 82-117, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_meta2"
+literal "false"
+
+\end_inset
+
+T.
+ Dokeroglu, E.
+ Sevinc, T.
+ Kucukyilmaz, A.
+ Cosar, A survey on new generation metaheuristic algorithms.
+ Computers & Industrial Engineering 
+\series bold
+137
+\series default
+, 106040, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_meta3"
+literal "false"
+
+\end_inset
+
+K.
+ Hussain, M.N.M.
+ Salleh, S.
+ Cheng, Y.
+ Shi, Metaheuristic research: a comprehensive survey.Artificial Intelligence
+ Review 
+\series bold
+52
+\series default
+, pp.
+ 2191-2233, 2019.
 \end_layout
 
 \begin_layout Bibliography
@@ -18862,21 +19597,6 @@ Charilogis, V.; Tsoulos, I.G.; Tzallas, A.
 \labelwidthstring 999
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
-key "Gao"
-literal "false"
-
-\end_inset
-
-Gao, Z.M., Zhao, J., Hu,Y.R., Chen, H.F.
- (2021).The Challenge for the Nature - Inspired Global Optimization Algorithms:
- Non-Symmetric Benchmark Functions.
- IEEE Access, July 26, 2021.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
 key "IPSO"
 literal "false"
 
@@ -18907,43 +19627,6 @@ Charilogis, V., Tsoulos, I., Tzallas, A., Karvounis, E.
 \labelwidthstring 999
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
-key "Eva K. Lee"
-literal "false"
-
-\end_inset
-
-Eva K.
- Lee, Large-Scale Optimization-Based Classification Models in Medicine and
- Biology, Annals of Biomedical Engineering 
-\series bold
-35
-\series default
-, pp 1095-1109, 2007.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "Y. Cherruault"
-literal "false"
-
-\end_inset
-
-Y.
- Cherruault, Global optimization in biology and medicine, Mathematical and
- Computer Modelling 
-\series bold
-20
-\series default
-, pp.
- 119-132, 1994.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
 key "S. Heiles"
 literal "false"
 
@@ -18962,565 +19645,6 @@ S.
 \series default
 , pp.
  2091– 2109, 2013.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "W.H. Shin"
-literal "false"
-
-\end_inset
-
-W.H.
- Shin, J.K.
- Kim, D.S.
- Kim, C.
- Seok, GalaxyDock2: Protein–ligand docking using beta-complex and global
- optimization, J.
- Comput.
- Chem.
- 
-\series bold
-34
-\series default
-, pp.
- 2647– 2656, 2013.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "A. Liwo"
-literal "false"
-
-\end_inset
-
-A.
- Liwo, J.
- Lee, D.R.
- Ripoll, J.
- Pillardy, H.
- A.
- Scheraga, Protein structure prediction by global optimization of a potential
- energy function, Biophysics 
-\series bold
-96
-\series default
-, pp.
- 5482-5485, 1999.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "L. Yang"
-literal "false"
-
-\end_inset
-
-L.
- Yang, D.
- Robin, F.
- Sannibale, C.
- Steier, W.
- Wan, Global optimization of an accelerator lattice using multiobjective
- genetic algorithms, Nuclear Instruments and Methods in Physics Research
- Section A: Accelerators, Spectrometers, Detectors and Associated Equipment
- 
-\series bold
-609
-\series default
-, pp.
- 50-57, 2009.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "E. Iuliano"
-literal "false"
-
-\end_inset
-
-E.
- Iuliano, Global optimization of benchmark aerodynamic cases using physics-based
- surrogate models, Aerospace Science and Technology 
-\series bold
-67
-\series default
-, pp.273-286, 2017.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "Q. Duan"
-literal "false"
-
-\end_inset
-
-Q.
- Duan, S.
- Sorooshian, V.
- Gupta, Effective and efficient global optimization for conceptual rainfall-runo
-ff models, Water Resources Research 
-\series bold
-28
-\series default
-, pp.
- 1015-1031 , 1992.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "Zwe-Lee Gaing"
-literal "false"
-
-\end_inset
-
-Zwe-Lee Gaing, Particle swarm optimization to solving the economic dispatch
- considering the generator constraints, IEEE Transactions on 
-\series bold
-18
-\series default
- Power Systems, pp.
- 1187-1195, 2003.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "C. D. Maranas"
-literal "false"
-
-\end_inset
-
-C.
- D.
- Maranas, I.
- P.
- Androulakis, C.
- A.
- Floudas, A.
- J.
- Berger, J.
- M.
- Mulvey, Solving long-term financial planning problems via global optimization,
- Journal of Economic Dynamics and Control 
-\series bold
-21
-\series default
-, pp.
- 1405-1425, 1997.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "M.A. Wolfe"
-literal "false"
-
-\end_inset
-
-M.A.
- Wolfe, Interval methods for global optimization, Applied Mathematics and
- Computation 
-\series bold
-75
-\series default
-, pp.
- 179-206, 1996.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "T. Csendes and D"
-literal "false"
-
-\end_inset
-
-T.
- Csendes and D.
- Ratz, Subdivision Direction Selection in Interval Methods for Global Optimizati
-on, SIAM J.
- Numer.
- Anal.
- 
-\series bold
-34
-\series default
-, pp.
- 922–938, 1997.
- 
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "M. Dorigo"
-literal "false"
-
-\end_inset
-
-M.
- Dorigo, M.
- Birattari and T.
- Stutzle, Ant colony optimization, IEEE Computational Intelligence Magazine
- 
-\series bold
-1
-\series default
-, pp.
- 28-39, 2006.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "K. Socha"
-literal "false"
-
-\end_inset
-
-K.
- Socha, M.
- Dorigo, Ant colony optimization for continuous domains, European Journal
- of Operational Research 185, pp.
- 1155-1173, 2008.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "W. L. Price"
-literal "false"
-
-\end_inset
-
-W.
- L.
- Price, Global optimization by controlled random search, Journal of Optimization
- Theory and Applications 
-\series bold
-40
-\series default
-, pp.
- 333-348, 1983.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "Ivan Křivý"
-literal "false"
-
-\end_inset
-
-Ivan Křivý, Josef Tvrdík, The controlled random search algorithm in optimizing
- regression models, Computational Statistics & Data Analysis 
-\series bold
-20
-\series default
-, pp.
- 229-234, 1995.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "M.M. Ali"
-literal "false"
-
-\end_inset
-
-M.M.
- Ali, A.
- Törn, and S.
- Viitanen, A Numerical Comparison of Some Modified Controlled Random Search
- Algorithms, Journal of Global Optimization 
-\series bold
-11
-\series default
-,pp.
- 377–385,1997.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "J. Kennedy and R. Eberhart"
-literal "false"
-
-\end_inset
-
-J.
- Kennedy and R.
- Eberhart, "Particle swarm optimization," Proceedings of ICNN'95 - International
- Conference on Neural Networks, 1995, pp.
- 1942-1948 vol.4, doi: 10.1109/ICNN.1995.488968.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "Riccardo Poli"
-literal "false"
-
-\end_inset
-
-Riccardo Poli, James Kennedy kennedy, Tim Blackwell, Particle swarm optimization
- An Overview, Swarm Intelligence 
-\series bold
-1
-\series default
-, pp 33-57, 2007.
- 
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "Ioan Cristian Trelea"
-literal "false"
-
-\end_inset
-
-Ioan Cristian Trelea, The particle swarm optimization algorithm: convergence
- analysis and parameter selection, Information Processing Letters 
-\series bold
-85
-\series default
-, pp.
- 317-325, 2003.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "S. Kirkpatrick"
-literal "false"
-
-\end_inset
-
-S.
- Kirkpatrick, CD Gelatt, , MP Vecchi, Optimization by simulated annealing,
- Science 
-\series bold
-220
-\series default
-, pp.
- 671-680, 1983.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "L. Ingber"
-literal "false"
-
-\end_inset
-
-L.
- Ingber, Very fast simulated re-annealing, Mathematical and Computer Modelling
- 
-\series bold
-12
-\series default
-, pp.
- 967-973, 1989.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "R.W. Eglese"
-literal "false"
-
-\end_inset
-
-R.W.
- Eglese, Simulated annealing: A tool for operational research, Simulated
- annealing: A tool for operational research 
-\series bold
-46
-\series default
-, pp.
- 271-281, 1990.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "R. Storn"
-literal "false"
-
-\end_inset
-
-R.
- Storn, K.
- Price, Differential Evolution - A Simple and Efficient Heuristic for Global
- Optimization over Continuous Spaces, Journal of Global Optimization 
-\series bold
-11
-\series default
-, pp.
- 341-359, 1997.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "J. Liu"
-literal "false"
-
-\end_inset
-
-J.
- Liu, J.
- Lampinen, A Fuzzy Adaptive Differential Evolution Algorithm.
- Soft Comput 
-\series bold
-9
-\series default
-, pp.448–462, 2005.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "D. Goldberg"
-literal "false"
-
-\end_inset
-
-D.
- Goldberg, Genetic Algorithms in Search, Optimization and Machine Learning,
- Addison-Wesley Publishing Company, Reading, Massachussets, 1989.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "Z. Michaelewicz"
-literal "false"
-
-\end_inset
-
-Z.
- Michaelewicz, Genetic Algorithms + Data Structures = Evolution Programs.
- Springer - Verlag, Berlin, 1996.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "S.A. Grady"
-literal "false"
-
-\end_inset
-
-S.A.
- Grady, M.Y.
- Hussaini, M.M.
- Abdullah, Placement of wind turbines using genetic algorithms, Renewable
- Energy 
-\series bold
-30
-\series default
-, pp.
- 259-270, 2005.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "I. BoussaïD"
-literal "false"
-
-\end_inset
-
-I.
- BoussaïD, J.
- Lepagnot, P.
- Siarry, P., A survey on optimization metaheuristics.
- Information sciences 
-\series bold
-237
-\series default
-, pp.
- 82-117, 2013.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "T. Dokeroglu"
-literal "false"
-
-\end_inset
-
-T.
- Dokeroglu, E.
- Sevinc, T.
- Kucukyilmaz, A.
- Cosar, A survey on new generation metaheuristic algorithms.
- Computers & Industrial Engineering 
-\series bold
-137
-\series default
-, 106040, 2019.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "K. Hussain"
-literal "false"
-
-\end_inset
-
-K.
- Hussain, M.N.M.
- Salleh, S.
- Cheng, Y.
- Shi, Metaheuristic research: a comprehensive survey.Artificial Intelligence
- Review 
-\series bold
-52
-\series default
-, pp.
- 2191-2233, 2019.
 \end_layout
 
 \begin_layout End Whole Page
