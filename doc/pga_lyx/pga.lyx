@@ -683,53 +683,104 @@ Although genetic algorithms have proven to be effective, the optimization
  This emphasizes the necessity of implementing parallel techniques, as the
  execution of algorithms is significantly accelerated by the combined use
  of multiple computational resources.
+ Modern parallel programming techniques include for example the Message
+ Passing Interface (MPI) 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "openmpi"
+literal "false"
+
+\end_inset
+
+ or the OpenMP library 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "opemp"
+literal "false"
+
+\end_inset
+
+.
+ Parallel programming techniques have also incorporated in various cases
+ in global optimization, such as the combination of Simulated Annealing
+ and parallel techniques 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "go_par1"
+literal "false"
+
+\end_inset
+
+, the usage of parallel methods in Particle Swarm Optimization
+\begin_inset CommandInset citation
+LatexCommand citep
+key "go_par2"
+literal "false"
+
+\end_inset
+
+, the incorporation of radial basis functions in parallel stochastic optimizatio
+n 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "go_par3"
+literal "false"
+
+\end_inset
+
+ etc.
+ One of the main advantages of Genetic Algorithms over other global optimization
+ techniques is that they can be easily parallelized and exploit modern computing
+ units as well as the previously mentioned parallel programming techniques.
+ In the relevant literature, two major categories of parallel genetic algorithms
+ appear: island genetic algorithms and cellurar genetic algorithms 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Tomohiro"
+literal "false"
+
+\end_inset
+
+.
+ The island model is a Parallel Genetic Algorithm (PGA), that manages several
+ subpopulations on separate islands, executing the genetic algorithm process
+ on each island simultaneously for a different set of solutions.
+ Island models have been utilized in various cases, such as molecular sequence
+ alignment 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "ga_island0"
+literal "false"
+
+\end_inset
+
+, the quadratic assignment problem 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "ga_island1"
+literal "false"
+
+\end_inset
+
+, placement of sensors/actuators in large structures 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "ga_island2"
+literal "false"
+
+\end_inset
+
+ etc.
+ Also recently, Tsoulos et al proposed an implementation of an island PGA
  
-\series bold
-(OTHER PARALLEL GA HERE?)For this reason, we employ the parallel genetic
- algorithm.
- The parallel genetic algorithm refers to a variation of the genetic algorithm
- that utilizes parallel computations to achieve its objective.
- In the parallel genetic algorithm, various computational resources work
- simultaneously, rather than executing sequentially.
- This accelerates the optimization process and allows for the efficient
- exploration of the solution space.
- Parallel genetic algorithms are useful when solving a problem that demands
- a substantial computational load or when many possible solutions need to
- be examined.
- Parallel execution enables the algorithm to handle multiple solutions simultane
-ously, achieving faster and more efficient performance.
- Regarding the implementation of a Parallel Genetic Algorithm (PGA), there
- are mainly four types of PGA models: global parallelization, island model,
- cellular model, and hybrid model 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "Tomohiro"
+key "pdoublepop"
 literal "false"
 
 \end_inset
 
 .
- Global parallelization within a genetic algorithm is achieved through the
- simultaneous handling of multiple temporary solutions by a central population.
- The evaluation process is executed in parallel, allowing for effective
- exploration and evolution of solutions.
- Management of temporary solutions, parallel evaluation, creation of new
- solutions, and replacement are presented as fundamental operational stages.
- Parallelization enables a more efficient execution of the genetic algorithm,
- improving the performance of the evaluation and evolution process 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Tomohiro"
-literal "false"
-
-\end_inset
-
-.
- The island model is a PGA that manages several subpopulations on separate
- islands, executing the genetic algorithm process on each island simultaneously
- for a different set of solutions.
- We will analyze this specific method and its operation in the next section
- in detail.
  In the case of the parallel cellular model of genetic algorithms, solutions
  are organized into a grid.
  Various diversity operators, such as crossover and mutation, are applied
@@ -740,35 +791,7 @@ literal "false"
  strategies, and settings.
  Implementations may involve multiple processors or graphical processing
  units, with information exchange possible through physical communication
- networks 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Tomohiro"
-literal "false"
-
-\end_inset
-
-.
- Different implementations can manage various parameters and operators for
- each solution in the grid.
- As for the parallel hybrid approach in genetic algorithms, it combines
- different models of parallel genetic algorithms to solve problems.
- For example, a hybrid model may be used that combines the island model
- with global parallelization.
- In this case, each island executes genetic algorithms in parallel, handling
- its solutions within a grid.
- The hybrid island model can also be used with another island model, where
- the two island models are combined.
- Finally, a hybrid island-cellular model is possible, where the island model
- serves as the base, and each island performs cellular parallelization 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Tomohiro"
-literal "false"
-
-\end_inset
-
-.
+ networks.
 \end_layout
 
 \begin_layout Standard
@@ -785,8 +808,7 @@ The present study focuses on the island model, where the total population
 \end_layout
 
 \begin_layout Standard
-The remaining portion of the article follows this structure: In section
- 
+The remaining of the article follows this structure: In section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Method-description"
@@ -1038,12 +1060,10 @@ name "enu:Fitness-calculation-Step"
 \begin_layout Enumerate
 
 \series bold
-(STOPPED HERE)
+Selection step
 \series default
-Selection: A subset of the current solutions is selected based on their
- fitness function.
- The most adapted solutions have higher chances of being selected.
- Chromosomes are sorted in an order of fitness contribution.
+.
+ The chromosomes are sorted with respect to their fitness values.
  Denote as 
 \begin_inset Formula $N_{b}$
 \end_inset
@@ -1052,22 +1072,29 @@ Selection: A subset of the current solutions is selected based on their
 \begin_inset Formula $\left(1-p_{s}\right)\times N_{c}$
 \end_inset
 
-.
- Chromosomes with lower functional values remain in the next generation.
- Conversely, a percentage of chromosomes with high functional values participate
- in the crossover process and are replaced by the offspring.
+ chromosomes with the lowest fitness values.
+ These chromosomes will copied to the next generation.
+ The rest of chromosomes will be substituted by offspings created in the
+ crossover procedure.
  Each offspring is created from two chromosomes (parents) of the population
- through the tournament selection process 
-\begin_inset Formula $N_{t}$
+ through the tournament selection process.
+ The procedure of tournament selection has as follows: A set of 
+\begin_inset Formula $N_{t}>1$
 \end_inset
 
-.
+ randomly selected chromosomes is formed and the individual with the lowest
+ fitness value from this set is selected as parent.
  
 \end_layout
 
-\begin_layout Itemize
-Crossover: Two selected solutions (parents) are combined to create new solutions
- (offspring).
+\begin_layout Enumerate
+
+\series bold
+Crossover step
+\series default
+.
+ Two selected solutions (parents) are combined to create new solutions (offsprin
+g).
  During crossover, genes are exchanged between parents, introducing diversity.
  For each selected pair of parents 
 \begin_inset Formula $(z,w)$
@@ -1115,8 +1142,13 @@ literal "true"
  
 \end_layout
 
-\begin_layout Itemize
-Replacement: 
+\begin_layout Enumerate
+
+\series bold
+Replacement step
+\series default
+.
+ 
 \end_layout
 
 \begin_deeper
@@ -1159,8 +1191,13 @@ EndFor
 \end_layout
 
 \end_deeper
-\begin_layout Itemize
-Mutation: Some genes in the offspring are randomly modified.
+\begin_layout Enumerate
+
+\series bold
+Mutation step
+\series default
+.
+ Some genes in the offspring are randomly modified.
  This introduces more diversity into the population and helps identify new
  solutions.
 \end_layout
@@ -1214,8 +1251,8 @@ EndFor
 \end_layout
 
 \end_deeper
-\begin_layout Itemize
-Generation: 
+\begin_layout Enumerate
+
 \series bold
 Set
 \series default
@@ -1224,8 +1261,15 @@ Set
 \end_inset
 
 .
- The above steps are repeated for multiple generations or until a termination
- criterion of Tsoulos 
+ If the termination criterion defined in the work of Tsoulos 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Tsoulos"
+literal "false"
+
+\end_inset
+
+, which is outlined in subsection 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "subsec:doublebox"
@@ -1235,21 +1279,31 @@ noprefix "false"
 
 \end_inset
 
- 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Tsoulos"
-literal "false"
+, is met or 
+\begin_inset Formula $k>N_{g}$
+\end_inset
+
+ then goto Local Search step elso goto to step 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "enu:Fitness-calculation-Step"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
- is met, such as achieving the desired fitness or specifying a predetermined
- maximum number of generations.
+.
 \end_layout
 
-\begin_layout Itemize
-Local search step: For improving the success in finding better solutions,
- a process of local optimization search takes place.
+\begin_layout Enumerate
+
+\series bold
+Local Search step
+\series default
+.
+ For improving the success in finding better solutions, a process of local
+ optimization search takes place.
  In the present study, the Broyden Fletcher Goldfarb Shanno (BFGS) variant
  proposed by Powell 
 \begin_inset CommandInset citation
@@ -1260,6 +1314,8 @@ literal "false"
 \end_inset
 
  was employed as the local search procedure.
+ This procedure is applied to the chromosome in the population with the
+ lowest fitness value.
 \end_layout
 
 \begin_layout Subsection
@@ -1267,7 +1323,7 @@ Parallelization of Genetic Algorithm and Propagation techniques
 \end_layout
 
 \begin_layout Standard
-In the parallel island model Figure 
+In the parallel island model of Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Parallelization-of-genetic"
@@ -1425,7 +1481,7 @@ Set
 Set
 \series default
  
-\begin_inset Formula $K=0$
+\begin_inset Formula $k=0$
 \end_inset
 
  the generation number.
@@ -1533,7 +1589,7 @@ End For
 Update
 \series default
  
-\begin_inset Formula $K=K+1$
+\begin_inset Formula $k=k+1$
 \end_inset
 
 
@@ -1649,10 +1705,6 @@ name "fig:Parallelization-of-genetic"
 
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
 \end_inset
 
 
@@ -1670,7 +1722,7 @@ The migration or propagation techniques, as described in this study, are
 
 \begin_layout Itemize
 1to1: Optimal solutions migrate from a random island to another random one,
- replacing the worst solutions.
+ replacing the worst solutions (see figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Propagation-1to1"
@@ -1680,12 +1732,12 @@ noprefix "false"
 
 \end_inset
 
-
+).
 \end_layout
 
 \begin_layout Itemize
 1toN: Optimal solutions migrate from a random island to all others, replacing
- the worst solutions.
+ the worst solutions (see figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Propagation-1toN"
@@ -1695,12 +1747,12 @@ noprefix "false"
 
 \end_inset
 
-
+).
 \end_layout
 
 \begin_layout Itemize
 Nto1: All islands send their optimal solutions to a random island, replacing
- the worst solutions.
+ the worst solutions (see figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Propagation-Nto1"
@@ -1710,12 +1762,12 @@ noprefix "false"
 
 \end_inset
 
-
+).
 \end_layout
 
 \begin_layout Itemize
 NtoN: All islands send their optimal solutions to all other islands, replacing
- the worst solutions.
+ the worst solutions (see figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Propagation-NtoN"
@@ -1725,7 +1777,7 @@ noprefix "false"
 
 \end_inset
 
-
+).
 \end_layout
 
 \begin_layout Standard
@@ -2684,7 +2736,7 @@ The global minimum is situated at
 \begin_inset Formula $z$
 \end_inset
 
-is employed to offset the position of the global minimum 
+ is employed to offset the position of the global minimum 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Zabinsky"
@@ -2756,6 +2808,10 @@ Experimental results
 \end_layout
 
 \begin_layout Standard
+
+\series bold
+(STOPPED HERE)
+\series default
 To ensure the reliability and validity of the research, the experiments
  were conducted 30 times and cover Tables 
 \begin_inset CommandInset ref
@@ -2875,7 +2931,7 @@ name "tab:settings1"
 
 
 \begin_inset Tabular
-<lyxtabular version="3" rows="11" columns="3">
+<lyxtabular version="3" rows="10" columns="3">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top" width="0pt">
@@ -3186,48 +3242,6 @@ noprefix "false"
 
 \begin_layout Plain Layout
 Propagation technique
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $StR$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Double Box
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:doublebox"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Termination rule
 \end_layout
 
 \end_inset
@@ -3571,7 +3585,6 @@ name "tab:Comparison1"
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 BF1
@@ -3584,7 +3597,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10578
 \end_layout
@@ -3596,7 +3608,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.557
 \end_layout
@@ -3608,7 +3619,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10555
 \end_layout
@@ -3620,7 +3630,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.193
 \end_layout
@@ -3632,7 +3641,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10533
 \end_layout
@@ -3644,7 +3652,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.126
 \end_layout
@@ -3656,7 +3663,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10511
 \end_layout
@@ -3668,7 +3674,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.121
 \end_layout
@@ -3682,7 +3687,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 BF2
@@ -3695,7 +3699,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10568
 \end_layout
@@ -3707,7 +3710,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.554
 \end_layout
@@ -3719,7 +3721,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10545
 \end_layout
@@ -3731,7 +3732,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.192
 \end_layout
@@ -3743,7 +3743,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10523
 \end_layout
@@ -3755,7 +3754,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.127
 \end_layout
@@ -3767,7 +3765,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10533
 \end_layout
@@ -3779,7 +3776,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.119
 \end_layout
@@ -3793,7 +3789,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 BRANIN
@@ -3806,7 +3801,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 46793
 \end_layout
@@ -3818,7 +3812,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 2.308
 \end_layout
@@ -3830,7 +3823,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 31231
 \end_layout
@@ -3842,7 +3834,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.562
 \end_layout
@@ -3854,7 +3845,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11125
 \end_layout
@@ -3866,7 +3856,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.134
 \end_layout
@@ -3878,7 +3867,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10533
 \end_layout
@@ -3890,7 +3878,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.169
 \end_layout
@@ -3904,7 +3891,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 CAMEL
@@ -3917,7 +3903,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 26537
 \end_layout
@@ -3929,7 +3914,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.338
 \end_layout
@@ -3941,7 +3925,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 15875
 \end_layout
@@ -3953,7 +3936,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.29
 \end_layout
@@ -3965,7 +3947,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 15833
 \end_layout
@@ -3977,7 +3958,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.188
 \end_layout
@@ -3989,7 +3969,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10861
 \end_layout
@@ -4001,7 +3980,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.123
 \end_layout
@@ -4015,7 +3993,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 CIGAR10
@@ -4028,7 +4005,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10502
 \end_layout
@@ -4040,7 +4016,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.089
 \end_layout
@@ -4052,7 +4027,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10577
 \end_layout
@@ -4064,7 +4038,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.383
 \end_layout
@@ -4076,7 +4049,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10583
 \end_layout
@@ -4088,7 +4060,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.222
 \end_layout
@@ -4100,7 +4071,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10541
 \end_layout
@@ -4112,7 +4082,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.206
 \end_layout
@@ -4126,7 +4095,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 CM4
@@ -4139,7 +4107,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10614
 \end_layout
@@ -4151,7 +4118,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.054
 \end_layout
@@ -4163,7 +4129,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10583
 \end_layout
@@ -4175,7 +4140,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.249
 \end_layout
@@ -4187,7 +4151,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10581
 \end_layout
@@ -4199,7 +4162,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.151
 \end_layout
@@ -4211,7 +4173,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10556
 \end_layout
@@ -4223,7 +4184,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.139
 \end_layout
@@ -4237,7 +4197,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 DISCUS10
@@ -4250,7 +4209,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10548
 \end_layout
@@ -4262,7 +4220,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.09
 \end_layout
@@ -4274,7 +4231,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10532
 \end_layout
@@ -4286,7 +4242,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.382
 \end_layout
@@ -4298,7 +4253,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10500
 \end_layout
@@ -4310,7 +4264,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.222
 \end_layout
@@ -4322,7 +4275,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10502
 \end_layout
@@ -4334,7 +4286,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.205
 \end_layout
@@ -4348,7 +4299,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 EASOM
@@ -4361,7 +4311,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 100762
 \end_layout
@@ -4373,7 +4322,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 4.504
 \end_layout
@@ -4385,7 +4333,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 100610
 \end_layout
@@ -4397,7 +4344,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.66
 \end_layout
@@ -4409,7 +4355,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 94541
 \end_layout
@@ -4421,7 +4366,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.089
 \end_layout
@@ -4433,7 +4377,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 22845
 \end_layout
@@ -4445,7 +4388,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.248
 \end_layout
@@ -4459,7 +4401,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 ELP10
@@ -4472,7 +4413,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10601
 \end_layout
@@ -4484,7 +4424,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.15
 \end_layout
@@ -4496,7 +4435,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10590
 \end_layout
@@ -4508,7 +4446,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.436
 \end_layout
@@ -4520,7 +4457,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10574
 \end_layout
@@ -4532,7 +4468,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.26
 \end_layout
@@ -4544,7 +4479,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10557
 \end_layout
@@ -4556,7 +4490,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.242
 \end_layout
@@ -4570,7 +4503,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 EXP4
@@ -4583,7 +4515,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 16621
 \end_layout
@@ -4595,7 +4526,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.092
 \end_layout
@@ -4607,7 +4537,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10587
 \end_layout
@@ -4619,7 +4548,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.249
 \end_layout
@@ -4631,7 +4559,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10560
 \end_layout
@@ -4643,7 +4570,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.15
 \end_layout
@@ -4655,7 +4581,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10544
 \end_layout
@@ -4667,7 +4592,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.143
 \end_layout
@@ -4681,7 +4605,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 EXP16
@@ -4694,7 +4617,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10680
 \end_layout
@@ -4706,7 +4628,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.336
 \end_layout
@@ -4718,7 +4639,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10654
 \end_layout
@@ -4730,7 +4650,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.53
 \end_layout
@@ -4742,7 +4661,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10643
 \end_layout
@@ -4754,7 +4672,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.287
 \end_layout
@@ -4766,7 +4683,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10626
 \end_layout
@@ -4778,7 +4694,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.258
 \end_layout
@@ -4792,7 +4707,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 EXP64
@@ -4805,7 +4719,6 @@ EXP64
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10857
 \end_layout
@@ -4817,7 +4730,6 @@ EXP64
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 2.333
 \end_layout
@@ -4829,7 +4741,6 @@ EXP64
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10829
 \end_layout
@@ -4841,7 +4752,6 @@ EXP64
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.235
 \end_layout
@@ -4853,7 +4763,6 @@ EXP64
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10814
 \end_layout
@@ -4865,7 +4774,6 @@ EXP64
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.825
 \end_layout
@@ -4877,7 +4785,6 @@ EXP64
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10830
 \end_layout
@@ -4889,7 +4796,6 @@ EXP64
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.728
 \end_layout
@@ -4903,7 +4809,6 @@ EXP64
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 EXP100
@@ -4916,7 +4821,6 @@ EXP100
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10855
 \end_layout
@@ -4928,7 +4832,6 @@ EXP100
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 3.517
 \end_layout
@@ -4940,7 +4843,6 @@ EXP100
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10901
 \end_layout
@@ -4952,7 +4854,6 @@ EXP100
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.763
 \end_layout
@@ -4964,7 +4865,6 @@ EXP100
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10868
 \end_layout
@@ -4976,7 +4876,6 @@ EXP100
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.25
 \end_layout
@@ -4988,7 +4887,6 @@ EXP100
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10887
 \end_layout
@@ -5000,7 +4898,6 @@ EXP100
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.052
 \end_layout
@@ -5014,7 +4911,6 @@ EXP100
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 GKLS250
@@ -5027,7 +4923,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 50804
 \end_layout
@@ -5039,7 +4934,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 2.825
 \end_layout
@@ -5051,7 +4945,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 25832
 \end_layout
@@ -5063,7 +4956,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.607
 \end_layout
@@ -5075,7 +4967,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11711
 \end_layout
@@ -5087,7 +4978,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.194
 \end_layout
@@ -5099,7 +4989,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10870(93)
 \end_layout
@@ -5111,7 +5000,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.198
 \end_layout
@@ -5125,7 +5013,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 GKLS350
@@ -5138,7 +5025,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 40707
 \end_layout
@@ -5150,7 +5036,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 2.327
 \end_layout
@@ -5162,7 +5047,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 23720
 \end_layout
@@ -5174,7 +5058,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.522
 \end_layout
@@ -5186,7 +5069,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 17646
 \end_layout
@@ -5198,7 +5080,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.26
 \end_layout
@@ -5210,7 +5091,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 14130
 \end_layout
@@ -5222,7 +5102,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.202
 \end_layout
@@ -5236,7 +5115,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 GRIEWANK2
@@ -5249,7 +5127,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10555
 \end_layout
@@ -5261,7 +5138,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.565
 \end_layout
@@ -5273,7 +5149,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10532
 \end_layout
@@ -5285,7 +5160,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.197
 \end_layout
@@ -5297,7 +5171,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10517
 \end_layout
@@ -5309,7 +5182,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.126
 \end_layout
@@ -5321,7 +5193,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10492
 \end_layout
@@ -5333,7 +5204,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.118
 \end_layout
@@ -5347,7 +5217,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 GRIEWANK10
@@ -5360,7 +5229,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10679
 \end_layout
@@ -5372,7 +5240,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.079
 \end_layout
@@ -5384,7 +5251,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10629
 \end_layout
@@ -5396,7 +5262,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.407
 \end_layout
@@ -5408,7 +5273,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10613
 \end_layout
@@ -5420,7 +5284,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.239
 \end_layout
@@ -5432,7 +5295,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10609
 \end_layout
@@ -5444,7 +5306,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.22
 \end_layout
@@ -5458,7 +5319,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 POTENTIAL3
@@ -5471,7 +5331,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 39607
 \end_layout
@@ -5483,7 +5342,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 2.057
 \end_layout
@@ -5495,7 +5353,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 34327
 \end_layout
@@ -5507,7 +5364,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.881
 \end_layout
@@ -5519,7 +5375,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 18313
 \end_layout
@@ -5531,7 +5386,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.34
 \end_layout
@@ -5543,7 +5397,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 15471
 \end_layout
@@ -5555,7 +5408,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.279
 \end_layout
@@ -5569,7 +5421,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 PONTENTIAL5
@@ -5582,7 +5433,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 33542
 \end_layout
@@ -5594,7 +5444,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.653
 \end_layout
@@ -5606,7 +5455,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 33737
 \end_layout
@@ -5618,7 +5466,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.074
 \end_layout
@@ -5630,7 +5477,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 12040
 \end_layout
@@ -5642,7 +5488,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.34
 \end_layout
@@ -5654,7 +5499,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11082
 \end_layout
@@ -5666,7 +5510,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.291
 \end_layout
@@ -5680,7 +5523,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 PONTENTIAL6
@@ -5693,7 +5535,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 28901(3)
 \end_layout
@@ -5705,7 +5546,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.56
 \end_layout
@@ -5717,7 +5557,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 26419(16)
 \end_layout
@@ -5729,7 +5568,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.018
 \end_layout
@@ -5741,7 +5579,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 14265(3)
 \end_layout
@@ -5753,7 +5590,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.478
 \end_layout
@@ -5765,7 +5601,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11109(10)
 \end_layout
@@ -5777,7 +5612,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.356
 \end_layout
@@ -5791,7 +5625,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 PONTENTIAL10
@@ -5804,7 +5637,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 42644(13)
 \end_layout
@@ -5816,7 +5648,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 3.316
 \end_layout
@@ -5828,7 +5659,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 37897(23)
 \end_layout
@@ -5840,7 +5670,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 2.538
 \end_layout
@@ -5852,7 +5681,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 14080(10)
 \end_layout
@@ -5864,7 +5692,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.937
 \end_layout
@@ -5876,7 +5703,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11319(6)
 \end_layout
@@ -5888,7 +5714,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.66
 \end_layout
@@ -5902,7 +5727,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 HANSEN
@@ -5915,7 +5739,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 46894(90)
 \end_layout
@@ -5927,7 +5750,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 2.494
 \end_layout
@@ -5939,7 +5761,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 28191(80)
 \end_layout
@@ -5951,7 +5772,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.575
 \end_layout
@@ -5963,7 +5783,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11085(56)
 \end_layout
@@ -5975,7 +5794,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.153
 \end_layout
@@ -5987,7 +5805,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11065
 \end_layout
@@ -5999,7 +5816,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.158
 \end_layout
@@ -6013,7 +5829,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 HARTMAN3
@@ -6026,7 +5841,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 22235
 \end_layout
@@ -6038,7 +5852,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.525
 \end_layout
@@ -6050,7 +5863,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 19030
 \end_layout
@@ -6062,7 +5874,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.379
 \end_layout
@@ -6074,7 +5885,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 16463
 \end_layout
@@ -6086,7 +5896,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.212
 \end_layout
@@ -6098,7 +5907,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 12048
 \end_layout
@@ -6110,7 +5918,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.146
 \end_layout
@@ -6124,7 +5931,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 HARTMAN6
@@ -6137,7 +5943,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 18352
 \end_layout
@@ -6149,7 +5954,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.505
 \end_layout
@@ -6161,7 +5965,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 15902
 \end_layout
@@ -6173,7 +5976,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.429
 \end_layout
@@ -6185,7 +5987,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 16726
 \end_layout
@@ -6197,7 +5998,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.279
 \end_layout
@@ -6209,7 +6009,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 12243
 \end_layout
@@ -6221,7 +6020,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.196
 \end_layout
@@ -6235,7 +6033,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 RASTRIGIN
@@ -6248,7 +6045,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 16567
 \end_layout
@@ -6260,7 +6056,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.855
 \end_layout
@@ -6272,7 +6067,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10543
 \end_layout
@@ -6284,7 +6078,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.193
 \end_layout
@@ -6296,7 +6089,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10521
 \end_layout
@@ -6308,7 +6100,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.125
 \end_layout
@@ -6320,7 +6111,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10506
 \end_layout
@@ -6332,7 +6122,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.116
 \end_layout
@@ -6346,7 +6135,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 ROSENBROCK8
@@ -6359,7 +6147,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10863
 \end_layout
@@ -6371,7 +6158,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.916
 \end_layout
@@ -6383,7 +6169,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10700
 \end_layout
@@ -6395,7 +6180,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.333
 \end_layout
@@ -6407,7 +6191,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10698
 \end_layout
@@ -6419,7 +6202,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.199
 \end_layout
@@ -6431,7 +6213,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10772
 \end_layout
@@ -6443,7 +6224,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.196
 \end_layout
@@ -6457,7 +6237,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 POSENBROCK16
@@ -6470,7 +6249,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10918
 \end_layout
@@ -6482,7 +6260,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.371
 \end_layout
@@ -6494,7 +6271,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10946
 \end_layout
@@ -6506,7 +6282,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.516
 \end_layout
@@ -6518,7 +6293,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10867
 \end_layout
@@ -6530,7 +6304,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.304
 \end_layout
@@ -6542,7 +6315,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10886
 \end_layout
@@ -6554,7 +6326,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.271
 \end_layout
@@ -6568,7 +6339,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 SHEKEL5
@@ -6581,7 +6351,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 32319(50)
 \end_layout
@@ -6593,7 +6362,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 2.069
 \end_layout
@@ -6605,7 +6373,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 17913(50)
 \end_layout
@@ -6617,7 +6384,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.412
 \end_layout
@@ -6629,7 +6395,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11185(36)
 \end_layout
@@ -6641,7 +6406,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.159
 \end_layout
@@ -6653,7 +6417,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11010(40)
 \end_layout
@@ -6665,7 +6428,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.15
 \end_layout
@@ -6679,7 +6441,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 SHEKEL7
@@ -6692,7 +6453,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 51183(73)
 \end_layout
@@ -6704,7 +6464,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 3.277
 \end_layout
@@ -6716,7 +6475,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 14981(53)
 \end_layout
@@ -6728,7 +6486,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.342
 \end_layout
@@ -6740,7 +6497,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11457(60)
 \end_layout
@@ -6752,7 +6508,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.163
 \end_layout
@@ -6764,7 +6519,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11035(50)
 \end_layout
@@ -6776,7 +6530,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.154
 \end_layout
@@ -6790,7 +6543,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 SHEKEL10
@@ -6803,7 +6555,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 47337(70)
 \end_layout
@@ -6815,7 +6566,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 2.977
 \end_layout
@@ -6827,7 +6577,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 46927(76)
 \end_layout
@@ -6839,7 +6588,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.113
 \end_layout
@@ -6851,7 +6599,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 16310(56)
 \end_layout
@@ -6863,7 +6610,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.23
 \end_layout
@@ -6875,7 +6621,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11329(70)
 \end_layout
@@ -6887,7 +6632,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.152
 \end_layout
@@ -6901,7 +6645,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 SINU4
@@ -6914,7 +6657,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 66625(83)
 \end_layout
@@ -6926,7 +6668,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 4.344
 \end_layout
@@ -6938,7 +6679,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 31511(86)
 \end_layout
@@ -6950,7 +6690,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.77
 \end_layout
@@ -6962,7 +6701,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 13979(73)
 \end_layout
@@ -6974,7 +6712,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.211
 \end_layout
@@ -6986,7 +6723,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11004(43)
 \end_layout
@@ -6998,7 +6734,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.161
 \end_layout
@@ -7012,7 +6747,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 SINU8
@@ -7025,7 +6759,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 29705
 \end_layout
@@ -7037,7 +6770,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 2.57
 \end_layout
@@ -7049,7 +6781,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 27613
 \end_layout
@@ -7061,7 +6792,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.987
 \end_layout
@@ -7073,7 +6803,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 24592
 \end_layout
@@ -7085,7 +6814,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.549
 \end_layout
@@ -7097,7 +6825,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11422
 \end_layout
@@ -7109,7 +6836,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.236
 \end_layout
@@ -7123,7 +6849,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 TEST2N4
@@ -7136,7 +6861,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 25553
 \end_layout
@@ -7148,7 +6872,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.558
 \end_layout
@@ -7160,7 +6883,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 17701
 \end_layout
@@ -7172,7 +6894,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.397
 \end_layout
@@ -7184,7 +6905,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 24763
 \end_layout
@@ -7196,7 +6916,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.359
 \end_layout
@@ -7208,7 +6927,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 13217
 \end_layout
@@ -7220,7 +6938,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.178
 \end_layout
@@ -7234,7 +6951,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 TEST2N5
@@ -7247,7 +6963,6 @@ TEST2N5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 20297
 \end_layout
@@ -7259,7 +6974,6 @@ TEST2N5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.327
 \end_layout
@@ -7271,7 +6985,6 @@ TEST2N5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 18440
 \end_layout
@@ -7283,7 +6996,6 @@ TEST2N5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.457
 \end_layout
@@ -7295,7 +7007,6 @@ TEST2N5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 16759
 \end_layout
@@ -7307,7 +7018,6 @@ TEST2N5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.265
 \end_layout
@@ -7319,7 +7029,6 @@ TEST2N5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11483
 \end_layout
@@ -7331,7 +7040,6 @@ TEST2N5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.168
 \end_layout
@@ -7345,7 +7053,6 @@ TEST2N5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 TEST2N6
@@ -7358,7 +7065,6 @@ TEST2N6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 20450
 \end_layout
@@ -7370,7 +7076,6 @@ TEST2N6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.311
 \end_layout
@@ -7382,7 +7087,6 @@ TEST2N6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 20837
 \end_layout
@@ -7394,7 +7098,6 @@ TEST2N6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.566
 \end_layout
@@ -7406,7 +7109,6 @@ TEST2N6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 18123
 \end_layout
@@ -7418,7 +7120,6 @@ TEST2N6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.315
 \end_layout
@@ -7430,7 +7131,6 @@ TEST2N6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11988
 \end_layout
@@ -7442,7 +7142,6 @@ TEST2N6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.194
 \end_layout
@@ -7456,7 +7155,6 @@ TEST2N6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 TEST2N7
@@ -7469,7 +7167,6 @@ TEST2N7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 26113
 \end_layout
@@ -7481,7 +7178,6 @@ TEST2N7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.924
 \end_layout
@@ -7493,7 +7189,6 @@ TEST2N7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 23940
 \end_layout
@@ -7505,7 +7200,6 @@ TEST2N7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.723
 \end_layout
@@ -7517,7 +7211,6 @@ TEST2N7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 20825
 \end_layout
@@ -7529,7 +7222,6 @@ TEST2N7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.384
 \end_layout
@@ -7541,7 +7233,6 @@ TEST2N7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11339
 \end_layout
@@ -7553,7 +7244,6 @@ TEST2N7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.196
 \end_layout
@@ -7567,7 +7257,6 @@ TEST2N7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 TEST2N8
@@ -7580,7 +7269,6 @@ TEST2N8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 18846
 \end_layout
@@ -7592,7 +7280,6 @@ TEST2N8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.454
 \end_layout
@@ -7604,7 +7291,6 @@ TEST2N8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 18549
 \end_layout
@@ -7616,7 +7302,6 @@ TEST2N8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.585
 \end_layout
@@ -7628,7 +7313,6 @@ TEST2N8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 16700
 \end_layout
@@ -7640,7 +7324,6 @@ TEST2N8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.329
 \end_layout
@@ -7652,7 +7335,6 @@ TEST2N8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11658
 \end_layout
@@ -7664,7 +7346,6 @@ TEST2N8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.218
 \end_layout
@@ -7678,7 +7359,6 @@ TEST2N8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 TEST2N9
@@ -7691,7 +7371,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 18154
 \end_layout
@@ -7703,7 +7382,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.582
 \end_layout
@@ -7715,7 +7393,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 18803
 \end_layout
@@ -7727,7 +7404,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.649
 \end_layout
@@ -7739,7 +7415,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 17100
 \end_layout
@@ -7751,7 +7426,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.368
 \end_layout
@@ -7763,7 +7437,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 13299
 \end_layout
@@ -7775,7 +7448,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.262
 \end_layout
@@ -7789,7 +7461,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 TEST30N3
@@ -7802,7 +7473,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 49235
 \end_layout
@@ -7814,7 +7484,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 2.46
 \end_layout
@@ -7826,7 +7495,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 24129
 \end_layout
@@ -7838,7 +7506,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.458
 \end_layout
@@ -7850,7 +7517,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 14743
 \end_layout
@@ -7862,7 +7528,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.188
 \end_layout
@@ -7874,7 +7539,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 12345
 \end_layout
@@ -7886,7 +7550,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.152
 \end_layout
@@ -7900,7 +7563,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 \color blue
 TEST30N4
@@ -7913,7 +7575,6 @@ TEST30N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 29667
 \end_layout
@@ -7925,7 +7586,6 @@ TEST30N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.553
 \end_layout
@@ -7937,7 +7597,6 @@ TEST30N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 17501
 \end_layout
@@ -7949,7 +7608,6 @@ TEST30N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.358
 \end_layout
@@ -7961,7 +7619,6 @@ TEST30N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 13367
 \end_layout
@@ -7973,7 +7630,6 @@ TEST30N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.186
 \end_layout
@@ -7985,7 +7641,6 @@ TEST30N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11778
 \end_layout
@@ -7997,7 +7652,6 @@ TEST30N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.151
 \end_layout
@@ -9003,7 +8657,6 @@ NtoN Time
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 BF1
 \end_layout
@@ -9015,7 +8668,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10809
 \end_layout
@@ -9027,7 +8679,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.123
 \end_layout
@@ -9039,7 +8690,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10741
 \end_layout
@@ -9051,7 +8701,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.127
 \end_layout
@@ -9063,7 +8712,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10770
 \end_layout
@@ -9075,7 +8723,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.126
 \end_layout
@@ -9087,7 +8734,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10746
 \end_layout
@@ -9099,7 +8745,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.127
 \end_layout
@@ -9111,7 +8756,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10808
 \end_layout
@@ -9123,7 +8767,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.136
 \end_layout
@@ -9137,7 +8780,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 BF2
 \end_layout
@@ -9149,7 +8791,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10725
 \end_layout
@@ -9161,7 +8802,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.124
 \end_layout
@@ -9173,7 +8813,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10773
 \end_layout
@@ -9185,7 +8824,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.126
 \end_layout
@@ -9197,7 +8835,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10764
 \end_layout
@@ -9209,7 +8846,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.13
 \end_layout
@@ -9221,7 +8857,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10783
 \end_layout
@@ -9233,7 +8868,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.126
 \end_layout
@@ -9245,7 +8879,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10731
 \end_layout
@@ -9257,7 +8890,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.136
 \end_layout
@@ -9271,7 +8903,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 BRANIN
 \end_layout
@@ -9283,7 +8914,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 48364
 \end_layout
@@ -9295,7 +8925,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.56
 \end_layout
@@ -9307,7 +8936,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 31470
 \end_layout
@@ -9319,7 +8947,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.397
 \end_layout
@@ -9331,7 +8958,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 18776
 \end_layout
@@ -9343,7 +8969,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.251
 \end_layout
@@ -9355,7 +8980,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 35367
 \end_layout
@@ -9367,7 +8991,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.448
 \end_layout
@@ -9379,7 +9002,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 19224
 \end_layout
@@ -9391,7 +9013,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.284
 \end_layout
@@ -9405,7 +9026,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 CAMEL
 \end_layout
@@ -9417,7 +9037,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 29087
 \end_layout
@@ -9429,7 +9048,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.337
 \end_layout
@@ -9441,7 +9059,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 18597
 \end_layout
@@ -9453,7 +9070,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.23
 \end_layout
@@ -9465,7 +9081,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 14429
 \end_layout
@@ -9477,7 +9092,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.185
 \end_layout
@@ -9489,7 +9103,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 24977
 \end_layout
@@ -9501,7 +9114,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.313
 \end_layout
@@ -9513,7 +9125,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 19341
 \end_layout
@@ -9525,7 +9136,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.286
 \end_layout
@@ -9539,7 +9149,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 CIGAR10
 \end_layout
@@ -9551,7 +9160,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10854
 \end_layout
@@ -9563,7 +9171,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.233
 \end_layout
@@ -9575,7 +9182,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10880
 \end_layout
@@ -9587,7 +9193,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.216
 \end_layout
@@ -9599,7 +9204,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10915
 \end_layout
@@ -9611,7 +9215,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.222
 \end_layout
@@ -9623,7 +9226,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10890
 \end_layout
@@ -9635,7 +9237,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.22
 \end_layout
@@ -9647,7 +9248,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10869
 \end_layout
@@ -9659,7 +9259,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.235
 \end_layout
@@ -9673,7 +9272,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 CM4
 \end_layout
@@ -9685,7 +9283,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10911
 \end_layout
@@ -9697,7 +9294,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.147
 \end_layout
@@ -9709,7 +9305,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10923
 \end_layout
@@ -9721,7 +9316,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.15
 \end_layout
@@ -9733,7 +9327,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10941
 \end_layout
@@ -9745,7 +9338,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.15
 \end_layout
@@ -9757,7 +9349,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10918
 \end_layout
@@ -9769,7 +9360,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.15
 \end_layout
@@ -9781,7 +9371,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10915
 \end_layout
@@ -9793,7 +9382,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.163
 \end_layout
@@ -9807,7 +9395,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 DISCUS10
 \end_layout
@@ -9819,7 +9406,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10651
 \end_layout
@@ -9831,7 +9417,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.222
 \end_layout
@@ -9843,7 +9428,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10632
 \end_layout
@@ -9855,7 +9439,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.213
 \end_layout
@@ -9867,7 +9450,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10651
 \end_layout
@@ -9879,7 +9461,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.217
 \end_layout
@@ -9891,7 +9472,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10641
 \end_layout
@@ -9903,7 +9483,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.22
 \end_layout
@@ -9915,7 +9494,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10606
 \end_layout
@@ -9927,7 +9505,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.231
 \end_layout
@@ -9941,7 +9518,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 EASOM
 \end_layout
@@ -9953,7 +9529,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 99569
 \end_layout
@@ -9965,7 +9540,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.094
 \end_layout
@@ -9977,7 +9551,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 100163
 \end_layout
@@ -9989,7 +9562,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.106
 \end_layout
@@ -10001,7 +9573,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 100160
 \end_layout
@@ -10013,7 +9584,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.121
 \end_layout
@@ -10025,7 +9595,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 100155
 \end_layout
@@ -10037,7 +9606,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.139
 \end_layout
@@ -10049,7 +9617,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 98336
 \end_layout
@@ -10061,7 +9628,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.156
 \end_layout
@@ -10075,7 +9641,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 ELP10
 \end_layout
@@ -10087,7 +9652,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10832
 \end_layout
@@ -10099,7 +9663,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.276
 \end_layout
@@ -10111,7 +9674,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10902
 \end_layout
@@ -10123,7 +9685,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.261
 \end_layout
@@ -10135,7 +9696,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10829
 \end_layout
@@ -10147,7 +9707,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.266
 \end_layout
@@ -10159,7 +9718,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10811
 \end_layout
@@ -10171,7 +9729,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.26
 \end_layout
@@ -10183,7 +9740,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10952
 \end_layout
@@ -10195,7 +9751,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.278
 \end_layout
@@ -10209,7 +9764,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 EXP4
 \end_layout
@@ -10221,7 +9775,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10803
 \end_layout
@@ -10233,7 +9786,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.151
 \end_layout
@@ -10245,7 +9797,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 12037
 \end_layout
@@ -10257,7 +9808,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.167
 \end_layout
@@ -10269,7 +9819,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 12695
 \end_layout
@@ -10281,7 +9830,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.183
 \end_layout
@@ -10293,7 +9841,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11416
 \end_layout
@@ -10305,7 +9852,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.164
 \end_layout
@@ -10317,7 +9863,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10819
 \end_layout
@@ -10329,7 +9874,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.158
 \end_layout
@@ -10343,7 +9887,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 EXP16
 \end_layout
@@ -10355,7 +9898,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11228
 \end_layout
@@ -10367,7 +9909,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.272
 \end_layout
@@ -10379,7 +9920,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11259
 \end_layout
@@ -10391,7 +9931,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.276
 \end_layout
@@ -10403,7 +9942,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11262
 \end_layout
@@ -10415,7 +9953,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.285
 \end_layout
@@ -10427,7 +9964,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11253
 \end_layout
@@ -10439,7 +9975,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.28
 \end_layout
@@ -10451,7 +9986,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11260
 \end_layout
@@ -10463,7 +9997,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.294
 \end_layout
@@ -10477,7 +10010,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 EXP64
 \end_layout
@@ -10489,7 +10021,6 @@ EXP64
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 12127
 \end_layout
@@ -10501,7 +10032,6 @@ EXP64
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.837
 \end_layout
@@ -10513,7 +10043,6 @@ EXP64
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 12204
 \end_layout
@@ -10525,7 +10054,6 @@ EXP64
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.848
 \end_layout
@@ -10537,7 +10065,6 @@ EXP64
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 12184
 \end_layout
@@ -10549,7 +10076,6 @@ EXP64
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.85
 \end_layout
@@ -10561,7 +10087,6 @@ EXP64
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 12151
 \end_layout
@@ -10573,7 +10098,6 @@ EXP64
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.849
 \end_layout
@@ -10585,7 +10109,6 @@ EXP64
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 12199
 \end_layout
@@ -10597,7 +10120,6 @@ EXP64
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.877
 \end_layout
@@ -10611,7 +10133,6 @@ EXP64
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 EXP100
 \end_layout
@@ -10623,7 +10144,6 @@ EXP100
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 12396
 \end_layout
@@ -10635,7 +10155,6 @@ EXP100
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.397
 \end_layout
@@ -10647,7 +10166,6 @@ EXP100
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 12376
 \end_layout
@@ -10659,7 +10177,6 @@ EXP100
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.4
 \end_layout
@@ -10671,7 +10188,6 @@ EXP100
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 12372
 \end_layout
@@ -10683,7 +10199,6 @@ EXP100
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.36
 \end_layout
@@ -10695,7 +10210,6 @@ EXP100
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 12460
 \end_layout
@@ -10707,7 +10221,6 @@ EXP100
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.387
 \end_layout
@@ -10719,7 +10232,6 @@ EXP100
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 12414
 \end_layout
@@ -10731,7 +10243,6 @@ EXP100
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.42
 \end_layout
@@ -10745,7 +10256,6 @@ EXP100
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 GKLS250
 \end_layout
@@ -10757,7 +10267,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 48672
 \end_layout
@@ -10769,7 +10278,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.813
 \end_layout
@@ -10781,7 +10289,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 55586
 \end_layout
@@ -10793,7 +10300,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.949
 \end_layout
@@ -10805,7 +10311,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 31493
 \end_layout
@@ -10817,7 +10322,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.564
 \end_layout
@@ -10829,7 +10333,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 58638
 \end_layout
@@ -10841,7 +10344,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.007
 \end_layout
@@ -10853,7 +10355,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 27840
 \end_layout
@@ -10865,7 +10366,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.532
 \end_layout
@@ -10879,7 +10379,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 GKLS350
 \end_layout
@@ -10891,7 +10390,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 55231
 \end_layout
@@ -10903,7 +10401,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.815
 \end_layout
@@ -10915,7 +10412,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 42100
 \end_layout
@@ -10927,7 +10423,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.636
 \end_layout
@@ -10939,7 +10434,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 28609
 \end_layout
@@ -10951,7 +10445,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.459
 \end_layout
@@ -10963,7 +10456,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 46923
 \end_layout
@@ -10975,7 +10467,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.72
 \end_layout
@@ -10987,7 +10478,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 25341
 \end_layout
@@ -10999,7 +10489,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.428
 \end_layout
@@ -11013,7 +10502,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 GRIEWANK2
 \end_layout
@@ -11025,7 +10513,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10682
 \end_layout
@@ -11037,7 +10524,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.127
 \end_layout
@@ -11049,7 +10535,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10670
 \end_layout
@@ -11061,7 +10546,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.125
 \end_layout
@@ -11073,7 +10557,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10697
 \end_layout
@@ -11085,7 +10568,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.126
 \end_layout
@@ -11097,7 +10579,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10683
 \end_layout
@@ -11109,7 +10590,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.127
 \end_layout
@@ -11121,7 +10601,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10684
 \end_layout
@@ -11133,7 +10612,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.134
 \end_layout
@@ -11147,7 +10625,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 GRIEWANK10
 \end_layout
@@ -11159,7 +10636,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11144
 \end_layout
@@ -11171,7 +10647,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.239
 \end_layout
@@ -11183,7 +10658,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11102
 \end_layout
@@ -11195,7 +10669,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.232
 \end_layout
@@ -11207,7 +10680,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11123
 \end_layout
@@ -11219,7 +10691,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.239
 \end_layout
@@ -11231,7 +10702,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11171
 \end_layout
@@ -11243,7 +10713,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.229
 \end_layout
@@ -11255,7 +10724,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11153
 \end_layout
@@ -11267,7 +10735,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.254
 \end_layout
@@ -11281,7 +10748,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 POTENTIAL3
 \end_layout
@@ -11293,7 +10759,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 45748
 \end_layout
@@ -11305,7 +10770,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.832
 \end_layout
@@ -11317,7 +10781,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 33598
 \end_layout
@@ -11329,7 +10792,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.643
 \end_layout
@@ -11341,7 +10803,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 17276
 \end_layout
@@ -11353,7 +10814,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.347
 \end_layout
@@ -11365,7 +10825,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 32603
 \end_layout
@@ -11377,7 +10836,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.631
 \end_layout
@@ -11389,7 +10847,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 16870
 \end_layout
@@ -11401,7 +10858,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.358
 \end_layout
@@ -11415,7 +10871,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 PONTENTIAL5
 \end_layout
@@ -11427,7 +10882,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 41946
 \end_layout
@@ -11439,7 +10893,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.156
 \end_layout
@@ -11451,7 +10904,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 41112
 \end_layout
@@ -11463,7 +10915,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.179
 \end_layout
@@ -11475,7 +10926,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 19912
 \end_layout
@@ -11487,7 +10937,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.597
 \end_layout
@@ -11499,7 +10948,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 37687
 \end_layout
@@ -11511,7 +10959,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.089
 \end_layout
@@ -11523,7 +10970,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 19622
 \end_layout
@@ -11535,7 +10981,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.614
 \end_layout
@@ -11549,7 +10994,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 PONTENTIAL6
 \end_layout
@@ -11561,7 +11005,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 46507
 \end_layout
@@ -11573,7 +11016,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.639
 \end_layout
@@ -11585,7 +11027,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 40518
 \end_layout
@@ -11597,7 +11038,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.449
 \end_layout
@@ -11609,7 +11049,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 21941
 \end_layout
@@ -11621,7 +11060,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.817
 \end_layout
@@ -11633,7 +11071,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 36138
 \end_layout
@@ -11645,7 +11082,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 1.315
 \end_layout
@@ -11657,7 +11093,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 21528
 \end_layout
@@ -11669,7 +11104,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.844
 \end_layout
@@ -11683,7 +11117,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 PONTENTIAL10
 \end_layout
@@ -11695,7 +11128,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 47031
 \end_layout
@@ -11707,7 +11139,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 3.4
 \end_layout
@@ -11719,7 +11150,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 45166
 \end_layout
@@ -11731,7 +11161,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 3.361
 \end_layout
@@ -11743,7 +11172,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 40212
 \end_layout
@@ -11755,7 +11183,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 3.239
 \end_layout
@@ -11767,7 +11194,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 42057
 \end_layout
@@ -11779,7 +11205,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 3.183
 \end_layout
@@ -11791,7 +11216,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 34750
 \end_layout
@@ -11803,7 +11227,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 2.883
 \end_layout
@@ -11817,7 +11240,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 HANSEN
 \end_layout
@@ -11829,7 +11251,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 63130
 \end_layout
@@ -11841,7 +11262,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.85
 \end_layout
@@ -11853,7 +11273,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 65414
 \end_layout
@@ -11865,7 +11284,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.918
 \end_layout
@@ -11877,7 +11295,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 39649
 \end_layout
@@ -11889,7 +11306,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.595
 \end_layout
@@ -11901,7 +11317,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 67369
 \end_layout
@@ -11913,7 +11328,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.947
 \end_layout
@@ -11925,7 +11339,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 31149
 \end_layout
@@ -11937,7 +11350,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.507
 \end_layout
@@ -11951,7 +11363,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 HARTMAN3
 \end_layout
@@ -11963,7 +11374,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 19170
 \end_layout
@@ -11975,7 +11385,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.248
 \end_layout
@@ -11987,7 +11396,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 20339
 \end_layout
@@ -11999,7 +11407,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.274
 \end_layout
@@ -12011,7 +11418,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 16280
 \end_layout
@@ -12023,7 +11429,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.226
 \end_layout
@@ -12035,7 +11440,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 20001
 \end_layout
@@ -12047,7 +11451,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.265
 \end_layout
@@ -12059,7 +11462,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 14587
 \end_layout
@@ -12071,7 +11473,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.219
 \end_layout
@@ -12085,7 +11486,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 HARTMAN6
 \end_layout
@@ -12097,7 +11497,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 23725
 \end_layout
@@ -12109,7 +11508,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.423
 \end_layout
@@ -12121,7 +11519,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 16856
 \end_layout
@@ -12133,7 +11530,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.285
 \end_layout
@@ -12145,7 +11541,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 14141
 \end_layout
@@ -12157,7 +11552,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.233
 \end_layout
@@ -12169,7 +11563,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 16955
 \end_layout
@@ -12181,7 +11574,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.288
 \end_layout
@@ -12193,7 +11585,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 13964
 \end_layout
@@ -12205,7 +11596,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.239
 \end_layout
@@ -12219,7 +11609,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 RASTRIGIN
 \end_layout
@@ -12231,7 +11620,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11264
 \end_layout
@@ -12243,7 +11631,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.147
 \end_layout
@@ -12255,7 +11642,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11256
 \end_layout
@@ -12267,7 +11653,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.132
 \end_layout
@@ -12279,7 +11664,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10652
 \end_layout
@@ -12291,7 +11675,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.126
 \end_layout
@@ -12303,7 +11686,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 10668
 \end_layout
@@ -12315,7 +11697,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.128
 \end_layout
@@ -12327,7 +11708,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11290
 \end_layout
@@ -12339,7 +11719,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.145
 \end_layout
@@ -12353,7 +11732,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 ROSENBROCK8
 \end_layout
@@ -12365,7 +11743,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11727
 \end_layout
@@ -12377,7 +11754,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.204
 \end_layout
@@ -12389,7 +11765,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11892
 \end_layout
@@ -12401,7 +11776,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.2
 \end_layout
@@ -12413,7 +11787,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11681
 \end_layout
@@ -12425,7 +11798,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.203
 \end_layout
@@ -12437,7 +11809,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11708
 \end_layout
@@ -12449,7 +11820,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.199
 \end_layout
@@ -12461,7 +11831,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 11882
 \end_layout
@@ -12473,7 +11842,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.217
 \end_layout
@@ -12487,7 +11855,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 POSENBROCK16
 \end_layout
@@ -12499,7 +11866,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 12372
 \end_layout
@@ -12511,7 +11877,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.42
 \end_layout
@@ -12523,7 +11888,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 12187
 \end_layout
@@ -12535,7 +11899,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.304
 \end_layout
@@ -12547,7 +11910,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 12394
 \end_layout
@@ -12559,7 +11921,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.313
 \end_layout
@@ -12571,7 +11932,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 12438
 \end_layout
@@ -12583,7 +11943,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.324
 \end_layout
@@ -12595,7 +11954,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 12455
 \end_layout
@@ -12607,7 +11965,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.324
 \end_layout
@@ -12621,7 +11978,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 SHEKEL5
 \end_layout
@@ -12633,7 +11989,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 44893
 \end_layout
@@ -12645,7 +12000,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.645
 \end_layout
@@ -12657,7 +12011,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 54184
 \end_layout
@@ -12669,7 +12022,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.751
 \end_layout
@@ -12681,7 +12033,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 34937
 \end_layout
@@ -12693,7 +12044,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.491
 \end_layout
@@ -12705,7 +12055,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 53277
 \end_layout
@@ -12717,7 +12066,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.755
 \end_layout
@@ -12729,7 +12077,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 40859
 \end_layout
@@ -12741,7 +12088,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.621
 \end_layout
@@ -12755,7 +12101,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 SHEKEL7
 \end_layout
@@ -12767,7 +12112,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 45722
 \end_layout
@@ -12779,7 +12123,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.638
 \end_layout
@@ -12791,7 +12134,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 55109
 \end_layout
@@ -12803,7 +12145,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.778
 \end_layout
@@ -12815,7 +12156,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 33440
 \end_layout
@@ -12827,7 +12167,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.472
 \end_layout
@@ -12839,7 +12178,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 49029
 \end_layout
@@ -12851,7 +12189,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.702
 \end_layout
@@ -12863,7 +12200,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 46066
 \end_layout
@@ -12875,7 +12211,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.696
 \end_layout
@@ -12889,7 +12224,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 SHEKEL10
 \end_layout
@@ -12901,7 +12235,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 58361
 \end_layout
@@ -12913,7 +12246,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.854
 \end_layout
@@ -12925,7 +12257,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 49400
 \end_layout
@@ -12937,7 +12268,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.721
 \end_layout
@@ -12949,7 +12279,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 32691
 \end_layout
@@ -12961,7 +12290,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.471
 \end_layout
@@ -12973,7 +12301,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 52798
 \end_layout
@@ -12985,7 +12312,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.783
 \end_layout
@@ -12997,7 +12323,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 38305
 \end_layout
@@ -13009,7 +12334,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.608
 \end_layout
@@ -13023,7 +12347,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 SINU4
 \end_layout
@@ -13035,7 +12358,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 64584
 \end_layout
@@ -13047,7 +12369,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.972
 \end_layout
@@ -13059,7 +12380,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 59414
 \end_layout
@@ -13071,7 +12391,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.922
 \end_layout
@@ -13083,7 +12402,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 36052
 \end_layout
@@ -13095,7 +12413,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.591
 \end_layout
@@ -13107,7 +12424,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 62924
 \end_layout
@@ -13119,7 +12435,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.972
 \end_layout
@@ -13131,7 +12446,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 52937
 \end_layout
@@ -13143,7 +12457,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.857
 \end_layout
@@ -13157,7 +12470,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 SINU8
 \end_layout
@@ -13169,7 +12481,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 32572
 \end_layout
@@ -13181,7 +12492,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.793
 \end_layout
@@ -13193,7 +12503,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 25552
 \end_layout
@@ -13205,7 +12514,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.63
 \end_layout
@@ -13217,7 +12525,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 19461
 \end_layout
@@ -13229,7 +12536,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.462
 \end_layout
@@ -13241,7 +12547,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 28744
 \end_layout
@@ -13253,7 +12558,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.716
 \end_layout
@@ -13265,7 +12569,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 18173
 \end_layout
@@ -13277,7 +12580,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.445
 \end_layout
@@ -13291,7 +12593,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 TEST2N4
 \end_layout
@@ -13303,7 +12604,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 23430
 \end_layout
@@ -13315,7 +12615,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.339
 \end_layout
@@ -13327,7 +12626,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 20474
 \end_layout
@@ -13339,7 +12637,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.3
 \end_layout
@@ -13351,7 +12648,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 17001
 \end_layout
@@ -13363,7 +12659,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.261
 \end_layout
@@ -13375,7 +12670,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 21468
 \end_layout
@@ -13387,7 +12681,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.316
 \end_layout
@@ -13399,7 +12692,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 18436
 \end_layout
@@ -13411,7 +12703,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.294
 \end_layout
@@ -13425,7 +12716,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 TEST2N5
 \end_layout
@@ -13437,7 +12727,6 @@ TEST2N5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 22662
 \end_layout
@@ -13449,7 +12738,6 @@ TEST2N5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.358
 \end_layout
@@ -13461,7 +12749,6 @@ TEST2N5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 20614
 \end_layout
@@ -13473,7 +12760,6 @@ TEST2N5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.33
 \end_layout
@@ -13485,7 +12771,6 @@ TEST2N5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 16171
 \end_layout
@@ -13497,7 +12782,6 @@ TEST2N5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.262
 \end_layout
@@ -13509,7 +12793,6 @@ TEST2N5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 19697
 \end_layout
@@ -13521,7 +12804,6 @@ TEST2N5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.316
 \end_layout
@@ -13533,7 +12815,6 @@ TEST2N5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 16421
 \end_layout
@@ -13545,7 +12826,6 @@ TEST2N5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.282
 \end_layout
@@ -13559,7 +12839,6 @@ TEST2N5
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 TEST2N6
 \end_layout
@@ -13571,7 +12850,6 @@ TEST2N6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 21663
 \end_layout
@@ -13583,7 +12861,6 @@ TEST2N6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.365
 \end_layout
@@ -13595,7 +12872,6 @@ TEST2N6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 18721
 \end_layout
@@ -13607,7 +12883,6 @@ TEST2N6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.323
 \end_layout
@@ -13619,7 +12894,6 @@ TEST2N6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 16600
 \end_layout
@@ -13631,7 +12905,6 @@ TEST2N6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.289
 \end_layout
@@ -13643,7 +12916,6 @@ TEST2N6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 19556
 \end_layout
@@ -13655,7 +12927,6 @@ TEST2N6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.339
 \end_layout
@@ -13667,7 +12938,6 @@ TEST2N6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 14633
 \end_layout
@@ -13679,7 +12949,6 @@ TEST2N6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.299
 \end_layout
@@ -13693,7 +12962,6 @@ TEST2N6
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 TEST2N7
 \end_layout
@@ -13705,7 +12973,6 @@ TEST2N7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 24401
 \end_layout
@@ -13717,7 +12984,6 @@ TEST2N7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.456
 \end_layout
@@ -13729,7 +12995,6 @@ TEST2N7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 18990
 \end_layout
@@ -13741,7 +13006,6 @@ TEST2N7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.354
 \end_layout
@@ -13753,7 +13017,6 @@ TEST2N7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 15792
 \end_layout
@@ -13765,7 +13028,6 @@ TEST2N7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.3
 \end_layout
@@ -13777,7 +13039,6 @@ TEST2N7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 20967
 \end_layout
@@ -13789,7 +13050,6 @@ TEST2N7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.405
 \end_layout
@@ -13801,7 +13061,6 @@ TEST2N7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 13995
 \end_layout
@@ -13813,7 +13072,6 @@ TEST2N7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.28
 \end_layout
@@ -13827,7 +13085,6 @@ TEST2N7
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 TEST2N8
 \end_layout
@@ -13839,7 +13096,6 @@ TEST2N8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 21017
 \end_layout
@@ -13851,7 +13107,6 @@ TEST2N8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.418
 \end_layout
@@ -13863,7 +13118,6 @@ TEST2N8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 18532
 \end_layout
@@ -13875,7 +13129,6 @@ TEST2N8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.369
 \end_layout
@@ -13887,7 +13140,6 @@ TEST2N8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 16644
 \end_layout
@@ -13899,7 +13151,6 @@ TEST2N8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.339
 \end_layout
@@ -13911,7 +13162,6 @@ TEST2N8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 20139
 \end_layout
@@ -13923,7 +13173,6 @@ TEST2N8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.413
 \end_layout
@@ -13935,7 +13184,6 @@ TEST2N8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 13980
 \end_layout
@@ -13947,7 +13195,6 @@ TEST2N8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.298
 \end_layout
@@ -13961,7 +13208,6 @@ TEST2N8
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 TEST2N9
 \end_layout
@@ -13973,7 +13219,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 22684
 \end_layout
@@ -13985,7 +13230,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.488
 \end_layout
@@ -13997,7 +13241,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 18538
 \end_layout
@@ -14009,7 +13252,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.407
 \end_layout
@@ -14021,7 +13263,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 16302
 \end_layout
@@ -14033,7 +13274,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.353
 \end_layout
@@ -14045,7 +13285,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 18929
 \end_layout
@@ -14057,7 +13296,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.421
 \end_layout
@@ -14069,7 +13307,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 14620
 \end_layout
@@ -14081,7 +13318,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.344
 \end_layout
@@ -14095,7 +13331,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 TEST30N3
 \end_layout
@@ -14107,7 +13342,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 24524
 \end_layout
@@ -14119,7 +13353,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.318
 \end_layout
@@ -14131,7 +13364,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 22799
 \end_layout
@@ -14143,7 +13375,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.296
 \end_layout
@@ -14155,7 +13386,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 20436
 \end_layout
@@ -14167,7 +13397,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.297
 \end_layout
@@ -14179,7 +13408,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 23186
 \end_layout
@@ -14191,7 +13419,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.311
 \end_layout
@@ -14203,7 +13430,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 19968
 \end_layout
@@ -14215,7 +13441,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.316
 \end_layout
@@ -14229,7 +13454,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 TEST30N4
 \end_layout
@@ -14241,7 +13465,6 @@ TEST30N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 21090
 \end_layout
@@ -14253,7 +13476,6 @@ TEST30N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.28
 \end_layout
@@ -14265,7 +13487,6 @@ TEST30N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 25160
 \end_layout
@@ -14277,7 +13498,6 @@ TEST30N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.358
 \end_layout
@@ -14289,7 +13509,6 @@ TEST30N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 21216
 \end_layout
@@ -14301,7 +13520,6 @@ TEST30N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.319
 \end_layout
@@ -14313,7 +13531,6 @@ TEST30N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 19444
 \end_layout
@@ -14325,7 +13542,6 @@ TEST30N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.276
 \end_layout
@@ -14337,7 +13553,6 @@ TEST30N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 16711
 \end_layout
@@ -14349,7 +13564,6 @@ TEST30N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size tiny
 0.267
 \end_layout
@@ -14869,7 +14083,6 @@ PGA
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 BF1
 \end_layout
@@ -14881,7 +14094,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 50398
 \end_layout
@@ -14893,7 +14105,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11478
 \end_layout
@@ -14905,7 +14116,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 7943(86)
 \end_layout
@@ -14917,7 +14127,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5535
 \end_layout
@@ -14929,7 +14138,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10578
 \end_layout
@@ -14941,7 +14149,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10501
 \end_layout
@@ -14955,7 +14162,6 @@ BF1
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 BF2
 \end_layout
@@ -14967,7 +14173,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 50397
 \end_layout
@@ -14979,7 +14184,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11292
 \end_layout
@@ -14991,7 +14195,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 8472(76)
 \end_layout
@@ -15003,7 +14206,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5539
 \end_layout
@@ -15015,7 +14217,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10568
 \end_layout
@@ -15027,7 +14228,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10510
 \end_layout
@@ -15041,7 +14241,6 @@ BF2
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 BRANIN
 \end_layout
@@ -15053,7 +14252,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 44800
 \end_layout
@@ -15065,7 +14263,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10849
 \end_layout
@@ -15077,7 +14274,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5513
 \end_layout
@@ -15089,7 +14285,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5514
 \end_layout
@@ -15101,7 +14296,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 46793
 \end_layout
@@ -15113,7 +14307,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10838
 \end_layout
@@ -15127,7 +14320,6 @@ BRANIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 CAMEL
 \end_layout
@@ -15139,7 +14331,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 48242
 \end_layout
@@ -15151,7 +14342,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11051
 \end_layout
@@ -15163,7 +14353,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5555
 \end_layout
@@ -15175,7 +14364,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5514
 \end_layout
@@ -15187,7 +14375,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 26537
 \end_layout
@@ -15199,7 +14386,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11087
 \end_layout
@@ -15213,7 +14399,6 @@ CAMEL
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 CIGAR10
 \end_layout
@@ -15225,7 +14410,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 50581
 \end_layout
@@ -15237,7 +14421,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 12331
 \end_layout
@@ -15249,7 +14432,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5586
 \end_layout
@@ -15261,7 +14443,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 100573
 \end_layout
@@ -15273,7 +14454,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10502
 \end_layout
@@ -15285,7 +14465,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10566
 \end_layout
@@ -15299,7 +14478,6 @@ CIGAR10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 CM4
 \end_layout
@@ -15311,7 +14489,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 48559
 \end_layout
@@ -15323,7 +14500,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11767
 \end_layout
@@ -15335,7 +14511,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5550
 \end_layout
@@ -15347,7 +14522,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5538
 \end_layout
@@ -15359,7 +14533,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10614
 \end_layout
@@ -15371,7 +14544,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10548
 \end_layout
@@ -15385,7 +14557,6 @@ CM4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 DISCUS10
 \end_layout
@@ -15397,7 +14568,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 50523
 \end_layout
@@ -15409,7 +14579,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 14328
 \end_layout
@@ -15421,7 +14590,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 18187
 \end_layout
@@ -15433,7 +14601,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 100518
 \end_layout
@@ -15445,7 +14612,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10548
 \end_layout
@@ -15457,7 +14623,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10503
 \end_layout
@@ -15471,7 +14636,6 @@ DISCUS10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 EASOM
 \end_layout
@@ -15483,7 +14647,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 21786
 \end_layout
@@ -15495,7 +14658,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10938
 \end_layout
@@ -15507,7 +14669,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 29256
 \end_layout
@@ -15519,7 +14680,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 24691
 \end_layout
@@ -15531,7 +14691,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 100762
 \end_layout
@@ -15543,7 +14702,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10797
 \end_layout
@@ -15557,7 +14715,6 @@ EASOM
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 ELP10
 \end_layout
@@ -15569,7 +14726,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 49837
 \end_layout
@@ -15581,7 +14737,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 4323
 \end_layout
@@ -15593,7 +14748,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11933
 \end_layout
@@ -15605,7 +14759,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 100584
 \end_layout
@@ -15617,7 +14770,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10601
 \end_layout
@@ -15629,7 +14781,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10559
 \end_layout
@@ -15643,7 +14794,6 @@ ELP10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 EXP4
 \end_layout
@@ -15655,7 +14805,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 48523
 \end_layout
@@ -15667,7 +14816,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11041
 \end_layout
@@ -15679,7 +14827,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 46752
 \end_layout
@@ -15691,7 +14838,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 19467
 \end_layout
@@ -15703,7 +14849,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 16621
 \end_layout
@@ -15715,7 +14860,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10503
 \end_layout
@@ -15729,7 +14873,6 @@ EXP4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 EXP16
 \end_layout
@@ -15741,7 +14884,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 50518
 \end_layout
@@ -15753,7 +14895,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10973
 \end_layout
@@ -15765,7 +14906,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5537
 \end_layout
@@ -15777,7 +14917,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 69494
 \end_layout
@@ -15789,7 +14928,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10680
 \end_layout
@@ -15801,7 +14939,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10595
 \end_layout
@@ -15815,7 +14952,6 @@ EXP16
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 GKLS250
 \end_layout
@@ -15827,7 +14963,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 43925
 \end_layout
@@ -15839,7 +14974,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10869
 \end_layout
@@ -15851,7 +14985,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 41016
 \end_layout
@@ -15863,7 +14996,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11430
 \end_layout
@@ -15875,7 +15007,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 50804
 \end_layout
@@ -15887,7 +15018,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10893(76)
 \end_layout
@@ -15901,7 +15031,6 @@ GKLS250
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 GKLS350
 \end_layout
@@ -15913,7 +15042,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 48202
 \end_layout
@@ -15925,7 +15053,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10750
 \end_layout
@@ -15937,7 +15064,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 56220
 \end_layout
@@ -15949,7 +15075,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 16831
 \end_layout
@@ -15961,7 +15086,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 40707
 \end_layout
@@ -15973,7 +15097,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11555(96)
 \end_layout
@@ -15987,7 +15110,6 @@ GKLS350
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 GRIEWANK2
 \end_layout
@@ -15999,7 +15121,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 44021
 \end_layout
@@ -16011,7 +15132,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 13514
 \end_layout
@@ -16023,7 +15143,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5538
 \end_layout
@@ -16035,7 +15154,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5533
 \end_layout
@@ -16047,7 +15165,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10555
 \end_layout
@@ -16059,7 +15176,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10498
 \end_layout
@@ -16073,7 +15189,6 @@ GRIEWANK2
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 GRIEWANK10
 \end_layout
@@ -16085,7 +15200,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 50557(3)
 \end_layout
@@ -16097,7 +15211,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 12258(86)
 \end_layout
@@ -16109,7 +15222,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5612(13)
 \end_layout
@@ -16121,7 +15233,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 85742(3)
 \end_layout
@@ -16133,7 +15244,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10679
 \end_layout
@@ -16145,7 +15255,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10576
 \end_layout
@@ -16159,7 +15268,6 @@ GRIEWANK10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 POTENTIAL3
 \end_layout
@@ -16171,7 +15279,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 49213
 \end_layout
@@ -16183,7 +15290,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 12124
 \end_layout
@@ -16195,7 +15301,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5530
 \end_layout
@@ -16207,7 +15312,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5523
 \end_layout
@@ -16219,7 +15323,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 39607
 \end_layout
@@ -16231,7 +15334,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11039
 \end_layout
@@ -16245,7 +15347,6 @@ POTENTIAL3
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 PONTENTIAL5
 \end_layout
@@ -16257,7 +15358,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 50548
 \end_layout
@@ -16269,7 +15369,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 16027
 \end_layout
@@ -16281,7 +15380,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5587
 \end_layout
@@ -16293,7 +15391,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5569
 \end_layout
@@ -16305,7 +15402,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 33542
 \end_layout
@@ -16317,7 +15413,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11134
 \end_layout
@@ -16331,7 +15426,6 @@ PONTENTIAL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 PONTENTIAL6
 \end_layout
@@ -16343,7 +15437,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 50558(3)
 \end_layout
@@ -16355,7 +15448,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 24414(66)
 \end_layout
@@ -16367,7 +15459,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5607(6)
 \end_layout
@@ -16379,7 +15470,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5588(3)
 \end_layout
@@ -16391,7 +15481,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 28901(3)
 \end_layout
@@ -16403,7 +15492,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11143(10)
 \end_layout
@@ -16417,7 +15505,6 @@ PONTENTIAL6
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 PONTENTIAL10
 \end_layout
@@ -16429,7 +15516,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 50641(6)
 \end_layout
@@ -16441,7 +15527,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 31434
 \end_layout
@@ -16453,7 +15538,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5670(3)
 \end_layout
@@ -16465,7 +15549,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5661(6)
 \end_layout
@@ -16477,7 +15560,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 42644(13)
 \end_layout
@@ -16489,7 +15571,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11290(20)
 \end_layout
@@ -16503,7 +15584,6 @@ PONTENTIAL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 HANSEN
 \end_layout
@@ -16515,7 +15595,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 47296
 \end_layout
@@ -16527,7 +15606,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 13131
 \end_layout
@@ -16539,7 +15617,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5522
 \end_layout
@@ -16551,7 +15628,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5521
 \end_layout
@@ -16563,7 +15639,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 46894(90)
 \end_layout
@@ -16575,7 +15650,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11055
 \end_layout
@@ -16589,7 +15663,6 @@ HANSEN
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 HARTMAN3
 \end_layout
@@ -16601,7 +15674,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 47778
 \end_layout
@@ -16613,7 +15685,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10961
 \end_layout
@@ -16625,7 +15696,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5525
 \end_layout
@@ -16637,7 +15707,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5522
 \end_layout
@@ -16649,7 +15718,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 22235
 \end_layout
@@ -16661,7 +15729,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11097
 \end_layout
@@ -16675,7 +15742,6 @@ HARTMAN3
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 HARTMAN6
 \end_layout
@@ -16687,7 +15753,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 50088(33)
 \end_layout
@@ -16699,7 +15764,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11085(86)
 \end_layout
@@ -16711,7 +15775,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5536(83)
 \end_layout
@@ -16723,7 +15786,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5536
 \end_layout
@@ -16735,7 +15797,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 18352
 \end_layout
@@ -16747,7 +15808,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11273
 \end_layout
@@ -16761,7 +15821,6 @@ HARTMAN6
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 RASTRIGIN
 \end_layout
@@ -16773,7 +15832,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 47433
 \end_layout
@@ -16785,7 +15843,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11594
 \end_layout
@@ -16797,7 +15854,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5542
 \end_layout
@@ -16809,7 +15865,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5524
 \end_layout
@@ -16821,7 +15876,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 16567
 \end_layout
@@ -16833,7 +15887,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10506
 \end_layout
@@ -16847,7 +15900,6 @@ RASTRIGIN
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 ROSENBROCK8
 \end_layout
@@ -16859,7 +15911,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 50549
 \end_layout
@@ -16871,7 +15922,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 13487
 \end_layout
@@ -16883,7 +15933,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 72088
 \end_layout
@@ -16895,7 +15944,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 100503
 \end_layout
@@ -16907,7 +15955,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10863
 \end_layout
@@ -16919,7 +15966,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10645
 \end_layout
@@ -16933,7 +15979,6 @@ ROSENBROCK8
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 POSENBROCK16
 \end_layout
@@ -16945,7 +15990,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 50584
 \end_layout
@@ -16957,7 +16001,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 12659
 \end_layout
@@ -16969,7 +16012,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 21517
 \end_layout
@@ -16981,7 +16023,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10645
 \end_layout
@@ -16993,7 +16034,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10918
 \end_layout
@@ -17005,7 +16045,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10957
 \end_layout
@@ -17019,7 +16058,6 @@ POSENBROCK16
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 SHEKEL5
 \end_layout
@@ -17031,7 +16069,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 49944(33)
 \end_layout
@@ -17043,7 +16080,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 13058(93)
 \end_layout
@@ -17055,7 +16091,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5532(86)
 \end_layout
@@ -17067,7 +16102,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5524(93)
 \end_layout
@@ -17079,7 +16113,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 32319(50)
 \end_layout
@@ -17091,7 +16124,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10883(43)
 \end_layout
@@ -17105,7 +16137,6 @@ SHEKEL5
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 SHEKEL7
 \end_layout
@@ -17117,7 +16148,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 50062(53)
 \end_layout
@@ -17129,7 +16159,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 12134(96)
 \end_layout
@@ -17141,7 +16170,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5533(96)
 \end_layout
@@ -17153,7 +16181,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5523
 \end_layout
@@ -17165,7 +16192,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 51183(73)
 \end_layout
@@ -17177,7 +16203,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 10926(53)
 \end_layout
@@ -17191,7 +16216,6 @@ SHEKEL7
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 SHEKEL10
 \end_layout
@@ -17203,7 +16227,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 50124(63)
 \end_layout
@@ -17215,7 +16238,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 14176
 \end_layout
@@ -17227,7 +16249,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5535(90)
 \end_layout
@@ -17239,7 +16260,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5523
 \end_layout
@@ -17251,7 +16271,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 47337(70)
 \end_layout
@@ -17263,7 +16282,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11207(80)
 \end_layout
@@ -17277,7 +16295,6 @@ SHEKEL10
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 SINU4
 \end_layout
@@ -17289,7 +16306,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 49239
 \end_layout
@@ -17301,7 +16317,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11349
 \end_layout
@@ -17313,7 +16328,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5527
 \end_layout
@@ -17325,7 +16339,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5510
 \end_layout
@@ -17337,7 +16350,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 66625(83)
 \end_layout
@@ -17349,7 +16361,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11063(76)
 \end_layout
@@ -17363,7 +16374,6 @@ SINU4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 SINU8
 \end_layout
@@ -17375,7 +16385,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 50224
 \end_layout
@@ -17387,7 +16396,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11295
 \end_layout
@@ -17399,7 +16407,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5537(80)
 \end_layout
@@ -17411,7 +16418,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5520
 \end_layout
@@ -17423,7 +16429,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 29705
 \end_layout
@@ -17435,7 +16440,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11378
 \end_layout
@@ -17449,7 +16453,6 @@ SINU8
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 TEST2N4
 \end_layout
@@ -17461,7 +16464,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 50112(93)
 \end_layout
@@ -17473,7 +16475,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 13173
 \end_layout
@@ -17485,7 +16486,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5529
 \end_layout
@@ -17497,7 +16497,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5519
 \end_layout
@@ -17509,7 +16508,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 25553
 \end_layout
@@ -17521,7 +16519,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11049
 \end_layout
@@ -17535,7 +16532,6 @@ TEST2N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 TEST2N9
 \end_layout
@@ -17547,7 +16543,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 50517(13)
 \end_layout
@@ -17559,7 +16554,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 17510(60)
 \end_layout
@@ -17571,7 +16565,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5546(6)
 \end_layout
@@ -17583,7 +16576,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5535(56)
 \end_layout
@@ -17595,7 +16587,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 18154
 \end_layout
@@ -17607,7 +16598,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11145
 \end_layout
@@ -17621,7 +16611,6 @@ TEST2N9
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 TEST30N3
 \end_layout
@@ -17633,7 +16622,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 44301
 \end_layout
@@ -17645,7 +16633,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 19638
 \end_layout
@@ -17657,7 +16644,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5515
 \end_layout
@@ -17669,7 +16655,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5511
 \end_layout
@@ -17681,7 +16666,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 49235
 \end_layout
@@ -17693,7 +16677,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11051
 \end_layout
@@ -17707,7 +16690,6 @@ TEST30N3
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 TEST30N4
 \end_layout
@@ -17719,7 +16701,6 @@ TEST30N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 49177
 \end_layout
@@ -17731,7 +16712,6 @@ TEST30N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 20839
 \end_layout
@@ -17743,7 +16723,6 @@ TEST30N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5514
 \end_layout
@@ -17755,7 +16734,6 @@ TEST30N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 5511
 \end_layout
@@ -17767,7 +16745,6 @@ TEST30N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 29667
 \end_layout
@@ -17779,7 +16756,6 @@ TEST30N4
 
 \begin_layout Plain Layout
 
-\series bold
 \size scriptsize
 11301
 \end_layout
@@ -18143,7 +17119,7 @@ name "sec:Conclusions"
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Standard
 According to the relevant literature, despite the high success rate they
  exhibit in finding good functional values, genetic algorithms require significa
 nt computational power, leading to longer processing times.
@@ -19335,7 +18311,112 @@ literal "false"
  Design of intelligent control system for agricultural greenhouses based
  on adaptive improved genetic algorithm for multi-energy supply system.
  Energy Rep.
- 2022, 8, 12126–12138
+ 2022, 8, 12126–12138.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "openmpi"
+literal "false"
+
+\end_inset
+
+R.L.
+ Graham, T.S.
+ Woodall, J.M.
+ Squyres, Open MPI: A flexible high performance MPI.
+ In Parallel Processing and Applied Mathematics: 6th International Conference,
+ PPAM 2005, Poznań, Poland, September 11-14, 2005, Revised Selected Papers
+ 6 (pp.
+ 228-239).
+ Springer Berlin Heidelberg, 2006.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "opemp"
+literal "false"
+
+\end_inset
+
+E.
+ Ayguadé, N.
+ Copty, A.
+ Duran, J.
+ Hoeflinger, Y.
+ Lin, F.
+ Massaioli, G.
+ Zhang, The design of OpenMP tasks.
+ IEEE Transactions on Parallel and Distributed systems 
+\series bold
+20
+\series default
+, pp.
+ 404-418, 2008.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_par1"
+literal "false"
+
+\end_inset
+
+E.
+ Onbaşoğlu, L.
+ Özdamar, Parallel simulated annealing algorithms in global optimization.
+ Journal of global optimization 
+\series bold
+19
+\series default
+, pp.
+ 27-50, 2001.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_par2"
+literal "false"
+
+\end_inset
+
+J.F.
+ Schutte, J.A.
+ Reinbolt, B.J.
+ Fregly, R.T.
+ Haftka, A.D.
+ George, Parallel global optimization with the particle swarm algorithm.
+ International journal for numerical methods in engineering 
+\series bold
+61
+\series default
+, pp.
+ 2296-2315, 2004.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_par3"
+literal "false"
+
+\end_inset
+
+Regis, R.
+ G., & Shoemaker, C.
+ A.
+ (2009).
+ Parallel stochastic global optimization using radial basis functions.
+ INFORMS Journal on Computing, 21(3), 411-426.
 \end_layout
 
 \begin_layout Bibliography
@@ -19353,7 +18434,90 @@ literal "false"
  ACM Comput.
  Surv.
  53, 4, Article 86 (August 2020), 39 pages.
- https://doi.org/10.1145/3400031
+ https://doi.org/10.1145/3400031.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ga_island0"
+literal "false"
+
+\end_inset
+
+L.A.
+ Anbarasu, P.
+ Narayanasamy, V.
+ Sundararajan, Multiple molecular sequence alignment by island parallel
+ genetic algorithm.
+ Current Science, pp.
+ 858-863, 2000.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ga_island1"
+literal "false"
+
+\end_inset
+
+U.
+ Tosun, T.
+ Dokeroglu, C.
+ Cosar, A robust island parallel genetic algorithm for the quadratic assignment
+ problem.
+ International Journal of Production Research 
+\series bold
+51
+\series default
+, pp.
+ 4117-4133, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "ga_island2"
+literal "false"
+
+\end_inset
+
+A.
+ Nandy, D.
+ Chakraborty, M.S.
+ Shah, Optimal sensors/actuators placement in smart structure using island
+ model parallel genetic algorithm.
+ International Journal of Computational Methods 
+\series bold
+16
+\series default
+, 1840018, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pdoublepop"
+literal "false"
+
+\end_inset
+
+I.G.
+ Tsoulos, A.
+ Tzallas, D.
+ Tsalikakis, PDoublePop: An implementation of parallel genetic algorithm
+ for function optimization.
+ Computer Physics Communications 
+\series bold
+209
+\series default
+, pp.
+ 183-189, 2016.
 \end_layout
 
 \begin_layout Bibliography
@@ -19384,6 +18548,26 @@ s, S.
  Meyer, C.
  Schweiger, Handbook of Test Problems in Local and Global Optimization,
  Kluwer Academic Publishers, Dordrecht, 1999.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Montaz Ali"
+literal "false"
+
+\end_inset
+
+ M.
+ Montaz Ali, Charoenchai Khompatraporn, Zelda B.
+ Zabinsky, A Numerical Evaluation of Several Stochastic Algorithms on Selected
+ Continuous Global Optimization Test Problems, Journal of Global Optimization
+ 
+\series bold
+31
+\series default
+, pp 635-672, 2005.
 \end_layout
 
 \begin_layout Bibliography
@@ -19431,26 +18615,6 @@ literal "false"
 \series default
 , pp.
  463–477, 1924.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "Montaz Ali"
-literal "false"
-
-\end_inset
-
- M.
- Montaz Ali, Charoenchai Khompatraporn, Zelda B.
- Zabinsky, A Numerical Evaluation of Several Stochastic Algorithms on Selected
- Continuous Global Optimization Test Problems, Journal of Global Optimization
- 
-\series bold
-31
-\series default
-, pp 635-672, 2005.
 \end_layout
 
 \begin_layout Bibliography
