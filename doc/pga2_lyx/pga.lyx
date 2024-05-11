@@ -300,8 +300,8 @@ The topic of efficiently finding the global minimum of multidimensional
  Genetic Algorithms and their various variants occupy an excellent position
  among them.
  Their popularity stems from their exceptional performance in identifying
- effective solutions for the optimization problems as well as because of
- their adaptability to various kinds of problems.
+ effective solutions for optimization problems as well as because of their
+ adaptability to various kinds of problems.
  However, Genetic Algorithms require significant computational resources
  and time, prompting the need for parallel techniques.
  Moving in this research direction, a new global optimization method is
@@ -312,11 +312,11 @@ y sharing the optimal solutions they discover.
  Increasing the number of computational threads, coupled with solution exchange
  techniques, can significantly reduce the number of calls to the objective
  function, thus saving computational power.
- Also, a stopping rule is proposed that take advantage of the parallel computati
-onal environment.
- The proposed method was tested on a wide series of benchmark function from
- the relevant literature and it is compared against other global optimization
- techniques regarding its efficiency.
+ Also, a stopping rule is proposed that takes advantage of the parallel
+ computational environment.
+ The proposed method was tested on a wide series of benchmark functions
+ from the relevant literature, and it is compared against other global optimizat
+ion techniques regarding its efficiency.
 \end_layout
 
 \begin_layout Keywords
@@ -495,7 +495,7 @@ literal "false"
 \series default
 In the second category, the search for the global minimum is based on randomness.
  Also, stochastic optimization methods are used in most cases, since they
- can be programmed more easily and they do depend on any priory information
+ can be programmed more easily and they do depend on any previous information
  about the objective problem.
  Some stochastic optimization methods that have been used by researchers
  include Ant Colony Optimization 
@@ -701,8 +701,8 @@ literal "false"
 \end_inset
 
 .
- Parallel programming techniques have also incorporated in various cases
- in global optimization, such as the combination of Simulated Annealing
+ Parallel programming techniques have also been incorporated in various
+ cases into global optimization, such as the combination of Simulated Annealing
  and parallel techniques 
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -733,7 +733,7 @@ literal "false"
  techniques is that they can be easily parallelized and exploit modern computing
  units as well as the previously mentioned parallel programming techniques.
  In the relevant literature, two major categories of parallel genetic algorithms
- appear: island genetic algorithms and cellurar genetic algorithms 
+ appear: island genetic algorithms and cellular genetic algorithms 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Tomohiro"
@@ -771,8 +771,8 @@ literal "false"
 \end_inset
 
  etc.
- Also recently, Tsoulos et al proposed an implementation of an island PGA
- 
+ Also, recently Tsoulos et al.
+ proposed an implementation of an island PGA 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "pdoublepop"
@@ -783,7 +783,7 @@ literal "false"
 .
  In the case of the parallel cellular model of genetic algorithms, solutions
  are organized into a grid.
- Various diversity operators, such as crossover and mutation, are applied
+ Various diverse operators, such as crossover and mutation, are applied
  to neighboring regions within the grid.
  For each solution, a descendant factor is created, replacing its position
  within the birth region.
@@ -875,7 +875,7 @@ Genetic algorithms are inspired by natural selection and the process of
  the dimension of the problem.
  The algorithm processes these solutions through iterative steps, replicating
  and evolving the population of solutions.
- At each generation, the selected solutions are crossed and mutated to improve
+ In each generation, the selected solutions are crossed and mutated to improve
  their fit to the problem.
  As generations progress, the population converges toward solutions with
  improved fit to the problem.
@@ -885,7 +885,7 @@ Genetic algorithms are inspired by natural selection and the process of
  The choice of these parameters affects the ability of the algorithm to
  explore the solution space and converge to the optimal result.
  Subsequently, the operation of the genetic algorithm is presented through
- the replication and advancement of solution populations step by step:
+ the replication and advancement of solution populations step by step
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Yu,Lawrence"
@@ -893,7 +893,7 @@ literal "false"
 
 \end_inset
 
-
+.
 \begin_inset CommandInset label
 LatexCommand label
 name "The-genetic-algorithm"
@@ -1074,7 +1074,7 @@ Selection step
 
  chromosomes with the lowest fitness values.
  These chromosomes will copied to the next generation.
- The rest of chromosomes will be substituted by offspings created in the
+ The rest of chromosomes will be substituted by offsprings created in the
  crossover procedure.
  Each offspring is created from two chromosomes (parents) of the population
  through the tournament selection process.
@@ -1359,7 +1359,7 @@ noprefix "false"
 \end_inset
 
 , the execution of the parallel islands model involves five islands, each
- managing a distinct set of solutions using five processors units (PU).
+ managing a distinct set of solutions using five processor units (PU).
  During the migration process, information related to solutions is exchanged
  among PU.
  In the same Figure 
@@ -2077,7 +2077,7 @@ name "sec:Experiments"
 \end_layout
 
 \begin_layout Standard
-A series of bechmark functions, found in the relevant literature is introduced
+A series of benchmark functions, found in the relevant literature is introduced
  here as well as the conducted experiments and some discussion on the experiment
 al results.
  
@@ -2090,7 +2090,7 @@ Test functions
 \begin_layout Standard
 To assess the effectiveness of the proposed method in locating the overall
  minimum of functions, a set of well - known test functions, found in the
- relevent literature 
+ relevant literature 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Floudas,Montaz Ali"
@@ -2808,12 +2808,8 @@ Experimental results
 \end_layout
 
 \begin_layout Standard
-
-\series bold
-(STOPPED HERE)
-\series default
-To ensure the reliability and validity of the research, the experiments
- were conducted 30 times and cover Tables 
+To ensure the reliability and validity of the research, experiments were
+ conducted 30 times and concerned the Tables 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:Comparison1"
@@ -2843,28 +2839,8 @@ noprefix "false"
 
 \end_inset
 
-.
- The Table 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Comparison1"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-includes various test functions with combinations of parallel computing
- units and chromosomes.
- For each function, we have the number of calls to the objective function
- and the computation time.
- In all problems, there is a reduction in the number of function calls and
- execution time as the number of parallel computing units (PU) increases.
- In any case, the number of chromosomes remains constant, that is, 1PUx500chrom,
- 2PUx250chrom, etc.
- This is a positive outcome, indicating that parallelization improves the
- performance of the genetic algorithm.
- The parameters used are in accordance with Table 1
+, with parameters consistent across all experiments as outlined in Table
+ 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:settings1"
@@ -2875,11 +2851,32 @@ noprefix "false"
 \end_inset
 
 .
- 
-\end_layout
+ In Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Comparison1"
+plural "false"
+caps "false"
+noprefix "false"
 
-\begin_layout Standard
-In Figure 
+\end_inset
+
+, the number of objective function invocations for each problem and its
+ solving time for various combinations of processing units (PU) and chromosomes
+ are provided.
+ In the columns containing objective function invocation values, values
+ in parentheses represent the percentage of executions where the overall
+ optimum was successfully identified.
+ The absence of this fraction indicates a 100% success rate, meaning that
+ the global minimum was found in every run.
+ Generally, across all problems, there is a decrease in the number of objective
+ function invocations and execution time as the number of parallel computing
+ units increases.
+ In each case, the number of chromosomes remains constant, i.e., 1PUx500chrom,
+ 2PUx250chrom, etc.
+ This is a positive result, indicating that parallelization improves the
+ performance of the genetic algorithm.
+ Figures 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Statistical1"
@@ -2889,9 +2886,7 @@ noprefix "false"
 
 \end_inset
 
-, we observe a reduction in the calls to the objective function as the number
- of computing units increases.
- Similarly, in Box Figure 
+ and 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Statistical2"
@@ -2901,8 +2896,323 @@ noprefix "false"
 
 \end_inset
 
-, there is a decrease in the computation time of the problem with the increase
- in computing units.
+ are derived from Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Comparison1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Statistical comparison of objective function invocations, solving times,
+ and execution times similarly shows performance improvement and computation
+ time reduction for problems as the number of computing units increases.
+\end_layout
+
+\begin_layout Standard
+Specifically, in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Statistical1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the objective function invocations are halved compared to the initial
+ invocations with only two computational units.
+ This reduction in invocations continues significantly as the number of
+ computational units increases.
+ In Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Statistical2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we observe a similar behavior in the algorithm termination times.
+ In this case, the times are significantly shorter in the parallel process
+ with ten (10) computational units compared to a single computational unit.
+ In the comparisons presented above, there is a reduction in required computatio
+nal power, as shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Statistical1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, along with a decrease in the time required to find solutions, as depicted
+ in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Statistical2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ In Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Comparison1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, additional interesting details regarding objective function invocations
+ and computational times are presented, such as minimum, maximum, mean,
+ and standard deviation.
+ In conclusion, as the workload is distributed among an increasing number
+ of computational units, there is an improvement in performance.
+ This reinforces the overall methodology.
+\end_layout
+
+\begin_layout Standard
+In Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Comparison2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ the chromosome migration with the best functional values occurs in every
+ generation, involving a specific number of chromosomes ten, N P =10 participati
+ng in the propagation process.
+ To achieve a more effective implementation of propagation techniques, we
+ proceeded to increase the local optimization rate applied to Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Comparison2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ from 0.1% (as presented in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Comparison1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) to 0.5% LSR .
+ However, the procedure of local optimization was maintained at certain
+ levels because an excessive increase would result in an elevated number
+ of calls to the objective function.
+ Conversely, reducing LSR would lead to a decrease in the success rate concernin
+g the identification of optimal chromosomes.
+ In the statistical representation of Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Statistical3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we observe the superiority of the '1 to N' propagation, meaning the transfer
+ of ten chromosomes from a random island to all others.
+ Equally, effective appears to be the 'N to N' propagation.
+ As a general rule, if we classify migration methods based on their performance,
+ they will be ranked as follows: '1toN' 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Propagation-1toN"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 'NtoN' 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Propagation-NtoN"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, '1to1'
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Propagation-1to1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ , and 'Nto1'
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Propagation-Nto1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ .
+ The first two strategies, where migration occurs across all islands, demonstrat
+e better performance compared to the other two, where migration only affects
+ one island.
+ The success of '1toN' 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Propagation-1toN"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 'NtoN' 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Propagation-NtoN"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ , albeit with a slight difference, appears to be due to the migration of
+ the best chromosomes to all islands.
+ This leads to an improvement in the convergence of the algorithm towards
+ better candidate solutions in a shorter time frame.
+ The actual times are shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Comparison3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For conducting experiments among stochastic methods of global optimization,
+ including Particle Swarm Optimization (PSO), Improved PSO (IPSO)
+\begin_inset CommandInset citation
+LatexCommand citep
+key "IPSO"
+literal "false"
+
+\end_inset
+
+, Differential Evolution with random selection (DE), Differential Evolution
+ with tournament selection (TDE)
+\begin_inset CommandInset citation
+LatexCommand citep
+key "IDE"
+literal "false"
+
+\end_inset
+
+, Genetic Algorithm (GA), and Parallel Genetic Algorithm (PGA), certain
+ parameters remained constant.
+ The population size for all methods is 500 particles or agents or chromosomes.
+ In PGA, the population consists of 20PUx25chrom, while all other parameters
+ remain the same as those described in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Comparison1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Any method employing LSR maintains this parameter at the same value.
+ The double box is a termination rule that is the same for all methods.
+ The values resulting from experiments in the 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Comparison4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ table are depicted in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Statistical4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and fig:
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Comparison5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ Figures.
+ The box plots of Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Statistical4"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ reveal the superiority of PGA, as objective function calls remain at approximat
+ely 10,000 across all problems.
+ Conversely, IPSO, DE, and TDE (especially DE) exhibit a low number of calls
+ in some problems, while in others, they display significant increases.
+ During initialization and optimization, each method has a specific lower
+ limit of calls, which varies from method to method.
+ PGA easily reaches this threshold with very small deviations, as illustrated
+ in the same figure.
+ The Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Comparison5"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ presents the total call values for each method.
 \end_layout
 
 \begin_layout Standard
@@ -2910,7 +3220,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -3380,7 +3690,7 @@ Local search rate
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -8267,29 +8577,11 @@ STDEV
 \end_layout
 
 \begin_layout Standard
-In Table 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Comparison1"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- The values in parentheses represent the percentage of runs where the global
- optimum was successfully identified.
- The absence of this fraction indicates a 100% success rate, signifying
- that the global minimum was found in every execution.
- 
-\end_layout
-
-\begin_layout Standard
 \begin_inset Float figure
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -8329,7 +8621,7 @@ name "fig:Statistical1"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -8364,111 +8656,11 @@ name "fig:Statistical2"
 \end_layout
 
 \begin_layout Standard
-Figures 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Statistical1"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- and 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Statistical2"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, extracting information from Table 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Comparison1"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, demonstrate the effectiveness of the parallel process of the genetic algorithm.
- Specifically, in Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Statistical1"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, the objective function calls are reduced to half of the initial calls
- with only two computational units.
- This reduction in calls continues significantly with the increase in computatio
-nal units.
- In Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Statistical2"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, we observe a similar behavior in the algorithm termination times.
- In this case, the times are noticeably shorter in the parallel process
- with ten (10) computational units compared to a single computational unit.
- In the comparisons presented above, a decrease in the required computational
- power is observed, as shown in Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Statistical1"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, along with a reduction in the time needed to find solutions, as depicted
- in Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Statistical2"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
- In 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Comparison1"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, additional interesting details are presented regarding the objective function
- calls and computational times, including: minimum, maximum, average, and
- standard deviation.
- In conclusion, as the workload is distributed across an increasing number
- of computing units, there is an improvement in performance.
- This fact enhances the overall methodology.
-\end_layout
-
-\begin_layout Standard
 \begin_inset Float table
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -13726,7 +13918,7 @@ Total
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -13763,7 +13955,7 @@ name "fig:Statistical3"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -13799,165 +13991,11 @@ name "fig:Comparison3"
 \end_layout
 
 \begin_layout Standard
-The parameters applied for the creation of Table 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Comparison2"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- correspond to those presented in Table 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:settings1"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
- Chromosome migration with the best functional values occurs in every generation
-, involving a specific number of chromosomes ten, 
-\begin_inset Formula $N_{P}=10$
-\end_inset
-
- participating in the propagation process.
- To achieve a more effective implementation of propagation techniques, we
- proceeded to increase the local optimization rate applied to Table 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Comparison2"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- from 0.1% (as presented in Table 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Comparison1"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-) to 0.5% 
-\begin_inset Formula $LSR$
-\end_inset
-
-.
- However, the procedure of local optimization was maintained at certain
- levels because an excessive increase would result in an elevated number
- of calls to the objective function.
- Conversely, reducing the LSR would lead to a decrease in the success rate
- concerning the identification of optimal chromosomes.
- In the statistical representation of Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Statistical3"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, we observe the superiority of the '1 to N' propagation, meaning the transfer
- of ten chromosomes from a random island to all others.
- Equally, effective appears to be the 'N to N' propagation.
- As a general rule, if we classify migration methods based on their performance,
- they will be ranked as follows: '1toN' 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Propagation-1toN"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, 'NtoN' 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Propagation-NtoN"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, '1to1'
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Propagation-1to1"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- , and 'Nto1'
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Propagation-Nto1"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- .
- The first two strategies, where migration occurs across all islands, demonstrat
-e better performance compared to the other two, where migration only affects
- one island.
- The success of '1toN' 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Propagation-1toN"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- and 'NtoN' 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Propagation-NtoN"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- , albeit with a slight difference, appears to be due to the migration of
- the best chromosomes to all islands.
- This leads to an improvement in the convergence of the algorithm towards
- better candidate solutions in a shorter time frame.
- The actual times are shown in Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Comparison3"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
 \begin_inset Float table
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -16870,7 +16908,7 @@ TOTAL
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -16918,7 +16956,7 @@ name "fig:Statistical4"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -16958,100 +16996,11 @@ name "fig:Comparison5"
 \end_layout
 
 \begin_layout Standard
-For conducting experiments among stochastic methods of global optimization,
- including Particle Swarm Optimization (PSO), Improved PSO (IPSO)
-\begin_inset CommandInset citation
-LatexCommand citep
-key "IPSO"
-literal "false"
-
-\end_inset
-
-, Differential Evolution with random selection (DE), Differential Evolution
- with tournament selection (TDE)
-\begin_inset CommandInset citation
-LatexCommand citep
-key "IDE"
-literal "false"
-
-\end_inset
-
-, Genetic Algorithm (GA), and Parallel Genetic Algorithm (PGA), certain
- parameters remained constant.
- The population size for all methods is 500 particles or agents or chromosomes.
- In PGA, the population consists of 20PUx25chrom, while all other parameters
- remain the same as those described in table 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Comparison1"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
- Any method employing LSR maintained this parameter at the same value.
- The double box is a termination rule that is the same for all methods.
- The values resulting from experiments in the comparison4 table are depicted
- in 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Statistical4"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- and 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Comparison5"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- figures.
- The box plots of Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Statistical4"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- reveal the superiority of PGA, as objective function calls remain approximately
- at 10,000 across all problems.
- Conversely, IPSO, DE, and TDE (especially DE) exhibit a low number of calls
- in some problems, while in others, they display significant increases.
- During initialization and optimization, each method has a specific lower
- limit of calls, which varies from method to method.
- PGA easily reaches this threshold with very small deviations, as illustrated
- in the same figure.
- The 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Comparison5"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- figure presents the total call values for each method.
-\end_layout
-
-\begin_layout Standard
 \begin_inset Float figure
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -17119,7 +17068,7 @@ name "sec:Conclusions"
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Standard
 According to the relevant literature, despite the high success rate they
  exhibit in finding good functional values, genetic algorithms require significa
 nt computational power, leading to longer processing times.
@@ -17356,7 +17305,7 @@ Keep empty!
 
 \begin_layout Standard
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Note Note
@@ -18808,7 +18757,7 @@ S.
 
 \begin_layout End Whole Page
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Plain Layout
 Keep empty!
