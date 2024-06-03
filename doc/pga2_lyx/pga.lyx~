@@ -771,7 +771,9 @@ literal "false"
 \end_inset
 
  etc.
- Also, recently Tsoulos et al.
+ 
+\series bold
+Also, recently Tsoulos et al.
  proposed an implementation of an island PGA 
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -780,6 +782,8 @@ literal "false"
 
 \end_inset
 
+
+\series default
 .
  In the case of the parallel cellular model of genetic algorithms, solutions
  are organized into a grid.
@@ -795,6 +799,8 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
+
+\series bold
 The present study focuses on the island model, where the total population
  is divided into independent subpopulations that operate concurrently and
  independently to find candidate solutions.
@@ -1784,12 +1790,10 @@ noprefix "false"
 If we assume that the migration method "1toN" is executed, then a random
  island will transfer chromosomes to the other islands, except for itself.
  However, we kept the label "N" instead of "N-1" because the chromosomes
- exist on the island that sends them.
-\end_layout
-
-\begin_layout Standard
-The number of solutions participating in the migration and replacement process
- is fully customizable and will be referred to in the experiments below.
+ exist on the island that sends them.The number of solutions participating
+ in the migration and replacement process is fully customizable and will
+ be referred to in the experiments below.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1797,14 +1801,14 @@ The number of solutions participating in the migration and replacement process
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -1843,7 +1847,7 @@ name "fig:Propagation-1to1"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -1926,7 +1930,7 @@ name "fig:Propagation-Nto1"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -2808,6 +2812,26 @@ Experimental results
 \end_layout
 
 \begin_layout Standard
+To evaluate the performance of the parallel genetic algorithm, a series
+ of experiments were carried out.
+ These experiments varied the number of parallel computing units from 1
+ to 10.
+ The parallelization was achieved using the freely available OpenMP library
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "opemp"
+literal "false"
+
+\end_inset
+
+, and the method was implemented in ANSI C++ within the OPTIMUS optimization
+ package, accessible at https://github.com/itsoulos/OPTIMUS.
+ All experiments were conducted on a system equipped with an AMD Ryzen 5950X
+ processor, 128GB of RAM, and running the Debian Linux operating system.
+\end_layout
+
+\begin_layout Standard
 To ensure the reliability and validity of the research, experiments were
  conducted 30 times and concerned the Tables 
 \begin_inset CommandInset ref
@@ -3115,6 +3139,12 @@ noprefix "false"
 \end_inset
 
 .
+ During the conducted experiments, the "1-to-N" and "N-to-N" propagation
+ techniques appear to perform better according to experimental evidence.
+ The common feature of these two techniques is that the optimal solutions
+ are distributed to all computing units, thereby improving the performance
+ of each individual unit and consequently enhancing the overall performance
+ of the general algorithm.
 \end_layout
 
 \begin_layout Standard
@@ -3138,6 +3168,15 @@ literal "false"
 
 , Genetic Algorithm (GA), and Parallel Genetic Algorithm (PGA), certain
  parameters remained constant.
+ Also, the parallel implementation of the GALIB library 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "galib"
+literal "false"
+
+\end_inset
+
+ was used in the comparative experiments.
  The population size for all methods is 500 particles or agents or chromosomes.
  In PGA, the population consists of 20PUx25chrom, while all other parameters
  remain the same as those described in Table 
@@ -3153,7 +3192,11 @@ noprefix "false"
 .
  Any method employing LSR maintains this parameter at the same value.
  The double box is a termination rule that is the same for all methods.
- The values resulting from experiments in the 
+ 
+\end_layout
+
+\begin_layout Standard
+The values resulting from experiments in the 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:Comparison4"
@@ -3202,7 +3245,7 @@ ely 10,000 across all problems.
  limit of calls, which varies from method to method.
  PGA easily reaches this threshold with very small deviations, as illustrated
  in the same figure.
- The 
+ The Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Comparison5"
@@ -3212,7 +3255,12 @@ noprefix "false"
 
 \end_inset
 
- Figure presents the total call values for each method.
+ presents the total call values for each method.
+ The current work was also compared against the parallel version of Galib,
+ found in the recent litearature.
+ Even though Galib seems to have the same success rate in discovering the
+ global minimum of the benchmark functions, it requires significantly more
+ functions calls than the proposed method for the same setup parameters.
 \end_layout
 
 \begin_layout Standard
@@ -13995,11 +14043,7 @@ name "fig:Comparison3"
 placement H
 wide false
 sideways false
-status collapsed
-
-\begin_layout Plain Layout
-
-\end_layout
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -14020,8 +14064,9 @@ name "tab:Comparison4"
 
 
 \begin_inset Tabular
-<lyxtabular version="3" rows="36" columns="7">
+<lyxtabular version="3" rows="36" columns="8">
 <features tabularvalignment="middle">
+<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -14098,6 +14143,18 @@ TDE
 \series bold
 \size scriptsize
 GA
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\size scriptsize
+GALIB
 \end_layout
 
 \end_inset
@@ -14182,6 +14239,17 @@ BF1
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+11641
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -14257,6 +14325,17 @@ BF2
 
 \size scriptsize
 10568
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+11321
 \end_layout
 
 \end_inset
@@ -14340,6 +14419,17 @@ BRANIN
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+34487
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -14415,6 +14505,17 @@ CAMEL
 
 \size scriptsize
 26537
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+17321
 \end_layout
 
 \end_inset
@@ -14498,6 +14599,17 @@ CIGAR10
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+11567(50)
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -14573,6 +14685,17 @@ CM4
 
 \size scriptsize
 10614
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+11118(70)
 \end_layout
 
 \end_inset
@@ -14656,6 +14779,17 @@ DISCUS10
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+10988
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -14731,6 +14865,17 @@ EASOM
 
 \size scriptsize
 100762
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+79689
 \end_layout
 
 \end_inset
@@ -14814,6 +14959,17 @@ ELP10
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+11673
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -14889,6 +15045,17 @@ EXP4
 
 \size scriptsize
 16621
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+16045
 \end_layout
 
 \end_inset
@@ -14972,6 +15139,17 @@ EXP16
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+10500
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -15047,6 +15225,17 @@ GKLS250
 
 \size scriptsize
 50804
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+31298
 \end_layout
 
 \end_inset
@@ -15130,6 +15319,17 @@ GKLS350
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+29897(96)
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -15205,6 +15405,17 @@ GRIEWANK2
 
 \size scriptsize
 10555
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+14419(67)
 \end_layout
 
 \end_inset
@@ -15288,6 +15499,17 @@ GRIEWANK10
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+10800
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -15363,6 +15585,17 @@ POTENTIAL3
 
 \size scriptsize
 39607
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+33452
 \end_layout
 
 \end_inset
@@ -15446,6 +15679,17 @@ PONTENTIAL5
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+31285
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -15521,6 +15765,17 @@ PONTENTIAL6
 
 \size scriptsize
 28901(3)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+28444(10)
 \end_layout
 
 \end_inset
@@ -15604,6 +15859,17 @@ PONTENTIAL10
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+38883(20)
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -15679,6 +15945,17 @@ HANSEN
 
 \size scriptsize
 46894(90)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+45440
 \end_layout
 
 \end_inset
@@ -15762,6 +16039,17 @@ HARTMAN3
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+19434
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -15837,6 +16125,17 @@ HARTMAN6
 
 \size scriptsize
 18352
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+18444(60)
 \end_layout
 
 \end_inset
@@ -15920,6 +16219,17 @@ RASTRIGIN
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+16286(96)
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -15995,6 +16305,17 @@ ROSENBROCK8
 
 \size scriptsize
 10863
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+11419
 \end_layout
 
 \end_inset
@@ -16078,6 +16399,17 @@ POSENBROCK16
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+11681
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -16153,6 +16485,17 @@ SHEKEL5
 
 \size scriptsize
 32319(50)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+29287
 \end_layout
 
 \end_inset
@@ -16236,6 +16579,17 @@ SHEKEL7
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+47245(77)
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -16311,6 +16665,17 @@ SHEKEL10
 
 \size scriptsize
 47337(70)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+45911(77)
 \end_layout
 
 \end_inset
@@ -16394,6 +16759,17 @@ SINU4
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+66383
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -16469,6 +16845,17 @@ SINU8
 
 \size scriptsize
 29705
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+29234
 \end_layout
 
 \end_inset
@@ -16552,6 +16939,17 @@ TEST2N4
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+19913
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -16627,6 +17025,17 @@ TEST2N9
 
 \size scriptsize
 18154
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+15376
 \end_layout
 
 \end_inset
@@ -16710,6 +17119,17 @@ TEST30N3
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+49234
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -16785,6 +17205,17 @@ TEST30N4
 
 \size scriptsize
 29667
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+33428
 \end_layout
 
 \end_inset
@@ -16874,6 +17305,18 @@ TOTAL
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\size scriptsize
+903547
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -16908,11 +17351,7 @@ TOTAL
 placement H
 wide false
 sideways false
-status collapsed
-
-\begin_layout Plain Layout
-
-\end_layout
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -16956,11 +17395,7 @@ name "fig:Statistical4"
 placement H
 wide false
 sideways false
-status collapsed
-
-\begin_layout Plain Layout
-
-\end_layout
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -17000,11 +17435,7 @@ name "fig:Comparison5"
 placement H
 wide false
 sideways false
-status collapsed
-
-\begin_layout Plain Layout
-
-\end_layout
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -18753,6 +19184,21 @@ S.
 \series default
 , pp.
  2091– 2109, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "galib"
+literal "false"
+
+\end_inset
+
+M.
+ Wall, GAlib: A C++ library of genetic algorithm components.
+ Mechanical Engineering Department, Massachusetts Institute of Technology.
+ 1996 Aug;87:54.
 \end_layout
 
 \begin_layout End Whole Page
