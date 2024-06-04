@@ -1,10 +1,11 @@
 %% LyX 2.3.7 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
-\documentclass[journal,article,submit,pdftex,moreauthors]{mdpi}
+\documentclass[journal,article,submit,pdftex,moreauthors]{Definitions/mdpi}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{color}
 \usepackage{array}
+\usepackage{longtable}
 \usepackage{float}
 \usepackage{booktabs}
 \usepackage{graphicx}
@@ -281,35 +282,50 @@ functions in parallel stochastic optimization \citep{go_par3} etc.
 One of the main advantages of Genetic Algorithms over other global
 optimization techniques is that they can be easily parallelized and
 exploit modern computing units as well as the previously mentioned
-parallel programming techniques. In the relevant literature, two major
-categories of parallel genetic algorithms appear: island genetic algorithms
-and cellular genetic algorithms \citep{Tomohiro}. The island model
-is a Parallel Genetic Algorithm (PGA), that manages several subpopulations
-on separate islands, executing the genetic algorithm process on each
-island simultaneously for a different set of solutions. Island models
-have been utilized in various cases, such as molecular sequence alignment
-\citep{ga_island0}, the quadratic assignment problem \citep{ga_island1},
-placement of sensors/actuators in large structures \citep{ga_island2}
-etc. Also, recently Tsoulos et al. proposed an implementation of an
-island PGA \citep{pdoublepop}. In the case of the parallel cellular
-model of genetic algorithms, solutions are organized into a grid.
-Various diverse operators, such as crossover and mutation, are applied
-to neighboring regions within the grid. For each solution, a descendant
-factor is created, replacing its position within the birth region.
-The model is flexible regarding the structure of the grid, neighborhood
-strategies, and settings. Implementations may involve multiple processors
-or graphical processing units, with information exchange possible
-through physical communication networks.
+parallel programming techniques. 
 
-The present study focuses on the island model, where the total population
-is divided into independent subpopulations that operate concurrently
-and independently to find candidate solutions. However, periodically,
-a migration process of chromosomes with good functional values is
-applied, which replaces the chromosomes that appear to contribute
-to better solutions. Additionally, local optimization (LSR) is periodically
-applied to expedite the overall algorithm. This approach, combined
-with dissemination techniques, results in a significant improvement
-in the overall performance of the genetic algorithm.
+In the relevant literature, two major categories of parallel genetic
+algorithms appear: island genetic algorithms and cellular genetic
+algorithms \citep{Tomohiro}. The island model is a Parallel Genetic
+Algorithm (PGA), that manages several subpopulations on separate islands,
+executing the genetic algorithm process on each island simultaneously
+for a different set of solutions. Island models have been utilized
+in various cases, such as molecular sequence alignment \citep{ga_island0},
+the quadratic assignment problem \citep{ga_island1}, placement of
+sensors/actuators in large structures \citep{ga_island2} etc. Also,
+recently Tsoulos et al. proposed an implementation of an island PGA
+\citep{pdoublepop}. In the case of the parallel cellular model of
+genetic algorithms, solutions are organized into a grid. Various diverse
+operators, such as crossover and mutation, are applied to neighboring
+regions within the grid. For each solution, a descendant factor is
+created, replacing its position within the birth region. The model
+is flexible regarding the structure of the grid, neighborhood strategies,
+and settings. Implementations may involve multiple processors or graphical
+processing units, with information exchange possible through physical
+communication networks. The theory of parallel genetic algorithms
+has been thoroughly presented by a number of researchers in the relevant
+literature \citep{pga_survey1,pga_survey2}. Also, parallel genetic
+algorithms have been incorporated in combinatorial optimization \citep{pga_comb}.
+
+The proposed method is based on the island technique and suggests
+a number of improvements to the general scheme of parallel Genetic
+Algorithms. Among these improvements are a series of techniques for
+propagating optimal solutions among islands that aim to speed up the
+convergence of the overall algorithm. In addition, on the individual
+islands of the genetic algorithm, a local minimization technique is
+periodically applied that has two goals: to discover with the maximum
+possible accuracy local minima of the objective function but also
+to speed up the convergence of the overall algorithm, without wasting
+computing power on values of function that have already been discovered.
+Furthermore, an efficient termination rule, which is based on asymptotic
+considerations and it was validated in a series of global optimization
+methods is also incorporated in the current algorithm. The proposed
+method was applied to a series of problems appearing in the relevant
+literature. From the experimental results, it was found that the new
+method is able to effectively find the global minimum of the functions
+in a large percentage and moreover the above modifications significantly
+accelerated the finding of the global minimum as the number of individual
+islands in the Genetic Algorithm increases. 
 
 The remaining of the article follows this structure: In section \ref{sec:Method-description},
 the genetic algorithm is analyzed, its parallelization is discussed,
@@ -508,11 +524,9 @@ If we assume that the migration method \textquotedbl 1toN\textquotedbl{}
 is executed, then a random island will transfer chromosomes to the
 other islands, except for itself. However, we kept the label \textquotedbl N\textquotedbl{}
 instead of \textquotedbl N-1\textquotedbl{} because the chromosomes
-exist on the island that sends them.
-
-The number of solutions participating in the migration and replacement
-process is fully customizable and will be referred to in the experiments
-below.
+exist on the island that sends them.The number of solutions participating
+in the migration and replacement process is fully customizable and
+will be referred to in the experiments below. 
 
 \begin{figure}[H]
 \begin{centering}
@@ -794,6 +808,15 @@ specified range and we used $n=3,4$ in the conducted experiments.
 
 \subsection{Experimental results}
 
+To evaluate the performance of the parallel genetic algorithm, a series
+of experiments were carried out. These experiments varied the number
+of parallel computing units from 1 to 10. The parallelization was
+achieved using the freely available OpenMP library \citep{opemp},
+and the method was implemented in ANSI C++ within the OPTIMUS optimization
+package, accessible at https://github.com/itsoulos/OPTIMUS. All experiments
+were conducted on a system equipped with an AMD Ryzen 5950X processor,
+128GB of RAM, and running the Debian Linux operating system.
+
 To ensure the reliability and validity of the research, experiments
 were conducted 30 times and concerned the Tables \ref{tab:Comparison1}
 , \ref{tab:Comparison2} and \ref{tab:Comparison4}, with parameters
@@ -860,29 +883,43 @@ The success of '1toN' \ref{fig:Propagation-1toN} and 'NtoN' \ref{fig:Propagation
 of the best chromosomes to all islands. This leads to an improvement
 in the convergence of the algorithm towards better candidate solutions
 in a shorter time frame. The actual times are shown in Figure \ref{fig:Comparison3}.
+During the conducted experiments, the \textquotedbl 1-to-N\textquotedbl{}
+and \textquotedbl N-to-N\textquotedbl{} propagation techniques appear
+to perform better according to experimental evidence. The common feature
+of these two techniques is that the optimal solutions are distributed
+to all computing units, thereby improving the performance of each
+individual unit and consequently enhancing the overall performance
+of the general algorithm.
 
 For conducting experiments among stochastic methods of global optimization,
 including Particle Swarm Optimization (PSO), Improved PSO (IPSO)\citep{IPSO},
 Differential Evolution with random selection (DE), Differential Evolution
 with tournament selection (TDE)\citep{IDE}, Genetic Algorithm (GA),
 and Parallel Genetic Algorithm (PGA), certain parameters remained
-constant. The population size for all methods is 500 particles or
-agents or chromosomes. In PGA, the population consists of 20PUx25chrom,
-while all other parameters remain the same as those described in Table
-\ref{tab:Comparison1}. Any method employing LSR maintains this parameter
-at the same value. The double box is a termination rule that is the
-same for all methods. The values resulting from experiments in the
-\ref{tab:Comparison4} table are depicted in \ref{fig:Statistical4}
-and fig:\ref{fig:Comparison5} Figures. The box plots of Figure \ref{fig:Statistical4}
-reveal the superiority of PGA, as objective function calls remain
-at approximately 10,000 across all problems. Conversely, IPSO, DE,
-and TDE (especially DE) exhibit a low number of calls in some problems,
-while in others, they display significant increases. During initialization
-and optimization, each method has a specific lower limit of calls,
-which varies from method to method. PGA easily reaches this threshold
-with very small deviations, as illustrated in the same figure. The
-Figure \ref{fig:Comparison5} presents the total call values for each
-method.
+constant. Also, the parallel implementation of the GALIB library \citep{galib}
+was used in the comparative experiments. The population size for all
+methods is 500 particles or agents or chromosomes. In PGA, the population
+consists of 20PUx25chrom, while all other parameters remain the same
+as those described in Table \ref{tab:Comparison1}. Any method employing
+LSR maintains this parameter at the same value. The double box is
+a termination rule that is the same for all methods. 
+
+The values resulting from experiments in the \ref{tab:Comparison4}
+table are depicted in \ref{fig:Statistical4} and fig:\ref{fig:Comparison5}
+Figures. The box plots of Figure \ref{fig:Statistical4} reveal the
+superiority of PGA, as objective function calls remain at approximately
+10,000 across all problems. Conversely, IPSO, DE, and TDE (especially
+DE) exhibit a low number of calls in some problems, while in others,
+they display significant increases. During initialization and optimization,
+each method has a specific lower limit of calls, which varies from
+method to method. PGA easily reaches this threshold with very small
+deviations, as illustrated in the same figure. The Figure \ref{fig:Comparison5}
+presents the total call values for each method. The current work was
+also compared against the parallel version of Galib, found in the
+recent literature. Even though Galib seems to have the same success
+rate in discovering the global minimum of the benchmark functions,
+it requires significantly more functions calls than the proposed method
+for the same setup parameters.
 
 \begin{table}[H]
 \centering{}\caption{The following settings were initially used to conduct the experiments\label{tab:settings1}}
@@ -918,8 +955,16 @@ $LSR$ & 0.1\% in Table \ref{tab:Comparison1}, 0.5\% in Table \ref{tab:Comparison
 \begin{table}[H]
 \centering{}\caption{Statistical analysis comparing execution times (seconds) and function
 calls across varying numbers of processor units.\label{tab:Comparison1}}
-\begin{tabular}{c>{\centering}p{1cm}>{\centering}p{1cm}>{\centering}p{1cm}>{\centering}p{1cm}>{\centering}p{1cm}>{\centering}p{1cm}>{\centering}p{1cm}>{\centering}p{1cm}}
-\toprule 
+\begin{longtable}
+[c]{c>{\centering}p{1cm}>{\centering}p{1cm}>{\centering}p{1cm}>{\centering}p{1cm}>{\centering}p{1cm}>{\centering}p{1cm}>{\centering}p{1cm}>{\centering}p{1cm}}
+\toprule
+{
+  colspec = {|XXXXXXXXX|},
+  rowhead = 1,
+  hlines,
+  row{even} = {gray9},
+  row{1} = {olive9},
+}
 \textbf{\tiny{}﻿Problems} & \textbf{\tiny{}$N_{i}=1$ $N_{c}=500$ Calls} & \textbf{\tiny{}$N_{i}=1$ $N_{c}=500$ Time} & \textbf{\tiny{}$N_{i}=2$ $N_{c}=250$ Calls} & \textbf{\tiny{}$N_{i}=2$ $N_{c}=250$ Time} & \textbf{\tiny{}$N_{i}=5$ $N_{c}=100$ Calls} & \textbf{\tiny{}$N_{i}=5$ $N_{c}=100$ Time} & \textbf{\tiny{}$N_{i}=10$ $N_{c}=50$ Calls} & \textbf{\tiny{}$N_{i}=10$ $N_{c}=50$ Time}\tabularnewline
 \midrule
 \midrule 
@@ -1013,7 +1058,7 @@ calls across varying numbers of processor units.\label{tab:Comparison1}}
 \midrule 
 \textbf{\textcolor{green}{\tiny{}STDEV}} & \textbf{\textcolor{green}{\tiny{}19305.784 }} & \textbf{\textcolor{green}{\tiny{}0.972 }} & \textbf{\textcolor{green}{\tiny{}15829.020 }} & \textbf{\textcolor{green}{\tiny{}0.482 }} & \textbf{\textcolor{green}{\tiny{}13335.509 }} & \textbf{\textcolor{green}{\tiny{}0.260 }} & \textbf{\textcolor{green}{\tiny{}2109.230 }} & \textbf{\textcolor{green}{\tiny{}0.180 }}\tabularnewline
 \bottomrule
-\end{tabular}
+\end{longtable}
 \end{table}
 
 \begin{figure}[H]
@@ -1135,91 +1180,89 @@ and different propagation techniques\label{fig:Comparison3}}
 \end{figure}
 
 \begin{table}[H]
-
 \begin{centering}
 \caption{Comparison of function calls using different stochastic optimization
 methods\label{tab:Comparison4}}
-\begin{tabular}{|c|c|c|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline 
-\textbf{\scriptsize{}﻿PROBLEMS} & \textbf{\scriptsize{}PSO} & \textbf{\scriptsize{}IPSO} & \textbf{\scriptsize{}RDE} & \textbf{\scriptsize{}TDE} & \textbf{\scriptsize{}GA} & \textbf{\scriptsize{}PGA}\tabularnewline
+\textbf{\scriptsize{}﻿PROBLEMS} & \textbf{\scriptsize{}PSO} & \textbf{\scriptsize{}IPSO} & \textbf{\scriptsize{}RDE} & \textbf{\scriptsize{}TDE} & \textbf{\scriptsize{}GA} & \textbf{\scriptsize{}GALIB} & \textbf{\scriptsize{}PGA}\tabularnewline
 \hline 
 \hline 
-{\scriptsize{}BF1} & {\scriptsize{}50398} & {\scriptsize{}11478} & {\scriptsize{}7943(86)} & {\scriptsize{}5535} & {\scriptsize{}10578} & {\scriptsize{}10501}\tabularnewline
+{\scriptsize{}BF1} & {\scriptsize{}50398} & {\scriptsize{}11478} & {\scriptsize{}7943(86)} & {\scriptsize{}5535} & {\scriptsize{}10578} & {\scriptsize{}11641} & {\scriptsize{}10501}\tabularnewline
 \hline 
-{\scriptsize{}BF2} & {\scriptsize{}50397} & {\scriptsize{}11292} & {\scriptsize{}8472(76)} & {\scriptsize{}5539} & {\scriptsize{}10568} & {\scriptsize{}10510}\tabularnewline
+{\scriptsize{}BF2} & {\scriptsize{}50397} & {\scriptsize{}11292} & {\scriptsize{}8472(76)} & {\scriptsize{}5539} & {\scriptsize{}10568} & {\scriptsize{}11321} & {\scriptsize{}10510}\tabularnewline
 \hline 
-{\scriptsize{}BRANIN} & {\scriptsize{}44800} & {\scriptsize{}10849} & {\scriptsize{}5513} & {\scriptsize{}5514} & {\scriptsize{}46793} & {\scriptsize{}10838}\tabularnewline
+{\scriptsize{}BRANIN} & {\scriptsize{}44800} & {\scriptsize{}10849} & {\scriptsize{}5513} & {\scriptsize{}5514} & {\scriptsize{}46793} & {\scriptsize{}34487} & {\scriptsize{}10838}\tabularnewline
 \hline 
-{\scriptsize{}CAMEL} & {\scriptsize{}48242} & {\scriptsize{}11051} & {\scriptsize{}5555} & {\scriptsize{}5514} & {\scriptsize{}26537} & {\scriptsize{}11087}\tabularnewline
+{\scriptsize{}CAMEL} & {\scriptsize{}48242} & {\scriptsize{}11051} & {\scriptsize{}5555} & {\scriptsize{}5514} & {\scriptsize{}26537} & {\scriptsize{}17321} & {\scriptsize{}11087}\tabularnewline
 \hline 
-{\scriptsize{}CIGAR10} & {\scriptsize{}50581} & {\scriptsize{}12331} & {\scriptsize{}5586} & {\scriptsize{}100573} & {\scriptsize{}10502} & {\scriptsize{}10566}\tabularnewline
+{\scriptsize{}CIGAR10} & {\scriptsize{}50581} & {\scriptsize{}12331} & {\scriptsize{}5586} & {\scriptsize{}100573} & {\scriptsize{}10502} & {\scriptsize{}11567(50)} & {\scriptsize{}10566}\tabularnewline
 \hline 
-{\scriptsize{}CM4} & {\scriptsize{}48559} & {\scriptsize{}11767} & {\scriptsize{}5550} & {\scriptsize{}5538} & {\scriptsize{}10614} & {\scriptsize{}10548}\tabularnewline
+{\scriptsize{}CM4} & {\scriptsize{}48559} & {\scriptsize{}11767} & {\scriptsize{}5550} & {\scriptsize{}5538} & {\scriptsize{}10614} & {\scriptsize{}11118(70)} & {\scriptsize{}10548}\tabularnewline
 \hline 
-{\scriptsize{}DISCUS10} & {\scriptsize{}50523} & {\scriptsize{}14328} & {\scriptsize{}18187} & {\scriptsize{}100518} & {\scriptsize{}10548} & {\scriptsize{}10503}\tabularnewline
+{\scriptsize{}DISCUS10} & {\scriptsize{}50523} & {\scriptsize{}14328} & {\scriptsize{}18187} & {\scriptsize{}100518} & {\scriptsize{}10548} & {\scriptsize{}10988} & {\scriptsize{}10503}\tabularnewline
 \hline 
-{\scriptsize{}EASOM} & {\scriptsize{}21786} & {\scriptsize{}10938} & {\scriptsize{}29256} & {\scriptsize{}24691} & {\scriptsize{}100762} & {\scriptsize{}10797}\tabularnewline
+{\scriptsize{}EASOM} & {\scriptsize{}21786} & {\scriptsize{}10938} & {\scriptsize{}29256} & {\scriptsize{}24691} & {\scriptsize{}100762} & {\scriptsize{}79689} & {\scriptsize{}10797}\tabularnewline
 \hline 
-{\scriptsize{}ELP10} & {\scriptsize{}49837} & {\scriptsize{}4323} & {\scriptsize{}11933} & {\scriptsize{}100584} & {\scriptsize{}10601} & {\scriptsize{}10559}\tabularnewline
+{\scriptsize{}ELP10} & {\scriptsize{}49837} & {\scriptsize{}4323} & {\scriptsize{}11933} & {\scriptsize{}100584} & {\scriptsize{}10601} & {\scriptsize{}11673} & {\scriptsize{}10559}\tabularnewline
 \hline 
-{\scriptsize{}EXP4} & {\scriptsize{}48523} & {\scriptsize{}11041} & {\scriptsize{}46752} & {\scriptsize{}19467} & {\scriptsize{}16621} & {\scriptsize{}10503}\tabularnewline
+{\scriptsize{}EXP4} & {\scriptsize{}48523} & {\scriptsize{}11041} & {\scriptsize{}46752} & {\scriptsize{}19467} & {\scriptsize{}16621} & {\scriptsize{}16045} & {\scriptsize{}10503}\tabularnewline
 \hline 
-{\scriptsize{}EXP16} & {\scriptsize{}50518} & {\scriptsize{}10973} & {\scriptsize{}5537} & {\scriptsize{}69494} & {\scriptsize{}10680} & {\scriptsize{}10595}\tabularnewline
+{\scriptsize{}EXP16} & {\scriptsize{}50518} & {\scriptsize{}10973} & {\scriptsize{}5537} & {\scriptsize{}69494} & {\scriptsize{}10680} & {\scriptsize{}10500} & {\scriptsize{}10595}\tabularnewline
 \hline 
-{\scriptsize{}GKLS250} & {\scriptsize{}43925} & {\scriptsize{}10869} & {\scriptsize{}41016} & {\scriptsize{}11430} & {\scriptsize{}50804} & {\scriptsize{}10893(76)}\tabularnewline
+{\scriptsize{}GKLS250} & {\scriptsize{}43925} & {\scriptsize{}10869} & {\scriptsize{}41016} & {\scriptsize{}11430} & {\scriptsize{}50804} & {\scriptsize{}31298} & {\scriptsize{}10893(76)}\tabularnewline
 \hline 
-{\scriptsize{}GKLS350} & {\scriptsize{}48202} & {\scriptsize{}10750} & {\scriptsize{}56220} & {\scriptsize{}16831} & {\scriptsize{}40707} & {\scriptsize{}11555(96)}\tabularnewline
+{\scriptsize{}GKLS350} & {\scriptsize{}48202} & {\scriptsize{}10750} & {\scriptsize{}56220} & {\scriptsize{}16831} & {\scriptsize{}40707} & {\scriptsize{}29897(96)} & {\scriptsize{}11555(96)}\tabularnewline
 \hline 
-{\scriptsize{}GRIEWANK2} & {\scriptsize{}44021} & {\scriptsize{}13514} & {\scriptsize{}5538} & {\scriptsize{}5533} & {\scriptsize{}10555} & {\scriptsize{}10498}\tabularnewline
+{\scriptsize{}GRIEWANK2} & {\scriptsize{}44021} & {\scriptsize{}13514} & {\scriptsize{}5538} & {\scriptsize{}5533} & {\scriptsize{}10555} & {\scriptsize{}14419(67)} & {\scriptsize{}10498}\tabularnewline
 \hline 
-{\scriptsize{}GRIEWANK10} & {\scriptsize{}50557(3)} & {\scriptsize{}12258(86)} & {\scriptsize{}5612(13)} & {\scriptsize{}85742(3)} & {\scriptsize{}10679} & {\scriptsize{}10576}\tabularnewline
+{\scriptsize{}GRIEWANK10} & {\scriptsize{}50557(3)} & {\scriptsize{}12258(86)} & {\scriptsize{}5612(13)} & {\scriptsize{}85742(3)} & {\scriptsize{}10679} & {\scriptsize{}10800} & {\scriptsize{}10576}\tabularnewline
 \hline 
-{\scriptsize{}POTENTIAL3} & {\scriptsize{}49213} & {\scriptsize{}12124} & {\scriptsize{}5530} & {\scriptsize{}5523} & {\scriptsize{}39607} & {\scriptsize{}11039}\tabularnewline
+{\scriptsize{}POTENTIAL3} & {\scriptsize{}49213} & {\scriptsize{}12124} & {\scriptsize{}5530} & {\scriptsize{}5523} & {\scriptsize{}39607} & {\scriptsize{}33452} & {\scriptsize{}11039}\tabularnewline
 \hline 
-{\scriptsize{}PONTENTIAL5} & {\scriptsize{}50548} & {\scriptsize{}16027} & {\scriptsize{}5587} & {\scriptsize{}5569} & {\scriptsize{}33542} & {\scriptsize{}11134}\tabularnewline
+{\scriptsize{}PONTENTIAL5} & {\scriptsize{}50548} & {\scriptsize{}16027} & {\scriptsize{}5587} & {\scriptsize{}5569} & {\scriptsize{}33542} & {\scriptsize{}31285} & {\scriptsize{}11134}\tabularnewline
 \hline 
-{\scriptsize{}PONTENTIAL6} & {\scriptsize{}50558(3)} & {\scriptsize{}24414(66)} & {\scriptsize{}5607(6)} & {\scriptsize{}5588(3)} & {\scriptsize{}28901(3)} & {\scriptsize{}11143(10)}\tabularnewline
+{\scriptsize{}PONTENTIAL6} & {\scriptsize{}50558(3)} & {\scriptsize{}24414(66)} & {\scriptsize{}5607(6)} & {\scriptsize{}5588(3)} & {\scriptsize{}28901(3)} & {\scriptsize{}28444(10)} & {\scriptsize{}11143(10)}\tabularnewline
 \hline 
-{\scriptsize{}PONTENTIAL10} & {\scriptsize{}50641(6)} & {\scriptsize{}31434} & {\scriptsize{}5670(3)} & {\scriptsize{}5661(6)} & {\scriptsize{}42644(13)} & {\scriptsize{}11290(20)}\tabularnewline
+{\scriptsize{}PONTENTIAL10} & {\scriptsize{}50641(6)} & {\scriptsize{}31434} & {\scriptsize{}5670(3)} & {\scriptsize{}5661(6)} & {\scriptsize{}42644(13)} & {\scriptsize{}38883(20)} & {\scriptsize{}11290(20)}\tabularnewline
 \hline 
-{\scriptsize{}HANSEN} & {\scriptsize{}47296} & {\scriptsize{}13131} & {\scriptsize{}5522} & {\scriptsize{}5521} & {\scriptsize{}46894(90)} & {\scriptsize{}11055}\tabularnewline
+{\scriptsize{}HANSEN} & {\scriptsize{}47296} & {\scriptsize{}13131} & {\scriptsize{}5522} & {\scriptsize{}5521} & {\scriptsize{}46894(90)} & {\scriptsize{}45440} & {\scriptsize{}11055}\tabularnewline
 \hline 
-{\scriptsize{}HARTMAN3} & {\scriptsize{}47778} & {\scriptsize{}10961} & {\scriptsize{}5525} & {\scriptsize{}5522} & {\scriptsize{}22235} & {\scriptsize{}11097}\tabularnewline
+{\scriptsize{}HARTMAN3} & {\scriptsize{}47778} & {\scriptsize{}10961} & {\scriptsize{}5525} & {\scriptsize{}5522} & {\scriptsize{}22235} & {\scriptsize{}19434} & {\scriptsize{}11097}\tabularnewline
 \hline 
-{\scriptsize{}HARTMAN6} & {\scriptsize{}50088(33)} & {\scriptsize{}11085(86)} & {\scriptsize{}5536(83)} & {\scriptsize{}5536} & {\scriptsize{}18352} & {\scriptsize{}11273}\tabularnewline
+{\scriptsize{}HARTMAN6} & {\scriptsize{}50088(33)} & {\scriptsize{}11085(86)} & {\scriptsize{}5536(83)} & {\scriptsize{}5536} & {\scriptsize{}18352} & {\scriptsize{}18444(60)} & {\scriptsize{}11273}\tabularnewline
 \hline 
-{\scriptsize{}RASTRIGIN} & {\scriptsize{}47433} & {\scriptsize{}11594} & {\scriptsize{}5542} & {\scriptsize{}5524} & {\scriptsize{}16567} & {\scriptsize{}10506}\tabularnewline
+{\scriptsize{}RASTRIGIN} & {\scriptsize{}47433} & {\scriptsize{}11594} & {\scriptsize{}5542} & {\scriptsize{}5524} & {\scriptsize{}16567} & {\scriptsize{}16286(96)} & {\scriptsize{}10506}\tabularnewline
 \hline 
-{\scriptsize{}ROSENBROCK8} & {\scriptsize{}50549} & {\scriptsize{}13487} & {\scriptsize{}72088} & {\scriptsize{}100503} & {\scriptsize{}10863} & {\scriptsize{}10645}\tabularnewline
+{\scriptsize{}ROSENBROCK8} & {\scriptsize{}50549} & {\scriptsize{}13487} & {\scriptsize{}72088} & {\scriptsize{}100503} & {\scriptsize{}10863} & {\scriptsize{}11419} & {\scriptsize{}10645}\tabularnewline
 \hline 
-{\scriptsize{}POSENBROCK16} & {\scriptsize{}50584} & {\scriptsize{}12659} & {\scriptsize{}21517} & {\scriptsize{}10645} & {\scriptsize{}10918} & {\scriptsize{}10957}\tabularnewline
+{\scriptsize{}POSENBROCK16} & {\scriptsize{}50584} & {\scriptsize{}12659} & {\scriptsize{}21517} & {\scriptsize{}10645} & {\scriptsize{}10918} & {\scriptsize{}11681} & {\scriptsize{}10957}\tabularnewline
 \hline 
-{\scriptsize{}SHEKEL5} & {\scriptsize{}49944(33)} & {\scriptsize{}13058(93)} & {\scriptsize{}5532(86)} & {\scriptsize{}5524(93)} & {\scriptsize{}32319(50)} & {\scriptsize{}10883(43)}\tabularnewline
+{\scriptsize{}SHEKEL5} & {\scriptsize{}49944(33)} & {\scriptsize{}13058(93)} & {\scriptsize{}5532(86)} & {\scriptsize{}5524(93)} & {\scriptsize{}32319(50)} & {\scriptsize{}29287} & {\scriptsize{}10883(43)}\tabularnewline
 \hline 
-{\scriptsize{}SHEKEL7} & {\scriptsize{}50062(53)} & {\scriptsize{}12134(96)} & {\scriptsize{}5533(96)} & {\scriptsize{}5523} & {\scriptsize{}51183(73)} & {\scriptsize{}10926(53)}\tabularnewline
+{\scriptsize{}SHEKEL7} & {\scriptsize{}50062(53)} & {\scriptsize{}12134(96)} & {\scriptsize{}5533(96)} & {\scriptsize{}5523} & {\scriptsize{}51183(73)} & {\scriptsize{}47245(77)} & {\scriptsize{}10926(53)}\tabularnewline
 \hline 
-{\scriptsize{}SHEKEL10} & {\scriptsize{}50124(63)} & {\scriptsize{}14176} & {\scriptsize{}5535(90)} & {\scriptsize{}5523} & {\scriptsize{}47337(70)} & {\scriptsize{}11207(80)}\tabularnewline
+{\scriptsize{}SHEKEL10} & {\scriptsize{}50124(63)} & {\scriptsize{}14176} & {\scriptsize{}5535(90)} & {\scriptsize{}5523} & {\scriptsize{}47337(70)} & {\scriptsize{}45911(77)} & {\scriptsize{}11207(80)}\tabularnewline
 \hline 
-{\scriptsize{}SINU4} & {\scriptsize{}49239} & {\scriptsize{}11349} & {\scriptsize{}5527} & {\scriptsize{}5510} & {\scriptsize{}66625(83)} & {\scriptsize{}11063(76)}\tabularnewline
+{\scriptsize{}SINU4} & {\scriptsize{}49239} & {\scriptsize{}11349} & {\scriptsize{}5527} & {\scriptsize{}5510} & {\scriptsize{}66625(83)} & {\scriptsize{}66383} & {\scriptsize{}11063(76)}\tabularnewline
 \hline 
-{\scriptsize{}SINU8} & {\scriptsize{}50224} & {\scriptsize{}11295} & {\scriptsize{}5537(80)} & {\scriptsize{}5520} & {\scriptsize{}29705} & {\scriptsize{}11378}\tabularnewline
+{\scriptsize{}SINU8} & {\scriptsize{}50224} & {\scriptsize{}11295} & {\scriptsize{}5537(80)} & {\scriptsize{}5520} & {\scriptsize{}29705} & {\scriptsize{}29234} & {\scriptsize{}11378}\tabularnewline
 \hline 
-{\scriptsize{}TEST2N4} & {\scriptsize{}50112(93)} & {\scriptsize{}13173} & {\scriptsize{}5529} & {\scriptsize{}5519} & {\scriptsize{}25553} & {\scriptsize{}11049}\tabularnewline
+{\scriptsize{}TEST2N4} & {\scriptsize{}50112(93)} & {\scriptsize{}13173} & {\scriptsize{}5529} & {\scriptsize{}5519} & {\scriptsize{}25553} & {\scriptsize{}19913} & {\scriptsize{}11049}\tabularnewline
 \hline 
-{\scriptsize{}TEST2N9} & {\scriptsize{}50517(13)} & {\scriptsize{}17510(60)} & {\scriptsize{}5546(6)} & {\scriptsize{}5535(56)} & {\scriptsize{}18154} & {\scriptsize{}11145}\tabularnewline
+{\scriptsize{}TEST2N9} & {\scriptsize{}50517(13)} & {\scriptsize{}17510(60)} & {\scriptsize{}5546(6)} & {\scriptsize{}5535(56)} & {\scriptsize{}18154} & {\scriptsize{}15376} & {\scriptsize{}11145}\tabularnewline
 \hline 
-{\scriptsize{}TEST30N3} & {\scriptsize{}44301} & {\scriptsize{}19638} & {\scriptsize{}5515} & {\scriptsize{}5511} & {\scriptsize{}49235} & {\scriptsize{}11051}\tabularnewline
+{\scriptsize{}TEST30N3} & {\scriptsize{}44301} & {\scriptsize{}19638} & {\scriptsize{}5515} & {\scriptsize{}5511} & {\scriptsize{}49235} & {\scriptsize{}49234} & {\scriptsize{}11051}\tabularnewline
 \hline 
-{\scriptsize{}TEST30N4} & {\scriptsize{}49177} & {\scriptsize{}20839} & {\scriptsize{}5514} & {\scriptsize{}5511} & {\scriptsize{}29667} & {\scriptsize{}11301}\tabularnewline
+{\scriptsize{}TEST30N4} & {\scriptsize{}49177} & {\scriptsize{}20839} & {\scriptsize{}5514} & {\scriptsize{}5511} & {\scriptsize{}29667} & {\scriptsize{}33428} & {\scriptsize{}11301}\tabularnewline
 \hline 
-\textbf{\scriptsize{}TOTAL} & \textbf{\footnotesize{}1639257} & \textbf{\footnotesize{}457850} & \textbf{\footnotesize{}446562} & \textbf{\footnotesize{}767771} & \textbf{\footnotesize{}997850} & \textbf{\footnotesize{}370671}\tabularnewline
+\textbf{\scriptsize{}TOTAL} & \textbf{\footnotesize{}1639257} & \textbf{\footnotesize{}457850} & \textbf{\footnotesize{}446562} & \textbf{\footnotesize{}767771} & \textbf{\footnotesize{}997850} & \textbf{\scriptsize{}903547} & \textbf{\footnotesize{}370671}\tabularnewline
 \hline 
 \end{tabular}
 \par\end{centering}
 \end{table}
 
 \begin{figure}[H]
-
 \begin{centering}
 \includegraphics{9}\caption{Statistical comparison of function calls using different stochastic
 optimization methods\label{fig:Statistical4}}
@@ -1227,13 +1270,11 @@ optimization methods\label{fig:Statistical4}}
 \end{figure}
 
 \begin{figure}[H]
-
 \centering{}\includegraphics{10}\caption{Comparison of total function calls using different stochastic optimization
 methods\label{fig:Comparison5}}
 \end{figure}
 
 \begin{figure}[H]
-
 \begin{centering}
 \includegraphics{11}\caption{Different variations of the ELP problem\label{fig:Comparison6}}
 \par\end{centering}
@@ -1241,7 +1282,24 @@ methods\label{fig:Comparison5}}
 
 In Figure \ref{fig:Comparison6}, it is observed that with the collaboration
 of sublisting units, the process of finding minima is significantly
-accelerated.
+accelerated. Additionally, a new experiment was conducted where the
+number of chromosomes was varied from 250 to 1000 and the number of
+processing units was changed from 1 to 10. The total number of function
+calls for each case is shown graphically in Figure \ref{fig:compareChromosomes}.
+The method maintains the same behavior for any number of chromosomes.
+This means that the set of required calls is significantly reduced
+by adding new parallel processing units. Of course, as expected, the
+total number of calls required increases as the number of available
+chromosomes increases.
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.5]{newimg}
+\par\end{centering}
+\caption{Comparison of function calls with different number of chromosomes.\label{fig:compareChromosomes}}
+
+\end{figure}
+
 
 \section{Conclusions \label{sec:Conclusions}}
 
@@ -1563,6 +1621,17 @@ Methods \textbf{16}, 1840018, 2019.
 An implementation of parallel genetic algorithm for function optimization.
 Computer Physics Communications \textbf{209}, pp. 183-189, 2016.
 
+\bibitem{pga_survey1}R. Shonkwiler, Parallel genetic algorithms.
+In ICGA (pp. 199-205), 1993.
+
+\bibitem{pga_survey2}E. Cantú-Paz, A survey of parallel genetic algorithms,
+Calculateurs paralleles, reseaux et systems repartis \textbf{10},
+pp. 141-171, 1998.
+
+\bibitem{pga_comb}H. Mühlenbein, Parallel genetic algorithms in combinatorial
+optimization. In Computer science and operations research, pp. 441-453,
+Pergamon, 1992.
+
 \bibitem{Floudas} C.A. Floudas, P.M. Pardalos, C. Adjiman, W. Esposoto,
 Z. G$\ddot{\mbox{u}}$m$\ddot{\mbox{u}}$s, S. Harding, J. Klepeis,
 C. Meyer, C. Schweiger, Handbook of Test Problems in Local and Global
@@ -1623,6 +1692,10 @@ Symmetry 2022,14(3),447; Doi: 10.3390/sym14030447
 \bibitem{S. Heiles}S. Heiles, R. L. Johnston, Global optimization
 of clusters using electronic structure methods, Int. J. Quantum Chem.
 \textbf{113}, pp. 2091-- 2109, 2013.
+
+\bibitem{galib}M. Wall, GAlib: A C++ library of genetic algorithm
+components. Mechanical Engineering Department, Massachusetts Institute
+of Technology. 1996 Aug;87:54.
 
 \end{thebibliography}
 

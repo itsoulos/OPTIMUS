@@ -732,7 +732,11 @@ literal "false"
  One of the main advantages of Genetic Algorithms over other global optimization
  techniques is that they can be easily parallelized and exploit modern computing
  units as well as the previously mentioned parallel programming techniques.
- In the relevant literature, two major categories of parallel genetic algorithms
+ 
+\end_layout
+
+\begin_layout Standard
+In the relevant literature, two major categories of parallel genetic algorithms
  appear: island genetic algorithms and cellular genetic algorithms 
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -771,9 +775,7 @@ literal "false"
 \end_inset
 
  etc.
- 
-\series bold
-Also, recently Tsoulos et al.
+ Also, recently Tsoulos et al.
  proposed an implementation of an island PGA 
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -782,8 +784,6 @@ literal "false"
 
 \end_inset
 
-
-\series default
 .
  In the case of the parallel cellular model of genetic algorithms, solutions
  are organized into a grid.
@@ -796,21 +796,50 @@ literal "false"
  Implementations may involve multiple processors or graphical processing
  units, with information exchange possible through physical communication
  networks.
+ The theory of parallel genetic algorithms has been thoroughly presented
+ by a number of researchers in the relevant literature 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "pga_survey1,pga_survey2"
+literal "false"
+
+\end_inset
+
+.
+ Also, parallel genetic algorithms have been incorporated in combinatorial
+ optimization 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "pga_comb"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-
-\series bold
-The present study focuses on the island model, where the total population
- is divided into independent subpopulations that operate concurrently and
- independently to find candidate solutions.
- However, periodically, a migration process of chromosomes with good functional
- values is applied, which replaces the chromosomes that appear to contribute
- to better solutions.
- Additionally, local optimization (LSR) is periodically applied to expedite
- the overall algorithm.
- This approach, combined with dissemination techniques, results in a significant
- improvement in the overall performance of the genetic algorithm.
+The proposed method is based on the island technique and suggests a number
+ of improvements to the general scheme of parallel Genetic Algorithms.
+ Among these improvements are a series of techniques for propagating optimal
+ solutions among islands that aim to speed up the convergence of the overall
+ algorithm.
+ In addition, on the individual islands of the genetic algorithm, a local
+ minimization technique is periodically applied that has two goals: to discover
+ with the maximum possible accuracy local minima of the objective function
+ but also to speed up the convergence of the overall algorithm, without
+ wasting computing power on values of function that have already been discovered.
+ Furthermore, an efficient termination rule, which is based on asymptotic
+ considerations and it was validated in a series of global optimization
+ methods is also incorporated in the current algorithm.
+ The proposed method was applied to a series of problems appearing in the
+ relevant literature.
+ From the experimental results, it was found that the new method is able
+ to effectively find the global minimum of the functions in a large percentage
+ and moreover the above modifications significantly accelerated the finding
+ of the global minimum as the number of individual islands in the Genetic
+ Algorithm increases.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -3257,7 +3286,7 @@ noprefix "false"
 
  presents the total call values for each method.
  The current work was also compared against the parallel version of Galib,
- found in the recent litearature.
+ found in the recent literature.
  Even though Galib seems to have the same success rate in discovering the
  global minimum of the benchmark functions, it requires significantly more
  functions calls than the proposed method for the same setup parameters.
@@ -3761,7 +3790,7 @@ name "tab:Comparison1"
 
 \begin_inset Tabular
 <lyxtabular version="3" rows="46" columns="9">
-<features booktabs="true" tabularvalignment="middle">
+<features booktabs="true" islongtable="true" longtabularalignment="center">
 <column alignment="center" valignment="top" width="0pt">
 <column alignment="center" valignment="top" width="1cm">
 <column alignment="center" valignment="top" width="1cm">
@@ -5808,7 +5837,7 @@ PONTENTIAL5
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -14043,7 +14072,7 @@ name "fig:Comparison3"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -17351,7 +17380,7 @@ TOTAL
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -17395,7 +17424,7 @@ name "fig:Statistical4"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -17435,7 +17464,7 @@ name "fig:Comparison5"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -17486,6 +17515,72 @@ noprefix "false"
 
 , it is observed that with the collaboration of sublisting units, the process
  of finding minima is significantly accelerated.
+ Additionally, a new experiment was conducted where the number of chromosomes
+ was varied from 250 to 1000 and the number of processing units was changed
+ from 1 to 10.
+ The total number of function calls for each case is shown graphically in
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:compareChromosomes"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The method maintains the same behavior for any number of chromosomes.
+ This means that the set of required calls is significantly reduced by adding
+ new parallel processing units.
+ Of course, as expected, the total number of calls required increases as
+ the number of available chromosomes increases.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename newimg.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparison of function calls with different number of chromosomes.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:compareChromosomes"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -18898,6 +18993,55 @@ I.G.
 \series default
 , pp.
  183-189, 2016.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pga_survey1"
+literal "false"
+
+\end_inset
+
+R.
+ Shonkwiler, Parallel genetic algorithms.
+ In ICGA (pp.
+ 199-205), 1993.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pga_survey2"
+literal "false"
+
+\end_inset
+
+E.
+ Cantú-Paz, A survey of parallel genetic algorithms, Calculateurs paralleles,
+ reseaux et systems repartis 
+\series bold
+10
+\series default
+, pp.
+ 141-171, 1998.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pga_comb"
+literal "false"
+
+\end_inset
+
+H.
+ Mühlenbein, Parallel genetic algorithms in combinatorial optimization.
+ In Computer science and operations research, pp.
+ 441-453, Pergamon, 1992.
 \end_layout
 
 \begin_layout Bibliography
