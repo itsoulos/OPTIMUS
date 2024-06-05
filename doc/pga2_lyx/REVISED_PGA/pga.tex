@@ -5,9 +5,10 @@
 \usepackage[utf8]{inputenc}
 \usepackage{color}
 \usepackage{array}
-\usepackage{longtable}
 \usepackage{float}
 \usepackage{booktabs}
+\usepackage{tabularray}
+\usepackage{xcolor}
 \usepackage{graphicx}
 
 \makeatletter
@@ -952,114 +953,69 @@ $LSR$ & 0.1\% in Table \ref{tab:Comparison1}, 0.5\% in Table \ref{tab:Comparison
 \end{tabular}
 \end{table}
 
-\begin{table}[H]
-\centering{}\caption{Statistical analysis comparing execution times (seconds) and function
-calls across varying numbers of processor units.\label{tab:Comparison1}}
-\begin{longtable}
-[c]{c>{\centering}p{1cm}>{\centering}p{1cm}>{\centering}p{1cm}>{\centering}p{1cm}>{\centering}p{1cm}>{\centering}p{1cm}>{\centering}p{1cm}>{\centering}p{1cm}}
-\toprule
-{
+
+\begin{longtblr}
+	[
+  caption = {Statistical analysis comparing execution times (seconds) and function
+calls across varying numbers of processor units},
+  label = {tab:Comparison1},
+]{
   colspec = {|XXXXXXXXX|},
   rowhead = 1,
   hlines,
   row{even} = {gray9},
   row{1} = {olive9},
 }
-\textbf{\tiny{}﻿Problems} & \textbf{\tiny{}$N_{i}=1$ $N_{c}=500$ Calls} & \textbf{\tiny{}$N_{i}=1$ $N_{c}=500$ Time} & \textbf{\tiny{}$N_{i}=2$ $N_{c}=250$ Calls} & \textbf{\tiny{}$N_{i}=2$ $N_{c}=250$ Time} & \textbf{\tiny{}$N_{i}=5$ $N_{c}=100$ Calls} & \textbf{\tiny{}$N_{i}=5$ $N_{c}=100$ Time} & \textbf{\tiny{}$N_{i}=10$ $N_{c}=50$ Calls} & \textbf{\tiny{}$N_{i}=10$ $N_{c}=50$ Time}\tabularnewline
-\midrule
-\midrule 
-\textcolor{blue}{\tiny{}BF1} & {\tiny{}10578} & {\tiny{}0.557} & {\tiny{}10555} & {\tiny{}0.193} & {\tiny{}10533} & {\tiny{}0.126} & {\tiny{}10511} & {\tiny{}0.121}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}BF2} & {\tiny{}10568} & {\tiny{}0.554} & {\tiny{}10545} & {\tiny{}0.192} & {\tiny{}10523} & {\tiny{}0.127} & {\tiny{}10533} & {\tiny{}0.119}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}BRANIN} & {\tiny{}46793} & {\tiny{}2.308} & {\tiny{}31231} & {\tiny{}0.562} & {\tiny{}11125} & {\tiny{}0.134} & {\tiny{}10533} & {\tiny{}0.169}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}CAMEL} & {\tiny{}26537} & {\tiny{}1.338} & {\tiny{}15875} & {\tiny{}0.29} & {\tiny{}15833} & {\tiny{}0.188} & {\tiny{}10861} & {\tiny{}0.123}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}CIGAR10} & {\tiny{}10502} & {\tiny{}1.089} & {\tiny{}10577} & {\tiny{}0.383} & {\tiny{}10583} & {\tiny{}0.222} & {\tiny{}10541} & {\tiny{}0.206}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}CM4} & {\tiny{}10614} & {\tiny{}1.054} & {\tiny{}10583} & {\tiny{}0.249} & {\tiny{}10581} & {\tiny{}0.151} & {\tiny{}10556} & {\tiny{}0.139}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}DISCUS10} & {\tiny{}10548} & {\tiny{}1.09} & {\tiny{}10532} & {\tiny{}0.382} & {\tiny{}10500} & {\tiny{}0.222} & {\tiny{}10502} & {\tiny{}0.205}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}EASOM} & {\tiny{}100762} & {\tiny{}4.504} & {\tiny{}100610} & {\tiny{}1.66} & {\tiny{}94541} & {\tiny{}1.089} & {\tiny{}22845} & {\tiny{}0.248}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}ELP10} & {\tiny{}10601} & {\tiny{}1.15} & {\tiny{}10590} & {\tiny{}0.436} & {\tiny{}10574} & {\tiny{}0.26} & {\tiny{}10557} & {\tiny{}0.242}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}EXP4} & {\tiny{}16621} & {\tiny{}1.092} & {\tiny{}10587} & {\tiny{}0.249} & {\tiny{}10560} & {\tiny{}0.15} & {\tiny{}10544} & {\tiny{}0.143}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}EXP16} & {\tiny{}10680} & {\tiny{}1.336} & {\tiny{}10654} & {\tiny{}0.53} & {\tiny{}10643} & {\tiny{}0.287} & {\tiny{}10626} & {\tiny{}0.258}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}EXP64} & {\tiny{}10857} & {\tiny{}2.333} & {\tiny{}10829} & {\tiny{}1.235} & {\tiny{}10814} & {\tiny{}0.825} & {\tiny{}10830} & {\tiny{}0.728}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}EXP100} & {\tiny{}10855} & {\tiny{}3.517} & {\tiny{}10901} & {\tiny{}1.763} & {\tiny{}10868} & {\tiny{}1.25} & {\tiny{}10887} & {\tiny{}1.052}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}GKLS250} & {\tiny{}50804} & {\tiny{}2.825} & {\tiny{}25832} & {\tiny{}0.607} & {\tiny{}11711} & {\tiny{}0.194} & {\tiny{}10870(93)} & {\tiny{}0.198}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}GKLS350} & {\tiny{}40707} & {\tiny{}2.327} & {\tiny{}23720} & {\tiny{}0.522} & {\tiny{}17646} & {\tiny{}0.26} & {\tiny{}14130} & {\tiny{}0.202}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}GRIEWANK2} & {\tiny{}10555} & {\tiny{}0.565} & {\tiny{}10532} & {\tiny{}0.197} & {\tiny{}10517} & {\tiny{}0.126} & {\tiny{}10492} & {\tiny{}0.118}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}GRIEWANK10} & {\tiny{}10679} & {\tiny{}1.079} & {\tiny{}10629} & {\tiny{}0.407} & {\tiny{}10613} & {\tiny{}0.239} & {\tiny{}10609} & {\tiny{}0.22}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}POTENTIAL3} & {\tiny{}39607} & {\tiny{}2.057} & {\tiny{}34327} & {\tiny{}0.881} & {\tiny{}18313} & {\tiny{}0.34} & {\tiny{}15471} & {\tiny{}0.279}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}PONTENTIAL5} & {\tiny{}33542} & {\tiny{}1.653} & {\tiny{}33737} & {\tiny{}1.074} & {\tiny{}12040} & {\tiny{}0.34} & {\tiny{}11082} & {\tiny{}0.291}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}PONTENTIAL6} & {\tiny{}28901(3)} & {\tiny{}1.56} & {\tiny{}26419(16)} & {\tiny{}1.018} & {\tiny{}14265(3)} & {\tiny{}0.478} & {\tiny{}11109(10)} & {\tiny{}0.356}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}PONTENTIAL10} & {\tiny{}42644(13)} & {\tiny{}3.316} & {\tiny{}37897(23)} & {\tiny{}2.538} & {\tiny{}14080(10)} & {\tiny{}0.937} & {\tiny{}11319(6)} & {\tiny{}0.66}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}HANSEN} & {\tiny{}46894(90)} & {\tiny{}2.494} & {\tiny{}28191(80)} & {\tiny{}0.575} & {\tiny{}11085(56)} & {\tiny{}0.153} & {\tiny{}11065} & {\tiny{}0.158}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}HARTMAN3} & {\tiny{}22235} & {\tiny{}1.525} & {\tiny{}19030} & {\tiny{}0.379} & {\tiny{}16463} & {\tiny{}0.212} & {\tiny{}12048} & {\tiny{}0.146}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}HARTMAN6} & {\tiny{}18352} & {\tiny{}1.505} & {\tiny{}15902} & {\tiny{}0.429} & {\tiny{}16726} & {\tiny{}0.279} & {\tiny{}12243} & {\tiny{}0.196}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}RASTRIGIN} & {\tiny{}16567} & {\tiny{}0.855} & {\tiny{}10543} & {\tiny{}0.193} & {\tiny{}10521} & {\tiny{}0.125} & {\tiny{}10506} & {\tiny{}0.116}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}ROSENBROCK8} & {\tiny{}10863} & {\tiny{}0.916} & {\tiny{}10700} & {\tiny{}0.333} & {\tiny{}10698} & {\tiny{}0.199} & {\tiny{}10772} & {\tiny{}0.196}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}POSENBROCK16} & {\tiny{}10918} & {\tiny{}1.371} & {\tiny{}10946} & {\tiny{}0.516} & {\tiny{}10867} & {\tiny{}0.304} & {\tiny{}10886} & {\tiny{}0.271}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}SHEKEL5} & {\tiny{}32319(50)} & {\tiny{}2.069} & {\tiny{}17913(50)} & {\tiny{}0.412} & {\tiny{}11185(36)} & {\tiny{}0.159} & {\tiny{}11010(40)} & {\tiny{}0.15}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}SHEKEL7} & {\tiny{}51183(73)} & {\tiny{}3.277} & {\tiny{}14981(53)} & {\tiny{}0.342} & {\tiny{}11457(60)} & {\tiny{}0.163} & {\tiny{}11035(50)} & {\tiny{}0.154}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}SHEKEL10} & {\tiny{}47337(70)} & {\tiny{}2.977} & {\tiny{}46927(76)} & {\tiny{}1.113} & {\tiny{}16310(56)} & {\tiny{}0.23} & {\tiny{}11329(70)} & {\tiny{}0.152}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}SINU4} & {\tiny{}66625(83)} & {\tiny{}4.344} & {\tiny{}31511(86)} & {\tiny{}0.77} & {\tiny{}13979(73)} & {\tiny{}0.211} & {\tiny{}11004(43)} & {\tiny{}0.161}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}SINU8} & {\tiny{}29705} & {\tiny{}2.57} & {\tiny{}27613} & {\tiny{}0.987} & {\tiny{}24592} & {\tiny{}0.549} & {\tiny{}11422} & {\tiny{}0.236}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}TEST2N4} & {\tiny{}25553} & {\tiny{}1.558} & {\tiny{}17701} & {\tiny{}0.397} & {\tiny{}24763} & {\tiny{}0.359} & {\tiny{}13217} & {\tiny{}0.178}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}TEST2N5} & {\tiny{}20297} & {\tiny{}1.327} & {\tiny{}18440} & {\tiny{}0.457} & {\tiny{}16759} & {\tiny{}0.265} & {\tiny{}11483} & {\tiny{}0.168}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}TEST2N6} & {\tiny{}20450} & {\tiny{}1.311} & {\tiny{}20837} & {\tiny{}0.566} & {\tiny{}18123} & {\tiny{}0.315} & {\tiny{}11988} & {\tiny{}0.194}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}TEST2N7} & {\tiny{}26113} & {\tiny{}1.924} & {\tiny{}23940} & {\tiny{}0.723} & {\tiny{}20825} & {\tiny{}0.384} & {\tiny{}11339} & {\tiny{}0.196}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}TEST2N8} & {\tiny{}18846} & {\tiny{}1.454} & {\tiny{}18549} & {\tiny{}0.585} & {\tiny{}16700} & {\tiny{}0.329} & {\tiny{}11658} & {\tiny{}0.218}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}TEST2N9} & {\tiny{}18154} & {\tiny{}1.582} & {\tiny{}18803} & {\tiny{}0.649} & {\tiny{}17100} & {\tiny{}0.368} & {\tiny{}13299} & {\tiny{}0.262}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}TEST30N3} & {\tiny{}49235} & {\tiny{}2.46} & {\tiny{}24129} & {\tiny{}0.458} & {\tiny{}14743} & {\tiny{}0.188} & {\tiny{}12345} & {\tiny{}0.152}\tabularnewline
-\midrule 
-\textcolor{blue}{\tiny{}TEST30N4} & {\tiny{}29667} & {\tiny{}1.553} & {\tiny{}17501} & {\tiny{}0.358} & {\tiny{}13367} & {\tiny{}0.186} & {\tiny{}11778} & {\tiny{}0.151}\tabularnewline
-\midrule 
-\textbf{\textcolor{green}{\tiny{}SUM}} & \textbf{\textcolor{green}{\tiny{}1105268}} & \textbf{\textcolor{green}{\tiny{}74.376}} & \textbf{\textcolor{green}{\tiny{}851319}} & \textbf{\textcolor{green}{\tiny{}25.61}} & \textbf{\textcolor{green}{\tiny{}633126}} & \textbf{\textcolor{green}{\tiny{}12.923}} & \textbf{\textcolor{green}{\tiny{}465835}} & \textbf{\textcolor{green}{\tiny{}9.532}}\tabularnewline
-\midrule 
-\textbf{\textcolor{green}{\tiny{}MINIMUM}} & \textbf{\textcolor{green}{\tiny{}10502 }} & \textbf{\textcolor{green}{\tiny{}0.554 }} & \textbf{\textcolor{green}{\tiny{}10532 }} & \textbf{\textcolor{green}{\tiny{}0.192 }} & \textbf{\textcolor{green}{\tiny{}10500 }} & \textbf{\textcolor{green}{\tiny{}0.125 }} & \textbf{\textcolor{green}{\tiny{}10492 }} & \textbf{\textcolor{green}{\tiny{}0.116 }}\tabularnewline
-\midrule 
-\textbf{\textcolor{green}{\tiny{}MAXIMUM}} & \textbf{\textcolor{green}{\tiny{}100762 }} & \textbf{\textcolor{green}{\tiny{}4.504 }} & \textbf{\textcolor{green}{\tiny{}100610 }} & \textbf{\textcolor{green}{\tiny{}2.538 }} & \textbf{\textcolor{green}{\tiny{}94541 }} & \textbf{\textcolor{green}{\tiny{}1.25 }} & \textbf{\textcolor{green}{\tiny{}22845 }} & \textbf{\textcolor{green}{\tiny{}1.052 }}\tabularnewline
-\midrule 
-\textbf{\textcolor{green}{\tiny{}AVERAGE}} & \textbf{\textcolor{green}{\tiny{}27631.7 }} & \textbf{\textcolor{green}{\tiny{}1.859 }} & \textbf{\textcolor{green}{\tiny{}21282.975 }} & \textbf{\textcolor{green}{\tiny{}0.640 }} & \textbf{\textcolor{green}{\tiny{}15828.15 }} & \textbf{\textcolor{green}{\tiny{}0.323 }} & \textbf{\textcolor{green}{\tiny{}11645.875 }} & \textbf{\textcolor{green}{\tiny{}0.238 }}\tabularnewline
-\midrule 
-\textbf{\textcolor{green}{\tiny{}STDEV}} & \textbf{\textcolor{green}{\tiny{}19305.784 }} & \textbf{\textcolor{green}{\tiny{}0.972 }} & \textbf{\textcolor{green}{\tiny{}15829.020 }} & \textbf{\textcolor{green}{\tiny{}0.482 }} & \textbf{\textcolor{green}{\tiny{}13335.509 }} & \textbf{\textcolor{green}{\tiny{}0.260 }} & \textbf{\textcolor{green}{\tiny{}2109.230 }} & \textbf{\textcolor{green}{\tiny{}0.180 }}\tabularnewline
-\bottomrule
-\end{longtable}
-\end{table}
+
+\textbf{\tiny{}﻿Problems} & \textbf{\tiny{}$N_{i}=1$ $N_{c}=500$ Calls} & \textbf{\tiny{}$N_{i}=1$ $N_{c}=500$ Time} & \textbf{\tiny{}$N_{i}=2$ $N_{c}=250$ Calls} & \textbf{\tiny{}$N_{i}=2$ $N_{c}=250$ Time} & \textbf{\tiny{}$N_{i}=5$ $N_{c}=100$ Calls} & \textbf{\tiny{}$N_{i}=5$ $N_{c}=100$ Time} & \textbf{\tiny{}$N_{i}=10$ $N_{c}=50$ Calls} & \textbf{\tiny{}$N_{i}=10$ $N_{c}=50$ Time}\\
+\textbf{\textcolor{blue}{\tiny{}BF1}} & \textbf{\tiny{}10578} & \textbf{\tiny{}0.557} & \textbf{\tiny{}10555} & \textbf{\tiny{}0.193} & \textbf{\tiny{}10533} & \textbf{\tiny{}0.126} & \textbf{\tiny{}10511} & \textbf{\tiny{}0.121}\\
+\textbf{\textcolor{blue}{\tiny{}BF2}} & \textbf{\tiny{}10568} & \textbf{\tiny{}0.554} & \textbf{\tiny{}10545} & \textbf{\tiny{}0.192} & \textbf{\tiny{}10523} & \textbf{\tiny{}0.127} & \textbf{\tiny{}10533} & \textbf{\tiny{}0.119}\\
+\textbf{\textcolor{blue}{\tiny{}BRANIN}} & \textbf{\tiny{}46793} & \textbf{\tiny{}2.308} & \textbf{\tiny{}31231} & \textbf{\tiny{}0.562} & \textbf{\tiny{}11125} & \textbf{\tiny{}0.134} & \textbf{\tiny{}10533} & \textbf{\tiny{}0.169}\\
+\textbf{\textcolor{blue}{\tiny{}CAMEL}} & \textbf{\tiny{}26537} & \textbf{\tiny{}1.338} & \textbf{\tiny{}15875} & \textbf{\tiny{}0.29} & \textbf{\tiny{}15833} & \textbf{\tiny{}0.188} & \textbf{\tiny{}10861} & \textbf{\tiny{}0.123}\\
+\textbf{\textcolor{blue}{\tiny{}CIGAR10}} & \textbf{\tiny{}10502} & \textbf{\tiny{}1.089} & \textbf{\tiny{}10577} & \textbf{\tiny{}0.383} & \textbf{\tiny{}10583} & \textbf{\tiny{}0.222} & \textbf{\tiny{}10541} & \textbf{\tiny{}0.206}\\
+\textbf{\textcolor{blue}{\tiny{}CM4}} & \textbf{\tiny{}10614} & \textbf{\tiny{}1.054} & \textbf{\tiny{}10583} & \textbf{\tiny{}0.249} & \textbf{\tiny{}10581} & \textbf{\tiny{}0.151} & \textbf{\tiny{}10556} & \textbf{\tiny{}0.139}\\
+\textbf{\textcolor{blue}{\tiny{}DISCUS10}} & \textbf{\tiny{}10548} & \textbf{\tiny{}1.09} & \textbf{\tiny{}10532} & \textbf{\tiny{}0.382} & \textbf{\tiny{}10500} & \textbf{\tiny{}0.222} & \textbf{\tiny{}10502} & \textbf{\tiny{}0.205}\\
+\textbf{\textcolor{blue}{\tiny{}EASOM}} & \textbf{\tiny{}100762} & \textbf{\tiny{}4.504} & \textbf{\tiny{}100610} & \textbf{\tiny{}1.66} & \textbf{\tiny{}94541} & \textbf{\tiny{}1.089} & \textbf{\tiny{}22845} & \textbf{\tiny{}0.248}\\
+\textbf{\textcolor{blue}{\tiny{}ELP10}} & \textbf{\tiny{}10601} & \textbf{\tiny{}1.15} & \textbf{\tiny{}10590} & \textbf{\tiny{}0.436} & \textbf{\tiny{}10574} & \textbf{\tiny{}0.26} & \textbf{\tiny{}10557} & \textbf{\tiny{}0.242}\\
+\textbf{\textcolor{blue}{\tiny{}EXP4}} & \textbf{\tiny{}16621} & \textbf{\tiny{}1.092} & \textbf{\tiny{}10587} & \textbf{\tiny{}0.249} & \textbf{\tiny{}10560} & \textbf{\tiny{}0.15} & \textbf{\tiny{}10544} & \textbf{\tiny{}0.143}\\
+\textbf{\textcolor{blue}{\tiny{}EXP16}} & \textbf{\tiny{}10680} & \textbf{\tiny{}1.336} & \textbf{\tiny{}10654} & \textbf{\tiny{}0.53} & \textbf{\tiny{}10643} & \textbf{\tiny{}0.287} & \textbf{\tiny{}10626} & \textbf{\tiny{}0.258}\\
+\textbf{\textcolor{blue}{\tiny{}EXP64}} & \textbf{\tiny{}10857} & \textbf{\tiny{}2.333} & \textbf{\tiny{}10829} & \textbf{\tiny{}1.235} & \textbf{\tiny{}10814} & \textbf{\tiny{}0.825} & \textbf{\tiny{}10830} & \textbf{\tiny{}0.728}\\
+\textbf{\textcolor{blue}{\tiny{}EXP100}} & \textbf{\tiny{}10855} & \textbf{\tiny{}3.517} & \textbf{\tiny{}10901} & \textbf{\tiny{}1.763} & \textbf{\tiny{}10868} & \textbf{\tiny{}1.25} & \textbf{\tiny{}10887} & \textbf{\tiny{}1.052}\\
+\textbf{\textcolor{blue}{\tiny{}GKLS250}} & \textbf{\tiny{}50804} & \textbf{\tiny{}2.825} & \textbf{\tiny{}25832} & \textbf{\tiny{}0.607} & \textbf{\tiny{}11711} & \textbf{\tiny{}0.194} & \textbf{\tiny{}10870(93)} & \textbf{\tiny{}0.198}\\
+\textbf{\textcolor{blue}{\tiny{}GKLS350}} & \textbf{\tiny{}40707} & \textbf{\tiny{}2.327} & \textbf{\tiny{}23720} & \textbf{\tiny{}0.522} & \textbf{\tiny{}17646} & \textbf{\tiny{}0.26} & \textbf{\tiny{}14130} & \textbf{\tiny{}0.202}\\
+\textbf{\textcolor{blue}{\tiny{}GRIEWANK2}} & \textbf{\tiny{}10555} & \textbf{\tiny{}0.565} & \textbf{\tiny{}10532} & \textbf{\tiny{}0.197} & \textbf{\tiny{}10517} & \textbf{\tiny{}0.126} & \textbf{\tiny{}10492} & \textbf{\tiny{}0.118}\\
+\textbf{\textcolor{blue}{\tiny{}GRIEWANK10}} & \textbf{\tiny{}10679} & \textbf{\tiny{}1.079} & \textbf{\tiny{}10629} & \textbf{\tiny{}0.407} & \textbf{\tiny{}10613} & \textbf{\tiny{}0.239} & \textbf{\tiny{}10609} & \textbf{\tiny{}0.22}\\
+\textbf{\textcolor{blue}{\tiny{}POTENTIAL3}} & \textbf{\tiny{}39607} & \textbf{\tiny{}2.057} & \textbf{\tiny{}34327} & \textbf{\tiny{}0.881} & \textbf{\tiny{}18313} & \textbf{\tiny{}0.34} & \textbf{\tiny{}15471} & \textbf{\tiny{}0.279}\\
+\textbf{\textcolor{blue}{\tiny{}PONTENTIAL5}} & \textbf{\tiny{}33542} & \textbf{\tiny{}1.653} & \textbf{\tiny{}33737} & \textbf{\tiny{}1.074} & \textbf{\tiny{}12040} & \textbf{\tiny{}0.34} & \textbf{\tiny{}11082} & \textbf{\tiny{}0.291}\\
+\textbf{\textcolor{blue}{\tiny{}PONTENTIAL6}} & \textbf{\tiny{}28901(3)} & \textbf{\tiny{}1.56} & \textbf{\tiny{}26419(16)} & \textbf{\tiny{}1.018} & \textbf{\tiny{}14265(3)} & \textbf{\tiny{}0.478} & \textbf{\tiny{}11109(10)} & \textbf{\tiny{}0.356}\\
+\textbf{\textcolor{blue}{\tiny{}PONTENTIAL10}} & \textbf{\tiny{}42644(13)} & \textbf{\tiny{}3.316} & \textbf{\tiny{}37897(23)} & \textbf{\tiny{}2.538} & \textbf{\tiny{}14080(10)} & \textbf{\tiny{}0.937} & \textbf{\tiny{}11319(6)} & \textbf{\tiny{}0.66}\\
+\textbf{\textcolor{blue}{\tiny{}HANSEN}} & \textbf{\tiny{}46894(90)} & \textbf{\tiny{}2.494} & \textbf{\tiny{}28191(80)} & \textbf{\tiny{}0.575} & \textbf{\tiny{}11085(56)} & \textbf{\tiny{}0.153} & \textbf{\tiny{}11065} & \textbf{\tiny{}0.158}\\
+\textbf{\textcolor{blue}{\tiny{}HARTMAN3}} & \textbf{\tiny{}22235} & \textbf{\tiny{}1.525} & \textbf{\tiny{}19030} & \textbf{\tiny{}0.379} & \textbf{\tiny{}16463} & \textbf{\tiny{}0.212} & \textbf{\tiny{}12048} & \textbf{\tiny{}0.146}\\
+\textbf{\textcolor{blue}{\tiny{}HARTMAN6}} & \textbf{\tiny{}18352} & \textbf{\tiny{}1.505} & \textbf{\tiny{}15902} & \textbf{\tiny{}0.429} & \textbf{\tiny{}16726} & \textbf{\tiny{}0.279} & \textbf{\tiny{}12243} & \textbf{\tiny{}0.196}\\
+\textbf{\textcolor{blue}{\tiny{}RASTRIGIN}} & \textbf{\tiny{}16567} & \textbf{\tiny{}0.855} & \textbf{\tiny{}10543} & \textbf{\tiny{}0.193} & \textbf{\tiny{}10521} & \textbf{\tiny{}0.125} & \textbf{\tiny{}10506} & \textbf{\tiny{}0.116}\\
+\textbf{\textcolor{blue}{\tiny{}ROSENBROCK8}} & \textbf{\tiny{}10863} & \textbf{\tiny{}0.916} & \textbf{\tiny{}10700} & \textbf{\tiny{}0.333} & \textbf{\tiny{}10698} & \textbf{\tiny{}0.199} & \textbf{\tiny{}10772} & \textbf{\tiny{}0.196}\\
+\textbf{\textcolor{blue}{\tiny{}POSENBROCK16}} & \textbf{\tiny{}10918} & \textbf{\tiny{}1.371} & \textbf{\tiny{}10946} & \textbf{\tiny{}0.516} & \textbf{\tiny{}10867} & \textbf{\tiny{}0.304} & \textbf{\tiny{}10886} & \textbf{\tiny{}0.271}\\
+\textbf{\textcolor{blue}{\tiny{}SHEKEL5}} & \textbf{\tiny{}32319(50)} & \textbf{\tiny{}2.069} & \textbf{\tiny{}17913(50)} & \textbf{\tiny{}0.412} & \textbf{\tiny{}11185(36)} & \textbf{\tiny{}0.159} & \textbf{\tiny{}11010(40)} & \textbf{\tiny{}0.15}\\
+\textbf{\textcolor{blue}{\tiny{}SHEKEL7}} & \textbf{\tiny{}51183(73)} & \textbf{\tiny{}3.277} & \textbf{\tiny{}14981(53)} & \textbf{\tiny{}0.342} & \textbf{\tiny{}11457(60)} & \textbf{\tiny{}0.163} & \textbf{\tiny{}11035(50)} & \textbf{\tiny{}0.154}\\
+\textbf{\textcolor{blue}{\tiny{}SHEKEL10}} & \textbf{\tiny{}47337(70)} & \textbf{\tiny{}2.977} & \textbf{\tiny{}46927(76)} & \textbf{\tiny{}1.113} & \textbf{\tiny{}16310(56)} & \textbf{\tiny{}0.23} & \textbf{\tiny{}11329(70)} & \textbf{\tiny{}0.152}\\
+\textbf{\textcolor{blue}{\tiny{}SINU4}} & \textbf{\tiny{}66625(83)} & \textbf{\tiny{}4.344} & \textbf{\tiny{}31511(86)} & \textbf{\tiny{}0.77} & \textbf{\tiny{}13979(73)} & \textbf{\tiny{}0.211} & \textbf{\tiny{}11004(43)} & \textbf{\tiny{}0.161}\\
+\textbf{\textcolor{blue}{\tiny{}SINU8}} & \textbf{\tiny{}29705} & \textbf{\tiny{}2.57} & \textbf{\tiny{}27613} & \textbf{\tiny{}0.987} & \textbf{\tiny{}24592} & \textbf{\tiny{}0.549} & \textbf{\tiny{}11422} & \textbf{\tiny{}0.236}\\
+\textbf{\textcolor{blue}{\tiny{}TEST2N4}} & \textbf{\tiny{}25553} & \textbf{\tiny{}1.558} & \textbf{\tiny{}17701} & \textbf{\tiny{}0.397} & \textbf{\tiny{}24763} & \textbf{\tiny{}0.359} & \textbf{\tiny{}13217} & \textbf{\tiny{}0.178}\\
+\textbf{\textcolor{blue}{\tiny{}TEST2N5}} & \textbf{\tiny{}20297} & \textbf{\tiny{}1.327} & \textbf{\tiny{}18440} & \textbf{\tiny{}0.457} & \textbf{\tiny{}16759} & \textbf{\tiny{}0.265} & \textbf{\tiny{}11483} & \textbf{\tiny{}0.168}\\
+\textbf{\textcolor{blue}{\tiny{}TEST2N6}} & \textbf{\tiny{}20450} & \textbf{\tiny{}1.311} & \textbf{\tiny{}20837} & \textbf{\tiny{}0.566} & \textbf{\tiny{}18123} & \textbf{\tiny{}0.315} & \textbf{\tiny{}11988} & \textbf{\tiny{}0.194}\\
+\textbf{\textcolor{blue}{\tiny{}TEST2N7}} & \textbf{\tiny{}26113} & \textbf{\tiny{}1.924} & \textbf{\tiny{}23940} & \textbf{\tiny{}0.723} & \textbf{\tiny{}20825} & \textbf{\tiny{}0.384} & \textbf{\tiny{}11339} & \textbf{\tiny{}0.196}\\
+\textbf{\textcolor{blue}{\tiny{}TEST2N8}} & \textbf{\tiny{}18846} & \textbf{\tiny{}1.454} & \textbf{\tiny{}18549} & \textbf{\tiny{}0.585} & \textbf{\tiny{}16700} & \textbf{\tiny{}0.329} & \textbf{\tiny{}11658} & \textbf{\tiny{}0.218}\\
+\textbf{\textcolor{blue}{\tiny{}TEST2N9}} & \textbf{\tiny{}18154} & \textbf{\tiny{}1.582} & \textbf{\tiny{}18803} & \textbf{\tiny{}0.649} & \textbf{\tiny{}17100} & \textbf{\tiny{}0.368} & \textbf{\tiny{}13299} & \textbf{\tiny{}0.262}\\
+\textbf{\textcolor{blue}{\tiny{}TEST30N3}} & \textbf{\tiny{}49235} & \textbf{\tiny{}2.46} & \textbf{\tiny{}24129} & \textbf{\tiny{}0.458} & \textbf{\tiny{}14743} & \textbf{\tiny{}0.188} & \textbf{\tiny{}12345} & \textbf{\tiny{}0.152}\\
+\textbf{\textcolor{blue}{\tiny{}TEST30N4}} & \textbf{\tiny{}29667} & \textbf{\tiny{}1.553} & \textbf{\tiny{}17501} & \textbf{\tiny{}0.358} & \textbf{\tiny{}13367} & \textbf{\tiny{}0.186} & \textbf{\tiny{}11778} & \textbf{\tiny{}0.151}\\
+\textbf{\textcolor{green}{\tiny{}SUM}} & \textbf{\textcolor{green}{\tiny{}1105268}} & \textbf{\textcolor{green}{\tiny{}74.376}} & \textbf{\textcolor{green}{\tiny{}851319}} & \textbf{\textcolor{green}{\tiny{}25.61}} & \textbf{\textcolor{green}{\tiny{}633126}} & \textbf{\textcolor{green}{\tiny{}12.923}} & \textbf{\textcolor{green}{\tiny{}465835}} & \textbf{\textcolor{green}{\tiny{}9.532}}\\
+\textbf{\textcolor{green}{\tiny{}MINIMUM}} & \textbf{\textcolor{green}{\tiny{}10502 }} & \textbf{\textcolor{green}{\tiny{}0.554 }} & \textbf{\textcolor{green}{\tiny{}10532 }} & \textbf{\textcolor{green}{\tiny{}0.192 }} & \textbf{\textcolor{green}{\tiny{}10500 }} & \textbf{\textcolor{green}{\tiny{}0.125 }} & \textbf{\textcolor{green}{\tiny{}10492 }} & \textbf{\textcolor{green}{\tiny{}0.116 }}\\
+\textbf{\textcolor{green}{\tiny{}MAXIMUM}} & \textbf{\textcolor{green}{\tiny{}100762 }} & \textbf{\textcolor{green}{\tiny{}4.504 }} & \textbf{\textcolor{green}{\tiny{}100610 }} & \textbf{\textcolor{green}{\tiny{}2.538 }} & \textbf{\textcolor{green}{\tiny{}94541 }} & \textbf{\textcolor{green}{\tiny{}1.25 }} & \textbf{\textcolor{green}{\tiny{}22845 }} & \textbf{\textcolor{green}{\tiny{}1.052 }}\\
+\textbf{\textcolor{green}{\tiny{}AVERAGE}} & \textbf{\textcolor{green}{\tiny{}27631.7 }} & \textbf{\textcolor{green}{\tiny{}1.859 }} & \textbf{\textcolor{green}{\tiny{}21282.975 }} & \textbf{\textcolor{green}{\tiny{}0.640 }} & \textbf{\textcolor{green}{\tiny{}15828.15 }} & \textbf{\textcolor{green}{\tiny{}0.323 }} & \textbf{\textcolor{green}{\tiny{}11645.875 }} & \textbf{\textcolor{green}{\tiny{}0.238 }}\\
+\textbf{\textcolor{green}{\tiny{}STDEV}} & \textbf{\textcolor{green}{\tiny{}19305.784 }} & \textbf{\textcolor{green}{\tiny{}0.972 }} & \textbf{\textcolor{green}{\tiny{}15829.020 }} & \textbf{\textcolor{green}{\tiny{}0.482 }} & \textbf{\textcolor{green}{\tiny{}13335.509 }} & \textbf{\textcolor{green}{\tiny{}0.260 }} & \textbf{\textcolor{green}{\tiny{}2109.230 }} & \textbf{\textcolor{green}{\tiny{}0.180 }}
+
+\end{longtblr}
+
 
 \begin{figure}[H]
 \centering{}\includegraphics{7}\caption{Statistical comparison of function calls with different number of
