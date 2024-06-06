@@ -2447,6 +2447,9 @@ noprefix "false"
 \end_inset
 
 .
+ The values of the parameters used in the experiments were such that there
+ is a balance between the ability of the algorithms to discover the global
+ minimum with certainty on the one hand but also on their speed.
 \end_layout
 
 \begin_layout Standard
@@ -2962,7 +2965,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -3970,6 +3973,32 @@ All tables presented here demonstrate the average function calls obtained
  method, since each function has a different complexity and therefore the
  average execution time would not be a good indication of the computational
  time required.
+ In the first set of experiments we examine if the presence of the suggested
+ stopping rule, which is the combination of a series of stopping rules,
+ affects the optimization techniques without parellization.
+ In Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:DE"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we observe the performance of all termination rules for the DE method.
+ From these, both statistical and quantitative comparisons arise, depicted
+ in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:DE_stat"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
  
 \end_layout
 
@@ -6165,51 +6194,33 @@ name "fig:DE_stat"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-placement H
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename 4.png
-	lyxscale 30
+As it is evident, the combination of the stopping rules reduces the required
+ number of function calls that are required to obtain the global minimum
+ by the DE method.
+ The proposed termination scheme outperforms by a percentage that varies
+ from 13% to 73% the other termination rules used here.
+ Subsequently, the same experiment was conducted for the PSO method and
+ the results are shown in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:PSO"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Comparison of function calls with different termination rull of differential
- evolution
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:DE_comp"
+ and the statistical comparison is outline graphically in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:PSO_stat"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
+.
 \end_layout
 
 \begin_layout Standard
@@ -6217,7 +6228,7 @@ name "fig:DE_comp"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -8361,10 +8372,6 @@ Total
 
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
 \end_inset
 
 
@@ -8410,47 +8417,30 @@ name "fig:PSO_stat"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-placement H
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename 6.png
-	lyxscale 30
+Once more, the proposed termination scheme outperforms the other stopping
+ rules in almost every test function.
+ Likewise, the same experiment was carried out for the Multistart method
+ and the results are depicted in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Multistart"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Comparison of function calls with different termination rull of particle
- swarm optimization
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:PSO_comp"
+ and the statistical comparison is shown in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Multistart_stat"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
+.
 \end_layout
 
 \begin_layout Standard
@@ -10652,50 +10642,19 @@ name "fig:Multistart_stat"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-placement H
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename 8.png
-	lyxscale 30
+ Observing the tables with the corresponding statistical and quantitative
+ comparisons, it is evident that the calls to the objective function for
+ the proposed termination rule 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Proposed_all"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Comparison of function calls with different termination rull of multistartMultis
-tart_comp
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Multistart_comp"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
+ are fewer than any other rule in any method.
 \end_layout
 
 \begin_layout Standard
@@ -10703,7 +10662,7 @@ name "fig:Multistart_comp"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -14048,10 +14007,6 @@ sideways false
 status collapsed
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename 1.png
@@ -14095,10 +14050,6 @@ sideways false
 status collapsed
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename 2.png
@@ -14135,166 +14086,8 @@ name "fig:Methods_comp"
 \end_layout
 
 \begin_layout Standard
-During the execution of the proposed algorithm 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "alg:The-overall-algorithm"
-plural "false"
-caps "false"
-noprefix "false"
 
-\end_inset
-
-, the calls to the objective function serve as the criterion for the computation
-al power consumed by each PU.
- Decreasing the computational consumption entails a faster completion of
- the global optimization process.
- The same holds true when only one PU is active, meaning optimization is
- performed by a single method, as is the case in Tables 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:DE"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-,
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:PSO"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- , and 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Multistart"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
- In Table 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:DE"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, we observe the performance of all termination rules for the DE method.
- From these, both statistical and quantitative comparisons arise, depicted
- in Figures 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:DE_stat"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- and 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:DE_comp"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, respectively.
- Table 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:PSO"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- analyzes the termination rules for PSO, with the corresponding statistical
- and quantitative comparison figures, Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:PSO_stat"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- and Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:PSO_comp"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
- Following is Table 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:Multistart"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, where the termination rules for the Multistart method are examined, along
- with the respective figures of statistical and quantitative comparison,
- Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Multistart_stat"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- and Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Multistart_comp"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
- Observing the tables with the corresponding statistical and quantitative
- comparisons, it is evident that the calls to the objective function for
- the proposed termination rule 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:Proposed_all"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- are fewer than any other rule in any method.
-\end_layout
-
-\begin_layout Standard
+\series bold
 In Table 
 \begin_inset CommandInset ref
 LatexCommand ref
