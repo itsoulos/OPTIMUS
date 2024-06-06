@@ -564,7 +564,7 @@ literal "false"
  etc.
 
 \series bold
- (OK)
+ 
 \series default
 Parallel optimization represents a significant approach in the field of
  optimization problem solving and is applied across a wide range of applications
@@ -631,9 +631,69 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-In this work, the parallelization of three different stochastic optimization
- methods belonging to distinct categories was implemented and the scheme
- of this algorithm is outlined in Figure 
+Parallel techniques have been developed by various researchers, such as
+\series bold
+ 
+\series default
+combining Simulated Annealing and parallel techniques 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "go_par1"
+literal "false"
+
+\end_inset
+
+, parallel Particle Swarm Optimization methods 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "go_par2"
+literal "false"
+
+\end_inset
+
+,
+\series bold
+ 
+\series default
+application of of radial basis functions in parallel stochastic optimization
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "go_par3"
+literal "false"
+
+\end_inset
+
+ etc.
+ Also, since the Genetic Algorithms is a method that can be parallelized
+ easily, there are several researchers that have examined them thoroughly
+ in the relevant literature 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "pga_survey1,pga_survey2"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In this paper, a new optimization method is proposed which is a mixture
+ of existing global optimization techniques running in parallel on a number
+ of available computing units.
+ Each technique is executed independently of the others and periodically
+ the optimal values retrieved from them are distributed to the rest of the
+ computing units using the propagation techniques presented here.
+ In addition, for the most efficient termination of the overall algorithm,
+ intelligent termination techniques based on stochastic observations are
+ used, which are suitably modified to adapt to the parallel computing environmen
+t.
+
+\series bold
+ 
+\series default
+The proposed algorithm is graphically outlined in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:basicFlowchart"
@@ -644,80 +704,14 @@ noprefix "false"
 \end_inset
 
 .
- These include Particle Swarm Optimization (PSO) 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:Particle_swarm_optimization"
-plural "false"
-caps "false"
-noprefix "false"
 
-\end_inset
-
-, Multistart
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:Multistart"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, and Differential Evolution (DE)
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:Differential_evolution"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
- PSO is an optimization method inspired by the behavior of swarms in nature.
- In PSO, a set of particles moves in the search space seeking the optimal
- solution.
- Each particle has a current position and velocity, and it moves based on
- its past performance and that of its neighboring particles.
- PSO continuously adjusts the movement of particles aiming for convergence
- to the optimal solution 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Marini,García-Gonzalo,Jain"
-literal "false"
-
-\end_inset
-
-.
- In contrast, the Multistart method follows a different approach.
- Instead of focusing on a single initial point, it repeats the search from
- various initial points in the search space.
- This allows for a broader exploration of the search space and increases
- the chances of finding the optimal solution.
- The Multistart method is particularly useful when optimization algorithms
- may get trapped in local minima 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Marti,Marti Moreno,Tu Mayne"
-literal "false"
-
-\end_inset
-
-.
- Finally, the DE method relies on differential operators and is particularly
- effective in optimization problems that involve searching through a continuous
- search space.
- By employing differential operators, DE generates new solutions that are
- then evaluated and adjusted until the optimal solution is achieved 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Feoktistov,Bilal,Das"
-literal "false"
-
-\end_inset
-
-.
+\series bold
+ 
+\series default
+The methods that are used in each processing unit may contain Particle Swarm
+ Optimization (PSO) , the Multistart method and Differential Evolution (DE).
+ These techniques were used since they have been widely used in the relevant
+ literature and provide the possibility to be parallelized relatively easily.
 \end_layout
 
 \begin_layout Standard
@@ -735,7 +729,7 @@ noprefix "false"
  In section 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "sec:Parallelization-of-stochastic"
+reference "sec:The-proposed-method"
 plural "false"
 caps "false"
 noprefix "false"
@@ -745,17 +739,6 @@ noprefix "false"
  the algorithm for parallelizing the three methods is described, along with
  the proposed mechanism for propagating the optimal solution to the remaining
  methods.
- In section 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:Termination-rules"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, termination rules are described, along with the proposed termination rule.
  In section 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -806,7 +789,11 @@ name "fig:basicFlowchart"
 
 \end_inset
 
-
+.
+ The DE acronym stands for the Differential Evolution method, the PSO acroym
+ stands for the Particle Swarm Optimization method and the PU acronym represents
+ the Parallel Unit that executes the algorithm.
+ 
 \end_layout
 
 \end_inset
@@ -824,7 +811,7 @@ name "fig:basicFlowchart"
 \end_layout
 
 \begin_layout Section
-Methods description
+Adopted Algorithms
 \begin_inset CommandInset label
 LatexCommand label
 name "sec:Methods-description"
@@ -834,325 +821,13 @@ name "sec:Methods-description"
 
 \end_layout
 
-\begin_layout Subsection
-The method: Differential evolution
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:Differential_evolution"
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Standard
-The Differential Evolution operates through the following steps:
-\end_layout
-
-\begin_layout Standard
-Initially, initialization takes place with a random population of solutions
- in the search space.
- Then, each solution is evaluated based on the objective function.
- Subsequently, a process is iterated involving the generation of new solutions
- through modifications, evaluation of these new solutions, and selection
- of the best ones for the next generation.
- The algorithm terminates when a termination criterion is met, such as achieving
- sufficient improvement in performance or exhausting the number of iterations.
-\end_layout
-
-\begin_layout Standard
-The main steps of the DE method are presented in the Algorithm.
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "alg:DE"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float algorithm
-placement H
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-The main steps of the DE method.
-\begin_inset CommandInset label
-LatexCommand label
-name "alg:DE"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-INPUT:
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-The population size 
-\begin_inset Formula $\mbox{N_{d}}\ge$
-\end_inset
-
-4.
- The members of this population are also called agents.
-\end_layout
-
-\begin_layout Enumerate
-The crossover probability 
-\begin_inset Formula $\mbox{CR}\in[0,1]$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Enumerate
-The differential weight 
-\begin_inset Formula $F\in[0,2].$
-\end_inset
-
- 
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-
-\series bold
-OUTPUT
-\series default
-: 
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-The agent 
-\begin_inset Formula $x_{\mbox{best}}$
-\end_inset
-
- with the lower function value 
-\begin_inset Formula $f\left(x_{\mbox{best}}\right)$
-\end_inset
-
-.
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-
-\series bold
-Initialize
-\series default
- all agents in 
-\begin_inset Formula $S$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-While
-\series default
- termination criteria are not hold 
-\series bold
-do
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-
-\series bold
-For
-\series default
- 
-\begin_inset Formula $i=1\ldots\mbox{N_{d}}\ $
-\end_inset
-
-
-\series bold
-do
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-
-\series bold
-Select
-\series default
- as 
-\begin_inset Formula $x$
-\end_inset
-
- the agent 
-\begin_inset Formula $i$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Select
-\series default
- randomly three agents 
-\begin_inset Formula $a,b,c$
-\end_inset
-
- with the property 
-\begin_inset Formula $a\ne b,\ b\ne c,\ c\ne a$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Select
-\series default
- a random position 
-\begin_inset Formula $R\in\left\{ 1,\ldots,n\right\} $
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Create
-\series default
- the vector 
-\begin_inset Formula $y=\left[y_{1,}y_{2},\ldots,y_{n}\right]$
-\end_inset
-
- with the following procedure
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-For
-\series default
- 
-\begin_inset Formula $j=1,\ldots,n$
-\end_inset
-
- 
-\series bold
-do
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-
-\series bold
-Set
-\series default
- 
-\begin_inset Formula $r_{i}\in[0,1]$
-\end_inset
-
- a random number.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-If
-\series default
- 
-\begin_inset Formula $r_{j}<\text{\mbox{CR} }$
-\end_inset
-
-
-\series bold
-or
-\series default
- 
-\begin_inset Formula $j=R$
-\end_inset
-
- 
-\series bold
-then
-\series default
- 
-\begin_inset Formula $y_{j}=a_{j}+F\times\left(b_{j}-c_{j}\right)$
-\end_inset
-
- 
-\series bold
-else
-\series default
- 
-\begin_inset Formula $y_{j}=x_{j}$
-\end_inset
-
-.
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-If 
-\begin_inset Formula $y\in S\ \mbox{AND}\ f\left(y\right)\le f\left(x\right)$
-\end_inset
-
- then 
-\begin_inset Formula $x=y$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-EndFor
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-
-\series bold
-EndFor
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-
-\series bold
-End While
-\end_layout
-
-\end_inset
-
-
+The methods executed in every processing unint are fully described in this
+ section.
 \end_layout
 
 \begin_layout Subsection
-The method: Particle swarm optimization
+The method Particle swarm optimization
 \begin_inset CommandInset label
 LatexCommand label
 name "subsec:Particle_swarm_optimization"
@@ -1163,17 +838,58 @@ name "subsec:Particle_swarm_optimization"
 \end_layout
 
 \begin_layout Standard
-The Particle Swarm Optimization (PSO) is an optimization method inspired
- by the behavior of animals in nature.
- In PSO, particles move within a solution search space, determining their
- position and velocity.
- Based on attraction towards the best-known positions (local search) and
- the best position found by any particle (global search), particles collaborate
- to explore and exploit the search space.
-\end_layout
+PSO is an optimization method inspired by the behavior of swarms in nature.
+ In PSO, a set of particles moves in the search space seeking the optimal
+ solution.
+ Each particle has a current position and velocity, and it moves based on
+ its past performance and that of its neighboring particles.
+ PSO continuously adjusts the movement of particles aiming for convergence
+ to the optimal solution 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Marini,García-Gonzalo,Jain"
+literal "false"
 
-\begin_layout Standard
-The main steps of the PSO method are presented in the Algorithm.
+\end_inset
+
+.
+ This method can be programmed easily and the set of the parameters to be
+ set is limited.
+ Hence, it has been used in a series of practical problems, such as problems
+ that arise in physics 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "psophysics1,psophysics2"
+literal "true"
+
+\end_inset
+
+, chemistry 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "psochem1,psochem2"
+literal "false"
+
+\end_inset
+
+, medicine 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "psomed1,psomed2"
+literal "true"
+
+\end_inset
+
+, economics 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "psoecon"
+literal "true"
+
+\end_inset
+
+ etc.
+ The main steps of the PSO method are presented in the Algorithm.
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "alg:PSO"
@@ -1191,7 +907,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1454,7 +1170,6 @@ The variable
 \end_inset
 
 .
- 
 \end_layout
 
 \end_deeper
@@ -1564,7 +1279,6 @@ Set
 \end_inset
 
 .
- 
 \end_layout
 
 \begin_layout Enumerate
@@ -1591,7 +1305,367 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection
-The method: Multistart
+The method Differential evolution
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Differential_evolution"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The DE method relies on differential operators and is particularly effective
+ in optimization problems that involve searching through a continuous search
+ space.
+ By employing differential operators, DE generates new solutions that are
+ then evaluated and adjusted until the optimal solution is achieved 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Feoktistov,Bilal"
+literal "false"
+
+\end_inset
+
+.
+ The method was used in a series of problels, such as electromagnetics 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_app1"
+literal "false"
+
+\end_inset
+
+, energy consumption problems 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_app2"
+literal "false"
+
+\end_inset
+
+, job shop scheduling 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_app3"
+literal "false"
+
+\end_inset
+
+, image segmentation 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "de_app4"
+literal "false"
+
+\end_inset
+
+ etc.
+
+\series bold
+ 
+\series default
+The Differential Evolution operates through the following steps: Initially,
+ initialization takes place with a random population of solutions in the
+ search space.
+ Then, each solution is evaluated based on the objective function.
+ Subsequently, a process is iterated involving the generation of new solutions
+ through modifications, evaluation of these new solutions, and selection
+ of the best ones for the next generation.
+ The algorithm terminates when a termination criterion is met, such as achieving
+ sufficient improvement in performance or exhausting the number of iterations.
+ The main steps of the DE method are presented in the Algorithm.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:DE"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The main steps of the DE method.
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:DE"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+INPUT:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The population size 
+\begin_inset Formula $\mbox{N_{d}}\ge$
+\end_inset
+
+4.
+ The members of this population are also called agents.
+\end_layout
+
+\begin_layout Enumerate
+The crossover probability 
+\begin_inset Formula $\mbox{CR}\in[0,1]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+The differential weight 
+\begin_inset Formula $F\in[0,2].$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+OUTPUT
+\series default
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The agent 
+\begin_inset Formula $x_{\mbox{best}}$
+\end_inset
+
+ with the lower function value 
+\begin_inset Formula $f\left(x_{\mbox{best}}\right)$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Initialize
+\series default
+ all agents in 
+\begin_inset Formula $S$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+While
+\series default
+ termination criteria are not hold 
+\series bold
+do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $i=1\ldots\mbox{N_{d}}\ $
+\end_inset
+
+
+\series bold
+do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Select
+\series default
+ as 
+\begin_inset Formula $x$
+\end_inset
+
+ the agent 
+\begin_inset Formula $i$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Select
+\series default
+ randomly three agents 
+\begin_inset Formula $a,b,c$
+\end_inset
+
+ with the property 
+\begin_inset Formula $a\ne b,\ b\ne c,\ c\ne a$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Select
+\series default
+ a random position 
+\begin_inset Formula $R\in\left\{ 1,\ldots,n\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Create
+\series default
+ the vector 
+\begin_inset Formula $y=\left[y_{1,}y_{2},\ldots,y_{n}\right]$
+\end_inset
+
+ with the following procedure
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+For
+\series default
+ 
+\begin_inset Formula $j=1,\ldots,n$
+\end_inset
+
+ 
+\series bold
+do
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
+ 
+\begin_inset Formula $r_{i}\in[0,1]$
+\end_inset
+
+ a random number.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+If
+\series default
+ 
+\begin_inset Formula $r_{j}<\text{\mbox{CR} }$
+\end_inset
+
+
+\series bold
+or
+\series default
+ 
+\begin_inset Formula $j=R$
+\end_inset
+
+ 
+\series bold
+then
+\series default
+ 
+\begin_inset Formula $y_{j}=a_{j}+F\times\left(b_{j}-c_{j}\right)$
+\end_inset
+
+ 
+\series bold
+else
+\series default
+ 
+\begin_inset Formula $y_{j}=x_{j}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+If 
+\begin_inset Formula $y\in S\ \mbox{AND}\ f\left(y\right)\le f\left(x\right)$
+\end_inset
+
+ then 
+\begin_inset Formula $x=y$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+EndFor
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+End While
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+The method Multistart
 \begin_inset CommandInset label
 LatexCommand label
 name "subsec:Multistart"
@@ -1602,18 +1676,44 @@ name "subsec:Multistart"
 \end_layout
 
 \begin_layout Standard
-The approach of multiple starts belongs to the simplest techniques for global
- optimization.
+In contrast, the Multistart method follows a different approach than previous
+ methods.
+ Instead of focusing on a single initial point, it repeats the search from
+ various initial points in the search space.
+ This allows for a broader exploration of the search space and increases
+ the chances of finding the optimal solution
+\series bold
+.
+
+\series default
+ The Multistart method is particularly useful when optimization algorithms
+ may get trapped in local minima 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Marti,Marti Moreno,Tu Mayne"
+literal "false"
+
+\end_inset
+
+.
+ The approach of multiple starts belongs to the simplest techniques for
+ global optimization.
  At the outset of the process, an initial distribution of points is made
  in the Euclidean space.
  Subsequently, local optimization begins simultaneously from these points.
  The discovered minima are compared, and the best one is retained as the
  global minimum.
- Local optimizations rely on the BFGS method.
-\end_layout
+ Local optimizations rely on the the Broyden Fletcher Goldfarb Shanno (BFGS)
+ method 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "bfgs_main"
+literal "false"
 
-\begin_layout Standard
-The main steps of the multistart method are presented in the Algorithm.
+\end_inset
+
+.
+ The main steps of the multistart method are presented in the Algorithm.
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "alg:multistart"
@@ -1631,7 +1731,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -1769,14 +1869,18 @@ EndFor
 \end_layout
 
 \begin_layout Section
-Parallelization of stochastic methods
+The proposed method
 \begin_inset CommandInset label
 LatexCommand label
-name "sec:Parallelization-of-stochastic"
+name "sec:The-proposed-method"
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+The proposed algorithm 
 \end_layout
 
 \begin_layout Standard
@@ -2027,10 +2131,12 @@ name "alg:The-overall-algorithm"
 
 \end_inset
 
-
+ 
+\series bold
+(TOO LIMITED HERE)
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 Termination rules
 \begin_inset CommandInset label
 LatexCommand label
@@ -2223,37 +2329,7 @@ This termination criterion is the combination of the aforementioned simirarity
  types.
  Optimization termination is achieved when any homogeneity condition is
  satisfied, resulting in improved speed.
- Therefore, the following relationships hold 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:best"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:mean"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:double"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-:
+ Therefore, the following relationships hold:
 \end_layout
 
 \begin_layout Standard
@@ -2337,10 +2413,7 @@ https://github.com/itsoulos/OPTIMUS
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-The total population 
+ The total population 
 \begin_inset Formula $N_{e}$
 \end_inset
 
@@ -2360,6 +2433,17 @@ The total population
 
 , and of Multistart will be 
 \begin_inset Formula $N_{m}=40$
+\end_inset
+
+.
+ The values used for all the parameters are shown in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:settings"
+plural "false"
+caps "false"
+noprefix "false"
+
 \end_inset
 
 .
@@ -2483,7 +2567,7 @@ Total elements
 \begin_inset Text
 
 \begin_layout Plain Layout
-Max iterations
+Maximum number iterations
 \end_layout
 
 \end_inset
@@ -2859,742 +2943,18 @@ literal "false"
 \end_inset
 
  specifically examines the issue of symmetry and asymmetry in the test functions.
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Bent Cigar function
-\series default
-\emph on
+ The test functions used in the conducted experiments are shown in Table
  
-\emph default
-The function is 
-\begin_inset Formula 
-\[
-f(x)=x_{1}^{2}+10^{6}\sum_{i=2}^{n}x_{i}^{2}
-\]
-
-\end_inset
-
- with the global minimum 
-\begin_inset Formula $f\left(x^{*}\right)=0$
-\end_inset
-
-.
- For the conducted experiments the value 
-\begin_inset Formula $n=10$
-\end_inset
-
- was used.
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Bf1
-\series default
- function.
- The function Bohachevsky 1 is given by the equation
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-f(x)=x_{1}^{2}+2x_{2}^{2}-\frac{3}{10}\cos\left(3\pi x_{1}\right)-\frac{4}{10}\cos\left(4\pi x_{2}\right)+\frac{7}{10}
-\]
-
-\end_inset
-
-with 
-\begin_inset Formula $x\in[-100,100]^{2}$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Bf2
-\series default
- function.
- The function Bohachevsky 2 is given by the equation 
-\begin_inset Formula 
-\[
-f(x)=x_{1}^{2}+2x_{2}^{2}-\frac{3}{10}\cos\left(3\pi x_{1}\right)\cos\left(4\pi x_{2}\right)+\frac{3}{10}
-\]
-
-\end_inset
-
-with 
-\begin_inset Formula $x\in[-50,50]^{2}$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Branin
-\series default
- function.
- The function is defined by 
-\begin_inset Formula $f(x)=\left(x_{2}-\frac{5.1}{4\pi^{2}}x_{1}^{2}+\frac{5}{\pi}x_{1}-6\right)^{2}+10\left(1-\frac{1}{8\pi}\right)\cos(x_{1})+10$
-\end_inset
-
- with 
-\begin_inset Formula $-5\le x_{1}\le10,\ 0\le x_{2}\le15$
-\end_inset
-
-.
- The value of global minimum is 0.397887.with 
-\begin_inset Formula $x\in[-10,10]^{2}$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-CM
-\series default
- function.
- The Cosine Mixture function is given by the equation 
-\begin_inset Formula 
-\[
-f(x)=\sum_{i=1}^{n}x_{i}^{2}-\frac{1}{10}\sum_{i=1}^{n}\cos\left(5\pi x_{i}\right)
-\]
-
-\end_inset
-
-with 
-\begin_inset Formula $x\in[-1,1]^{n}$
-\end_inset
-
-.
- For the conducted experiments the value 
-\begin_inset Formula $n=4$
-\end_inset
-
- was used.
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Discus function
-\series default
-\emph on
- 
-\emph default
-The function is defined as 
-\begin_inset Formula 
-\[
-f(x)=10^{6}x_{1}^{2}+\sum_{i=2}^{n}x_{i}^{2}
-\]
-
-\end_inset
-
- with global minimum 
-\begin_inset Formula $f\left(x^{*}\right)=0.$
-\end_inset
-
- For the conducted experiments the value 
-\begin_inset Formula $n=10$
-\end_inset
-
- was used.
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Easom
-\series default
- function The function is given by the equation 
-\begin_inset Formula 
-\[
-f(x)=-\cos\left(x_{1}\right)\cos\left(x_{2}\right)\exp\left(\left(x_{2}-\pi\right)^{2}-\left(x_{1}-\pi\right)^{2}\right)
-\]
-
-\end_inset
-
-with 
-\begin_inset Formula $x\in[-100,100]^{2}$
-\end_inset
-
- and global minimum -1.0
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Exponential
-\series default
- function.
- The function is given by 
-\begin_inset Formula 
-\[
-f(x)=-\exp\left(-0.5\sum_{i=1}^{n}x_{i}^{2}\right),\quad-1\le x_{i}\le1
-\]
-
-\end_inset
-
-The global minimum is situated at 
-\begin_inset Formula $x^{*}=(0,0,...,0)$
-\end_inset
-
- with a value 
-\begin_inset Formula $-1$
-\end_inset
-
-.
- In our experiments, we applied this function for 
-\begin_inset Formula $n=4,16,64$
-\end_inset
-
- , and referred to the respective instances as EXP4, EXP16 .
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Griewank
-\series default
- function with 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-n=2, 
-\family default
-\series default
-\shape default
-\size default
-\emph default
-\bar default
-\strikeout default
-\xout default
-\uuline default
-\uwave default
-\noun default
-\color inherit
-10 dimensions:
-\begin_inset Formula 
-\[
-f(x)=1+\frac{1}{200}\sum_{i=1}^{d}x_{i}^{2}-\prod_{i=1}^{d}\frac{\cos(x_{i})}{\sqrt{(i)}},\quad x\in[-100,100]^{2}
-\]
-
-\end_inset
-
-The global minimum is located at the 
-\begin_inset Formula $x^{*}=(0,0,...,0)$
-\end_inset
-
- with value 0.
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Gkls
-\series default
- function.
- 
-\begin_inset Formula $f(x)=\mbox{Gkls}(x,n,w)$
-\end_inset
-
-, is a function with 
-\begin_inset Formula $w$
-\end_inset
-
- local minima, described in 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Gaviano"
-literal "false"
-
-\end_inset
-
- with 
-\begin_inset Formula $x\in[-1,1]^{n}$
-\end_inset
-
- and 
-\begin_inset Formula $n$
-\end_inset
-
- a positive integer between 2 and 100.
- The value of the global minimum is -1 and in our experiments we have used
- 
-\begin_inset Formula $n=2,3$
-\end_inset
-
- and 
-\begin_inset Formula $w=50,\ 100$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Hansen
-\series default
- function.
- 
-\begin_inset Formula $f(x)=\sum_{i=1}^{5}i\cos\left[(i-1)x_{1}+i\right]\sum_{j=1}^{5}j\cos\left[(j+1)x_{2}+j\right]$
-\end_inset
-
-, 
-\begin_inset Formula $x\in[-10,10]^{2}$
-\end_inset
-
- .
- The global minimum of the function is -176.541793.
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Hartman 3
-\series default
- function.
- The function is given by
-\begin_inset Formula 
-\[
-f(x)=-\sum_{i=1}^{4}c_{i}\exp\left(-\sum_{j=1}^{3}a_{ij}\left(x_{j}-p_{ij}\right)^{2}\right)
-\]
-
-\end_inset
-
-with 
-\begin_inset Formula $x\in[0,1]^{3}$
-\end_inset
-
- and 
-\begin_inset Formula $a=\left(\begin{array}{ccc}
-3 & 10 & 30\\
-0.1 & 10 & 35\\
-3 & 10 & 30\\
-0.1 & 10 & 35
-\end{array}\right),\ c=\left(\begin{array}{c}
-1\\
-1.2\\
-3\\
-3.2
-\end{array}\right)$
-\end_inset
-
- and
-\begin_inset Formula 
-\[
-p=\left(\begin{array}{ccc}
-0.3689 & 0.117 & 0.2673\\
-0.4699 & 0.4387 & 0.747\\
-0.1091 & 0.8732 & 0.5547\\
-0.03815 & 0.5743 & 0.8828
-\end{array}\right)
-\]
-
-\end_inset
-
-The value of global minimum is -3.862782.
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Hartman 6
-\series default
- function.
-\begin_inset Formula 
-\[
-f(x)=-\sum_{i=1}^{4}c_{i}\exp\left(-\sum_{j=1}^{6}a_{ij}\left(x_{j}-p_{ij}\right)^{2}\right)
-\]
-
-\end_inset
-
-with 
-\begin_inset Formula $x\in[0,1]^{6}$
-\end_inset
-
- and 
-\begin_inset Formula $a=\left(\begin{array}{cccccc}
-10 & 3 & 17 & 3.5 & 1.7 & 8\\
-0.05 & 10 & 17 & 0.1 & 8 & 14\\
-3 & 3.5 & 1.7 & 10 & 17 & 8\\
-17 & 8 & 0.05 & 10 & 0.1 & 14
-\end{array}\right),\ c=\left(\begin{array}{c}
-1\\
-1.2\\
-3\\
-3.2
-\end{array}\right)$
-\end_inset
-
- and
-\begin_inset Formula 
-\[
-p=\left(\begin{array}{cccccc}
-0.1312 & 0.1696 & 0.5569 & 0.0124 & 0.8283 & 0.5886\\
-0.2329 & 0.4135 & 0.8307 & 0.3736 & 0.1004 & 0.9991\\
-0.2348 & 0.1451 & 0.3522 & 0.2883 & 0.3047 & 0.6650\\
-0.4047 & 0.8828 & 0.8732 & 0.5743 & 0.1091 & 0.0381
-\end{array}\right)
-\]
-
-\end_inset
-
-the value of global minimum is -3.322368.
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-High Conditioned Elliptic
-\series default
- function, defined as 
-\begin_inset Formula 
-\[
-f(x)=\sum_{i=1}^{n}\left(10^{6}\right)^{\frac{i-1}{n-1}}x_{i}^{2}
-\]
-
-\end_inset
-
-Featuring a global minimum at 
-\begin_inset Formula $f\left(x^{*}\right)=0$
-\end_inset
-
-, the experiments were conducted using the value 
-\begin_inset Formula $n=10$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Potential
-\series default
- function.
- As a test case, the molecular conformation 
-\series bold
-Find
-\series default
-corresponding to the global minimum of the energy of N atoms interacting
- via the Lennard-Jones potential 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Lennard"
-literal "false"
-
-\end_inset
-
- is utilized.
- The function to be minimized is defined as follows:
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula 
-\begin{equation}
-V_{LJ}(r)=4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^{6}\right]\label{eq:potential}
-\end{equation}
-
-\end_inset
-
-In the current experiments two different cases were studied: 
-\begin_inset Formula $N=3,\ 5,\ 7,\ 10$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Rastrigin
-\series default
- function.
- The function is given by 
-\begin_inset Formula 
-\[
-f(x)=x_{1}^{2}+x_{2}^{2}-\cos(18x_{1})-\cos(18x_{2}),\quad x\in[-1,1]^{2}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Shekel 5 
-\series default
-function.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-f(x)=-\sum_{i=1}^{5}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}
-\]
-
-\end_inset
-
- 
-\end_layout
-
-\begin_layout Standard
-with 
-\begin_inset Formula $x\in[0,10]^{4}$
-\end_inset
-
- and 
-\begin_inset Formula $a=\left(\begin{array}{cccc}
-4 & 4 & 4 & 4\\
-1 & 1 & 1 & 1\\
-8 & 8 & 8 & 8\\
-6 & 6 & 6 & 6\\
-3 & 7 & 3 & 7
-\end{array}\right),\ c=\left(\begin{array}{c}
-0.1\\
-0.2\\
-0.2\\
-0.4\\
-0.4
-\end{array}\right)$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Shekel 7
-\series default
- function.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-f(x)=-\sum_{i=1}^{7}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-with 
-\begin_inset Formula $x\in[0,10]^{4}$
-\end_inset
-
- and 
-\begin_inset Formula $a=\left(\begin{array}{cccc}
-4 & 4 & 4 & 4\\
-1 & 1 & 1 & 1\\
-8 & 8 & 8 & 8\\
-6 & 6 & 6 & 6\\
-3 & 7 & 3 & 7\\
-2 & 9 & 2 & 9\\
-5 & 3 & 5 & 3
-\end{array}\right),\ c=\left(\begin{array}{c}
-0.1\\
-0.2\\
-0.2\\
-0.4\\
-0.4\\
-0.6\\
-0.3
-\end{array}\right)$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Shekel 10
-\series default
- function.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-f(x)=-\sum_{i=1}^{10}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}
-\]
-
-\end_inset
-
- 
-\end_layout
-
-\begin_layout Standard
-with 
-\begin_inset Formula $x\in[0,10]^{4}$
-\end_inset
-
- and 
-\begin_inset Formula $a=\left(\begin{array}{cccc}
-4 & 4 & 4 & 4\\
-1 & 1 & 1 & 1\\
-8 & 8 & 8 & 8\\
-6 & 6 & 6 & 6\\
-3 & 7 & 3 & 7\\
-2 & 9 & 2 & 9\\
-5 & 5 & 3 & 3\\
-8 & 1 & 8 & 1\\
-6 & 2 & 6 & 2\\
-7 & 3.6 & 7 & 3.6
-\end{array}\right),\ c=\left(\begin{array}{c}
-0.1\\
-0.2\\
-0.2\\
-0.4\\
-0.4\\
-0.6\\
-0.3\\
-0.7\\
-0.5\\
-0.6
-\end{array}\right)$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Sinusoidal
-\series default
- function.
- The function is given by 
-\begin_inset Formula 
-\[
-f(x)=-\left(2.5\prod_{i=1}^{n}\sin\left(x_{i}-z\right)+\prod_{i=1}^{n}\sin\left(5\left(x_{i}-z\right)\right)\right),\quad0\le x_{i}\le\pi.
-\]
-
-\end_inset
-
-The global minimum is situated at 
-\begin_inset Formula $x^{*}=(2.09435,2.09435,...,2.09435)$
-\end_inset
-
- with a value 
-\begin_inset Formula $f\left(x^{*}\right)=-3.5$
-\end_inset
-
-.
- In the performed experiments, we examined scenarios with 
-\begin_inset Formula $n=4,8$
-\end_inset
-
- and 
-\begin_inset Formula $z=\frac{\pi}{6}$
-\end_inset
-
-.
- The parameter 
-\begin_inset Formula $z$
-\end_inset
-
-is employed to offset the position of the global minimum 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Zabinsky"
-literal "false"
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:The-test-functions"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Test2N
-\series default
- function.
- This function is given by the equation 
-\begin_inset Formula 
-\[
-f(x)=\frac{1}{2}\sum_{i=1}^{n}x_{i}^{4}-16x_{i}^{2}+5x_{i},\quad x_{i}\in[-5,5].
-\]
-
-\end_inset
-
-The function has 
-\begin_inset Formula $2^{n}$
-\end_inset
-
- in the specified range and in our experiments we used 
-\begin_inset Formula $n=4,9$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Test30N
-\series default
- function.
- This function is given by 
-\begin_inset Formula 
-\[
-f(x)=\frac{1}{10}\sin^{2}\left(3\pi x_{1}\right)\sum_{i=2}^{n-1}\left(\left(x_{i}-1\right)^{2}\left(1+\sin^{2}\left(3\pi x_{i+1}\right)\right)\right)+\left(x_{n}-1\right)^{2}\left(1+\sin^{2}\left(2\pi x_{n}\right)\right)
-\]
-
-\end_inset
-
-with 
-\begin_inset Formula $x\in[-10,10]$
-\end_inset
-
-.
- The function has 
-\begin_inset Formula $30^{n}$
-\end_inset
-
- local minima in the specified range and we used 
-\begin_inset Formula $n=3,4$
-\end_inset
-
- in the conducted experiments.
-\end_layout
-
-\begin_layout Subsection
-Experimental results
 \end_layout
 
 \begin_layout Standard
@@ -3605,15 +2965,1028 @@ sideways false
 status open
 
 \begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="24" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+NAME
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+FORMULA
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+DIMENSION
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Bent Cigar
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $f(x)=x_{1}^{2}+10^{6}\sum_{i=2}^{n}x_{i}^{2}$
+\end_inset
+
 
 \end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+10
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+BF1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $f(x)=x_{1}^{2}+2x_{2}^{2}-\frac{3}{10}\cos\left(3\pi x_{1}\right)-\frac{4}{10}\cos\left(4\pi x_{2}\right)+\frac{7}{10}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+BF2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $f(x)=x_{1}^{2}+2x_{2}^{2}-\frac{3}{10}\cos\left(3\pi x_{1}\right)\cos\left(4\pi x_{2}\right)+\frac{3}{10}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Branin
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $f(x)=\left(x_{2}-\frac{5.1}{4\pi^{2}}x_{1}^{2}+\frac{5}{\pi}x_{1}-6\right)^{2}+10\left(1-\frac{1}{8\pi}\right)\cos(x_{1})+10$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+CM
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $f(x)=\sum_{i=1}^{n}x_{i}^{2}-\frac{1}{10}\sum_{i=1}^{n}\cos\left(5\pi x_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+4
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Discus
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $f(x)=10^{6}x_{1}^{2}+\sum_{i=2}^{n}x_{i}^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+10
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Easom
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $f(x)=-\cos\left(x_{1}\right)\cos\left(x_{2}\right)\exp\left(\left(x_{2}-\pi\right)^{2}-\left(x_{1}-\pi\right)^{2}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Exp
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $f(x)=-\exp\left(-0.5\sum_{i=1}^{n}x_{i}^{2}\right),\quad-1\le x_{i}\le1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $n=4,16$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Griewank2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $f(x)=1+\frac{1}{200}\sum_{i=1}^{2}x_{i}^{2}-\prod_{i=1}^{2}\frac{\cos(x_{i})}{\sqrt{(i)}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Griewank10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+f
+\begin_inset Formula $(x)=1+\frac{1}{200}\sum_{i=1}^{10}x_{i}^{2}-\prod_{i=1}^{10}\frac{\cos(x_{i})}{\sqrt{(i)}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+10
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Gkls
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Gaviano"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $f(x)=\mbox{Gkls}(x,n,w)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $n=2,3\ w=50,100$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Hansen
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $f(x)=\sum_{i=1}^{5}i\cos\left[(i-1)x_{1}+i\right]\sum_{j=1}^{5}j\cos\left[(j+1)x_{2}+j\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Hartman3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $f(x)=-\sum_{i=1}^{4}c_{i}\exp\left(-\sum_{j=1}^{3}a_{ij}\left(x_{j}-p_{ij}\right)^{2}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+3
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Hartman6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $f(x)=-\sum_{i=1}^{4}c_{i}\exp\left(-\sum_{j=1}^{6}a_{ij}\left(x_{j}-p_{ij}\right)^{2}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+6
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+High Elliptic
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $f(x)=\sum_{i=1}^{n}\left(10^{6}\right)^{\frac{i-1}{n-1}}x_{i}^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+10
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Potential
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Lennard"
+literal "false"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $V_{LJ}(r)=4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^{6}\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $n=9,15,21,30$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Rastrigin
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $f(x)=x_{1}^{2}+x_{2}^{2}-\cos(18x_{1})-\cos(18x_{2})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Shekel5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $f(x)=-\sum_{i=1}^{5}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+4
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Shekel7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $f(x)=-\sum_{i=1}^{7}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+4
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Shekel10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $f(x)=-\sum_{i=1}^{10}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+4
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Sinusoidal
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Zabinsky"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $f(x)=-\left(2.5\prod_{i=1}^{n}\sin\left(x_{i}-z\right)+\prod_{i=1}^{n}\sin\left(5\left(x_{i}-z\right)\right)\right),\quad0\le x_{i}\le\pi$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $n=4,8$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Test2N
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $f(x)=\frac{1}{2}\sum_{i=1}^{n}x_{i}^{4}-16x_{i}^{2}+5x_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $n=4,9$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Test30N
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\frac{1}{10}\sin^{2}\left(3\pi x_{1}\right)\sum_{i=2}^{n-1}\left(\left(x_{i}-1\right)^{2}\left(1+\sin^{2}\left(3\pi x_{i+1}\right)\right)\right)+\left(x_{n}-1\right)^{2}\left(1+\sin^{2}\left(2\pi x_{n}\right)\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $n=3,4$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The test functions used in the conducted experiments.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:The-test-functions"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Experimental results
+\end_layout
+
+\begin_layout Standard
+All tables presented here demonstrate the average function calls obtained
+ for each test problem.
+ The average function can be considered as a measure of the speed of each
+ method, since each function has a different complexity and therefore the
+ average execution time would not be a good indication of the computational
+ time required.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Differential evolution: Function calls with different termination rulls
+Average function calls for the Differential evolution method, using different
+ different termination rules
 \begin_inset CommandInset label
 LatexCommand label
 name "tab:DE"
@@ -5760,7 +6133,7 @@ Total
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -5800,7 +6173,7 @@ name "fig:DE_stat"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -5845,10 +6218,6 @@ placement H
 wide false
 sideways false
 status open
-
-\begin_layout Plain Layout
-
-\end_layout
 
 \begin_layout Plain Layout
 \align center
@@ -8006,7 +8375,7 @@ Total
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -8049,7 +8418,7 @@ name "fig:PSO_stat"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -8089,7 +8458,7 @@ name "fig:PSO_comp"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -10247,7 +10616,7 @@ Total
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -10291,7 +10660,7 @@ name "fig:Multistart_stat"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -10337,15 +10706,11 @@ sideways false
 status open
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
 \align center
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Function calls with different stochastic methods
+Average number of function calls for different optimization methods.
 \begin_inset CommandInset label
 LatexCommand label
 name "tab:Methods"
@@ -13680,7 +14045,7 @@ Total
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -13727,7 +14092,7 @@ name "fig:Methods_stat"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -14005,6 +14370,14 @@ name "sec:Conclusions"
 \end_layout
 
 \begin_layout Paragraph
+
+\series bold
+(TOO SMALL)
+\end_layout
+
+\begin_layout Paragraph
+
+\series bold
 Our experimental observations confirm that as the number of methods involved
  in global optimization increases, optimal solutions are found more quickly,
  saving computational power.
@@ -15069,6 +15442,100 @@ literal "false"
 \labelwidthstring 999
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "go_par1"
+literal "false"
+
+\end_inset
+
+E.
+ Onbaşoğlu, L.
+ Özdamar, Parallel simulated annealing algorithms in global optimization.
+ Journal of global optimization 
+\series bold
+19
+\series default
+, pp.
+ 27-50, 2001.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_par2"
+literal "false"
+
+\end_inset
+
+J.F.
+ Schutte, J.A.
+ Reinbolt, B.J.
+ Fregly, R.T.
+ Haftka, A.D.
+ George, Parallel global optimization with the particle swarm algorithm.
+ International journal for numerical methods in engineering 
+\series bold
+61
+\series default
+, pp.
+ 2296-2315, 2004.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_par3"
+literal "false"
+
+\end_inset
+
+Regis, R.
+ G., & Shoemaker, C.
+ A.
+ (2009).
+ Parallel stochastic global optimization using radial basis functions.
+ INFORMS Journal on Computing, 21(3), 411-426.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pga_survey1"
+literal "false"
+
+\end_inset
+
+R.
+ Shonkwiler, Parallel genetic algorithms.
+ In ICGA (pp.
+ 199-205), 1993.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "pga_survey2"
+literal "false"
+
+\end_inset
+
+E.
+ Cantú-Paz, A survey of parallel genetic algorithms, Calculateurs paralleles,
+ reseaux et systems repartis 
+\series bold
+10
+\series default
+, pp.
+ 141-171, 1998.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "Marini"
 literal "false"
 
@@ -15127,6 +15594,266 @@ literal "false"
 \labelwidthstring 999
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
+key "psophysics1"
+literal "true"
+
+\end_inset
+
+Anderson Alvarenga de Moura Meneses, Marcelo Dornellas, Machado Roberto
+ Schirru, Particle Swarm Optimization applied to the nuclear reload problem
+ of a Pressurized Water Reactor, Progress in Nuclear Energy 
+\series bold
+51
+\series default
+, pp.
+ 319-326, 2009.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psophysics2"
+literal "true"
+
+\end_inset
+
+Ranjit Shaw, Shalivahan Srivastava, Particle swarm optimization: A new tool
+ to invert geophysical data, Geophysics 
+\series bold
+72
+\series default
+, 2007.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psochem1"
+literal "false"
+
+\end_inset
+
+C.
+ O.
+ Ourique, E.C.
+ Biscaia, J.C.
+ Pinto, The use of particle swarm optimization for dynamical analysis in
+ chemical processes, Computers & Chemical Engineering 
+\series bold
+26
+\series default
+, pp.
+ 1783-1793, 2002.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psochem2"
+literal "false"
+
+\end_inset
+
+H.
+ Fang, J.
+ Zhou, Z.
+ Wang et al, Hybrid method integrating machine learning and particle swarm
+ optimization for smart chemical process operations, Front.
+ Chem.
+ Sci.
+ Eng.
+ 
+\series bold
+16
+\series default
+, pp.
+ 274–287, 2022.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psomed1"
+literal "true"
+
+\end_inset
+
+M.P.
+ Wachowiak, R.
+ Smolikova, Yufeng Zheng, J.M.
+ Zurada, A.S.
+ Elmaghraby, An approach to multimodal biomedical image registration utilizing
+ particle swarm optimization, IEEE Transactions on Evolutionary Computation
+ 
+\series bold
+8
+\series default
+, pp.
+ 289-301, 2004.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psomed2"
+literal "true"
+
+\end_inset
+
+Yannis Marinakis.
+ Magdalene Marinaki, Georgios Dounias, Particle swarm optimization for pap-smear
+ diagnosis, Expert Systems with Applications 
+\series bold
+35
+\series default
+, pp.
+ 1645-1656, 2008.
+ 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "psoecon"
+literal "true"
+
+\end_inset
+
+Jong-Bae Park, Yun-Won Jeong, Joong-Rin Shin, Kwang Y.
+ Lee, An Improved Particle Swarm Optimization for Nonconvex Economic Dispatch
+ Problems, IEEE Transactions on Power Systems 
+\series bold
+25
+\series default
+, pp.
+ 156-16
+\series bold
+216
+\series default
+6, 2010.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Feoktistov"
+literal "false"
+
+\end_inset
+
+ Feoktistov, V.
+ (2006).
+ Differential Evolution.
+ In Search of Solutions.
+ Optimization and Its Appl;ications, Springer.
+ Doi: https://doi.org/10.1007/978-0-387-36896-2 
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "Bilal"
+literal "false"
+
+\end_inset
+
+ Bilal, M.P., Zaheer, H., Garcia-Hernandez, L.
+ & Abraham, A.
+ (2020).
+ Differential Evolution: A review of more than two decades of research.
+ Engineering Applications of Artificial Intelligence 90 (2020) 103479.
+ Doi: https://doi.org/10.1016/j.engappai.2020.103479 
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_app1"
+literal "false"
+
+\end_inset
+
+P.
+ Rocca, G.
+ Oliveri, A.
+ Massa, Differential Evolution as Applied to Electromagnetics, IEEE Antennas
+ and Propagation Magazine.
+ 
+\series bold
+53
+\series default
+, pp.
+ 38-49, 2011.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_app2"
+literal "false"
+
+\end_inset
+
+W.S.
+ Lee, Y.T.
+ Chen, Y.
+ Kao, Optimal chiller loading by differential evolution algorithm for reducing
+ energy consumption, Energy and Buildings 
+\series bold
+43
+\series default
+, pp.
+ 599-604, 2011.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_app3"
+literal "false"
+
+\end_inset
+
+Y.
+ Yuan, H.
+ Xu, Flexible job shop scheduling using hybrid differential evolution algorithms
+, Computers & Industrial Engineering 
+\series bold
+65
+\series default
+, pp.
+ 246-260, 2013.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "de_app4"
+literal "false"
+
+\end_inset
+
+L.
+ Xu, H.
+ Jia, C.
+ Lang, X.
+ Peng, K.
+ Sun, A Novel Method for Multilevel Color Image Segmentation Based on Dragonfly
+ Algorithm and Differential Evolution, IEEE Access 
+\series bold
+7
+\series default
+, pp.
+ 19502-19538, 2019.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
 key "Marti"
 literal "false"
 
@@ -15179,17 +15906,16 @@ literal "false"
 \labelwidthstring 999
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
-key "Feoktistov"
+key "bfgs_main"
 literal "false"
 
 \end_inset
 
- Feoktistov, V.
- (2006).
- Differential Evolution.
- In Search of Solutions.
- Optimization and Its Appl;ications, Springer.
- Doi: https://doi.org/10.1007/978-0-387-36896-2 
+Dai, Y.
+ H.
+ (2002).
+ Convergence properties of the BFGS algoritm.
+ SIAM Journal on Optimization, 13(3), 693-701.
 \end_layout
 
 \begin_layout Bibliography
@@ -15207,23 +15933,6 @@ literal "false"
  Math.
  Comput.
  2008, 203, 598–607.
-\end_layout
-
-\begin_layout Bibliography
-\labelwidthstring 999
-\begin_inset CommandInset bibitem
-LatexCommand bibitem
-key "Bilal"
-literal "false"
-
-\end_inset
-
- Bilal, M.P., Zaheer, H., Garcia-Hernandez, L.
- & Abraham, A.
- (2020).
- Differential Evolution: A review of more than two decades of research.
- Engineering Applications of Artificial Intelligence 90 (2020) 103479.
- Doi: https://doi.org/10.1016/j.engappai.2020.103479 
 \end_layout
 
 \begin_layout Bibliography

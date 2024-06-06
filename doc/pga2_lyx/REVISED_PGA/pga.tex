@@ -341,7 +341,7 @@ are outlined, and future explorations are formulated.
 This section initiates with a detailed description of the base genetic
 algorithm and continues providing the details of the suggested modifications.
 
-\subsection{The Genetic Algorithm}
+\subsection{The Genetic Algorithm}\label{sub:genetic}
 
 Genetic algorithms are inspired by natural selection and the process
 of evolution in nature. In their basic form, they start with an initial
@@ -436,7 +436,7 @@ with the lowest fitness value.
 
 In the parallel island model of Figure \ref{fig:Parallelization-of-genetic},
 an evolving population is divided into various \textquotedbl islands\textquotedbl ,
-each working concurrently to optimize a specific set of solutions.
+each working concurrently to optimize a specific set of solutions. In this figure each island implements a separate genetic algorithm as described in subsection \ref{sub:genetic}. The steps of the overall algorithm are also preseneted through a series of steps in Algorithm \ref{alg:mainAlg}.
 In contrast to classical parallelization, which handles a central
 population, the island model features decentralized populations evolving
 independently. Each island exchanges information with others at specific
@@ -496,7 +496,7 @@ step \ref{enu:For--do}.
 this located value to enhance the located global minimum.
 \end{enumerate}
 \end{enumerate}
-\caption{The overall algorithm\label{alg:The-overall-algorithm}}
+\caption{The overall algorithm\label{alg:mainAlg}}
 \end{algorithm}
 
 \begin{figure}[H]
