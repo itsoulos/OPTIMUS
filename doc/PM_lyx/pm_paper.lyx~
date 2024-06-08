@@ -14178,23 +14178,24 @@ In this paper, the use of mixed termination rules for global optimization
 \begin_layout Standard
 Furthermore, the new stopping rule was utilized in a novel stochastic global
  optimization technique that involves some basic global optimization techniques.
- 
+ This method is designed to be executed on parallel computation environments.
+ At each step of the method, a different global optimization method is also
+ executed on each parallel computing unit, and these different techniques
+ exchange optimal solutions with each other.
+ In the current work, the global optimization techniques of Differential
+ Evolution, Multistart and the Particle Swarm Optimization was used in the
+ processing units, but the method can be generalized to use other stochastic
+ optimization techniques, such as genetic algorithms or simulated annealing.
+ Also, the overall method terminates with the combined termination rule
+ proposed here and the experimental results performed on a series of well
+ -know test problems from the relevant literature seem to be very promising.
 \end_layout
 
-\begin_layout Paragraph
-
-\series bold
-(TOO SMALL)
-\end_layout
-
-\begin_layout Paragraph
-
-\series bold
-Specifically, this combined termination rule is essential for parallelizing
- multiple optimization methods, as the process is terminated by any termination
- rule and significantly improves the overall algorithm's performance.
- However, further research could explore other combinations of optimization
- methods or termination rules to further enhance performance.
+\begin_layout Standard
+Future extensions of the current work may include the incorporation of more
+ advanced termination rules as well ass the execution of alternative global
+ optimization methods in the processing units, such as genetic algorithms
+ or variants of the simulated annealing.
 \end_layout
 
 \begin_layout Standard
