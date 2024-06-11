@@ -689,11 +689,7 @@ In this paper, a new optimization method is proposed which is a mixture
  intelligent termination techniques based on stochastic observations are
  used, which are suitably modified to adapt to the parallel computing environmen
 t.
-
-\series bold
- 
-\series default
-The proposed algorithm is graphically outlined in Figure 
+ The proposed algorithm is graphically outlined in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:basicFlowchart"
@@ -704,12 +700,9 @@ noprefix "false"
 \end_inset
 
 .
-
-\series bold
- 
-\series default
-The methods that are used in each processing unit may contain Particle Swarm
- Optimization (PSO) , the Multistart method and Differential Evolution (DE).
+ The methods that are used in each processing unit may contain Particle
+ Swarm Optimization (PSO) , the Multistart method and Differential Evolution
+ (DE).
  These techniques were used since they have been widely used in the relevant
  literature and provide the possibility to be parallelized relatively easily.
 \end_layout
@@ -822,8 +815,8 @@ name "sec:Methods-description"
 \end_layout
 
 \begin_layout Standard
-The methods executed in every processing unint are fully described in this
- section.
+The methods that may executed in each processing unint are fully described
+ in this section.
 \end_layout
 
 \begin_layout Subsection
@@ -1879,6 +1872,207 @@ name "sec:The-proposed-method"
 
 \end_layout
 
+\begin_layout Standard
+In the present work, a mixture of termination rules is proposed as a novel
+ technique, which can be used without partitioning in any stochastic global
+ optimization technique.
+ Also, a new parallel global optimization technique is proposed that utilizes
+ the new termination rule.
+ In the following subsections, the new termination rule is fully described
+ followed by the new optimization method.
+\end_layout
+
+\begin_layout Subsection
+The new termination rule
+\end_layout
+
+\begin_layout Standard
+The proposed termination rule is a mixture of several stochastic termination
+ rules proposed in the recent literature.
+ The first algorithm will be called 
+\emph on
+best - fitness 
+\emph default
+and in this termination technique, at each iteration 
+\emph on
+
+\begin_inset Formula $k$
+\end_inset
+
+
+\emph default
+, the difference between the current best value 
+\begin_inset Formula $f_{min}^{(k)}$
+\end_inset
+
+ and the previous best value 
+\begin_inset Formula $f_{min}^{(k+1)}$
+\end_inset
+
+ is calculated, i.e., the absolute difference:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Formula 
+\begin{equation}
+\left|f_{\mbox{min}}^{(k)}-f_{\mbox{min}}^{(k-1)}\right|\label{eq:best}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align block
+If this difference is zero for a series of predefined consecutive iterations
+ 
+\begin_inset Formula $N_{k}$
+\end_inset
+
+, then the method terminates.
+ In the second termination rule, that will be called 
+\emph on
+mean - fitness
+\emph default
+, the average function value for each iteration is computed.
+ If this value remains relatively unchanged over a certain number of consecutive
+ iterations, it indicates that the method may not be making significant
+ progress towards discovering a new global minimum.
+ Therefore, termination is warranted.
+ Hence, in every iteration 
+\begin_inset Formula $k$
+\end_inset
+
+, we compute:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\text{\ensuremath{\delta^{(k)}=}}\left|\sum_{i=1}^{\mbox{NP}}\left|f_{i}^{(k)}\right|-\sum_{i=1}^{\mbox{NP}}\left|f_{i}^{(k-1)}\right|\right|\label{eq:mean}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The value NP denotes the number of particles or chromosomes that participate
+ in the algorithm.
+ The termination rule is defined as follows: terminate if 
+\begin_inset Formula $\delta^{(k)}\le\epsilon$
+\end_inset
+
+ for a predefined number 
+\begin_inset Formula $N_{k}$
+\end_inset
+
+ of iterations.
+ The third stopping rule was the so - called DoubleBox stopping rule, that
+ was initially proposed in the work of Tsoulos 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Tsoulos"
+literal "false"
+
+\end_inset
+
+.
+ According to this criterion, the algorithm terminates when one of the following
+ conditions is met:
+\end_layout
+
+\begin_layout Itemize
+The iteration 
+\begin_inset Formula $k$
+\end_inset
+
+ count exceeds a predefined limit of iterations 
+\begin_inset Formula $k_{max}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The relative variance 
+\begin_inset Formula $σ^{(k)}$
+\end_inset
+
+ falls below half of the variance 
+\begin_inset Formula $σ^{(k_{last})}$
+\end_inset
+
+ of the last itaration 
+\begin_inset Formula $k_{(last)}$
+\end_inset
+
+ where a new optimal functional value was found.
+\begin_inset Formula 
+\begin{equation}
+k\geq N_{k}\,or\,\sigma^{(k)}\leq\frac{\sigma^{(klast)}}{2}\label{eq:double}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+This proposed termination criterion is the combination of the aforementioned
+ simirarity types.
+ Optimization termination is achieved when any homogeneity condition is
+ satisfied, resulting in improved speed.
+ Therefore, the following relationships holds:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left|f_{\mbox{min}}^{(k)}-f_{\mbox{min}}^{(k-1)}\right|or
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\text{\ensuremath{\delta^{(k)}=}}\left|\sum_{i=1}^{\mbox{NP}}\left|f_{i}^{(k)}\right|-\sum_{i=1}^{\mbox{NP}}\left|f_{i}^{(k-1)}\right|\right|or
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\sigma^{(iteration)}\leq\frac{\sigma^{(klast)}}{2}\,or
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+k\geq N_{k}
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 The proposed algorithm 
 \end_layout
@@ -1924,7 +2118,7 @@ status open
 Set
 \series default
  as 
-\begin_inset Formula $N_{I}=3$
+\begin_inset Formula $N_{I}$
 \end_inset
 
  the total number of parallel processing units.
@@ -1935,8 +2129,20 @@ Set
 \series bold
 Set
 \series default
+ as 
+\begin_inset Formula $N_{k}$
+\end_inset
+
+ the total number of allowed iterations.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Set
+\series default
  
-\begin_inset Formula $K=0$
+\begin_inset Formula $k=0$
 \end_inset
 
  the iteration number.
@@ -1967,62 +2173,14 @@ name "enu:For--do"
 \series bold
 Execute
 \series default
- an iteration of the DE algorithm described in algorithm 
+ an iteration of any stochastic algorithm mentioned in section 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "alg:DE"
+reference "sec:Methods-description"
 plural "false"
 caps "false"
 noprefix "false"
 
-\end_inset
-
- on processing unit 
-\begin_inset Formula $1$
-\end_inset
-
- and recalculate the optimal minimum using a local optimization approach.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Execute
-\series default
- an iteration of the PSO algorithm described in algorithm 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "alg:PSO"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- on processing unit 
-\begin_inset Formula $2$
-\end_inset
-
- and and recalculate the optimal minimum using a local optimization approach.
-\end_layout
-
-\begin_layout Enumerate
-
-\series bold
-Execute
-\series default
- an iteration of the Multistart algorithm described in algorithm 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "alg:multistart"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- on processing unit 
-\begin_inset Formula $3$
 \end_inset
 
 .
@@ -2033,11 +2191,7 @@ noprefix "false"
 \series bold
 Find
 \series default
- the best element from all optimization methods 
-\begin_inset Formula $j$
-\end_inset
-
- and 
+ the best element from all optimization methods and 
 \series bold
 propagate
 \series default
@@ -2057,7 +2211,7 @@ End For
 Update
 \series default
  
-\begin_inset Formula $K=K+1$
+\begin_inset Formula $k=k+1$
 \end_inset
 
 
@@ -2132,248 +2286,6 @@ name "alg:The-overall-algorithm"
 \end_inset
 
  
-\series bold
-(TOO LIMITED HERE)
-\end_layout
-
-\begin_layout Subsection
-Termination rules
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:Termination-rules"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The termination criteria that follow leverage the similarity parameter.
-\end_layout
-
-\begin_layout Subsection
-The termination rule: best fitness
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:Best_fitness"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-In this termination technique, at each iteration 
-\emph on
-
-\begin_inset Formula $k$
-\end_inset
-
-
-\emph default
-, the difference between the current best value 
-\begin_inset Formula $f_{min}^{(k)}$
-\end_inset
-
- and the previous best value 
-\begin_inset Formula $f_{min}^{(k+1)}$
-\end_inset
-
- is calculated, i.e., the absolute difference:
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Formula 
-\begin{equation}
-\left|f_{\mbox{min}}^{(k)}-f_{\mbox{min}}^{(k-1)}\right|\label{eq:best}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-If this difference is zero for a series of predefined consecutive iterations
- 
-\begin_inset Formula $N_{k}$
-\end_inset
-
-, then the method terminates.
-\end_layout
-
-\begin_layout Subsection
-The termination rule: mean or sum fitness arrray 
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:Mean_fitness"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-In this termination rule, we compute the average function value for each
- generation of the population.
- If this value remains relatively unchanged over a certain number of consecutive
- iterations, it indicates that the method may not be making significant
- progress towards discovering a new global minimum.
- Therefore, termination is warranted.
- Hence, in every iteration 
-\begin_inset Formula $k$
-\end_inset
-
-, we compute:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{equation}
-\text{\ensuremath{\delta^{(k)}=}}\left|\sum_{i=1}^{\mbox{NP}}\left|f_{i}^{(k)}\right|-\sum_{i=1}^{\mbox{NP}}\left|f_{i}^{(k-1)}\right|\right|\label{eq:mean}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The termination rule is defined as follows: terminate if 
-\begin_inset Formula $\delta^{(k)}\le\epsilon$
-\end_inset
-
- for a predefined number 
-\begin_inset Formula $N_{k}$
-\end_inset
-
- of iterations.
-\end_layout
-
-\begin_layout Subsection
-The termination rule: doublebox
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:Double_box"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The termination criterion used in this study was originally introduced in
- the research conducted by Tsoulos 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Tsoulos"
-literal "false"
-
-\end_inset
-
-.
- According to this criterion, the algorithm terminates when one of the following
- conditions is met:
-\end_layout
-
-\begin_layout Itemize
-The iteration 
-\begin_inset Formula $k$
-\end_inset
-
- count exceeds a predefined limit of iterations 
-\begin_inset Formula $k_{max}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-The relative variance 
-\begin_inset Formula $σ^{(iteration)}$
-\end_inset
-
- falls below half of the variance 
-\begin_inset Formula $σ^{(k_{last})}$
-\end_inset
-
- of the last itaration 
-\begin_inset Formula $k_{(last)}$
-\end_inset
-
- where a new optimal functional value was found.
-\begin_inset Formula 
-\begin{equation}
-iteration\geq N_{g}\,or\,\sigma^{(iteration)}\leq\frac{\sigma^{(klast)}}{2}\label{eq:double}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-The proposed termination rule: all
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:Proposed_all"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-This termination criterion is the combination of the aforementioned simirarity
- types.
- Optimization termination is achieved when any homogeneity condition is
- satisfied, resulting in improved speed.
- Therefore, the following relationships hold:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\left|f_{\mbox{min}}^{(k)}-f_{\mbox{min}}^{(k-1)}\right|or
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\text{\ensuremath{\delta^{(k)}=}}\left|\sum_{i=1}^{\mbox{NP}}\left|f_{i}^{(k)}\right|-\sum_{i=1}^{\mbox{NP}}\left|f_{i}^{(k-1)}\right|\right|or
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\sigma^{(iteration)}\leq\frac{\sigma^{(klast)}o}{2}\,or
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-iteration\geq N_{k}
-\]
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Section
@@ -2390,8 +2302,6 @@ name "sec:Experiments"
 \begin_layout Standard
 All experiments conducted were repeated 30 times to ensure the reliability
  of the algorithm producing the results.
- The following table presents the critical parameters of the three global
- optimization methods that participated.
  The parallelization was achieved using the OpenMP library 
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -2410,29 +2320,6 @@ status open
 https://github.com/itsoulos/OPTIMUS
 \end_layout
 
-\end_inset
-
-.
- The total population 
-\begin_inset Formula $N_{e}$
-\end_inset
-
- regardless of the combination of optimization methods.
- For example, if all three methods participate and the total population
- is 
-\begin_inset Formula $N_{e}=120$
-\end_inset
-
-, then the population of DE will be 
-\begin_inset Formula $N_{d}=40$
-\end_inset
-
-, of PSO will be 
-\begin_inset Formula $N_{p}=40$
-\end_inset
-
-, and of Multistart will be 
-\begin_inset Formula $N_{m}=40$
 \end_inset
 
 .
@@ -2457,7 +2344,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -2478,7 +2365,7 @@ name "tab:settings"
 
 
 \begin_inset Tabular
-<lyxtabular version="3" rows="12" columns="3">
+<lyxtabular version="3" rows="6" columns="3">
 <features booktabs="true" tabularvalignment="middle">
 <column alignment="center" valignment="top" width="3cm">
 <column alignment="center" valignment="top" width="5.8cm">
@@ -2570,175 +2457,7 @@ Total elements
 \begin_inset Text
 
 \begin_layout Plain Layout
-Maximum number iterations
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $N_{I}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-3
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Processing units 
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $N_{P}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Elements for propagation
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $TR$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Best fitness 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:Best_fitness"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, Mean fitness 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:Mean_fitness"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, Double Box 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:Double_box"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, All 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:Proposed_all"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Termination rule
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $LSR$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.1% (DE and PSO)
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Local search rate
+Maximum number of iterations
 \end_layout
 
 \end_inset
@@ -2802,14 +2521,14 @@ Similarity max count
 \begin_inset Text
 
 \begin_layout Plain Layout
-Differential weight
+Differential weight for DE
 \end_layout
 
 \end_inset
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2821,7 +2540,7 @@ Differential weight
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2830,75 +2549,11 @@ Differential weight
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Crossover Probability
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $c_{1}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.5 (PSO)
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Parameter of PSO
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $c_{2}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.5 (PSO)
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Parameter of PSO
+Crossover Probability for DE
 \end_layout
 
 \end_inset
@@ -10661,8 +10316,11 @@ noprefix "false"
 \begin_layout Standard
 The proposed termination rule was also applied to the current paralell optimizat
 ion technique for the test function described previously.
- The experimental results for the so - called DoubleBox stopping rule and
- the given parallel method are show in Table 
+ The experimental results for the so - called 
+\emph on
+DoubleBox
+\emph default
+ stopping rule and the given parallel method are show in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:parallelDoublebox"
@@ -12532,10 +12190,14 @@ In this experiment the total number of particles was set to 500, in order
  The results indicate that the increase of processing units may reduce the
  required number of function calls.
  The same series of experiments was also conducted using the so - called
- mean fitness termination rule, that has been described in subsection 
+ 
+\emph on
+mean fitness
+\emph default
+ termination rule, that has been described in equation 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "subsec:Mean_fitness"
+reference "eq:mean"
 plural "false"
 caps "false"
 noprefix "false"
@@ -16302,7 +15964,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -16341,7 +16003,9 @@ name "fig:elpTime"
 
 \end_inset
 
-
+As in the previous experiments, increasing the number of computing units
+ leads to a reduction in the required number of function calls and as can
+ be seen in this graph, this in turn leads to a reduction in computing time.
 \end_layout
 
 \begin_layout Section
