@@ -27,11 +27,11 @@ QMAKE_CFLAGS += -O3 -march=native -fopenmp -unroll-loops -omit-frame-pointer -Wi
 
 QMAKE_LFLAGS += -O3
 SOURCES += \
-    PM.cpp
+    PMNEW.cpp
 
 HEADERS += \
-    PM_global.h \
-    PM.h
+    PMNEW_global.h \
+    PMNEW.h
 
 
 

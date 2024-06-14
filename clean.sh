@@ -15,7 +15,7 @@ else
 		(cd PROBLEMS/NNC; qmake; make clean)
 		(cd PROBLEMS/RbfTest; qmake; make clean)
 		(cd PROBLEMS/DataFitting; qmake; make clean)
-		methods=("Optimus" "islandDE" "islandMultistart" "Bfgs" "IntegerGenetic" "Genetic" "DoubleGenetic" "MinCenter" "Tmlsl" "GENDE" "GCRS" "DE" "Price" "Multistart" "Pso" "iPso"  "Minfinder" "NeuralMinimizer" "ParallelDe" "parallelPso" "ParallelGenetic" "pDoubleGenetic" "pdg"  "PM")
+		methods=("Optimus" "islandDE" "islandMultistart" "Bfgs" "IntegerGenetic" "Genetic" "DoubleGenetic" "MinCenter" "Tmlsl" "GENDE" "GCRS" "DE" "Price" "Multistart" "Pso" "iPso"  "Minfinder" "NeuralMinimizer" "ParallelDe" "parallelPso" "ParallelGenetic" "pDoubleGenetic" "pdg"  "PMNEW")
 		for str in ${methods[@]}; do
 			(cd src/$str; qmake;  make clean )
 			(cd src/$str; rm -f *.so )
