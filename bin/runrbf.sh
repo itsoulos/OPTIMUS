@@ -3,7 +3,7 @@ DATAPATH=~/Desktop/ERGASIES/FeatureConstruction2/datasets/tenfolding/
 #DATAPATH=/home/sheridan/Desktop/ERGASIES/SECDATA/
 NODES=10
 
-METHOD=NeuralMinimizer
+METHOD=iPso
 METHODPARAMS=""
 if [ $METHOD = "Minfinder" ]
 then
@@ -13,7 +13,7 @@ then
 	METHODPARAMS="--double_chromosomes=200 --double_generations=200  --localsearch_method=bfgs --double_localsearchrate=0.001 --sample_method=mlp --mlp_samples=2000"
 elif [ $METHOD = "iPso" ]
 then
-	METHODPARAMS="--ipso_particles=100 --ipso_localsearch_rate=0.05 --ipso_stoppingrule=best_fitness --ipso_gradientcheck=true --ipso_inertiatype=1 --localsearch_method=adam"
+	METHODPARAMS="--ipso_particles=200 --ipso_localsearch_rate=0.05 --ipso_stoppingrule=best_fitness --ipso_gradientcheck=true --ipso_inertiatype=4 --localsearch_method=bfgs"
 elif [ $METHOD = "Genetic" ]
 then
 	METHODPARAMS="--max_generations=200 --localsearch_rate=0.00 --localsearch_method=lbfgs"
