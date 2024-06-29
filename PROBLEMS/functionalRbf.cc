@@ -618,8 +618,8 @@ Data trainy;
 vector<Data> testx;
 Data testy;
 Data dclass;
-double initialLeft=-100.0;
-double initialRight= 100.0;
+double initialLeft=-1000.0;
+double initialRight= 1000.0;
 Interval maxWidth;
 int failCount=0;
 int normalTrain=0;
@@ -871,7 +871,7 @@ double neuronOutput( vector<double> &x, vector<double> &patt, unsigned pattDim, 
     double df=(-out / (x[nodes*pattDim+offset] * x[nodes*pattDim+offset]) );
 //    if(fabs(df)>100) return 1e+8;
   //  if(fabs(df)>100)return 1.0;// return 1000;
-  if(exp(df)<1e-15) return 1e-15;
+  //if(exp(df)<1e-15) return 1e-15;
     return exp(df);
 }
 
@@ -968,7 +968,8 @@ double	funmin(vector<double> &x)
         errorSum += ( tempOut - trainy[i] ) * ( tempOut - trainy[i] );
     }
 
-  //if(norm>1000) return errorSum*(1.0+norm);
+   // return errorSum * (1.0 + norm * norm);
+  //if(norm>100) return errorSum*(1.0+norm);
   return errorSum;
 #endif
 }
@@ -979,7 +980,7 @@ adept::adouble aneuronOutput( vector<adept::adouble> &x, vector<double> &patt, u
         out += (patt[i] - x[offset*pattDim + i]) * (patt[i] - x[offset*pattDim + i]);
     }
     adept::adouble darg = out / (x[nodes*pattDim + offset] * x[nodes*pattDim + offset]);
-    if(exp(-darg)<1e-15) return 1e-15;
+   // if(exp(-darg)<1e-15) return 1e-15;
 //    if(fabs(darg)>100) return 1e+8;
     return exp(-out / (x[nodes*pattDim + offset] * x[nodes*pattDim + offset]) );
 }
@@ -1007,7 +1008,8 @@ adept::adouble afunmin( vector<adept::adouble> &x, vector<double> &x1 ){
 
         norm+=(Linear(j))*(Linear(j));
     norm = sqrt(norm);
-    //if(norm>1000) return errorSum*(1.0+norm);
+    //return errorSum * (1.0 + norm * norm);
+    //if(norm>100) return errorSum*(1.0+norm *norm);
     return errorSum;
 }
 
@@ -1102,13 +1104,15 @@ QJsonObject    done(Data &x)
 #else
     bool ok;
     arma::vec Linear = train(x,ok);
-
+for(int i=0;i<nodes;i++)
+    printf("Linear[%d]=%lf\n",i,Linear(i));
     for(int i=0;i<testx.size();i++)
     {
 	       Data pattern = testx[i];
         arma::vec neuronOuts(nodes);
         for(unsigned j = 0; j < nodes;j++){
             neuronOuts[j] = neuronOutput(x,pattern,pattern.size(),j);
+
         }
         double tempOut = arma::dot(neuronOuts,Linear);
 

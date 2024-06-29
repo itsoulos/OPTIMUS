@@ -341,6 +341,14 @@ Introduction
 \end_layout
 
 \begin_layout Standard
+The problem of finding the global minimum of a multidimensional function
+ occurs in various scientific areas and has wide applications.
+ In this the programmer seeks the absolute minimum of a function subject
+ to some assumptions or constraints.
+ 
+\end_layout
+
+\begin_layout Standard
 The global minimization problem of a continuous and differentiable function
  
 \begin_inset Formula $f:S\rightarrow R,S\subset R^{n}$
@@ -445,8 +453,11 @@ literal "true"
  is divided through a series of steps into subregions and some subregions
  that do not contain the global solution can be removed using some pre-defined
  criteria.
- On the other hand, there is a variety of stochastic methods that are easier
- to implement than the deterministic ones.
+ The second category contains stochastic techniques that do not guarantee
+ finding the total minimum, they are easier to program since they do not
+ rely on some assumptions about the objective function.
+ In addition, they also constitute the vast majority of global optimization
+ methods.
  Among them, there are methods based on considerations derived from Physics,
  such as the Simulated Annealing method
 \begin_inset CommandInset citation
@@ -643,7 +654,7 @@ literal "false"
 
 \end_inset
 
-, parallel Particle Swarm Optimization methods 
+, parallel PSO methods 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "go_par2"
@@ -689,23 +700,7 @@ In this paper, a new optimization method is proposed which is a mixture
  intelligent termination techniques based on stochastic observations are
  used, which are suitably modified to adapt to the parallel computing environmen
 t.
- The proposed algorithm is graphically outlined in Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:basicFlowchart"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
- The methods that are used in each processing unit may include Particle
- Swarm Optimization (PSO) , the Multistart method and Differential Evolution
- (DE).
- These techniques have been adopted since they have been widely used in
- the relevant literature and provide the possibility to be parallelized
- relatively easily.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -757,53 +752,6 @@ noprefix "false"
 , the conclusions from the application of the current work are discussed.
 \end_layout
 
-\begin_layout Standard
-\begin_inset Float figure
-placement H
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename pm_datagram.png
-	scale 30
-
-\end_inset
-
-
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Flowchart of the overall process
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:basicFlowchart"
-
-\end_inset
-
-.
- The DE acronym stands for the Differential Evolution method, the PSO acroym
- stands for the Particle Swarm Optimization method and the PU acronym represents
- the Parallel Unit that executes the algorithm.
- 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Section
 Adopted Algorithms
 \begin_inset CommandInset label
@@ -821,7 +769,7 @@ The methods that may executed in each processing unit are fully described
 \end_layout
 
 \begin_layout Subsection
-The method Particle swarm optimization
+The method PSO
 \begin_inset CommandInset label
 LatexCommand label
 name "subsec:Particle_swarm_optimization"
@@ -942,7 +890,7 @@ Initialization
 Set
 \series default
  
-\begin_inset Formula $\text{\mbox{iter}}=0$
+\begin_inset Formula $k=0$
 \end_inset
 
  (iteration counter).
@@ -970,7 +918,7 @@ Set
 Set
 \series default
  the maximum number of iterations allowed 
-\begin_inset Formula $\mbox{iter}_{\mbox{max}}$
+\begin_inset Formula $k_{\mbox{max}}$
 \end_inset
 
 
@@ -1269,7 +1217,7 @@ Set
 Set
 \series default
  
-\begin_inset Formula $\mbox{iter}=\mbox{iter}+1$
+\begin_inset Formula $k=k+1$
 \end_inset
 
 .
@@ -1961,8 +1909,12 @@ mean - fitness
 \end_layout
 
 \begin_layout Standard
-The value NP denotes the number of particles or chromosomes that participate
- in the algorithm.
+The value 
+\begin_inset Formula $NP$
+\end_inset
+
+ denotes the number of particles or chromosomes that participate in the
+ algorithm.
  The termination rule is defined as follows: terminate if 
 \begin_inset Formula $\delta^{(k)}\le\epsilon$
 \end_inset
@@ -2111,7 +2063,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Enumerate
 
@@ -2286,7 +2238,60 @@ name "alg:The-overall-algorithm"
 
 \end_inset
 
- 
+ The proposed algorithm is graphically outlined in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:basicFlowchart"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The methods that are used in each processing unit may include Particle
+ Swarm Optimization, the Multistart method and Differential Evolution (DE).
+ These techniques have been adopted since they have been widely used in
+ the relevant literature and provide the possibility to be parallelized
+ relatively easily.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename pm_datagram.png
+	scale 30
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Flowchart of the overall process
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:basicFlowchart"
+
+\end_inset
+
+.
+ The DE acronym stands for the Differential Evolution method, the PU acronym
+ represents the Parallel Unit that executes the algorithm.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -2335,9 +2340,10 @@ noprefix "false"
 \end_inset
 
 .
- The values of the parameters used in the experiments were such that there
- is a balance between the ability of the algorithms to discover the global
- minimum with certainty on the one hand, but also on their speed.
+ The parameters used here are either suggested in the original publications
+ of the methods (eg Differential Evolution, Particle Swarm Optimization)
+ or have been chosen so that there is a compromise between the execution
+ time of the method and its efficiency.
 \end_layout
 
 \begin_layout Standard
@@ -2345,7 +2351,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -2614,6 +2620,43 @@ noprefix "false"
 \end_inset
 
 .
+ Generally, the region of attraction 
+\begin_inset Formula $A\left(x^{*}\right)$
+\end_inset
+
+ of a local minimum 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ is defined as:
+\begin_inset Formula 
+\begin{equation}
+A\left(x^{*}\right)=\left\{ x:\ x\in S,\ L(x)=x^{*}\right\} 
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $L(x)$
+\end_inset
+
+ is a local search procedure, such as BFGS.
+ Global optimization methods, usually find points which are in the region
+ of attraction 
+\begin_inset Formula $A\left(x^{*}\right)$
+\end_inset
+
+ of a local minimum 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ but not necessarily the local minimum itself.
+ For this reason, at the end of their execution, a local minimization method
+ is applied in order to ensure the exact finding of a local minimum.
+ Of course, this does not imply that the minimum that will be located will
+ be the total minimum of the function, since a function can contain tens
+ or even hundreds of local minima.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -5891,7 +5934,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Particle swarm optimization: Function calls with different termination rules
+PSO: Function calls with different termination rules
 \begin_inset CommandInset label
 LatexCommand label
 name "tab:PSO"
@@ -8056,7 +8099,7 @@ status collapsed
 
 \begin_layout Plain Layout
 Statistical comparison of function calls with different termination rule
- of particle swarm optimization
+ of PSO method
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:PSO_stat"
@@ -10300,17 +10343,7 @@ name "fig:Multistart_stat"
 
  Observing the tables with the corresponding statistical and quantitative
  comparisons, it is evident that the calls to the objective function for
- the proposed termination rule 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:Proposed_all"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- are fewer than any other rule in any method.
+ the proposed termination rule  are fewer than any other rule in any method.
  
 \end_layout
 
@@ -16102,9 +16135,9 @@ Furthermore, the new stopping rule was utilized in a novel stochastic global
  executed on each parallel computing unit, and these different techniques
  exchange optimal solutions with each other.
  In current work, the global optimization techniques of Differential Evolution,
- Multistart and Particle Swarm optimization were used in the processing
- units, but the method can be generalized to use other stochastic optimization
- techniques, such as genetic algorithms or simulated annealing.
+ Multistart and PSO were used in the processing units, but the method can
+ be generalized to use other stochastic optimization techniques, such as
+ genetic algorithms or simulated annealing.
  Also, the overall method terminates with the combined termination rule
  proposed here, and the experimental results performed on a series of well
  - known test problems from the relevant literature seem to be very promising.
