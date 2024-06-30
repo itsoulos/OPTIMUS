@@ -345,16 +345,12 @@ The problem of finding the global minimum of a multidimensional function
  occurs in various scientific areas and has wide applications.
  In this the programmer seeks the absolute minimum of a function subject
  to some assumptions or constraints.
- 
-\end_layout
-
-\begin_layout Standard
-The global minimization problem of a continuous and differentiable function
- 
+ The objective function is defined as 
 \begin_inset Formula $f:S\rightarrow R,S\subset R^{n}$
 \end_inset
 
- can be formulated as
+ and the mathmatical formulation of the global optimization problem has
+ as:
 \begin_inset Formula 
 \begin{equation}
 x^{*}=\mbox{arg}\min_{x\in S}f(x).\label{eq:eq1-1}
@@ -2664,7 +2660,7 @@ where
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -16012,39 +16008,26 @@ name "fig:Wilcoxon-rank-sum-test"
 \end_layout
 
 \begin_layout Standard
-An additional experiment was performed in order to demonstrate the efficiency
- of the proposed technique on high-dimensional functions.
- For this reason, the high elliptic function was selected.
- The function is defined as 
+An additional experiment was performed to assess the capabilities of the
+ parallel technique using the CM function for various values of the dimension.
+ This function is defined as:
 \begin_inset Formula 
 \[
-f(x)=\sum_{i=1}^{n}\left(10^{6}\right)^{\frac{i-1}{n-1}}x_{i}^{2}
+f(x)=\sum_{i=1}^{n}x_{i}^{2}-\frac{1}{10}\sum_{i=1}^{n}\cos\left(5\pi x_{i}\right)
 \]
 
 \end_inset
 
-where the 
+The proposed method was tested on this function for different values of
+ the dimension 
 \begin_inset Formula $n$
 \end_inset
 
- stands for the dimension of the function.
- The results from the application of the current parallel method to this
- function when the variable 
-\begin_inset Formula $n$
-\end_inset
-
- varies from 
-\begin_inset Formula $n=10$
-\end_inset
-
- to 
-\begin_inset Formula $n=60$
-\end_inset
-
- are graphically illustrated in Figure 
+ and for a variety of processing units and the results are graphically illustrat
+ed in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:elpTime"
+reference "fig:cmExper"
 plural "false"
 caps "false"
 noprefix "false"
@@ -16052,9 +16035,7 @@ noprefix "false"
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
+ 
 \begin_inset Float figure
 placement H
 wide false
@@ -16062,10 +16043,8 @@ sideways false
 status collapsed
 
 \begin_layout Plain Layout
-\align center
 \begin_inset Graphics
-	filename elp_parallel.png
-	scale 65
+	filename cm.png
 
 \end_inset
 
@@ -16076,11 +16055,16 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Execution time for the proposed method when applied to the ELP problem for
- different dimensions.
+Experiments using the proposed paralell technique and the CM function.
+ The dimension of the function 
+\begin_inset Formula $n$
+\end_inset
+
+ varies from 1 to 20 and the number of processing units changes from 1 to
+ 20.
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:elpTime"
+name "fig:cmExper"
 
 \end_inset
 
@@ -16098,9 +16082,7 @@ name "fig:elpTime"
 
 \end_inset
 
-As in the previous experiments, increasing the number of computing units
- leads to a reduction in the required number of function calls and as can
- be seen in this graph, this in turn leads to a reduction in computing time.
+
 \end_layout
 
 \begin_layout Section
