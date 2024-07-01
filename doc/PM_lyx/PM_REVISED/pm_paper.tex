@@ -1,6 +1,6 @@
-%% LyX 2.3.7 created this file.  For more info, see http://www.lyx.org/.
+%% LyX 2.3.6 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
-\documentclass[journal,article,submit,pdftex,moreauthors]{mdpi}
+\documentclass[journal,article,submit,pdftex,moreauthors]{Definitions/mdpi}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{array}
@@ -200,8 +200,12 @@ techniques}
 
 \section{Introduction}
 
-The global minimization problem of a continuous and differentiable
-function $f:S\rightarrow R,S\subset R^{n}$ can be formulated as
+The problem of finding the global minimum of a multidimensional function
+occurs in various scientific areas and has wide applications. In this
+the programmer seeks the absolute minimum of a function subject to
+some assumptions or constraints. The objective function is defined
+as $f:S\rightarrow R,S\subset R^{n}$ and the mathmatical formulation
+of the global optimization problem has as:
 \begin{equation}
 x^{*}=\mbox{arg}\min_{x\in S}f(x).\label{eq:eq1-1}
 \end{equation}
@@ -219,20 +223,22 @@ categories:\textbf{ }deterministic and stochastic methods. In the
 first category, the most common method is the interval method \citep{interval1,interval2},
 where the set $S$ is divided through a series of steps into subregions
 and some subregions that do not contain the global solution can be
-removed using some pre-defined criteria. On the other hand, there
-is a variety of stochastic methods that are easier to implement than
-the deterministic ones. Among them, there are methods based on considerations
-derived from Physics, such as the Simulated Annealing method\citep{Kirkpatrick},
-the Henry's Gas Solubility Optimization (HGSO) \citep{Hashim}, the
-Gravitational Search Algorithm (GSA) \citep{Rashedi}, the Small World
-Optimization Algorithm (SWOA) \citep{Du-Wu}, etc. Also, a series
-of evolutionary based techniques have also been suggested for Global
-Optimization problems, such as Genetic Algorithms \citep{Goldberg},
-the Differential Evolution method \citep{Das,Charilogis}, Particle
-Swarm Optimization (PSO) \citep{Kennedy,Charilogis2}, Ant Colony
-Optimization (ACO) \citep{Dorigo}, Bat Algorithm (BA) \citep{Yang},
-Whale Optimization Algorithm (WOA) \citep{Mirjalili}, Grasshopper
-Optimization Algorithm (GOA) \citep{Saremi}, etc.
+removed using some pre-defined criteria. The second category contains
+stochastic techniques that do not guarantee finding the total minimum,
+they are easier to program since they do not rely on some assumptions
+about the objective function. In addition, they also constitute the
+vast majority of global optimization methods. Among them, there are
+methods based on considerations derived from Physics, such as the
+Simulated Annealing method\citep{Kirkpatrick}, the Henry's Gas Solubility
+Optimization (HGSO) \citep{Hashim}, the Gravitational Search Algorithm
+(GSA) \citep{Rashedi}, the Small World Optimization Algorithm (SWOA)
+\citep{Du-Wu}, etc. Also, a series of evolutionary based techniques
+have also been suggested for Global Optimization problems, such as
+Genetic Algorithms \citep{Goldberg}, the Differential Evolution method
+\citep{Das,Charilogis}, Particle Swarm Optimization (PSO) \citep{Kennedy,Charilogis2},
+Ant Colony Optimization (ACO) \citep{Dorigo}, Bat Algorithm (BA)
+\citep{Yang}, Whale Optimization Algorithm (WOA) \citep{Mirjalili},
+Grasshopper Optimization Algorithm (GOA) \citep{Saremi}, etc.
 
 However, the above optimization methods require significant amounts
 of computational power and time; therefore, parallelization of the
@@ -265,11 +271,11 @@ collecting and evaluating results.
 
 Parallel techniques have been developed by various researchers, such
 as\textbf{ }combining Simulated Annealing and parallel techniques
-\citep{go_par1}, parallel Particle Swarm Optimization methods \citep{go_par2},\textbf{
-}application of radial basis functions in parallel stochastic optimization
-\citep{go_par3} etc. Also, since the Genetic Algorithms is a method
-that can be parallelized easily, there are several researchers that
-have examined them thoroughly in the relevant literature \citep{pga_survey1,pga_survey2}.
+\citep{go_par1}, parallel PSO methods \citep{go_par2},\textbf{ }application
+of radial basis functions in parallel stochastic optimization \citep{go_par3}
+etc. Also, since the Genetic Algorithms is a method that can be parallelized
+easily, there are several researchers that have examined them thoroughly
+in the relevant literature \citep{pga_survey1,pga_survey2}.
 
 In this paper, a new optimization method is proposed which is a mixture
 of existing global optimization techniques running in parallel on
@@ -279,13 +285,7 @@ from them are distributed to the rest of the computing units using
 the propagation techniques presented here. In addition, for the most
 efficient termination of the overall algorithm, intelligent termination
 techniques based on stochastic observations are used, which are suitably
-modified to adapt to the parallel computing environment. The proposed
-algorithm is graphically outlined in Figure \ref{fig:basicFlowchart}.
-The methods that are used in each processing unit may include Particle
-Swarm Optimization (PSO) , the Multistart method and Differential
-Evolution (DE). These techniques have been adopted since they have
-been widely used in the relevant literature and provide the possibility
-to be parallelized relatively easily.
+modified to adapt to the parallel computing environment. 
 
 The following sections are organized as follows: In section \ref{sec:Methods-description},
 the three main algorithms participating in the overall algorithm are
@@ -296,22 +296,12 @@ In section \ref{sec:Experiments}, experimental models and experimental
 results are described. Finally, in section \ref{sec:Conclusions},
 the conclusions from the application of the current work are discussed.
 
-\begin{figure}[H]
-\begin{centering}
-\includegraphics[scale=0.3]{pm_datagram}\caption{Flowchart of the overall process\label{fig:basicFlowchart}. The DE
-acronym stands for the Differential Evolution method, the PSO acroym
-stands for the Particle Swarm Optimization method and the PU acronym
-represents the Parallel Unit that executes the algorithm. }
-\par\end{centering}
-\end{figure}
-
-
 \section{Adopted Algorithms\label{sec:Methods-description}}
 
 The methods that may executed in each processing unit are fully described
 in this section.
 
-\subsection{The method Particle swarm optimization\label{subsec:Particle_swarm_optimization}}
+\subsection{The method PSO\label{subsec:Particle_swarm_optimization}}
 
 PSO is an optimization method inspired by the behavior of swarms in
 nature. In PSO, a set of particles moves in the search space seeking
@@ -333,9 +323,9 @@ presented in the Algorithm \ref{alg:PSO}.
 \item \textbf{Initialization}. 
 
 \begin{enumerate}
-\item \textbf{Set} $\text{\mbox{iter}}=0$ (iteration counter).
+\item \textbf{Set} $k=0$ (iteration counter).
 \item \textbf{Set} the number of particles \textbf{$N_{p}$}.
-\item \textbf{Set} the maximum number of iterations allowed $\mbox{iter}_{\mbox{max}}$
+\item \textbf{Set} the maximum number of iterations allowed $k_{\mbox{max}}$
 \item \textbf{Set} the local search rate $p_{l}\in[0,1]$.
 \item \textbf{Initialize} randomly the positions of the $m$ particles $x_{1},x_{2},...,x_{m}$,
 with $x_{i}\in S\subset R^{n}$
@@ -372,7 +362,7 @@ where $\mbox{LS}(x)$ is a local search procedure.
 \end{enumerate}
 \item \textbf{End} \textbf{For}
 \item \textbf{Set} $p_{\mbox{best}}=\arg\min_{i\in1..m}f\left(x_{i}\right)$
-\item \textbf{Set} $\mbox{iter}=\mbox{iter}+1$.
+\item \textbf{Set} $k=k+1$.
 \item \textbf{Goto} Step \ref{enu:TCheckPSO}
 \end{enumerate}
 \end{algorithm}
@@ -520,10 +510,10 @@ in every iteration $k$, we compute:
 \text{\ensuremath{\delta^{(k)}=}}\left|\sum_{i=1}^{\mbox{NP}}\left|f_{i}^{(k)}\right|-\sum_{i=1}^{\mbox{NP}}\left|f_{i}^{(k-1)}\right|\right|\label{eq:mean}
 \end{equation}
 
-The value NP denotes the number of particles or chromosomes that participate
-in the algorithm. The termination rule is defined as follows: terminate
-if $\delta^{(k)}\le\epsilon$ for a predefined number $N_{k}$ of
-iterations. The third stopping rule was the so - called DoubleBox
+The value $NP$ denotes the number of particles or chromosomes that
+participate in the algorithm. The termination rule is defined as follows:
+terminate if $\delta^{(k)}\le\epsilon$ for a predefined number $N_{k}$
+of iterations. The third stopping rule was the so - called DoubleBox
 stopping rule, that was initially proposed in the work of Tsoulos
 \citep{Tsoulos}. According to this criterion, the algorithm terminates
 when one of the following conditions is met:
@@ -592,7 +582,18 @@ step \ref{enu:For--do}.
 \end{enumerate}
 \caption{The proposed overall algorithm\label{alg:The-overall-algorithm}}
 \end{algorithm}
- 
+ The proposed algorithm is graphically outlined in Figure \ref{fig:basicFlowchart}.
+The methods that are used in each processing unit may include Particle
+Swarm Optimization, the Multistart method and Differential Evolution
+(DE). These techniques have been adopted since they have been widely
+used in the relevant literature and provide the possibility to be
+parallelized relatively easily.
+\begin{figure}[H]
+\centering{}\includegraphics[scale=0.3]{pm_datagram}\caption{Flowchart of the overall process\label{fig:basicFlowchart}. The DE
+acronym stands for the Differential Evolution method, the PU acronym
+represents the Parallel Unit that executes the algorithm.}
+\end{figure}
+
 
 \section{Experiments\label{sec:Experiments}}
 
@@ -602,10 +603,10 @@ using the OpenMP library \citep{openMP}, while the implementation
 of the method was done in ANSI C++ within the optimization package
 OPTIMUS, available at \url{https://github.com/itsoulos/OPTIMUS}.
 The values used for all the parameters are shown in Table \ref{tab:settings}.
-The values of the parameters used in the experiments were such that
-there is a balance between the ability of the algorithms to discover
-the global minimum with certainty on the one hand, but also on their
-speed.
+The parameters used here are either suggested in the original publications
+of the methods (eg Differential Evolution, Particle Swarm Optimization)
+or have been chosen so that there is a compromise between the execution
+time of the method and its efficiency.
 
 \begin{table}[H]
 \centering{}\caption{The following parameters were considered for conducting the experiments\label{tab:settings}}
@@ -640,9 +641,19 @@ such as dimensionality, minima, scalability, and symmetry. A study
 by Z.-M. Gao and colleagues \citep{Gao} specifically examines the
 issue of symmetry and asymmetry in the test functions. The test functions
 used in the conducted experiments are shown in Table \ref{tab:The-test-functions}.
-The application of a local search method at the end of every method
-used in the experiments ensures that the global optimization method
-will discover a true minima of the used test function.
+Generally, the region of attraction $A\left(x^{*}\right)$ of a local
+minimum $x^{*}$ is defined as:
+\begin{equation}
+A\left(x^{*}\right)=\left\{ x:\ x\in S,\ L(x)=x^{*}\right\} 
+\end{equation}
+where $L(x)$ is a local search procedure, such as BFGS. Global optimization
+methods, usually find points which are in the region of attraction
+$A\left(x^{*}\right)$ of a local minimum $x^{*}$ but not necessarily
+the local minimum itself. For this reason, at the end of their execution,
+a local minimization method is applied in order to ensure the exact
+finding of a local minimum. Of course, this does not imply that the
+minimum that will be located will be the total minimum of the function,
+since a function can contain tens or even hundreds of local minima. 
 
 \begin{table}[H]
 \begin{centering}
@@ -721,86 +732,89 @@ in Figure \ref{fig:DE_stat}.
 \begin{table}[H]
 \centering{}\caption{Average function calls for the Differential evolution method, using
 different different termination rules\label{tab:DE}}
-\begin{tabular}{|l|c|c|c|c|c|}
+\begin{tabular}{|l|c|c|c|c|}
 \hline 
-\textbf{﻿Problem} & \textbf{ITERATION} & \textbf{BEST} & \textbf{MEAN} & \textbf{DOUBLEBOX} & \textbf{ALL}\tabularnewline
+\textbf{﻿Problem} & \textbf{BEST} & \textbf{MEAN} & \textbf{DOUBLEBOX} & \textbf{ALL}\tabularnewline
 \hline 
 \hline 
-\textbf{BF1} & 32561 & 6761 & 10511 & 10369 & 6114\tabularnewline
+\textbf{BF1} & 6761 & 10511 & 10369 & 6114\tabularnewline
 \hline 
-\textbf{BF2} & 30339 & 7693 & 9222 & 11524 & 7560\tabularnewline
+\textbf{BF2} & 7693 & 9222 & 11524 & 7560\tabularnewline
 \hline 
-\textbf{BRANIN} & 21650 & 4639 & 10982 & 4907 & 4289\tabularnewline
+\textbf{BRANIN} & 4639 & 10982 & 4907 & 4289\tabularnewline
 \hline 
-\textbf{CAMEL} & 27444 & 6116 & 13290 & 9905 & 5940\tabularnewline
+\textbf{CAMEL} & 6116 & 13290 & 9905 & 5940\tabularnewline
 \hline 
-\textbf{CIGAR10} & 31854 & 7647 & 4348 & 21116 & 3111\tabularnewline
+\textbf{CIGAR10} & 7647 & 4348 & 21116 & 3111\tabularnewline
 \hline 
-\textbf{CM4} & 31504 & 7913 & 4175 & 11851 & 4079\tabularnewline
+\textbf{CM4} & 7913 & 4175 & 11851 & 4079\tabularnewline
 \hline 
-\textbf{DISCUS10} & 25477 & 5191 & 2042 & 13614 & 2034\tabularnewline
+\textbf{DISCUS10} & 5191 & 2042 & 13614 & 2034\tabularnewline
 \hline 
-\textbf{EASOM} & 19591 & 1917 & 15103 & 1721 & 1721\tabularnewline
+\textbf{EASOM} & 1917 & 15103 & 1721 & 1721\tabularnewline
 \hline 
-\textbf{ELP10} & 25870 & 6046 & 24675 & 12519 & 6031\tabularnewline
+\textbf{ELP10} & 6046 & 24675 & 12519 & 6031\tabularnewline
 \hline 
-\textbf{EXP4} & 27134 & 5216 & 18151 & 6385 & 5040\tabularnewline
+\textbf{EXP4} & 5216 & 18151 & 6385 & 5040\tabularnewline
 \hline 
-\textbf{EXP16} & 28161 & 5588 & 27387 & 7552 & 5339\tabularnewline
+\textbf{EXP16} & 5588 & 27387 & 7552 & 5339\tabularnewline
 \hline 
-\textbf{GKLS250} & 25362 & 5227 & 2641 & 8379 & 2641\tabularnewline
+\textbf{GKLS250} & 5227 & 2641 & 8379 & 2641\tabularnewline
 \hline 
-\textbf{GKLS350} & 24645 & 5624 & 3298 & 17437 & 3206\tabularnewline
+\textbf{GKLS350} & 5624 & 3298 & 17437 & 3206\tabularnewline
 \hline 
-\textbf{GRIEWANK2} & 29342 & 8027 & 10458 & 14756 & 6915\tabularnewline
+\textbf{GRIEWANK2} & 8027 & 10458 & 14756 & 6915\tabularnewline
 \hline 
-\textbf{GRIEWANK10} & 38706 & 9664 & 37839 & 17312 & 9539\tabularnewline
+\textbf{GRIEWANK10} & 9664 & 37839 & 17312 & 9539\tabularnewline
 \hline 
-\textbf{POTENTIAL3} & 26013 & 5278 & 24823 & 13871 & 5256\tabularnewline
+\textbf{POTENTIAL3} & 5278 & 24823 & 13871 & 5256\tabularnewline
 \hline 
-\textbf{PONTENTIAL5} & 32876 & 8225 & 32439 & 20828 & 7742\tabularnewline
+\textbf{PONTENTIAL5} & 8225 & 32439 & 20828 & 7742\tabularnewline
 \hline 
-\textbf{PONTENTIAL6} & 35041 & 8467 & 34946 & 19169 & 8197\tabularnewline
+\textbf{PONTENTIAL6} & 8467 & 34946 & 19169 & 8197\tabularnewline
 \hline 
-\textbf{PONTENTIAL10} & 41410 & 10330 & 41300 & 26308 & 10643\tabularnewline
+\textbf{PONTENTIAL10} & 10330 & 41300 & 26308 & 10643\tabularnewline
 \hline 
-\textbf{HANSEN} & 23069 & 5219 & 23050 & 14245 & 4263\tabularnewline
+\textbf{HANSEN} & 5219 & 23050 & 14245 & 4263\tabularnewline
 \hline 
-\textbf{HARTMAN3} & 24165 & 4613 & 17966 & 7333 & 4566\tabularnewline
+\textbf{HARTMAN3} & 4613 & 17966 & 7333 & 4566\tabularnewline
 \hline 
-\textbf{HARTMAN6} & 25963 & 5734 & 17109 & 9354 & 5550\tabularnewline
+\textbf{HARTMAN6} & 5734 & 17109 & 9354 & 5550\tabularnewline
 \hline 
-\textbf{RASTRIGIN} & 29501 & 5912 & 17240 & 8987 & 5999\tabularnewline
+\textbf{RASTRIGIN} & 5912 & 17240 & 8987 & 5999\tabularnewline
 \hline 
-\textbf{ROSENBROCK8} & 34964 & 8503 & 34429 & 20980 & 8051\tabularnewline
+\textbf{ROSENBROCK8} & 8503 & 34429 & 20980 & 8051\tabularnewline
 \hline 
-\textbf{ROSENBROCK16} & 41395 & 10052 & 41335 & 26156 & 8307\tabularnewline
+\textbf{ROSENBROCK16} & 10052 & 41335 & 26156 & 8307\tabularnewline
 \hline 
-\textbf{SHEKEL5} & 25810 & 6064 & 25800 & 19877 & 5933\tabularnewline
+\textbf{SHEKEL5} & 6064 & 25800 & 19877 & 5933\tabularnewline
 \hline 
-\textbf{SHEKEL7} & 26177 & 5597 & 26168 & 20274 & 5677\tabularnewline
+\textbf{SHEKEL7} & 5597 & 26168 & 20274 & 5677\tabularnewline
 \hline 
-\textbf{SHEKEL10} & 26489 & 6037 & 26439 & 22960 & 5100\tabularnewline
+\textbf{SHEKEL10} & 6037 & 26439 & 22960 & 5100\tabularnewline
 \hline 
-\textbf{SINU4} & 24646 & 5751 & 24620 & 12511 & 4776\tabularnewline
+\textbf{SINU4} & 5751 & 24620 & 12511 & 4776\tabularnewline
 \hline 
-\textbf{SINU8} & 25355 & 6340 & 25477 & 18741 & 4980\tabularnewline
+\textbf{SINU8} & 6340 & 25477 & 18741 & 4980\tabularnewline
 \hline 
-\textbf{TEST2N4} & 25987 & 5848 & 24947 & 11640 & 5727\tabularnewline
+\textbf{TEST2N4} & 5848 & 24947 & 11640 & 5727\tabularnewline
 \hline 
-\textbf{TEST2N9} & 26698 & 7303 & 26571 & 16165 & 6288\tabularnewline
+\textbf{TEST2N9} & 7303 & 26571 & 16165 & 6288\tabularnewline
 \hline 
-\textbf{TEST30N3} & 25560 & 3169 & 8395 & 8134 & 2869\tabularnewline
+\textbf{TEST30N3} & 3169 & 8395 & 8134 & 2869\tabularnewline
 \hline 
-\textbf{TEST30N4} & 25021 & 2841 & 10381 & 7853 & 2714\tabularnewline
+\textbf{TEST30N4} & 2841 & 10381 & 7853 & 2714\tabularnewline
 \hline 
-\textbf{Total} & \textbf{965780} & \textbf{214552} & \textbf{677557} & \textbf{474733} & \textbf{186197}\tabularnewline
+\textbf{Total} & \textbf{214552} & \textbf{677557} & \textbf{474733} & \textbf{186197}\tabularnewline
 \hline 
 \end{tabular}
 \end{table}
 
 \begin{figure}[H]
-\centering{}\includegraphics{3}\caption{Statistical comparison of function calls with different termination
+\begin{centering}
+\includegraphics{table3}
+\par\end{centering}
+\centering{}\caption{Statistical comparison of function calls with different termination
 rule of differential evolution\label{fig:DE_stat}}
 \end{figure}
 As it is evident, the combination of the stopping rules reduces the
@@ -812,92 +826,91 @@ the PSO method and the results are shown in Table \ref{tab:PSO} and
 the statistical comparison is outlined graphically in Figure \ref{fig:PSO_stat}.
 
 \begin{table}[H]
-\centering{}\caption{Particle swarm optimization: Function calls with different termination
-rules\label{tab:PSO}}
-\begin{tabular}{|l|c|c|c|c|c|}
+\centering{}\caption{PSO: Function calls with different termination rules\label{tab:PSO}}
+\begin{tabular}{|l|c|c|c|c|}
 \hline 
-\textbf{﻿Problem} & \textbf{ITERATION} & \textbf{BEST} & \textbf{MEAN} & \textbf{DOUBLEBOX} & \textbf{ALL}\tabularnewline
+\textbf{﻿Problem} & \textbf{BEST} & \textbf{MEAN} & \textbf{DOUBLEBOX} & \textbf{ALL}\tabularnewline
 \hline 
 \hline 
-\textbf{BF1} & 33113 & 3418 & 3127 & 3122 & 3005\tabularnewline
+\textbf{BF1} & 3418 & 3127 & 3122 & 3005\tabularnewline
 \hline 
-\textbf{BF2} & 32804 & 3265 & 2995 & 2919 & 2889\tabularnewline
+\textbf{BF2} & 3265 & 2995 & 2919 & 2889\tabularnewline
 \hline 
-\textbf{BRANIN} & 27762 & 2601 & 2549 & 2431 & 2417\tabularnewline
+\textbf{BRANIN} & 2601 & 2549 & 2431 & 2417\tabularnewline
 \hline 
-\textbf{CAMEL} & 28511 & 2801 & 2675 & 2547 & 2547\tabularnewline
+\textbf{CAMEL} & 2801 & 2675 & 2547 & 2547\tabularnewline
 \hline 
-\textbf{CIGAR10} & 39038 & 3987 & 3674 & 3638 & 3638\tabularnewline
+\textbf{CIGAR10} & 3987 & 3674 & 3638 & 3638\tabularnewline
 \hline 
-\textbf{CM4} & 33051 & 3863 & 3299 & 3144 & 3144\tabularnewline
+\textbf{CM4} & 3863 & 3299 & 3144 & 3144\tabularnewline
 \hline 
-\textbf{DISCUS10} & 29548 & 2611 & 2409 & 2405 & 2405\tabularnewline
+\textbf{DISCUS10} & 2611 & 2409 & 2405 & 2405\tabularnewline
 \hline 
-\textbf{EASOM} & 26251 & 2420 & 2232 & 2232 & 2232\tabularnewline
+\textbf{EASOM} & 2420 & 2232 & 2232 & 2232\tabularnewline
 \hline 
-\textbf{ELP10} & 1907 & 1705 & 1741 & 1586 & 1586\tabularnewline
+\textbf{ELP10} & 1705 & 1741 & 1586 & 1586\tabularnewline
 \hline 
-\textbf{EXP4} & 28364 & 2751 & 2558 & 2558 & 2558\tabularnewline
+\textbf{EXP4} & 2751 & 2558 & 2558 & 2558\tabularnewline
 \hline 
-\textbf{EXP16} & 28536 & 2898 & 2676 & 2676 & 2676\tabularnewline
+\textbf{EXP16} & 2898 & 2676 & 2676 & 2676\tabularnewline
 \hline 
-\textbf{GKLS250} & 27495 & 2796 & 2553 & 2422 & 2422\tabularnewline
+\textbf{GKLS250} & 2796 & 2553 & 2422 & 2422\tabularnewline
 \hline 
-\textbf{GKLS350} & 28350 & 2947 & 2645 & 3833 & 2558\tabularnewline
+\textbf{GKLS350} & 2947 & 2645 & 3833 & 2558\tabularnewline
 \hline 
-\textbf{GRIEWANK2} & 32596 & 4405 & 2839 & 4282 & 2820\tabularnewline
+\textbf{GRIEWANK2} & 4405 & 2839 & 4282 & 2820\tabularnewline
 \hline 
-\textbf{GRIEWANK10} & 37070 & 5327 & 4561 & 4797 & 4248\tabularnewline
+\textbf{GRIEWANK10} & 5327 & 4561 & 4797 & 4248\tabularnewline
 \hline 
-\textbf{POTENTIAL3} & 32890 & 3289 & 3231 & 3222 & 3170\tabularnewline
+\textbf{POTENTIAL3} & 3289 & 3231 & 3222 & 3170\tabularnewline
 \hline 
-\textbf{PONTENTIAL5} & 50595 & 4926 & 4881 & 7282 & 4730\tabularnewline
+\textbf{PONTENTIAL5} & 4926 & 4881 & 7282 & 4730\tabularnewline
 \hline 
-\textbf{PONTENTIAL6} & 62076 & 6699 & 5537 & 7534 & 5077\tabularnewline
+\textbf{PONTENTIAL6} & 6699 & 5537 & 7534 & 5077\tabularnewline
 \hline 
-\textbf{PONTENTIAL10} & 78807 & 10582 & 6737 & 29865 & 6539\tabularnewline
+\textbf{PONTENTIAL10} & 10582 & 6737 & 29865 & 6539\tabularnewline
 \hline 
-\textbf{HANSEN} & 29527 & 3788 & 2687 & 3062 & 2587\tabularnewline
+\textbf{HANSEN} & 3788 & 2687 & 3062 & 2587\tabularnewline
 \hline 
-\textbf{HARTMAN3} & 29673 & 2807 & 2743 & 2550 & 2550\tabularnewline
+\textbf{HARTMAN3} & 2807 & 2743 & 2550 & 2550\tabularnewline
 \hline 
-\textbf{HARTMAN6} & 31739 & 3081 & 2915 & 2809 & 2809\tabularnewline
+\textbf{HARTMAN6} & 3081 & 2915 & 2809 & 2809\tabularnewline
 \hline 
-\textbf{RASTRIGIN} & 32717 & 3558 & 2990 & 2829 & 2829\tabularnewline
+\textbf{RASTRIGIN} & 3558 & 2990 & 2829 & 2829\tabularnewline
 \hline 
-\textbf{ROSENBROCK8} & 33115 & 4279 & 4263 & 4036 & 3969\tabularnewline
+\textbf{ROSENBROCK8} & 4279 & 4263 & 4036 & 3969\tabularnewline
 \hline 
-\textbf{ROSENBROCK16} & 35519 & 5761 & 5432 & 5170 & 5170\tabularnewline
+\textbf{ROSENBROCK16} & 5761 & 5432 & 5170 & 5170\tabularnewline
 \hline 
-\textbf{SHEKEL5} & 29461 & 3132 & 2823 & 12476 & 2816\tabularnewline
+\textbf{SHEKEL5} & 3132 & 2823 & 12476 & 2816\tabularnewline
 \hline 
-\textbf{SHEKEL7} & 30003 & 3064 & 2855 & 11520 & 2856\tabularnewline
+\textbf{SHEKEL7} & 3064 & 2855 & 11520 & 2856\tabularnewline
 \hline 
-\textbf{SHEKEL10} & 30043 & 3128 & 2942 & 14786 & 2866\tabularnewline
+\textbf{SHEKEL10} & 3128 & 2942 & 14786 & 2866\tabularnewline
 \hline 
-\textbf{SINU4} & 27786 & 3047 & 2740 & 2673 & 2657\tabularnewline
+\textbf{SINU4} & 3047 & 2740 & 2673 & 2657\tabularnewline
 \hline 
-\textbf{SINU8} & 28129 & 3177 & 2824 & 4113 & 2828\tabularnewline
+\textbf{SINU8} & 3177 & 2824 & 4113 & 2828\tabularnewline
 \hline 
-\textbf{TEST2N4} & 28950 & 3037 & 2839 & 2681 & 2681\tabularnewline
+\textbf{TEST2N4} & 3037 & 2839 & 2681 & 2681\tabularnewline
 \hline 
-\textbf{TEST2N9} & 30368 & 4188 & 3106 & 3105 & 3067\tabularnewline
+\textbf{TEST2N9} & 4188 & 3106 & 3105 & 3067\tabularnewline
 \hline 
-\textbf{TEST30N3} & 27643 & 2943 & 3130 & 2762 & 2762\tabularnewline
+\textbf{TEST30N3} & 2943 & 3130 & 2762 & 2762\tabularnewline
 \hline 
-\textbf{TEST30N4} & 27836 & 3202 & 3185 & 2915 & 2915\tabularnewline
+\textbf{TEST30N4} & 3202 & 3185 & 2915 & 2915\tabularnewline
 \hline 
-\textbf{Total} & \textbf{1111273} & \textbf{125483} & \textbf{110393} & \textbf{169982} & \textbf{106023}\tabularnewline
+\textbf{Total} & \textbf{125483} & \textbf{110393} & \textbf{169982} & \textbf{106023}\tabularnewline
 \hline 
 \end{tabular}
 \end{table}
 
 \begin{figure}[H]
 \begin{centering}
-\includegraphics{5}
+\includegraphics{table4}
 \par\end{centering}
 \caption{Statistical comparison of function calls with different termination
-rule of particle swarm optimization\label{fig:PSO_stat}}
+rule of PSO method\label{fig:PSO_stat}}
 \end{figure}
 Once more, the proposed termination scheme outperforms the other stopping
 rules in almost every test function. Likewise, the same experiment
@@ -908,80 +921,80 @@ in Figure \ref{fig:Multistart_stat}.
 \begin{table}[H]
 \begin{centering}
 \caption{Multistart: Function calls with different termination rules\label{tab:Multistart}}
-\begin{tabular}{|l|c|c|c|c|c|}
+\begin{tabular}{|l|c|c|c|c|}
 \hline 
-\textbf{﻿Problem} & \textbf{ITERATION} & \textbf{BEST} & \textbf{MEAN} & \textbf{DOUBLEBOX} & \textbf{ALL}\tabularnewline
+\textbf{﻿Problem} & \textbf{BEST} & \textbf{MEAN} & \textbf{DOUBLEBOX} & \textbf{ALL}\tabularnewline
 \hline 
 \hline 
-\textbf{BF1} & 479374 & 53873 & 479374 & 50762 & 50762\tabularnewline
+\textbf{BF1} & 53873 & 479374 & 50762 & 50762\tabularnewline
 \hline 
-\textbf{BF2} & 276214 & 37670 & 239220 & 35711 & 35711\tabularnewline
+\textbf{BF2} & 37670 & 239220 & 35711 & 35711\tabularnewline
 \hline 
-\textbf{BRANIN} & 107283 & 11063 & 11046 & 10521 & 10521\tabularnewline
+\textbf{BRANIN} & 11063 & 11046 & 10521 & 10521\tabularnewline
 \hline 
-\textbf{CAMEL} & 163508 & 16083 & 153559 & 15255 & 15255\tabularnewline
+\textbf{CAMEL} & 16083 & 153559 & 15255 & 15255\tabularnewline
 \hline 
-\textbf{CIGAR10} & 59097 & 14937 & 14937 & 14697 & 14697\tabularnewline
+\textbf{CIGAR10} & 14937 & 14937 & 14697 & 14697\tabularnewline
 \hline 
-\textbf{CM4} & 726033 & 62236 & 62192 & 58581 & 58581\tabularnewline
+\textbf{CM4} & 62236 & 62192 & 58581 & 58581\tabularnewline
 \hline 
-\textbf{DISCUS10} & 50456 & 6296 & 6296 & 6056 & 6056\tabularnewline
+\textbf{DISCUS10} & 6296 & 6296 & 6056 & 6056\tabularnewline
 \hline 
-\textbf{EASOM} & 55130 & 5412 & 55130 & 51132 & 5412\tabularnewline
+\textbf{EASOM} & 5412 & 55130 & 51132 & 5412\tabularnewline
 \hline 
-\textbf{ELP10} & 58917 & 14757 & 14981 & 14517 & 14517\tabularnewline
+\textbf{ELP10} & 14757 & 14981 & 14517 & 14517\tabularnewline
 \hline 
-\textbf{EXP4} & 54174 & 10022 & 54174 & 9774 & 9774\tabularnewline
+\textbf{EXP4} & 10022 & 54174 & 9774 & 9774\tabularnewline
 \hline 
-\textbf{EXP16} & 54680 & 10528 & 54680 & 10280 & 10280\tabularnewline
+\textbf{EXP16} & 10528 & 54680 & 10280 & 10280\tabularnewline
 \hline 
-\textbf{GKLS250} & 58547 & 6202 & 47948 & 5908 & 5908\tabularnewline
+\textbf{GKLS250} & 6202 & 47948 & 5908 & 5908\tabularnewline
 \hline 
-\textbf{GKLS350} & 81988 & 7560 & 42145 & 7087 & 7087\tabularnewline
+\textbf{GKLS350} & 7560 & 42145 & 7087 & 7087\tabularnewline
 \hline 
-\textbf{GRIEWANK2} & 188429 & 19179 & 188429 & 17877 & 17877\tabularnewline
+\textbf{GRIEWANK2} & 19179 & 188429 & 17877 & 17877\tabularnewline
 \hline 
-\textbf{GRIEWANK10} & 620223 & 65206 & 567153 & 61818 & 61818\tabularnewline
+\textbf{GRIEWANK10} & 65206 & 567153 & 61818 & 61818\tabularnewline
 \hline 
-\textbf{POTENTIAL3} & 126632 & 17773 & 126632 & 17161 & 17161\tabularnewline
+\textbf{POTENTIAL3} & 17773 & 126632 & 17161 & 17161\tabularnewline
 \hline 
-\textbf{PONTENTIAL5} & 226873 & 31347 & 226873 & 30249 & 30249\tabularnewline
+\textbf{PONTENTIAL5} & 31347 & 226873 & 30249 & 30249\tabularnewline
 \hline 
-\textbf{PONTENTIAL6} & 247144 & 35457 & 247144 & 33883 & 33883\tabularnewline
+\textbf{PONTENTIAL6} & 35457 & 247144 & 33883 & 33883\tabularnewline
 \hline 
-\textbf{PONTENTIAL10} & 283230 & 44957 & 283230 & 43618 & 43618\tabularnewline
+\textbf{PONTENTIAL10} & 44957 & 283230 & 43618 & 43618\tabularnewline
 \hline 
-\textbf{HANSEN} & 201543 & 18568 & 201543 & 17541 & 17541\tabularnewline
+\textbf{HANSEN} & 18568 & 201543 & 17541 & 17541\tabularnewline
 \hline 
-\textbf{HARTMAN3} & 162934 & 17395 & 162934 & 16562 & 16562\tabularnewline
+\textbf{HARTMAN3} & 17395 & 162934 & 16562 & 16562\tabularnewline
 \hline 
-\textbf{HARTMAN6} & 179073 & 22010 & 179073 & 21015 & 21015\tabularnewline
+\textbf{HARTMAN6} & 22010 & 179073 & 21015 & 21015\tabularnewline
 \hline 
-\textbf{RASTRIGIN} & 275610 & 24696 & 275610 & 23015 & 23015\tabularnewline
+\textbf{RASTRIGIN} & 24696 & 275610 & 23015 & 23015\tabularnewline
 \hline 
-\textbf{ROSENBROCK8} & 62010 & 17850 & 17850 & 17610 & 17610\tabularnewline
+\textbf{ROSENBROCK8} & 17850 & 17850 & 17610 & 17610\tabularnewline
 \hline 
-\textbf{ROSENBROCK16} & 69460 & 25300 & 25300 & 25060 & 25060\tabularnewline
+\textbf{ROSENBROCK16} & 25300 & 25300 & 25060 & 25060\tabularnewline
 \hline 
-\textbf{SHEKEL5} & 151648 & 17725 & 151648 & 16972 & 16972\tabularnewline
+\textbf{SHEKEL5} & 17725 & 151648 & 16972 & 16972\tabularnewline
 \hline 
-\textbf{SHEKEL7} & 154373 & 17894 & 154373 & 17127 & 17127\tabularnewline
+\textbf{SHEKEL7} & 17894 & 154373 & 17127 & 17127\tabularnewline
 \hline 
-\textbf{SHEKEL10} & 159825 & 17931 & 159825 & 17135 & 17135\tabularnewline
+\textbf{SHEKEL10} & 17931 & 159825 & 17135 & 17135\tabularnewline
 \hline 
-\textbf{SINU4} & 155634 & 16429 & 155634 & 15647 & 15647\tabularnewline
+\textbf{SINU4} & 16429 & 155634 & 15647 & 15647\tabularnewline
 \hline 
-\textbf{SINU8} & 170167 & 19519 & 170167 & 18674 & 18674\tabularnewline
+\textbf{SINU8} & 19519 & 170167 & 18674 & 18674\tabularnewline
 \hline 
-\textbf{TEST2N4} & 154092 & 16486 & 154092 & 15806 & 15806\tabularnewline
+\textbf{TEST2N4} & 16486 & 154092 & 15806 & 15806\tabularnewline
 \hline 
-\textbf{TEST2N9} & 160651 & 22035 & 160651 & 20716 & 20716\tabularnewline
+\textbf{TEST2N9} & 22035 & 160651 & 20716 & 20716\tabularnewline
 \hline 
-\textbf{TEST30N3} & 161628 & 16934 & 161628 & 16145 & 16145\tabularnewline
+\textbf{TEST30N3} & 16934 & 161628 & 16145 & 16145\tabularnewline
 \hline 
-\textbf{TEST30N4} & 159753 & 16686 & 159753 & 15907 & 15907\tabularnewline
+\textbf{TEST30N4} & 16686 & 159753 & 15907 & 15907\tabularnewline
 \hline 
-\textbf{Total} & \textbf{6296333} & \textbf{758016} & \textbf{5165224} & \textbf{769819} & \textbf{724099}\tabularnewline
+\textbf{Total} & \textbf{758016} & \textbf{5165224} & \textbf{769819} & \textbf{724099}\tabularnewline
 \hline 
 \end{tabular}
 \par\end{centering}
@@ -989,14 +1002,114 @@ in Figure \ref{fig:Multistart_stat}.
 
 \begin{figure}[H]
 \begin{centering}
-\includegraphics{7}\caption{Statistical comparison of function calls with different termination
+\includegraphics{table5}
+\par\end{centering}
+\begin{centering}
+\caption{Statistical comparison of function calls with different termination
 rule of multistart\label{fig:Multistart_stat}}
 \par\end{centering}
 \end{figure}
  Observing the tables with the corresponding statistical and quantitative
 comparisons, it is evident that the calls to the objective function
-for the proposed termination rule \ref{subsec:Proposed_all} are fewer
-than any other rule in any method. 
+for the proposed termination rule  are fewer than any other rule in
+any method. Also, the proposed termination rule was also applied to
+a recent global optimization method named Grey Wolf Optimizer \citep{gwo}
+and the results are shown in Table \ref{tab:experGWO} and the corresponding
+statistical comparison in Figure \ref{fig:experGWO}.
+
+\begin{table}[H]
+\caption{Experiments using the variety of termination rules and the GWO optimization
+method.\label{tab:experGWO}}
+
+\begin{centering}
+\begin{tabular}{|l|c|c|c|c|}
+\hline 
+\textbf{﻿Problem} & \textbf{BEST} & \textbf{MEAN} & \textbf{DOUBLEBOX} & \textbf{ALL}\tabularnewline
+\hline 
+\hline 
+\textbf{BF1} & 3080 & 4675 & 6719 & 3080\tabularnewline
+\hline 
+\textbf{BF2} & 3083 & 4747 & 6923 & 3083\tabularnewline
+\hline 
+\textbf{BRANIN} & 3217 & 3217 & 5105 & 2661\tabularnewline
+\hline 
+\textbf{CAMEL} & 2750 & 3411 & 3780 & 2724\tabularnewline
+\hline 
+\textbf{CIGAR10} & 14718 & 23003 & 24134 & 14718\tabularnewline
+\hline 
+\textbf{CM4} & 3187 & 5638 & 8802 & 3187\tabularnewline
+\hline 
+\textbf{DISCUS10} & 12946 & 22194 & 24134 & 12946\tabularnewline
+\hline 
+\textbf{EASOM} & 2701 & 2965 & 10201 & 2135\tabularnewline
+\hline 
+\textbf{ELP10} & 6440 & 22449 & 24123 & 6440\tabularnewline
+\hline 
+\textbf{EXP4} & 2796 & 5198 & 7830 & 2796\tabularnewline
+\hline 
+\textbf{EXP16} & 4991 & 10842 & 22025 & 4991\tabularnewline
+\hline 
+\textbf{GKLS250} & 3072 & 3072 & 4840 & 2940\tabularnewline
+\hline 
+\textbf{GKLS350} & 4041 & 4041 & 8620 & 4041\tabularnewline
+\hline 
+\textbf{GRIEWANK2} & 3155 & 4818 & 7258 & 3155\tabularnewline
+\hline 
+\textbf{GRIEWANK10} & 8568 & 10196 & 22841 & 8568\tabularnewline
+\hline 
+\textbf{POTENTIAL3} & 3766 & 3766 & 13063 & 3701\tabularnewline
+\hline 
+\textbf{PONTENTIAL5} & 4082 & 4082 & 19826 & 3645\tabularnewline
+\hline 
+\textbf{PONTENTIAL6} & 3754 & 3754 & 19477 & 3380\tabularnewline
+\hline 
+\textbf{PONTENTIAL10} & 3502 & 3502 & 13129 & 2538\tabularnewline
+\hline 
+\textbf{HANSEN} & 3407 & 3407 & 8345 & 2795\tabularnewline
+\hline 
+\textbf{HARTMAN3} & 3251 & 3251 & 7587 & 2911\tabularnewline
+\hline 
+\textbf{HARTMAN6} & 3639 & 3639 & 13342 & 3408\tabularnewline
+\hline 
+\textbf{RASTRIGIN} & 2878 & 4499 & 6463 & 2806\tabularnewline
+\hline 
+\textbf{ROSENBROCK8} & 5859 & 22384 & 24123 & 5859\tabularnewline
+\hline 
+\textbf{ROSENBROCK16} & 8528 & 23513 & 24132 & 8528\tabularnewline
+\hline 
+\textbf{SHEKEL5} & 3381 & 3381 & 16781 & 2778\tabularnewline
+\hline 
+\textbf{SHEKEL7} & 3600 & 3600 & 17989 & 3324\tabularnewline
+\hline 
+\textbf{SHEKEL10} & 3258 & 3258 & 19227 & 2866\tabularnewline
+\hline 
+\textbf{SINU4} & 2923 & 2923 & 9767 & 2231\tabularnewline
+\hline 
+\textbf{SINU8} & 2934 & 2934 & 10714 & 2502\tabularnewline
+\hline 
+\textbf{TEST2N4} & 3623 & 3623 & 9619 & 3603\tabularnewline
+\hline 
+\textbf{TEST2N9} & 4327 & 4327 & 21381 & 4207\tabularnewline
+\hline 
+\textbf{TEST30N3} & 3225 & 3237 & 3513 & 2769\tabularnewline
+\hline 
+\textbf{TEST30N4} & 3324 & 3324 & 6124 & 3144\tabularnewline
+\hline 
+\textbf{Total} & \textbf{152006} & \textbf{236870} & \textbf{451937} & \textbf{144460}\tabularnewline
+\hline 
+\end{tabular}
+\par\end{centering}
+\end{table}
+\begin{figure}[H]
+\begin{centering}
+\includegraphics{table6}
+\par\end{centering}
+\caption{Statistical comparison for the GWO optimizer using different termination
+rules.\label{fig:experGWO}}
+
+\end{figure}
+Once again the combinatorial termination technique achieves the lowest
+number of function calls of all available techniques. 
 
 The proposed termination rule was also applied to the current parallel
 optimization technique for the test function described previously.
@@ -1303,30 +1416,50 @@ for 5 processing units.\label{fig:Wilcoxon-rank-sum-test}}
  A p-value of less than 0.05 (two-tailed) was used to determine statistical
 significance and is indicated in bold.
 
-An additional experiment was performed in order to demonstrate the
-efficiency of the proposed technique on high-dimensional functions.
-For this reason, the high elliptic function was selected. The function
-is defined as 
+An additional experiment was performed to assess the capabilities
+of the parallel technique using the CM function for various values
+of the dimension. This function is defined as:
 \[
-f(x)=\sum_{i=1}^{n}\left(10^{6}\right)^{\frac{i-1}{n-1}}x_{i}^{2}
+f(x)=\sum_{i=1}^{n}x_{i}^{2}-\frac{1}{10}\sum_{i=1}^{n}\cos\left(5\pi x_{i}\right)
 \]
-where the $n$ stands for the dimension of the function. The results
-from the application of the current parallel method to this function
-when the variable $n$ varies from $n=10$ to $n=60$ are graphically
-illustrated in Figure \ref{fig:elpTime}.
-
+The proposed method was tested on this function for different values
+of the dimension $n$ and for a variety of processing units and the
+results are graphically illustrated in Figure \ref{fig:cmExper}.
 \begin{figure}[H]
-\begin{centering}
-\includegraphics[scale=0.65]{elp_parallel}
-\par\end{centering}
-\caption{Execution time for the proposed method when applied to the ELP problem
-for different dimensions.\label{fig:elpTime}}
+\includegraphics{cm}
+
+\caption{Experiments using the proposed paralell technique and the CM function.
+The dimension of the function $n$ varies from 1 to 20 and the number
+of processing units changes from 1 to 20.\label{fig:cmExper}}
 
 \end{figure}
-As in the previous experiments, increasing the number of computing
-units leads to a reduction in the required number of function calls
-and as can be seen in this graph, this in turn leads to a reduction
-in computing time.
+From the experimental results it is obvious that the required number
+of function calls is drastically reduced with the increase of computing
+units from 1 to 2 or to 5. 
+
+Also, the proposed method was applied on the GKLS function for different
+versions of the function. The dimension of the function was in the
+range $[2..5]$. In each dimension, 10 different versions of the functions
+were used and average execution times and function calls were recorded.
+Also, the proposed method was applied on the GKLS function using different
+number of processing units. The average function calls from this experiment
+are show graphically in Figure \ref{fig:experGklsCalls} and the average
+execution times in Figure \ref{fig:gklsExperTime}.
+\begin{figure}[H]
+\includegraphics{gkls_calls}
+
+\caption{Average function calls for the proposed method and different dimensions
+of the GKLS function.\label{fig:experGklsCalls}}
+\end{figure}
+\begin{figure}[H]
+\includegraphics{gkls_time}
+
+\caption{Average execution time for the GKLS function and the proposed method.
+\label{fig:gklsExperTime}}
+\end{figure}
+ The graphs above show once again that adding processing units to
+the proposed technique can reduce not only the execution time, as
+expected, but also the required number of function calls.
 
 \section{Conclusions \label{sec:Conclusions}}
 
@@ -1347,12 +1480,12 @@ environments. At each step of the method, a different global optimization
 method is also executed on each parallel computing unit, and these
 different techniques exchange optimal solutions with each other. In
 current work, the global optimization techniques of Differential Evolution,
-Multistart and Particle Swarm optimization were used in the processing
-units, but the method can be generalized to use other stochastic optimization
-techniques, such as genetic algorithms or simulated annealing. Also,
-the overall method terminates with the combined termination rule proposed
-here, and the experimental results performed on a series of well -
-known test problems from the relevant literature seem to be very promising.
+Multistart and PSO were used in the processing units, but the method
+can be generalized to use other stochastic optimization techniques,
+such as genetic algorithms or simulated annealing. Also, the overall
+method terminates with the combined termination rule proposed here,
+and the experimental results performed on a series of well - known
+test problems from the relevant literature seem to be very promising.
 
 Future extensions of the current work may include the incorporation
 of more advanced termination rules as well as the execution of alternative
@@ -1760,6 +1893,8 @@ Non-Symmetric Benchmark Functions. IEEE Access, July 26, 2021.
 and R. Menon, Parallel Programming in OpenMP, Morgan Kaufmann Publishers
 Inc., 2001.
 
+\bibitem{gwo}S. Mirjalili, S.M. Mirjalili, A. Lewis, Grey wolf optimizer.
+Advances in engineering software \textbf{69}, pp. 46-61, 2014.
 \end{thebibliography}
 
 \end{adjustwidth}{}
