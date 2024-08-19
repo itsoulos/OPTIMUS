@@ -311,24 +311,28 @@ These authors contributed equally to this work.
 \end_layout
 
 \begin_layout Abstract
-Parallel optimization constitutes a powerful tool for solving optimization
- problems in various domains.
- By harnessing multiple computational resources simultaneously, optimization
- methods can achieve faster convergence and improved performance.
- This specific parallel implementation involves the concurrent execution
- of different methods, such as evolutionary algorithms, swarm-based optimization
-, and the utilization of multiple restarts.
- The primary objective is the efficient exploration of the search space
- and the attainment of optimal solutions in shorter time frames without
- squandering computational power.
- However, defined termination criteria are essential to prevent uncontrolled
- execution of the algorithm, aiming to conserve computational resources
- and time.
- Within the scope of this study, an innovative combination of termination
- rules and a mechanism for transferring optimal solutions among different
- methodological approaches is proposed.
- The proposed enhancements have been tested on a series of well-known optimizati
-on problems from relevant literature, and the results are reported here.
+Parallel optimization enables faster and more efficient problem-solving
+ by reducing computational resource consumption and time.
+ By simultaneously combining multiple methods, such as evolutionary algorithms
+ and swarm-based optimization, effective exploration of the search space
+ and achievement of optimal solutions in shorter time frames are realized.
+ In this study, a combination of termination criteria is proposed, utilizing
+ three different criteria to end the algorithmic process.
+ These criteria include measuring the difference between optimal values
+ in successive iterations, calculating the mean value of the cost function
+ in each iteration, and the so-called "DoubleBox" criterion, which is based
+ on the relative variance of the best value of the objective cost function
+ over a specific number of iterations.
+ The problem is addressed through the parallel execution of three different
+ optimization methods (PSO, Differential Evolution, Multistart).
+ Each method operates independently on separate computational units with
+ the goal of faster discovery of the optimal solution and more efficient
+ use of computational resources.
+ The optimal solution identified in each iteration is transferred to the
+ other computational units.
+ The proposed enhancements were tested on a series of well-known optimization
+ problems from relevant literature, demonstrating significant improvements
+ in convergence speed and solution quality compared to traditional approaches.
 \end_layout
 
 \begin_layout Keywords
@@ -374,39 +378,112 @@ S=\left[a_{1},b_{1}\right]\otimes\left[a_{2},b_{2}\right]\otimes\ldots\left[a_{n
 
 
 \series default
-Such problems occur frequently in areas such as physics 
+Such problems frequently arise in sciences like physics, where genetic algorithm
+s prove effective in locating positions in magnetic plasmas and in developing
+ optimization tools 
 \begin_inset CommandInset citation
-LatexCommand cite
-key "go_physics1,go_physics2,go_physics3"
+LatexCommand citep
+key "go_physics1"
 literal "false"
 
 \end_inset
 
-, chemistry 
+.
+ Additionally, the combined use of various optimization techniques enhances
+ performance and stability in complex problems 
 \begin_inset CommandInset citation
-LatexCommand cite
-key "go_chemistry1,go_chemistry2,go_chemistry3"
+LatexCommand citep
+key "go_physics2"
 literal "false"
 
 \end_inset
 
-, economics 
+.
+ Furthermore, the hybrid approach that combines artificial physics techniques
+ with particle swarm optimization has proven to be particularly effective
+ in solving energy allocation problems 
 \begin_inset CommandInset citation
-LatexCommand cite
-key "go_econ1,go_econ2"
+LatexCommand citep
+key "go_physics3"
 literal "false"
 
 \end_inset
 
-, medicine 
+.
+ In the field of chemistry, minimizing potential energy functions is crucial
+ for understanding the ground states of molecular clusters and proteins
+ 
 \begin_inset CommandInset citation
-LatexCommand cite
-key "go_med1,go_med2"
+LatexCommand citep
+key "go_chemistry1"
 literal "false"
 
 \end_inset
 
- etc.
+.
+ Optimizing these functions has been used for accurate protein structure
+ prediction, with results closely matching crystal structures 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "go_chemistry2"
+literal "false"
+
+\end_inset
+
+.
+ Moreover, a new computational framework combining variance-based methods
+ with artificial neural networks has significantly improved accuracy and
+ reduced computational cost in sensitivity analysis 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "go_chemistry3"
+literal "false"
+
+\end_inset
+
+.
+ Even in the field of economics, optimization plays a crucial role.
+ The particle swarm optimization (PSO) method is shown to be highly effective
+ in solving the economic dispatch problem in power systems, providing higher
+ quality solutions with greater efficiency compared to genetic algorithms
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "go_econ1"
+literal "false"
+
+\end_inset
+
+.
+ Additionally, a multi-objective optimization approach for economic load
+ dispatch and emission reduction in hydroelectric and thermal plants achieves
+ optimal solutions that align with the user's preferences and goals 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "go_econ2"
+literal "false"
+
+\end_inset
+
+.
+ Finally, optimization is also applied in biological process models 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "go_med1"
+literal "false"
+
+\end_inset
+
+ and medical data classification, achieving high accuracy in diagnosing
+ diseases and analyzing genomes 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "go_med2"
+literal "false"
+
+\end_inset
+
+.
  A series of methods have been proposed in the recent literature to handle
  problems of Equation 
 \begin_inset CommandInset ref
@@ -549,66 +626,263 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-However, the above optimization methods require significant amounts of computati
-onal power and time; therefore, parallelization of the methods is essential.
- Recently, a variety of methods were proposed that can take advantage of
- parallel processing, such as parallel techniques 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "parallel-pso,parallel-multistart,parallel-doublepop"
-literal "false"
-
-\end_inset
-
-, or methods that utilize the GPU architectures 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "msgpu1,msgpu2,msgpu3"
-literal "false"
-
-\end_inset
-
- etc.
-
-\series bold
- 
-\series default
-Parallel optimization represents a significant approach in the field of
- optimization problem-solving and is applied across a wide range of applications
-, such as optimization of machine learning model parameters 
+However, the above optimization methods require significant computational
+ power and time.
+ Therefore, parallel processing of these methods is essential.
+ Recently, various methods have been proposed to leverage parallel processing.
+ Specifically, one study details the parallel implementation of the Particle
+ Swarm Optimization (PSO) algorithm, which improves performance for load-balance
+d problems but shows reduced efficiency for load-imbalanced ones.
+ The study suggests using larger particle populations and implementing asynchron
+ous processing to enhance performance 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "Low Gon,Yangyang,Yamashiro"
-literal "false"
-
-\end_inset
-
-, control system design and optimization 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Kim Tsai,Oh Jong,Fatehi"
-literal "false"
-
-\end_inset
-
-, energy and resource management 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Cai Yang,Yu Shahabi,Ramirez,Tavakolan"
-literal "false"
-
-\end_inset
-
-, as well as problems related to sustainable development and enhancing sustainab
-ility 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Lin,Pang,Ezugwu"
+key "parallel-pso"
 literal "false"
 
 \end_inset
 
 .
+ Another review provides a comprehensive overview of derivative-free optimizatio
+n methods, useful for problems where objective and constraint functions
+ come only from a black-box or simulator interface.
+ The review focuses on recent developments and categorizes methods based
+ on assumptions about functions and their characteristics 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "parallel-multistart"
+literal "false"
+
+\end_inset
+
+.
+ Lastly, the PDoublePop software is presented, which implements parallel
+ genetic algorithms with advanced features, such as an enhanced stopping
+ rule and advanced mutation schemes.
+ The software allows for coding the objective function in C++ or Fortran77
+ and has been tested on well-known benchmark functions, showing promising
+ results 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "parallel-doublepop"
+literal "false"
+
+\end_inset
+
+.
+ Moreover, there are methods that utilize GPU architectures for solving
+ complex optimization problems.
+ In the case of the Traveling Salesman Problem (TSP), a parallel GPU implementat
+ion has been developed to achieve high performance on large scales, solving
+ problems up to 6,000 cities with great efficiency 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "msgpu1"
+literal "false"
+
+\end_inset
+
+.
+ Additionally, the use of the multi-start model in local search algorithms
+ has proven to be particularly effective when combined with GPUs, reducing
+ computation time and improving solution quality for large and time-intensive
+ problems 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "msgpu2"
+literal "false"
+
+\end_inset
+
+.
+ Finally, a parallel algorithm using Peano curves for dimension reduction
+ has demonstrated significant improvements in speed and efficiency when
+ run on GPUs, compared to CPU-only implementations, for multidimensional
+ problems with multiple local minima 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "msgpu3"
+literal "false"
+
+\end_inset
+
+.
+ Parallel optimization represents a significant approach in the field of
+ optimization problem-solving and is applied across a broad range of application
+s, including the optimization of machine learning model parameters.
+ In the case of GraphLab, a platform is presented that enhances existing
+ abstract methods, such as MapReduce, for parallel execution of machine
+ learning algorithms with high performance and accuracy 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Low Gon"
+literal "false"
+
+\end_inset
+
+.
+ Additionally, the new MARSAOP method for hyperparameter optimization uses
+ multidimensional spirals as surrogates and dynamic coordinate search to
+ achieve high-quality solutions with limited computational cost 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Yangyang"
+literal "false"
+
+\end_inset
+
+.
+ Lastly, the study proposes a processing time estimation system using machine
+ learning models to adapt to complex distributions and improve production
+ scheduling, achieving significant reduction in completion time 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Yamashiro"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The use of parallel optimization has brought significant advancements in
+ solving complex control and design problems 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Kim Tsai"
+literal "false"
+
+\end_inset
+
+.
+ In one case, the parallel application of the Genetic Algorithm with a Fair
+ Competitive Strategy (HFCGA) has been used for the design of an optimized
+ cascade controller for ball and beam systems.
+ This approach allows for the automation of controller parameter tuning,
+ improving performance compared to traditional methods, with parallel computatio
+ns helping to avoid premature convergence to suboptimal solutions 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Oh Jong"
+literal "false"
+
+\end_inset
+
+.
+ In another case, the advanced Teaching-Learning-Based Optimization (TLBO)
+ method has been applied to optimize the design of propulsion control systems
+ with hydrogen peroxide.
+ This method, which includes improvements in the teaching and learning phases
+ as well as in the search process, has proven highly effective in addressing
+ uncertainties in real-world design problems, enhancing both accuracy and
+ convergence speed of the optimization process 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Fatehi"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Similarly, parallel optimization has significant applications in energy
+ and resource management.
+ In the case of pump and cooling system management, a two-stage method based
+ on an innovative multidimensional optimization algorithm has been proposed,
+ which reduces overall energy consumption and discrepancies between pump
+ and cooling system flow rates, achieving significant improvements in energy
+ efficiency 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Cai Yang"
+literal "false"
+
+\end_inset
+
+.
+ In energy network management, a coordinated scheduled optimization method
+ has been proposed, which simultaneously considers various energy sources
+ and uncertainty conditions.
+ This method, using the Competitive Swarm Optimization (CSO) algorithm and
+ adjusted based on chaos theory, has proven 50% faster than other methods
+ and effective in managing uncertainties and energy 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Yu Shahabi"
+literal "false"
+
+\end_inset
+
+.
+ In topological optimization, parallel processing through CPUs and GPUs
+ has drastically improved speed and energy consumption for complex problems,
+ achieving up to 25 times faster processing and reducing energy consumption
+ by up to 93% 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Ramirez"
+literal "false"
+
+\end_inset
+
+.
+ Lastly, in building energy retrofitting, a multi-objective platform was
+ used for evaluating and optimizing upgrade strategies, demonstrating that
+ removing subsidies and providing incentives for energy upgrades yield promising
+ results 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Tavakolan"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In conclusion, parallel optimization has provided significant solutions
+ to problems related to sustainable development and enhancing sustainability.
+ In the field of increasing the resilience of energy systems, the development
+ of strategies for managing severe risks, such as extreme weather conditions
+ and supplier disruptions, has been improved through parallel optimization,
+ enabling safer and more cost-effective energy system operations 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Lin"
+literal "false"
+
+\end_inset
+
+.
+ In addressing groundwater contamination, the use of parallel optimization
+ has highlighted the potential for faster and more effective design of remediati
+on methods, significantly reducing computational budgets and ensuring better
+ results compared to other methods 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Pang"
+literal "false"
+
+\end_inset
+
+.
+ Finally, in the field of sustainable production, metaheuristic optimization
+ algorithms have proven useful for improving production scheduling, promoting
+ resource efficiency, and reducing environmental impacts, while contributing
+ to the achievement of sustainable development goals 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Ezugwu"
+literal "false"
+
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1975,7 +2249,37 @@ This proposed termination criterion is the combination of the aforementioned
  similarity types.
  Optimization termination is achieved when any homogeneity condition is
  satisfied, resulting in improved speed.
- Therefore, the following relationships holds:
+ Hence by using equations 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:best"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:mean"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:double"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ following termination rule is derived:
 \end_layout
 
 \begin_layout Standard
@@ -2260,7 +2564,7 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename pm_datagram.png
-	scale 30
+	scale 50
 
 \end_inset
 
@@ -2368,7 +2672,7 @@ name "tab:settings"
 
 
 \begin_inset Tabular
-<lyxtabular version="3" rows="6" columns="3">
+<lyxtabular version="3" rows="10" columns="3">
 <features booktabs="true" tabularvalignment="middle">
 <column alignment="center" valignment="top" width="3cm">
 <column alignment="center" valignment="top" width="5.8cm">
@@ -2407,7 +2711,7 @@ Explanation
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $N_{e}$
+\begin_inset Formula $N_{p}$
 \end_inset
 
 
@@ -2428,7 +2732,71 @@ Explanation
 \begin_inset Text
 
 \begin_layout Plain Layout
-Total elements
+Total particles for PSO 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{d}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+120
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Total elements for DE 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{m}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+120
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Total elements for Multistart 
 \end_layout
 
 \end_inset
@@ -2483,7 +2851,7 @@ Maximum number of iterations
 \begin_inset Text
 
 \begin_layout Plain Layout
-15 (DE, PSO and Multistart)
+15
 \end_layout
 
 \end_inset
@@ -2515,7 +2883,7 @@ Similarity max count
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.8 (DE)
+0.8 
 \end_layout
 
 \end_inset
@@ -2531,7 +2899,7 @@ Differential weight for DE
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2543,11 +2911,66 @@ Differential weight for DE
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.9 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Crossover Probability for DE
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $P_{m}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.005
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Local search rate for DE and PSO
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.9 (DE)
+\begin_inset Formula $C_{1},C_{2}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2556,7 +2979,16 @@ Differential weight for DE
 \begin_inset Text
 
 \begin_layout Plain Layout
-Crossover Probability for DE
+0.5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Parameters of PSO
 \end_layout
 
 \end_inset
@@ -2660,7 +3092,7 @@ where
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -3698,7 +4130,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -5593,14 +6025,14 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-PSO: Function calls with different termination rules
+Average function calls for the PSO method, with different termination rules
 \begin_inset CommandInset label
 LatexCommand label
 name "tab:PSO"
@@ -7483,7 +7915,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -9391,7 +9823,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -11316,7 +11748,7 @@ Column 10x50 stands for the usage of 10 processing units.
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -13176,7 +13608,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -15035,7 +15467,7 @@ noprefix "false"
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
