@@ -1,5 +1,5 @@
-#LyX 2.3 created this file. For more info see http://www.lyx.org/
-\lyxformat 544
+#LyX 2.4 created this file. For more info see https://www.lyx.org/
+\lyxformat 620
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -128,17 +128,14 @@
 \end_preamble
 \options journal,article,submit,pdftex,moreauthors
 \use_default_options true
-\maintain_unincluded_children false
+\maintain_unincluded_children no
 \begin_local_layout
 #Adds an endnote inset, in addition to footnotes. You will need to add
 #\printendnotes in TeX-code where you want the endnotes to appear.
-
 Format 66
-
 Counter endnotes
     PrettyFormat "Endnote ##"
 End
-
 InsetLayout Flex:Endnote
    LyXType     custom
    LatexName   endnote
@@ -156,7 +153,7 @@ End
 \language english
 \language_package none
 \inputencoding utf8
-\fontencoding global
+\fontencoding auto
 \font_roman "default" "default"
 \font_sans "default" "default"
 \font_typewriter "default" "default"
@@ -164,7 +161,9 @@ End
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
-\font_osf false
+\font_roman_osf false
+\font_sans_osf false
+\font_typewriter_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
 \use_microtype false
@@ -198,7 +197,9 @@ End
 \suppress_date false
 \justification true
 \use_refstyle 0
+\use_formatted_ref 0
 \use_minted 0
+\use_lineno 0
 \index Index
 \shortcut idx
 \color #008000
@@ -214,21 +215,28 @@ End
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
+\tablestyle default
 \tracking_changes false
 \output_changes false
+\change_bars false
+\postpone_fragile_content false
 \html_math_output 0
 \html_css_as_file 0
 \html_be_strict false
+\docbook_table_output 0
+\docbook_mathml_prefix 1
 \end_header
 
 \begin_body
 
 \begin_layout Title
-Optimization: parallel stochastic methods and mixed termination rules
+Optimization:
+ parallel stochastic methods and mixed termination rules
 \end_layout
 
 \begin_layout Title Citation
-Optimization: parallel stochastic methods and mixed termination rules
+Optimization:
+ parallel stochastic methods and mixed termination rules
 \end_layout
 
 \begin_layout Author
@@ -236,12 +244,14 @@ Vasileios Charilogis
 \begin_inset Formula $^{1}$
 \end_inset
 
-, Ioannis G.
+,
+ Ioannis G.
  Tsoulos
 \begin_inset Formula $^{2,*}$
 \end_inset
 
-, Anna Maria Gianni
+,
+ Anna Maria Gianni
 \begin_inset Formula $^{3}$
 \end_inset
 
@@ -250,13 +260,18 @@ Vasileios Charilogis
 
 \begin_layout Author Names for PDF
 V.
- Charilogis, I.G.
- Tsoulos, A.M.
+ Charilogis,
+ I.G.
+ Tsoulos,
+ A.M.
  Gianni
 \end_layout
 
 \begin_layout Author Names for Citation
-Charilogis V.; Tsoulos I.G.; Gianni A.M; 
+Charilogis V.;
+ Tsoulos I.G.;
+ Gianni A.M;
+ 
 \end_layout
 
 \begin_layout Address
@@ -267,8 +282,10 @@ Charilogis V.; Tsoulos I.G.; Gianni A.M;
 \begin_inset space \quad{}
 \end_inset
 
-Department of Informatics and Telecommunications, University of Ioannina,
- Greece; v.charilog@uoi.gr
+Department of Informatics and Telecommunications,
+ University of Ioannina,
+ Greece;
+ v.charilog@uoi.gr
 \begin_inset Newline newline
 \end_inset
 
@@ -280,8 +297,10 @@ Department of Informatics and Telecommunications, University of Ioannina,
 \begin_inset space \quad{}
 \end_inset
 
-Department of Informatics and Telecommunications, University of Ioannina,
- Greece; itsoulos@uoi.gr
+Department of Informatics and Telecommunications,
+ University of Ioannina,
+ Greece;
+ itsoulos@uoi.gr
 \begin_inset Newline newline
 \end_inset
 
@@ -293,17 +312,22 @@ Department of Informatics and Telecommunications, University of Ioannina,
 \begin_inset space \quad{}
 \end_inset
 
-Department of Informatics and Telecommunications, University of Ioannina,
- Greece; am.gianni@uoi.gr
+Department of Informatics and Telecommunications,
+ University of Ioannina,
+ Greece;
+ am.gianni@uoi.gr
 \end_layout
 
 \begin_layout Corresponding Author
-Correspondence: itsoulos@uoi.gr;
+Correspondence:
+ itsoulos@uoi.gr;
 \end_layout
 
 \begin_layout First Note
-Current address: Department of Informatics and Telecommunications, University
- of Ioannina, Greece.
+Current address:
+ Department of Informatics and Telecommunications,
+ University of Ioannina,
+ Greece.
 \end_layout
 
 \begin_layout Second Note
@@ -311,33 +335,31 @@ These authors contributed equally to this work.
 \end_layout
 
 \begin_layout Abstract
-Parallel optimization enables faster and more efficient problem-solving
- by reducing computational resource consumption and time.
- By simultaneously combining multiple methods, such as evolutionary algorithms
- and swarm-based optimization, effective exploration of the search space
- and achievement of optimal solutions in shorter time frames are realized.
- In this study, a combination of termination criteria is proposed, utilizing
- three different criteria to end the algorithmic process.
- These criteria include measuring the difference between optimal values
- in successive iterations, calculating the mean value of the cost function
- in each iteration, and the so-called "DoubleBox" criterion, which is based
- on the relative variance of the best value of the objective cost function
- over a specific number of iterations.
- The problem is addressed through the parallel execution of three different
- optimization methods (PSO, Differential Evolution, Multistart).
- Each method operates independently on separate computational units with
- the goal of faster discovery of the optimal solution and more efficient
- use of computational resources.
- The optimal solution identified in each iteration is transferred to the
- other computational units.
- The proposed enhancements were tested on a series of well-known optimization
- problems from relevant literature, demonstrating significant improvements
- in convergence speed and solution quality compared to traditional approaches.
+Parallel optimization enables faster and more efficient problem-solving by reducing computational resource consumption and time.
+ By simultaneously combining multiple methods,
+ such as evolutionary algorithms and swarm-based optimization,
+ effective exploration of the search space and achievement of optimal solutions in shorter time frames are realized.
+ In this study,
+ a combination of termination criteria is proposed,
+ utilizing three different criteria to end the algorithmic process.
+ These criteria include measuring the difference between optimal values in successive iterations,
+ calculating the mean value of the cost function in each iteration,
+ and the so-called "DoubleBox" criterion,
+ which is based on the relative variance of the best value of the objective cost function over a specific number of iterations.
+ The problem is addressed through the parallel execution of three different optimization methods (PSO,
+ Differential Evolution,
+ Multistart).
+ Each method operates independently on separate computational units with the goal of faster discovery of the optimal solution and more efficient use of computational resources.
+ The optimal solution identified in each iteration is transferred to the other computational units.
+ The proposed enhancements were tested on a series of well-known optimization problems from relevant literature,
+ demonstrating significant improvements in convergence speed and solution quality compared to traditional approaches.
 \end_layout
 
 \begin_layout Keywords
-Global optimization; Parallel techniques; Termination rules; Evolutionary
- techniques
+Global optimization;
+ Parallel techniques;
+ Termination rules;
+ Evolutionary techniques
 \end_layout
 
 \begin_layout Section
@@ -345,16 +367,13 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-The problem of finding the global minimum of a multidimensional function
- occurs in various scientific areas and has wide applications.
- In this the programmer seeks the absolute minimum of a function subject
- to some assumptions or constraints.
+The problem of finding the global minimum of a multidimensional function occurs in various scientific areas and has wide applications.
+ In this the programmer seeks the absolute minimum of a function subject to some assumptions or constraints.
  The objective function is defined as 
 \begin_inset Formula $f:S\rightarrow R,S\subset R^{n}$
 \end_inset
 
- and the mathmatical formulation of the global optimization problem is as
- follows:
+ and the mathematical formulation of the global optimization problem is as follows:
 \begin_inset Formula 
 \begin{equation}
 x^{*}=\mbox{arg}\min_{x\in S}f(x).\label{eq:eq1-1}
@@ -366,7 +385,8 @@ where the set
 \begin_inset Formula $S$
 \end_inset
 
- is as follows: 
+ is as follows:
+ 
 \series bold
 
 \begin_inset Formula 
@@ -378,9 +398,8 @@ S=\left[a_{1},b_{1}\right]\otimes\left[a_{2},b_{2}\right]\otimes\ldots\left[a_{n
 
 
 \series default
-Such problems frequently arise in sciences like physics, where genetic algorithm
-s prove effective in locating positions in magnetic plasmas and in developing
- optimization tools 
+Such problems frequently arise in sciences like physics,
+ where genetic algorithms prove effective in locating positions in magnetic plasmas and in developing optimization tools 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "go_physics1"
@@ -389,8 +408,8 @@ literal "false"
 \end_inset
 
 .
- Additionally, the combined use of various optimization techniques enhances
- performance and stability in complex problems 
+ Additionally,
+ the combined use of various optimization techniques enhances performance and stability in complex problems 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "go_physics2"
@@ -399,9 +418,8 @@ literal "false"
 \end_inset
 
 .
- Furthermore, the hybrid approach that combines artificial physics techniques
- with particle swarm optimization has proven to be particularly effective
- in solving energy allocation problems 
+ Furthermore,
+ the hybrid approach that combines artificial physics techniques with particle swarm optimization has proven to be particularly effective in solving energy allocation problems 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "go_physics3"
@@ -410,9 +428,8 @@ literal "false"
 \end_inset
 
 .
- In the field of chemistry, minimizing potential energy functions is crucial
- for understanding the ground states of molecular clusters and proteins
- 
+ In the field of chemistry,
+ minimizing potential energy functions is crucial for understanding the ground states of molecular clusters and proteins 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "go_chemistry1"
@@ -421,8 +438,8 @@ literal "false"
 \end_inset
 
 .
- Optimizing these functions has been used for accurate protein structure
- prediction, with results closely matching crystal structures 
+ Optimizing these functions has been used for accurate protein structure prediction,
+ with results closely matching crystal structures 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "go_chemistry2"
@@ -431,9 +448,8 @@ literal "false"
 \end_inset
 
 .
- Moreover, a new computational framework combining variance-based methods
- with artificial neural networks has significantly improved accuracy and
- reduced computational cost in sensitivity analysis 
+ Moreover,
+ a new computational framework combining variance-based methods with artificial neural networks has significantly improved accuracy and reduced computational cost in sensitivity analysis 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "go_chemistry3"
@@ -442,11 +458,10 @@ literal "false"
 \end_inset
 
 .
- Even in the field of economics, optimization plays a crucial role.
- The particle swarm optimization (PSO) method is shown to be highly effective
- in solving the economic dispatch problem in power systems, providing higher
- quality solutions with greater efficiency compared to genetic algorithms
- 
+ Even in the field of economics,
+ optimization plays a crucial role.
+ The particle swarm optimization (PSO) method is shown to be highly effective in solving the economic dispatch problem in power systems,
+ providing higher quality solutions with greater efficiency compared to genetic algorithms 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "go_econ1"
@@ -455,9 +470,8 @@ literal "false"
 \end_inset
 
 .
- Additionally, a multi-objective optimization approach for economic load
- dispatch and emission reduction in hydroelectric and thermal plants achieves
- optimal solutions that align with the user's preferences and goals 
+ Additionally,
+ a multi-objective optimization approach for economic load dispatch and emission reduction in hydroelectric and thermal plants achieves optimal solutions that align with the user's preferences and goals 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "go_econ2"
@@ -466,7 +480,8 @@ literal "false"
 \end_inset
 
 .
- Finally, optimization is also applied in biological process models 
+ Finally,
+ optimization is also applied in biological process models 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "go_med1"
@@ -474,8 +489,8 @@ literal "false"
 
 \end_inset
 
- and medical data classification, achieving high accuracy in diagnosing
- diseases and analyzing genomes 
+ and medical data classification,
+ achieving high accuracy in diagnosing diseases and analyzing genomes 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "go_med2"
@@ -484,14 +499,14 @@ literal "false"
 \end_inset
 
 .
- A series of methods have been proposed in the recent literature to handle
- problems of Equation 
+ A series of methods have been proposed in the recent literature to handle problems of Equation 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:eq1-1"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -503,15 +518,18 @@ reference "eq:eq1-1"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
  are usually divided into two categories:
+
 \series bold
  
 \series default
 deterministic and stochastic methods.
- In the first category, the most common method is the interval method 
+ In the first category,
+ the most common method is the interval method 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "interval1,interval2"
@@ -519,19 +537,18 @@ literal "true"
 
 \end_inset
 
-, where the set 
+,
+ where the set 
 \begin_inset Formula $S$
 \end_inset
 
- is divided through a series of steps into subregions and some subregions
- that do not contain the global solution can be removed using some pre-defined
- criteria.
- The second category contains stochastic techniques that do not guarantee
- finding the total minimum, they are easier to program since they do not
- rely on some assumptions about the objective function.
- In addition, they also constitute the vast majority of global optimization
- methods.
- Among them, there are methods based on considerations derived from Physics,
+ is divided through a series of steps into subregions and some subregions that do not contain the global solution can be removed using some pre-defined criteria.
+ The second category contains stochastic techniques that do not guarantee finding the total minimum,
+ they are easier to program since they do not rely on some assumptions about the objective function.
+ In addition,
+ they also constitute the vast majority of global optimization methods.
+ Among them,
+ there are methods based on considerations derived from Physics,
  such as the Simulated Annealing method
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -540,7 +557,8 @@ literal "false"
 
 \end_inset
 
-, the Henry's Gas Solubility Optimization (HGSO) 
+,
+ the Henry's Gas Solubility Optimization (HGSO) 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Hashim"
@@ -548,7 +566,8 @@ literal "false"
 
 \end_inset
 
-, the Gravitational Search Algorithm (GSA) 
+,
+ the Gravitational Search Algorithm (GSA) 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Rashedi"
@@ -556,7 +575,8 @@ literal "false"
 
 \end_inset
 
-, the Small World Optimization Algorithm (SWOA) 
+,
+ the Small World Optimization Algorithm (SWOA) 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Du-Wu"
@@ -564,9 +584,11 @@ literal "false"
 
 \end_inset
 
-, etc.
- Also, a series of evolutionary based techniques have also been suggested
- for Global Optimization problems, such as Genetic Algorithms 
+,
+ etc.
+ Also,
+ a series of evolutionary based techniques have also been suggested for Global Optimization problems,
+ such as Genetic Algorithms 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Goldberg"
@@ -574,7 +596,8 @@ literal "false"
 
 \end_inset
 
-, the Differential Evolution method 
+,
+ the Differential Evolution method 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Das,Charilogis"
@@ -582,7 +605,8 @@ literal "false"
 
 \end_inset
 
-, Particle Swarm Optimization (PSO) 
+,
+ Particle Swarm Optimization (PSO) 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Kennedy,Charilogis2"
@@ -590,7 +614,8 @@ literal "false"
 
 \end_inset
 
-, Ant Colony Optimization (ACO) 
+,
+ Ant Colony Optimization (ACO) 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Dorigo"
@@ -598,7 +623,8 @@ literal "false"
 
 \end_inset
 
-, Bat Algorithm (BA) 
+,
+ Bat Algorithm (BA) 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Yang"
@@ -606,7 +632,8 @@ literal "false"
 
 \end_inset
 
-, Whale Optimization Algorithm (WOA) 
+,
+ Whale Optimization Algorithm (WOA) 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Mirjalili"
@@ -614,7 +641,8 @@ literal "false"
 
 \end_inset
 
-, Grasshopper Optimization Algorithm (GOA) 
+,
+ Grasshopper Optimization Algorithm (GOA) 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Saremi"
@@ -622,19 +650,21 @@ literal "false"
 
 \end_inset
 
-, etc.
+,
+ etc.
 \end_layout
 
 \begin_layout Standard
-However, the above optimization methods require significant computational
- power and time.
- Therefore, parallel processing of these methods is essential.
- Recently, various methods have been proposed to leverage parallel processing.
- Specifically, one study details the parallel implementation of the Particle
- Swarm Optimization (PSO) algorithm, which improves performance for load-balance
-d problems but shows reduced efficiency for load-imbalanced ones.
- The study suggests using larger particle populations and implementing asynchron
-ous processing to enhance performance 
+However,
+ the above optimization methods require significant computational power and time.
+ Therefore,
+ parallel processing of these methods is essential.
+ Recently,
+ various methods have been proposed to leverage parallel processing.
+ Specifically,
+ one study details the parallel implementation of the Particle Swarm Optimization (PSO) algorithm,
+ which improves performance for load-balanced problems but shows reduced efficiency for load-imbalanced ones.
+ The study suggests using larger particle populations and implementing asynchronous processing to enhance performance 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "parallel-pso"
@@ -643,11 +673,9 @@ literal "false"
 \end_inset
 
 .
- Another review provides a comprehensive overview of derivative-free optimizatio
-n methods, useful for problems where objective and constraint functions
- come only from a black-box or simulator interface.
- The review focuses on recent developments and categorizes methods based
- on assumptions about functions and their characteristics 
+ Another review provides a comprehensive overview of derivative-free optimization methods,
+ useful for problems where objective and constraint functions come only from a black-box or simulator interface.
+ The review focuses on recent developments and categorizes methods based on assumptions about functions and their characteristics 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "parallel-multistart"
@@ -656,12 +684,12 @@ literal "false"
 \end_inset
 
 .
- Lastly, the PDoublePop software is presented, which implements parallel
- genetic algorithms with advanced features, such as an enhanced stopping
- rule and advanced mutation schemes.
- The software allows for coding the objective function in C++ or Fortran77
- and has been tested on well-known benchmark functions, showing promising
- results 
+ Lastly,
+ the PDoublePop software is presented,
+ which implements parallel genetic algorithms with advanced features,
+ such as an enhanced stopping rule and advanced mutation schemes.
+ The software allows for coding the objective function in C++ or Fortran77 and has been tested on well-known benchmark functions,
+ showing promising results 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "parallel-doublepop"
@@ -670,11 +698,11 @@ literal "false"
 \end_inset
 
 .
- Moreover, there are methods that utilize GPU architectures for solving
- complex optimization problems.
- In the case of the Traveling Salesman Problem (TSP), a parallel GPU implementat
-ion has been developed to achieve high performance on large scales, solving
- problems up to 6,000 cities with great efficiency 
+ Moreover,
+ there are methods that utilize GPU architectures for solving complex optimization problems.
+ In the case of the Traveling Salesman Problem (TSP),
+ a parallel GPU implementation has been developed to achieve high performance on large scales,
+ solving problems up to 6,000 cities with great efficiency 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "msgpu1"
@@ -683,10 +711,9 @@ literal "false"
 \end_inset
 
 .
- Additionally, the use of the multi-start model in local search algorithms
- has proven to be particularly effective when combined with GPUs, reducing
- computation time and improving solution quality for large and time-intensive
- problems 
+ Additionally,
+ the use of the multi-start model in local search algorithms has proven to be particularly effective when combined with GPUs,
+ reducing computation time and improving solution quality for large and time-intensive problems 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "msgpu2"
@@ -695,10 +722,10 @@ literal "false"
 \end_inset
 
 .
- Finally, a parallel algorithm using Peano curves for dimension reduction
- has demonstrated significant improvements in speed and efficiency when
- run on GPUs, compared to CPU-only implementations, for multidimensional
- problems with multiple local minima 
+ Finally,
+ a parallel algorithm using Peano curves for dimension reduction has demonstrated significant improvements in speed and efficiency when run on GPUs,
+ compared to CPU-only implementations,
+ for multidimensional problems with multiple local minima 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "msgpu3"
@@ -707,12 +734,12 @@ literal "false"
 \end_inset
 
 .
- Parallel optimization represents a significant approach in the field of
- optimization problem-solving and is applied across a broad range of application
-s, including the optimization of machine learning model parameters.
- In the case of GraphLab, a platform is presented that enhances existing
- abstract methods, such as MapReduce, for parallel execution of machine
- learning algorithms with high performance and accuracy 
+ Parallel optimization represents a significant approach in the field of optimization problem-solving and is applied across a broad range of applications,
+ including the optimization of machine learning model parameters.
+ In the case of GraphLab,
+ a platform is presented that enhances existing abstract methods,
+ such as MapReduce,
+ for parallel execution of machine learning algorithms with high performance and accuracy 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Low Gon"
@@ -721,9 +748,8 @@ literal "false"
 \end_inset
 
 .
- Additionally, the new MARSAOP method for hyperparameter optimization uses
- multidimensional spirals as surrogates and dynamic coordinate search to
- achieve high-quality solutions with limited computational cost 
+ Additionally,
+ the new MARSAOP method for hyperparameter optimization uses multidimensional spirals as surrogates and dynamic coordinate search to achieve high-quality solutions with limited computational cost 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Yangyang"
@@ -732,9 +758,9 @@ literal "false"
 \end_inset
 
 .
- Lastly, the study proposes a processing time estimation system using machine
- learning models to adapt to complex distributions and improve production
- scheduling, achieving significant reduction in completion time 
+ Lastly,
+ the study proposes a processing time estimation system using machine learning models to adapt to complex distributions and improve production scheduling,
+ achieving significant reduction in completion time 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Yamashiro"
@@ -746,8 +772,7 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-The use of parallel optimization has brought significant advancements in
- solving complex control and design problems 
+The use of parallel optimization has brought significant advancements in solving complex control and design problems 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Kim Tsai"
@@ -756,12 +781,11 @@ literal "false"
 \end_inset
 
 .
- In one case, the parallel application of the Genetic Algorithm with a Fair
- Competitive Strategy (HFCGA) has been used for the design of an optimized
- cascade controller for ball and beam systems.
+ In one case,
+ the parallel application of the Genetic Algorithm with a Fair Competitive Strategy (HFCGA) has been used for the design of an optimized cascade controller for ball and beam systems.
  This approach allows for the automation of controller parameter tuning,
- improving performance compared to traditional methods, with parallel computatio
-ns helping to avoid premature convergence to suboptimal solutions 
+ improving performance compared to traditional methods,
+ with parallel computations helping to avoid premature convergence to suboptimal solutions 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Oh Jong"
@@ -770,13 +794,12 @@ literal "false"
 \end_inset
 
 .
- In another case, the advanced Teaching-Learning-Based Optimization (TLBO)
- method has been applied to optimize the design of propulsion control systems
- with hydrogen peroxide.
- This method, which includes improvements in the teaching and learning phases
- as well as in the search process, has proven highly effective in addressing
- uncertainties in real-world design problems, enhancing both accuracy and
- convergence speed of the optimization process 
+ In another case,
+ the advanced Teaching-Learning-Based Optimization (TLBO) method has been applied to optimize the design of propulsion control systems with hydrogen peroxide.
+ This method,
+ which includes improvements in the teaching and learning phases as well as in the search process,
+ has proven highly effective in addressing uncertainties in real-world design problems,
+ enhancing both accuracy and convergence speed of the optimization process 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Fatehi"
@@ -788,13 +811,12 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-Similarly, parallel optimization has significant applications in energy
- and resource management.
- In the case of pump and cooling system management, a two-stage method based
- on an innovative multidimensional optimization algorithm has been proposed,
- which reduces overall energy consumption and discrepancies between pump
- and cooling system flow rates, achieving significant improvements in energy
- efficiency 
+Similarly,
+ parallel optimization has significant applications in energy and resource management.
+ In the case of pump and cooling system management,
+ a two-stage method based on an innovative multidimensional optimization algorithm has been proposed,
+ which reduces overall energy consumption and discrepancies between pump and cooling system flow rates,
+ achieving significant improvements in energy efficiency 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Cai Yang"
@@ -803,12 +825,12 @@ literal "false"
 \end_inset
 
 .
- In energy network management, a coordinated scheduled optimization method
- has been proposed, which simultaneously considers various energy sources
- and uncertainty conditions.
- This method, using the Competitive Swarm Optimization (CSO) algorithm and
- adjusted based on chaos theory, has proven 50% faster than other methods
- and effective in managing uncertainties and energy 
+ In energy network management,
+ a coordinated scheduled optimization method has been proposed,
+ which simultaneously considers various energy sources and uncertainty conditions.
+ This method,
+ using the Competitive Swarm Optimization (CSO) algorithm and adjusted based on chaos theory,
+ has proven 50% faster than other methods and effective in managing uncertainties and energy 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Yu Shahabi"
@@ -817,10 +839,9 @@ literal "false"
 \end_inset
 
 .
- In topological optimization, parallel processing through CPUs and GPUs
- has drastically improved speed and energy consumption for complex problems,
- achieving up to 25 times faster processing and reducing energy consumption
- by up to 93% 
+ In topological optimization,
+ parallel processing through CPUs and GPUs has drastically improved speed and energy consumption for complex problems,
+ achieving up to 25 times faster processing and reducing energy consumption by up to 93% 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Ramirez"
@@ -829,10 +850,10 @@ literal "false"
 \end_inset
 
 .
- Lastly, in building energy retrofitting, a multi-objective platform was
- used for evaluating and optimizing upgrade strategies, demonstrating that
- removing subsidies and providing incentives for energy upgrades yield promising
- results 
+ Lastly,
+ in building energy retrofitting,
+ a multi-objective platform was used for evaluating and optimizing upgrade strategies,
+ demonstrating that removing subsidies and providing incentives for energy upgrades yield promising results 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Tavakolan"
@@ -844,11 +865,12 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-In conclusion, parallel optimization has provided significant solutions
- to problems related to sustainable development and enhancing sustainability.
- In the field of increasing the resilience of energy systems, the development
- of strategies for managing severe risks, such as extreme weather conditions
- and supplier disruptions, has been improved through parallel optimization,
+In conclusion,
+ parallel optimization has provided significant solutions to problems related to sustainable development and enhancing sustainability.
+ In the field of increasing the resilience of energy systems,
+ the development of strategies for managing severe risks,
+ such as extreme weather conditions and supplier disruptions,
+ has been improved through parallel optimization,
  enabling safer and more cost-effective energy system operations 
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -858,10 +880,9 @@ literal "false"
 \end_inset
 
 .
- In addressing groundwater contamination, the use of parallel optimization
- has highlighted the potential for faster and more effective design of remediati
-on methods, significantly reducing computational budgets and ensuring better
- results compared to other methods 
+ In addressing groundwater contamination,
+ the use of parallel optimization has highlighted the potential for faster and more effective design of remediation methods,
+ significantly reducing computational budgets and ensuring better results compared to other methods 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Pang"
@@ -870,10 +891,12 @@ literal "false"
 \end_inset
 
 .
- Finally, in the field of sustainable production, metaheuristic optimization
- algorithms have proven useful for improving production scheduling, promoting
- resource efficiency, and reducing environmental impacts, while contributing
- to the achievement of sustainable development goals 
+ Finally,
+ in the field of sustainable production,
+ metaheuristic optimization algorithms have proven useful for improving production scheduling,
+ promoting resource efficiency,
+ and reducing environmental impacts,
+ while contributing to the achievement of sustainable development goals 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Ezugwu"
@@ -886,16 +909,14 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-By harnessing multiple computational resources, parallel optimization allows
- for the simultaneous execution of multiple algorithms, leading to faster
- convergence and improved performance.
- These computational resources can communicate with each other to exchange
- information and synchronize processes, thereby contributing to faster convergen
-ce towards common solutions.
- Additionally, leveraging multiple resources enables more effective handling
- of exceptions and errors, while increased computational power for conducting
- more trials or utilizing more complex models leads to enhanced performance
- 
+By harnessing multiple computational resources,
+ parallel optimization allows for the simultaneous execution of multiple algorithms,
+ leading to faster convergence and improved performance.
+ These computational resources can communicate with each other to exchange information and synchronize processes,
+ thereby contributing to faster convergence towards common solutions.
+ Additionally,
+ leveraging multiple resources enables more effective handling of exceptions and errors,
+ while increased computational power for conducting more trials or utilizing more complex models leads to enhanced performance 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Censor"
@@ -904,15 +925,15 @@ literal "false"
 \end_inset
 
 .
- Of course, this process requires the development of suitable algorithms
- and techniques to effectively manage and exploit available resources.
- Each parallel optimization algorithm requires a coherent strategy for workload
- distribution among the available resources, as well as an efficient method
- for collecting and evaluating results.
+ Of course,
+ this process requires the development of suitable algorithms and techniques to effectively manage and exploit available resources.
+ Each parallel optimization algorithm requires a coherent strategy for workload distribution among the available resources,
+ as well as an efficient method for collecting and evaluating results.
 \end_layout
 
 \begin_layout Standard
-Parallel techniques have been developed by various researchers, such as
+Parallel techniques have been developed by various researchers,
+ such as
 \series bold
  
 \series default
@@ -924,7 +945,8 @@ literal "false"
 
 \end_inset
 
-, parallel PSO methods 
+,
+ parallel PSO methods 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "go_par2"
@@ -933,11 +955,11 @@ literal "false"
 \end_inset
 
 ,
+
 \series bold
  
 \series default
-application of radial basis functions in parallel stochastic optimization
- 
+application of radial basis functions in parallel stochastic optimization 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "go_par3"
@@ -946,9 +968,9 @@ literal "false"
 \end_inset
 
  etc.
- Also, since the Genetic Algorithms is a method that can be parallelized
- easily, there are several researchers that have examined them thoroughly
- in the relevant literature 
+ Also,
+ since the Genetic Algorithms is a method that can be parallelized easily,
+ there are several researchers that have examined them thoroughly in the relevant literature 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "pga_survey1,pga_survey2"
@@ -960,31 +982,31 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-In this paper, a new optimization method is proposed which is a mixture
- of existing global optimization techniques running in parallel on a number
- of available computing units.
- Each technique is executed independently of the others and periodically
- the optimal values retrieved from them are distributed to the rest of the
- computing units using the propagation techniques presented here.
- In addition, for the most efficient termination of the overall algorithm,
- intelligent termination techniques based on stochastic observations are
- used, which are suitably modified to adapt to the parallel computing environmen
-t.
+In this paper,
+ a new optimization method is proposed which is a mixture of existing global optimization techniques running in parallel on a number of available computing units.
+ Each technique is executed independently of the others and periodically the optimal values retrieved from them are distributed to the rest of the computing units using the propagation techniques presented here.
+ In addition,
+ for the most efficient termination of the overall algorithm,
+ intelligent termination techniques based on stochastic observations are used,
+ which are suitably modified to adapt to the parallel computing environment.
  
 \end_layout
 
 \begin_layout Standard
-The following sections are organized as follows: In section 
+The following sections are organized as follows:
+ In section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Methods-description"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-, the three main algorithms participating in the overall algorithm are described.
+,
+ the three main algorithms participating in the overall algorithm are described.
  In section 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -992,12 +1014,12 @@ reference "sec:The-proposed-method"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
- the algorithm for parallelizing the three methods is described, along with
- the proposed mechanism for propagating the optimal solution to the remaining
- methods.
+ the algorithm for parallelizing the three methods is described,
+ along with the proposed mechanism for propagating the optimal solution to the remaining methods.
  In section 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1005,21 +1027,26 @@ reference "sec:Experiments"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-, experimental models and experimental results are described.
- Finally, in section 
+,
+ experimental models and experimental results are described.
+ Finally,
+ in section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Conclusions"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-, the conclusions from the application of the current work are discussed.
+,
+ the conclusions from the application of the current work are discussed.
 \end_layout
 
 \begin_layout Section
@@ -1034,8 +1061,7 @@ name "sec:Methods-description"
 \end_layout
 
 \begin_layout Standard
-The methods that may executed in each processing unit are fully described
- in this section.
+The methods that may executed in each processing unit are fully described in this section.
 \end_layout
 
 \begin_layout Subsection
@@ -1051,12 +1077,11 @@ name "subsec:Particle_swarm_optimization"
 
 \begin_layout Standard
 PSO is an optimization method inspired by the behavior of swarms in nature.
- In PSO, a set of particles moves in the search space seeking the optimal
- solution.
- Each particle has a current position and velocity, and it moves based on
- its past performance and that of its neighboring particles.
- PSO continuously adjusts the movement of particles aiming for convergence
- to the optimal solution 
+ In PSO,
+ a set of particles moves in the search space seeking the optimal solution.
+ Each particle has a current position and velocity,
+ and it moves based on its past performance and that of its neighboring particles.
+ PSO continuously adjusts the movement of particles aiming for convergence to the optimal solution 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Marini,García-Gonzalo,Jain"
@@ -1065,10 +1090,10 @@ literal "false"
 \end_inset
 
 .
- This method can be programmed easily and the set of the parameters to be
- set is limited.
- Hence, it has been used in a series of practical problems, such as problems
- that arise in physics 
+ This method can be programmed easily and the set of the parameters to be set is limited.
+ Hence,
+ it has been used in a series of practical problems,
+ such as problems that arise in physics 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "psophysics1,psophysics2"
@@ -1076,7 +1101,8 @@ literal "true"
 
 \end_inset
 
-, chemistry 
+,
+ chemistry 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "psochem1,psochem2"
@@ -1084,7 +1110,8 @@ literal "false"
 
 \end_inset
 
-, medicine 
+,
+ medicine 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "psomed1,psomed2"
@@ -1092,7 +1119,8 @@ literal "true"
 
 \end_inset
 
-, economics 
+,
+ economics 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "psoecon"
@@ -1108,6 +1136,7 @@ reference "alg:PSO"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -1117,6 +1146,7 @@ noprefix "false"
 \begin_layout Standard
 \begin_inset Float algorithm
 placement H
+alignment document
 wide false
 sideways false
 status collapsed
@@ -1219,7 +1249,8 @@ Initialize
 \begin_inset Formula $x_{1},x_{2},...,x_{m}$
 \end_inset
 
-, with 
+,
+ with 
 \begin_inset Formula $x_{i}\in S\subset R^{n}$
 \end_inset
 
@@ -1239,7 +1270,8 @@ Initialize
 \begin_inset Formula $u_{1},u_{2},...,u_{m}$
 \end_inset
 
-, with 
+,
+ with 
 \begin_inset Formula $u_{i}\in S\subset R^{n}$
 \end_inset
 
@@ -1377,7 +1409,8 @@ The variable
 \begin_inset Formula $\omega$
 \end_inset
 
- is called inertia, with 
+ is called inertia,
+ with 
 \begin_inset Formula $\omega\in[0,1]$
 \end_inset
 
@@ -1419,7 +1452,8 @@ Set
 \begin_inset Formula $x_{i}=\mbox{LS}\left(x_{i}\right)$
 \end_inset
 
-, where 
+,
+ where 
 \begin_inset Formula $\mbox{LS}(x)$
 \end_inset
 
@@ -1435,7 +1469,8 @@ Evaluate
 \begin_inset Formula $i$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $f\left(x_{i}\right)$
 \end_inset
 
@@ -1505,6 +1540,7 @@ reference "enu:TCheckPSO"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -1528,11 +1564,9 @@ name "subsec:Differential_evolution"
 \end_layout
 
 \begin_layout Standard
-The DE method relies on differential operators and is particularly effective
- in optimization problems that involve searching through a continuous search
- space.
- By employing differential operators, DE generates new solutions that are
- then evaluated and adjusted until the optimal solution is achieved 
+The DE method relies on differential operators and is particularly effective in optimization problems that involve searching through a continuous search space.
+ By employing differential operators,
+ DE generates new solutions that are then evaluated and adjusted until the optimal solution is achieved 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Feoktistov,Bilal"
@@ -1541,7 +1575,8 @@ literal "false"
 \end_inset
 
 .
- The method was used in a series of problems, such as electromagnetics 
+ The method was used in a series of problems,
+ such as electromagnetics 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "de_app1"
@@ -1549,7 +1584,8 @@ literal "false"
 
 \end_inset
 
-, energy consumption problems 
+,
+ energy consumption problems 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "de_app2"
@@ -1557,7 +1593,8 @@ literal "false"
 
 \end_inset
 
-, job shop scheduling 
+,
+ job shop scheduling 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "de_app3"
@@ -1565,7 +1602,8 @@ literal "false"
 
 \end_inset
 
-, image segmentation 
+,
+ image segmentation 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "de_app4"
@@ -1578,15 +1616,17 @@ literal "false"
 \series bold
  
 \series default
-The Differential Evolution operates through the following steps: Initially,
- initialization takes place with a random population of solutions in the
- search space.
- Then, each solution is evaluated based on the objective function.
- Subsequently, a process is iterated involving the generation of new solutions
- through modifications, evaluation of these new solutions, and selection
- of the best ones for the next generation.
- The algorithm terminates when a termination criterion is met, such as achieving
- sufficient improvement in performance or exhausting the number of iterations.
+The Differential Evolution operates through the following steps:
+ Initially,
+ initialization takes place with a random population of solutions in the search space.
+ Then,
+ each solution is evaluated based on the objective function.
+ Subsequently,
+ a process is iterated involving the generation of new solutions through modifications,
+ evaluation of these new solutions,
+ and selection of the best ones for the next generation.
+ The algorithm terminates when a termination criterion is met,
+ such as achieving sufficient improvement in performance or exhausting the number of iterations.
  The main steps of the DE method are presented in Algorithm 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1594,6 +1634,7 @@ reference "alg:DE"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -1603,6 +1644,7 @@ noprefix "false"
 \begin_layout Standard
 \begin_inset Float algorithm
 placement H
+alignment document
 wide false
 sideways false
 status collapsed
@@ -1888,18 +1930,16 @@ name "subsec:Multistart"
 \end_layout
 
 \begin_layout Standard
-In contrast, the Multistart method follows a different approach than previous
- methods.
- Instead of focusing on a single initial point, it repeats the search from
- various initial points in the search space.
- This allows for a broader exploration of the search space and increases
- the chances of finding the optimal solution
+In contrast,
+ the Multistart method follows a different approach than previous methods.
+ Instead of focusing on a single initial point,
+ it repeats the search from various initial points in the search space.
+ This allows for a broader exploration of the search space and increases the chances of finding the optimal solution
 \series bold
 .
 
 \series default
- The Multistart method is particularly useful when optimization algorithms
- may get trapped in local minima 
+ The Multistart method is particularly useful when optimization algorithms may get trapped in local minima 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Marti,Marti Moreno,Tu Mayne"
@@ -1908,15 +1948,14 @@ literal "false"
 \end_inset
 
 .
- The approach of multiple starts belongs to the simplest techniques for
- global optimization.
- At the outset of the process, an initial distribution of points is made
- in Euclidean space.
- Subsequently, local optimization begins simultaneously from these points.
- The discovered minima are compared, and the best one is retained as the
- global minimum.
- Local optimizations rely on the Broyden Fletcher Goldfarb Shanno (BFGS)
- method 
+ The approach of multiple starts belongs to the simplest techniques for global optimization.
+ At the outset of the process,
+ an initial distribution of points is made in Euclidean space.
+ Subsequently,
+ local optimization begins simultaneously from these points.
+ The discovered minima are compared,
+ and the best one is retained as the global minimum.
+ Local optimizations rely on the Broyden Fletcher Goldfarb Shanno (BFGS) method 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "bfgs_main"
@@ -1932,6 +1971,7 @@ reference "alg:multistart"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -1941,6 +1981,7 @@ noprefix "false"
 \begin_layout Standard
 \begin_inset Float algorithm
 placement H
+alignment document
 wide false
 sideways false
 status collapsed
@@ -2092,27 +2133,66 @@ name "sec:The-proposed-method"
 \end_layout
 
 \begin_layout Standard
-In the present work, a mixture of termination rules is proposed as a novel
- technique, which can be used without partitioning in any stochastic global
- optimization technique.
- Also, a new parallel global optimization technique is proposed that utilizes
- the new termination rule.
- In the following subsections, the new termination rule is fully described,
+In the present work,
+ a mixture of termination rules is proposed as a novel technique,
+ which can be used without partitioning in any stochastic global optimization technique.
+ Also,
+ a new parallel global optimization technique is proposed that utilizes the new termination rule.
+ 
+\end_layout
+
+\begin_layout Standard
+The existing method that was presented in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Methods-description"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
+ employs Particle Swarm Optimization (PSO),
+ Differential Evolution (DE),
+ and Multistart techniques,
+ each with its own independent termination criteria.
+ In contrast,
+ the proposed method that which will be presented at this section,
+ integrates an innovative combination of termination rules,
+ including Best-Fitness,
+ Mean-Fitness,
+ and DoubleBox,
+ enhancing the termination process of the search.
+ By incorporating these advanced termination strategies into a parallel algorithm,
+ the new method achieves faster convergence and improved solution quality.
+ This approach combines the efficiency of parallel execution with the flexibility of advanced termination criteria,
+ representing a significant advancement over traditional methods.
+ In the following subsections,
+ the new termination rule is fully described,
  followed by the new optimization method.
 \end_layout
 
 \begin_layout Subsection
 The new termination rule
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:The-new-termination"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-The proposed termination rule is a mixture of several stochastic termination
- rules proposed in the recent literature.
+The proposed termination rule is a mixture of several stochastic termination rules proposed in the recent literature.
  The first algorithm will be called 
 \emph on
 best - fitness 
 \emph default
-and in this termination technique, at each iteration 
+and in this termination technique,
+ at each iteration 
 \emph on
 
 \begin_inset Formula $k$
@@ -2120,7 +2200,8 @@ and in this termination technique, at each iteration
 
 
 \emph default
-, the difference between the current best value 
+,
+ the difference between the current best value 
 \begin_inset Formula $f_{min}^{(k)}$
 \end_inset
 
@@ -2128,7 +2209,9 @@ and in this termination technique, at each iteration
 \begin_inset Formula $f_{min}^{(k+1)}$
 \end_inset
 
- is calculated, i.e., the absolute difference:
+ is calculated,
+ i.e.,
+ the absolute difference:
 \end_layout
 
 \begin_layout Standard
@@ -2145,26 +2228,30 @@ and in this termination technique, at each iteration
 
 \begin_layout Standard
 \align block
-If this difference is zero for a series of predefined consecutive iterations
- 
+If this difference is zero for a series of predefined consecutive iterations 
 \begin_inset Formula $N_{k}$
 \end_inset
 
-, then the method terminates.
- In the second termination rule, which will be called 
+,
+ then the method terminates.
+ In the second termination rule,
+ which will be called 
 \emph on
 mean - fitness
 \emph default
-, the average function value for each iteration is computed.
- If this value remains relatively unchanged over a certain number of consecutive
- iterations, it indicates that the method may not be making significant
- progress towards discovering a new global minimum.
- Therefore, termination is warranted.
- Hence, in every iteration 
+,
+ the average function value for each iteration is computed.
+ If this value remains relatively unchanged over a certain number of consecutive iterations,
+ it indicates that the method may not be making significant progress towards discovering a new global minimum.
+ Therefore,
+ termination is warranted.
+ Hence,
+ in every iteration 
 \begin_inset Formula $k$
 \end_inset
 
-, we compute:
+,
+ we compute:
 \end_layout
 
 \begin_layout Standard
@@ -2183,9 +2270,9 @@ The value
 \begin_inset Formula $NP$
 \end_inset
 
- denotes the number of particles or chromosomes that participate in the
- algorithm.
- The termination rule is defined as follows: terminate if 
+ denotes the number of particles or chromosomes that participate in the algorithm.
+ The termination rule is defined as follows:
+ terminate if 
 \begin_inset Formula $\delta^{(k)}\le\epsilon$
 \end_inset
 
@@ -2194,8 +2281,8 @@ The value
 \end_inset
 
  of iterations.
- The third stopping rule was the so - called DoubleBox stopping rule, that
- was initially proposed in the work of Tsoulos 
+ The third stopping rule was the so - called DoubleBox stopping rule,
+ that was initially proposed in the work of Tsoulos 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Tsoulos"
@@ -2204,8 +2291,15 @@ literal "false"
 \end_inset
 
 .
- According to this criterion, the algorithm terminates when one of the following
- conditions is met:
+ In this criterion,
+ the search process is terminated once sufficient coverage of the search space has been achieved.
+ The estimation of the coverage is based on the asymptotic approximation of the relative proportion of points that lead to local minima.
+ Since the exact coverage cannot be directly calculated,
+ sampling is conducted over a larger region.
+ The search is stopped when the variance of the sample distribution falls below a predefined threshold,
+ which is adjusted based on the most recent discovery of a new local minimum.
+ According to this criterion,
+ the algorithm terminates when one of the following conditions is met:
 \end_layout
 
 \begin_layout Itemize
@@ -2245,10 +2339,9 @@ k\geq N_{k}\,or\,\sigma^{(k)}\leq\frac{\sigma^{(klast)}}{2}\label{eq:double}
 \begin_inset Newline newline
 \end_inset
 
-This proposed termination criterion is the combination of the aforementioned
- similarity types.
- Optimization termination is achieved when any homogeneity condition is
- satisfied, resulting in improved speed.
+This proposed termination criterion is the combination of the aforementioned similarity types.
+ Optimization termination is achieved when any homogeneity condition is satisfied,
+ resulting in improved speed.
  Hence by using equations 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2256,16 +2349,19 @@ reference "eq:best"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-, 
+,
+ 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:mean"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -2276,6 +2372,7 @@ reference "eq:double"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -2331,9 +2428,8 @@ The proposed algorithm
 \end_layout
 
 \begin_layout Standard
-In the scientific literature, parallelization typically involves distributing
- the population among parallel computing units to save computational power
- and time 
+In the scientific literature,
+ parallelization typically involves distributing the population among parallel computing units to save computational power and time 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "pde,ppso"
@@ -2342,9 +2438,8 @@ literal "false"
 \end_inset
 
 .
- In the present study, we concurrently compute the optimal solutions of
- three different stochastic optimization methods originating from different
- classification categories.
+ In the present study,
+ we concurrently compute the optimal solutions of three different stochastic optimization methods originating from different classification categories.
  The proposed algorithm is shown in Algorithm 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2352,6 +2447,7 @@ reference "alg:The-overall-algorithm"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -2361,9 +2457,10 @@ noprefix "false"
 \begin_layout Standard
 \begin_inset Float algorithm
 placement H
+alignment document
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Enumerate
 
@@ -2433,6 +2530,7 @@ reference "sec:Methods-description"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -2476,13 +2574,15 @@ Update
 Check
 \series default
  the proposed termination rule.
- If the termination rule is valid, then goto step 
+ If the termination rule is valid,
+ then goto step 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "enu:Terminate-and-report"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -2493,6 +2593,7 @@ reference "enu:For--do"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -2545,17 +2646,69 @@ reference "fig:basicFlowchart"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 .
- The methods that are used in each processing unit may include Particle
- Swarm Optimization, the Multistart method and Differential Evolution (DE).
- These techniques have been adopted since they have been widely used in
- the relevant literature and provide the possibility to be parallelized
- relatively easily.
+ The methods that are used in each processing unit may include Particle Swarm Optimization,
+ the Multistart method and Differential Evolution (DE).
+ These techniques have been adopted since they have been widely used in the relevant literature and provide the possibility to be parallelized relatively easily.
+ Initially the algorithm distributes the three methodologies across 
+\begin_inset Formula $N_{I}$
+\end_inset
+
+ threads,
+ where 
+\begin_inset Formula $N_{I}>3$
+\end_inset
+
+.
+ The first thread executes the DE method,
+ the next executes PSO,
+ and the third runs the Multistart method.
+ This process is repeated to ensure an equivalent distribution of the methods across all threads,
+ optimizing the utilization of available computational resources.When the number of threads is equal to or a multiple of the number of methods,
+ the distribution is 100% equivalent.
+ In other cases,
+ the degree of equivalence increases with the number of threads.
+\end_layout
+
+\begin_layout Standard
+As presented in this subsection,
+ the proposed algorithm exploits the parallel execution of three distinct optimization methods,
+ with its efficiency in termination procedures incorporated through the criteria described in Subsection 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:The-new-termination"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+.
+ The algorithm uses three termination criteria:
+ the difference between the best values \SpecialChar allowbreak
+\SpecialChar allowbreak
+in successive iterations,
+ the stability of the mean fitness value,
+ and the relative variance of the cost function values.
+ Each criterion contributes to the evaluation of the algorithm's progress,
+ dynamically switching between these criteria based on the current state of the search.
+ Specifically,
+ when any of the criteria meets its predefined conditions,
+ the algorithm terminates the search,
+ thus adapting the process to the continuous search conditions.
+ This strategy ensures the flexibility and efficiency of the algorithm,
+ minimizing computational resources and time wastage.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
 placement H
+alignment document
 wide false
 sideways false
 status collapsed
@@ -2580,8 +2733,8 @@ name "fig:basicFlowchart"
 \end_inset
 
 .
- The DE acronym stands for the Differential Evolution method, the PU acronym
- represents the Parallel Unit that executes the algorithm.
+ The DE acronym stands for the Differential Evolution method,
+ the PU acronym represents the Parallel Unit that executes the algorithm.
 \end_layout
 
 \end_inset
@@ -2606,8 +2759,25 @@ name "sec:Experiments"
 \end_layout
 
 \begin_layout Standard
-All experiments conducted were repeated 30 times to ensure the reliability
- of the algorithm producing the results.
+All experiments conducted were repeated 30 times to ensure the reliability of the algorithm producing the results.
+ The initial sample distribution is the same across all optimization methods,
+ and the other parameters have been kept constant,
+ as shown in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:settings"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+.
+ Specifically,
+ in the parallel algorithm,
+ the total number of initial samples remains as constant as possible,
+ regardless of the number of threads used.
  The parallelization was achieved using the OpenMP library 
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -2616,8 +2786,9 @@ literal "false"
 
 \end_inset
 
-, while the implementation of the method was done in ANSI C++ within the
- optimization package OPTIMUS, available at 
+,
+ while the implementation of the method was done in ANSI C++ within the optimization package OPTIMUS,
+ available at 
 \begin_inset Flex URL
 status open
 
@@ -2629,26 +2800,14 @@ https://github.com/itsoulos/OPTIMUS
 \end_inset
 
 .
- The values used for all the parameters are shown in Table 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:settings"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
- The parameters used here are either suggested in the original publications
- of the methods (eg Differential Evolution, Particle Swarm Optimization)
- or have been chosen so that there is a compromise between the execution
- time of the method and its efficiency.
+ The parameters used here are either suggested in the original publications of the methods (eg Differential Evolution,
+ Particle Swarm Optimization) or have been chosen so that there is a compromise between the execution time of the method and its efficiency.
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float table
 placement H
+alignment document
 wide false
 sideways false
 status open
@@ -3019,13 +3178,15 @@ literal "false"
 
 \end_inset
 
- presented below exhibit varying levels of difficulty in solving them; hence,
+ presented below exhibit varying levels of difficulty in solving them;
+ hence,
  a periodic local optimization mechanism has been incorporated.
- Periodic local optimization plays a crucial role in increasing the success
- rate in locating the minimum of functions.
- This addition appears to lead to a success rate approaching 100% for all
- functions, regardless of their characteristics such as dimensionality,
- minima, scalability, and symmetry.
+ Periodic local optimization plays a crucial role in increasing the success rate in locating the minimum of functions.
+ This addition appears to lead to a success rate approaching 100% for all functions,
+ regardless of their characteristics such as dimensionality,
+ minima,
+ scalability,
+ and symmetry.
  A study by Z.-M.
  Gao and colleagues 
 \begin_inset CommandInset citation
@@ -3036,19 +3197,20 @@ literal "false"
 \end_inset
 
  specifically examines the issue of symmetry and asymmetry in the test functions.
- The test functions used in the conducted experiments are shown in Table
- 
+ The test functions used in the conducted experiments are shown in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:The-test-functions"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 .
- Generally, the region of attraction 
+ Generally,
+ the region of attraction 
 \begin_inset Formula $A\left(x^{*}\right)$
 \end_inset
 
@@ -3068,9 +3230,10 @@ where
 \begin_inset Formula $L(x)$
 \end_inset
 
- is a local search procedure, such as BFGS.
- Global optimization methods, usually find points which are in the region
- of attraction 
+ is a local search procedure,
+ such as BFGS.
+ Global optimization methods,
+ usually find points which are in the region of attraction 
 \begin_inset Formula $A\left(x^{*}\right)$
 \end_inset
 
@@ -3079,17 +3242,19 @@ where
 \end_inset
 
  but not necessarily the local minimum itself.
- For this reason, at the end of their execution, a local minimization method
- is applied in order to ensure the exact finding of a local minimum.
- Of course, this does not imply that the minimum that will be located will
- be the total minimum of the function, since a function can contain tens
- or even hundreds of local minima.
+ For this reason,
+ at the end of their execution,
+ a local minimization method is applied in order to ensure the exact finding of a local minimum.
+ Of course,
+ this does not imply that the minimum that will be located will be the total minimum of the function,
+ since a function can contain tens or even hundreds of local minima.
  
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float table
 placement H
+alignment document
 wide false
 sideways false
 status collapsed
@@ -4090,15 +4255,19 @@ Experimental results
 \end_layout
 
 \begin_layout Standard
-All tables presented here demonstrate the average function calls obtained
- for each test problem.
- The average function can be considered as a measure of the speed of each
- method, since each function has a different complexity and therefore, the
- average execution time would not be a good indication of the computational
- time required.
- In the first set of experiments we examined if the presence of the suggested
- stopping rule, which is the combination of a series of stopping rules,
+All tables presented here demonstrate the average function calls obtained for each test problem.
+ The average function can be considered as a measure of the speed of each method,
+ since each function has a different complexity and therefore,
+ the average execution time would not be a good indication of the computational time required.
+ In the first set of experiments we examined if the presence of the suggested stopping rule,
+ which is the combination of a series of stopping rules,
  affects the optimization techniques without parallelization.
+ During parallel execution,
+ the total sum of calls is computed across all computing units nodes,
+ ensuring efficient load distribution and resource utilization.
+ However,
+ the algorithm terminates at the computing unit that identifies the optimal solution,
+ signaling the achievement of the desired convergence criterion.
  In Table 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -4106,18 +4275,22 @@ reference "tab:DE"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-, we observe the performance of all termination rules for the DE method.
- From these, both statistical and quantitative comparisons arise, depicted
- in Figure 
+,
+ we observe the performance of all termination rules for the DE method.
+ From these,
+ both statistical and quantitative comparisons arise,
+ depicted in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:DE_stat"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -4128,6 +4301,7 @@ noprefix "false"
 \begin_layout Standard
 \begin_inset Float table
 placement H
+alignment document
 wide false
 sideways false
 status collapsed
@@ -4137,8 +4311,8 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Average function calls for the Differential evolution method, using different
-  termination rules
+Average function calls for the Differential evolution method,
+ using different  termination rules
 \begin_inset CommandInset label
 LatexCommand label
 name "tab:DE"
@@ -5954,6 +6128,7 @@ Total
 \begin_layout Standard
 \begin_inset Float figure
 placement H
+alignment document
 wide false
 sideways false
 status collapsed
@@ -5973,8 +6148,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Statistical comparison of function calls with different termination rule
- of differential evolution
+Statistical comparison of function calls with different termination rule of differential evolution
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:DE_stat"
@@ -5991,19 +6165,18 @@ name "fig:DE_stat"
 
 \end_inset
 
-As it is evident, the combination of the stopping rules reduces the required
- number of function calls that are required to obtain the global minimum
- by the DE method.
- The proposed termination scheme outperforms by a percentage that varies
- from 13% to 73% the other termination rules used here.
- Subsequently, the same experiment was conducted for the PSO method and
- the results are shown in Table 
+As it is evident,
+ the combination of the stopping rules reduces the required number of function calls that are required to obtain the global minimum by the DE method.
+ The proposed termination scheme outperforms by a percentage that varies from 13% to 73% the other termination rules used here.
+ Subsequently,
+ the same experiment was conducted for the PSO method and the results are shown in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:PSO"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -6014,6 +6187,7 @@ reference "fig:PSO_stat"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -6023,6 +6197,7 @@ noprefix "false"
 \begin_layout Standard
 \begin_inset Float table
 placement H
+alignment document
 wide false
 sideways false
 status collapsed
@@ -6032,7 +6207,8 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Average function calls for the PSO method, with different termination rules
+Average function calls for the PSO method,
+ with different termination rules
 \begin_inset CommandInset label
 LatexCommand label
 name "tab:PSO"
@@ -7848,6 +8024,7 @@ Total
 \begin_layout Standard
 \begin_inset Float figure
 placement H
+alignment document
 wide false
 sideways false
 status open
@@ -7866,8 +8043,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Statistical comparison of function calls with different termination rule
- of PSO method
+Statistical comparison of function calls with different termination rule of PSO method
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:PSO_stat"
@@ -7884,16 +8060,17 @@ name "fig:PSO_stat"
 
 \end_inset
 
-Once more, the proposed termination scheme outperforms the other stopping
- rules in almost every test function.
- Likewise, the same experiment was carried out for the Multistart method
- and the results are depicted in Table 
+Once more,
+ the proposed termination scheme outperforms the other stopping rules in almost every test function.
+ Likewise,
+ the same experiment was carried out for the Multistart method and the results are depicted in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:Multistart"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -7904,6 +8081,7 @@ reference "fig:Multistart_stat"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -7913,6 +8091,7 @@ noprefix "false"
 \begin_layout Standard
 \begin_inset Float table
 placement H
+alignment document
 wide false
 sideways false
 status open
@@ -7922,7 +8101,8 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Multistart: Function calls with different termination rules
+Multistart:
+ Function calls with different termination rules
 \begin_inset CommandInset label
 LatexCommand label
 name "tab:Multistart"
@@ -9742,6 +9922,7 @@ Total
 \begin_layout Standard
 \begin_inset Float figure
 placement H
+alignment document
 wide false
 sideways false
 status collapsed
@@ -9761,8 +9942,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Statistical comparison of function calls with different termination rule
- of multistart
+Statistical comparison of function calls with different termination rule of multistart
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Multistart_stat"
@@ -9783,11 +9963,10 @@ name "fig:Multistart_stat"
 
 \end_inset
 
- Observing the tables with the corresponding statistical and quantitative
- comparisons, it is evident that the calls to the objective function for
- the proposed termination rule  are fewer than any other rule in any method.
- Also, the proposed termination rule was also applied to a recent global
- optimization method named Grey Wolf Optimizer 
+ Observing the tables with the corresponding statistical and quantitative comparisons,
+ it is evident that the calls to the objective function for the proposed termination rule  are fewer than any other rule in any method.
+ Also,
+ the proposed termination rule was also applied to a recent global optimization method named Grey Wolf Optimizer 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "gwo"
@@ -9802,6 +9981,7 @@ reference "tab:experGWO"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -9812,6 +9992,7 @@ reference "fig:experGWO"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -9821,6 +10002,7 @@ noprefix "false"
 \begin_layout Standard
 \begin_inset Float table
 placement H
+alignment document
 wide false
 sideways false
 status open
@@ -9829,8 +10011,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Experiments using the variety of termination rules and the GWO optimization
- method.
+Experiments using the variety of termination rules and the GWO optimization method.
 \begin_inset CommandInset label
 LatexCommand label
 name "tab:experGWO"
@@ -11651,6 +11832,7 @@ Total
 
 \begin_inset Float figure
 placement H
+alignment document
 wide false
 sideways false
 status collapsed
@@ -11669,8 +11851,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Statistical comparison for the GWO optimizer using different termination
- rules.
+Statistical comparison for the GWO optimizer using different termination rules.
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:experGWO"
@@ -11691,14 +11872,12 @@ name "fig:experGWO"
 
 \end_inset
 
-Once again the combinatorial termination technique achieves the lowest number
- of function calls of all available techniques.
+Once again the combinatorial termination technique achieves the lowest number of function calls of all available techniques.
  
 \end_layout
 
 \begin_layout Standard
-The proposed termination rule was also applied to the current parallel optimizat
-ion technique for the test function described previously.
+The proposed termination rule was also applied to the current parallel optimization technique for the test function described previously.
  The experimental results for the so - called 
 \emph on
 DoubleBox
@@ -11710,6 +11889,7 @@ reference "tab:parallelDoublebox"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -11722,30 +11902,31 @@ Column Problem denotes the test function used.
 \end_layout
 
 \begin_layout Enumerate
-Column 1x500 denotes the application of the proposed technique with one
- processing unit and 500 particles.
+Column 1x500 denotes the application of the proposed technique with one processing unit and 500 particles.
 \end_layout
 
 \begin_layout Enumerate
 Column 2x250 stands for the usage of two processing units.
- In each unit, the number of particles was set to 250.
+ In each unit,
+ the number of particles was set to 250.
 \end_layout
 
 \begin_layout Enumerate
-Column 5x100 denotes the incorporation of 5 processing units into the proposed
- method.
+Column 5x100 denotes the incorporation of 5 processing units into the proposed method.
  In each processing unit the number of particles was set to 100.
 \end_layout
 
 \begin_layout Enumerate
 Column 10x50 stands for the usage of 10 processing units.
- In each processing unit, the number of particles was set to 50.
+ In each processing unit,
+ the number of particles was set to 50.
 \end_layout
 
 \begin_layout Standard
 \align block
 \begin_inset Float table
 placement H
+alignment document
 wide false
 sideways false
 status open
@@ -11755,8 +11936,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Experiments using the proposed optimization technique and the Doublebox
- stopping rule.
+Experiments using the proposed optimization technique and the Doublebox stopping rule.
  The experiment was performed on the test functions described previously.
  Numbers in cells denote average function calls.
 \begin_inset CommandInset label
@@ -13568,22 +13748,23 @@ Total
 
 \end_inset
 
-In this experiment, the total number of particles was set to 500, in order
- to have credibility in the values recorded.
- The results indicate that the increase in processing units may reduce the
- required number of function calls.
- The same series of experiments was also conducted using the so - called
- 
+In this experiment,
+ the total number of particles was set to 500,
+ in order to have credibility in the values recorded.
+ The results indicate that the increase in processing units may reduce the required number of function calls.
+ The same series of experiments was also conducted using the so - called 
 \emph on
 mean fitness
 \emph default
- termination rule, that has been described in equation 
+ termination rule,
+ that has been described in equation 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:mean"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -13591,10 +13772,11 @@ noprefix "false"
  The obtained results are presented in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "tab:parallelBest"
+reference "tab:parallelMean"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -13606,6 +13788,7 @@ noprefix "false"
 \align block
 \begin_inset Float table
 placement H
+alignment document
 wide false
 sideways false
 status open
@@ -13615,12 +13798,11 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Experiments using the proposed optimization technique and the mean - fitness
- stopping rule.
+Experiments using the proposed optimization technique and the mean - fitness stopping rule.
  Numbers in cells denote average function calls.
 \begin_inset CommandInset label
 LatexCommand label
-name "tab:parallelBest"
+name "tab:parallelMean"
 
 \end_inset
 
@@ -15431,31 +15613,4120 @@ Total
 
 \end_inset
 
-And in this series of experiments, the columns of the table retain the same
- meaning as in Table 
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement document
+alignment document
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Experiments using the proposed optimization technique and the best - fitness stopping rule.
+ Numbers in cells denote average function calls.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:parallelBest"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="36" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+Problems
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+1x500
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+2x250
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5x100
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+10x50
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+BF1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+9270
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+6253
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+6497
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+6089
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+BF2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+9838
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+6249
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+6078
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5853
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+BRANIN
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5787
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5022
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+4991
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+4989
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+CAMEL
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+12204
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5882
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5765
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5399
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+CIGAR10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+7631
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+6482
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+6350
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+6420
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+CM4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+16222
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5037
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+7422
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+6366
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+DISCUS10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5997
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+7364
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+4906
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5037
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+EASOM
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+4701
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+4752
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+4653
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+4668
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ELP10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+6230
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5223
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5407
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5314
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+EXP4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+10277
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5675
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5638
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5526
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+EXP16
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+9577
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5575
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5471
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5470
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+GKLS250
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+13328
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5864
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5323
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+4993
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+GKLS350
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+10131
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+4998
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5442
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+4919
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+GRIEWANK2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+8504
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+7345
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+6108
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5876
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+GRIEWANK10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+8535
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+7704
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+7771
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+7126
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+POTENTIAL3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+11338
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5726
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5471
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5699
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+PONTENTIAL5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+12414
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+7192
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+6977
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+7070
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+PONTENTIAL6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+14760
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+8480
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+7210
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+7511
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+PONTENTIAL10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+17729
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+12218
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+10217
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+9439
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+HANSEN
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+8379
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5945
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5023
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+4972
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+HARTMAN3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+10674
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5613
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5703
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5163
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+HARTMAN6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+10841
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5541
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5485
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5536
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+RASTRIGIN
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+13657
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+6636
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+6129
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5399
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ROSENBROCK8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+9456
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+6979
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+7165
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+7049
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+POSENBROCK16
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+9853
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+8620
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+8110
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+8379
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+SHEKEL5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+10959
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5437
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5684
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5616
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+SHEKEL7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+10651
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5715
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5739
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5486
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+SHEKEL10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+1533
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+6064
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5772
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5516
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+SINU4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+10291
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+6249
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5426
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5188
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+SINU8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+9993
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+6847
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+6080
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5582
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+TEST2N4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+10242
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+6131
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5837
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5480
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+TEST2N9
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+12998
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+7402
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+6455
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5702
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+TEST30N3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+6228
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5712
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5723
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5321
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+TEST30N4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5540
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5437
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5490
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+5484
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+Total
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+335768
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+217369
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+207518
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+199637
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align block
+And in this series of experiments,
+ the columns of the table retain the same meaning as in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:parallelDoublebox"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 .
- Furthermore, once again, it is observed that the increase in the number
- of computing units significantly reduces the required number of function
- calls to find the global minimum.
- Additionally, there is a significant reduction in the number of function
- calls required to be compared to the previous termination rule.
- Finally, the proposed termination rule is utilized in the parallel optimization
- technique and the experimental results are outlined in Table 
+ Furthermore,
+ once again,
+ it is observed that the increase in the number of computing units significantly reduces the required number of function calls to find the global minimum.
+ Additionally,
+ there is a significant reduction in the number of function calls required to be compared to the previous termination rule.
+ Finally,
+ the proposed termination rule is utilized in the parallel optimization technique and the experimental results are outlined in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:parallelProposed"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -15465,6 +19736,7 @@ noprefix "false"
 \begin_layout Standard
 \begin_inset Float table
 placement H
+alignment document
 wide false
 sideways false
 status open
@@ -15474,8 +19746,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Experiments using the proposed optimization technique and proposed stopping
- rule.
+Experiments using the proposed optimization technique and proposed stopping rule.
  Numbers in cells denote average function calls.
 \begin_inset CommandInset label
 LatexCommand label
@@ -17290,21 +21561,22 @@ Total
 
 \end_inset
 
-And in this case, it is observed that the increase of parallel processing
- units significantly reduces the required number of function calls, as in
- the two previous termination rules.
- However, the proposed termination rule dramatically reduces the number
- of required function calls and consequently the computation time compared
- to previous termination rules.
+And in this case,
+ it is observed that the increase of parallel processing units significantly reduces the required number of function calls,
+ as in the two previous termination rules.
+ However,
+ the proposed termination rule dramatically reduces the number of required function calls and consequently the computation time compared to previous termination rules.
  This reduction in fact intensifies as the number of computing nodes increases.
- Also, for the same set of experiments, a statistical test (Wilcoxon test)
- was conducted and the it is graphically presented in Figure 
+ Also,
+ for the same set of experiments,
+ a statistical test (Wilcoxon test) was conducted and the it is graphically presented in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Wilcoxon-rank-sum-test"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -17314,6 +21586,7 @@ noprefix "false"
 \begin_layout Standard
 \begin_inset Float figure
 placement H
+alignment document
 wide false
 sideways false
 status collapsed
@@ -17333,9 +21606,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Wilcoxon rank-sum test results for the comparison of different termination
- rules as used in the proposed parallel optimization technique and for 5
- processing units.
+Wilcoxon rank-sum test results for the comparison of different termination rules as used in the proposed parallel optimization technique and for 5 processing units.
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:Wilcoxon-rank-sum-test"
@@ -17356,13 +21627,11 @@ name "fig:Wilcoxon-rank-sum-test"
 
 \end_inset
 
- A p-value of less than 0.05 (two-tailed) was used to determine statistical
- significance and is indicated in bold.
+ A p-value of less than 0.05 (two-tailed) was used to determine statistical significance and is indicated in bold.
 \end_layout
 
 \begin_layout Standard
-An additional experiment was performed to assess the capabilities of the
- parallel technique using the CM function for various values of the dimension.
+An additional experiment was performed to assess the capabilities of the parallel technique using the CM function for various values of the dimension.
  This function is defined as:
 \begin_inset Formula 
 \[
@@ -17371,19 +21640,18 @@ f(x)=\sum_{i=1}^{n}x_{i}^{2}-\frac{1}{10}\sum_{i=1}^{n}\cos\left(5\pi x_{i}\righ
 
 \end_inset
 
-The proposed method was tested on this function for different values of
- the dimension 
+The proposed method was tested on this function for different values of the dimension 
 \begin_inset Formula $n$
 \end_inset
 
- and for a variety of processing units and the results are graphically illustrat
-ed in Figure 
+ and for a variety of processing units and the results are graphically illustrated in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:cmExper"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -17391,6 +21659,7 @@ noprefix "false"
  
 \begin_inset Float figure
 placement H
+alignment document
 wide false
 sideways false
 status collapsed
@@ -17413,8 +21682,7 @@ Experiments using the proposed paralell technique and the CM function.
 \begin_inset Formula $n$
 \end_inset
 
- varies from 1 to 20 and the number of processing units changes from 1 to
- 20.
+ varies from 1 to 20 and the number of processing units changes from 1 to 20.
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:cmExper"
@@ -17435,32 +21703,30 @@ name "fig:cmExper"
 
 \end_inset
 
-From the experimental results it is obvious that the required number of
- function calls is drastically reduced with the increase of computing units
- from 1 to 2 or to 5.
+From the experimental results it is obvious that the required number of function calls is drastically reduced with the increase of computing units from 1 to 2 or to 5.
  
 \end_layout
 
 \begin_layout Standard
-Also, the proposed method was applied on the GKLS function for different
- versions of the function.
+Also,
+ the proposed method was applied on the GKLS function for different versions of the function.
  The dimension of the function was in the range 
 \begin_inset Formula $[2..5]$
 \end_inset
 
 .
- In each dimension, 10 different versions of the functions were used and
- average execution times and function calls were recorded.
- Also, the proposed method was applied on the GKLS function using different
- number of processing units.
- The average function calls from this experiment are show graphically in
- Figure 
+ In each dimension,
+ 10 different versions of the functions were used and average execution times and function calls were recorded.
+ Also,
+ the proposed method was applied on the GKLS function using different number of processing units.
+ The average function calls from this experiment are show graphically in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:experGklsCalls"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -17471,12 +21737,14 @@ reference "fig:gklsExperTime"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 .
 \begin_inset Float figure
 placement H
+alignment document
 wide false
 sideways false
 status collapsed
@@ -17494,8 +21762,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Average function calls for the proposed method and different dimensions
- of the GKLS function.
+Average function calls for the proposed method and different dimensions of the GKLS function.
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:experGklsCalls"
@@ -17515,6 +21782,7 @@ name "fig:experGklsCalls"
 
 \begin_inset Float figure
 placement H
+alignment document
 wide false
 sideways false
 status collapsed
@@ -17550,9 +21818,9 @@ name "fig:gklsExperTime"
 
 \end_inset
 
- The graphs above show once again that adding processing units to the proposed
- technique can reduce not only the execution time, as expected, but also
- the required number of function calls.
+ The graphs above show once again that adding processing units to the proposed technique can reduce not only the execution time,
+ as expected,
+ but also the required number of function calls.
 \end_layout
 
 \begin_layout Section
@@ -17567,39 +21835,38 @@ name "sec:Conclusions"
 \end_layout
 
 \begin_layout Standard
-In this paper, the use of mixed termination rules for global optimization
- methods was thoroughly presented, and a new global optimization method
- that takes full advantage of parallel computing structures was afterward
- proposed.
- The use of mixed termination rules leads a series of computational global
- optimization techniques to find the global minimum of the objective function
- faster, as was also shown by the experimental results.
- The termination rules exploited are based on asymptotic criteria and are
- general enough to be applicable to any global optimization problem and
- stochastic global optimization technique.
+In this paper,
+ the use of mixed termination rules for global optimization methods was thoroughly presented,
+ and a new global optimization method that takes full advantage of parallel computing structures was afterward proposed.
+ The use of mixed termination rules leads a series of computational global optimization techniques to find the global minimum of the objective function faster,
+ as was also shown by the experimental results.
+ The termination rules exploited are based on asymptotic criteria and are general enough to be applicable to any global optimization problem and stochastic global optimization technique.
 \end_layout
 
 \begin_layout Standard
-Furthermore, the new stopping rule was utilized in a novel stochastic global
- optimization technique that involves some basic global optimization techniques.
+Furthermore,
+ the new stopping rule was utilized in a novel stochastic global optimization technique that involves some basic global optimization techniques.
  This method is designed to be executed in parallel computation environments.
- At each step of the method, a different global optimization method is also
- executed on each parallel computing unit, and these different techniques
- exchange optimal solutions with each other.
- In current work, the global optimization techniques of Differential Evolution,
- Multistart and PSO were used in the processing units, but the method can
- be generalized to use other stochastic optimization techniques, such as
- genetic algorithms or simulated annealing.
- Also, the overall method terminates with the combined termination rule
- proposed here, and the experimental results performed on a series of well
- - known test problems from the relevant literature seem to be very promising.
+ At each step of the method,
+ a different global optimization method is also executed on each parallel computing unit,
+ and these different techniques exchange optimal solutions with each other.
+ In current work,
+ the global optimization techniques of Differential Evolution,
+ Multistart and PSO were used in the processing units,
+ but the method can be generalized to use other stochastic optimization techniques,
+ such as genetic algorithms or simulated annealing.
+ Also,
+ the overall method terminates with the combined termination rule proposed here,
+ and the experimental results performed on a series of well - known test problems from the relevant literature seem to be very promising.
 \end_layout
 
 \begin_layout Standard
-Future extensions of the current work may include the incorporation of more
- advanced termination rules as well as the execution of alternative global
- optimization methods in the processing units, such as genetic algorithms
- or variants of the simulated annealing.
+However,
+ the present work is limited to a specific set of optimization methods and termination criteria.
+ Therefore,
+ future extensions of this work may include the integration of additional and more advanced termination criteria,
+ as well as the implementation of alternative global optimization methods in the processing units,
+ such as genetic algorithms or variations of simulated annealing.
 \end_layout
 
 \begin_layout Standard
@@ -17617,8 +21884,8 @@ Future extensions of the current work may include the incorporation of more
 \end_layout
 
 \begin_layout Author Contributions
-V.C., I.G.T and A.M.G conceived the idea and methodology and supervised the technical
- part regarding the software.
+V.C.,
+ I.G.T and A.M.G conceived the idea and methodology and supervised the technical part regarding the software.
  V.C.
  conducted the experiments.
  A.M.G.
@@ -17641,11 +21908,11 @@ Not applicable.
 \end_layout
 
 \begin_layout Acknowledgments
-This research has been financed by the European Union : Next Generation
- EU through the Program Greece 2.0 National Recovery and Resilience Plan
- , under the call RESEARCH – CREATE – INNOVATE, project name “iCREW: Intelligent
- small craft simulator for advanced crew training using Virtual Reality
- techniques" (project code:TAEDK-06195).
+This research has been financed by the European Union :
+ Next Generation EU through the Program Greece 2.0 National Recovery and Resilience Plan ,
+ under the call RESEARCH – CREATE – INNOVATE,
+ project name “iCREW:
+ Intelligent small craft simulator for advanced crew training using Virtual Reality techniques" (project code:TAEDK-06195).
 \end_layout
 
 \begin_layout Conflicts of Interest
@@ -17685,8 +21952,7 @@ Appendix A
 \end_inset
 
 ).
- If the appendix sections contain a heading then change the argument to
- 
+ If the appendix sections contain a heading then change the argument to 
 \begin_inset Quotes eld
 \end_inset
 
@@ -17698,7 +21964,8 @@ yes
 \end_layout
 
 \begin_layout Plain Layout
-Please, note that in LyX a trailing dot is always present and the name 
+Please,
+ note that in LyX a trailing dot is always present and the name 
 \begin_inset Quotes eld
 \end_inset
 
@@ -17798,13 +22065,16 @@ literal "false"
 \end_inset
 
 M.
- Honda, Application of genetic algorithms to modelings of fusion plasma
- physics, Computer Physics Communications 
+ Honda,
+ Application of genetic algorithms to modelings of fusion plasma physics,
+ Computer Physics Communications 
 \series bold
 231
 \series default
-, pp.
- 94-106, 2018.
+,
+ pp.
+ 94-106,
+ 2018.
 \end_layout
 
 \begin_layout Bibliography
@@ -17816,14 +22086,19 @@ literal "false"
 \end_inset
 
 X.L.
- Luo, J.
- Feng, H.H.
- Zhang, A genetic algorithm for astroparticle physics studies, Computer
- Physics Communications 
+ Luo,
+ J.
+ Feng,
+ H.H.
+ Zhang,
+ A genetic algorithm for astroparticle physics studies,
+ Computer Physics Communications 
 \series bold
 250
 \series default
-, 106818, 2020.
+,
+ 106818,
+ 2020.
 \end_layout
 
 \begin_layout Bibliography
@@ -17835,14 +22110,19 @@ literal "false"
 \end_inset
 
 T.M.
- Aljohani, A.F.
- Ebrahim, O.
- Mohammed, Single and Multiobjective Optimal Reactive Power Dispatch Based
- on Hybrid Artificial Physics–Particle Swarm Optimization, Energies 
+ Aljohani,
+ A.F.
+ Ebrahim,
+ O.
+ Mohammed,
+ Single and Multiobjective Optimal Reactive Power Dispatch Based on Hybrid Artificial Physics–Particle Swarm Optimization,
+ Energies 
 \series bold
 12
 \series default
-, 2333, 2019.
+,
+ 2333,
+ 2019.
 \end_layout
 
 \begin_layout Bibliography
@@ -17854,15 +22134,20 @@ literal "true"
 \end_inset
 
 P.M.
- Pardalos, D.
- Shalloway, G.
- Xue, Optimization methods for computing global minima of nonconvex potential
- energy functions, Journal of Global Optimization 
+ Pardalos,
+ D.
+ Shalloway,
+ G.
+ Xue,
+ Optimization methods for computing global minima of nonconvex potential energy functions,
+ Journal of Global Optimization 
 \series bold
 4
 \series default
-, pp.
- 117-133, 1994.
+,
+ pp.
+ 117-133,
+ 1994.
 \end_layout
 
 \begin_layout Bibliography
@@ -17874,18 +22159,25 @@ literal "true"
 \end_inset
 
 A.
- Liwo, J.
- Lee, D.R.
- Ripoll, J.
- Pillardy, H.
+ Liwo,
+ J.
+ Lee,
+ D.R.
+ Ripoll,
+ J.
+ Pillardy,
+ H.
  A.
- Scheraga, Protein structure prediction by global optimization of a potential
- energy function, Biophysics 
+ Scheraga,
+ Protein structure prediction by global optimization of a potential energy function,
+ Biophysics 
 \series bold
 96
 \series default
-, pp.
- 5482-5485, 1999.
+,
+ pp.
+ 5482-5485,
+ 1999.
 \end_layout
 
 \begin_layout Bibliography
@@ -17897,16 +22189,23 @@ literal "false"
 \end_inset
 
 J.
- An, G.He, F.
- Qin, R.
- Li, Z.
- Huang, A new framework of global sensitivity analysis for the chemical
- kinetic model using PSO-BPNN, Computers & Chemical Engineering 
+ An,
+ G.He,
+ F.
+ Qin,
+ R.
+ Li,
+ Z.
+ Huang,
+ A new framework of global sensitivity analysis for the chemical kinetic model using PSO-BPNN,
+ Computers & Chemical Engineering 
 \series bold
 112
 \series default
-, pp.
- 154-164, 2018.
+,
+ pp.
+ 154-164,
+ 2018.
 \end_layout
 
 \begin_layout Bibliography
@@ -17917,13 +22216,16 @@ literal "true"
 
 \end_inset
 
-Zwe-Lee Gaing, Particle swarm optimization to solving the economic dispatch
- considering the generator constraints, IEEE Transactions on 
+Zwe-Lee Gaing,
+ Particle swarm optimization to solving the economic dispatch considering the generator constraints,
+ IEEE Transactions on 
 \series bold
 18
 \series default
- Power Systems, pp.
- 1187-1195, 2003.
+ Power Systems,
+ pp.
+ 1187-1195,
+ 2003.
 \end_layout
 
 \begin_layout Bibliography
@@ -17935,14 +22237,16 @@ literal "false"
 \end_inset
 
 M.
- Basu, A simulated annealing-based goal-attainment method for economic emission
- load dispatch of fixed head hydrothermal power systems, International Journal
- of Electrical Power & Energy Systems 
+ Basu,
+ A simulated annealing-based goal-attainment method for economic emission load dispatch of fixed head hydrothermal power systems,
+ International Journal of Electrical Power & Energy Systems 
 \series bold
 27
 \series default
-, pp.
- 147-153, 2005.
+,
+ pp.
+ 147-153,
+ 2005.
 \end_layout
 
 \begin_layout Bibliography
@@ -17954,13 +22258,16 @@ literal "true"
 \end_inset
 
 Y.
- Cherruault, Global optimization in biology and medicine, Mathematical and
- Computer Modelling 
+ Cherruault,
+ Global optimization in biology and medicine,
+ Mathematical and Computer Modelling 
 \series bold
 20
 \series default
-, pp.
- 119-132, 1994.
+,
+ pp.
+ 119-132,
+ 1994.
 \end_layout
 
 \begin_layout Bibliography
@@ -17972,12 +22279,15 @@ literal "true"
 \end_inset
 
 Eva K.
- Lee, Large-Scale Optimization-Based Classification Models in Medicine and
- Biology, Annals of Biomedical Engineering 
+ Lee,
+ Large-Scale Optimization-Based Classification Models in Medicine and Biology,
+ Annals of Biomedical Engineering 
 \series bold
 35
 \series default
-, pp 1095-1109, 2007.
+,
+ pp 1095-1109,
+ 2007.
 \end_layout
 
 \begin_layout Bibliography
@@ -17989,13 +22299,16 @@ literal "true"
 \end_inset
 
 M.A.
- Wolfe, Interval methods for global optimization, Applied Mathematics and
- Computation 
+ Wolfe,
+ Interval methods for global optimization,
+ Applied Mathematics and Computation 
 \series bold
 75
 \series default
-, pp.
- 179-206, 1996.
+,
+ pp.
+ 179-206,
+ 1996.
 \end_layout
 
 \begin_layout Bibliography
@@ -18008,16 +22321,19 @@ literal "true"
 
 T.
  Csendes and D.
- Ratz, Subdivision Direction Selection in Interval Methods for Global Optimizati
-on, SIAM J.
+ Ratz,
+ Subdivision Direction Selection in Interval Methods for Global Optimization,
+ SIAM J.
  Numer.
  Anal.
  
 \series bold
 34
 \series default
-, pp.
- 922–938, 1997.
+,
+ pp.
+ 922–938,
+ 1997.
  
 \end_layout
 
@@ -18030,11 +22346,22 @@ literal "false"
 
 \end_inset
 
- Kawachi, M., Ando, N.
+ Kawachi,
+ M.,
+ Ando,
+ N.
  ( 1989).
- Genetic Algorithms in Search, Optimization & Machine Learning.
- Artificial Intelligence, Vol.: 7, Issue: 1, pp.: 168.
- Doi: https://doi.org/10.11517/jjsai.7.1_168 
+ Genetic Algorithms in Search,
+ Optimization & Machine Learning.
+ Artificial Intelligence,
+ Vol.:
+ 7,
+ Issue:
+ 1,
+ pp.:
+ 168.
+ Doi:
+ https://doi.org/10.11517/jjsai.7.1_168 
 \end_layout
 
 \begin_layout Bibliography
@@ -18046,12 +22373,23 @@ literal "false"
 
 \end_inset
 
- Kirkpatrick, S., Gelatt, C.D., Vecchi, M.P.
+ Kirkpatrick,
+ S.,
+ Gelatt,
+ C.D.,
+ Vecchi,
+ M.P.
  (1983).
  Optimization by simulated annealing.
- Science, Vol.
- 220, Issue: 4598, pp.: 671–680.
- DOI: 10.1126/science.220.4598.671 [CrossRef] [PubMed]
+ Science,
+ Vol.
+ 220,
+ Issue:
+ 4598,
+ pp.:
+ 671–680.
+ DOI:
+ 10.1126/science.220.4598.671 [CrossRef] [PubMed]
 \end_layout
 
 \begin_layout Bibliography
@@ -18063,11 +22401,26 @@ literal "false"
 
 \end_inset
 
- Hashim, F.A., Houssein, E.H., Mabrouk, M.S., Al-Atabany,W., Mirjalili, S.
+ Hashim,
+ F.A.,
+ Houssein,
+ E.H.,
+ Mabrouk,
+ M.S.,
+ Al-Atabany,W.,
+ Mirjalili,
+ S.
  (2019).
- Henry gas solubility optimization: A novel physics based algorithm.
- Future Generation Computer Systems: Vol.: 101, pp.: 646–667.
- Doi: https: 10.1016/j.future.2019.07.015
+ Henry gas solubility optimization:
+ A novel physics based algorithm.
+ Future Generation Computer Systems:
+ Vol.:
+ 101,
+ pp.:
+ 646–667.
+ Doi:
+ https:
+ 10.1016/j.future.2019.07.015
 \end_layout
 
 \begin_layout Bibliography
@@ -18079,10 +22432,19 @@ literal "false"
 
 \end_inset
 
- Rashedi, E., Nezamabadi-Pour, H., Saryazdi, S.
+ Rashedi,
+ E.,
+ Nezamabadi-Pour,
+ H.,
+ Saryazdi,
+ S.
  (2009).
- GSA: A gravitational search algorithm.
- Information Sciences: Vol.: 179, pp.:2232–2248.
+ GSA:
+ A gravitational search algorithm.
+ Information Sciences:
+ Vol.:
+ 179,
+ pp.:2232–2248.
  https://doi.org/10.1016/j.ins.2009.03.004
 \end_layout
 
@@ -18095,13 +22457,22 @@ literal "false"
 
 \end_inset
 
- Du, H., Wu, X., Zhuang, J.
+ Du,
+ H.,
+ Wu,
+ X.,
+ Zhuang,
+ J.
  (2006).
  Small-World Optimization Algorithm for Function Optimization.
  In Proceedings of the International Conference on Natural Computation,
- Xi’an, China, 24–28 September 2006, pp.
+ Xi’an,
+ China,
+ 24–28 September 2006,
+ pp.
  264–273.
- Doi: 10.1007/11881223_33 
+ Doi:
+ 10.1007/11881223_33 
 \end_layout
 
 \begin_layout Bibliography
@@ -18113,11 +22484,17 @@ literal "false"
 
 \end_inset
 
- Goldberg, D.E., Holland, J.H.
+ Goldberg,
+ D.E.,
+ Holland,
+ J.H.
  (1988).
  Genetic Algorithms and Machine Learning.
- Machine Learning (3): pp.: 95–99.
- Doi: 10.1023/A:1022602019183
+ Machine Learning (3):
+ pp.:
+ 95–99.
+ Doi:
+ 10.1023/A:1022602019183
 \end_layout
 
 \begin_layout Bibliography
@@ -18129,12 +22506,22 @@ literal "false"
 
 \end_inset
 
- Das, S.
- , Suganthan, P.N.
+ Das,
+ S.
+ ,
+ Suganthan,
+ P.N.
  (2011).
- Differential evolution: A survey of the state-of-the-art.
- IEEE Transactions on Evolutionary Computation, Vol.: 15, Issue:1, pp.: 4–31.
- Doi: 10.1109/TEVC.2010.2059031
+ Differential evolution:
+ A survey of the state-of-the-art.
+ IEEE Transactions on Evolutionary Computation,
+ Vol.:
+ 15,
+ Issue:1,
+ pp.:
+ 4–31.
+ Doi:
+ 10.1109/TEVC.2010.2059031
 \end_layout
 
 \begin_layout Bibliography
@@ -18147,15 +22534,21 @@ literal "false"
 \end_inset
 
  V.
- Charilogis , I.G.
- Tsoulos, A.
- Tzallas, E.
- Karvounis, Modifications for the Differential Evolution Algorithm, Symmetry
- 
+ Charilogis ,
+ I.G.
+ Tsoulos,
+ A.
+ Tzallas,
+ E.
+ Karvounis,
+ Modifications for the Differential Evolution Algorithm,
+ Symmetry 
 \series bold
 14
 \series default
-, 447, 2022.
+,
+ 447,
+ 2022.
 \end_layout
 
 \begin_layout Bibliography
@@ -18167,13 +22560,23 @@ literal "false"
 
 \end_inset
 
- Kennedy, J., Eberhart, R.
+ Kennedy,
+ J.,
+ Eberhart,
+ R.
  (1995).
  Particle Swarm Optimization.
- In Proceedings of the ICNN’95—International Conference on Neural Networks,
- Perth,WA, Australia, 27 November–1 December 1995, Vol.: 4, pp.
+ In Proceedings of the ICNN’95—
+International Conference on Neural Networks,
+ Perth,WA,
+ Australia,
+ 27 November–1 December 1995,
+ Vol.:
+ 4,
+ pp.
  1942–1948.
- Doi: 10.1109/ICNN.1995.488968
+ Doi:
+ 10.1109/ICNN.1995.488968
 \end_layout
 
 \begin_layout Bibliography
@@ -18186,13 +22589,17 @@ literal "false"
 \end_inset
 
  V.
- Charilogis, I.G.
- Tsoulos, Toward an Ideal Particle Swarm Optimizer for Multidimensional
- Functions, Information 
+ Charilogis,
+ I.G.
+ Tsoulos,
+ Toward an Ideal Particle Swarm Optimizer for Multidimensional Functions,
+ Information 
 \series bold
 13
 \series default
-, 217, 2022.
+,
+ 217,
+ 2022.
 \end_layout
 
 \begin_layout Bibliography
@@ -18204,12 +22611,25 @@ literal "false"
 
 \end_inset
 
- Dorigo, M., Maniezzo, V., Colorni, A.
+ Dorigo,
+ M.,
+ Maniezzo,
+ V.,
+ Colorni,
+ A.
  (1996).
- Ant system: Optimization by a colony of cooperating agents.
- IEEE Transactions on Systems, Man, and Cybernetics, Part B (Cybernetics),
- Vol.: 26, pp.: 29–41.
- Doi: 10.1109/3477.484436 
+ Ant system:
+ Optimization by a colony of cooperating agents.
+ IEEE Transactions on Systems,
+ Man,
+ and Cybernetics,
+ Part B (Cybernetics),
+ Vol.:
+ 26,
+ pp.:
+ 29–41.
+ Doi:
+ 10.1109/3477.484436 
 \end_layout
 
 \begin_layout Bibliography
@@ -18221,11 +22641,20 @@ literal "false"
 
 \end_inset
 
- Yang, X.S., Gandomi, A.H.
+ Yang,
+ X.S.,
+ Gandomi,
+ A.H.
  (2012).
- Bat algorithm: A novel approach for global engineering optimization.
- Engineering Computations, Vol.: 29, pp.: 464–483.
- Doi: https://doi.org/10.1108/02644401211235834
+ Bat algorithm:
+ A novel approach for global engineering optimization.
+ Engineering Computations,
+ Vol.:
+ 29,
+ pp.:
+ 464–483.
+ Doi:
+ https://doi.org/10.1108/02644401211235834
 \end_layout
 
 \begin_layout Bibliography
@@ -18237,11 +22666,19 @@ literal "false"
 
 \end_inset
 
- Mirjalili, S., Lewis, A.
+ Mirjalili,
+ S.,
+ Lewis,
+ A.
  (2016).
  The whale optimization algorithm.
- Advances in Engineering Softwar, Vol.: 95, pp.: 51–67.
- Doi: https://doi.org/10.1016/j.advengsoft.2016.01.008
+ Advances in Engineering Softwar,
+ Vol.:
+ 95,
+ pp.:
+ 51–67.
+ Doi:
+ https://doi.org/10.1016/j.advengsoft.2016.01.008
 \end_layout
 
 \begin_layout Bibliography
@@ -18253,11 +22690,21 @@ literal "false"
 
 \end_inset
 
- Saremi, S., Mirjalili, S., Lewis, A.
+ Saremi,
+ S.,
+ Mirjalili,
+ S.,
+ Lewis,
+ A.
  (2017).
- Grasshopper optimisation algorithm: Theory and application.
- Advances in Engineering Software, Vol.: 105, pp.: 30–47.Doi: https://doi.org/10.1016
-/j.advengsoft.2017.01.004.
+ Grasshopper optimisation algorithm:
+ Theory and application.
+ Advances in Engineering Software,
+ Vol.:
+ 105,
+ pp.:
+ 30–47.Doi:
+ https://doi.org/10.1016/j.advengsoft.2017.01.004.
 \end_layout
 
 \begin_layout Bibliography
@@ -18269,12 +22716,22 @@ literal "false"
 
 \end_inset
 
- Rao, R.V., Savsani, V.J., Vakharia, D.
+ Rao,
+ R.V.,
+ Savsani,
+ V.J.,
+ Vakharia,
+ D.
  (2011).
- Teaching–learning-based optimization: A novel method for constrained mechanical
- design optimization problems.
- Computer-Aided Design, Vol.: 43, pp.: 303–315.
- Doi: https://doi.org/10.1016/j.cad.2010.12.015
+ Teaching–learning-based optimization:
+ A novel method for constrained mechanical design optimization problems.
+ Computer-Aided Design,
+ Vol.:
+ 43,
+ pp.:
+ 303–315.
+ Doi:
+ https://doi.org/10.1016/j.cad.2010.12.015
 \end_layout
 
 \begin_layout Bibliography
@@ -18296,13 +22753,16 @@ J.
  T.
  Haftka, A.
  D.
- George, Parallel global optimization with the particle swarm algorithm,
+ George,
+ Parallel global optimization with the particle swarm algorithm,
  International journal for Numerical methods in Engineering 
 \series bold
 61
 \series default
-, pp.
- 2296-2315, 2004.
+,
+ pp.
+ 2296-2315,
+ 2004.
 \end_layout
 
 \begin_layout Bibliography
@@ -18315,13 +22775,16 @@ literal "true"
 
 J.
  Larson and S.M.
- Wild, Asynchronously parallel optimization solver for finding multiple
- minima, Mathematical Programming Computation 
+ Wild,
+ Asynchronously parallel optimization solver for finding multiple minima,
+ Mathematical Programming Computation 
 \series bold
 10
 \series default
-, pp.
- 303-332, 2018.
+,
+ pp.
+ 303-332,
+ 2018.
 \end_layout
 
 \begin_layout Bibliography
@@ -18333,15 +22796,21 @@ literal "false"
 \end_inset
 
 I.G.
- Tsoulos, A.
- Tzallas, D.
- Tsalikakis, PDoublePop: An implementation of parallel genetic algorithm
- for function optimization, Computer Physics Communications 
+ Tsoulos,
+ A.
+ Tzallas,
+ D.
+ Tsalikakis,
+ PDoublePop:
+ An implementation of parallel genetic algorithm for function optimization,
+ Computer Physics Communications 
 \series bold
 209
 \series default
-, pp.
- 183-189, 2016.
+,
+ pp.
+ 183-189,
+ 2016.
 \end_layout
 
 \begin_layout Bibliography
@@ -18353,11 +22822,14 @@ literal "false"
 \end_inset
 
 R.
- Kamil, S.
- Reiji, An Efficient GPU Implementation of a Multi-Start TSP Solver for
- Large Problem Instances, Proceedings of the 14th Annual Conference Companion
- on Genetic and Evolutionary Computation, pp.
- 1441-1442, 2012.
+ Kamil,
+ S.
+ Reiji,
+ An Efficient GPU Implementation of a Multi-Start TSP Solver for Large Problem Instances,
+ Proceedings of the 14th Annual Conference Companion on Genetic and Evolutionary Computation,
+ pp.
+ 1441-1442,
+ 2012.
 \end_layout
 
 \begin_layout Bibliography
@@ -18368,13 +22840,19 @@ literal "false"
 
 \end_inset
 
-Van Luong T., Melab N., Talbi EG.
+Van Luong T.,
+ Melab N.,
+ Talbi EG.
  (2011) GPU-Based Multi-start Local Search Algorithms.
- In: Coello C.A.C.
+ In:
+ Coello C.A.C.
  (eds) Learning and Intelligent Optimization.
  LION 2011.
- Lecture Notes in Computer Science, vol 6683.
- Springer, Berlin, Heidelberg.
+ Lecture Notes in Computer Science,
+ vol 6683.
+ Springer,
+ Berlin,
+ Heidelberg.
  https://doi.org/10.1007/978-3-642-25566-3_24
 \end_layout
 
@@ -18387,13 +22865,18 @@ literal "false"
 \end_inset
 
 K.
- Barkalov, V.
- Gergel, Parallel global optimization on GPU, J Glob Optim 
+ Barkalov,
+ V.
+ Gergel,
+ Parallel global optimization on GPU,
+ J Glob Optim 
 \series bold
 66
 \series default
-, pp.
- 3–20, 2016.
+,
+ pp.
+ 3–20,
+ 2016.
  
 \end_layout
 
@@ -18406,10 +22889,23 @@ literal "false"
 
 \end_inset
 
- Low, Y., Gonzalez, J., Kyrola, A., Bickson,D., Guestrin, C., Hellerstein, J.
+ Low,
+ Y.,
+ Gonzalez,
+ J.,
+ Kyrola,
+ A.,
+ Bickson,D.,
+ Guestrin,
+ C.,
+ Hellerstein,
+ J.
  (2010).
- GraphLab: A New Framework For Parallel Machine Learning.
- Source: arXiv, Computer Science.
+ GraphLab:
+ A New Framework For Parallel Machine Learning.
+ Source:
+ arXiv,
+ Computer Science.
  
 \end_layout
 
@@ -18422,13 +22918,24 @@ literal "false"
 
 \end_inset
 
- Yangyang, L., Liu, G., Lu, G., Jiao, L., Marturi, N.
- & Shang, R.
+ Yangyang,
+ L.,
+ Liu,
+ G.,
+ Lu,
+ G.,
+ Jiao,
+ L.,
+ Marturi,
+ N.
+ & Shang,
+ R.
  (2019).
- Hyper-Parameter Optimization Using MARS Surrogate for Machine-Learning
- Algorithms.
- IEEE Transactions on Emerging Topics in Computational Intelligence, pp(99):1-11.
- DOI: 10.1109/TETCI.2019.2918509.
+ Hyper-Parameter Optimization Using MARS Surrogate for Machine-Learning Algorithms.
+ IEEE Transactions on Emerging Topics in Computational Intelligence,
+ pp(99):1-11.
+ DOI:
+ 10.1109/TETCI.2019.2918509.
  
 \end_layout
 
@@ -18441,13 +22948,18 @@ literal "false"
 
 \end_inset
 
-Yamashiro, H.
- & Nonaka, H.
+Yamashiro,
+ H.
+ & Nonaka,
+ H.
  (2021).
- Estimation of processing time using machine learning and real factory data
- for optimization of parallel machine scheduling problem.
- ScienceDirect: Operations Research Perspectives, Vol.:8, 2021, Doi: https://doi.o
-rg/10.1016/j.orp.2021.100196 .
+ Estimation of processing time using machine learning and real factory data for optimization of parallel machine scheduling problem.
+ ScienceDirect:
+ Operations Research Perspectives,
+ Vol.:8,
+ 2021,
+ Doi:
+ https://doi.org/10.1016/j.orp.2021.100196 .
 \end_layout
 
 \begin_layout Bibliography
@@ -18459,12 +22971,15 @@ literal "false"
 
 \end_inset
 
- Kim, H.S.
- & Tsai, L.
+ Kim,
+ H.S.
+ & Tsai,
+ L.
  (2003).
  Design Optimization of a Cartesian Parallel Manipulator.
  Journal of Mechanical Design,125(1):43-51.
- Doi: https://doi.org/10.1115/1.1543977 .
+ Doi:
+ https://doi.org/10.1115/1.1543977 .
 \end_layout
 
 \begin_layout Bibliography
@@ -18476,14 +22991,19 @@ literal "false"
 
 \end_inset
 
- Oh, S., Jong Jang,H.
- & Pedrycz, W.
+ Oh,
+ S.,
+ Jong Jang,H.
+ & Pedrycz,
+ W.
  (2009).
- The design of a fuzzy cascade controller for ball and beam system: A study
- in optimization with the use of parallel genetic algorithms.
- ScienceDirect: Engineering Applications of Artificial Intelligence, 22(2):261-2
-71.
- Doi: https://doi.org/10.1016/j.engappai.2008.07.003 .
+ The design of a fuzzy cascade controller for ball and beam system:
+ A study in optimization with the use of parallel genetic algorithms.
+ ScienceDirect:
+ Engineering Applications of Artificial Intelligence,
+ 22(2):261-271.
+ Doi:
+ https://doi.org/10.1016/j.engappai.2008.07.003 .
 \end_layout
 
 \begin_layout Bibliography
@@ -18495,13 +23015,22 @@ literal "false"
 
 \end_inset
 
- Fatehi, M., Toloei, A., Zio, E., Niaki, S.T.A.
+ Fatehi,
+ M.,
+ Toloei,
+ A.,
+ Zio,
+ E.,
+ Niaki,
+ S.T.A.
  & Kesh,B.
  (2023).
- Robust optimization of the design of monopropellant propulsion control
- systems using an advanced teaching-learning-based optimization method.
- ScienceDirect: Engineering Applications of Artificial Intelligence, Vol.:126,
- Part: A.
+ Robust optimization of the design of monopropellant propulsion control systems using an advanced teaching-learning-based optimization method.
+ ScienceDirect:
+ Engineering Applications of Artificial Intelligence,
+ Vol.:126,
+ Part:
+ A.
  
 \end_layout
 
@@ -18514,12 +23043,21 @@ literal "false"
 
 \end_inset
 
- Cai, J., Yang, H., Lai, T.
- & Xu, K.(2023).
- Parallel pump and chiller system optimization method for minimizing energy
- consumption based on a novel multi-objective gorilla troops optimizer.
- ScienceDirect: Journal Of Building Engineering, Vol.: 76, Doi: https://doi.org/10.
-1016/j.jobe.2023.107366
+ Cai,
+ J.,
+ Yang,
+ H.,
+ Lai,
+ T.
+ & Xu,
+ K.(2023).
+ Parallel pump and chiller system optimization method for minimizing energy consumption based on a novel multi-objective gorilla troops optimizer.
+ ScienceDirect:
+ Journal Of Building Engineering,
+ Vol.:
+ 76,
+ Doi:
+ https://doi.org/10.1016/j.jobe.2023.107366
 \end_layout
 
 \begin_layout Bibliography
@@ -18531,15 +23069,19 @@ literal "false"
 
 \end_inset
 
- Yu, Y.
- & Shahabi, L.
+ Yu,
+ Y.
+ & Shahabi,
+ L.
  (2023).
- Engineering Application of Artificial Intelligence: Optimal infrastructure
- in microgrids with diverse uncertainties based on demand response, renewable
- energy sources and two-stage parallel optimization algorithm.
+ Engineering Application of Artificial Intelligence:
+ Optimal infrastructure in microgrids with diverse uncertainties based on demand response,
+ renewable energy sources and two-stage parallel optimization algorithm.
  ScienceDirect.
- Vol.:123, Part b.
- Doi: https://doi.org/10.1016/j.engappai.2023.106233 
+ Vol.:123,
+ Part b.
+ Doi:
+ https://doi.org/10.1016/j.engappai.2023.106233 
 \end_layout
 
 \begin_layout Bibliography
@@ -18551,13 +23093,22 @@ literal "false"
 
 \end_inset
 
- Ramirez-Gil, F.J., Pere-Madrid, C.M., Nelli Silva, E.C.
- & Montealerge-Rubio, W.
+ Ramirez-Gil,
+ F.J.,
+ Pere-Madrid,
+ C.M.,
+ Nelli Silva,
+ E.C.
+ & Montealerge-Rubio,
+ W.
  (2021).
- Sustainable Computing: Informatics and Systems: Parallel computing for
- the topology optimization method: Performance metrics and energy consumption
- analysis in multiphysics problems.
- Vol.:30, Doi: https://doi.org/10.1016/j.suscom.2020.100481 
+ Sustainable Computing:
+ Informatics and Systems:
+ Parallel computing for the topology optimization method:
+ Performance metrics and energy consumption analysis in multiphysics problems.
+ Vol.:30,
+ Doi:
+ https://doi.org/10.1016/j.suscom.2020.100481 
 \end_layout
 
 \begin_layout Bibliography
@@ -18569,13 +23120,25 @@ literal "false"
 
 \end_inset
 
- Tavakolan, M., Mostafazadeh, F., Eirdmousa, S.J., Safari, A.
- & Mirzai, K.
+ Tavakolan,
+ M.,
+ Mostafazadeh,
+ F.,
+ Eirdmousa,
+ S.J.,
+ Safari,
+ A.
+ & Mirzai,
+ K.
  (2022).
- A parallel computing simulation-based multi-objective optimization framework
- for economic analysis of building energy retrofit: A case study in Iran.
- ScienceDirect: Journal of Building Engineering, Vol.: 45, Doi: https://doi.org/10.
-1016/j.jobe.2021.103485
+ A parallel computing simulation-based multi-objective optimization framework for economic analysis of building energy retrofit:
+ A case study in Iran.
+ ScienceDirect:
+ Journal of Building Engineering,
+ Vol.:
+ 45,
+ Doi:
+ https://doi.org/10.1016/j.jobe.2021.103485
 \end_layout
 
 \begin_layout Bibliography
@@ -18587,13 +23150,14 @@ literal "false"
 
 \end_inset
 
- Lin, G.
+ Lin,
+ G.
  (2020).
- Parallel optimization n based operational planning to enhance the resilience
- of large-scale power systems.
- Mississippi State University, Scholars Junction.
- Online: https://scholarsjunction.msstate.edu/cgi/viewcontent.cgi?article=4435&cont
-ext=td
+ Parallel optimization n based operational planning to enhance the resilience of large-scale power systems.
+ Mississippi State University,
+ Scholars Junction.
+ Online:
+ https://scholarsjunction.msstate.edu/cgi/viewcontent.cgi?article=4435&context=td
 \end_layout
 
 \begin_layout Bibliography
@@ -18605,13 +23169,16 @@ literal "false"
 
 \end_inset
 
- Pang, M.
- & Shoemaker, C.A.
+ Pang,
+ M.
+ & Shoemaker,
+ C.A.
  (2023).
- Comparison of parallel optimization algorithms on computationally expensive
- groundwater remediation designs.
- Sience of the Total Environment: 857(3), Doi: https://doi.org/10.1016/j.scitotenv.2
-022.159544
+ Comparison of parallel optimization algorithms on computationally expensive groundwater remediation designs.
+ Sience of the Total Environment:
+ 857(3),
+ Doi:
+ https://doi.org/10.1016/j.scitotenv.2022.159544
 \end_layout
 
 \begin_layout Bibliography
@@ -18623,12 +23190,16 @@ literal "false"
 
 \end_inset
 
- Ezugwu, A.
+ Ezugwu,
+ A.
  (2023).
- A general Framework for Utilizing Metaheuristic Optimization for Sustainable
- Unrelated Parallel Machine Scheduling: A concise overview.
- Arxiv, Computer Science, Neural and Evolutionary Computing.
- Doi: https://doi.org/10.48550/arXiv.2311.12802 
+ A general Framework for Utilizing Metaheuristic Optimization for Sustainable Unrelated Parallel Machine Scheduling:
+ A concise overview.
+ Arxiv,
+ Computer Science,
+ Neural and Evolutionary Computing.
+ Doi:
+ https://doi.org/10.48550/arXiv.2311.12802 
 \end_layout
 
 \begin_layout Bibliography
@@ -18640,12 +23211,21 @@ literal "false"
 
 \end_inset
 
- Censor, Y.
- & Zenios, S.
+ Censor,
+ Y.
+ & Zenios,
+ S.
  (1997).
- Parallel Optimization: Theory, Algorithms and Applications.
- Publisher: Oxford University Press, USAISBN: ISBN-13: 978-0195100624.
- DOI: 10.1093/oso/9780195100624.001.0001 
+ Parallel Optimization:
+ Theory,
+ Algorithms and Applications.
+ Publisher:
+ Oxford University Press,
+ USAISBN:
+ ISBN-13:
+ 978-0195100624.
+ DOI:
+ 10.1093/oso/9780195100624.001.0001 
 \end_layout
 
 \begin_layout Bibliography
@@ -18658,14 +23238,18 @@ literal "false"
 \end_inset
 
 E.
- Onbaşoğlu, L.
- Özdamar, Parallel simulated annealing algorithms in global optimization.
+ Onbaşoğlu,
+ L.
+ Özdamar,
+ Parallel simulated annealing algorithms in global optimization.
  Journal of global optimization 
 \series bold
 19
 \series default
-, pp.
- 27-50, 2001.
+,
+ pp.
+ 27-50,
+ 2001.
 \end_layout
 
 \begin_layout Bibliography
@@ -18678,17 +23262,24 @@ literal "false"
 \end_inset
 
 J.F.
- Schutte, J.A.
- Reinbolt, B.J.
- Fregly, R.T.
- Haftka, A.D.
- George, Parallel global optimization with the particle swarm algorithm.
+ Schutte,
+ J.A.
+ Reinbolt,
+ B.J.
+ Fregly,
+ R.T.
+ Haftka,
+ A.D.
+ George,
+ Parallel global optimization with the particle swarm algorithm.
  International journal for numerical methods in engineering 
 \series bold
 61
 \series default
-, pp.
- 2296-2315, 2004.
+,
+ pp.
+ 2296-2315,
+ 2004.
 \end_layout
 
 \begin_layout Bibliography
@@ -18700,12 +23291,17 @@ literal "false"
 
 \end_inset
 
-Regis, R.
- G., & Shoemaker, C.
+Regis,
+ R.
+ G.,
+ & Shoemaker,
+ C.
  A.
  (2009).
  Parallel stochastic global optimization using radial basis functions.
- INFORMS Journal on Computing, 21(3), 411-426.
+ INFORMS Journal on Computing,
+ 21(3),
+ 411-426.
 \end_layout
 
 \begin_layout Bibliography
@@ -18718,9 +23314,11 @@ literal "false"
 \end_inset
 
 R.
- Shonkwiler, Parallel genetic algorithms.
+ Shonkwiler,
+ Parallel genetic algorithms.
  In ICGA (pp.
- 199-205), 1993.
+ 199-205),
+ 1993.
 \end_layout
 
 \begin_layout Bibliography
@@ -18733,13 +23331,17 @@ literal "false"
 \end_inset
 
 E.
- Cantú-Paz, A survey of parallel genetic algorithms, Calculateurs paralleles,
+ Cantú-Paz,
+ A survey of parallel genetic algorithms,
+ Calculateurs paralleles,
  reseaux et systems repartis 
 \series bold
 10
 \series default
-, pp.
- 141-171, 1998.
+,
+ pp.
+ 141-171,
+ 1998.
 \end_layout
 
 \begin_layout Bibliography
@@ -18751,14 +23353,19 @@ literal "false"
 
 \end_inset
 
- Marini, F.
- & Walczak, B.
+ Marini,
+ F.
+ & Walczak,
+ B.
  (2015).
  Particle swarm optimization (PSO).
  A tutorial.
  Chemometrics and Intelligent Laboratory Systems.
- Volume 149, Part B, p.:153-165.
- Doi: https://doi.org/10.1016/j.chemolab.2015.08.020
+ Volume 149,
+ Part B,
+ p.:153-165.
+ Doi:
+ https://doi.org/10.1016/j.chemolab.2015.08.020
 \end_layout
 
 \begin_layout Bibliography
@@ -18770,13 +23377,18 @@ literal "false"
 
 \end_inset
 
- García-Gonzalo, E.
- & Fernández-Martínez, J.
+ García-Gonzalo,
+ E.
+ & Fernández-Martínez,
+ J.
  L.
  (2012).
  A Brief Historical Review of Particle Swarm Optimization (PSO).
- Journal of Bioinformatics and Intelligent Control, Volume 1, Number 1,
- June 2012, pp.
+ Journal of Bioinformatics and Intelligent Control,
+ Volume 1,
+ Number 1,
+ June 2012,
+ pp.
  3-16(14).
  American Scientific Publishers.
  DOI:https://doi.org/10.1166/jbic.2012.1002 
@@ -18791,11 +23403,20 @@ literal "false"
 
 \end_inset
 
- Jain, M., Saihjpal, V., Singh, N.
- & Singh, S.B.
+ Jain,
+ M.,
+ Saihjpal,
+ V.,
+ Singh,
+ N.
+ & Singh,
+ S.B.
  (2022).
  An Overview of Variants and Advancements of PSO Algorithm.
- MDPI, Applied Sciences: 12, 8392.
+ MDPI,
+ Applied Sciences:
+ 12,
+ 8392.
  Doi:https://doi.org/10.3390/ app12178392 .
  
 \end_layout
@@ -18809,14 +23430,18 @@ literal "true"
 
 \end_inset
 
-Anderson Alvarenga de Moura Meneses, Marcelo Dornellas, Machado Roberto
- Schirru, Particle Swarm Optimization applied to the nuclear reload problem
- of a Pressurized Water Reactor, Progress in Nuclear Energy 
+Anderson Alvarenga de Moura Meneses,
+ Marcelo Dornellas,
+ Machado Roberto Schirru,
+ Particle Swarm Optimization applied to the nuclear reload problem of a Pressurized Water Reactor,
+ Progress in Nuclear Energy 
 \series bold
 51
 \series default
-, pp.
- 319-326, 2009.
+,
+ pp.
+ 319-326,
+ 2009.
 \end_layout
 
 \begin_layout Bibliography
@@ -18827,12 +23452,16 @@ literal "true"
 
 \end_inset
 
-Ranjit Shaw, Shalivahan Srivastava, Particle swarm optimization: A new tool
- to invert geophysical data, Geophysics 
+Ranjit Shaw,
+ Shalivahan Srivastava,
+ Particle swarm optimization:
+ A new tool to invert geophysical data,
+ Geophysics 
 \series bold
 72
 \series default
-, 2007.
+,
+ 2007.
 \end_layout
 
 \begin_layout Bibliography
@@ -18845,15 +23474,20 @@ literal "false"
 
 C.
  O.
- Ourique, E.C.
- Biscaia, J.C.
- Pinto, The use of particle swarm optimization for dynamical analysis in
- chemical processes, Computers & Chemical Engineering 
+ Ourique,
+ E.C.
+ Biscaia,
+ J.C.
+ Pinto,
+ The use of particle swarm optimization for dynamical analysis in chemical processes,
+ Computers & Chemical Engineering 
 \series bold
 26
 \series default
-, pp.
- 1783-1793, 2002.
+,
+ pp.
+ 1783-1793,
+ 2002.
 \end_layout
 
 \begin_layout Bibliography
@@ -18865,10 +23499,13 @@ literal "false"
 \end_inset
 
 H.
- Fang, J.
- Zhou, Z.
- Wang et al, Hybrid method integrating machine learning and particle swarm
- optimization for smart chemical process operations, Front.
+ Fang,
+ J.
+ Zhou,
+ Z.
+ Wang et al,
+ Hybrid method integrating machine learning and particle swarm optimization for smart chemical process operations,
+ Front.
  Chem.
  Sci.
  Eng.
@@ -18876,8 +23513,10 @@ H.
 \series bold
 16
 \series default
-, pp.
- 274–287, 2022.
+,
+ pp.
+ 274–287,
+ 2022.
 \end_layout
 
 \begin_layout Bibliography
@@ -18889,17 +23528,23 @@ literal "true"
 \end_inset
 
 M.P.
- Wachowiak, R.
- Smolikova, Yufeng Zheng, J.M.
- Zurada, A.S.
- Elmaghraby, An approach to multimodal biomedical image registration utilizing
- particle swarm optimization, IEEE Transactions on Evolutionary Computation
- 
+ Wachowiak,
+ R.
+ Smolikova,
+ Yufeng Zheng,
+ J.M.
+ Zurada,
+ A.S.
+ Elmaghraby,
+ An approach to multimodal biomedical image registration utilizing particle swarm optimization,
+ IEEE Transactions on Evolutionary Computation 
 \series bold
 8
 \series default
-, pp.
- 289-301, 2004.
+,
+ pp.
+ 289-301,
+ 2004.
 \end_layout
 
 \begin_layout Bibliography
@@ -18911,13 +23556,17 @@ literal "true"
 \end_inset
 
 Yannis Marinakis.
- Magdalene Marinaki, Georgios Dounias, Particle swarm optimization for pap-smear
- diagnosis, Expert Systems with Applications 
+ Magdalene Marinaki,
+ Georgios Dounias,
+ Particle swarm optimization for pap-smear diagnosis,
+ Expert Systems with Applications 
 \series bold
 35
 \series default
-, pp.
- 1645-1656, 2008.
+,
+ pp.
+ 1645-1656,
+ 2008.
  
 \end_layout
 
@@ -18929,18 +23578,24 @@ literal "true"
 
 \end_inset
 
-Jong-Bae Park, Yun-Won Jeong, Joong-Rin Shin, Kwang Y.
- Lee, An Improved Particle Swarm Optimization for Nonconvex Economic Dispatch
- Problems, IEEE Transactions on Power Systems 
+Jong-Bae Park,
+ Yun-Won Jeong,
+ Joong-Rin Shin,
+ Kwang Y.
+ Lee,
+ An Improved Particle Swarm Optimization for Nonconvex Economic Dispatch Problems,
+ IEEE Transactions on Power Systems 
 \series bold
 25
 \series default
-, pp.
+,
+ pp.
  156-16
 \series bold
 216
 \series default
-6, 2010.
+6,
+ 2010.
 \end_layout
 
 \begin_layout Bibliography
@@ -18952,12 +23607,15 @@ literal "false"
 
 \end_inset
 
- Feoktistov, V.
+ Feoktistov,
+ V.
  (2006).
  Differential Evolution.
  In Search of Solutions.
- Optimization and Its Appl;ications, Springer.
- Doi: https://doi.org/10.1007/978-0-387-36896-2 
+ Optimization and Its Appl;ications,
+ Springer.
+ Doi:
+ https://doi.org/10.1007/978-0-387-36896-2 
 \end_layout
 
 \begin_layout Bibliography
@@ -18969,12 +23627,20 @@ literal "false"
 
 \end_inset
 
- Bilal, M.P., Zaheer, H., Garcia-Hernandez, L.
- & Abraham, A.
+ Bilal,
+ M.P.,
+ Zaheer,
+ H.,
+ Garcia-Hernandez,
+ L.
+ & Abraham,
+ A.
  (2020).
- Differential Evolution: A review of more than two decades of research.
+ Differential Evolution:
+ A review of more than two decades of research.
  Engineering Applications of Artificial Intelligence 90 (2020) 103479.
- Doi: https://doi.org/10.1016/j.engappai.2020.103479 
+ Doi:
+ https://doi.org/10.1016/j.engappai.2020.103479 
 \end_layout
 
 \begin_layout Bibliography
@@ -18987,16 +23653,21 @@ literal "false"
 \end_inset
 
 P.
- Rocca, G.
- Oliveri, A.
- Massa, Differential Evolution as Applied to Electromagnetics, IEEE Antennas
- and Propagation Magazine.
+ Rocca,
+ G.
+ Oliveri,
+ A.
+ Massa,
+ Differential Evolution as Applied to Electromagnetics,
+ IEEE Antennas and Propagation Magazine.
  
 \series bold
 53
 \series default
-, pp.
- 38-49, 2011.
+,
+ pp.
+ 38-49,
+ 2011.
 \end_layout
 
 \begin_layout Bibliography
@@ -19008,15 +23679,20 @@ literal "false"
 \end_inset
 
 W.S.
- Lee, Y.T.
- Chen, Y.
- Kao, Optimal chiller loading by differential evolution algorithm for reducing
- energy consumption, Energy and Buildings 
+ Lee,
+ Y.T.
+ Chen,
+ Y.
+ Kao,
+ Optimal chiller loading by differential evolution algorithm for reducing energy consumption,
+ Energy and Buildings 
 \series bold
 43
 \series default
-, pp.
- 599-604, 2011.
+,
+ pp.
+ 599-604,
+ 2011.
 \end_layout
 
 \begin_layout Bibliography
@@ -19028,14 +23704,18 @@ literal "false"
 \end_inset
 
 Y.
- Yuan, H.
- Xu, Flexible job shop scheduling using hybrid differential evolution algorithms
-, Computers & Industrial Engineering 
+ Yuan,
+ H.
+ Xu,
+ Flexible job shop scheduling using hybrid differential evolution algorithms,
+ Computers & Industrial Engineering 
 \series bold
 65
 \series default
-, pp.
- 246-260, 2013.
+,
+ pp.
+ 246-260,
+ 2013.
 \end_layout
 
 \begin_layout Bibliography
@@ -19047,17 +23727,24 @@ literal "false"
 \end_inset
 
 L.
- Xu, H.
- Jia, C.
- Lang, X.
- Peng, K.
- Sun, A Novel Method for Multilevel Color Image Segmentation Based on Dragonfly
- Algorithm and Differential Evolution, IEEE Access 
+ Xu,
+ H.
+ Jia,
+ C.
+ Lang,
+ X.
+ Peng,
+ K.
+ Sun,
+ A Novel Method for Multilevel Color Image Segmentation Based on Dragonfly Algorithm and Differential Evolution,
+ IEEE Access 
 \series bold
 7
 \series default
-, pp.
- 19502-19538, 2019.
+,
+ pp.
+ 19502-19538,
+ 2019.
 \end_layout
 
 \begin_layout Bibliography
@@ -19069,13 +23756,20 @@ literal "false"
 
 \end_inset
 
- Marti, R., Resende, M.G.C.
- & Ribeiro, C.
+ Marti,
+ R.,
+ Resende,
+ M.G.C.
+ & Ribeiro,
+ C.
  (2013).
  Multi-start methods for combinatorial optimization.
- European Journal of Operational Research Volume 226, Issue 1, 1 April 2013,
+ European Journal of Operational Research Volume 226,
+ Issue 1,
+ 1 April 2013,
  Pages 1-8.
- Doi: https://doi.org/10.1016/j.ejor.2012.10.012 
+ Doi:
+ https://doi.org/10.1016/j.ejor.2012.10.012 
 \end_layout
 
 \begin_layout Bibliography
@@ -19087,11 +23781,17 @@ literal "false"
 
 \end_inset
 
- Marti, R., Moreno-Vega, J.
- & Duarte, A.
+ Marti,
+ R.,
+ Moreno-Vega,
+ J.
+ & Duarte,
+ A.
  (2010).
  Advanced Multi-start Methods.
- Handbook of Metaheuristics, pp: 265–281.
+ Handbook of Metaheuristics,
+ pp:
+ 265–281.
 \end_layout
 
 \begin_layout Bibliography
@@ -19103,12 +23803,15 @@ literal "false"
 
 \end_inset
 
- Tu, W.
- & Mayne, R.W.
+ Tu,
+ W.
+ & Mayne,
+ R.W.
  (2002).
  Studies of multi-start clustering for global optimization.
  International Journal for Numerical Methods in Engineering.
- Doi: https://doi.org/10.1002/nme.400.
+ Doi:
+ https://doi.org/10.1002/nme.400.
  
 \end_layout
 
@@ -19121,11 +23824,14 @@ literal "false"
 
 \end_inset
 
-Dai, Y.
+Dai,
+ Y.
  H.
  (2002).
  Convergence properties of the BFGS algoritm.
- SIAM Journal on Optimization, 13(3), 693-701.
+ SIAM Journal on Optimization,
+ 13(3),
+ 693-701.
 \end_layout
 
 \begin_layout Bibliography
@@ -19137,12 +23843,15 @@ literal "false"
 
 \end_inset
 
- Tsoulos, I.G.
+ Tsoulos,
+ I.G.
  Modifications of real code genetic algorithm for global optimization.
  Appl.
  Math.
  Comput.
- 2008, 203, 598–607.
+ 2008,
+ 203,
+ 598–607.
 \end_layout
 
 \begin_layout Bibliography
@@ -19155,19 +23864,25 @@ literal "false"
 \end_inset
 
  M.
- Gaviano, D.E.
- Ksasov, D.
- Lera, Y.D.
- Sergeyev, Software for generation of classes of test functions with known
- local and global minima for global optimization, ACM Trans.
+ Gaviano,
+ D.E.
+ Ksasov,
+ D.
+ Lera,
+ Y.D.
+ Sergeyev,
+ Software for generation of classes of test functions with known local and global minima for global optimization,
+ ACM Trans.
  Math.
  Softw.
  
 \series bold
 29
 \series default
-, pp.
- 469-480, 2003.
+,
+ pp.
+ 469-480,
+ 2003.
 \end_layout
 
 \begin_layout Bibliography
@@ -19180,7 +23895,9 @@ literal "false"
 \end_inset
 
  J.E.
- Lennard-Jones, On the Determination of Molecular Fields, Proc.
+ Lennard-Jones,
+ On the Determination of Molecular Fields,
+ Proc.
  R.
  Soc.
  Lond.
@@ -19188,8 +23905,10 @@ literal "false"
 \series bold
  106
 \series default
-, pp.
- 463–477, 1924.
+,
+ pp.
+ 463–477,
+ 1924.
 \end_layout
 
 \begin_layout Bibliography
@@ -19202,12 +23921,19 @@ literal "false"
 \end_inset
 
  Z.B.
- Zabinsky, D.L.
- Graesser, M.E.
- Tuttle, G.I.
- Kim, Global optimization of composite laminates using improving hit and
- run, In: Recent advances in global optimization, pp.
- 343-368, 1992.
+ Zabinsky,
+ D.L.
+ Graesser,
+ M.E.
+ Tuttle,
+ G.I.
+ Kim,
+ Global optimization of composite laminates using improving hit and run,
+ In:
+ Recent advances in global optimization,
+ pp.
+ 343-368,
+ 1992.
 \end_layout
 
 \begin_layout Bibliography
@@ -19219,9 +23945,14 @@ literal "false"
 
 \end_inset
 
-Charilogis, V.; Tsoulos, I.G.
+Charilogis,
+ V.;
+ Tsoulos,
+ I.G.
  A Parallel Implementation of the Differential Evolution Method.
- Analytics 2023, 2, 17–30.
+ Analytics 2023,
+ 2,
+ 17–30.
 \end_layout
 
 \begin_layout Bibliography
@@ -19233,7 +23964,12 @@ literal "false"
 
 \end_inset
 
-Charilogis, V.; Tsoulos, I.G.; Tzallas, A.
+Charilogis,
+ V.;
+ Tsoulos,
+ I.G.;
+ Tzallas,
+ A.
  (2023).
  An Improved Parallel Particle Swarm Optimization.
  SN Computer Science (2023) 4:766
@@ -19249,10 +23985,14 @@ literal "false"
 \end_inset
 
  C.A.
- Floudas, P.M.
- Pardalos, C.
- Adjiman, W.
- Esposoto, Z.
+ Floudas,
+ P.M.
+ Pardalos,
+ C.
+ Adjiman,
+ W.
+ Esposoto,
+ Z.
  G
 \begin_inset Formula $\ddot{\mbox{u}}$
 \end_inset
@@ -19261,12 +24001,19 @@ m
 \begin_inset Formula $\ddot{\mbox{u}}$
 \end_inset
 
-s, S.
- Harding, J.
- Klepeis, C.
- Meyer, C.
- Schweiger, Handbook of Test Problems in Local and Global Optimization,
- Kluwer Academic Publishers, Dordrecht, 1999.
+s,
+ S.
+ Harding,
+ J.
+ Klepeis,
+ C.
+ Meyer,
+ C.
+ Schweiger,
+ Handbook of Test Problems in Local and Global Optimization,
+ Kluwer Academic Publishers,
+ Dordrecht,
+ 1999.
 \end_layout
 
 \begin_layout Bibliography
@@ -19279,14 +24026,18 @@ literal "false"
 \end_inset
 
 M.
- Montaz Ali, Charoenchai Khompatraporn, Zelda B.
- Zabinsky, A Numerical Evaluation of Several Stochastic Algorithms on Selected
- Continuous Global Optimization Test Problems, Journal of Global Optimization
- 
+ Montaz Ali,
+ Charoenchai Khompatraporn,
+ Zelda B.
+ Zabinsky,
+ A Numerical Evaluation of Several Stochastic Algorithms on Selected Continuous Global Optimization Test Problems,
+ Journal of Global Optimization 
 \series bold
 31
 \series default
-, pp 635-672, 2005.
+,
+ pp 635-672,
+ 2005.
 \end_layout
 
 \begin_layout Bibliography
@@ -19298,10 +24049,18 @@ literal "false"
 
 \end_inset
 
-Gao, Z.M., Zhao, J., Hu,Y.R., Chen, H.F.
+Gao,
+ Z.M.,
+ Zhao,
+ J.,
+ Hu,Y.R.,
+ Chen,
+ H.F.
  (2021).The Challenge for the Nature - Inspired Global Optimization Algorithms:
  Non-Symmetric Benchmark Functions.
- IEEE Access, July 26, 2021.
+ IEEE Access,
+ July 26,
+ 2021.
 \end_layout
 
 \begin_layout Bibliography
@@ -19314,12 +24073,17 @@ literal "false"
 \end_inset
 
  R.
- Chandra, L.
- Dagum, D.
- Kohr, D.
+ Chandra,
+ L.
+ Dagum,
+ D.
+ Kohr,
+ D.
  Maydan,J.
  McDonald and R.
- Menon, Parallel Programming in OpenMP, Morgan Kaufmann Publishers Inc.,
+ Menon,
+ Parallel Programming in OpenMP,
+ Morgan Kaufmann Publishers Inc.,
  2001.
 \end_layout
 
@@ -19333,15 +24097,20 @@ literal "false"
 \end_inset
 
 S.
- Mirjalili, S.M.
- Mirjalili, A.
- Lewis, Grey wolf optimizer.
+ Mirjalili,
+ S.M.
+ Mirjalili,
+ A.
+ Lewis,
+ Grey wolf optimizer.
  Advances in engineering software 
 \series bold
 69
 \series default
-, pp.
- 46-61, 2014.
+,
+ pp.
+ 46-61,
+ 2014.
 \end_layout
 
 \begin_layout End Whole Page
