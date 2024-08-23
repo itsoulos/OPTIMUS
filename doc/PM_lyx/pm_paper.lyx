@@ -909,11 +909,13 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-Parallel techniques have been developed by various researchers, such as
-\series bold
- 
-\series default
-combining Simulated Annealing and parallel techniques 
+Various researchers have developed parallel techniques, such as the development
+ and evaluation of five different parallel Simulated Annealing (SA) algorithms
+ for solving global optimization problems.
+ The paper compares the performance of these algorithms across an extensive
+ set of tests, focusing on various synchronization and information exchange
+ approaches, and highlights their particularly noteworthy performance on
+ functions with large search spaces where other methods have failed 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "go_par1"
@@ -921,7 +923,12 @@ literal "false"
 
 \end_inset
 
-, parallel PSO methods 
+.
+ Additionally, other research focuses on the parallel application of the
+ Particle Swarm Optimization (PSO) method, analyzing the performance of
+ the parallel PSO algorithm on two categories of problems: analytical problems
+ with low computational cost and industrial problems with high computational
+ cost 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "go_par2"
@@ -929,11 +936,17 @@ literal "false"
 
 \end_inset
 
-,
-\series bold
- 
-\series default
-application of radial basis functions in parallel stochastic optimization
+.
+ This research demonstrates that the parallel PSO method performs exceptionally
+ well on problems with evenly distributed load, while in cases of uneven
+ load, the use of asynchronous approaches and larger particle populations
+ proves more effective.
+ Another study develops a parallel implementation of a stochastic Radial
+ Basis Function (RBF) algorithm for global optimization, which does not
+ require derivatives and is suitable for computationally intensive functions.
+ The paper compares the performance of the proposed method with other parallel
+ optimization methods, noting that the RBF method achieves good results
+ with one, four, or eight processors across various optimization problems
  
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -942,13 +955,120 @@ literal "false"
 
 \end_inset
 
- etc.
- Also, since the Genetic Algorithms is a method that can be parallelized
- easily, there are several researchers that have examined them thoroughly
- in the relevant literature 
+.Parallel techniques are also applied in real-time image processing, which
+ is critical for applications such as video surveillance, diagnostic medicine,
+ and autonomous vehicles.
+ A related article examines parallel architectures and algorithms, identifying
+ effective applications, evaluating challenges, and limitations of their
+ practical implementation, aiming to develop more efficient solutions 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "pga_survey1,pga_survey2"
+key "go_add_par1"
+literal "false"
+
+\end_inset
+
+.
+ Another study reviews parallel computing strategies for computational fluid
+ dynamics (CFD),focusing on tools like OpenMP, MPI, and CUDA to reduce computati
+onal time 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "go_add_par2"
+literal "false"
+
+\end_inset
+
+.
+ Finally, a significant study explores parallel programming technologies
+ for processing genetic sequences, presenting three main parallel computing
+ models and analyzing applications such as sequence alignment, single nucleotide
+ polymorphism calling, sequence preprocessing, and pattern detection 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "go_add_par3"
+literal "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Genetic Algorithms (GAs) are methods that can be easily parallelized, and
+ several researchers have thoroughly examined them in the literature.
+ For example, a universal parallel execution method for Genetic Algorithms,
+ known as IIP (Parallel, Independent, and Identical Processing), is presented.
+ This method achieves acceleration with the use of m processors.
+ The technique calculates execution speed and compares results on small-size
+ problems and the non-parametric Inverse Fractal Problem 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "pga_survey1"
+literal "false"
+
+\end_inset
+
+.
+ Similarly, another paper presents a distributed mechanism for improving
+ resource protection in a digital ecosystem.
+ This mechanism can be used not only for secure and reliable transactions
+ but also to enhance collaboration among digital ecosystem community members
+ to secure the environment, and also employs Public Key Infrastructure to
+ provide strong protection for access workflows 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "pga_survey2"
+literal "false"
+
+\end_inset
+
+.
+ Genetic Algorithms have also been used as a strategy for optimizing large
+ and complex problems, specifically in wavelength selection for multi-component
+ analysis.
+ The study examines the effectiveness of the genetic algorithm in finding
+ acceptable solutions in a reasonable time and notes that the algorithm
+ incorporates prior information to improve performance, based on mathematically
+ grounded frameworks such as the schema theorem 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "go_add_par4"
+literal "false"
+
+\end_inset
+
+.
+ Additionally, another paper develops two genetic algorithm-based algorithms
+ to improve the lifetime and energy consumption in mobile wireless sensor
+ networks (MWSNs).
+ The first algorithm is an improvement of the Unequal Clustering Genetic
+ Algorithm, while the second algorithm combines the K-means Clustering Algorithm
+ with Genetic Algorithms.
+ These algorithms aim to better adapt to dynamic changes in network topology,
+ thereby enhancing network lifetime and energy consumption 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "go_add_par5"
+literal "false"
+
+\end_inset
+
+.
+ Lastly, the use of Genetic Algorithms has promising applications across
+ various medical specialties, including radiology, radiotherapy, oncology,
+ pediatrics, cardiology, endocrinology, surgery, obstetrics and gynecology,
+ pulmonology, infectious diseases, orthopedics, rehabilitation medicine,
+ neurology, pharmacotherapy, and health care management.
+ A related paper reviews and introduces applications of Genetic Algorithms
+ in disease screening, diagnosis, treatment planning, pharmacovigilance,
+ prognosis, and health care management, enabling physicians to envision
+ potential applications of this metaheuristic method in their medical careers
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "go_add_par6"
 literal "false"
 
 \end_inset
@@ -967,7 +1087,23 @@ In this paper, a new optimization method is proposed which is a mixture
  intelligent termination techniques based on stochastic observations are
  used, which are suitably modified to adapt to the parallel computing environmen
 t.
+ The contributions of this work as summarized as follows:
+\end_layout
+
+\begin_layout Enumerate
+Periodic local search was integrated into the Differential Evolution (DE)
+ and Particle Swarm Optimization (PSO) methods.
  
+\end_layout
+
+\begin_layout Enumerate
+A mechanism for disseminating the optimal solution to all PUs was added
+ in each iteration of the methods.
+ 
+\end_layout
+
+\begin_layout Enumerate
+The overall algorithm terminates based on the proposed termination criterion.
 \end_layout
 
 \begin_layout Standard
@@ -2158,7 +2294,15 @@ and in this termination technique, at each iteration
 \begin_inset Formula $f_{min}^{(k+1)}$
 \end_inset
 
- is calculated, i.e., the absolute difference:
+ is calculated 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "pde"
+literal "false"
+
+\end_inset
+
+, i.e., the absolute difference:
 \end_layout
 
 \begin_layout Standard
@@ -2189,7 +2333,15 @@ mean - fitness
  If this value remains relatively unchanged over a certain number of consecutive
  iterations, it indicates that the method may not be making significant
  progress towards discovering a new global minimum.
- Therefore, termination is warranted.
+ Therefore, termination is warranted 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Charilogis"
+literal "false"
+
+\end_inset
+
+.
  Hence, in every iteration 
 \begin_inset Formula $k$
 \end_inset
@@ -21746,8 +21898,21 @@ name "fig:gklsExperTime"
  The graphs above show once again that adding processing units to the proposed
  technique can reduce not only the execution time, as expected, but also
  the required number of function calls.
- Furthermore, the speedup and the efficieny of the paralell implementation
- was measured and they are depicted in Figure 
+ Furthermore, in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Speedup"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the behavior of speedup and efficiency is depicted as a function of the
+ number of computational units.
+ It is observed that speedup increases with the addition of more computational
+ units, while efficiency is initially high but gradually decreases.
+ 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Speedup"
@@ -22993,6 +23158,101 @@ E.
 \series default
 , pp.
  141-171, 1998.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_add_par1"
+literal "false"
+
+\end_inset
+
+Rudy Alex Gallegos Lizárraga (2024).
+ Parallel Computing for Real-Time Image Processing.
+ DOI:10.20944/preprints202408.0040.v1 
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_add_par2"
+literal "false"
+
+\end_inset
+
+Asif Afzal, Zahid Ansari, Ahmed Rimaz Faizabadi & M.
+ K.
+ Ramis (2017).Parallelization Strategies for Computational Fluid Dynamics
+ Software: State of the Art Review.
+ Archives of Computational Methods in Engineering.
+ Volume 24, pages 337–363, (2017).
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_add_par3"
+literal "false"
+
+\end_inset
+
+You Zou, Yuejie Zhu, Yaohang Li, Fang-Xiang Wu, Jianxin Wang (2021).Parallel
+ computing for genome sequence processing.
+ DOI: 10.1093/bib/bbab070 
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_add_par4"
+literal "false"
+
+\end_inset
+
+C.B.
+ Lucasius, G.
+ Kateman (1991).Genetic algorithms for large-scale optimization in chemometrics:
+ An application.
+ TrAC Trends in Analytical Chemistry.
+ Volume 10, Issue 8, September 1991, Pages 254-261.
+ https://doi.org/10.1016/0165-9936(91)85132-B 
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_add_par5"
+literal "false"
+
+\end_inset
+
+Sangeetha M., Sabari A.
+ (2018).
+ Genetic optimization of hybrid clustering algorithm in mobile wireless
+ sensor networks.
+ Sensor Review:Volume 38 Issue 4.
+\end_layout
+
+\begin_layout Bibliography
+\labelwidthstring 999
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "go_add_par6"
+literal "false"
+
+\end_inset
+
+Ali Ghaheri, Saeed Shoar, Mohammad Naderan & Sayed Shahabuddin Hoseini (2015).The
+ Applications of Genetic Algorithms in Medicine.
+ Journal List Oman Med J.
+ Nov; 30(6): 406–416.
+ doi: 10.5001/omj.2015.82 
 \end_layout
 
 \begin_layout Bibliography
