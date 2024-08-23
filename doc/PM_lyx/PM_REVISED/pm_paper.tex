@@ -1,4 +1,4 @@
-%% LyX 2.3.6 created this file.  For more info, see http://www.lyx.org/.
+%% LyX 2.3.7 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
 \documentclass[journal,article,submit,pdftex,moreauthors]{Definitions/mdpi}
 \usepackage[T1]{fontenc}
@@ -14,9 +14,11 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
 
-\Title{Optimization: parallel stochastic methods and mixed termination rules}
+\Title{Combining Parallel Stochastic Methods and Mixed Termination Rules
+in Optimization}
 
-\TitleCitation{Optimization: parallel stochastic methods and mixed termination rules}
+\TitleCitation{Combining Parallel Stochastic Methods and Mixed Termination Rules
+in Optimization}
 
 \Author{Vasileios Charilogis$^{1}$, Ioannis G. Tsoulos$^{2,*}$, Anna Maria
 Gianni$^{3}$}
@@ -44,27 +46,34 @@ University of Ioannina, Greece.}
 \secondnote{These authors contributed equally to this work.}
 
 
-\abstract{Parallel optimization constitutes a powerful tool for solving optimization
-problems in various domains. By harnessing multiple computational
-resources simultaneously, optimization methods can achieve faster
-convergence and improved performance. This specific parallel implementation
-involves the concurrent execution of different methods, such as evolutionary
-algorithms, swarm-based optimization, and the utilization of multiple
-restarts. The primary objective is the efficient exploration of the
-search space and the attainment of optimal solutions in shorter time
-frames without squandering computational power. However, defined termination
-criteria are essential to prevent uncontrolled execution of the algorithm,
-aiming to conserve computational resources and time. Within the scope
-of this study, an innovative combination of termination rules and
-a mechanism for transferring optimal solutions among different methodological
-approaches is proposed. The proposed enhancements have been tested
-on a series of well-known optimization problems from relevant literature,
-and the results are reported here.}
+\abstract{Parallel optimization enables faster and more efficient problem-solving
+by reducing computational resource consumption and time. By simultaneously
+combining multiple methods, such as evolutionary algorithms and swarm-based
+optimization, effective exploration of the search space and achievement
+of optimal solutions in shorter time frames are realized. In this
+study, a combination of termination criteria is proposed, utilizing
+three different criteria to end the algorithmic process. These criteria
+include measuring the difference between optimal values in successive
+iterations, calculating the mean value of the cost function in each
+iteration, and the so-called \textquotedbl DoubleBox\textquotedbl{}
+criterion, which is based on the relative variance of the best value
+of the objective cost function over a specific number of iterations.
+The problem is addressed through the parallel execution of three different
+optimization methods (PSO, Differential Evolution, Multistart). Each
+method operates independently on separate computational units with
+the goal of faster discovery of the optimal solution and more efficient
+use of computational resources. The optimal solution identified in
+each iteration is transferred to the other computational units. The
+proposed enhancements were tested on a series of well-known optimization
+problems from relevant literature, demonstrating significant improvements
+in convergence speed and solution quality compared to traditional
+approaches.}
 
 
 \keyword{Global optimization; Parallel techniques; Termination rules; Evolutionary
 techniques}
 
+\newcommand*\LyXZeroWidthSpace{\hspace{0pt}}
 %% Because html converters don't know tabularnewline
 \providecommand{\tabularnewline}{\\}
 \floatstyle{ruled}
@@ -204,55 +213,161 @@ The problem of finding the global minimum of a multidimensional function
 occurs in various scientific areas and has wide applications. In this
 the programmer seeks the absolute minimum of a function subject to
 some assumptions or constraints. The objective function is defined
-as $f:S\rightarrow R,S\subset R^{n}$ and the mathmatical formulation
-of the global optimization problem has as:
+as $f:S\rightarrow R,S\subset R^{n}$ and the mathematical formulation
+of the global optimization problem is as follows:
 \begin{equation}
 x^{*}=\mbox{arg}\min_{x\in S}f(x).\label{eq:eq1-1}
 \end{equation}
-where the set $S$ is has as follows: \textbf{
+where the set $S$ is as follows: \textbf{
 \[
 S=\left[a_{1},b_{1}\right]\otimes\left[a_{2},b_{2}\right]\otimes\ldots\left[a_{n},b_{n}\right]
 \]
-}Such problems occur frequently in areas such as physics \citep{go_physics1,go_physics2,go_physics3},
-chemistry \citep{go_chemistry1,go_chemistry2,go_chemistry3}, economics
-\citep{go_econ1,go_econ2}, medicine \citep{go_med1,go_med2} etc.
-A series of methods have been proposed in the recent literature to
-handle problems of Equation \ref{eq:eq1-1}. Methods used to handle
-problems of Equation \ref{eq:eq1-1} are usually divided into two
-categories:\textbf{ }deterministic and stochastic methods. In the
-first category, the most common method is the interval method \citep{interval1,interval2},
-where the set $S$ is divided through a series of steps into subregions
-and some subregions that do not contain the global solution can be
-removed using some pre-defined criteria. The second category contains
-stochastic techniques that do not guarantee finding the total minimum,
-they are easier to program since they do not rely on some assumptions
-about the objective function. In addition, they also constitute the
-vast majority of global optimization methods. Among them, there are
-methods based on considerations derived from Physics, such as the
-Simulated Annealing method\citep{Kirkpatrick}, the Henry's Gas Solubility
-Optimization (HGSO) \citep{Hashim}, the Gravitational Search Algorithm
-(GSA) \citep{Rashedi}, the Small World Optimization Algorithm (SWOA)
-\citep{Du-Wu}, etc. Also, a series of evolutionary based techniques
-have also been suggested for Global Optimization problems, such as
-Genetic Algorithms \citep{Goldberg}, the Differential Evolution method
-\citep{Das,Charilogis}, Particle Swarm Optimization (PSO) \citep{Kennedy,Charilogis2},
-Ant Colony Optimization (ACO) \citep{Dorigo}, Bat Algorithm (BA)
-\citep{Yang}, Whale Optimization Algorithm (WOA) \citep{Mirjalili},
-Grasshopper Optimization Algorithm (GOA) \citep{Saremi}, etc.
+}Such problems frequently arise in sciences like physics, where genetic
+algorithms prove effective in locating positions in magnetic plasmas
+and in developing optimization tools \citep{go_physics1}. Additionally,
+the combined use of various optimization techniques enhances performance
+and stability in complex problems \citep{go_physics2}. Furthermore,
+the hybrid approach that combines artificial physics techniques with
+particle swarm optimization has proven to be particularly effective
+in solving energy allocation problems \citep{go_physics3}. In the
+field of chemistry, minimizing potential energy functions is crucial
+for understanding the ground states of molecular clusters and proteins
+\citep{go_chemistry1}. Optimizing these functions has been used for
+accurate protein structure prediction, with results closely matching
+crystal structures \citep{go_chemistry2}. Moreover, a new computational
+framework combining variance-based methods with artificial neural
+networks has significantly improved accuracy and reduced computational
+cost in sensitivity analysis \citep{go_chemistry3}. Even in the field
+of economics, optimization plays a crucial role. The particle swarm
+optimization (PSO) method is shown to be highly effective in solving
+the economic dispatch problem in power systems, providing higher quality
+solutions with greater efficiency compared to genetic algorithms \citep{go_econ1}.
+Additionally, a multi-objective optimization approach for economic
+load dispatch and emission reduction in hydroelectric and thermal
+plants achieves optimal solutions that align with the user's preferences
+and goals \citep{go_econ2}. Finally, optimization is also applied
+in biological process models \citep{go_med1} and medical data classification,
+achieving high accuracy in diagnosing diseases and analyzing genomes
+\citep{go_med2}. A series of methods have been proposed in the recent
+literature to handle problems of Equation \ref{eq:eq1-1}. Methods
+used to handle problems of Equation \ref{eq:eq1-1} are usually divided
+into two categories:\textbf{ }deterministic and stochastic methods.
+In the first category, the most common method is the interval method
+\citep{interval1,interval2}, where the set $S$ is divided through
+a series of steps into subregions and some subregions that do not
+contain the global solution can be removed using some pre-defined
+criteria. The second category contains stochastic techniques that
+do not guarantee finding the total minimum, they are easier to program
+since they do not rely on some assumptions about the objective function.
+In addition, they also constitute the vast majority of global optimization
+methods. Among them, there are methods based on considerations derived
+from Physics, such as the Simulated Annealing method\citep{Kirkpatrick},
+the Henry's Gas Solubility Optimization (HGSO) \citep{Hashim}, the
+Gravitational Search Algorithm (GSA) \citep{Rashedi}, the Small World
+Optimization Algorithm (SWOA) \citep{Du-Wu}, etc. Also, a series
+of evolutionary based techniques have also been suggested for Global
+Optimization problems, such as Genetic Algorithms \citep{Goldberg},
+the Differential Evolution method \citep{Das,Charilogis}, Particle
+Swarm Optimization (PSO) \citep{Kennedy,Charilogis2}, Ant Colony
+Optimization (ACO) \citep{Dorigo}, Bat Algorithm (BA) \citep{Yang},
+Whale Optimization Algorithm (WOA) \citep{Mirjalili}, Grasshopper
+Optimization Algorithm (GOA) \citep{Saremi}, etc.
 
-However, the above optimization methods require significant amounts
-of computational power and time; therefore, parallelization of the
-methods is essential. Recently, a variety of methods proposed that
-can take advantage of parallel processing, such as parallel techniques
-\citep{parallel-pso,parallel-multistart,parallel-doublepop}, or methods
-that utilize the GPU architectures \citep{msgpu1,msgpu2,msgpu3} etc.\textbf{
-}Parallel optimization represents a significant approach in the field
-of optimization problem-solving and is applied across a wide range
-of applications, such as optimization of machine learning model parameters
-\citep{Low Gon,Yangyang,Yamashiro}, control system design and optimization
-\citep{Kim Tsai,Oh Jong,Fatehi}, energy and resource management \citep{Cai Yang,Yu Shahabi,Ramirez,Tavakolan},
-as well as problems related to sustainable development and enhancing
-sustainability \citep{Lin,Pang,Ezugwu}.
+However, the above optimization methods require significant computational
+power and time. Therefore, parallel processing of these methods is
+essential. Recently, various methods have been proposed to leverage
+parallel processing. Specifically, one study details the parallel
+implementation of the Particle Swarm Optimization (PSO) algorithm,
+which improves performance for load-balanced problems but shows reduced
+efficiency for load-imbalanced ones. The study suggests using larger
+particle populations and implementing asynchronous processing to enhance
+performance \citep{parallel-pso}. Another review provides a comprehensive
+overview of derivative-free optimization methods, useful for problems
+where objective and constraint functions come only from a black-box
+or simulator interface. The review focuses on recent developments
+and categorizes methods based on assumptions about functions and their
+characteristics \citep{parallel-multistart}. Lastly, the PDoublePop
+software is presented, which implements parallel genetic algorithms
+with advanced features, such as an enhanced stopping rule and advanced
+mutation schemes. The software allows for coding the objective function
+in C++ or Fortran77 and has been tested on well-known benchmark functions,
+showing promising results \citep{parallel-doublepop}. Moreover, there
+are methods that utilize GPU architectures for solving complex optimization
+problems. In the case of the Traveling Salesman Problem (TSP), a parallel
+GPU implementation has been developed to achieve high performance
+on large scales, solving problems up to 6,000 cities with great efficiency
+\citep{msgpu1}. Additionally, the use of the multi-start model in
+local search algorithms has proven to be particularly effective when
+combined with GPUs, reducing computation time and improving solution
+quality for large and time-intensive problems \citep{msgpu2}. Finally,
+a parallel algorithm using Peano curves for dimension reduction has
+demonstrated significant improvements in speed and efficiency when
+run on GPUs, compared to CPU-only implementations, for multidimensional
+problems with multiple local minima \citep{msgpu3}. Parallel optimization
+represents a significant approach in the field of optimization problem-solving
+and is applied across a broad range of applications, including the
+optimization of machine learning model parameters. In the case of
+GraphLab, a platform is presented that enhances existing abstract
+methods, such as MapReduce, for parallel execution of machine learning
+algorithms with high performance and accuracy \citep{Low Gon}. Additionally,
+the new MARSAOP method for hyperparameter optimization uses multidimensional
+spirals as surrogates and dynamic coordinate search to achieve high-quality
+solutions with limited computational cost \citep{Yangyang}. Lastly,
+the study proposes a processing time estimation system using machine
+learning models to adapt to complex distributions and improve production
+scheduling, achieving significant reduction in completion time \citep{Yamashiro}.
+
+The use of parallel optimization has brought significant advancements
+in solving complex control and design problems \citep{Kim Tsai}.
+In one case, the parallel application of the Genetic Algorithm with
+a Fair Competitive Strategy (HFCGA) has been used for the design of
+an optimized cascade controller for ball and beam systems. This approach
+allows for the automation of controller parameter tuning, improving
+performance compared to traditional methods, with parallel computations
+helping to avoid premature convergence to suboptimal solutions \citep{Oh Jong}.
+In another case, the advanced Teaching-Learning-Based Optimization
+(TLBO) method has been applied to optimize the design of propulsion
+control systems with hydrogen peroxide. This method, which includes
+improvements in the teaching and learning phases as well as in the
+search process, has proven highly effective in addressing uncertainties
+in real-world design problems, enhancing both accuracy and convergence
+speed of the optimization process \citep{Fatehi}.
+
+Similarly, parallel optimization has significant applications in energy
+and resource management. In the case of pump and cooling system management,
+a two-stage method based on an innovative multidimensional optimization
+algorithm has been proposed, which reduces overall energy consumption
+and discrepancies between pump and cooling system flow rates, achieving
+significant improvements in energy efficiency \citep{Cai Yang}. In
+energy network management, a coordinated scheduled optimization method
+has been proposed, which simultaneously considers various energy sources
+and uncertainty conditions. This method, using the Competitive Swarm
+Optimization (CSO) algorithm and adjusted based on chaos theory, has
+proven 50\% faster than other methods and effective in managing uncertainties
+and energy \citep{Yu Shahabi}. In topological optimization, parallel
+processing through CPUs and GPUs has drastically improved speed and
+energy consumption for complex problems, achieving up to 25 times
+faster processing and reducing energy consumption by up to 93\% \citep{Ramirez}.
+Lastly, in building energy retrofitting, a multi-objective platform
+was used for evaluating and optimizing upgrade strategies, demonstrating
+that removing subsidies and providing incentives for energy upgrades
+yield promising results \citep{Tavakolan}.
+
+In conclusion, parallel optimization has provided significant solutions
+to problems related to sustainable development and enhancing sustainability.
+In the field of increasing the resilience of energy systems, the development
+of strategies for managing severe risks, such as extreme weather conditions
+and supplier disruptions, has been improved through parallel optimization,
+enabling safer and more cost-effective energy system operations \citep{Lin}.
+In addressing groundwater contamination, the use of parallel optimization
+has highlighted the potential for faster and more effective design
+of remediation methods, significantly reducing computational budgets
+and ensuring better results compared to other methods \citep{Pang}.
+Finally, in the field of sustainable production, metaheuristic optimization
+algorithms have proven useful for improving production scheduling,
+promoting resource efficiency, and reducing environmental impacts,
+while contributing to the achievement of sustainable development goals
+\citep{Ezugwu}. 
 
 By harnessing multiple computational resources, parallel optimization
 allows for the simultaneous execution of multiple algorithms, leading
@@ -269,13 +384,78 @@ optimization algorithm requires a coherent strategy for workload distribution
 among the available resources, as well as an efficient method for
 collecting and evaluating results.
 
-Parallel techniques have been developed by various researchers, such
-as\textbf{ }combining Simulated Annealing and parallel techniques
-\citep{go_par1}, parallel PSO methods \citep{go_par2},\textbf{ }application
-of radial basis functions in parallel stochastic optimization \citep{go_par3}
-etc. Also, since the Genetic Algorithms is a method that can be parallelized
-easily, there are several researchers that have examined them thoroughly
-in the relevant literature \citep{pga_survey1,pga_survey2}.
+Various researchers have developed parallel techniques, such as the
+development and evaluation of five different parallel Simulated Annealing
+(SA) algorithms for solving global optimization problems. The paper
+compares the performance of these algorithms across an extensive set
+of tests, focusing on various synchronization and information exchange
+approaches, and highlights their particularly noteworthy performance
+on functions with large search spaces where other methods have failed
+\citep{go_par1}. Additionally, other research focuses on the parallel
+application of the Particle Swarm Optimization (PSO) method, analyzing
+the performance of the parallel PSO algorithm on two categories of
+problems: analytical problems with low computational cost and industrial
+problems with high computational cost \citep{go_par2}. This research
+demonstrates that the parallel PSO method performs exceptionally well
+on problems with evenly distributed load, while in cases of uneven
+load, the use of asynchronous approaches and larger particle populations
+proves more effective. Another study develops a parallel implementation
+of a stochastic Radial Basis Function (RBF) algorithm for global optimization,
+which does not require derivatives and is suitable for computationally
+intensive functions. The paper compares the performance of the proposed
+method with other parallel optimization methods, noting that the RBF
+method achieves good results with one, four, or eight processors across
+various optimization problems \citep{go_par3}.Parallel techniques
+are also applied in real-time image processing, which is critical
+for applications such as video surveillance, diagnostic medicine,
+and autonomous vehicles. A related article examines parallel architectures
+and algorithms, identifying effective applications, evaluating challenges,
+and limitations of their practical implementation, aiming to develop
+more efficient solutions \citep{go_add_par1}. Another study reviews
+parallel computing strategies for computational fluid dynamics (CFD),focusing
+on tools like OpenMP, MPI, and CUDA to reduce computational time \citep{go_add_par2}.
+Finally, a significant study explores parallel programming technologies
+for processing genetic sequences, presenting three main parallel computing
+models and analyzing applications such as sequence alignment, single
+nucleotide polymorphism calling, sequence preprocessing, and pattern
+detection \citep{go_add_par3}. 
+
+Genetic Algorithms (GAs) are methods that can be easily parallelized,
+and several researchers have thoroughly examined them in the literature.
+For example, a universal parallel execution method for Genetic Algorithms,
+known as IIP (Parallel, Independent, and Identical Processing), is
+presented. This method achieves acceleration with the use of m processors.
+The technique calculates execution speed and compares results on small-size
+problems and the non-parametric Inverse Fractal Problem \citep{pga_survey1}.
+Similarly, another paper presents a distributed mechanism for improving
+resource protection in a digital ecosystem. This mechanism can be
+used not only for secure and reliable transactions but also to enhance
+collaboration among digital ecosystem community members to secure
+the environment, and also employs Public Key Infrastructure to provide
+strong protection for access workflows \citep{pga_survey2}. Genetic
+Algorithms have also been used as a strategy for optimizing large
+and complex problems, specifically in wavelength selection for multi-component
+analysis. The study examines the effectiveness of the genetic algorithm
+in finding acceptable solutions in a reasonable time and notes that
+the algorithm incorporates prior information to improve performance,
+based on mathematically grounded frameworks such as the schema theorem
+\citep{go_add_par4}. Additionally, another paper develops two genetic
+algorithm-based algorithms to improve the lifetime and energy consumption
+in mobile wireless sensor networks (MWSNs). The first algorithm is
+an improvement of the Unequal Clustering Genetic Algorithm, while
+the second algorithm combines the K-means Clustering Algorithm with
+Genetic Algorithms. These algorithms aim to better adapt to dynamic
+changes in network topology, thereby enhancing network lifetime and
+energy consumption \citep{go_add_par5}. Lastly, the use of Genetic
+Algorithms has promising applications across various medical specialties,
+including radiology, radiotherapy, oncology, pediatrics, cardiology,
+endocrinology, surgery, obstetrics and gynecology, pulmonology, infectious
+diseases, orthopedics, rehabilitation medicine, neurology, pharmacotherapy,
+and health care management. A related paper reviews and introduces
+applications of Genetic Algorithms in disease screening, diagnosis,
+treatment planning, pharmacovigilance, prognosis, and health care
+management, enabling physicians to envision potential applications
+of this metaheuristic method in their medical careers \citep{go_add_par6}.
 
 In this paper, a new optimization method is proposed which is a mixture
 of existing global optimization techniques running in parallel on
@@ -285,8 +465,16 @@ from them are distributed to the rest of the computing units using
 the propagation techniques presented here. In addition, for the most
 efficient termination of the overall algorithm, intelligent termination
 techniques based on stochastic observations are used, which are suitably
-modified to adapt to the parallel computing environment. 
-
+modified to adapt to the parallel computing environment. The contributions
+of this work as summarized as follows:
+\begin{enumerate}
+\item Periodic local search was integrated into the Differential Evolution
+(DE) and Particle Swarm Optimization (PSO) methods. 
+\item A mechanism for disseminating the optimal solution to all PUs was
+added in each iteration of the methods. 
+\item The overall algorithm terminates based on the proposed termination
+criterion.
+\end{enumerate}
 The following sections are organized as follows: In section \ref{sec:Methods-description},
 the three main algorithms participating in the overall algorithm are
 described. In section \ref{sec:The-proposed-method} the algorithm
@@ -402,10 +590,10 @@ of this population are also called agents.
 \end{enumerate}
 \item \textbf{OUTPUT}:
 \begin{enumerate}
-\item The agent $x_{\mbox{best}}$ with the lower function value $f\left(x_{\mbox{best}}\right)$.
+\item The agent $x_{\mbox{best}}$ with the lowest function value $f\left(x_{\mbox{best}}\right)$.
 \end{enumerate}
 \item \textbf{Initialize} all agents in $S$.
-\item \textbf{While} termination criteria are not hold \textbf{do}
+\item \textbf{While} termination criteria are not met \textbf{do}
 \begin{enumerate}
 \item \textbf{For} $i=1\ldots\mbox{\ensuremath{N_{d}}}\ $\textbf{do}
 \begin{enumerate}
@@ -479,18 +667,30 @@ procedure.
 In the present work, a mixture of termination rules is proposed as
 a novel technique, which can be used without partitioning in any stochastic
 global optimization technique. Also, a new parallel global optimization
-technique is proposed that utilizes the new termination rule. In the
-following subsections, the new termination rule is fully described,
-followed by the new optimization method.
+technique is proposed that utilizes the new termination rule. 
 
-\subsection{The new termination rule}
+The existing method that was presented in section \ref{sec:Methods-description},
+employs Particle Swarm Optimization (PSO), Differential Evolution
+(DE), and Multistart techniques, each with its own independent termination
+criteria. In contrast, the proposed method that which will be presented
+at this section, integrates an innovative combination of termination
+rules, including Best-Fitness, Mean-Fitness, and DoubleBox, enhancing
+the termination process of the search. By incorporating these advanced
+termination strategies into a parallel algorithm, the new method achieves
+faster convergence and improved solution quality. This approach combines
+the efficiency of parallel execution with the flexibility of advanced
+termination criteria, representing a significant advancement over
+traditional methods. In the following subsections, the new termination
+rule is fully described, followed by the new optimization method.
+
+\subsection{The new termination rule\label{subsec:The-new-termination}}
 
 The proposed termination rule is a mixture of several stochastic termination
 rules proposed in the recent literature. The first algorithm will
 be called \emph{best - fitness }and in this termination technique,
 at each iteration \emph{$k$}, the difference between the current
 best value $f_{min}^{(k)}$ and the previous best value $f_{min}^{(k+1)}$
-is calculated, i.e., the absolute difference:
+is calculated \citep{pde}, i.e., the absolute difference:
 \begin{center}
 \begin{equation}
 \left|f_{\mbox{min}}^{(k)}-f_{\mbox{min}}^{(k-1)}\right|\label{eq:best}
@@ -503,8 +703,8 @@ rule, which will be called \emph{mean - fitness}, the average function
 value for each iteration is computed. If this value remains relatively
 unchanged over a certain number of consecutive iterations, it indicates
 that the method may not be making significant progress towards discovering
-a new global minimum. Therefore, termination is warranted. Hence,
-in every iteration $k$, we compute:
+a new global minimum. Therefore, termination is warranted \citep{Charilogis}.
+Hence, in every iteration $k$, we compute:
 
 \begin{equation}
 \text{\ensuremath{\delta^{(k)}=}}\left|\sum_{i=1}^{\mbox{NP}}\left|f_{i}^{(k)}\right|-\sum_{i=1}^{\mbox{NP}}\left|f_{i}^{(k-1)}\right|\right|\label{eq:mean}
@@ -515,8 +715,16 @@ participate in the algorithm. The termination rule is defined as follows:
 terminate if $\delta^{(k)}\le\epsilon$ for a predefined number $N_{k}$
 of iterations. The third stopping rule was the so - called DoubleBox
 stopping rule, that was initially proposed in the work of Tsoulos
-\citep{Tsoulos}. According to this criterion, the algorithm terminates
-when one of the following conditions is met:
+\citep{Tsoulos}. In this criterion, the search process is terminated
+once sufficient coverage of the search space has been achieved. The
+estimation of the coverage is based on the asymptotic approximation
+of the relative proportion of points that lead to local minima. Since
+the exact coverage cannot be directly calculated, sampling is conducted
+over a larger region. The search is stopped when the variance of the
+sample distribution falls below a predefined threshold, which is adjusted
+based on the most recent discovery of a new local minimum. According
+to this criterion, the algorithm terminates when one of the following
+conditions is met:
 \begin{itemize}
 \item The iteration $k$ count exceeds a predefined limit of iterations
 $k_{max}$
@@ -529,8 +737,9 @@ k\geq N_{k}\,or\,\sigma^{(k)}\leq\frac{\sigma^{(klast)}}{2}\label{eq:double}
 \\
 This proposed termination criterion is the combination of the aforementioned
 similarity types. Optimization termination is achieved when any homogeneity
-condition is satisfied, resulting in improved speed. Therefore, the
-following relationships holds:
+condition is satisfied, resulting in improved speed. Hence by using
+equations \ref{eq:best}, \ref{eq:mean} and \ref{eq:double} following
+termination rule is derived:
 \end{itemize}
 \[
 \left|f_{\mbox{min}}^{(k)}-f_{\mbox{min}}^{(k-1)}\right|or
@@ -587,9 +796,33 @@ The methods that are used in each processing unit may include Particle
 Swarm Optimization, the Multistart method and Differential Evolution
 (DE). These techniques have been adopted since they have been widely
 used in the relevant literature and provide the possibility to be
-parallelized relatively easily.
+parallelized relatively easily. Initially the algorithm distributes
+the three methodologies across $N_{I}$ threads, where $N_{I}>3$.
+The first thread executes the DE method, the next executes PSO, and
+the third runs the Multistart method. This process is repeated to
+ensure an equivalent distribution of the methods across all threads,
+optimizing the utilization of available computational resources.When
+the number of threads is equal to or a multiple of the number of methods,
+the distribution is 100\% equivalent. In other cases, the degree of
+equivalence increases with the number of threads.
+
+As presented in this subsection, the proposed algorithm exploits the
+parallel execution of three distinct optimization methods, with its
+efficiency in termination procedures incorporated through the criteria
+described in Subsection \ref{subsec:The-new-termination}. The algorithm
+uses three termination criteria: the difference between the best values
+\LyXZeroWidthSpace\LyXZeroWidthSpace in successive iterations, the
+stability of the mean fitness value, and the relative variance of
+the cost function values. Each criterion contributes to the evaluation
+of the algorithm's progress, dynamically switching between these criteria
+based on the current state of the search. Specifically, when any of
+the criteria meets its predefined conditions, the algorithm terminates
+the search, thus adapting the process to the continuous search conditions.
+This strategy ensures the flexibility and efficiency of the algorithm,
+minimizing computational resources and time wastage.
+
 \begin{figure}[H]
-\centering{}\includegraphics[scale=0.3]{pm_datagram}\caption{Flowchart of the overall process\label{fig:basicFlowchart}. The DE
+\centering{}\includegraphics[scale=0.5]{pm_datagram}\caption{Flowchart of the overall process\label{fig:basicFlowchart}. The DE
 acronym stands for the Differential Evolution method, the PU acronym
 represents the Parallel Unit that executes the algorithm.}
 \end{figure}
@@ -598,15 +831,27 @@ represents the Parallel Unit that executes the algorithm.}
 \section{Experiments\label{sec:Experiments}}
 
 All experiments conducted were repeated 30 times to ensure the reliability
-of the algorithm producing the results. The parallelization was achieved
-using the OpenMP library \citep{openMP}, while the implementation
-of the method was done in ANSI C++ within the optimization package
-OPTIMUS, available at \url{https://github.com/itsoulos/OPTIMUS}.
-The values used for all the parameters are shown in Table \ref{tab:settings}.
-The parameters used here are either suggested in the original publications
-of the methods (eg Differential Evolution, Particle Swarm Optimization)
-or have been chosen so that there is a compromise between the execution
-time of the method and its efficiency.
+of the algorithm producing the results. In experimental research,
+the number of repetitions required to ensure reliable results depends
+on the nature of the experiment, the variability of the data, and
+the precision requirements. There is no universal answer that applies
+to all experiments, but general guidelines and best practices have
+been established in the literature. In many scientific studies, at
+least 30 repetitions are recommended to achieve satisfactory statistical
+power. This is based on statistical theories such as the Law of Large
+Numbers and theorems for estimating sample distributions. The initial
+sample distribution is the same across all optimization methods, and
+the other parameters have been kept constant, as shown in Table \ref{tab:settings}.
+Specifically, in the parallel algorithm, the total number of initial
+samples remains as constant as possible, regardless of the number
+of threads used. The parallelization was achieved using the OpenMP
+library \citep{openMP}, while the implementation of the method was
+done in ANSI C++ within the optimization package OPTIMUS, available
+at \url{https://github.com/itsoulos/OPTIMUS}. The parameters used
+here are either suggested in the original publications of the methods
+(eg Differential Evolution, Particle Swarm Optimization) or have been
+chosen so that there is a compromise between the execution time of
+the method and its efficiency.
 
 \begin{table}[H]
 \centering{}\caption{The following parameters were considered for conducting the experiments\label{tab:settings}}
@@ -615,15 +860,23 @@ time of the method and its efficiency.
 Parameter & Value & Explanation\tabularnewline
 \midrule
 \midrule 
-$N_{e}$ & 120 & Total elements\tabularnewline
+$N_{p}$ & 120 & Total particles for PSO \tabularnewline
+\midrule 
+$N_{d}$ & 120 & Total elements for DE \tabularnewline
+\midrule 
+$N_{m}$ & 120 & Total elements for Multistart \tabularnewline
 \midrule 
 $N_{k}$ & 200 & Maximum number of iterations\tabularnewline
 \midrule 
-$N_{s}$ & 15 (DE, PSO and Multistart) & Similarity max count\tabularnewline
+$N_{s}$ & 15 & Similarity max count\tabularnewline
 \midrule 
-$F$ & 0.8 (DE) & Differential weight for DE\tabularnewline
+$F$ & 0.8  & Differential weight for DE\tabularnewline
 \midrule 
-$CR$ & 0.9 (DE) & Crossover Probability for DE\tabularnewline
+$CR$ & 0.9  & Crossover Probability for DE\tabularnewline
+\midrule 
+$P_{m}$ & 0.005 & Local search rate for DE and PSO\tabularnewline
+\midrule 
+$C_{1},C_{2}$ & 0.5 & Parameters of PSO\tabularnewline
 \bottomrule
 \end{tabular}
 \end{table}
@@ -656,7 +909,9 @@ minimum that will be located will be the total minimum of the function,
 since a function can contain tens or even hundreds of local minima. 
 
 \begin{table}[H]
-\begin{centering}
+\caption{The test functions used in the conducted experiments.\label{tab:The-test-functions}}
+
+\centering{}%
 \begin{tabular}{|c|c|c|}
 \hline 
 {\footnotesize{}NAME} & {\scriptsize{}FORMULA} & {\scriptsize{}DIMENSION}\tabularnewline
@@ -668,7 +923,7 @@ since a function can contain tens or even hundreds of local minima.
 \hline 
 {\footnotesize{}BF2} & {\scriptsize{}$f(x)=x_{1}^{2}+2x_{2}^{2}-\frac{3}{10}\cos\left(3\pi x_{1}\right)\cos\left(4\pi x_{2}\right)+\frac{3}{10}$} & {\scriptsize{}2}\tabularnewline
 \hline 
-{\footnotesize{}Branin} & {\scriptsize{}$f(x)=\left(x_{2}-\frac{5.1}{4\pi^{2}}x_{1}^{2}+\frac{5}{\pi}x_{1}-6\right)^{2}+10\left(1-\frac{1}{8\pi}\right)\cos(x_{1})+10$ } & {\scriptsize{}2}\tabularnewline
+{\footnotesize{}Branin} & {\scriptsize{}$f(x)=\left(x_{2}-\frac{5.1}{4\pi^{2}}x_{1}^{2}+\frac{5}{\pi}x_{1}-6\right)^{2}+10\left(1-\frac{1}{8\pi}\right)\cos(x_{1})+10$} & {\scriptsize{}2}\tabularnewline
 \hline 
 {\footnotesize{}CM} & {\scriptsize{}$f(x)=\sum_{i=1}^{n}x_{i}^{2}-\frac{1}{10}\sum_{i=1}^{n}\cos\left(5\pi x_{i}\right)$} & {\scriptsize{}4}\tabularnewline
 \hline 
@@ -692,7 +947,7 @@ since a function can contain tens or even hundreds of local minima.
 \hline 
 {\footnotesize{}High Elliptic} & {\scriptsize{}$f(x)=\sum_{i=1}^{n}\left(10^{6}\right)^{\frac{i-1}{n-1}}x_{i}^{2}$} & {\scriptsize{}10}\tabularnewline
 \hline 
-{\footnotesize{}Potential\citep{Lennard} } & {\scriptsize{}$V_{LJ}(r)=4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^{6}\right]$} & {\scriptsize{}$n=9,15,21,30$}\tabularnewline
+{\footnotesize{}Potential\citep{Lennard}} & {\scriptsize{}$V_{LJ}(r)=4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^{6}\right]$} & {\scriptsize{}$n=9,15,21,30$}\tabularnewline
 \hline 
 {\footnotesize{}Rastrigin} & {\scriptsize{}$f(x)=x_{1}^{2}+x_{2}^{2}-\cos(18x_{1})-\cos(18x_{2})$} & {\scriptsize{}2}\tabularnewline
 \hline 
@@ -709,9 +964,6 @@ since a function can contain tens or even hundreds of local minima.
 {\footnotesize{}Test30N} & {\scriptsize{}$\frac{1}{10}\sin^{2}\left(3\pi x_{1}\right)\sum_{i=2}^{n-1}\left(\left(x_{i}-1\right)^{2}\left(1+\sin^{2}\left(3\pi x_{i+1}\right)\right)\right)+\left(x_{n}-1\right)^{2}\left(1+\sin^{2}\left(2\pi x_{n}\right)\right)$} & {\scriptsize{}$n=3,4$}\tabularnewline
 \hline 
 \end{tabular}
-\par\end{centering}
-\caption{The test functions used in the conducted experiments.\label{tab:The-test-functions}}
-
 \end{table}
 
 
@@ -724,14 +976,18 @@ complexity and therefore, the average execution time would not be
 a good indication of the computational time required. In the first
 set of experiments we examined if the presence of the suggested stopping
 rule, which is the combination of a series of stopping rules, affects
-the optimization techniques without parallelization. In Table \ref{tab:DE},
-we observe the performance of all termination rules for the DE method.
-From these, both statistical and quantitative comparisons arise, depicted
-in Figure \ref{fig:DE_stat}. 
+the optimization techniques without parallelization. During parallel
+execution, the total sum of calls is computed across all computing
+units nodes, ensuring efficient load distribution and resource utilization.
+However, the algorithm terminates at the computing unit that identifies
+the optimal solution, signaling the achievement of the desired convergence
+criterion. In Table \ref{tab:DE}, we observe the performance of all
+termination rules for the DE method. From these, both statistical
+and quantitative comparisons arise, depicted in Figure \ref{fig:DE_stat}. 
 
 \begin{table}[H]
 \centering{}\caption{Average function calls for the Differential evolution method, using
-different different termination rules\label{tab:DE}}
+different  termination rules\label{tab:DE}}
 \begin{tabular}{|l|c|c|c|c|}
 \hline 
 \textbf{﻿Problem} & \textbf{BEST} & \textbf{MEAN} & \textbf{DOUBLEBOX} & \textbf{ALL}\tabularnewline
@@ -826,7 +1082,8 @@ the PSO method and the results are shown in Table \ref{tab:PSO} and
 the statistical comparison is outlined graphically in Figure \ref{fig:PSO_stat}.
 
 \begin{table}[H]
-\centering{}\caption{PSO: Function calls with different termination rules\label{tab:PSO}}
+\centering{}\caption{Average function calls for the PSO method, with different termination
+rules\label{tab:PSO}}
 \begin{tabular}{|l|c|c|c|c|}
 \hline 
 \textbf{﻿Problem} & \textbf{BEST} & \textbf{MEAN} & \textbf{DOUBLEBOX} & \textbf{ALL}\tabularnewline
@@ -1109,7 +1366,13 @@ rules.\label{fig:experGWO}}
 
 \end{figure}
 Once again the combinatorial termination technique achieves the lowest
-number of function calls of all available techniques. 
+number of function calls of all available techniques. Each optimization
+method and termination criterion function differently and yield varying
+results. This variation is further influenced by the differing nature
+of the cost functions involved. When integrated into the overall algorithm,
+each method, in combination with the termination criterion that best
+suits it, can converge to optimal solutions more quickly, thereby
+enhancing the algorithm's overall performance. 
 
 The proposed termination rule was also applied to the current parallel
 optimization technique for the test function described previously.
@@ -1215,13 +1478,13 @@ that the increase in processing units may reduce the required number
 of function calls. The same series of experiments was also conducted
 using the so - called \emph{mean fitness} termination rule, that has
 been described in equation \ref{eq:mean}. The obtained results are
-presented in Table \ref{tab:parallelBest}. 
+presented in Table \ref{tab:parallelMean}. 
 
 \begin{table}[H]
 \begin{centering}
 \caption{Experiments using the proposed optimization technique and the mean
 - fitness stopping rule. Numbers in cells denote average function
-calls.\label{tab:parallelBest}}
+calls.\label{tab:parallelMean}}
 \par\end{centering}
 \centering{}%
 \begin{tabular}{|c|c|c|c|c|}
@@ -1301,6 +1564,91 @@ calls.\label{tab:parallelBest}}
 \hline 
 \end{tabular}
 \end{table}
+
+\begin{table}
+\caption{Experiments using the proposed optimization technique and the best
+- fitness stopping rule. Numbers in cells denote average function
+calls.\label{tab:parallelBest}}
+
+\centering{}%
+\begin{tabular}{|c|c|c|c|c|}
+\hline 
+Problems & 1x500 & 2x250 & 5x100 & 10x50\tabularnewline
+\hline 
+\hline 
+BF1 & 9270 & 6253 & 6497 & 6089\tabularnewline
+\hline 
+BF2 & 9838 & 6249 & 6078 & 5853\tabularnewline
+\hline 
+BRANIN & 5787 & 5022 & 4991 & 4989\tabularnewline
+\hline 
+CAMEL & 12204 & 5882 & 5765 & 5399\tabularnewline
+\hline 
+CIGAR10 & 7631 & 6482 & 6350 & 6420\tabularnewline
+\hline 
+CM4 & 16222 & 5037 & 7422 & 6366\tabularnewline
+\hline 
+DISCUS10 & 5997 & 7364 & 4906 & 5037\tabularnewline
+\hline 
+EASOM & 4701 & 4752 & 4653 & 4668\tabularnewline
+\hline 
+ELP10 & 6230 & 5223 & 5407 & 5314\tabularnewline
+\hline 
+EXP4 & 10277 & 5675 & 5638 & 5526\tabularnewline
+\hline 
+EXP16 & 9577 & 5575 & 5471 & 5470\tabularnewline
+\hline 
+GKLS250 & 13328 & 5864 & 5323 & 4993\tabularnewline
+\hline 
+GKLS350 & 10131 & 4998 & 5442 & 4919\tabularnewline
+\hline 
+GRIEWANK2 & 8504 & 7345 & 6108 & 5876\tabularnewline
+\hline 
+GRIEWANK10 & 8535 & 7704 & 7771 & 7126\tabularnewline
+\hline 
+POTENTIAL3 & 11338 & 5726 & 5471 & 5699\tabularnewline
+\hline 
+PONTENTIAL5 & 12414 & 7192 & 6977 & 7070\tabularnewline
+\hline 
+PONTENTIAL6 & 14760 & 8480 & 7210 & 7511\tabularnewline
+\hline 
+PONTENTIAL10 & 17729 & 12218 & 10217 & 9439\tabularnewline
+\hline 
+HANSEN & 8379 & 5945 & 5023 & 4972\tabularnewline
+\hline 
+HARTMAN3 & 10674 & 5613 & 5703 & 5163\tabularnewline
+\hline 
+HARTMAN6 & 10841 & 5541 & 5485 & 5536\tabularnewline
+\hline 
+RASTRIGIN & 13657 & 6636 & 6129 & 5399\tabularnewline
+\hline 
+ROSENBROCK8 & 9456 & 6979 & 7165 & 7049\tabularnewline
+\hline 
+POSENBROCK16 & 9853 & 8620 & 8110 & 8379\tabularnewline
+\hline 
+SHEKEL5 & 10959 & 5437 & 5684 & 5616\tabularnewline
+\hline 
+SHEKEL7 & 10651 & 5715 & 5739 & 5486\tabularnewline
+\hline 
+SHEKEL10 & 1533 & 6064 & 5772 & 5516\tabularnewline
+\hline 
+SINU4 & 10291 & 6249 & 5426 & 5188\tabularnewline
+\hline 
+SINU8 & 9993 & 6847 & 6080 & 5582\tabularnewline
+\hline 
+TEST2N4 & 10242 & 6131 & 5837 & 5480\tabularnewline
+\hline 
+TEST2N9 & 12998 & 7402 & 6455 & 5702\tabularnewline
+\hline 
+TEST30N3 & 6228 & 5712 & 5723 & 5321\tabularnewline
+\hline 
+TEST30N4 & 5540 & 5437 & 5490 & 5484\tabularnewline
+\hline 
+Total & 335768 & 217369 & 207518 & 199637\tabularnewline
+\hline 
+\end{tabular}
+\end{table}
+
 And in this series of experiments, the columns of the table retain
 the same meaning as in Table \ref{tab:parallelDoublebox}. Furthermore,
 once again, it is observed that the increase in the number of computing
@@ -1459,7 +1807,21 @@ of the GKLS function.\label{fig:experGklsCalls}}
 \end{figure}
  The graphs above show once again that adding processing units to
 the proposed technique can reduce not only the execution time, as
-expected, but also the required number of function calls.
+expected, but also the required number of function calls. Furthermore,
+in Figure \ref{fig:Speedup}, the behavior of speedup and efficiency
+is depicted as a function of the number of computational units. It
+is observed that speedup increases with the addition of more computational
+units, while efficiency is initially high but gradually decreases.
+\ref{fig:Speedup}.
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[scale=0.75]{speedup}
+\par\end{centering}
+\caption{Speedup and efficiency of the parallel approach.\label{fig:Speedup}}
+
+\end{figure}
+
 
 \section{Conclusions \label{sec:Conclusions}}
 
@@ -1487,10 +1849,12 @@ method terminates with the combined termination rule proposed here,
 and the experimental results performed on a series of well - known
 test problems from the relevant literature seem to be very promising.
 
-Future extensions of the current work may include the incorporation
-of more advanced termination rules as well as the execution of alternative
+However, the present work is limited to a specific set of optimization
+methods and termination criteria. Therefore, future extensions of
+this work may include the integration of additional and more advanced
+termination criteria, as well as the implementation of alternative
 global optimization methods in the processing units, such as genetic
-algorithms or variants of the simulated annealing.
+algorithms or variations of simulated annealing.
 
 \vspace{6pt}
 
@@ -1763,6 +2127,32 @@ In ICGA (pp. 199-205), 1993.
 Calculateurs paralleles, reseaux et systems repartis \textbf{10},
 pp. 141-171, 1998.
 
+\bibitem{go_add_par1}Rudy Alex Gallegos Lizárraga (2024). Parallel
+Computing for Real-Time Image Processing. DOI:10.20944/preprints202408.0040.v1 
+
+\bibitem{go_add_par2}Asif Afzal, Zahid Ansari, Ahmed Rimaz Faizabadi
+\& M. K. Ramis (2017).Parallelization Strategies for Computational
+Fluid Dynamics Software: State of the Art Review. Archives of Computational
+Methods in Engineering. Volume 24, pages 337--363, (2017).
+
+\bibitem{go_add_par3}You Zou, Yuejie Zhu, Yaohang Li, Fang-Xiang
+Wu, Jianxin Wang (2021).Parallel computing for genome sequence processing.
+DOI: 10.1093/bib/bbab070 
+
+\bibitem{go_add_par4}C.B. Lucasius, G. Kateman (1991).Genetic algorithms
+for large-scale optimization in chemometrics: An application. TrAC
+Trends in Analytical Chemistry. Volume 10, Issue 8, September 1991,
+Pages 254-261. https://doi.org/10.1016/0165-9936(91)85132-B 
+
+\bibitem{go_add_par5}Sangeetha M., Sabari A. (2018). Genetic optimization
+of hybrid clustering algorithm in mobile wireless sensor networks.
+Sensor Review:Volume 38 Issue 4.
+
+\bibitem{go_add_par6}Ali Ghaheri, Saeed Shoar, Mohammad Naderan \&
+Sayed Shahabuddin Hoseini (2015).The Applications of Genetic Algorithms
+in Medicine. Journal List Oman Med J. Nov; 30(6): 406--416. doi:
+10.5001/omj.2015.82 
+
 \bibitem{Marini} Marini, F. \& Walczak, B. (2015). Particle swarm
 optimization (PSO). A tutorial. Chemometrics and Intelligent Laboratory
 Systems. Volume 149, Part B, p.:153-165. Doi: https://doi.org/10.1016/j.chemolab.2015.08.020
@@ -1895,6 +2285,7 @@ Inc., 2001.
 
 \bibitem{gwo}S. Mirjalili, S.M. Mirjalili, A. Lewis, Grey wolf optimizer.
 Advances in engineering software \textbf{69}, pp. 46-61, 2014.
+
 \end{thebibliography}
 
 \end{adjustwidth}{}
