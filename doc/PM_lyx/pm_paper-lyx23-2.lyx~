@@ -2758,19 +2758,6 @@ noprefix "false"
 .
  The first thread executes the DE method, the next executes PSO, and the
  third runs the Multistart method.
- As shown in the Figure 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:basicFlowchart"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, at each iteration, every computational unit that uses this specific optimizati
-on method calculates the best solution and replaces the worst solutions
- of the other computational units.
  This process is repeated to ensure an equivalent distribution of the methods
  across all threads, optimizing the utilization of available computational
  resources.
@@ -15433,31 +15420,11 @@ noprefix "false"
 
 \end_inset
 
- and 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:best"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
 .
  The obtained results are presented in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:parallelMean"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- and 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:parallelBest"
 plural "false"
 caps "false"
 noprefix "false"
@@ -23523,15 +23490,20 @@ noprefix "false"
 \end_inset
 
 , the behavior of speedup and efficiency is depicted as a function of the
- number of PUs.
- The execution of the algorithm with a single processing unit, where the
- speedup is 1, serves as the reference point.
- As the number of PUs increases, a corresponding increase in speedup is
- observed, though it is often less than the ideal (equal to the number of
- PUs) due to communication delays and overhead.
- Conversely, efficiency decreases with the increase in PUs, a common phenomenon
- in parallel computing, caused by non-linear scaling and uneven workload
- distribution.
+ number of computational units.
+ It is observed that speedup increases with the addition of more computational
+ units, while efficiency is initially high but gradually decreases.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Speedup"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard

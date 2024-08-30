@@ -672,8 +672,8 @@ technique is proposed that utilizes the new termination rule.
 The existing method that was presented in section \ref{sec:Methods-description},
 employs Particle Swarm Optimization (PSO), Differential Evolution
 (DE), and Multistart techniques, each with its own independent termination
-criteria. In contrast, the proposed method that which will be presented
-at this section, integrates an innovative combination of termination
+criteria. In contrast, the proposed method that will be presented
+in this section, integrates an innovative combination of termination
 rules, including Best-Fitness, Mean-Fitness, and DoubleBox, enhancing
 the termination process of the search. By incorporating these advanced
 termination strategies into a parallel algorithm, the new method achieves
@@ -799,26 +799,29 @@ used in the relevant literature and provide the possibility to be
 parallelized relatively easily. Initially the algorithm distributes
 the three methodologies across $N_{I}$ threads, where $N_{I}>3$.
 The first thread executes the DE method, the next executes PSO, and
-the third runs the Multistart method. This process is repeated to
-ensure an equivalent distribution of the methods across all threads,
-optimizing the utilization of available computational resources.When
-the number of threads is equal to or a multiple of the number of methods,
-the distribution is 100\% equivalent. In other cases, the degree of
-equivalence increases with the number of threads.
+the third runs the Multistart method. As shown in the Figure \ref{fig:basicFlowchart},
+at each iteration, every computational unit that uses this specific
+optimization method calculates the best solution and replaces the
+worst solutions of the other computational units. This process is
+repeated to ensure an equivalent distribution of the methods across
+all threads, optimizing the utilization of available computational
+resources. When the number of threads is equal to or a multiple of
+the number of methods, the distribution is 100\% equivalent. In other
+cases, the degree of equivalence increases with the number of threads.
 
 As presented in this subsection, the proposed algorithm exploits the
 parallel execution of three distinct optimization methods, with its
 efficiency in termination procedures incorporated through the criteria
 described in Subsection \ref{subsec:The-new-termination}. The algorithm
 uses three termination criteria: the difference between the best values
-\LyXZeroWidthSpace\LyXZeroWidthSpace in successive iterations, the
-stability of the mean fitness value, and the relative variance of
-the cost function values. Each criterion contributes to the evaluation
-of the algorithm's progress, dynamically switching between these criteria
-based on the current state of the search. Specifically, when any of
-the criteria meets its predefined conditions, the algorithm terminates
-the search, thus adapting the process to the continuous search conditions.
-This strategy ensures the flexibility and efficiency of the algorithm,
+\LyXZeroWidthSpace in successive iterations, the stability of the
+mean fitness value, and the relative variance of the cost function
+values. Each criterion contributes to the evaluation of the algorithm's
+progress, dynamically switching between these criteria based on the
+current state of the search. Specifically, when any of the criteria
+meets its predefined conditions, the algorithm terminates the search,
+thus adapting the process to the continuous search conditions. This
+strategy ensures the flexibility and efficiency of the algorithm,
 minimizing computational resources and time wastage.
 
 \begin{figure}[H]
@@ -847,11 +850,13 @@ samples remains as constant as possible, regardless of the number
 of threads used. The parallelization was achieved using the OpenMP
 library \citep{openMP}, while the implementation of the method was
 done in ANSI C++ within the optimization package OPTIMUS, available
-at \url{https://github.com/itsoulos/OPTIMUS}. The parameters used
-here are either suggested in the original publications of the methods
-(eg Differential Evolution, Particle Swarm Optimization) or have been
-chosen so that there is a compromise between the execution time of
-the method and its efficiency.
+at \url{https://github.com/itsoulos/OPTIMUS}. The experiments were
+executed on a Debian Linux system that runs on an AMD Ryzen 5950X
+processor, with 128GB of RAM. The parameters used here are either
+suggested in the original publications of the methods (e.g. Differential
+Evolution, Particle Swarm Optimization) or have been chosen so that
+there is a compromise between the execution time of the method and
+its efficiency.
 
 \begin{table}[H]
 \centering{}\caption{The following parameters were considered for conducting the experiments\label{tab:settings}}
@@ -917,7 +922,7 @@ since a function can contain tens or even hundreds of local minima.
 {\footnotesize{}NAME} & {\scriptsize{}FORMULA} & {\scriptsize{}DIMENSION}\tabularnewline
 \hline 
 \hline 
-{\footnotesize{}Bent Cigar} & {\scriptsize{}$f(x)=x_{1}^{2}+10^{6}\sum_{i=2}^{n}x_{i}^{2}$} & {\scriptsize{}10}\tabularnewline
+{\footnotesize{}Cigar10} & {\scriptsize{}$f(x)=x_{1}^{2}+10^{6}\sum_{i=2}^{n}x_{i}^{2}$} & {\scriptsize{}10}\tabularnewline
 \hline 
 {\footnotesize{}BF1} & {\scriptsize{}$f(x)=x_{1}^{2}+2x_{2}^{2}-\frac{3}{10}\cos\left(3\pi x_{1}\right)-\frac{4}{10}\cos\left(4\pi x_{2}\right)+\frac{7}{10}$} & {\scriptsize{}2}\tabularnewline
 \hline 
@@ -945,11 +950,13 @@ since a function can contain tens or even hundreds of local minima.
 \hline 
 {\footnotesize{}Hartman6} & {\scriptsize{}$f(x)=-\sum_{i=1}^{4}c_{i}\exp\left(-\sum_{j=1}^{6}a_{ij}\left(x_{j}-p_{ij}\right)^{2}\right)$} & {\scriptsize{}6}\tabularnewline
 \hline 
-{\footnotesize{}High Elliptic} & {\scriptsize{}$f(x)=\sum_{i=1}^{n}\left(10^{6}\right)^{\frac{i-1}{n-1}}x_{i}^{2}$} & {\scriptsize{}10}\tabularnewline
+{\footnotesize{}Elp} & {\scriptsize{}$f(x)=\sum_{i=1}^{n}\left(10^{6}\right)^{\frac{i-1}{n-1}}x_{i}^{2}$} & {\scriptsize{}10}\tabularnewline
 \hline 
 {\footnotesize{}Potential\citep{Lennard}} & {\scriptsize{}$V_{LJ}(r)=4\epsilon\left[\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^{6}\right]$} & {\scriptsize{}$n=9,15,21,30$}\tabularnewline
 \hline 
 {\footnotesize{}Rastrigin} & {\scriptsize{}$f(x)=x_{1}^{2}+x_{2}^{2}-\cos(18x_{1})-\cos(18x_{2})$} & {\scriptsize{}2}\tabularnewline
+\hline 
+{\footnotesize{}Rosenbrcok} & {\tiny{}$f(x)=\sum_{i=1}^{n-1}\left(100\left(x_{i+1}-x_{i}^{2}\right)^{2}+\left(x_{i}-1\right)^{2}\right),\quad-30\le x_{i}\le30$} & {\scriptsize{}$n=4,8,16$}\tabularnewline
 \hline 
 {\footnotesize{}Shekel5} & {\scriptsize{}$f(x)=-\sum_{i=1}^{5}\frac{1}{(x-a_{i})(x-a_{i})^{T}+c_{i}}$} & {\scriptsize{}4}\tabularnewline
 \hline 
@@ -1077,9 +1084,102 @@ As it is evident, the combination of the stopping rules reduces the
 required number of function calls that are required to obtain the
 global minimum by the DE method. The proposed termination scheme outperforms
 by a percentage that varies from 13\% to 73\% the other termination
-rules used here. Subsequently, the same experiment was conducted for
-the PSO method and the results are shown in Table \ref{tab:PSO} and
-the statistical comparison is outlined graphically in Figure \ref{fig:PSO_stat}.
+rules used here. In addition, in order to ascertain which of the three
+termination rules has the greatest effect on the termination with
+the mixed rule, the rule responsible for the termination of the DE
+optimization technique was recorded for all functions of the test
+set. The results from this recording are shown in Table \ref{tab:percentageDE}.
+The two techniques that seem to be the most decisive for terminating
+each function are Best and the Doublebox method, and in fact the Best
+method appears to significantly outperform DoubleBox termination scheme
+on average.
+
+\begin{table}[H]
+\caption{Percentage of the rule which is responsible for termination in the
+mixed stopping rule.\label{tab:percentageDE}}
+
+\centering{}%
+\begin{tabular}{|l|c|c|c|}
+\hline 
+\textbf{﻿Problem} & \textbf{Mean} & \textbf{Best} & \textbf{Doublebox}\tabularnewline
+\hline 
+\hline 
+\textbf{BF1} & 0.00\% & 36.67\% & 63.33\%\tabularnewline
+\hline 
+\textbf{BF2} & 6.67\% & 33.33\% & 60.00\%\tabularnewline
+\hline 
+\textbf{BRANIN} & 0.00\% & 6.67\% & 93.33\%\tabularnewline
+\hline 
+\textbf{CAMEL} & 10.00\% & 76.67\% & 13.33\%\tabularnewline
+\hline 
+\textbf{CIGAR10} & 0.00\% & 20.00\% & 80.00\%\tabularnewline
+\hline 
+\textbf{CM4} & 0.00\% & 90.00\% & 10.00\%\tabularnewline
+\hline 
+\textbf{DISCUS10} & 0.00\% & 6.67\% & 93.33\%\tabularnewline
+\hline 
+\textbf{EASOM} & 0.00\% & 0.00\% & 100.00\%\tabularnewline
+\hline 
+\textbf{ELP10} & 0.00\% & 0.00\% & 100.00\%\tabularnewline
+\hline 
+\textbf{EXP4} & 0.00\% & 86.67\% & 13.33\%\tabularnewline
+\hline 
+\textbf{EXP16} & 0.00\% & 76.67\% & 23.33\%\tabularnewline
+\hline 
+\textbf{GKLS250} & 6.67\% & 73.33\% & 20.00\%\tabularnewline
+\hline 
+\textbf{GKLS350} & 20.00\% & 80.00\% & 0.00\%\tabularnewline
+\hline 
+\textbf{GRIEWANK2} & 3.33\% & 26.67\% & 70.00\%\tabularnewline
+\hline 
+\textbf{GRIEWANK10} & 0.00\% & 10.00\% & 90.00\%\tabularnewline
+\hline 
+\textbf{POTENTIAL3} & 3.33\% & 66.67\% & 30.00\%\tabularnewline
+\hline 
+\textbf{PONTENTIAL5} & 10.00\% & 86.67\% & 3.33\%\tabularnewline
+\hline 
+\textbf{PONTENTIAL6} & 0.00\% & 90.00\% & 10.00\%\tabularnewline
+\hline 
+\textbf{PONTENTIAL10} & 13.33\% & 86.67\% & 0.00\%\tabularnewline
+\hline 
+\textbf{HANSEN} & 16.67\% & 50.00\% & 33.33\%\tabularnewline
+\hline 
+\textbf{HARTMAN3} & 0.00\% & 70.00\% & 30.00\%\tabularnewline
+\hline 
+\textbf{HARTMAN6} & 3.33\% & 76.67\% & 20.00\%\tabularnewline
+\hline 
+\textbf{RASTRIGIN} & 0.00\% & 83.33\% & 16.67\%\tabularnewline
+\hline 
+\textbf{ROSENBROCK8} & 0.00\% & 13.33\% & 86.67\%\tabularnewline
+\hline 
+\textbf{ROSENBROCK16} & 0.00\% & 13.33\% & 86.67\%\tabularnewline
+\hline 
+\textbf{SHEKEL5} & 3.33\% & 93.33\% & 3.33\%\tabularnewline
+\hline 
+\textbf{SHEKEL7} & 10.00\% & 90.00\% & 0.00\%\tabularnewline
+\hline 
+\textbf{SHEKEL10} & 6.67\% & 93.33\% & 0.00\%\tabularnewline
+\hline 
+\textbf{SINU4} & 6.67\% & 80.00\% & 13.33\%\tabularnewline
+\hline 
+\textbf{SINU8} & 0.00\% & 100.00\% & 0.00\%\tabularnewline
+\hline 
+\textbf{TEST2N4} & 0.00\% & 76.67\% & 23.33\%\tabularnewline
+\hline 
+\textbf{TEST2N9} & 0.00\% & 100.00\% & 0.00\%\tabularnewline
+\hline 
+\textbf{TEST30N3} & 0.00\% & 33.33\% & 66.67\%\tabularnewline
+\hline 
+\textbf{TEST30N4} & 0.00\% & 40.00\% & 60.00\%\tabularnewline
+\hline 
+\textbf{AVERAGE} & \textbf{3.53\%} & \textbf{57.84\%} & \textbf{38.63\%}\tabularnewline
+\hline 
+\end{tabular}
+\end{table}
+
+Subsequently, the same experiment was conducted for the PSO method
+and the results are shown in Table \ref{tab:PSO} and the statistical
+comparison is outlined graphically in Figure \ref{fig:PSO_stat}.
 
 \begin{table}[H]
 \centering{}\caption{Average function calls for the PSO method, with different termination
@@ -1375,9 +1475,9 @@ suits it, can converge to optimal solutions more quickly, thereby
 enhancing the algorithm's overall performance. 
 
 The proposed termination rule was also applied to the current parallel
-optimization technique for the test function described previously.
+optimization technique for the test functions described previously.
 The experimental results for the so - called \emph{DoubleBox} stopping
-rule and the given parallel method are show in Table \ref{tab:parallelDoublebox}.
+rule and the given parallel method are shown in Table \ref{tab:parallelDoublebox}.
 The columns in the table stand for the following:
 \begin{enumerate}
 \item Column Problem denotes the test function used.
@@ -1477,8 +1577,9 @@ in order to have credibility in the values recorded. The results indicate
 that the increase in processing units may reduce the required number
 of function calls. The same series of experiments was also conducted
 using the so - called \emph{mean fitness} termination rule, that has
-been described in equation \ref{eq:mean}. The obtained results are
-presented in Table \ref{tab:parallelMean}. 
+been described in equation \ref{eq:mean} and \ref{eq:best}. The
+obtained results are presented in Table \ref{tab:parallelMean} and
+\ref{tab:parallelBest}. 
 
 \begin{table}[H]
 \begin{centering}
@@ -1807,12 +1908,21 @@ of the GKLS function.\label{fig:experGklsCalls}}
 \end{figure}
  The graphs above show once again that adding processing units to
 the proposed technique can reduce not only the execution time, as
-expected, but also the required number of function calls. Furthermore,
-in Figure \ref{fig:Speedup}, the behavior of speedup and efficiency
-is depicted as a function of the number of computational units. It
-is observed that speedup increases with the addition of more computational
-units, while efficiency is initially high but gradually decreases.
-\ref{fig:Speedup}.
+expected, but also the required number of function calls. In the specific
+scheme, the execution time increases slightly for a certain number
+of execution units and above, as this time also includes the time
+spent by the execution engine for the synchronization of the processing
+units as well as for the exchange of information between them.
+
+Furthermore, in Figure \ref{fig:Speedup}, the behavior of speedup
+and efficiency is depicted as a function of the number of PUs. The
+execution of the algorithm with a single processing unit, where the
+speedup is 1, serves as the reference point. As the number of PUs
+increases, a corresponding increase in speedup is observed, though
+it is often less than the ideal (equal to the number of PUs) due to
+communication delays and overhead. Conversely, efficiency decreases
+with the increase in PUs, a common phenomenon in parallel computing,
+caused by non-linear scaling and uneven workload distribution.
 
 \begin{figure}[H]
 \begin{centering}
@@ -1914,12 +2024,12 @@ H. A. Scheraga, Protein structure prediction by global optimization
 of a potential energy function, Biophysics \textbf{96}, pp. 5482-5485,
 1999.
 
-\bibitem{go_chemistry3}J. An, G.He, F. Qin, R. Li, Z. Huang, A new
+\bibitem{go_chemistry3}J. An, G. He, F. Qin, R. Li, Z. Huang, A new
 framework of global sensitivity analysis for the chemical kinetic
 model using PSO-BPNN, Computers \& Chemical Engineering \textbf{112},
 pp. 154-164, 2018.
 
-\bibitem{go_econ1}Zwe-Lee Gaing, Particle swarm optimization to solving
+\bibitem{go_econ1}Z.L. Gaing, Particle swarm optimization to solving
 the economic dispatch considering the generator constraints, IEEE
 Transactions on \textbf{18} Power Systems, pp. 1187-1195, 2003.
 
@@ -1932,86 +2042,81 @@ Systems \textbf{27}, pp. 147-153, 2005.
 medicine, Mathematical and Computer Modelling \textbf{20}, pp. 119-132,
 1994.
 
-\bibitem{go_med2}Eva K. Lee, Large-Scale Optimization-Based Classification
+\bibitem{go_med2}E.K. Lee, Large-Scale Optimization-Based Classification
 Models in Medicine and Biology, Annals of Biomedical Engineering \textbf{35},
 pp 1095-1109, 2007.
 
 \bibitem{interval1}M.A. Wolfe, Interval methods for global optimization,
 Applied Mathematics and Computation \textbf{75}, pp. 179-206, 1996.
 
-\bibitem{interval2}T. Csendes and D. Ratz, Subdivision Direction
-Selection in Interval Methods for Global Optimization, SIAM J. Numer.
-Anal. \textbf{34}, pp. 922--938, 1997. 
+\bibitem{interval2}T. Csendes, D. Ratz, Subdivision Direction Selection
+in Interval Methods for Global Optimization, SIAM J. Numer. Anal.
+\textbf{34}, pp. 922--938, 1997. 
 
-\bibitem{Kawachi} Kawachi, M., Ando, N. ( 1989). Genetic Algorithms
-in Search, Optimization \& Machine Learning. Artificial Intelligence,
-Vol.: 7, Issue: 1, pp.: 168. Doi: https://doi.org/10.11517/jjsai.7.1\_168 
+\bibitem{Kawachi}M. Kawachi, N. Ando, Genetic Algorithms in Search,
+Optimization \& Machine Learning, Artificial Intelligence \textbf{7},
+pp.: 168, 1989.
 
-\bibitem{Kirkpatrick} Kirkpatrick, S., Gelatt, C.D., Vecchi, M.P.
-(1983). Optimization by simulated annealing. Science, Vol. 220, Issue:
-4598, pp.: 671--680. DOI: 10.1126/science.220.4598.671 {[}CrossRef{]}
-{[}PubMed{]}
+\bibitem{Kirkpatrick} S. Kirkpatrick, C.D. Gelatt, M.P. Vecchi, Optimization
+by simulated annealing, Science \textbf{220}, pp.: 671--680, 1983.
 
-\bibitem{Hashim} Hashim, F.A., Houssein, E.H., Mabrouk, M.S., Al-Atabany,W.,
-Mirjalili, S. (2019). Henry gas solubility optimization: A novel physics
-based algorithm. Future Generation Computer Systems: Vol.: 101, pp.:
-646--667. Doi: https: 10.1016/j.future.2019.07.015
+\bibitem{Hashim}F.A. Hashim, E.H. Houssein, M.S. Mabrouk, W. Al-Atabany,
+S. Mirjalili, Henry gas solubility optimization: A novel physics based
+algorithm. Future Generation Computer Systems \textbf{101}, pp.: 646--667,
+2019.
 
-\bibitem{Rashedi} Rashedi, E., Nezamabadi-Pour, H., Saryazdi, S.
-(2009). GSA: A gravitational search algorithm. Information Sciences:
-Vol.: 179, pp.:2232--2248. https://doi.org/10.1016/j.ins.2009.03.004
+\bibitem{Rashedi}E. Rashedi, H. Nezamabadi-Pour, S. Saryazdi, GSA:
+A gravitational search algorithm, Information Sciences \textbf{179},
+pp. 2232--2248, 2009.
 
 \bibitem{Du-Wu} Du, H., Wu, X., Zhuang, J. (2006). Small-World Optimization
 Algorithm for Function Optimization. In Proceedings of the International
 Conference on Natural Computation, Xi’an, China, 24--28 September
 2006, pp. 264--273. Doi: 10.1007/11881223\_33 
 
-\bibitem{Goldberg} Goldberg, D.E., Holland, J.H. (1988). Genetic
-Algorithms and Machine Learning. Machine Learning (3): pp.: 95--99.
-Doi: 10.1023/A:1022602019183
+\bibitem{Goldberg}D.E. Goldberg, J.H. Holland, Genetic Algorithms
+and Machine Learning, Machine Learning \textbf{3}, pp.: 95--99, 1988.
 
-\bibitem{Das} Das, S. , Suganthan, P.N. (2011). Differential evolution:
-A survey of the state-of-the-art. IEEE Transactions on Evolutionary
-Computation, Vol.: 15, Issue:1, pp.: 4--31. Doi: 10.1109/TEVC.2010.2059031
+\bibitem{Das} S. Das, P.N. Suganthan, Differential evolution: A survey
+of the state-of-the-art, IEEE Transactions on Evolutionary Computation
+\textbf{15}, pp. 4--31, 2011.
 
 \bibitem{Charilogis} V. Charilogis , I.G. Tsoulos, A. Tzallas, E.
 Karvounis, Modifications for the Differential Evolution Algorithm,
 Symmetry \textbf{14}, 447, 2022.
 
-\bibitem{Kennedy} Kennedy, J., Eberhart, R. (1995). Particle Swarm
-Optimization. In Proceedings of the ICNN’95---International Conference
-on Neural Networks, Perth,WA, Australia, 27 November--1 December
-1995, Vol.: 4, pp. 1942--1948. Doi: 10.1109/ICNN.1995.488968
+\bibitem{Kennedy}J. Kennedy, R. Eberhart, Particle Swarm Optimization.
+In Proceedings of the ICNN’95---International Conference on Neural
+Networks, Perth,WA, Australia, 27 November--1 December 1995, Vol.:
+4, pp. 1942--1948. Doi: 10.1109/ICNN.1995.488968.
 
 \bibitem{Charilogis2} V. Charilogis, I.G. Tsoulos, Toward an Ideal
 Particle Swarm Optimizer for Multidimensional Functions, Information
 \textbf{13}, 217, 2022.
 
-\bibitem{Dorigo} Dorigo, M., Maniezzo, V., Colorni, A. (1996). Ant
-system: Optimization by a colony of cooperating agents. IEEE Transactions
-on Systems, Man, and Cybernetics, Part B (Cybernetics), Vol.: 26,
-pp.: 29--41. Doi: 10.1109/3477.484436 
+\bibitem{Dorigo}M. Dorigo, V. Maniezzo, A. Colorni, Ant system: Optimization
+by a colony of cooperating agents. IEEE Transactions on Systems, Man,
+and Cybernetics, Part B (Cybernetics) \textbf{26}, pp. 29--41, 1996.
 
-\bibitem{Yang} Yang, X.S., Gandomi, A.H. (2012). Bat algorithm: A
-novel approach for global engineering optimization. Engineering Computations,
-Vol.: 29, pp.: 464--483. Doi: https://doi.org/10.1108/02644401211235834
+\bibitem{Yang}X.S. Yang, A.H. Gandomi, Bat algorithm: A novel approach
+for global engineering optimization. Engineering Computations \textbf{29},
+pp. 464--483, 2012.
 
-\bibitem{Mirjalili} Mirjalili, S., Lewis, A. (2016). The whale optimization
-algorithm. Advances in Engineering Softwar, Vol.: 95, pp.: 51--67.
-Doi: https://doi.org/10.1016/j.advengsoft.2016.01.008
+\bibitem{Mirjalili}S. Mirjalili, A. Lewis, The whale optimization
+algorithm. Advances in Engineering Softwar \textbf{95}, pp. 51--67,
+2016.
 
-\bibitem{Saremi} Saremi, S., Mirjalili, S., Lewis, A. (2017). Grasshopper
-optimisation algorithm: Theory and application. Advances in Engineering
-Software, Vol.: 105, pp.: 30--47.Doi: https://doi.org/10.1016/j.advengsoft.2017.01.004.
+\bibitem{Saremi}S. Saremi, S. Mirjalili, A. Lewis, Grasshopper optimisation
+algorithm: Theory and application. Advances in Engineering Software
+\textbf{105}, pp. 30--47, 2017.
 
-\bibitem{Rao} Rao, R.V., Savsani, V.J., Vakharia, D. (2011). Teaching--learning-based
+\bibitem{Rao}R.V. Rao, V.J. Savsani, D. Vakharia, Teaching--learning-based
 optimization: A novel method for constrained mechanical design optimization
-problems. Computer-Aided Design, Vol.: 43, pp.: 303--315. Doi: https://doi.org/10.1016/j.cad.2010.12.015
+problems. Computer-Aided Design \textbf{43}, pp. 303--315, 2011.
 
-\bibitem{parallel-pso}J. F. Schutte, J. A. Reinbolt, B. J. Fregly, R.
-T. Haftka, A. D. George, Parallel global optimization with the particle
-swarm algorithm, International journal for Numerical methods in Engineering
-\textbf{61}, pp. 2296-2315, 2004.
+\bibitem{parallel-pso}S.C. Chu, J.F. Roddick, J.S. Pan, A parallel
+particle swarm optimization algorithm with communication strategies,
+J. Inf. Sci. Eng \textbf{21}, pp. 809-818, 2005.
 
 \bibitem{parallel-multistart}J. Larson and S.M. Wild, Asynchronously
 parallel optimization solver for finding multiple minima, Mathematical
@@ -2027,85 +2132,82 @@ of a Multi-Start TSP Solver for Large Problem Instances, Proceedings
 of the 14th Annual Conference Companion on Genetic and Evolutionary
 Computation, pp. 1441-1442, 2012.
 
-\bibitem{msgpu2}Van Luong T., Melab N., Talbi EG. (2011) GPU-Based
-Multi-start Local Search Algorithms. In: Coello C.A.C. (eds) Learning
-and Intelligent Optimization. LION 2011. Lecture Notes in Computer
-Science, vol 6683. Springer, Berlin, Heidelberg. https://doi.org/10.1007/978-3-642-25566-3\_24
+\bibitem{msgpu2}T. Van Luong., N. Melab, E.G. Talbi, GPU-Based Multi-start
+Local Search Algorithms. In: Coello C.A.C. (eds) Learning and Intelligent
+Optimization. LION 2011. Lecture Notes in Computer Science, vol 6683,
+2011.
 
 \bibitem{msgpu3}K. Barkalov, V. Gergel, Parallel global optimization
 on GPU, J Glob Optim \textbf{66}, pp. 3--20, 2016. 
 
-\bibitem{Low Gon} Low, Y., Gonzalez, J., Kyrola, A., Bickson,D.,
-Guestrin, C., Hellerstein, J. (2010). GraphLab: A New Framework For
-Parallel Machine Learning. Source: arXiv, Computer Science. 
+\bibitem{Low Gon}Y. Low, J. Gonzalez, A. Kyrola, D. Bickson, C. Guestrin,
+J. Hellerstein, GraphLab: A New Framework For Parallel Machine Learning.
+Source: arXiv, Computer Science, 2010.
 
-\bibitem{Yangyang} Yangyang, L., Liu, G., Lu, G., Jiao, L., Marturi,
-N. \& Shang, R. (2019). Hyper-Parameter Optimization Using MARS Surrogate
-for Machine-Learning Algorithms. IEEE Transactions on Emerging Topics
-in Computational Intelligence, pp(99):1-11. DOI: 10.1109/TETCI.2019.2918509. 
+\bibitem{Yangyang}L. Yangyang, G. Liu, G. Lu, L. Jiao, N. Marturi,
+R. Shang, Hyper-Parameter Optimization Using MARS Surrogate for Machine-Learning
+Algorithms. IEEE Transactions on Emerging Topics in Computational
+Intelligence \textbf{99}, pp. 1-11, 2019.
 
-\bibitem{Yamashiro}Yamashiro, H. \& Nonaka, H. (2021). Estimation
-of processing time using machine learning and real factory data for
-optimization of parallel machine scheduling problem. ScienceDirect:
-Operations Research Perspectives, Vol.:8, 2021, Doi: https://doi.org/10.1016/j.orp.2021.100196
-.
+\bibitem{Yamashiro}H. Yamashiro, H. Nonaka, Estimation of processing
+time using machine learning and real factory data for optimization
+of parallel machine scheduling problem. Operations Research Perspectives
+\textbf{8}, 2021.
 
-\bibitem{Kim Tsai} Kim, H.S. \& Tsai, L. (2003). Design Optimization
-of a Cartesian Parallel Manipulator. Journal of Mechanical Design,125(1):43-51.
-Doi: https://doi.org/10.1115/1.1543977 .
+\bibitem{Kim Tsai}H.S. Kim, L. Tsai, Design Optimization of a Cartesian
+Parallel Manipulator. Journal of Mechanical Design \textbf{125}, pp.
+43-51, 2003.
 
-\bibitem{Oh Jong} Oh, S., Jong Jang,H. \& Pedrycz, W. (2009). The
-design of a fuzzy cascade controller for ball and beam system: A study
-in optimization with the use of parallel genetic algorithms. ScienceDirect:
-Engineering Applications of Artificial Intelligence, 22(2):261-271.
-Doi: https://doi.org/10.1016/j.engappai.2008.07.003 .
+\bibitem{Oh Jong}S. Oh, H. Jong Jang, W. Pedrycz, The design of a
+fuzzy cascade controller for ball and beam system: A study in optimization
+with the use of parallel genetic algorithms. ScienceDirect: Engineering
+Applications of Artificial Intelligence \textbf{22}, pp. 261-271,
+2009.
 
-\bibitem{Fatehi} Fatehi, M., Toloei, A., Zio, E., Niaki, S.T.A. \&
-Kesh,B. (2023). Robust optimization of the design of monopropellant
-propulsion control systems using an advanced teaching-learning-based
-optimization method. ScienceDirect: Engineering Applications of Artificial
-Intelligence, Vol.:126, Part: A. 
+\bibitem{Fatehi}M. Fatehi, A. Toloei, E. Zio, S.T.A. Niaki, B. Kesh,
+Robust optimization of the design of monopropellant propulsion control
+systems using an advanced teaching-learning-based optimization method.
+Engineering Applications of Artificial Intelligence \textbf{126},
+2023.
 
-\bibitem{Cai Yang} Cai, J., Yang, H., Lai, T. \& Xu, K.(2023). Parallel
-pump and chiller system optimization method for minimizing energy
-consumption based on a novel multi-objective gorilla troops optimizer.
-ScienceDirect: Journal Of Building Engineering, Vol.: 76, Doi: https://doi.org/10.1016/j.jobe.2023.107366
+\bibitem{Cai Yang}J. Cai, H. Yang, T. Lai, K. Xu,Parallel pump and
+chiller system optimization method for minimizing energy consumption
+based on a novel multi-objective gorilla troops optimizer, Journal
+Of Building Engineering \textbf{76}, 2023.
 
-\bibitem{Yu Shahabi} Yu, Y. \& Shahabi, L. (2023). Engineering Application
-of Artificial Intelligence: Optimal infrastructure in microgrids with
-diverse uncertainties based on demand response, renewable energy sources
-and two-stage parallel optimization algorithm. ScienceDirect. Vol.:123,
-Part b. Doi: https://doi.org/10.1016/j.engappai.2023.106233 
+\bibitem{Yu Shahabi}Y. Yu, L. Shahabi, Optimal infrastructure in
+microgrids with diverse uncertainties based on demand response, renewable
+energy sources and two-stage parallel optimization algorithm, Engineering
+Application of Artificial Intelligence \textbf{123}, 2023.
 
-\bibitem{Ramirez} Ramirez-Gil, F.J., Pere-Madrid, C.M., Nelli Silva,
-E.C. \& Montealerge-Rubio, W. (2021). Sustainable Computing: Informatics
-and Systems: Parallel computing for the topology optimization method:
-Performance metrics and energy consumption analysis in multiphysics
-problems. Vol.:30, Doi: https://doi.org/10.1016/j.suscom.2020.100481 
+\bibitem{Ramirez}F.J. Ramirez-Gil, C.M. Pere-Madrid, E.C. Nelli Silva,
+W. Montealerge-Rubio, Sustainable Parallel computing for the topology
+optimization method: Performance metrics and energy consumption analysis
+in multiphysics problems, Computing: Informatics and Systems \textbf{30},
+2021.
 
-\bibitem{Tavakolan} Tavakolan, M., Mostafazadeh, F., Eirdmousa, S.J.,
-Safari, A. \& Mirzai, K. (2022). A parallel computing simulation-based
-multi-objective optimization framework for economic analysis of building
-energy retrofit: A case study in Iran. ScienceDirect: Journal of Building
-Engineering, Vol.: 45, Doi: https://doi.org/10.1016/j.jobe.2021.103485
+\bibitem{Tavakolan}M. Tavakolan, F. Mostafazadeh, S.J. Eirdmousa,
+A. Safari, K. Mirzai, A parallel computing simulation-based multi-objective
+optimization framework for economic analysis of building energy retrofit:
+A case study in Iran, Journal of Building Engineering \textbf{45},
+2022.
 
-\bibitem{Lin} Lin, G. (2020). Parallel optimization n based operational
+\bibitem{Lin}G. Lin, (2020). Parallel optimization n based operational
 planning to enhance the resilience of large-scale power systems. Mississippi
 State University, Scholars Junction. Online: https://scholarsjunction.msstate.edu/cgi/viewcontent.cgi?article=4435\&context=td
 
-\bibitem{Pang} Pang, M. \& Shoemaker, C.A. (2023). Comparison of
-parallel optimization algorithms on computationally expensive groundwater
-remediation designs. Sience of the Total Environment: 857(3), Doi:
-https://doi.org/10.1016/j.scitotenv.2022.159544
+\bibitem{Pang}M. Pang, C.A. Shoemaker, Comparison of parallel optimization
+algorithms on computationally expensive groundwater remediation designs.
+Sience of the Total Environment \textbf{857}, 2023.
 
-\bibitem{Ezugwu} Ezugwu, A. (2023). A general Framework for Utilizing
-Metaheuristic Optimization for Sustainable Unrelated Parallel Machine
-Scheduling: A concise overview. Arxiv, Computer Science, Neural and
-Evolutionary Computing. Doi: https://doi.org/10.48550/arXiv.2311.12802 
+\bibitem{Ezugwu}A. Ezugwu, A general Framework for Utilizing Metaheuristic
+Optimization for Sustainable Unrelated Parallel Machine Scheduling:
+A concise overview. Arxiv, Computer Science, Neural and Evolutionary
+Computing. Doi: https://doi.org/10.48550/arXiv.2311.12802 
 
-\bibitem{Censor} Censor, Y. \& Zenios, S. (1997). Parallel Optimization:
-Theory, Algorithms and Applications. Publisher: Oxford University
-Press, USAISBN: ISBN-13: 978-0195100624. DOI: 10.1093/oso/9780195100624.001.0001 
+\bibitem{Censor}Y. Censor, S. Zenios, Parallel Optimization: Theory,
+Algorithms and Applications. Publisher: Oxford University Press, USAISBN:
+ISBN-13: 978-0195100624. DOI: 10.1093/oso/9780195100624.001.0001. 
 
 \bibitem{go_par1}E. Onbaşoğlu, L. Özdamar, Parallel simulated annealing
 algorithms in global optimization. Journal of global optimization
@@ -2116,9 +2218,9 @@ A.D. George, Parallel global optimization with the particle swarm
 algorithm. International journal for numerical methods in engineering
 \textbf{61}, pp. 2296-2315, 2004.
 
-\bibitem{go_par3}Regis, R. G., \& Shoemaker, C. A. (2009). Parallel
-stochastic global optimization using radial basis functions. INFORMS
-Journal on Computing, 21(3), 411-426.
+\bibitem{go_par3}R.G. Regis, C.A. Shoemaker, Parallel stochastic
+global optimization using radial basis functions. INFORMS Journal
+on Computing \textbf{21}, pp. 411-426, 2009.
 
 \bibitem{pga_survey1}R. Shonkwiler, Parallel genetic algorithms.
 In ICGA (pp. 199-205), 1993.
@@ -2127,54 +2229,49 @@ In ICGA (pp. 199-205), 1993.
 Calculateurs paralleles, reseaux et systems repartis \textbf{10},
 pp. 141-171, 1998.
 
-\bibitem{go_add_par1}Rudy Alex Gallegos Lizárraga (2024). Parallel
-Computing for Real-Time Image Processing. DOI:10.20944/preprints202408.0040.v1 
+\bibitem{go_add_par1}R.A.G. Lizárraga, Parallel Computing for Real-Time
+Image Processing. DOI:10.20944/preprints202408.0040.v1 
 
-\bibitem{go_add_par2}Asif Afzal, Zahid Ansari, Ahmed Rimaz Faizabadi
-\& M. K. Ramis (2017).Parallelization Strategies for Computational
-Fluid Dynamics Software: State of the Art Review. Archives of Computational
-Methods in Engineering. Volume 24, pages 337--363, (2017).
+\bibitem{go_add_par2}A. Afzal, Z. Ansari, A. Rimaz Faizabadi, M.
+K. Ramis, Parallelization Strategies for Computational Fluid Dynamics
+Software: State of the Art Review. Archives of Computational Methods
+in Engineering \textbf{24}, pp. 337--363, 2017)
 
-\bibitem{go_add_par3}You Zou, Yuejie Zhu, Yaohang Li, Fang-Xiang
-Wu, Jianxin Wang (2021).Parallel computing for genome sequence processing.
-DOI: 10.1093/bib/bbab070 
+\bibitem{go_add_par3}Y. Zou, Y. Zhu, Y. Li, F.X. Wu, J. Wang, Parallel
+computing for genome sequence processing, 2021.
 
-\bibitem{go_add_par4}C.B. Lucasius, G. Kateman (1991).Genetic algorithms
+\bibitem{go_add_par4}C.B. Lucasius, G. Kateman, Genetic algorithms
 for large-scale optimization in chemometrics: An application. TrAC
-Trends in Analytical Chemistry. Volume 10, Issue 8, September 1991,
-Pages 254-261. https://doi.org/10.1016/0165-9936(91)85132-B 
+Trends in Analytical Chemistry. \textbf{10}, pp. 254-261, 1991.
 
-\bibitem{go_add_par5}Sangeetha M., Sabari A. (2018). Genetic optimization
+\bibitem{go_add_par5}M. Sangeetha, A. Sabari, Genetic optimization
 of hybrid clustering algorithm in mobile wireless sensor networks.
-Sensor Review:Volume 38 Issue 4.
+Sensor Review \textbf{38}, 2018.
 
-\bibitem{go_add_par6}Ali Ghaheri, Saeed Shoar, Mohammad Naderan \&
-Sayed Shahabuddin Hoseini (2015).The Applications of Genetic Algorithms
-in Medicine. Journal List Oman Med J. Nov; 30(6): 406--416. doi:
-10.5001/omj.2015.82 
+\bibitem{go_add_par6}A. Ghaheri, S. Shoar, M. Naderan, S. Shahabuddin
+Hoseini, The Applications of Genetic Algorithms in Medicine. Journal
+List Oman Med J. Nov \textbf{30}, pp. 406--416, 2015.
 
-\bibitem{Marini} Marini, F. \& Walczak, B. (2015). Particle swarm
-optimization (PSO). A tutorial. Chemometrics and Intelligent Laboratory
-Systems. Volume 149, Part B, p.:153-165. Doi: https://doi.org/10.1016/j.chemolab.2015.08.020
+\bibitem{Marini}F. Marini, B. Walczak, Particle swarm optimization
+(PSO). A tutorial. Chemometrics and Intelligent Laboratory Systems
+\textbf{149}, pp. 153-165, 2015.
 
-\bibitem{Garc=0000EDa-Gonzalo} García-Gonzalo, E. \& Fernández-Martínez,
-J. L. (2012). A Brief Historical Review of Particle Swarm Optimization
-(PSO). Journal of Bioinformatics and Intelligent Control, Volume 1,
-Number 1, June 2012, pp. 3-16(14). American Scientific Publishers.
-DOI:https://doi.org/10.1166/jbic.2012.1002 
+\bibitem{Garc=0000EDa-Gonzalo}E. García-Gonzalo, J.L. Fernández-Martínez,
+A Brief Historical Review of Particle Swarm Optimization (PSO). Journal
+of Bioinformatics and Intelligent Control, Volume 1, Number 1, June
+2012, pp. 3-16(14). American Scientific Publishers. DOI:https://doi.org/10.1166/jbic.2012.1002 
 
-\bibitem{Jain} Jain, M., Saihjpal, V., Singh, N. \& Singh, S.B. (2022).
-An Overview of Variants and Advancements of PSO Algorithm. MDPI, Applied
-Sciences: 12, 8392. Doi:https://doi.org/10.3390/ app12178392 . 
+\bibitem{Jain} M. Jain, V. Saihjpal, N. Singh, S.B. Singh, An Overview
+of Variants and Advancements of PSO Algorithm. MDPI, Applied Sciences
+\textbf{12}, 8392, 2022.
 
-\bibitem{psophysics1}Anderson Alvarenga de Moura Meneses, Marcelo
-Dornellas, Machado Roberto Schirru, Particle Swarm Optimization applied
-to the nuclear reload problem of a Pressurized Water Reactor, Progress
-in Nuclear Energy \textbf{51}, pp. 319-326, 2009.
+\bibitem{psophysics1}A.A. de Moura Meneses, M. Dornellas, M.R. Schirru,
+Particle Swarm Optimization applied to the nuclear reload problem
+of a Pressurized Water Reactor, Progress in Nuclear Energy \textbf{51},
+pp. 319-326, 2009.
 
-\bibitem{psophysics2}Ranjit Shaw, Shalivahan Srivastava, Particle
-swarm optimization: A new tool to invert geophysical data, Geophysics
-\textbf{72}, 2007.
+\bibitem{psophysics2}R. Shaw, S. Srivastava, Particle swarm optimization:
+A new tool to invert geophysical data, Geophysics \textbf{72}, 2007.
 
 \bibitem{psochem1}C. O. Ourique, E.C. Biscaia, J.C. Pinto, The use
 of particle swarm optimization for dynamical analysis in chemical
@@ -2191,23 +2288,22 @@ Zurada, A.S. Elmaghraby, An approach to multimodal biomedical image
 registration utilizing particle swarm optimization, IEEE Transactions
 on Evolutionary Computation \textbf{8}, pp. 289-301, 2004.
 
-\bibitem{psomed2}Yannis Marinakis. Magdalene Marinaki, Georgios Dounias,
-Particle swarm optimization for pap-smear diagnosis, Expert Systems
-with Applications \textbf{35}, pp. 1645-1656, 2008. 
+\bibitem{psomed2}Y. Marinakis. M. Marinaki, G. Dounias, Particle
+swarm optimization for pap-smear diagnosis, Expert Systems with Applications
+\textbf{35}, pp. 1645-1656, 2008. 
 
-\bibitem{psoecon}Jong-Bae Park, Yun-Won Jeong, Joong-Rin Shin, Kwang
-Y. Lee, An Improved Particle Swarm Optimization for Nonconvex Economic
-Dispatch Problems, IEEE Transactions on Power Systems \textbf{25},
-pp. 156-16\textbf{216}6, 2010.
+\bibitem{psoecon}J.B. Park, Y.W. Jeong, J.R. Shin, K.Y. Lee, An Improved
+Particle Swarm Optimization for Nonconvex Economic Dispatch Problems,
+IEEE Transactions on Power Systems \textbf{25}, pp. 156-16\textbf{216}6,
+2010.
 
-\bibitem{Feoktistov} Feoktistov, V. (2006). Differential Evolution.
-In Search of Solutions. Optimization and Its Appl;ications, Springer.
-Doi: https://doi.org/10.1007/978-0-387-36896-2 
+\bibitem{Feoktistov}V. Feoktistov, Differential Evolution. In Search
+of Solutions. Optimization and Its Applications, Springer. Doi: https://doi.org/10.1007/978-0-387-36896-2 
 
-\bibitem{Bilal} Bilal, M.P., Zaheer, H., Garcia-Hernandez, L. \&
-Abraham, A. (2020). Differential Evolution: A review of more than
-two decades of research. Engineering Applications of Artificial Intelligence
-90 (2020) 103479. Doi: https://doi.org/10.1016/j.engappai.2020.103479 
+\bibitem{Bilal}M.P. Bilal, H. Zaheer, L. Garcia-Hernandez, A. Abraham,
+Differential Evolution: A review of more than two decades of research.
+Engineering Applications of Artificial Intelligence \textbf{90}, 103479,
+2020.
 
 \bibitem{de_app1}P. Rocca, G. Oliveri, A. Massa, Differential Evolution
 as Applied to Electromagnetics, IEEE Antennas and Propagation Magazine.
@@ -2226,24 +2322,23 @@ Method for Multilevel Color Image Segmentation Based on Dragonfly
 Algorithm and Differential Evolution, IEEE Access \textbf{7}, pp.
 19502-19538, 2019.
 
-\bibitem{Marti} Marti, R., Resende, M.G.C. \& Ribeiro, C. (2013).
-Multi-start methods for combinatorial optimization. European Journal
-of Operational Research Volume 226, Issue 1, 1 April 2013, Pages 1-8.
-Doi: https://doi.org/10.1016/j.ejor.2012.10.012 
+\bibitem{Marti}R. Marti, M.G.C. Resende, C. Ribeiro, Multi-start
+methods for combinatorial optimization. European Journal of Operational
+Research Volume \textbf{226}, pp. 1-8, 2013.
 
-\bibitem{Marti Moreno} Marti, R., Moreno-Vega, J. \& Duarte, A. (2010).
-Advanced Multi-start Methods. Handbook of Metaheuristics, pp: 265--281.
+\bibitem{Marti Moreno} R. Marti, J. Moreno-Vega, A. Duarte, Advanced
+Multi-start Methods. Handbook of Metaheuristics, pp 265--281, 2010.
 
-\bibitem{Tu Mayne} Tu, W. \& Mayne, R.W. (2002). Studies of multi-start
-clustering for global optimization. International Journal for Numerical
-Methods in Engineering. Doi: https://doi.org/10.1002/nme.400. 
+\bibitem{Tu Mayne}W. Tu, R.W. Mayne, Studies of multi-start clustering
+for global optimization, International Journal for Numerical Methods
+in Engineering, 2002.
 
-\bibitem{bfgs_main}Dai, Y. H. (2002). Convergence properties of the
-BFGS algoritm. SIAM Journal on Optimization, 13(3), 693-701.
+\bibitem{bfgs_main}Y.H. Dai, Convergence properties of the BFGS algoritm.
+SIAM Journal on Optimization \textbf{13}, pp. 693-701, 2002.
 
-\bibitem{Tsoulos} Tsoulos, I.G. Modifications of real code genetic
-algorithm for global optimization. Appl. Math. Comput. 2008, 203,
-598--607.
+\bibitem{Tsoulos} I.G. Tsoulos, Modifications of real code genetic
+algorithm for global optimization, Appl. Math. Comput \textbf{203},
+pp. 598--607, 2008.
 
 \bibitem{Gaviano} M. Gaviano, D.E. Ksasov, D. Lera, Y.D. Sergeyev,
 Software for generation of classes of test functions with known local
@@ -2258,26 +2353,27 @@ Kim, Global optimization of composite laminates using improving hit
 and run, In: Recent advances in global optimization, pp. 343-368,
 1992.
 
-\bibitem{pde}Charilogis, V.; Tsoulos, I.G. A Parallel Implementation
-of the Differential Evolution Method. Analytics 2023, 2, 17--30.
+\bibitem{pde}V. Charilogis, I.G. Tsoulos, A Parallel Implementation
+of the Differential Evolution Method, Analytics \textbf{2}, pp. 17--30,
+2023.
 
-\bibitem{ppso}Charilogis, V.; Tsoulos, I.G.; Tzallas, A. (2023).
-An Improved Parallel Particle Swarm Optimization. SN Computer Science
-(2023) 4:766
+\bibitem{ppso}V. Charilogis, I.G. Tsoulos, A. Tzallas, An Improved
+Parallel Particle Swarm Optimization. SN Computer Science \textbf{4},
+766, 2023.
 
 \bibitem{Floudas} C.A. Floudas, P.M. Pardalos, C. Adjiman, W. Esposoto,
 Z. G$\ddot{\mbox{u}}$m$\ddot{\mbox{u}}$s, S. Harding, J. Klepeis,
 C. Meyer, C. Schweiger, Handbook of Test Problems in Local and Global
 Optimization, Kluwer Academic Publishers, Dordrecht, 1999.
 
-\bibitem{Montaz Ali}M. Montaz Ali, Charoenchai Khompatraporn, Zelda
-B. Zabinsky, A Numerical Evaluation of Several Stochastic Algorithms
-on Selected Continuous Global Optimization Test Problems, Journal
-of Global Optimization \textbf{31}, pp 635-672, 2005.
+\bibitem{Montaz Ali}M. Montaz Ali, C. Khompatraporn, Z.B. Zabinsky,
+A Numerical Evaluation of Several Stochastic Algorithms on Selected
+Continuous Global Optimization Test Problems, Journal of Global Optimization
+\textbf{31}, pp 635-672, 2005.
 
-\bibitem{Gao}Gao, Z.M., Zhao, J., Hu,Y.R., Chen, H.F. (2021).The
-Challenge for the Nature - Inspired Global Optimization Algorithms:
-Non-Symmetric Benchmark Functions. IEEE Access, July 26, 2021.
+\bibitem{Gao}Z.M. Gao, J. Zhao, Y.R. Hu, H.F. Chen, The Challenge
+for the Nature - Inspired Global Optimization Algorithms: Non-Symmetric
+Benchmark Functions. IEEE Access, July 26, 2021.
 
 \bibitem{openMP} R. Chandra, L. Dagum, D. Kohr, D. Maydan,J. McDonald
 and R. Menon, Parallel Programming in OpenMP, Morgan Kaufmann Publishers
