@@ -13,27 +13,28 @@ double  Adam::Solve(Data &x)
 {
 	
     double f=0.0;
-    Data gradient=x;
-
-    rM = myProblem->getRightMargin();
-    lM = myProblem->getLeftMargin();
-    M_0.resize(myProblem->getDimension(),0.0);
-    U_0.resize(myProblem->getDimension(),0.0);
-    for(unsigned i = 0; i < iterations; i++){
-        double a = learningRate * sqrt( 1.0 - pow(b2,i+1) ) / (1.0 - pow(b1,i+1));
-        myProblem->granal(x,gradient);
-        for(unsigned j = 0; j < gradient.size(); j++){
-            M_0[j] = b1 * M_0[j] + (1-b1) * gradient[j];
-            U_0[j] = b2 * U_0[j] + (1-b2) * gradient[j] * gradient[j];
-            x[j] -= a * M_0[j] / (sqrt(U_0[j]) + 1e-1) ;
-            if(x[j] > rM[j]) x[j] = rM[j];
-            if(x[j] < lM[j]) x[j] = lM[j];
-        }
-        f=myProblem->funmin(x);
-        if(i % (iterations/10) == 0)std::cout << "ADAM ITER: " << i << " ERROR: " <<f << std::endl;
-    }
-    return f;
+    if (iterations >= 0) {
+        Data gradient=x;
     
+        rM = myProblem->getRightMargin();
+        lM = myProblem->getLeftMargin();
+        M_0.resize(myProblem->getDimension(),0.0);
+        U_0.resize(myProblem->getDimension(),0.0);
+        for(unsigned i = 0; i < iterations; i++){
+            double a = learningRate * sqrt( 1.0 - pow(b2,i+1) ) / (1.0 - pow(b1,i+1));
+            myProblem->granal(x,gradient);
+            for(unsigned j = 0; j < gradient.size(); j++){
+                M_0[j] = b1 * M_0[j] + (1-b1) * gradient[j];
+                U_0[j] = b2 * U_0[j] + (1-b2) * gradient[j] * gradient[j];
+                x[j] -= a * M_0[j] / (sqrt(U_0[j]) + 1e-1) ;
+                if(x[j] > rM[j]) x[j] = rM[j];
+                if(x[j] < lM[j]) x[j] = lM[j];
+            }
+            f=myProblem->funmin(x);
+            if(i % (iterations/10) == 0)std::cout << "ADAM ITER: " << i << " ERROR: " <<f << std::endl;
+        }
+        return f;
+    }
 
 	Data g_t = x;
 	Data m_t = x;
@@ -71,7 +72,7 @@ double  Adam::Solve(Data &x)
 		diff/=x.size();
 		if(diff<1e-7) break;
 		f=myProblem->funmin(x);
-		if(t>=iterations) break;
+		if(t>=-iterations) break;
 	}
 
 	return f;
@@ -112,7 +113,7 @@ double  Adam::getLearningRate() const
 
 void    Adam::setIterations(int it)
 {
-    if(it>0) iterations=it;
+    if(it!=0) iterations=it;
 }
 
 int     Adam::getIterations() const
